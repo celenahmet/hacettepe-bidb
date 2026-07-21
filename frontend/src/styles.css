@@ -243,3 +243,69 @@ img { max-width: 100%; height: auto; }
   /* Dokunmatik hedefler için asgari yükseklik */
   .ust-menu > a, .dil-secim a, .sosyal a { padding: 6px 0; }
 }
+
+/* ---------- yönetim paneli ---------- */
+
+.yonetim { padding-top: 34px; padding-bottom: 54px; }
+.yonetim h1 { font-size: 1.5rem; color: var(--lacivert); margin: 0 0 20px; }
+
+.giris { max-width: 380px; display: grid; gap: 6px; }
+.giris label, .duyuru-form label, .duzenleme label {
+  font-size: .84rem; font-weight: 600; color: var(--metin-acik); margin-top: 10px;
+}
+.giris input, .duyuru-form input, .duyuru-form select,
+.duzenleme input[type="text"], .duzenleme input:not([type]), .duzenleme textarea {
+  width: 100%; padding: 9px 11px; font: inherit; font-size: .92rem;
+  border: 1px solid var(--cizgi); border-radius: 4px; background: var(--beyaz);
+}
+.giris input:focus, .duyuru-form input:focus, .duzenleme input:focus, .duzenleme textarea:focus {
+  outline: 2px solid var(--mavi); outline-offset: 1px; border-color: var(--mavi);
+}
+
+.yonetim button {
+  margin-top: 14px; padding: 9px 20px; font: inherit; font-size: .9rem; font-weight: 600;
+  color: #fff; background: var(--lacivert); border: 1px solid var(--lacivert);
+  border-radius: 4px; cursor: pointer;
+}
+.yonetim button:hover { background: #16345f; }
+.yonetim button.ikincil { color: var(--lacivert); background: var(--beyaz); }
+.yonetim button.ikincil:hover { background: var(--zemin); }
+.yonetim button.tehlike { color: var(--kirmizi); background: var(--beyaz); border-color: #e6c3c5; }
+.yonetim button.tehlike:hover { background: #fdeced; }
+.yonetim button[disabled] { opacity: .6; cursor: default; }
+
+.yonetim-ust { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.yonetim-ust h1 { margin: 0; }
+
+.sekmeler { display: flex; gap: 8px; margin: 18px 0; border-bottom: 1px solid var(--cizgi); }
+.sekmeler button {
+  margin: 0; padding: 10px 18px; color: var(--metin-acik); background: none;
+  border: 0; border-bottom: 3px solid transparent; border-radius: 0;
+}
+.sekmeler button:hover { background: var(--zemin); color: var(--metin); }
+.sekmeler button.etkin { color: var(--kirmizi); border-bottom-color: var(--kirmizi); }
+
+.aciklama { padding: 12px 16px; background: var(--zemin); border-left: 3px solid var(--mavi); font-size: .88rem; }
+.bilgi { padding: 10px 16px; background: #eaf5ea; border-left: 3px solid #3d8b40; font-size: .9rem; }
+.hata { margin: 10px 0 0; padding: 10px 14px; background: #fdeced; border-left: 3px solid var(--kirmizi); font-size: .9rem; }
+
+.yonetim-tablo { width: 100%; border-collapse: collapse; font-size: .9rem; }
+.yonetim-tablo th, .yonetim-tablo td { padding: 10px 12px; border-bottom: 1px solid var(--cizgi); text-align: left; vertical-align: top; }
+.yonetim-tablo th { background: var(--zemin); font-size: .78rem; text-transform: uppercase; letter-spacing: .04em; color: var(--metin-acik); }
+.yonetim-tablo small { color: var(--metin-acik); }
+.yonetim-tablo tr.duzenleme td { background: #fafcfe; }
+.yonetim-tablo button { margin: 0 6px 0 0; padding: 6px 12px; font-size: .82rem; }
+
+.duyuru-form { max-width: 620px; display: grid; gap: 2px; margin-bottom: 30px; }
+.duyuru-form h2, .duzenleme h2 { font-size: 1.1rem; color: var(--lacivert); margin: 0; }
+.duzenleme form { display: grid; gap: 2px; max-width: 620px; }
+.onay { display: flex; align-items: center; gap: 8px; margin-top: 12px; font-weight: 500; }
+.onay input { width: auto; }
+.dugmeler { display: flex; gap: 10px; }
+
+@media (max-width: 620px) {
+  .yonetim-tablo, .yonetim-tablo tbody, .yonetim-tablo tr, .yonetim-tablo td { display: block; width: auto; }
+  .yonetim-tablo thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .yonetim-tablo tr { padding: 10px 0; border-bottom: 1px solid var(--cizgi); }
+  .yonetim-tablo td { border: 0; padding: 3px 0; }
+}

@@ -41,13 +41,28 @@ const angularApp = new AngularNodeAppEngine({ allowedHosts: izinliHostlar } as n
  */
 const apiTaban = process.env['BIDB_API'] ?? 'http://localhost:8081';
 
-app.use('/api', async (req, res) => {
+app.use('/api', express.raw({ type: '*/*', limit: '5mb' }), async (req, res) => {
   try {
     const hedef = apiTaban + '/api' + req.url;
-    const yanit = await fetch(hedef, { headers: { Accept: 'application/json' } });
-    const govde = await yanit.text();
+
+    // Kimlik doğrulama ve içerik başlıkları olduğu gibi iletilir
+    const basliklar: Record<string, string> = { Accept: 'application/json' };
+    if (req.headers.authorization) basliklar['Authorization'] = req.headers.authorization;
+    if (req.headers['content-type']) basliklar['Content-Type'] = String(req.headers['content-type']);
+
+    const govdeliMi = req.method !== 'GET' && req.method !== 'HEAD';
+    const yanit = await fetch(hedef, {
+      method: req.method,
+      headers: basliklar,
+      body: govdeliMi && Buffer.isBuffer(req.body) && req.body.length ? new Uint8Array(req.body) : undefined
+    });
+
+    const govde = Buffer.from(await yanit.arrayBuffer());
     res.status(yanit.status);
-    res.type(yanit.headers.get('content-type') ?? 'application/json');
+    const tur = yanit.headers.get('content-type');
+    if (tur) res.type(tur);
+    // Yetkisiz isteklerde tarayıcının parola penceresi açılmasın
+    res.removeHeader('WWW-Authenticate');
     res.send(govde);
   } catch {
     res.status(502).json({ hata: 'Backend servisine ulaşılamadı' });
