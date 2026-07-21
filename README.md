@@ -29,7 +29,7 @@ Tek gereksinim **Docker**'dır. Aynı komutlar Windows ve macOS'ta çalışır.
 ```bash
 docker compose up -d db        # yalnızca veritabanı
 docker compose up -d backend   # veritabanı + REST servisi
-docker compose up              # tümü (frontend dahil)
+docker compose up -d           # tümü: veritabanı + servis + site
 docker compose down            # durdur (veriler kalır)
 docker compose down -v         # durdur ve veritabanını sıfırla
 ```
@@ -38,7 +38,7 @@ docker compose down -v         # durdur ve veritabanını sıfırla
 |---|---|
 | REST API | http://localhost:8081 |
 | PostgreSQL | localhost:5432 (kullanıcı/parola/veritabanı: `bidb`) |
-| Frontend (geliştirme) | http://localhost:4200 |
+| Site (SSR) | http://localhost:4000 |
 
 > API dışarıya **8081** portundan açılır; 8080 birçok geliştirme makinesinde
 > başka bir servis tarafından kullanıldığı için tercih edilmemiştir.
@@ -52,6 +52,11 @@ npm install
 npm start          # http://localhost:4200
 npm run build      # SSR dahil üretim derlemesi
 ```
+
+> **Önemli:** Veritabanı göç dosyaları backend imajının içine kopyalanır.
+> İçerik veya şema değiştiğinde imajı yeniden derlemek gerekir
+> (`docker compose up -d --build backend`); yalnızca yeniden başlatmak
+> eski verilerle çalışır.
 
 ## REST uçları
 

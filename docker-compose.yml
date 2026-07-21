@@ -59,9 +59,10 @@ services:
     depends_on:
       - backend
     environment:
-      API_URL: http://backend:8080
+      BIDB_API: http://backend:8080
+      ALLOWED_HOSTS: localhost,127.0.0.1,bidb.hacettepe.edu.tr
     ports:
-      - "4200:4200"
+      - "4000:4000"
 
 volumes:
   db-data:
