@@ -26,11 +26,28 @@ const q = (v) => (v === null || v === undefined ? "NULL" : "'" + String(v).repla
    sayfa içeriği olduğu gibi kalır; dış bağlantılar ve belge adresleri
    hiç ellenmez. */
 function adresCevir(html) {
-  return String(html).replace(
-    /(href|src)=(["'])(https?:\/\/bidb\.hacettepe\.edu\.tr)?\/(tr|en)\/([a-z0-9_-]+)\2/gi,
-    (tam, oz, tirnak, kok, dil, slug) =>
-      oz + "=" + tirnak + "/" + dil + "/" + yeniSlug(dil.toLowerCase(), slug) + tirnak
-  );
+  return String(html)
+    .replace(
+      /(href|src)=(["'])(https?:\/\/bidb\.hacettepe\.edu\.tr)?\/(tr|en)\/([a-z0-9_-]+)\2/gi,
+      (tam, oz, tirnak, kok, dil, slug) =>
+        oz + "=" + tirnak + "/" + dil + "/" + yeniSlug(dil.toLowerCase(), slug) + tirnak
+    )
+    // Belge ve görseller kendi sunucumuzdan verilir (bkz. tools/fetch-dosyalar.js).
+    // Kaynak sunucuya mutlak adres bırakılırsa, yeni site aynı alan adında
+    // yayına girdiğinde bu bağlantılar kırılır.
+    .replace(
+      /(href|src)=(["'])https?:\/\/bidb\.hacettepe\.edu\.tr(\/(?:dosyalar|images)\/)/gi,
+      (tam, oz, tirnak, yol) => oz + "=" + tirnak + yol
+    );
+}
+
+/** Belge ve görsel adresini kendi sunucumuza göreli hâle getirir.
+
+   Yalnızca gerçekten barındırdığımız yollar (/dosyalar, /images) çevrilir.
+   Kaynak sunucudaki başka uygulamalar (örn. /eimza/index.php) bize ait
+   değildir; adresleri olduğu gibi bırakılır. */
+function varlikAdresi(u) {
+  return String(u || "").replace(/^https?:\/\/bidb\.hacettepe\.edu\.tr(?=\/(?:dosyalar|images)\/)/i, "");
 }
 
 function sayfaOku(dil) {
@@ -69,7 +86,7 @@ const sayfaAnahtar = {};   // "tr/slug" -> sıra numarası (menü bağlamak içi
       const tur = (b.href.match(/\.([a-z0-9]{2,5})(?:\?|$)/i) || ["", ""])[1].toUpperCase();
       yaz(
         "INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, " +
-        [q(b.metin), q(b.href), q(tur), i].join(", ") +
+        [q(b.metin), q(varlikAdresi(b.href)), q(tur), i].join(", ") +
         " FROM sayfa WHERE slug = " + q(s.slug) + " AND dil = " + q(dil) + ";"
       );
     });
@@ -83,7 +100,17 @@ const menu = JSON.parse(fs.readFileSync(path.join(ICERIK, "_menu.json"), "utf8")
   (menu[dil] || []).forEach((bolum, bi) => {
     yaz("");
     yaz("INSERT INTO menu (dil, konum, baslik, sira) VALUES (" + [q(dil), q("sol"), q(bolum.bolum), bi].join(", ") + ");");
-    bolum.sayfalar.forEach(([eskiSlug, ad], si) => {
+    bolum.sayfalar.forEach((oge, si) => {
+      // Menü öğesi ya bir sayfaya ya da bir belgeye/dış adrese işaret eder
+      if (!Array.isArray(oge)) {
+        yaz(
+          "INSERT INTO menu_oge (menu_id, etiket, dis_adres, yeni_sekme, sira) SELECT m.id, " +
+          [q(oge.ad), q(varlikAdresi(oge.disAdres)), "TRUE", si].join(", ") +
+          " FROM menu m WHERE m.dil = " + q(dil) + " AND m.baslik = " + q(bolum.bolum) + ";"
+        );
+        return;
+      }
+      const [eskiSlug, ad] = oge;
       const slug = yeniSlug(dil, eskiSlug);
       yaz(
         "INSERT INTO menu_oge (menu_id, etiket, sayfa_id, sira) SELECT m.id, " + q(ad) + ", s.id, " + si +

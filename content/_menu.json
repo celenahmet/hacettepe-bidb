@@ -52,6 +52,14 @@
           "yazilim",
           "Lisanslı Yazılım Sunucusu"
         ],
+        {
+          "ad": "HÜ Yönetim Sistemleri",
+          "disAdres": "https://huys.hacettepe.edu.tr:7020/CasSunucu/login?service=http%3A%2F%2Fhuys.hacettepe.edu.tr%2FuygulamaGiris"
+        },
+        {
+          "ad": "E-İmza Kullanma Rehberi",
+          "disAdres": "https://bidb.hacettepe.edu.tr/eimza/index.php"
+        },
         [
           "bilgidokuman",
           "Bilgi ve Dokümanlar"
@@ -89,6 +97,10 @@
           "bgys",
           "Bilgi Güvenliği Yönetim Sistemi"
         ],
+        {
+          "ad": "Hacettepe Üniversitesi E-Posta Yönergesi",
+          "disAdres": "/dosyalar/epostayonergesi22.pdf"
+        },
         [
           "tarama",
           "E-Posta Tarama Politikaları"
@@ -120,7 +132,11 @@
         [
           "hunet_protokol",
           "HUNET Beytepe Yurt Erişim Protokolü"
-        ]
+        ],
+        {
+          "ad": "Bilişim ile ilgili Yasal Düzenlemeler",
+          "disAdres": "https://www.btk.gov.tr/kanunlar"
+        }
       ]
     },
     {
@@ -182,7 +198,11 @@
         [
           "grup",
           "Service Groups"
-        ]
+        ],
+        {
+          "ad": "Computer Center Portal",
+          "disAdres": "https://portal.hacettepe.edu.tr/?lang=en"
+        }
       ]
     },
     {

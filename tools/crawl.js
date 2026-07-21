@@ -19,15 +19,21 @@ const MENU_TR = [
     ["organizasyonsemasi", "Organizasyon Şeması"], ["kk", "Kurul ve Komisyonlar"] ] },
   { bolum: "Servislerimiz", sayfalar: [
     ["webser", "WEB Servisleri"], ["hu-iys", "İçerik Yönetim Sistemi"], ["kablosuz", "Kablosuz Erişim Servisleri"],
-    ["yazilim", "Lisanslı Yazılım Sunucusu"], ["bilgidokuman", "Bilgi ve Dokümanlar"],
+    ["yazilim", "Lisanslı Yazılım Sunucusu"],
+    { ad: "HÜ Yönetim Sistemleri", disAdres: "https://huys.hacettepe.edu.tr:7020/CasSunucu/login?service=http%3A%2F%2Fhuys.hacettepe.edu.tr%2FuygulamaGiris" },
+    { ad: "E-İmza Kullanma Rehberi", disAdres: "https://bidb.hacettepe.edu.tr/eimza/index.php" },
+    ["bilgidokuman", "Bilgi ve Dokümanlar"],
     ["eposta", "E-Posta İşlemleri"], ["e-posta", "E-Posta Giriş"], ["office365", "Office 365"],
     ["proxy", "Proxy Ayarları ve Kurulumu"], ["sss", "Sık Sorulan Sorular"], ["formlar", "Formlar"] ] },
   { bolum: "Kurallar ve İlkeler", sayfalar: [
-    ["bgys", "Bilgi Güvenliği Yönetim Sistemi"], ["tarama", "E-Posta Tarama Politikaları"],
+    ["bgys", "Bilgi Güvenliği Yönetim Sistemi"],
+    { ad: "Hacettepe Üniversitesi E-Posta Yönergesi", disAdres: "/dosyalar/epostayonergesi22.pdf" },
+    ["tarama", "E-Posta Tarama Politikaları"],
     ["yayim", "WEB Sayfası Yayım İlkeleri"], ["ogr_kural", "Yurt ve Öğrenci Evleri Kuralları"],
     ["pc_salon", "PC Salonlarının Kullanım Kuralları"], ["posta_kural", "Dağıtım Listeleri Politikaları"],
     ["hunet_kurallar", "HUNET Kullanım İlkeleri"], ["bilisim_ilke", "HUNET Öğrenci Çerçeve Kuralları"],
-    ["hunet_protokol", "HUNET Beytepe Yurt Erişim Protokolü"] ] },
+    ["hunet_protokol", "HUNET Beytepe Yurt Erişim Protokolü"],
+    { ad: "Bilişim ile ilgili Yasal Düzenlemeler", disAdres: "https://www.btk.gov.tr/kanunlar" } ] },
   { bolum: "Teknik Altyapı", sayfalar: [
     ["altyapi", "Ağ Altyapısı"], ["donanim", "Mevcut Donanım Bilgileri"], ["erisim", "Dış Erişim Kuralları"] ] },
   { bolum: "İletişim", sayfalar: [
@@ -38,7 +44,9 @@ const MENU_TR = [
 const MENU_EN = [
   { bolum: "Corporate", sayfalar: [
     ["overview", "Overview"], ["mv", "Mission and Vision"], ["yonetim", "Administrative Organization"] ] },
-  { bolum: "Services", sayfalar: [ ["grup", "Service Groups"] ] },
+  { bolum: "Services", sayfalar: [
+    ["grup", "Service Groups"],
+    { ad: "Computer Center Portal", disAdres: "https://portal.hacettepe.edu.tr/?lang=en" } ] },
   { bolum: "Contact", sayfalar: [ ["iletisim", "Contact"] ] }
 ];
 
@@ -103,7 +111,10 @@ function sayfaCoz(html, dil, slug, bolum, ad) {
     await bekle(BEKLEME);
 
     for (const b of menu) {
-      for (const [slug, ad] of b.sayfalar) {
+      for (const oge of b.sayfalar) {
+        // Belge veya dış bağlantı olan menü öğeleri indirilmez
+        if (!Array.isArray(oge)) continue;
+        const [slug, ad] = oge;
         try {
           const html = await getir(ORIGIN + "/" + dil + "/" + slug);
           const veri = sayfaCoz(html, dil, slug, b.bolum, ad);

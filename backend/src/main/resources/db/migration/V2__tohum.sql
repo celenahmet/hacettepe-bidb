@@ -152,19 +152,19 @@ Bilgi İşlem Daire Başkanlığı</p>
 <p><A href="/dosyalar/epostaaktarimi.pdf" target="_blank">Elektronik Posta Hesabından Mail Aktarımı</A></p>
 
 </div>', 'Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı', '', '', 3);
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sözleşmeli Bilişim Personeli Alımı Sınav Sonuçları (20.01.2023)', 'https://bidb.hacettepe.edu.tr/dosyalar/personelalimsonuc200123v1.pdf', 'PDF', 0 FROM sayfa WHERE slug = 'archive' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sözleşmeli Bilişim Personeli Alımı İle İlgili Yazılı Sınav Sonuçları ve Sözlü Sınav Bilgileri', 'https://bidb.hacettepe.edu.tr/dosyalar/SozlesmeliBilisimPersoneliSinavSonuc_v01_160123.pdf', 'PDF', 1 FROM sayfa WHERE slug = 'archive' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sözleşmeli Bilişim Personeli Alımı İle İlgili Ön İnceleme Sonucu Sınava Girmeye Hak Kazananların Listesi (10.01.2023)', 'https://bidb.hacettepe.edu.tr/dosyalar/SozlesmeliBilisimPersoneliSinavDuyurusu100123.pdf', 'PDF', 2 FROM sayfa WHERE slug = 'archive' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sözleşmeli Bilişim Personeli Alımı Sınav Sonuçları (19.11.21)', 'https://bidb.hacettepe.edu.tr/dosyalar/sinav_sonuc191121.pdf', 'PDF', 3 FROM sayfa WHERE slug = 'archive' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sözleşmeli Bilişim Personeli Alımı İle İlgili Yazılı Sınav Sonuçları ve Sözlü Sınav Bilgileri (09.11.21)', 'https://bidb.hacettepe.edu.tr/dosyalar/katilimlist091121.pdf', 'PDF', 4 FROM sayfa WHERE slug = 'archive' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sözleşmeli Bilişim Personeli Alımı İle İlgili Ön İnceleme Sonucu Sınava Girmeye Hak Kazananların Listesi (27.10.2021)', 'https://bidb.hacettepe.edu.tr/dosyalar/Aday-degerlendirme271021.pdf', 'PDF', 5 FROM sayfa WHERE slug = 'archive' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Mavi Ekran Hatalarını Gideren Windows10 20H2 03 KB5001567 Güncellemesi Çıktı', 'https://bidb.hacettepe.edu.tr/dosyalar/maviekran.pdf', 'PDF', 6 FROM sayfa WHERE slug = 'archive' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'E-Posta Sisteminden Yönlendirmenin Kaldırılması', 'https://bidb.hacettepe.edu.tr/dosyalar/yonlendirmeiptal080920.pdf', 'PDF', 7 FROM sayfa WHERE slug = 'archive' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Ücretsiz Matlab Eğitimleri', 'https://bidb.hacettepe.edu.tr/dosyalar/matlab090620.pdf', 'PDF', 8 FROM sayfa WHERE slug = 'archive' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Uzaktan Eğitim Hakkında', 'https://bidb.hacettepe.edu.tr/dosyalar/BilgiIslemDairesi_UzaktanEgitim.pdf', 'PDF', 9 FROM sayfa WHERE slug = 'archive' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'ISO 27001 Bilgi güvenliği sertifikasının 2019-2020 yılı yenilemesi tamamlanmıştır.', 'https://bidb.hacettepe.edu.tr/dosyalar/isobelge2020.pdf', 'PDF', 10 FROM sayfa WHERE slug = 'archive' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'MAC Bilgisayar Kullanıcılarının Dikkatine', 'https://bidb.hacettepe.edu.tr/dosyalar/mac240819.pdf', 'PDF', 11 FROM sayfa WHERE slug = 'archive' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Elektronik Posta Hesabından Mail Aktarımı', 'https://bidb.hacettepe.edu.tr/dosyalar/epostaaktarimi.pdf', 'PDF', 12 FROM sayfa WHERE slug = 'archive' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sözleşmeli Bilişim Personeli Alımı Sınav Sonuçları (20.01.2023)', '/dosyalar/personelalimsonuc200123v1.pdf', 'PDF', 0 FROM sayfa WHERE slug = 'archive' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sözleşmeli Bilişim Personeli Alımı İle İlgili Yazılı Sınav Sonuçları ve Sözlü Sınav Bilgileri', '/dosyalar/SozlesmeliBilisimPersoneliSinavSonuc_v01_160123.pdf', 'PDF', 1 FROM sayfa WHERE slug = 'archive' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sözleşmeli Bilişim Personeli Alımı İle İlgili Ön İnceleme Sonucu Sınava Girmeye Hak Kazananların Listesi (10.01.2023)', '/dosyalar/SozlesmeliBilisimPersoneliSinavDuyurusu100123.pdf', 'PDF', 2 FROM sayfa WHERE slug = 'archive' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sözleşmeli Bilişim Personeli Alımı Sınav Sonuçları (19.11.21)', '/dosyalar/sinav_sonuc191121.pdf', 'PDF', 3 FROM sayfa WHERE slug = 'archive' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sözleşmeli Bilişim Personeli Alımı İle İlgili Yazılı Sınav Sonuçları ve Sözlü Sınav Bilgileri (09.11.21)', '/dosyalar/katilimlist091121.pdf', 'PDF', 4 FROM sayfa WHERE slug = 'archive' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sözleşmeli Bilişim Personeli Alımı İle İlgili Ön İnceleme Sonucu Sınava Girmeye Hak Kazananların Listesi (27.10.2021)', '/dosyalar/Aday-degerlendirme271021.pdf', 'PDF', 5 FROM sayfa WHERE slug = 'archive' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Mavi Ekran Hatalarını Gideren Windows10 20H2 03 KB5001567 Güncellemesi Çıktı', '/dosyalar/maviekran.pdf', 'PDF', 6 FROM sayfa WHERE slug = 'archive' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'E-Posta Sisteminden Yönlendirmenin Kaldırılması', '/dosyalar/yonlendirmeiptal080920.pdf', 'PDF', 7 FROM sayfa WHERE slug = 'archive' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Ücretsiz Matlab Eğitimleri', '/dosyalar/matlab090620.pdf', 'PDF', 8 FROM sayfa WHERE slug = 'archive' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Uzaktan Eğitim Hakkında', '/dosyalar/BilgiIslemDairesi_UzaktanEgitim.pdf', 'PDF', 9 FROM sayfa WHERE slug = 'archive' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'ISO 27001 Bilgi güvenliği sertifikasının 2019-2020 yılı yenilemesi tamamlanmıştır.', '/dosyalar/isobelge2020.pdf', 'PDF', 10 FROM sayfa WHERE slug = 'archive' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'MAC Bilgisayar Kullanıcılarının Dikkatine', '/dosyalar/mac240819.pdf', 'PDF', 11 FROM sayfa WHERE slug = 'archive' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Elektronik Posta Hesabından Mail Aktarımı', '/dosyalar/epostaaktarimi.pdf', 'PDF', 12 FROM sayfa WHERE slug = 'archive' AND dil = 'tr';
 INSERT INTO sayfa (slug, dil, baslik, icerik_html, seo_title, seo_description, seo_keywords, sira) VALUES ('connection-security', 'tr', 'HÜ Internet Bağlantısı Hakkında', '<div class="icerik">
 
 <p>Kullanıcılar zaman zaman Internet üzerinden bağlantı kurmak   istedikleri yerlere bağlanamamakta ya da olağandan daha yavaş hızlarda   bağlanabilmektedirler. Bu durumda kullanıcının ilk aklına gelen, üniversitemizin   dış bağlantısında oluşabilecek bir arıza olasılığıdır. Oysa, son kullanıcının   bilgisayarından dünyanın diğer ucundaki bir Web sunucusuna bağlantı kurana kadar   çok çeşitli yollardan geçen Internet paketleri, bu yolların herhangi bir   aşamasında takılabilmektedirler.
@@ -211,10 +211,10 @@ INSERT INTO sayfa (slug, dil, baslik, icerik_html, seo_title, seo_description, s
 
 
 </div>', 'Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı', '', '', 5);
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Bilgi Güvenliği Politikası', 'https://bidb.hacettepe.edu.tr/dosyalar/BilgiGuvenligiPolitikasi.pdf', 'PDF', 0 FROM sayfa WHERE slug = 'isms' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Bilgi Sistemleri Kabul Edilebilir Kullanım Politikası', 'https://bidb.hacettepe.edu.tr/dosyalar/BilgiSistemleriKabulEdilebilirKullanimPolitikasi.pdf', 'PDF', 1 FROM sayfa WHERE slug = 'isms' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Parola Politikası', 'https://bidb.hacettepe.edu.tr/dosyalar/ParolaPolitikasi.pdf', 'PDF', 2 FROM sayfa WHERE slug = 'isms' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Temiz Masa ve Temiz Ekran Politikası', 'https://bidb.hacettepe.edu.tr/dosyalar/TemizMasaveTemizEkranPolitikasi.pdf', 'PDF', 3 FROM sayfa WHERE slug = 'isms' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Bilgi Güvenliği Politikası', '/dosyalar/BilgiGuvenligiPolitikasi.pdf', 'PDF', 0 FROM sayfa WHERE slug = 'isms' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Bilgi Sistemleri Kabul Edilebilir Kullanım Politikası', '/dosyalar/BilgiSistemleriKabulEdilebilirKullanimPolitikasi.pdf', 'PDF', 1 FROM sayfa WHERE slug = 'isms' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Parola Politikası', '/dosyalar/ParolaPolitikasi.pdf', 'PDF', 2 FROM sayfa WHERE slug = 'isms' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Temiz Masa ve Temiz Ekran Politikası', '/dosyalar/TemizMasaveTemizEkranPolitikasi.pdf', 'PDF', 3 FROM sayfa WHERE slug = 'isms' AND dil = 'tr';
 INSERT INTO sayfa (slug, dil, baslik, icerik_html, seo_title, seo_description, seo_keywords, sira) VALUES ('documents', 'tr', 'Bilgi ve Dokümanlar', '<div class="icerik">
 
   <UL>
@@ -666,20 +666,20 @@ INSERT INTO sayfa (slug, dil, baslik, icerik_html, seo_title, seo_description, s
 <p></p>
 <p><a href="/dosyalar/EskiEpostaYedekAlmaIslemleri.pdf" target="_blank">Eski E-Posta Yedek Alma İşlemleri</a></p>
 <p><a href="/tr/email-backup-video">Eski E-Posta Yedek Alma İşlemleri (Videolu Anlatım)</a></p>
-<p><a href="https://bidb.hacettepe.edu.tr/dosyalar/epostayonergesi_300120.pdf" target="_blank">HÜ E-Posta Yönergesi</a></p>
+<p><a href="/dosyalar/epostayonergesi_300120.pdf" target="_blank">HÜ E-Posta Yönergesi</a></p>
 
 
 </div>', 'Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı', '', '', 21);
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Mail Arayüzü Üzerinden Giriş', 'https://bidb.hacettepe.edu.tr/dosyalar/yenimail/web_arayuz_giris.pdf', 'PDF', 0 FROM sayfa WHERE slug = 'email-migration' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Outlook Mail Hesabı Ayarları', 'https://bidb.hacettepe.edu.tr/dosyalar/yenimail/outlook_kurulum.pdf', 'PDF', 1 FROM sayfa WHERE slug = 'email-migration' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Android Cihazlarda Outlook Mail Hesabı Ayarları', 'https://bidb.hacettepe.edu.tr/dosyalar/yenimail/android_outlook_191125.pdf', 'PDF', 2 FROM sayfa WHERE slug = 'email-migration' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Android Mail Hesabı Ayarları', 'https://bidb.hacettepe.edu.tr/dosyalar/yenimail/Android_posta_kurulum_250522.pdf', 'PDF', 3 FROM sayfa WHERE slug = 'email-migration' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'IOS Mail Hesabı Ayarları', 'https://bidb.hacettepe.edu.tr/dosyalar/yenimail/ios_kurulum_250522.pdf', 'PDF', 4 FROM sayfa WHERE slug = 'email-migration' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'MacOS Mail Hesabı Ayarları', 'https://bidb.hacettepe.edu.tr/dosyalar/yenimail/MACOSkurulum2.pdf', 'PDF', 5 FROM sayfa WHERE slug = 'email-migration' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Bilgi Güncelleme Dokümanı (.PDF)', 'https://bidb.hacettepe.edu.tr/dosyalar/BilgiGuncellemeDokuman.pdf', 'PDF', 6 FROM sayfa WHERE slug = 'email-migration' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Şifre Güncelleme Dokümanı (.PDF)', 'https://bidb.hacettepe.edu.tr/dosyalar/SifreGuncelleme.pdf', 'PDF', 7 FROM sayfa WHERE slug = 'email-migration' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Eski E-Posta Yedek Alma İşlemleri', 'https://bidb.hacettepe.edu.tr/dosyalar/EskiEpostaYedekAlmaIslemleri.pdf', 'PDF', 8 FROM sayfa WHERE slug = 'email-migration' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'HÜ E-Posta Yönergesi', 'https://bidb.hacettepe.edu.tr/dosyalar/epostayonergesi_300120.pdf', 'PDF', 9 FROM sayfa WHERE slug = 'email-migration' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Mail Arayüzü Üzerinden Giriş', '/dosyalar/yenimail/web_arayuz_giris.pdf', 'PDF', 0 FROM sayfa WHERE slug = 'email-migration' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Outlook Mail Hesabı Ayarları', '/dosyalar/yenimail/outlook_kurulum.pdf', 'PDF', 1 FROM sayfa WHERE slug = 'email-migration' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Android Cihazlarda Outlook Mail Hesabı Ayarları', '/dosyalar/yenimail/android_outlook_191125.pdf', 'PDF', 2 FROM sayfa WHERE slug = 'email-migration' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Android Mail Hesabı Ayarları', '/dosyalar/yenimail/Android_posta_kurulum_250522.pdf', 'PDF', 3 FROM sayfa WHERE slug = 'email-migration' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'IOS Mail Hesabı Ayarları', '/dosyalar/yenimail/ios_kurulum_250522.pdf', 'PDF', 4 FROM sayfa WHERE slug = 'email-migration' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'MacOS Mail Hesabı Ayarları', '/dosyalar/yenimail/MACOSkurulum2.pdf', 'PDF', 5 FROM sayfa WHERE slug = 'email-migration' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Bilgi Güncelleme Dokümanı (.PDF)', '/dosyalar/BilgiGuncellemeDokuman.pdf', 'PDF', 6 FROM sayfa WHERE slug = 'email-migration' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Şifre Güncelleme Dokümanı (.PDF)', '/dosyalar/SifreGuncelleme.pdf', 'PDF', 7 FROM sayfa WHERE slug = 'email-migration' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Eski E-Posta Yedek Alma İşlemleri', '/dosyalar/EskiEpostaYedekAlmaIslemleri.pdf', 'PDF', 8 FROM sayfa WHERE slug = 'email-migration' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'HÜ E-Posta Yönergesi', '/dosyalar/epostayonergesi_300120.pdf', 'PDF', 9 FROM sayfa WHERE slug = 'email-migration' AND dil = 'tr';
 INSERT INTO sayfa (slug, dil, baslik, icerik_html, seo_title, seo_description, seo_keywords, sira) VALUES ('accessibility', 'tr', 'Erişilebilirlik Bildirimi', '<div class="icerik">
 <p align="justify"><strong>1. Taahhüt Beyanı</strong><br />
   Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı olarak, dijital  hizmetlerimizi engelli bireyler dahil tüm kullanıcılar için erişilebilir  kılmayı taahhüt ediyoruz. Web sitemizi, herkesin bilgiye eşit ve bağımsız bir  şekilde ulaşabilmesini sağlayacak standartlara getirmek için sürekli  geliştiriyoruz.&nbsp; <br />
@@ -760,16 +760,16 @@ INSERT INTO sayfa (slug, dil, baslik, icerik_html, seo_title, seo_description, s
 </UL>
 
 </div>', 'Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı', '', '', 25);
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'E-Posta Engel Kaldırma Formu', 'https://bidb.hacettepe.edu.tr/dosyalar/E-PostaEngelKaldirmaFormu.docx', 'DOCX', 0 FROM sayfa WHERE slug = 'forms' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'E-Posta İptal Formu', 'https://bidb.hacettepe.edu.tr/dosyalar/E-PostaIptalFormu.docx', 'DOCX', 1 FROM sayfa WHERE slug = 'forms' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'E-Posta Talep Formu (Kurumsal)', 'https://bidb.hacettepe.edu.tr/dosyalar/E-PostaTalepFormuKurumsal.docx', 'DOCX', 2 FROM sayfa WHERE slug = 'forms' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'E-Posta Güncelleme Formu (Kurumsal)', 'https://bidb.hacettepe.edu.tr/dosyalar/E-PostaGuncellemeFormuKurumsal.docx', 'DOCX', 3 FROM sayfa WHERE slug = 'forms' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'E-Posta Talep Formu (Diğer)', 'https://bidb.hacettepe.edu.tr/dosyalar/E_postaDigerKullaniciTalep_Formu.docx', 'DOCX', 4 FROM sayfa WHERE slug = 'forms' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Misafir Kullanıcı Talep Formu', 'https://bidb.hacettepe.edu.tr/dosyalar/BGYS-F-25MisafirKullaniciTalep Formu.docx', 'DOCX', 5 FROM sayfa WHERE slug = 'forms' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sunucu Talep Formu', 'https://bidb.hacettepe.edu.tr/dosyalar/BGYS-F-03SunucuTalepFormuv01.docx', 'DOCX', 6 FROM sayfa WHERE slug = 'forms' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sunucu Bakım Formu', 'https://bidb.hacettepe.edu.tr/dosyalar/SunucuBakimListesiFormu.docx', 'DOCX', 7 FROM sayfa WHERE slug = 'forms' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'VPN Bağlantı Talep Formu', 'https://bidb.hacettepe.edu.tr/dosyalar/SSLVPNBaglantiTalepFormu.pdf', 'PDF', 8 FROM sayfa WHERE slug = 'forms' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Yazılım Geliştirme Talep Formu', 'https://bidb.hacettepe.edu.tr/dosyalar/HUBIDB_YazilimGelistirmeTalepFormu.pdf', 'PDF', 9 FROM sayfa WHERE slug = 'forms' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'E-Posta Engel Kaldırma Formu', '/dosyalar/E-PostaEngelKaldirmaFormu.docx', 'DOCX', 0 FROM sayfa WHERE slug = 'forms' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'E-Posta İptal Formu', '/dosyalar/E-PostaIptalFormu.docx', 'DOCX', 1 FROM sayfa WHERE slug = 'forms' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'E-Posta Talep Formu (Kurumsal)', '/dosyalar/E-PostaTalepFormuKurumsal.docx', 'DOCX', 2 FROM sayfa WHERE slug = 'forms' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'E-Posta Güncelleme Formu (Kurumsal)', '/dosyalar/E-PostaGuncellemeFormuKurumsal.docx', 'DOCX', 3 FROM sayfa WHERE slug = 'forms' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'E-Posta Talep Formu (Diğer)', '/dosyalar/E_postaDigerKullaniciTalep_Formu.docx', 'DOCX', 4 FROM sayfa WHERE slug = 'forms' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Misafir Kullanıcı Talep Formu', '/dosyalar/BGYS-F-25MisafirKullaniciTalep Formu.docx', 'DOCX', 5 FROM sayfa WHERE slug = 'forms' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sunucu Talep Formu', '/dosyalar/BGYS-F-03SunucuTalepFormuv01.docx', 'DOCX', 6 FROM sayfa WHERE slug = 'forms' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sunucu Bakım Formu', '/dosyalar/SunucuBakimListesiFormu.docx', 'DOCX', 7 FROM sayfa WHERE slug = 'forms' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'VPN Bağlantı Talep Formu', '/dosyalar/SSLVPNBaglantiTalepFormu.pdf', 'PDF', 8 FROM sayfa WHERE slug = 'forms' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Yazılım Geliştirme Talep Formu', '/dosyalar/HUBIDB_YazilimGelistirmeTalepFormu.pdf', 'PDF', 9 FROM sayfa WHERE slug = 'forms' AND dil = 'tr';
 INSERT INTO sayfa (slug, dil, baslik, icerik_html, seo_title, seo_description, seo_keywords, sira) VALUES ('about', 'tr', 'Genel Tanıtım', '<div class="icerik">
 
     <p align="justify"><strong><u>Ağ  Birimi (Beytepe):</u></strong> Yerel ağın kurulumu, mevcut ağın  yönetimi, denetimini yapar  ve ağın  geleceği ile ilgili projeleri üretir, kullanıcılara internet kullanımı hizmeti  verilmesi için gerekli altyapı, donanım, yazılım ve bilgi desteği sağlar. </p>
@@ -898,7 +898,7 @@ INSERT INTO sayfa (slug, dil, baslik, icerik_html, seo_title, seo_description, s
   </TBODY>
 </TABLE>
 </div>', 'Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı', '', '', 28);
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, '“HÜ-İYS Başvuru Formu”', 'https://bidb.hacettepe.edu.tr/dosyalar/BGYS-F-23-IYSTalepFormurevizyon.docx', 'DOCX', 0 FROM sayfa WHERE slug = 'cms' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, '“HÜ-İYS Başvuru Formu”', '/dosyalar/BGYS-F-23-IYSTalepFormurevizyon.docx', 'DOCX', 0 FROM sayfa WHERE slug = 'cms' AND dil = 'tr';
 INSERT INTO sayfa (slug, dil, baslik, icerik_html, seo_title, seo_description, seo_keywords, sira) VALUES ('hunet-policy', 'tr', 'HUNET Kullanım İlkeleri', '<div class="icerik">
 <p><strong>1. Tanımlar</strong></p>
 <p><STRONG>Bilişim Kaynağı:</STRONG> Hacettepe Üniversitesi kampüsleri dahilinde bulunan   ve BİD''nin kurup yönettiği bilgisayar ağı (HUNET), bağlı olduğu tüm iç ve dış   ağlar ile bu ağa bağlanan her türlü elektronik cihaz, bilgisayar ve yan   ürünleri. </p>
@@ -1053,8 +1053,8 @@ Başvurular 06/10/2021-20/10/2021  tarihleri  arasında www.bidb.hacettepe.edu.t
 
 <h2><a href="/dosyalar/basvuruformu_bidb.xlsx">Sözleşmeli Bilişim Personeli Başvuru Formu (.xlsx)</a></h2>
 </div>', 'Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı', '', '', 31);
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sözleşmeli Bilişim Personeli Başvuru Formu', 'https://bidb.hacettepe.edu.tr/dosyalar/basvuruformu_bidb.xlsx', 'XLSX', 0 FROM sayfa WHERE slug = 'notices' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sözleşmeli Bilişim Personeli Başvuru Formu (.xlsx)', 'https://bidb.hacettepe.edu.tr/dosyalar/basvuruformu_bidb.xlsx', 'XLSX', 1 FROM sayfa WHERE slug = 'notices' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sözleşmeli Bilişim Personeli Başvuru Formu', '/dosyalar/basvuruformu_bidb.xlsx', 'XLSX', 0 FROM sayfa WHERE slug = 'notices' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sözleşmeli Bilişim Personeli Başvuru Formu (.xlsx)', '/dosyalar/basvuruformu_bidb.xlsx', 'XLSX', 1 FROM sayfa WHERE slug = 'notices' AND dil = 'tr';
 INSERT INTO sayfa (slug, dil, baslik, icerik_html, seo_title, seo_description, seo_keywords, sira) VALUES ('notice-280425', 'tr', 'SÖZLEŞMELİ BİLİŞİM PERSONELİ SINAV DUYURUSU', '<div class="icerik">
 
 
@@ -1157,7 +1157,7 @@ INSERT INTO sayfa (slug, dil, baslik, icerik_html, seo_title, seo_description, s
 <p>&nbsp;</p>
 <p><strong>II.  İSTENİLEN BELGELER - BAŞVURU ŞEKLİ - YERİ – TARİHİ</strong><br />
     <br />
-  Başvurular 28/04/2025-12/05/2025 tarihleri arasında https://bidb.hacettepe.edu.tr  adresinde bulunan “<a href="https://bidb.hacettepe.edu.tr/dosyalar/basvuruformu_bidb_280425.xlsx">Sözleşmeli  Bilişim Personeli Başvuru Formu</a>” nun doldurulmasından  sonra, fotoğraf yapıştırılmak ve imzalanmak suretiyle aşağıda sayılan  belgelerle birlikte, Bilgi İşlem Dairesi Başkanlığına (Hacettepe Üniversitesi  Bilgi İşlem Dairesi Başkanlığı – Beytepe /ANKARA) elden teslim edilmek veya son  başvuru tarihinde anılan adreste olacak şekilde postayla gönderilmek suretiyle  yapılacaktır.</p>
+  Başvurular 28/04/2025-12/05/2025 tarihleri arasında https://bidb.hacettepe.edu.tr  adresinde bulunan “<a href="/dosyalar/basvuruformu_bidb_280425.xlsx">Sözleşmeli  Bilişim Personeli Başvuru Formu</a>” nun doldurulmasından  sonra, fotoğraf yapıştırılmak ve imzalanmak suretiyle aşağıda sayılan  belgelerle birlikte, Bilgi İşlem Dairesi Başkanlığına (Hacettepe Üniversitesi  Bilgi İşlem Dairesi Başkanlığı – Beytepe /ANKARA) elden teslim edilmek veya son  başvuru tarihinde anılan adreste olacak şekilde postayla gönderilmek suretiyle  yapılacaktır.</p>
 <ul>
   <li>Başvuru formu (Fotoğraflı)(https://bidb.hacettepe.edu.tr  ),</li>
   <li>Lisans diploması veya okul çıkış belgesinin aslı veya  noter onaylı sureti (Belge aslının ibraz edilmesi halinde fotokopisi  Kurumumuzca onaylanacaktır),</li>
@@ -1229,8 +1229,8 @@ INSERT INTO sayfa (slug, dil, baslik, icerik_html, seo_title, seo_description, s
   Tel: 0  (312) 297 62 00  </p>
 <h2><a href="/dosyalar/basvuruformu_bidb_280425.xlsx">Sözleşmeli Bilişim Personeli Başvuru Formu (.xlsx)</a></h2>
 </div>', 'Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı', '', '', 32);
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sözleşmeli Bilişim Personeli Başvuru Formu', 'https://bidb.hacettepe.edu.tr/dosyalar/basvuruformu_bidb_280425.xlsx', 'XLSX', 0 FROM sayfa WHERE slug = 'notice-280425' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sözleşmeli Bilişim Personeli Başvuru Formu (.xlsx)', 'https://bidb.hacettepe.edu.tr/dosyalar/basvuruformu_bidb_280425.xlsx', 'XLSX', 1 FROM sayfa WHERE slug = 'notice-280425' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sözleşmeli Bilişim Personeli Başvuru Formu', '/dosyalar/basvuruformu_bidb_280425.xlsx', 'XLSX', 0 FROM sayfa WHERE slug = 'notice-280425' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sözleşmeli Bilişim Personeli Başvuru Formu (.xlsx)', '/dosyalar/basvuruformu_bidb_280425.xlsx', 'XLSX', 1 FROM sayfa WHERE slug = 'notice-280425' AND dil = 'tr';
 INSERT INTO sayfa (slug, dil, baslik, icerik_html, seo_title, seo_description, seo_keywords, sira) VALUES ('contact', 'tr', 'İletişim Bilgileri', '<div class="icerik">
 
 
@@ -1397,9 +1397,9 @@ INSERT INTO sayfa (slug, dil, baslik, icerik_html, seo_title, seo_description, s
 
 
 </div>', 'Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı', '', '', 41);
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'MİCROSOFT OFFİCE 365 KULLANMA', 'https://bidb.hacettepe.edu.tr/dosyalar/HU-Office_365_Hesap_Olusturma.pdf', 'PDF', 0 FROM sayfa WHERE slug = 'office365' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'MİCROSOFT TEAMS KURULUM KILAVUZU', 'https://bidb.hacettepe.edu.tr/dosyalar/HU-TeamsKurulumKilavuzu.pdf', 'PDF', 1 FROM sayfa WHERE slug = 'office365' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'MİCROSOFT TEAMS KULLANIM KILAVUZU', 'https://bidb.hacettepe.edu.tr/dosyalar/HU-TeamsKullanimKilavuzu.pdf', 'PDF', 2 FROM sayfa WHERE slug = 'office365' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'MİCROSOFT OFFİCE 365 KULLANMA', '/dosyalar/HU-Office_365_Hesap_Olusturma.pdf', 'PDF', 0 FROM sayfa WHERE slug = 'office365' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'MİCROSOFT TEAMS KURULUM KILAVUZU', '/dosyalar/HU-TeamsKurulumKilavuzu.pdf', 'PDF', 1 FROM sayfa WHERE slug = 'office365' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'MİCROSOFT TEAMS KULLANIM KILAVUZU', '/dosyalar/HU-TeamsKullanimKilavuzu.pdf', 'PDF', 2 FROM sayfa WHERE slug = 'office365' AND dil = 'tr';
 INSERT INTO sayfa (slug, dil, baslik, icerik_html, seo_title, seo_description, seo_keywords, sira) VALUES ('dorm-rules', 'tr', 'Yurt ve Öğrenci Evleri için Kurallar', '<div class="icerik">
 
 <p>Hacettepe Üniversitesi Bilgi İşlem Dairesi üniversitede bulunan yurt ve özel   öğrenci evlerine de Internet hizmeti vermektedir. Öğrenciler kendi kişisel   bilgisayarlarını bu sisteme bağlayarak otomatik IP adresi almakta ve -sanal IP +   NAT üzerinden- Internet ve Intranet bağlantısı kurabilmektedirler. </p>
@@ -1632,12 +1632,12 @@ INSERT INTO sayfa (slug, dil, baslik, icerik_html, seo_title, seo_description, s
 
 
 </div>', 'Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı', '', '', 48);
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Microsoft Edge Ayarları', 'https://bidb.hacettepe.edu.tr/dosyalar/proxy-pdf/edgeproxy_2023.pdf', 'PDF', 0 FROM sayfa WHERE slug = 'proxy' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Chrome İçin Proxy Ayarları', 'https://bidb.hacettepe.edu.tr/dosyalar/proxy-pdf/chromeproxy_2023.pdf', 'PDF', 1 FROM sayfa WHERE slug = 'proxy' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Macos Chrome Proxy Ayarları', 'https://bidb.hacettepe.edu.tr/dosyalar/proxy-pdf/macos_chrome_proxy_ayarlari2021.pdf', 'PDF', 2 FROM sayfa WHERE slug = 'proxy' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Mozilla Firefox İçin Proxy Ayarları', 'https://bidb.hacettepe.edu.tr/dosyalar/proxy-pdf/firefoxproxy_2023.pdf', 'PDF', 3 FROM sayfa WHERE slug = 'proxy' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Safari İçin Proxy Ayarları', 'https://bidb.hacettepe.edu.tr/dosyalar/proxy-pdf/safari_proxy_ayarlari2021.pdf', 'PDF', 4 FROM sayfa WHERE slug = 'proxy' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Android Wifi İçin Proxy Ayarları IOS Wifi İçin Proxy Ayarları', 'https://bidb.hacettepe.edu.tr/dosyalar/proxy-pdf/android_proxy_ayarlari2021.pdf', 'PDF', 5 FROM sayfa WHERE slug = 'proxy' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Microsoft Edge Ayarları', '/dosyalar/proxy-pdf/edgeproxy_2023.pdf', 'PDF', 0 FROM sayfa WHERE slug = 'proxy' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Chrome İçin Proxy Ayarları', '/dosyalar/proxy-pdf/chromeproxy_2023.pdf', 'PDF', 1 FROM sayfa WHERE slug = 'proxy' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Macos Chrome Proxy Ayarları', '/dosyalar/proxy-pdf/macos_chrome_proxy_ayarlari2021.pdf', 'PDF', 2 FROM sayfa WHERE slug = 'proxy' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Mozilla Firefox İçin Proxy Ayarları', '/dosyalar/proxy-pdf/firefoxproxy_2023.pdf', 'PDF', 3 FROM sayfa WHERE slug = 'proxy' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Safari İçin Proxy Ayarları', '/dosyalar/proxy-pdf/safari_proxy_ayarlari2021.pdf', 'PDF', 4 FROM sayfa WHERE slug = 'proxy' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Android Wifi İçin Proxy Ayarları IOS Wifi İçin Proxy Ayarları', '/dosyalar/proxy-pdf/android_proxy_ayarlari2021.pdf', 'PDF', 5 FROM sayfa WHERE slug = 'proxy' AND dil = 'tr';
 INSERT INTO sayfa (slug, dil, baslik, icerik_html, seo_title, seo_description, seo_keywords, sira) VALUES ('proxy-spam', 'tr', 'Proxy-Spam Kontrol', '<div class="icerik">
 
 <p><b>Proxy hesabınız engellenirse ne  yapmalısınız?</b><br />
@@ -1719,7 +1719,7 @@ INSERT INTO sayfa (slug, dil, baslik, icerik_html, seo_title, seo_description, s
   HACETTEPE ÜNIVERSITESI-BİDB''nin web kullanıcıları servis politikasında   diğer kişi ve kurumlara haber vermeden değişiklik yapma hakkı   saklıdır. Ayrıca, HACETTEPE ÜNIVERSITESI-BİDB merkezi web sunucusu   üzerinde herhangi bir zamanda teknik değişiklikler yapma hakkına   sahiptir. Bu değişiklikleri önceden kullanıcılara bildirebileceği gibi,   anlık olarak yapılabilecek değişikliklerin önceden duyurulamamasıda   mümkün olabilir.
   <p>Web kullanıcıları bu metinde yer alan bilgileri   periyodik olarak izlemek ve olası değişikliklerden haberdar olmakla   yükümlüdürler.</p>
 </div>', 'Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı', '', '', 51);
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Başvuru Dilekçesi Örneği', 'https://bidb.hacettepe.edu.tr/dosyalar/BGYS-F-12WebKullaniciKoduTalepFormurevizyon.docx', 'DOCX', 0 FROM sayfa WHERE slug = 'services' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Başvuru Dilekçesi Örneği', '/dosyalar/BGYS-F-12WebKullaniciKoduTalepFormurevizyon.docx', 'DOCX', 0 FROM sayfa WHERE slug = 'services' AND dil = 'tr';
 INSERT INTO sayfa (slug, dil, baslik, icerik_html, seo_title, seo_description, seo_keywords, sira) VALUES ('disclaimer', 'tr', 'Sorumluluk Sınırı', '<div class="icerik">
 <p align="justify">Bu site üçüncü sahıslar tarafından kontrol edilen İnternet sitelerine bağlantılar sağlamaktadır. Bu üçüncü şahıs sitelerindeki bilgiler, ürünler ve hizmetler ile kurumumuzun hiçbir şekilde herhangi bir menfaat bağlantısı söz konusu değildir. Yine ilgili üçüncü şahısların web sitelerinde yayınlayabileceği herhangi bir bilgi ve içerikle de bölümümüzün bir ilgisi ve kontrolü olamaz. Bu site ve üçüncü şahıs sitelerindeki bilgiler *olduğu gibi* sağlanmaktadır ve açık ya da dolaylı hiç bir garanti verilmemektedir.</p>
 <p align="justify">Sitemizde verilen dahili bilgiler bir otomasyon sistemi üzerinden sağlanmakta ve içeriği sıklıkla güncellenmektedir. Yine de kurumumuz, bu sitedeki ya da üçüncü şahıs sitelerindeki malzemelerin kullanımı ya da kullanım sonuçları konusunda, doğruluk, kesinlik, zamanında olmaklık, güvenilirlik ya da başka açılardan hiç bir garanti vermez; her türlü teknik ve insani hataya karşı, burada verilen herhangi bir bilgi ile ilgili olarak site ziyaretçisinin görebileceği maddi ve manevi herhangi bir zarardan kurumumuz nezdinde özel veya tüzel bir kişinin sorumluğu bulunamaz. Ziyaretçi, verilen bilgilerin doğruluğunu sorgulamak ihtiyacı duyduğu takdirde başka kaynaklardan yararlanmak zorundadır.</p>
@@ -2210,7 +2210,7 @@ Mümkün ancak istediğiniz adres ile ilgili bölümümüze resmi yazı ile baş
       <div id="collapse16" class="panel-collapse collapse">
 
         <div class="panel-body">
-<a href="https://bidb.hacettepe.edu.tr/dosyalar/haberlesme101023.pdf" " target="_blank">haberlesme</a> linkine basarak dokümanı inceleyebilirsiniz.
+<a href="/dosyalar/haberlesme101023.pdf" " target="_blank">haberlesme</a> linkine basarak dokümanı inceleyebilirsiniz.
 </div>
 
 		<p>&nbsp;</p>
@@ -2235,7 +2235,7 @@ Mümkün ancak istediğiniz adres ile ilgili bölümümüze resmi yazı ile baş
       <div id="collapse17" class="panel-collapse collapse">
 
         <div class="panel-body">
-<a href="https://bidb.hacettepe.edu.tr/dosyalar/e-postakurtarma101023.pdf" target="_blank">e-posta kurtarma</a> linkinden gerekli dokümana ulaşabilirsiniz.
+<a href="/dosyalar/e-postakurtarma101023.pdf" target="_blank">e-posta kurtarma</a> linkinden gerekli dokümana ulaşabilirsiniz.
 </div>
 
 		<p>&nbsp;</p>
@@ -3240,7 +3240,7 @@ Detaylı bilgi ve yardım için Uzaktan Eğitim Uygulama ve Araştırma Merkezi 
     
       <div id="collapse58" class="panel-collapse collapse">
 
-        <div class="panel-body">Gruba eklenme taleplerinizi bhim@hacettepe.edu.tr e-posta adresinden Basın ve Halkla İlişkiler Müdürlüğüne bildirmeniz gerekmektedir. Ancak tüm kampüsü bilgilendirmek amaçlı e-postalar gönderildiği için gruptan ayrılamazsınız. E-postanın tarafınıza ulaşmasını istemiyorsanız; arayüz üzerinden gereksiz posta kutunuza gitmesini sağlayabilirsiniz.<a href="https://bidb.hacettepe.edu.tr/dosyalar/istenmeyenposta101023.pdf" " target="_blank">istenmeyen_e-posta</a> linkinden nasıl yapacağınız bilgisine ulaşabilirsiniz.</div>
+        <div class="panel-body">Gruba eklenme taleplerinizi bhim@hacettepe.edu.tr e-posta adresinden Basın ve Halkla İlişkiler Müdürlüğüne bildirmeniz gerekmektedir. Ancak tüm kampüsü bilgilendirmek amaçlı e-postalar gönderildiği için gruptan ayrılamazsınız. E-postanın tarafınıza ulaşmasını istemiyorsanız; arayüz üzerinden gereksiz posta kutunuza gitmesini sağlayabilirsiniz.<a href="/dosyalar/istenmeyenposta101023.pdf" " target="_blank">istenmeyen_e-posta</a> linkinden nasıl yapacağınız bilgisine ulaşabilirsiniz.</div>
 
 		<p>&nbsp;</p>
       </div>
@@ -3274,10 +3274,10 @@ Detaylı bilgi ve yardım için Uzaktan Eğitim Uygulama ve Araştırma Merkezi 
 	</div>
 </div>
 </div>', 'Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı', '', '', 55);
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'E-posta İptal Formu', 'https://bidb.hacettepe.edu.tr/dosyalar/BGYS-F-12e-PostaiptalFormu.docx', 'DOCX', 0 FROM sayfa WHERE slug = 'faq' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'haberlesme', 'https://bidb.hacettepe.edu.tr/dosyalar/haberlesme101023.pdf', 'PDF', 1 FROM sayfa WHERE slug = 'faq' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'e-posta kurtarma', 'https://bidb.hacettepe.edu.tr/dosyalar/e-postakurtarma101023.pdf', 'PDF', 2 FROM sayfa WHERE slug = 'faq' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'istenmeyen_e-posta', 'https://bidb.hacettepe.edu.tr/dosyalar/istenmeyenposta101023.pdf', 'PDF', 3 FROM sayfa WHERE slug = 'faq' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'E-posta İptal Formu', '/dosyalar/BGYS-F-12e-PostaiptalFormu.docx', 'DOCX', 0 FROM sayfa WHERE slug = 'faq' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'haberlesme', '/dosyalar/haberlesme101023.pdf', 'PDF', 1 FROM sayfa WHERE slug = 'faq' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'e-posta kurtarma', '/dosyalar/e-postakurtarma101023.pdf', 'PDF', 2 FROM sayfa WHERE slug = 'faq' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'istenmeyen_e-posta', '/dosyalar/istenmeyenposta101023.pdf', 'PDF', 3 FROM sayfa WHERE slug = 'faq' AND dil = 'tr';
 INSERT INTO sayfa (slug, dil, baslik, icerik_html, seo_title, seo_description, seo_keywords, sira) VALUES ('stylecc50-removal', 'tr', '50. yıl logolarının web sayfasından kaldırılması hakkında', '<div class="icerik">
 <p>Hacettepe  Üniversitesi''nin kuruluşunun 50.yılı nedeniyle Hacettepe Üniversitesi logosuna  eklenen 50.yıl logoları 50.yılın sona ermesi nedeniyle web sayfalarından  kaldırılmaktadır.</p>
 <p>50.yıl  logosunu kaldırmak için Hacettepe Üniversitesi birimlerince kullanılan  tasarımda style.css dosyasında yapılması gereken değişiklikler aşağıdaki  gibidir.<br>
@@ -3400,7 +3400,7 @@ INSERT INTO sayfa (slug, dil, baslik, icerik_html, seo_title, seo_description, s
 
   
 </div>', 'Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı', '', '', 59);
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Kurulum dökümanına buradan erişebilirsiniz.', 'https://bidb.hacettepe.edu.tr/dosyalar/hu_vpn_erisim_klavuzu.pdf', 'PDF', 0 FROM sayfa WHERE slug = 'vpn' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Kurulum dökümanına buradan erişebilirsiniz.', '/dosyalar/hu_vpn_erisim_klavuzu.pdf', 'PDF', 0 FROM sayfa WHERE slug = 'vpn' AND dil = 'tr';
 INSERT INTO sayfa (slug, dil, baslik, icerik_html, seo_title, seo_description, seo_keywords, sira) VALUES ('web-services', 'tr', 'WEB Servisleri', '<div class="icerik">
 <p><STRONG>Hacettepe Üniversitesi Ana Web Sitesi</STRONG><BR>
   Hacettepe Üniversitesi''nin   ana Web sitesi <A href="http://www.hacettepe.edu.tr/" target="_new">www.hacettepe.edu.tr</A> adresinden Bilgi İşlem Dairesi sorumludur.   Daire bünyesinde faaliyet gösteren Web Birimi, bu sitenin tasarım ve   güncellemesini yapmaktadır. Sitede yer alması istenilen bilgiler, yapılması   gereken düzeltmeler ve eklentiler için <A href="mailto:webmaster@hacettepe.edu.tr">webmaster@hacettepe.edu.tr</A> adresine   başvurulabilir. </p>
@@ -3427,7 +3427,7 @@ INSERT INTO sayfa (slug, dil, baslik, icerik_html, seo_title, seo_description, s
   <p><a  href="https://www.btk.gov.tr/kanunlar" target="_blank">Bilişim ile ilgili diğer Yasal Düzenlemeler</a></p>
   
 </div>', 'Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı', '', '', 61);
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Hacettepe Üniversitesi Web Sayfası Hazırlama ve Yayım İlkeleri', 'https://bidb.hacettepe.edu.tr/dosyalar/web_sayfasi_ilkeleri.pdf', 'PDF', 0 FROM sayfa WHERE slug = 'web-policy' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Hacettepe Üniversitesi Web Sayfası Hazırlama ve Yayım İlkeleri', '/dosyalar/web_sayfasi_ilkeleri.pdf', 'PDF', 0 FROM sayfa WHERE slug = 'web-policy' AND dil = 'tr';
 INSERT INTO sayfa (slug, dil, baslik, icerik_html, seo_title, seo_description, seo_keywords, sira) VALUES ('software', 'tr', 'Lisanslı Yazılım Sunucusu', '<div class="icerik">
 
 <p align="justify"><STRONG>HACETTEPE ÜNİVERSİTESİ YAZILIM SUNUCUSU</STRONG><BR>
@@ -3642,26 +3642,26 @@ Tüm öğrencilerimize önemle duyurulur (23.10.2025)</p>
 
 
 		</div>', 'Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı', '', '', 64);
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Microsoft OneDrive Depolama Kotaları Hakkında Bilgilendirme', 'https://bidb.hacettepe.edu.tr/dosyalar/onedriveduyuru230626.pdf', 'PDF', 0 FROM sayfa WHERE slug = 'home' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Microsoft 365 Lisanslama ve Kullanım Değişikliği Hakkında', 'https://bidb.hacettepe.edu.tr/dosyalar/365A1plus_020626.pdf', 'PDF', 1 FROM sayfa WHERE slug = 'home' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sözleşmeli Bilişim Personeli Alımı İle İlgili Değerlendirme Sonucu', 'https://bidb.hacettepe.edu.tr/dosyalar/sozlesmeilan240426.pdf', 'PDF', 2 FROM sayfa WHERE slug = 'home' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sözleşmeli Bilişim Personeli Alımı İle İlgili Yazılı Sınav Sonuçları ve Sözlü Sınav Bilgileri', 'https://bidb.hacettepe.edu.tr/dosyalar/EK_5_sozlu_sinava_girmeye_hak_kazananlarin_ilani_090426.pdf', 'PDF', 3 FROM sayfa WHERE slug = 'home' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sözleşmeli Bilişim Personeli Alımı İle İlgili Ön İnceleme Sonucu Sınava Girmeye Hak Kazananların Listesi', 'https://bidb.hacettepe.edu.tr/dosyalar/EK_3_yazili_sinava_girmeye_hak_kazananlarin_ilani_310326.pdf', 'PDF', 4 FROM sayfa WHERE slug = 'home' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'İŞKUR Gençlik Programı Noter Kurası Çekilişi', 'https://bidb.hacettepe.edu.tr/dosyalar/iskur_kuracekimi_151025.pdf', 'PDF', 5 FROM sayfa WHERE slug = 'home' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Microsoft OneDrive Depolama Kotaları Hakkında Bilgilendirme', '/dosyalar/onedriveduyuru230626.pdf', 'PDF', 0 FROM sayfa WHERE slug = 'home' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Microsoft 365 Lisanslama ve Kullanım Değişikliği Hakkında', '/dosyalar/365A1plus_020626.pdf', 'PDF', 1 FROM sayfa WHERE slug = 'home' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sözleşmeli Bilişim Personeli Alımı İle İlgili Değerlendirme Sonucu', '/dosyalar/sozlesmeilan240426.pdf', 'PDF', 2 FROM sayfa WHERE slug = 'home' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sözleşmeli Bilişim Personeli Alımı İle İlgili Yazılı Sınav Sonuçları ve Sözlü Sınav Bilgileri', '/dosyalar/EK_5_sozlu_sinava_girmeye_hak_kazananlarin_ilani_090426.pdf', 'PDF', 3 FROM sayfa WHERE slug = 'home' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sözleşmeli Bilişim Personeli Alımı İle İlgili Ön İnceleme Sonucu Sınava Girmeye Hak Kazananların Listesi', '/dosyalar/EK_3_yazili_sinava_girmeye_hak_kazananlarin_ilani_310326.pdf', 'PDF', 4 FROM sayfa WHERE slug = 'home' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'İŞKUR Gençlik Programı Noter Kurası Çekilişi', '/dosyalar/iskur_kuracekimi_151025.pdf', 'PDF', 5 FROM sayfa WHERE slug = 'home' AND dil = 'tr';
 INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, '2025-2026 Eğitim Öğretim Dönemi İŞKUR Gençlik Programı', 'https://pdb.hacettepe.edu.tr/duyuru/iskur_131025.pdf', 'PDF', 6 FROM sayfa WHERE slug = 'home' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sözleşmeli Bilişim Personeli Alımı Değerlendirme Sonucu', 'https://bidb.hacettepe.edu.tr/dosyalar/sozlesme_hak_kazananlarin_ilani290525.pdf', 'PDF', 7 FROM sayfa WHERE slug = 'home' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sözleşmeli Bilişim Personeli Alımı İle İlgili Yazılı Sınav Sonuçları ve Sözlü Sınav Bilgileri', 'https://bidb.hacettepe.edu.tr/dosyalar/Sozlu_sinava_girmeye_hak_kazananlarin_ilani_232025.pdf', 'PDF', 8 FROM sayfa WHERE slug = 'home' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sözleşmeli Bilişim Personeli Alımı İle İlgili Ön İnceleme Sonucu Sınava Girmeye Hak Kazananların Listesi', 'https://bidb.hacettepe.edu.tr/dosyalar/yazili_sinava_girmeye_hak_kazananlarin_ilani130525.pdf', 'PDF', 9 FROM sayfa WHERE slug = 'home' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sözleşmeli Bilişim Personeli Alımı Değerlendirme Sonucu', '/dosyalar/sozlesme_hak_kazananlarin_ilani290525.pdf', 'PDF', 7 FROM sayfa WHERE slug = 'home' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sözleşmeli Bilişim Personeli Alımı İle İlgili Yazılı Sınav Sonuçları ve Sözlü Sınav Bilgileri', '/dosyalar/Sozlu_sinava_girmeye_hak_kazananlarin_ilani_232025.pdf', 'PDF', 8 FROM sayfa WHERE slug = 'home' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sözleşmeli Bilişim Personeli Alımı İle İlgili Ön İnceleme Sonucu Sınava Girmeye Hak Kazananların Listesi', '/dosyalar/yazili_sinava_girmeye_hak_kazananlarin_ilani130525.pdf', 'PDF', 9 FROM sayfa WHERE slug = 'home' AND dil = 'tr';
 INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'İŞKUR Gençlik Programı Asıl Olarak Hak Kazanan Öğrencilerimiz', 'https://www.hacettepe.edu.tr/duyuru/rekduy/iskur240225.pdf', 'PDF', 10 FROM sayfa WHERE slug = 'home' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'İŞKUR Gençlik Programı Çerçevesinde 19.02.2025 Tarihinde Yapılan Noter Çekilişi', 'https://bidb.hacettepe.edu.tr/dosyalar/sonuc200225.pdf', 'PDF', 11 FROM sayfa WHERE slug = 'home' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'İşkur Gençlik Programı', 'https://bidb.hacettepe.edu.tr/dosyalar/iskurduyuru170225.pdf', 'PDF', 12 FROM sayfa WHERE slug = 'home' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sözleşmeli Bilişim Personeli Alımı Değerlendirme Sonucu (22.12.23)', 'https://bidb.hacettepe.edu.tr/dosyalar/prsalimsonuc221223.pdf', 'PDF', 13 FROM sayfa WHERE slug = 'home' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sözleşmeli Bilişim Personeli Alımı İle İlgili Yazılı Sınav Sonuçları ve Sözlü Sınav Bilgileri (18.12.23)', 'https://bidb.hacettepe.edu.tr/dosyalar/SinavSonucuYazili181223.pdf', 'PDF', 14 FROM sayfa WHERE slug = 'home' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sözleşmeli Bilişim Personeli Alımı İle İlgili Ön İnceleme Sonucu Sınava Girmeye Hak Kazananların Listesi (11.12.23)', 'https://bidb.hacettepe.edu.tr/dosyalar/Sinav_web_141223.pdf', 'PDF', 15 FROM sayfa WHERE slug = 'home' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sözleşmeli Bilişim Personeli Alımı Sınav Sonuçları', 'https://bidb.hacettepe.edu.tr/dosyalar/SozlesmeYapmayaHakKazananlar_200623.pdf', 'PDF', 16 FROM sayfa WHERE slug = 'home' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sözleşmeli Bilişim Personeli Alımı İle İlgili Yazılı Sınav Sonuçları ve Sözlü Sınav Bilgileri (16.06.23)', 'https://bidb.hacettepe.edu.tr/dosyalar/sinavsonuc160623.pdf', 'PDF', 17 FROM sayfa WHERE slug = 'home' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sözleşmeli Bilişim Personeli Alımı İle İlgili Ön İnceleme Sonucu Sınava Girmeye Hak Kazananların Listesi (14.06.23)', 'https://bidb.hacettepe.edu.tr/dosyalar/sozlesmeli_personel_140623.pdf', 'PDF', 18 FROM sayfa WHERE slug = 'home' AND dil = 'tr';
-INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sözleşmeli Bilişim Personeli Duyurusu', 'https://bidb.hacettepe.edu.tr/dosyalar/bilisimduyuru300523.pdf', 'PDF', 19 FROM sayfa WHERE slug = 'home' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'İŞKUR Gençlik Programı Çerçevesinde 19.02.2025 Tarihinde Yapılan Noter Çekilişi', '/dosyalar/sonuc200225.pdf', 'PDF', 11 FROM sayfa WHERE slug = 'home' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'İşkur Gençlik Programı', '/dosyalar/iskurduyuru170225.pdf', 'PDF', 12 FROM sayfa WHERE slug = 'home' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sözleşmeli Bilişim Personeli Alımı Değerlendirme Sonucu (22.12.23)', '/dosyalar/prsalimsonuc221223.pdf', 'PDF', 13 FROM sayfa WHERE slug = 'home' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sözleşmeli Bilişim Personeli Alımı İle İlgili Yazılı Sınav Sonuçları ve Sözlü Sınav Bilgileri (18.12.23)', '/dosyalar/SinavSonucuYazili181223.pdf', 'PDF', 14 FROM sayfa WHERE slug = 'home' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sözleşmeli Bilişim Personeli Alımı İle İlgili Ön İnceleme Sonucu Sınava Girmeye Hak Kazananların Listesi (11.12.23)', '/dosyalar/Sinav_web_141223.pdf', 'PDF', 15 FROM sayfa WHERE slug = 'home' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sözleşmeli Bilişim Personeli Alımı Sınav Sonuçları', '/dosyalar/SozlesmeYapmayaHakKazananlar_200623.pdf', 'PDF', 16 FROM sayfa WHERE slug = 'home' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sözleşmeli Bilişim Personeli Alımı İle İlgili Yazılı Sınav Sonuçları ve Sözlü Sınav Bilgileri (16.06.23)', '/dosyalar/sinavsonuc160623.pdf', 'PDF', 17 FROM sayfa WHERE slug = 'home' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sözleşmeli Bilişim Personeli Alımı İle İlgili Ön İnceleme Sonucu Sınava Girmeye Hak Kazananların Listesi (14.06.23)', '/dosyalar/sozlesmeli_personel_140623.pdf', 'PDF', 18 FROM sayfa WHERE slug = 'home' AND dil = 'tr';
+INSERT INTO belge (sayfa_id, ad, adres, tur, sira) SELECT id, 'Sözleşmeli Bilişim Personeli Duyurusu', '/dosyalar/bilisimduyuru300523.pdf', 'PDF', 19 FROM sayfa WHERE slug = 'home' AND dil = 'tr';
 INSERT INTO sayfa (slug, dil, baslik, icerik_html, seo_title, seo_description, seo_keywords, sira) VALUES ('accessibility', 'en', 'Hata!..', '<div class="icerik">
 Böyle bir sayfa bulunmamaktadır!.
 </div>', 'Hacettepe University Comnputer Center', '', '', 65);
@@ -3756,24 +3756,28 @@ INSERT INTO menu_oge (menu_id, etiket, sayfa_id, sira) SELECT m.id, 'WEB Servisl
 INSERT INTO menu_oge (menu_id, etiket, sayfa_id, sira) SELECT m.id, 'İçerik Yönetim Sistemi', s.id, 1 FROM menu m JOIN sayfa s ON s.slug = 'cms' AND s.dil = 'tr' WHERE m.dil = 'tr' AND m.baslik = 'Servislerimiz';
 INSERT INTO menu_oge (menu_id, etiket, sayfa_id, sira) SELECT m.id, 'Kablosuz Erişim Servisleri', s.id, 2 FROM menu m JOIN sayfa s ON s.slug = 'wireless' AND s.dil = 'tr' WHERE m.dil = 'tr' AND m.baslik = 'Servislerimiz';
 INSERT INTO menu_oge (menu_id, etiket, sayfa_id, sira) SELECT m.id, 'Lisanslı Yazılım Sunucusu', s.id, 3 FROM menu m JOIN sayfa s ON s.slug = 'software' AND s.dil = 'tr' WHERE m.dil = 'tr' AND m.baslik = 'Servislerimiz';
-INSERT INTO menu_oge (menu_id, etiket, sayfa_id, sira) SELECT m.id, 'Bilgi ve Dokümanlar', s.id, 4 FROM menu m JOIN sayfa s ON s.slug = 'documents' AND s.dil = 'tr' WHERE m.dil = 'tr' AND m.baslik = 'Servislerimiz';
-INSERT INTO menu_oge (menu_id, etiket, sayfa_id, sira) SELECT m.id, 'E-Posta İşlemleri', s.id, 5 FROM menu m JOIN sayfa s ON s.slug = 'email' AND s.dil = 'tr' WHERE m.dil = 'tr' AND m.baslik = 'Servislerimiz';
-INSERT INTO menu_oge (menu_id, etiket, sayfa_id, sira) SELECT m.id, 'E-Posta Giriş', s.id, 6 FROM menu m JOIN sayfa s ON s.slug = 'webmail' AND s.dil = 'tr' WHERE m.dil = 'tr' AND m.baslik = 'Servislerimiz';
-INSERT INTO menu_oge (menu_id, etiket, sayfa_id, sira) SELECT m.id, 'Office 365', s.id, 7 FROM menu m JOIN sayfa s ON s.slug = 'office365' AND s.dil = 'tr' WHERE m.dil = 'tr' AND m.baslik = 'Servislerimiz';
-INSERT INTO menu_oge (menu_id, etiket, sayfa_id, sira) SELECT m.id, 'Proxy Ayarları ve Kurulumu', s.id, 8 FROM menu m JOIN sayfa s ON s.slug = 'proxy' AND s.dil = 'tr' WHERE m.dil = 'tr' AND m.baslik = 'Servislerimiz';
-INSERT INTO menu_oge (menu_id, etiket, sayfa_id, sira) SELECT m.id, 'Sık Sorulan Sorular', s.id, 9 FROM menu m JOIN sayfa s ON s.slug = 'faq' AND s.dil = 'tr' WHERE m.dil = 'tr' AND m.baslik = 'Servislerimiz';
-INSERT INTO menu_oge (menu_id, etiket, sayfa_id, sira) SELECT m.id, 'Formlar', s.id, 10 FROM menu m JOIN sayfa s ON s.slug = 'forms' AND s.dil = 'tr' WHERE m.dil = 'tr' AND m.baslik = 'Servislerimiz';
+INSERT INTO menu_oge (menu_id, etiket, dis_adres, yeni_sekme, sira) SELECT m.id, 'HÜ Yönetim Sistemleri', 'https://huys.hacettepe.edu.tr:7020/CasSunucu/login?service=http%3A%2F%2Fhuys.hacettepe.edu.tr%2FuygulamaGiris', TRUE, 4 FROM menu m WHERE m.dil = 'tr' AND m.baslik = 'Servislerimiz';
+INSERT INTO menu_oge (menu_id, etiket, dis_adres, yeni_sekme, sira) SELECT m.id, 'E-İmza Kullanma Rehberi', 'https://bidb.hacettepe.edu.tr/eimza/index.php', TRUE, 5 FROM menu m WHERE m.dil = 'tr' AND m.baslik = 'Servislerimiz';
+INSERT INTO menu_oge (menu_id, etiket, sayfa_id, sira) SELECT m.id, 'Bilgi ve Dokümanlar', s.id, 6 FROM menu m JOIN sayfa s ON s.slug = 'documents' AND s.dil = 'tr' WHERE m.dil = 'tr' AND m.baslik = 'Servislerimiz';
+INSERT INTO menu_oge (menu_id, etiket, sayfa_id, sira) SELECT m.id, 'E-Posta İşlemleri', s.id, 7 FROM menu m JOIN sayfa s ON s.slug = 'email' AND s.dil = 'tr' WHERE m.dil = 'tr' AND m.baslik = 'Servislerimiz';
+INSERT INTO menu_oge (menu_id, etiket, sayfa_id, sira) SELECT m.id, 'E-Posta Giriş', s.id, 8 FROM menu m JOIN sayfa s ON s.slug = 'webmail' AND s.dil = 'tr' WHERE m.dil = 'tr' AND m.baslik = 'Servislerimiz';
+INSERT INTO menu_oge (menu_id, etiket, sayfa_id, sira) SELECT m.id, 'Office 365', s.id, 9 FROM menu m JOIN sayfa s ON s.slug = 'office365' AND s.dil = 'tr' WHERE m.dil = 'tr' AND m.baslik = 'Servislerimiz';
+INSERT INTO menu_oge (menu_id, etiket, sayfa_id, sira) SELECT m.id, 'Proxy Ayarları ve Kurulumu', s.id, 10 FROM menu m JOIN sayfa s ON s.slug = 'proxy' AND s.dil = 'tr' WHERE m.dil = 'tr' AND m.baslik = 'Servislerimiz';
+INSERT INTO menu_oge (menu_id, etiket, sayfa_id, sira) SELECT m.id, 'Sık Sorulan Sorular', s.id, 11 FROM menu m JOIN sayfa s ON s.slug = 'faq' AND s.dil = 'tr' WHERE m.dil = 'tr' AND m.baslik = 'Servislerimiz';
+INSERT INTO menu_oge (menu_id, etiket, sayfa_id, sira) SELECT m.id, 'Formlar', s.id, 12 FROM menu m JOIN sayfa s ON s.slug = 'forms' AND s.dil = 'tr' WHERE m.dil = 'tr' AND m.baslik = 'Servislerimiz';
 
 INSERT INTO menu (dil, konum, baslik, sira) VALUES ('tr', 'sol', 'Kurallar ve İlkeler', 2);
 INSERT INTO menu_oge (menu_id, etiket, sayfa_id, sira) SELECT m.id, 'Bilgi Güvenliği Yönetim Sistemi', s.id, 0 FROM menu m JOIN sayfa s ON s.slug = 'isms' AND s.dil = 'tr' WHERE m.dil = 'tr' AND m.baslik = 'Kurallar ve İlkeler';
-INSERT INTO menu_oge (menu_id, etiket, sayfa_id, sira) SELECT m.id, 'E-Posta Tarama Politikaları', s.id, 1 FROM menu m JOIN sayfa s ON s.slug = 'mail-filtering' AND s.dil = 'tr' WHERE m.dil = 'tr' AND m.baslik = 'Kurallar ve İlkeler';
-INSERT INTO menu_oge (menu_id, etiket, sayfa_id, sira) SELECT m.id, 'WEB Sayfası Yayım İlkeleri', s.id, 2 FROM menu m JOIN sayfa s ON s.slug = 'web-policy' AND s.dil = 'tr' WHERE m.dil = 'tr' AND m.baslik = 'Kurallar ve İlkeler';
-INSERT INTO menu_oge (menu_id, etiket, sayfa_id, sira) SELECT m.id, 'Yurt ve Öğrenci Evleri Kuralları', s.id, 3 FROM menu m JOIN sayfa s ON s.slug = 'dorm-rules' AND s.dil = 'tr' WHERE m.dil = 'tr' AND m.baslik = 'Kurallar ve İlkeler';
-INSERT INTO menu_oge (menu_id, etiket, sayfa_id, sira) SELECT m.id, 'PC Salonlarının Kullanım Kuralları', s.id, 4 FROM menu m JOIN sayfa s ON s.slug = 'lab-rules' AND s.dil = 'tr' WHERE m.dil = 'tr' AND m.baslik = 'Kurallar ve İlkeler';
-INSERT INTO menu_oge (menu_id, etiket, sayfa_id, sira) SELECT m.id, 'Dağıtım Listeleri Politikaları', s.id, 5 FROM menu m JOIN sayfa s ON s.slug = 'mailing-lists' AND s.dil = 'tr' WHERE m.dil = 'tr' AND m.baslik = 'Kurallar ve İlkeler';
-INSERT INTO menu_oge (menu_id, etiket, sayfa_id, sira) SELECT m.id, 'HUNET Kullanım İlkeleri', s.id, 6 FROM menu m JOIN sayfa s ON s.slug = 'hunet-policy' AND s.dil = 'tr' WHERE m.dil = 'tr' AND m.baslik = 'Kurallar ve İlkeler';
-INSERT INTO menu_oge (menu_id, etiket, sayfa_id, sira) SELECT m.id, 'HUNET Öğrenci Çerçeve Kuralları', s.id, 7 FROM menu m JOIN sayfa s ON s.slug = 'student-rules' AND s.dil = 'tr' WHERE m.dil = 'tr' AND m.baslik = 'Kurallar ve İlkeler';
-INSERT INTO menu_oge (menu_id, etiket, sayfa_id, sira) SELECT m.id, 'HUNET Beytepe Yurt Erişim Protokolü', s.id, 8 FROM menu m JOIN sayfa s ON s.slug = 'dorm-access' AND s.dil = 'tr' WHERE m.dil = 'tr' AND m.baslik = 'Kurallar ve İlkeler';
+INSERT INTO menu_oge (menu_id, etiket, dis_adres, yeni_sekme, sira) SELECT m.id, 'Hacettepe Üniversitesi E-Posta Yönergesi', '/dosyalar/epostayonergesi22.pdf', TRUE, 1 FROM menu m WHERE m.dil = 'tr' AND m.baslik = 'Kurallar ve İlkeler';
+INSERT INTO menu_oge (menu_id, etiket, sayfa_id, sira) SELECT m.id, 'E-Posta Tarama Politikaları', s.id, 2 FROM menu m JOIN sayfa s ON s.slug = 'mail-filtering' AND s.dil = 'tr' WHERE m.dil = 'tr' AND m.baslik = 'Kurallar ve İlkeler';
+INSERT INTO menu_oge (menu_id, etiket, sayfa_id, sira) SELECT m.id, 'WEB Sayfası Yayım İlkeleri', s.id, 3 FROM menu m JOIN sayfa s ON s.slug = 'web-policy' AND s.dil = 'tr' WHERE m.dil = 'tr' AND m.baslik = 'Kurallar ve İlkeler';
+INSERT INTO menu_oge (menu_id, etiket, sayfa_id, sira) SELECT m.id, 'Yurt ve Öğrenci Evleri Kuralları', s.id, 4 FROM menu m JOIN sayfa s ON s.slug = 'dorm-rules' AND s.dil = 'tr' WHERE m.dil = 'tr' AND m.baslik = 'Kurallar ve İlkeler';
+INSERT INTO menu_oge (menu_id, etiket, sayfa_id, sira) SELECT m.id, 'PC Salonlarının Kullanım Kuralları', s.id, 5 FROM menu m JOIN sayfa s ON s.slug = 'lab-rules' AND s.dil = 'tr' WHERE m.dil = 'tr' AND m.baslik = 'Kurallar ve İlkeler';
+INSERT INTO menu_oge (menu_id, etiket, sayfa_id, sira) SELECT m.id, 'Dağıtım Listeleri Politikaları', s.id, 6 FROM menu m JOIN sayfa s ON s.slug = 'mailing-lists' AND s.dil = 'tr' WHERE m.dil = 'tr' AND m.baslik = 'Kurallar ve İlkeler';
+INSERT INTO menu_oge (menu_id, etiket, sayfa_id, sira) SELECT m.id, 'HUNET Kullanım İlkeleri', s.id, 7 FROM menu m JOIN sayfa s ON s.slug = 'hunet-policy' AND s.dil = 'tr' WHERE m.dil = 'tr' AND m.baslik = 'Kurallar ve İlkeler';
+INSERT INTO menu_oge (menu_id, etiket, sayfa_id, sira) SELECT m.id, 'HUNET Öğrenci Çerçeve Kuralları', s.id, 8 FROM menu m JOIN sayfa s ON s.slug = 'student-rules' AND s.dil = 'tr' WHERE m.dil = 'tr' AND m.baslik = 'Kurallar ve İlkeler';
+INSERT INTO menu_oge (menu_id, etiket, sayfa_id, sira) SELECT m.id, 'HUNET Beytepe Yurt Erişim Protokolü', s.id, 9 FROM menu m JOIN sayfa s ON s.slug = 'dorm-access' AND s.dil = 'tr' WHERE m.dil = 'tr' AND m.baslik = 'Kurallar ve İlkeler';
+INSERT INTO menu_oge (menu_id, etiket, dis_adres, yeni_sekme, sira) SELECT m.id, 'Bilişim ile ilgili Yasal Düzenlemeler', 'https://www.btk.gov.tr/kanunlar', TRUE, 10 FROM menu m WHERE m.dil = 'tr' AND m.baslik = 'Kurallar ve İlkeler';
 
 INSERT INTO menu (dil, konum, baslik, sira) VALUES ('tr', 'sol', 'Teknik Altyapı', 3);
 INSERT INTO menu_oge (menu_id, etiket, sayfa_id, sira) SELECT m.id, 'Ağ Altyapısı', s.id, 0 FROM menu m JOIN sayfa s ON s.slug = 'network' AND s.dil = 'tr' WHERE m.dil = 'tr' AND m.baslik = 'Teknik Altyapı';
@@ -3792,6 +3796,7 @@ INSERT INTO menu_oge (menu_id, etiket, sayfa_id, sira) SELECT m.id, 'Administrat
 
 INSERT INTO menu (dil, konum, baslik, sira) VALUES ('en', 'sol', 'Services', 1);
 INSERT INTO menu_oge (menu_id, etiket, sayfa_id, sira) SELECT m.id, 'Service Groups', s.id, 0 FROM menu m JOIN sayfa s ON s.slug = 'service-groups' AND s.dil = 'en' WHERE m.dil = 'en' AND m.baslik = 'Services';
+INSERT INTO menu_oge (menu_id, etiket, dis_adres, yeni_sekme, sira) SELECT m.id, 'Computer Center Portal', 'https://portal.hacettepe.edu.tr/?lang=en', TRUE, 1 FROM menu m WHERE m.dil = 'en' AND m.baslik = 'Services';
 
 INSERT INTO menu (dil, konum, baslik, sira) VALUES ('en', 'sol', 'Contact', 2);
 INSERT INTO menu_oge (menu_id, etiket, sayfa_id, sira) SELECT m.id, 'Contact', s.id, 0 FROM menu m JOIN sayfa s ON s.slug = 'contact' AND s.dil = 'en' WHERE m.dil = 'en' AND m.baslik = 'Contact';
