@@ -1,0 +1,67 @@
+# Geliştirme ortamı — Windows ve macOS'ta aynı şekilde çalışır.
+# Java, Maven, Node ve PostgreSQL'in makineye kurulması gerekmez;
+# hepsi kap içinde çalışır.
+#
+#   docker compose up -d db          → yalnızca veritabanı
+#   docker compose up                → veritabanı + backend + frontend
+#   docker compose down              → durdur (veriler kalır)
+#   docker compose down -v           → durdur ve verileri sil
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: bidb-db
+    environment:
+      POSTGRES_DB: bidb
+      POSTGRES_USER: bidb
+      POSTGRES_PASSWORD: bidb
+      # Türkçe sıralama ve karşılaştırma
+      LANG: tr_TR.utf8
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8"
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bidb -d bidb"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: bidb-backend
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/bidb
+      SPRING_DATASOURCE_USERNAME: bidb
+      SPRING_DATASOURCE_PASSWORD: bidb
+      SPRING_PROFILES_ACTIVE: docker
+    ports:
+      # 8080 geliştirme makinesinde başka bir servis tarafından kullanılabildiği için
+      # dışarıya 8081 açılır; kap içi haberleşme yine 8080 üzerindendir.
+      - "8081:8080"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8080/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: bidb-frontend
+    depends_on:
+      - backend
+    environment:
+      API_URL: http://backend:8080
+    ports:
+      - "4200:4200"
+
+volumes:
+  db-data:

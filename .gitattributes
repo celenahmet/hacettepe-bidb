@@ -1,0 +1,23 @@
+# Satır sonlarını depoda daima LF tut.
+# Windows ve macOS arasında geçiş yaparken dosyaların "değişmiş" görünmesini
+# ve kabuk betiklerinin macOS'ta çalışmamasını engeller.
+* text=auto eol=lf
+
+# İkili dosyalar dönüştürülmez
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.avif binary
+*.ico binary
+*.woff2 binary
+*.pdf binary
+*.docx binary
+*.xlsx binary
+*.pptx binary
+*.zip binary
+*.jar binary
+
+# Maven sarmalayıcısı çalıştırılabilir kalmalı
+mvnw text eol=lf
+gradlew text eol=lf

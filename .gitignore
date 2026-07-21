@@ -13,3 +13,13 @@ dist/
 .idea/
 .DS_Store
 Thumbs.db
+
+# Derleme çıktıları
+frontend/dist/
+frontend/.angular/
+backend/target/
+
+# Günlükler
+tools/*.log
+*-build.log
+frontend-kurulum.log

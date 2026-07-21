@@ -1,14 +1,15 @@
 # Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı — Web Sitesi
 
 Mevcut `bidb.hacettepe.edu.tr` sitesinin yenilenmesi projesi.
+İçerikler kaynak siteden **birebir** aktarılmıştır; hiçbir metin değiştirilmemiştir.
 
 ## Mimari
 
 | Katman | Teknoloji |
 |---|---|
-| Backend | Spring Boot (REST API) |
-| Veritabanı | PostgreSQL |
-| Frontend | Angular |
+| Backend | Spring Boot 3.3 (Java 21) — REST API |
+| Veritabanı | PostgreSQL 16 (şema Flyway ile yönetilir) |
+| Frontend | Angular 20 + SSR (sunucu tarafı render) |
 
 Yönetilebilir alanlar: sayfa içerikleri, menüler, slider, sosyal medya hesapları,
 sayfa başına SEO bilgileri (title, description, keywords).
@@ -20,32 +21,110 @@ sayfa başına SEO bilgileri (title, description, keywords).
 /en/<slug>      İngilizce sayfalar  örn. /en/overview
 ```
 
+## Çalıştırma
+
+Makineye Java, Maven, Node veya PostgreSQL kurmaya gerek yoktur; hepsi kap içinde çalışır.
+Tek gereksinim **Docker**'dır. Aynı komutlar Windows ve macOS'ta çalışır.
+
+```bash
+docker compose up -d db        # yalnızca veritabanı
+docker compose up -d backend   # veritabanı + REST servisi
+docker compose up              # tümü (frontend dahil)
+docker compose down            # durdur (veriler kalır)
+docker compose down -v         # durdur ve veritabanını sıfırla
+```
+
+| Servis | Adres |
+|---|---|
+| REST API | http://localhost:8081 |
+| PostgreSQL | localhost:5432 (kullanıcı/parola/veritabanı: `bidb`) |
+| Frontend (geliştirme) | http://localhost:4200 |
+
+> API dışarıya **8081** portundan açılır; 8080 birçok geliştirme makinesinde
+> başka bir servis tarafından kullanıldığı için tercih edilmemiştir.
+> Kaplar kendi aralarında `backend:8080` üzerinden haberleşir.
+
+### Frontend'i ayrı çalıştırma
+
+```bash
+cd frontend
+npm install
+npm start          # http://localhost:4200
+npm run build      # SSR dahil üretim derlemesi
+```
+
+## REST uçları
+
+| Uç | Açıklama |
+|---|---|
+| `GET /api/{dil}/sayfa/{slug}` | Sayfa içeriği, SEO alanları ve bağlı belgeler |
+| `GET /api/{dil}/sayfalar` | Sayfa listesi (içerik olmadan) |
+| `GET /api/{dil}/menu?konum=sol` | Menü ve alt bağlantıları |
+| `GET /api/{dil}/slider` | Ana sayfa slider görselleri |
+| `GET /api/{dil}/sosyal` | Sosyal medya hesapları |
+| `GET /actuator/health` | Servis sağlık durumu |
+
 ## Proje düzeni
 
 ```
-content/           Mevcut siteden aktarılan içerik (JSON)
-  tr/<slug>.json   Türkçe sayfalar: başlık, SEO, paragraflar, bağlantılar, belgeler
-  en/<slug>.json   İngilizce sayfalar
-  _kabuk.json      Sol menü ve sosyal medya hesapları
-  _menu.json       Menü yapısı (bölüm → sayfa)
-  _ozet.json       Aktarım özeti (sayfa başına karakter ve belge sayısı)
+backend/                     Spring Boot uygulaması
+  src/main/java/.../model    JPA varlıkları (Sayfa, Menu, Slider, Belge…)
+  src/main/java/.../repo     Veri erişimi
+  src/main/java/.../web      REST denetleyicileri
+  src/main/java/.../dto      Ön yüze gönderilen veri yapıları
+  src/main/resources/db/migration
+    V1__sema.sql             Tablolar
+    V2__tohum.sql            Aktarılan içerik (üretilmiş dosya, elle düzenlenmez)
 
-tools/             İçerik aktarım araçları
-  crawl.js         Kaynak siteden sayfaları indirir
-  extract.js       HTML'den içerik ayıklama
-  crawl-home.js    Ana sayfa bileşenleri (slider, hızlı erişim, duyurular)
+frontend/                    Angular 20 + SSR
+
+content/                     Kaynak siteden aktarılan içerik (JSON)
+  tr/<slug>.json             Başlık, SEO, paragraflar, bağlantılar, belgeler
+  en/<slug>.json
+  _kabuk.json                Sol menü ve sosyal medya hesapları
+  _menu.json                 Menü yapısı
+
+tools/
+  crawl.js                   Kaynak siteden içerik indirir
+  extract.js                 HTML'den içerik ayıklama
+  seed.js                    content/*.json → V2__tohum.sql
+  verify-content.js          Veritabanı ile canlı siteyi karşılaştırır
 ```
 
-## İçerik aktarımını yeniden çalıştırma
+## İçerik doğrulama
+
+İçeriğin değişmediği iddiası ölçülerek kanıtlanır: `verify-content.js`, veritabanındaki
+her sayfanın metnini kaynak sitedeki canlı sayfayla karakter karakter karşılaştırır.
 
 ```bash
-node tools/crawl.js        # tüm sayfaları yeniden indirir
-node tools/crawl-home.js   # ana sayfa bileşenlerini çıkarır
+node tools/verify-content.js
 ```
+
+Son çalıştırma sonucu:
+
+```
+38 sayfa birebir aynı, 0 sayfa farklı.
+```
+
+İçerik yeniden aktarılacaksa sıra şudur:
+
+```bash
+node tools/crawl.js          # kaynaktan indir
+node tools/seed.js           # V2__tohum.sql üret
+docker compose down -v       # veritabanını sıfırla
+docker compose up -d backend # Flyway şemayı ve içeriği yeniden yükler
+node tools/verify-content.js # doğrula
+```
+
+## İki makinede çalışma
+
+Depo Windows ve macOS arasında paylaşılmaktadır. `.gitattributes` dosyası satır
+sonlarını depoda LF olarak sabitler; bu olmadan dosyalar karşı makinede
+"değişmiş" görünür ve kabuk betikleri bozulur.
 
 ## Aktarım durumu
 
 - **33 Türkçe sayfa** — yaklaşık 58.000 karakter metin
-- **5 İngilizce sayfa** — kaynak sitede İngilizce içerik sınırlı
-- **63 belge bağlantısı** (form, yönerge, kılavuz)
-- Sol menü, sosyal medya hesapları ve iletişim bilgileri ayrıca çıkarıldı
+- **5 İngilizce sayfa** — kaynak sitede İngilizce içerik sınırlıdır
+- **50 belge bağlantısı** (form, yönerge, kılavuz)
+- **38 menü öğesi**, 8 menü başlığı, 3 sosyal medya hesabı

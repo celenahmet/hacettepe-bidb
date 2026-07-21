@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: bidb-backend
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/bidb}
+    username: ${SPRING_DATASOURCE_USERNAME:bidb}
+    password: ${SPRING_DATASOURCE_PASSWORD:bidb}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate      # şema Flyway ile yönetilir
+    properties:
+      hibernate:
+        format_sql: false
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+
+server:
+  port: 8080
+  # Angular sunucu tarafı render'ı bu servisi çağırır
+  forward-headers-strategy: framework
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+# Geliştirmede Angular (4200) farklı porttan çağırır
+bidb:
+  cors:
+    izinli-adresler: ${BIDB_CORS:http://localhost:4200,http://127.0.0.1:4200}
