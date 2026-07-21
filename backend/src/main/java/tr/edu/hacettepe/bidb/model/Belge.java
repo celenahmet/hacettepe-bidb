@@ -29,8 +29,13 @@ public class Belge {
 
     public Long getId() { return id; }
     public Sayfa getSayfa() { return sayfa; }
+    public void setSayfa(Sayfa sayfa) { this.sayfa = sayfa; }
     public String getAd() { return ad; }
+    public void setAd(String ad) { this.ad = ad; }
     public String getAdres() { return adres; }
+    public void setAdres(String adres) { this.adres = adres; }
     public String getTur() { return tur; }
+    public void setTur(String tur) { this.tur = tur; }
     public int getSira() { return sira; }
+    public void setSira(int sira) { this.sira = sira; }
 }

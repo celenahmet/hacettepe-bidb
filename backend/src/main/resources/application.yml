@@ -1,4 +1,9 @@
 spring:
+  servlet:
+    multipart:
+      # Panelden yüklenen belgeler için üst sınır (denetim ayrıca kodda da yapılır)
+      max-file-size: 25MB
+      max-request-size: 26MB
   application:
     name: bidb-backend
   datasource:
@@ -39,3 +44,5 @@ bidb:
     parola: ${BIDB_YONETICI_PAROLA:}
   cors:
     izinli-adresler: ${BIDB_CORS:http://localhost:4200,http://127.0.0.1:4200}
+  # Panelden yüklenen belgelerin yazıldığı dizin; ön yüz aynı dizini sunar
+  dosya-dizini: ${BIDB_DOSYA_DIZINI:/veri/dosyalar}

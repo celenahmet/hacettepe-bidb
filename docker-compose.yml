@@ -44,6 +44,10 @@ services:
       # Yönetim uçları için kimlik bilgileri (üretimde mutlaka değiştirilmeli)
       BIDB_YONETICI_KULLANICI: ${BIDB_YONETICI_KULLANICI:-yonetici}
       BIDB_YONETICI_PAROLA: ${BIDB_YONETICI_PAROLA:-degistir-beni}
+      # Panelden yüklenen belgeler burada durur; ön yüz aynı birimi okur
+      BIDB_DOSYA_DIZINI: /veri/dosyalar
+    volumes:
+      - belgeler:/veri/dosyalar
     ports:
       # 8080 geliştirme makinesinde başka bir servis tarafından kullanılabildiği için
       # dışarıya 8081 açılır; kap içi haberleşme yine 8080 üzerindendir.
@@ -64,8 +68,12 @@ services:
     environment:
       BIDB_API: http://backend:8080
       ALLOWED_HOSTS: localhost,127.0.0.1,bidb.hacettepe.edu.tr
+    volumes:
+      # Panelden yüklenen belgeler (backend yazar, ön yüz sunar)
+      - belgeler:/veri/dosyalar:ro
     ports:
       - "4000:4000"
 
 volumes:
+  belgeler:
   db-data:

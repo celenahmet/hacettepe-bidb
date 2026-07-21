@@ -69,5 +69,6 @@ public class Sayfa {
     public int getSira() { return sira; }
     public void setSira(int sira) { this.sira = sira; }
     public OffsetDateTime getGuncelleme() { return guncelleme; }
+    public void setGuncelleme(OffsetDateTime guncelleme) { this.guncelleme = guncelleme; }
     public List<Belge> getBelgeler() { return belgeler; }
 }
