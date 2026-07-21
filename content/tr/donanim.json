@@ -1,0 +1,37 @@
+{
+  "slug": "donanim",
+  "dil": "tr",
+  "bolum": "Teknik Altyapı",
+  "menuAdi": "Mevcut Donanım Bilgileri",
+  "url": "https://bidb.hacettepe.edu.tr/tr/donanim",
+  "baslik": "Donanım",
+  "seo": {
+    "title": "Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı",
+    "description": "",
+    "keywords": ""
+  },
+  "paragraflar": [
+    {
+      "tur": "p",
+      "metin": "Hacettepe Üniversitesi Bilgi İşlem Dairesi’nin başta ağ cihazları ve fiber kablolama olmak üzere bilişim hizmetleri alanında hizmet vermeye yönelik alt yapı olanakları mevcuttur."
+    },
+    {
+      "tur": "p",
+      "metin": "Beytepe Yerleşkemizde çalışan 1 adet router, yedekli çalışan iki ana omurga, 57 adet yarı omurga 3. seviye ağ anahtarlama cihazı, 509 adet 2. seviye ağ anahtarlama cihazı ile 1761 adet WIFI cihazı ve WIFI yönetimi için 5 adet merkezi kontrol cihazı, 56 tane merkezi kontrol cihazından bağımsız WIFI cihazı mevcuttur."
+    },
+    {
+      "tur": "p",
+      "metin": "Sihhiye kampusümüzde çalışan bir adet “router”, yedekli ana omurga, 1 adet bant genişliği yönetim cihazı ,14 adet 3. seviye ağ anahtarlama cihazı, 174 adet 2.seviye ağ anahtarlama cihazı ile 274 adet Wi-Fi cihazı mevcuttur."
+    },
+    {
+      "tur": "p",
+      "metin": "Ağ sistemimizin güvenliği için kampüs ve sunucular önünde yedekli güvenlik duvarı sistemi kullanılmaktadır. Sıhhiye kampüsümüzün güvenliği için yedekli güvenlik duvarı sistemi ve URL filtreleme sistemleri kullanılmaktadır."
+    }
+  ],
+  "baglantilar": [],
+  "gorseller": [],
+  "belgeler": [],
+  "govdeHtml": "<div class=\"icerik\">\n\n\n\n<p align=\"justify\">Hacettepe Üniversitesi Bilgi İşlem Dairesi’nin başta ağ cihazları ve fiber kablolama olmak üzere bilişim hizmetleri alanında hizmet vermeye yönelik alt yapı olanakları mevcuttur.</p>\n<p align=\"justify\">Beytepe  Yerleşkemizde çalışan  1  adet  router,  yedekli  çalışan  iki  ana  omurga,  57  adet yarı omurga 3. seviye ağ anahtarlama cihazı, 509 adet 2. seviye ağ anahtarlama cihazı ile 1761 adet WIFI cihazı ve WIFI yönetimi için 5 adet merkezi kontrol cihazı, 56 tane merkezi kontrol cihazından bağımsız WIFI cihazı mevcuttur.  </p>\n\n<p align=\"justify\">Sihhiye kampusümüzde çalışan bir adet “router”, yedekli ana omurga, 1 adet bant genişliği yönetim cihazı ,14 adet 3. seviye ağ anahtarlama cihazı, 174 adet 2.seviye ağ anahtarlama cihazı ile 274 adet Wi-Fi cihazı mevcuttur.</p>\n<p align=\"justify\">Ağ sistemimizin güvenliği için kampüs ve sunucular önünde yedekli güvenlik duvarı sistemi kullanılmaktadır. Sıhhiye kampüsümüzün güvenliği için yedekli güvenlik duvarı sistemi ve URL filtreleme sistemleri kullanılmaktadır.</p>\n\n\n\n\n\n</div>",
+  "karakter": 939,
+  "cekilme": "2026-07-21T14:34:00.514Z"
+}

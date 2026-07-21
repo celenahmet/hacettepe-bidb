@@ -1,0 +1,30 @@
+{
+  "slug": "iletisim",
+  "dil": "en",
+  "bolum": "Contact",
+  "menuAdi": "Contact",
+  "url": "https://bidb.hacettepe.edu.tr/en/iletisim",
+  "baslik": "Contact",
+  "seo": {
+    "title": "Hacettepe University Comnputer Center",
+    "description": "",
+    "keywords": ""
+  },
+  "paragraflar": [
+    {
+      "tur": "p",
+      "metin": "Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı 06800 Beytepe / ANKARA Telephone: +90 312 297 62 00 Fax: +90 312 299 20 88 E-Mail: bidb@hacettepe.edu.tr"
+    }
+  ],
+  "baglantilar": [
+    {
+      "metin": "bidb@hacettepe.edu.tr",
+      "href": "mailto:bidb@hacettepe.edu.tr"
+    }
+  ],
+  "gorseller": [],
+  "belgeler": [],
+  "govdeHtml": "<div class=\"icerik\">\n  <p>Hacettepe Üniversitesi<BR>\n    Bilgi İşlem Daire Başkanlığı<BR>\n    06800 Beytepe / ANKARA<BR>\n    Telephone: +90 312 297 62 00<BR>\n    Fax: +90 312 299 20 88<BR>\n    E-Mail: <A href=\"mailto:bidb@hacettepe.edu.tr\">bidb@hacettepe.edu.tr</A></p>\n \n</div>",
+  "karakter": 156,
+  "cekilme": "2026-07-21T14:34:03.841Z"
+}

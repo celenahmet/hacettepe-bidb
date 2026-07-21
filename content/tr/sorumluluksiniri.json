@@ -1,0 +1,33 @@
+{
+  "slug": "sorumluluksiniri",
+  "dil": "tr",
+  "bolum": "İletişim",
+  "menuAdi": "Sorumluluk Sınırı",
+  "url": "https://bidb.hacettepe.edu.tr/tr/sorumluluksiniri",
+  "baslik": "Sorumluluk Sınırı",
+  "seo": {
+    "title": "Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı",
+    "description": "",
+    "keywords": ""
+  },
+  "paragraflar": [
+    {
+      "tur": "p",
+      "metin": "Bu site üçüncü sahıslar tarafından kontrol edilen İnternet sitelerine bağlantılar sağlamaktadır. Bu üçüncü şahıs sitelerindeki bilgiler, ürünler ve hizmetler ile kurumumuzun hiçbir şekilde herhangi bir menfaat bağlantısı söz konusu değildir. Yine ilgili üçüncü şahısların web sitelerinde yayınlayabileceği herhangi bir bilgi ve içerikle de bölümümüzün bir ilgisi ve kontrolü olamaz. Bu site ve üçüncü şahıs sitelerindeki bilgiler *olduğu gibi* sağlanmaktadır ve açık ya da dolaylı hiç bir garanti verilmemektedir."
+    },
+    {
+      "tur": "p",
+      "metin": "Sitemizde verilen dahili bilgiler bir otomasyon sistemi üzerinden sağlanmakta ve içeriği sıklıkla güncellenmektedir. Yine de kurumumuz, bu sitedeki ya da üçüncü şahıs sitelerindeki malzemelerin kullanımı ya da kullanım sonuçları konusunda, doğruluk, kesinlik, zamanında olmaklık, güvenilirlik ya da başka açılardan hiç bir garanti vermez; her türlü teknik ve insani hataya karşı, burada verilen herhangi bir bilgi ile ilgili olarak site ziyaretçisinin görebileceği maddi ve manevi herhangi bir zarardan kurumumuz nezdinde özel veya tüzel bir kişinin sorumluğu bulunamaz. Ziyaretçi, verilen bilgilerin doğruluğunu sorgulamak ihtiyacı duyduğu takdirde başka kaynaklardan yararlanmak zorundadır."
+    },
+    {
+      "tur": "p",
+      "metin": "Sitemizin ziyaretçisi, bu siteyi kullanmakla yukarıda belirtilen uyarıları anlamış ve doğabilecek tüm maddi ve manevi zararın tazminini de üstlenmiş kabul edilir."
+    }
+  ],
+  "baglantilar": [],
+  "gorseller": [],
+  "belgeler": [],
+  "govdeHtml": "<div class=\"icerik\">\n<p align=\"justify\">Bu site üçüncü sahıslar tarafından kontrol edilen İnternet sitelerine bağlantılar sağlamaktadır. Bu üçüncü şahıs sitelerindeki bilgiler, ürünler ve hizmetler ile kurumumuzun hiçbir şekilde herhangi bir menfaat bağlantısı söz konusu değildir. Yine ilgili üçüncü şahısların web sitelerinde yayınlayabileceği herhangi bir bilgi ve içerikle de bölümümüzün bir ilgisi ve kontrolü olamaz. Bu site ve üçüncü şahıs sitelerindeki bilgiler *olduğu gibi* sağlanmaktadır ve açık ya da dolaylı hiç bir garanti verilmemektedir.</p>\n<p align=\"justify\">Sitemizde verilen dahili bilgiler bir otomasyon sistemi üzerinden sağlanmakta ve içeriği sıklıkla güncellenmektedir. Yine de kurumumuz, bu sitedeki ya da üçüncü şahıs sitelerindeki malzemelerin kullanımı ya da kullanım sonuçları konusunda, doğruluk, kesinlik, zamanında olmaklık, güvenilirlik ya da başka açılardan hiç bir garanti vermez; her türlü teknik ve insani hataya karşı, burada verilen herhangi bir bilgi ile ilgili olarak site ziyaretçisinin görebileceği maddi ve manevi herhangi bir zarardan kurumumuz nezdinde özel veya tüzel bir kişinin sorumluğu bulunamaz. Ziyaretçi, verilen bilgilerin doğruluğunu sorgulamak ihtiyacı duyduğu takdirde başka kaynaklardan yararlanmak zorundadır.</p>\n<p align=\"justify\">Sitemizin ziyaretçisi, bu siteyi kullanmakla yukarıda belirtilen uyarıları anlamış ve doğabilecek tüm maddi ve manevi zararın tazminini de üstlenmiş kabul edilir.</p>\n\n</div>",
+  "karakter": 1367,
+  "cekilme": "2026-07-21T14:34:01.521Z"
+}

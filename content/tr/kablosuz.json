@@ -1,0 +1,34 @@
+{
+  "slug": "kablosuz",
+  "dil": "tr",
+  "bolum": "Servislerimiz",
+  "menuAdi": "Kablosuz Erişim Servisleri",
+  "url": "https://bidb.hacettepe.edu.tr/tr/kablosuz",
+  "baslik": "Kablosuz Erişim Servisleri",
+  "seo": {
+    "title": "Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı",
+    "description": "",
+    "keywords": ""
+  },
+  "paragraflar": [
+    {
+      "tur": "p",
+      "metin": "Sıhhiye ve Beytepe kampüslerinde YURTLAR BÖLGESİ ve KAMPÜS İÇERİSİNDE açık alanlarda kurulan wifi sistemi Eduroam ve Hacettepe yayınları ile hizmet vermektedir."
+    },
+    {
+      "tur": "p",
+      "metin": "Eduroam bağlantı ayarları ile ilgili güncellemeleri http://eduroam.hacettepe.edu.tr web sayfasından takip edebilirsiniz."
+    }
+  ],
+  "baglantilar": [
+    {
+      "metin": "http://eduroam.hacettepe.edu.tr",
+      "href": "http://eduroam.hacettepe.edu.tr"
+    }
+  ],
+  "gorseller": [],
+  "belgeler": [],
+  "govdeHtml": "<div class=\"icerik\">\n<p>Sıhhiye ve Beytepe kampüslerinde YURTLAR BÖLGESİ ve KAMPÜS İÇERİSİNDE açık alanlarda kurulan  wifi sistemi Eduroam ve Hacettepe yayınları ile hizmet vermektedir.</p>\n<p>Eduroam bağlantı ayarları ile ilgili güncellemeleri <a href=\"http://eduroam.hacettepe.edu.tr\" target=\"_blank\">http://eduroam.hacettepe.edu.tr</a> web sayfasından takip edebilirsiniz.</p>\n</div>",
+  "karakter": 280,
+  "cekilme": "2026-07-21T14:33:54.177Z"
+}

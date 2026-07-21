@@ -1,0 +1,59 @@
+{
+  "slug": "office365",
+  "dil": "tr",
+  "bolum": "Servislerimiz",
+  "menuAdi": "Office 365",
+  "url": "https://bidb.hacettepe.edu.tr/tr/office365",
+  "baslik": "Office 365",
+  "seo": {
+    "title": "Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı",
+    "description": "",
+    "keywords": ""
+  },
+  "paragraflar": [
+    {
+      "tur": "p",
+      "metin": "MİCROSOFT OFFİCE 365 KULLANMA"
+    },
+    {
+      "tur": "p",
+      "metin": "MİCROSOFT TEAMS KURULUM KILAVUZU"
+    },
+    {
+      "tur": "p",
+      "metin": "MİCROSOFT TEAMS KULLANIM KILAVUZU"
+    }
+  ],
+  "baglantilar": [
+    {
+      "metin": "MİCROSOFT OFFİCE 365 KULLANMA",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/HU-Office_365_Hesap_Olusturma.pdf"
+    },
+    {
+      "metin": "MİCROSOFT TEAMS KURULUM KILAVUZU",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/HU-TeamsKurulumKilavuzu.pdf"
+    },
+    {
+      "metin": "MİCROSOFT TEAMS KULLANIM KILAVUZU",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/HU-TeamsKullanimKilavuzu.pdf"
+    }
+  ],
+  "gorseller": [],
+  "belgeler": [
+    {
+      "metin": "MİCROSOFT OFFİCE 365 KULLANMA",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/HU-Office_365_Hesap_Olusturma.pdf"
+    },
+    {
+      "metin": "MİCROSOFT TEAMS KURULUM KILAVUZU",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/HU-TeamsKurulumKilavuzu.pdf"
+    },
+    {
+      "metin": "MİCROSOFT TEAMS KULLANIM KILAVUZU",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/HU-TeamsKullanimKilavuzu.pdf"
+    }
+  ],
+  "govdeHtml": "<div class=\"icerik\">\n<p><a href=\"/dosyalar/HU-Office_365_Hesap_Olusturma.pdf\" target=\"_blank\">MİCROSOFT OFFİCE 365 KULLANMA</a></p>\n\n\n\n<p><a href=\"/dosyalar/HU-TeamsKurulumKilavuzu.pdf\" target=\"_blank\">MİCROSOFT TEAMS KURULUM KILAVUZU</a></p>\n<p><a href=\"/dosyalar/HU-TeamsKullanimKilavuzu.pdf\" target=\"_blank\">MİCROSOFT TEAMS KULLANIM KILAVUZU</a></p>\n\n\n\n\n\n\n\n</div>",
+  "karakter": 94,
+  "cekilme": "2026-07-21T14:33:55.849Z"
+}

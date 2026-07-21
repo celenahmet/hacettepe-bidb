@@ -1,0 +1,63 @@
+{
+  "slug": "e-posta",
+  "dil": "tr",
+  "bolum": "Servislerimiz",
+  "menuAdi": "E-Posta Giriş",
+  "url": "https://bidb.hacettepe.edu.tr/tr/e-posta",
+  "baslik": "E-posta",
+  "seo": {
+    "title": "Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı",
+    "description": "",
+    "keywords": ""
+  },
+  "paragraflar": [
+    {
+      "tur": "h5",
+      "metin": "E-Posta Girişi (Microsoft Exchange)"
+    },
+    {
+      "tur": "p",
+      "metin": "(Personel - Öğrenci Girişi)"
+    },
+    {
+      "tur": "h5",
+      "metin": "Mezun E-Posta Giriş"
+    },
+    {
+      "tur": "h5",
+      "metin": "HÜ Bilgi İşlem Daire Başkanlığı Portalı"
+    }
+  ],
+  "baglantilar": [
+    {
+      "metin": "E-Posta Girişi (Microsoft Exchange)",
+      "href": "https://posta.hacettepe.edu.tr"
+    },
+    {
+      "metin": "Mezun E-Posta Giriş",
+      "href": "https://outlook.office.com/"
+    },
+    {
+      "metin": "HÜ Bilgi İşlem Daire Başkanlığı Portalı",
+      "href": "https://portal.hacettepe.edu.tr/"
+    }
+  ],
+  "gorseller": [
+    {
+      "src": "https://bidb.hacettepe.edu.tr/images/icon_exchange2.jpg",
+      "alt": ""
+    },
+    {
+      "src": "https://bidb.hacettepe.edu.tr/images/icon_mail2.jpg",
+      "alt": ""
+    },
+    {
+      "src": "https://bidb.hacettepe.edu.tr/images/icon/portal.png",
+      "alt": ""
+    }
+  ],
+  "belgeler": [],
+  "govdeHtml": "<div class=\"icerik\">\n\n\n\n\n\n\n\n<div class=\"row\">\n\t<div class=\"col-lg-3  mb-4\">\n\t\n\t\t<div class=\"card text-center h-100\">\t\t  \n\t\t  <div class=\"card-body\">\n\t\t  \t<div class=\"mb-2\"><img src=\"/images/icon_exchange2.jpg\" width=\"48\" /></div>\n\t\t    <h5 class=\"card-title2\"><a href=\"https://posta.hacettepe.edu.tr\" target=\"_blank\">E-Posta Girişi<br />(Microsoft Exchange)</a></h5>\t\n\t\t    <p><span class=\"text-danger\">(Personel - Öğrenci Girişi)</span></p>\t    \n\t\t  </div>\n\t\t</div>\n\t\n\t</div>\n\n<div class=\"col-lg-3 mb-4\">\n\t\n\t\t<div class=\"card text-center h-100\">\t\t  \n\t\t  <div class=\"card-body\">\n\t\t  \t<div class=\"mb-2\"><img src=\"/images/icon_mail2.jpg\" width=\"48\" /></div>\n\t\t    <h5 class=\"card-title2\"><a href=\"https://outlook.office.com/\" target=\"_blank\">Mezun E-Posta Giriş</a></h5>\t\t    \n\t\t  </div>\n\t\t</div>\n\t\n\t</div>\n\n\n\t<div class=\"col-lg-3  mb-4\">\n\t\n\t\t<div class=\"card text-center h-100\">\t\t  \n\t\t  <div class=\"card-body\">\n\t\t  \t<div class=\"mb-2\"><img src=\"/images/icon/portal.png\" width=\"48\" /></div>\n\t\t    <h5 class=\"card-title2\"><a href=\"https://portal.hacettepe.edu.tr/\" target=\"_blank\">HÜ Bilgi İşlem Daire Başkanlığı Portalı</a></h5>\t\t    \n\t\t  </div>\n\t\t</div>\n\t\n\t</div>\n\n\t\n\n\n\n\n\n</div>\n\t\n\t\n  \n  \n\n\n\n</div>",
+  "karakter": 120,
+  "cekilme": "2026-07-21T14:33:55.520Z"
+}

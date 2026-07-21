@@ -1,0 +1,93 @@
+{
+  "slug": "pc_salon",
+  "dil": "tr",
+  "bolum": "Kurallar ve İlkeler",
+  "menuAdi": "PC Salonlarının Kullanım Kuralları",
+  "url": "https://bidb.hacettepe.edu.tr/tr/pc_salon",
+  "baslik": "PC Salonlarının Kullanım Kuralları",
+  "seo": {
+    "title": "Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı",
+    "description": "",
+    "keywords": ""
+  },
+  "paragraflar": [
+    {
+      "tur": "p",
+      "metin": "Hacettepe Üniversitesi Bilgi İşlem Dairesi Sıhhiye Yerleşkesinde 75 adet ve Beytepe Yerleşkesinde 24 saat esasına göre hizmet veren 260 adet bilgisayardan oluşan bilgisayar salonlarını işletmektedir. Salonlar, özellikle yerleşkelerdeki öğrencilerin bilişim gereksinimlerini karşılamayı amaçlamaktadır. Salondaki tüm bilgisayarlar Internet bağlantılı olup gerekli olabileceği düşünülen ofis yazılımları ve yardımcı araçları da bulundurmaktadır."
+    },
+    {
+      "tur": "p",
+      "metin": "Randevu kuralı uygulanan bu salonların işletiminden sorumlu bir yetkili de sürekli olarak hazır bulunmaktadır."
+    },
+    {
+      "tur": "p",
+      "metin": "Kaynakların adil ve optimium biçimde paylaşılabilmesi amacıyla bu salonların kullanımında uyulması gereken kurallar aşağıda belirtilmiştir:"
+    },
+    {
+      "tur": "li",
+      "metin": "Bilgisayar salonlarında bulunan bilgisayarları sadece Hacettepe Üniversitesi öğrencileri kullanabilirler. Üniversite dışından kişilerin bilgisayar odalarına girmeleri kesinlikle yasaktır."
+    },
+    {
+      "tur": "li",
+      "metin": "Bilgisayar giriş hakları öğrencilere belirli bir süreliğine verilir. Bu süre bir eğitim döneminin tam katları şeklinde belirlenir. Kullanım süresi bitiminde, iligili kullanıcıya ait tüm profil ve disk alanları silinecektir."
+    },
+    {
+      "tur": "li",
+      "metin": "Bilgisayarlara giriş için kullanılan kullanıcı ad ve şifreleri sadece o şifreyi alan öğrencinin kullanımı içindir. Şifreyi alan öğrenci, bunun güvenlik ve gizliliğinden bizzat sorumludur. Şifrenin bir başkası tarafından kullanıldığının tespiti halinde şifrenin sahibi olan öğrenci sorumlu tutulacaktır."
+    },
+    {
+      "tur": "li",
+      "metin": "Bir bilgisayar başında birden fazla kişinin oturması yasaktır."
+    },
+    {
+      "tur": "li",
+      "metin": "Bilgisayar odalarına yiyecek veya içecekle girmek kesinlikle yasaktır."
+    },
+    {
+      "tur": "li",
+      "metin": "Kullanıcılar, her ne amaçlı olursa olsun, üniversite içi veya dışına yönelik herhangi bir bilgisayara hack/crack ve benzeri ataklarda bulunamaz, başkalarının şifresini veya verilerini ele geçirmeye teşebbüs dahi edemez."
+    },
+    {
+      "tur": "li",
+      "metin": "Bilgisayar salonlarında kullanıcıları rahatsız edici hiçbir davranışta bulunulamaz, gürültü yapılamaz, yüksek sesle konuşulamaz, bilgisayar kullanımı dışında sohbet vs. amaçlarla bulunulamaz, cep telefonu ile konuşulamaz."
+    },
+    {
+      "tur": "li",
+      "metin": "Kullanıcıların, mevcut sistemi kendi istekleri doğrultusunda, izin verilen sınırlar dışında kişiselleştirmeleri ve program yüklemeleri yasaktır."
+    },
+    {
+      "tur": "li",
+      "metin": "Sunulan donanım, yazılım ve Internet bağlantıları, sadece öğrencilerin eğitim, öğretim ve iletişim gereksinimleri içindir. Bunlar dışında herhangi bir amaçla kullanılamaz."
+    },
+    {
+      "tur": "li",
+      "metin": "Mevcut CD yazıcılar, sadece kişisel dosyaların yedeklenmesi için kullanılacaktır. Bu amaç dışında her türlü izinsiz kopyalama yapmak yasaktır."
+    },
+    {
+      "tur": "li",
+      "metin": "Salonlardan sorumlu olan görevliler dışındaki kullanıcılar bilgisayarlar, monitörler ve kesintisiz güç kaynakları üzerinden açma/kapama yapmayacaklardır. Kullanıcıların sadece işleri bitince LOGOUT yapıp çıkmaları gerekmektedir. LOGOUT yapmadan bilgisayar terk edilemez."
+    },
+    {
+      "tur": "li",
+      "metin": "Bilgisayarlar, hiç bir şekilde genel ahlak ve toplum kurallarına, yasalara ve kişisel haklara aykırı amaçlar için kullanılamaz."
+    },
+    {
+      "tur": "li",
+      "metin": "Bilgisayar salonları 24 saat güvenlik kameraları ile izlenmekte ve görüntüler kaydedilmektedir. Kullanıcıların salonları bu bilinçle kullanmaları gerekmektedir."
+    },
+    {
+      "tur": "li",
+      "metin": "Öğrenciler, kendilerine ayrılmış disk alanlarında dosyalarını saklayabilirler. Ancak, üniversitemiz, bu verilerin güvenliğinden ve kalıcılığından sorumlu değildir. Kullanıcı, herhangi bir olağanüstü durum dahilinde verilerin silinebileceği olasılığını göz önünde bulundurarak önemli dosyalarını yedeklemelidir."
+    },
+    {
+      "tur": "li",
+      "metin": "Yukarıda belirtilen maddelerden herhangi birine aykırı hareket eden kullanıcıların kullanım hakları süresiz olarak alınacak ve durumları bağlı olduğu fakülte/bölüm/birim yönetimine yazılı olarak iletilecektir."
+    }
+  ],
+  "baglantilar": [],
+  "gorseller": [],
+  "belgeler": [],
+  "govdeHtml": "<div class=\"icerik\">\n\n\n<p>Hacettepe Üniversitesi Bilgi İşlem Dairesi Sıhhiye Yerleşkesinde 75 adet ve Beytepe Yerleşkesinde 24 saat esasına göre hizmet veren 260 adet bilgisayardan oluşan bilgisayar salonlarını işletmektedir. Salonlar, özellikle yerleşkelerdeki öğrencilerin bilişim gereksinimlerini karşılamayı amaçlamaktadır. Salondaki tüm bilgisayarlar Internet bağlantılı olup gerekli olabileceği düşünülen ofis yazılımları ve yardımcı araçları da bulundurmaktadır. </p>\n<p>Randevu kuralı uygulanan bu salonların işletiminden sorumlu bir yetkili de   sürekli olarak hazır bulunmaktadır. </p>\n<p>Kaynakların adil ve optimium biçimde paylaşılabilmesi amacıyla bu salonların   kullanımında uyulması gereken kurallar aşağıda belirtilmiştir: </p>\n<OL>\n  <LI>Bilgisayar salonlarında bulunan bilgisayarları sadece Hacettepe Üniversitesi   öğrencileri kullanabilirler. Üniversite dışından kişilerin bilgisayar odalarına   girmeleri kesinlikle yasaktır. </LI>\n  <LI>Bilgisayar giriş hakları öğrencilere belirli bir süreliğine verilir. Bu süre   bir eğitim döneminin tam katları şeklinde belirlenir. Kullanım süresi bitiminde,   iligili kullanıcıya ait tüm profil ve disk alanları silinecektir. </LI>\n  <LI>Bilgisayarlara giriş için kullanılan kullanıcı ad ve şifreleri sadece o   şifreyi alan öğrencinin kullanımı içindir. Şifreyi alan öğrenci, bunun güvenlik   ve gizliliğinden bizzat sorumludur. Şifrenin bir başkası tarafından   kullanıldığının tespiti halinde şifrenin sahibi olan öğrenci sorumlu   tutulacaktır. </LI>\n  <LI>Bir bilgisayar başında birden fazla kişinin oturması yasaktır. </LI>\n  <LI>Bilgisayar odalarına yiyecek veya içecekle girmek kesinlikle yasaktır. </LI>\n  <LI>Kullanıcılar, her ne amaçlı olursa olsun, üniversite içi veya dışına yönelik   herhangi bir bilgisayara hack/crack ve benzeri ataklarda bulunamaz, başkalarının   şifresini veya verilerini ele geçirmeye teşebbüs dahi edemez. </LI>\n  <LI>Bilgisayar salonlarında kullanıcıları rahatsız edici hiçbir davranışta   bulunulamaz, gürültü yapılamaz, yüksek sesle konuşulamaz, bilgisayar kullanımı   dışında sohbet vs. amaçlarla bulunulamaz, cep telefonu ile konuşulamaz. </LI>\n  <LI>Kullanıcıların, mevcut sistemi kendi istekleri doğrultusunda, izin verilen   sınırlar dışında kişiselleştirmeleri ve program yüklemeleri yasaktır. </LI>\n  <LI>Sunulan donanım, yazılım ve Internet bağlantıları, sadece öğrencilerin   eğitim, öğretim ve iletişim gereksinimleri içindir. Bunlar dışında herhangi bir   amaçla kullanılamaz. </LI>\n  <LI>Mevcut CD yazıcılar, sadece kişisel dosyaların yedeklenmesi için   kullanılacaktır. Bu amaç dışında her türlü izinsiz kopyalama yapmak yasaktır. </LI>\n  <LI>Salonlardan sorumlu olan görevliler dışındaki kullanıcılar bilgisayarlar,   monitörler ve kesintisiz güç kaynakları üzerinden açma/kapama yapmayacaklardır.   Kullanıcıların sadece işleri bitince LOGOUT yapıp çıkmaları gerekmektedir.   LOGOUT yapmadan bilgisayar terk edilemez. </LI>\n  <LI>Bilgisayarlar, hiç bir şekilde genel ahlak ve toplum kurallarına, yasalara   ve kişisel haklara aykırı amaçlar için kullanılamaz. </LI>\n  <LI>Bilgisayar salonları 24 saat güvenlik kameraları ile izlenmekte ve   görüntüler kaydedilmektedir. Kullanıcıların salonları bu bilinçle kullanmaları   gerekmektedir. </LI>\n  <LI>Öğrenciler, kendilerine ayrılmış disk alanlarında dosyalarını   saklayabilirler. Ancak, üniversitemiz, bu verilerin güvenliğinden ve   kalıcılığından sorumlu değildir. Kullanıcı, herhangi bir olağanüstü durum   dahilinde verilerin silinebileceği olasılığını göz önünde bulundurarak önemli   dosyalarını yedeklemelidir. </LI>\n  <LI>Yukarıda belirtilen maddelerden herhangi birine aykırı hareket eden   kullanıcıların kullanım hakları süresiz olarak alınacak ve durumları bağlı   olduğu fakülte/bölüm/birim yönetimine yazılı olarak iletilecektir. </LI>\n</OL>\n</div>",
+  "karakter": 3509,
+  "cekilme": "2026-07-21T14:33:58.532Z"
+}

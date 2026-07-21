@@ -1,0 +1,243 @@
+{
+  "tr": {
+    "menu": [
+      {
+        "ad": "Ana Sayfa",
+        "href": "https://bidb.hacettepe.edu.tr/tr",
+        "altlar": []
+      },
+      {
+        "ad": "Kurumsal",
+        "href": null,
+        "altlar": [
+          {
+            "ad": "Genel Tanıtım",
+            "href": "https://bidb.hacettepe.edu.tr/tr/geneltanitim"
+          }
+        ]
+      },
+      {
+        "ad": "Yönetim",
+        "href": "https://bidb.hacettepe.edu.tr/tr/yonetim",
+        "altlar": []
+      },
+      {
+        "ad": "Misyon ve Vizyon",
+        "href": "https://bidb.hacettepe.edu.tr/tr/misyonvizyon",
+        "altlar": []
+      },
+      {
+        "ad": "Bilgi Güvenliği Politikası",
+        "href": "https://bidb.hacettepe.edu.tr/tr/bilgikorumaanapolitikamiz",
+        "altlar": []
+      },
+      {
+        "ad": "Personel",
+        "href": "https://bidb.hacettepe.edu.tr/tr/personel",
+        "altlar": []
+      },
+      {
+        "ad": "Organizasyon Şeması",
+        "href": "https://bidb.hacettepe.edu.tr/tr/organizasyonsemasi",
+        "altlar": []
+      },
+      {
+        "ad": "Kurul ve Komisyonlar",
+        "href": "https://bidb.hacettepe.edu.tr/tr/kk",
+        "altlar": []
+      },
+      {
+        "ad": "Servislerimiz",
+        "href": null,
+        "altlar": [
+          {
+            "ad": "WEB Servisleri",
+            "href": "https://bidb.hacettepe.edu.tr/tr/webser"
+          }
+        ]
+      },
+      {
+        "ad": "İçerik Yönetim Sistemi",
+        "href": "https://bidb.hacettepe.edu.tr/tr/hu-iys",
+        "altlar": []
+      },
+      {
+        "ad": "Kablosuz Erişim Servisleri",
+        "href": "https://bidb.hacettepe.edu.tr/tr/kablosuz",
+        "altlar": []
+      },
+      {
+        "ad": "Lisanslı Yazılım Sunucusu",
+        "href": "https://bidb.hacettepe.edu.tr/tr/yazilim",
+        "altlar": []
+      },
+      {
+        "ad": "HÜ Yönetim Sistemleri",
+        "href": "https://huys.hacettepe.edu.tr:7020/CasSunucu/login?service=http%3A%2F%2Fhuys.hacettepe.edu.tr%2FuygulamaGiris",
+        "altlar": []
+      },
+      {
+        "ad": "E-İmza Kullanma Rehberi",
+        "href": "https://bidb.hacettepe.edu.tr/eimza/index.php",
+        "altlar": []
+      },
+      {
+        "ad": "Bilgi ve Dokümanlar",
+        "href": "https://bidb.hacettepe.edu.tr/tr/bilgidokuman",
+        "altlar": []
+      },
+      {
+        "ad": "Kurallar ve İlkeler",
+        "href": null,
+        "altlar": [
+          {
+            "ad": "Bilgi Güvenliği Yönetim Sistemi",
+            "href": "https://bidb.hacettepe.edu.tr/tr/bgys"
+          }
+        ]
+      },
+      {
+        "ad": "Hacettepe Üniversitesi E-Posta Yönergesi",
+        "href": "https://bidb.hacettepe.edu.tr/dosyalar/epostayonergesi22.pdf",
+        "altlar": []
+      },
+      {
+        "ad": "E-Posta Tarama Politikaları",
+        "href": "https://bidb.hacettepe.edu.tr/tr/tarama",
+        "altlar": []
+      },
+      {
+        "ad": "WEB Sayfası Yayım İlkeleri",
+        "href": "https://bidb.hacettepe.edu.tr/tr/yayim",
+        "altlar": []
+      },
+      {
+        "ad": "Yurt ve Öğrenci Evleri için Kurallar",
+        "href": "https://bidb.hacettepe.edu.tr/tr/ogr_kural",
+        "altlar": []
+      },
+      {
+        "ad": "PC Salonlarının Kullanım Kuralları",
+        "href": "https://bidb.hacettepe.edu.tr/tr/pc_salon",
+        "altlar": []
+      },
+      {
+        "ad": "Dağıtım Listeleri Kullanım Politikaları",
+        "href": "https://bidb.hacettepe.edu.tr/tr/posta_kural",
+        "altlar": []
+      },
+      {
+        "ad": "HUNET Kullanım İlkeleri",
+        "href": "https://bidb.hacettepe.edu.tr/tr/hunet_kurallar",
+        "altlar": []
+      },
+      {
+        "ad": "HUNET Hakkında Öğrencilerimiz için Çerçeve Kurallar",
+        "href": "https://bidb.hacettepe.edu.tr/tr/bilisim_ilke",
+        "altlar": []
+      },
+      {
+        "ad": "HUNET - BEYTEPE Yurt Erişim Protokolü",
+        "href": "https://bidb.hacettepe.edu.tr/tr/hunet_protokol",
+        "altlar": []
+      },
+      {
+        "ad": "Bilişim ile ilgili Yasal Düzenlemeler",
+        "href": "https://www.btk.gov.tr/kanunlar",
+        "altlar": []
+      },
+      {
+        "ad": "Teknik Altyapı",
+        "href": null,
+        "altlar": [
+          {
+            "ad": "Ağ Altyapısı",
+            "href": "https://bidb.hacettepe.edu.tr/tr/altyapi"
+          }
+        ]
+      },
+      {
+        "ad": "Mevcut Donanım Bilgileri",
+        "href": "https://bidb.hacettepe.edu.tr/tr/donanim",
+        "altlar": []
+      },
+      {
+        "ad": "Dış Erişim Kuralları",
+        "href": "https://bidb.hacettepe.edu.tr/tr/erisim",
+        "altlar": []
+      },
+      {
+        "ad": "İletişim",
+        "href": "https://bidb.hacettepe.edu.tr/tr/iletisim",
+        "altlar": []
+      }
+    ],
+    "sosyal": [
+      {
+        "ag": "instagram",
+        "url": "https://www.instagram.com/hacettepe_university/"
+      },
+      {
+        "ag": "facebook",
+        "url": "https://www.facebook.com/HacettepeUniversitesiKurumsal"
+      },
+      {
+        "ag": "twitter",
+        "url": "https://twitter.com/hacettepe1967"
+      }
+    ]
+  },
+  "en": {
+    "menu": [
+      {
+        "ad": "Home Page",
+        "href": "https://bidb.hacettepe.edu.tr/en",
+        "altlar": []
+      },
+      {
+        "ad": "Overview",
+        "href": "https://bidb.hacettepe.edu.tr/en/overview",
+        "altlar": []
+      },
+      {
+        "ad": "Mission and Vision",
+        "href": "https://bidb.hacettepe.edu.tr/en/mv",
+        "altlar": []
+      },
+      {
+        "ad": "Administrative Organization",
+        "href": "https://bidb.hacettepe.edu.tr/en/yonetim",
+        "altlar": []
+      },
+      {
+        "ad": "Service Groups",
+        "href": "https://bidb.hacettepe.edu.tr/en/grup",
+        "altlar": []
+      },
+      {
+        "ad": "Computer Center Portal",
+        "href": "https://portal.hacettepe.edu.tr/?lang=en",
+        "altlar": []
+      },
+      {
+        "ad": "Contact",
+        "href": "https://bidb.hacettepe.edu.tr/en/iletisim",
+        "altlar": []
+      }
+    ],
+    "sosyal": [
+      {
+        "ag": "instagram",
+        "url": "https://www.instagram.com/hacettepe_university/"
+      },
+      {
+        "ag": "facebook",
+        "url": "https://www.facebook.com/HacettepeUniversitesiKurumsal"
+      },
+      {
+        "ag": "twitter",
+        "url": "https://twitter.com/hacettepe1967"
+      }
+    ]
+  }
+}

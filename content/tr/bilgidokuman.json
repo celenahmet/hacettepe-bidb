@@ -1,0 +1,78 @@
+{
+  "slug": "bilgidokuman",
+  "dil": "tr",
+  "bolum": "Servislerimiz",
+  "menuAdi": "Bilgi ve Dokümanlar",
+  "url": "https://bidb.hacettepe.edu.tr/tr/bilgidokuman",
+  "baslik": "Bilgi ve Dokümanlar",
+  "seo": {
+    "title": "Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı",
+    "description": "",
+    "keywords": ""
+  },
+  "paragraflar": [
+    {
+      "tur": "li",
+      "metin": "VPN Kurulumu Kılavuzu"
+    },
+    {
+      "tur": "li",
+      "metin": "SPAM ve PHISHING Hakkında"
+    },
+    {
+      "tur": "li",
+      "metin": "Virüsler ve Güvenlik Önerileri"
+    },
+    {
+      "tur": "li",
+      "metin": "Bilgisayar Kazaları için Önlemler"
+    },
+    {
+      "tur": "li",
+      "metin": "HÜ Internet Bağlantısı Hakkında"
+    },
+    {
+      "tur": "li",
+      "metin": "Proxy Ayarları"
+    },
+    {
+      "tur": "li",
+      "metin": "Yararlı Doküman ve Bağlantılar"
+    }
+  ],
+  "baglantilar": [
+    {
+      "metin": "VPN Kurulumu Kılavuzu",
+      "href": "https://bidb.hacettepe.edu.tr/tr/VPN"
+    },
+    {
+      "metin": "SPAM ve PHISHING Hakkında",
+      "href": "https://bidb.hacettepe.edu.tr/tr/spam"
+    },
+    {
+      "metin": "Virüsler ve Güvenlik Önerileri",
+      "href": "https://bidb.hacettepe.edu.tr/tr/guvenlik"
+    },
+    {
+      "metin": "Bilgisayar Kazaları için Önlemler",
+      "href": "https://bidb.hacettepe.edu.tr/tr/bil_onlem"
+    },
+    {
+      "metin": "HÜ Internet Bağlantısı Hakkında",
+      "href": "https://bidb.hacettepe.edu.tr/tr/baglanti_onlem"
+    },
+    {
+      "metin": "Proxy Ayarları",
+      "href": "https://bidb.hacettepe.edu.tr/tr/proxy"
+    },
+    {
+      "metin": "Yararlı Doküman ve Bağlantılar",
+      "href": "https://bidb.hacettepe.edu.tr/tr/dokuman_link"
+    }
+  ],
+  "gorseller": [],
+  "belgeler": [],
+  "govdeHtml": "<div class=\"icerik\">\n\n  <UL>\n    <li><a href=\"/tr/VPN\" target=\"_blank\">VPN Kurulumu Kılavuzu</a></li>\n    <LI><A href=\"/tr/spam\">SPAM ve PHISHING Hakkında</A></LI>\n    <LI><A href=\"/tr/guvenlik\">Virüsler ve Güvenlik Önerileri</A></LI>\n    <LI><A href=\"/tr/bil_onlem\">Bilgisayar Kazaları için Önlemler</A></LI>\n    <LI><A href=\"/tr/baglanti_onlem\">HÜ Internet Bağlantısı Hakkında</A></LI>\n    <LI><A href=\"/tr/proxy\">Proxy Ayarları</A></LI>\n    <LI><A href=\"/tr/dokuman_link\">Yararlı Doküman ve Bağlantılar</A></LI>\n  </UL>\n</div>",
+  "karakter": 184,
+  "cekilme": "2026-07-21T14:33:54.841Z"
+}

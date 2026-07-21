@@ -1,0 +1,70 @@
+{
+  "slug": "ogr_kural",
+  "dil": "tr",
+  "bolum": "Kurallar ve İlkeler",
+  "menuAdi": "Yurt ve Öğrenci Evleri Kuralları",
+  "url": "https://bidb.hacettepe.edu.tr/tr/ogr_kural",
+  "baslik": "Yurt ve Öğrenci Evleri için Kurallar",
+  "seo": {
+    "title": "Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı",
+    "description": "",
+    "keywords": ""
+  },
+  "paragraflar": [
+    {
+      "tur": "p",
+      "metin": "Hacettepe Üniversitesi Bilgi İşlem Dairesi üniversitede bulunan yurt ve özel öğrenci evlerine de Internet hizmeti vermektedir. Öğrenciler kendi kişisel bilgisayarlarını bu sisteme bağlayarak otomatik IP adresi almakta ve -sanal IP + NAT üzerinden- Internet ve Intranet bağlantısı kurabilmektedirler."
+    },
+    {
+      "tur": "p",
+      "metin": "Bu bölgelerde BİD'nin verdiği Internet hizmetinden yararlanırken aşağıdaki kurallara uyulması gerekmektedir:"
+    },
+    {
+      "tur": "li",
+      "metin": "Yurt odalarında öğrencilerin kişisel bilgisayarları için sağlanan Internet ve Intranet bağlantısı, kullanıcı kodları vb. kaynaklar \" Hacettepe Üniversitesi Bilişim Kaynakları Kullanım İlkeleri \" çerçevesinde kullanılmalıdır."
+    },
+    {
+      "tur": "li",
+      "metin": "Üniversitenin bilgisayar ve ağ altyapısı akademik, idari, eğitim ve araştırma amaçlarına hizmet etmek amacıyla kurulmuştur. Ağ üzerindeki kişisel kullanımlar hiçbir zaman diğer kullanıcıların ağ erişim gereksinimlerini yerine getirmelerine engel olmamalıdır. Bu nedenle uyulması gereken bazı kural ve yasaklar getirilmiştir: Ağ kaynaklarının kişisel kazanç ve kar amacı ile kullanılması yasaktır."
+    },
+    {
+      "tur": "li",
+      "metin": "Ağ kaynakları kullanılarak, kitlesel e-postaların gönderilmesi (mail bombing, spam) veya üçüncü şahısların göndermesine olanak sağlanması yasaktır."
+    },
+    {
+      "tur": "li",
+      "metin": "Yurt odalarında, servis veren (web hosting, e-posta, ftp servisi vb.) sunucu nitelikli yazılımların çalıştırılması yasaktır."
+    },
+    {
+      "tur": "li",
+      "metin": "Üniversite ağ kaynaklarının üniversite dışından kullanılmasına sebep olabilecek ya da üniversite dışındaki kişi ya da bilgisayarların kendilerini üniversite içindeymiş gibi tanıtmalarını sağlayacak her tür faaliyet (proxy, relay, IP sharer, NAT vb.) yasaktır."
+    },
+    {
+      "tur": "li",
+      "metin": "Ağ güvenliğini tehdit edici ya da ağ trafiğini gözlemleyici faaliyetlerde bulunmak yasaktır."
+    },
+    {
+      "tur": "li",
+      "metin": "Yurt odasında, ağ sistemine bağlı bilgisayarı bulunan her öğrenci, üniversite tarafından kendisine ayrılan Internet/Intranet bağlantısı, kullanıcı hesapları vb. kaynakların kullanımından, güvenliğinden ve bu kaynakların bilinçli ya da bilinçsiz olarak üçüncü kişilere kullandırılması durumunda ortaya çıkabilecek yasaklanmış faaliyetlerden birinci derecede sorumludur."
+    },
+    {
+      "tur": "li",
+      "metin": "Yukarıda belirtilen kurallara uyulmadığının tesbiti durumunda ilgili kişiye ağ bağlantısının kapatılması, kullanıcı hesaplarının dondurulması, üniversite yönetmeliklerine göre yasal soruşturmanın başlatılması veya Türkiye Cumhuriyeti yasalarına göre adli soruşturmanın başlatılması gibi işlemlerden biri ya da birkaçı uygulanabilir."
+    },
+    {
+      "tur": "li",
+      "metin": "Kurallara uymadığı tesbit edilen öğrencilere ikamet ettiği birimin (yurt ya da öğrenci evleri) yönetimi aracılığı ile bildirim yapılır."
+    }
+  ],
+  "baglantilar": [
+    {
+      "metin": "Hacettepe Üniversitesi Bilişim Kaynakları Kullanım İlkeleri",
+      "href": "https://bidb.hacettepe.edu.tr/tr/bilisim_ilke"
+    }
+  ],
+  "gorseller": [],
+  "belgeler": [],
+  "govdeHtml": "<div class=\"icerik\">\n\n<p>Hacettepe Üniversitesi Bilgi İşlem Dairesi üniversitede bulunan yurt ve özel   öğrenci evlerine de Internet hizmeti vermektedir. Öğrenciler kendi kişisel   bilgisayarlarını bu sisteme bağlayarak otomatik IP adresi almakta ve -sanal IP +   NAT üzerinden- Internet ve Intranet bağlantısı kurabilmektedirler. </p>\n<p>Bu bölgelerde BİD'nin verdiği Internet hizmetinden yararlanırken aşağıdaki   kurallara uyulması gerekmektedir: </p>\n<OL>\n  <LI>Yurt odalarında öğrencilerin kişisel bilgisayarları için sağlanan Internet   ve Intranet bağlantısı, kullanıcı kodları vb. kaynaklar \"<A href=\"/tr/bilisim_ilke\">Hacettepe   Üniversitesi Bilişim Kaynakları Kullanım İlkeleri</A>\" çerçevesinde   kullanılmalıdır. </LI>\n  <LI>Üniversitenin bilgisayar ve ağ altyapısı akademik, idari, eğitim ve   araştırma amaçlarına hizmet etmek amacıyla kurulmuştur. Ağ üzerindeki kişisel   kullanımlar hiçbir zaman diğer kullanıcıların ağ erişim gereksinimlerini yerine   getirmelerine engel olmamalıdır. Bu nedenle uyulması gereken bazı kural ve   yasaklar getirilmiştir:\n    <UL>\n      <LI>Ağ kaynaklarının kişisel kazanç ve kar amacı ile kullanılması yasaktır. </LI>\n      <LI>Ağ kaynakları kullanılarak, kitlesel e-postaların gönderilmesi (mail   bombing, spam) veya üçüncü şahısların göndermesine olanak sağlanması yasaktır. </LI>\n      <LI>Yurt odalarında, servis veren (web hosting, e-posta, ftp servisi vb.) sunucu   nitelikli yazılımların çalıştırılması yasaktır. </LI>\n      <LI>Üniversite ağ kaynaklarının üniversite dışından kullanılmasına sebep   olabilecek ya da üniversite dışındaki kişi ya da bilgisayarların kendilerini   üniversite içindeymiş gibi tanıtmalarını sağlayacak her tür faaliyet (proxy,   relay, IP sharer, NAT vb.) yasaktır. </LI>\n      <LI>Ağ güvenliğini tehdit edici ya da ağ trafiğini gözlemleyici faaliyetlerde   bulunmak yasaktır. </LI>\n      <LI>Yurt odasında, ağ sistemine bağlı bilgisayarı bulunan her öğrenci,   üniversite tarafından kendisine ayrılan Internet/Intranet bağlantısı, kullanıcı   hesapları vb. kaynakların kullanımından, güvenliğinden ve bu kaynakların   bilinçli ya da bilinçsiz olarak üçüncü kişilere kullandırılması durumunda ortaya   çıkabilecek yasaklanmış faaliyetlerden birinci derecede sorumludur. </LI>\n    </UL>\n  </LI>\n  <LI>Yukarıda belirtilen kurallara uyulmadığının tesbiti durumunda ilgili kişiye   ağ bağlantısının kapatılması, kullanıcı hesaplarının dondurulması, üniversite   yönetmeliklerine göre yasal soruşturmanın başlatılması veya Türkiye Cumhuriyeti   yasalarına göre adli soruşturmanın başlatılması gibi işlemlerden biri ya da   birkaçı uygulanabilir. </LI>\n  <LI>Kurallara uymadığı tesbit edilen öğrencilere ikamet ettiği birimin (yurt ya   da öğrenci evleri) yönetimi aracılığı ile bildirim yapılır. </LI>\n</OL>\n</div>",
+  "karakter": 2484,
+  "cekilme": "2026-07-21T14:33:58.204Z"
+}

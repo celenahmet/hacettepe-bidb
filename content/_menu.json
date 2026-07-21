@@ -1,0 +1,198 @@
+{
+  "tr": [
+    {
+      "bolum": "Kurumsal",
+      "sayfalar": [
+        [
+          "geneltanitim",
+          "Genel Tanıtım"
+        ],
+        [
+          "yonetim",
+          "Yönetim"
+        ],
+        [
+          "misyonvizyon",
+          "Misyon ve Vizyon"
+        ],
+        [
+          "bilgikorumaanapolitikamiz",
+          "Bilgi Güvenliği Politikası"
+        ],
+        [
+          "personel",
+          "Personel"
+        ],
+        [
+          "organizasyonsemasi",
+          "Organizasyon Şeması"
+        ],
+        [
+          "kk",
+          "Kurul ve Komisyonlar"
+        ]
+      ]
+    },
+    {
+      "bolum": "Servislerimiz",
+      "sayfalar": [
+        [
+          "webser",
+          "WEB Servisleri"
+        ],
+        [
+          "hu-iys",
+          "İçerik Yönetim Sistemi"
+        ],
+        [
+          "kablosuz",
+          "Kablosuz Erişim Servisleri"
+        ],
+        [
+          "yazilim",
+          "Lisanslı Yazılım Sunucusu"
+        ],
+        [
+          "bilgidokuman",
+          "Bilgi ve Dokümanlar"
+        ],
+        [
+          "eposta",
+          "E-Posta İşlemleri"
+        ],
+        [
+          "e-posta",
+          "E-Posta Giriş"
+        ],
+        [
+          "office365",
+          "Office 365"
+        ],
+        [
+          "proxy",
+          "Proxy Ayarları ve Kurulumu"
+        ],
+        [
+          "sss",
+          "Sık Sorulan Sorular"
+        ],
+        [
+          "formlar",
+          "Formlar"
+        ]
+      ]
+    },
+    {
+      "bolum": "Kurallar ve İlkeler",
+      "sayfalar": [
+        [
+          "bgys",
+          "Bilgi Güvenliği Yönetim Sistemi"
+        ],
+        [
+          "tarama",
+          "E-Posta Tarama Politikaları"
+        ],
+        [
+          "yayim",
+          "WEB Sayfası Yayım İlkeleri"
+        ],
+        [
+          "ogr_kural",
+          "Yurt ve Öğrenci Evleri Kuralları"
+        ],
+        [
+          "pc_salon",
+          "PC Salonlarının Kullanım Kuralları"
+        ],
+        [
+          "posta_kural",
+          "Dağıtım Listeleri Politikaları"
+        ],
+        [
+          "hunet_kurallar",
+          "HUNET Kullanım İlkeleri"
+        ],
+        [
+          "bilisim_ilke",
+          "HUNET Öğrenci Çerçeve Kuralları"
+        ],
+        [
+          "hunet_protokol",
+          "HUNET Beytepe Yurt Erişim Protokolü"
+        ]
+      ]
+    },
+    {
+      "bolum": "Teknik Altyapı",
+      "sayfalar": [
+        [
+          "altyapi",
+          "Ağ Altyapısı"
+        ],
+        [
+          "donanim",
+          "Mevcut Donanım Bilgileri"
+        ],
+        [
+          "erisim",
+          "Dış Erişim Kuralları"
+        ]
+      ]
+    },
+    {
+      "bolum": "İletişim",
+      "sayfalar": [
+        [
+          "iletisim",
+          "İletişim"
+        ],
+        [
+          "sorumluluksiniri",
+          "Sorumluluk Sınırı"
+        ],
+        [
+          "erisilebilirlik",
+          "Erişilebilirlik Bildirimi"
+        ]
+      ]
+    }
+  ],
+  "en": [
+    {
+      "bolum": "Corporate",
+      "sayfalar": [
+        [
+          "overview",
+          "Overview"
+        ],
+        [
+          "mv",
+          "Mission and Vision"
+        ],
+        [
+          "yonetim",
+          "Administrative Organization"
+        ]
+      ]
+    },
+    {
+      "bolum": "Services",
+      "sayfalar": [
+        [
+          "grup",
+          "Service Groups"
+        ]
+      ]
+    },
+    {
+      "bolum": "Contact",
+      "sayfalar": [
+        [
+          "iletisim",
+          "Contact"
+        ]
+      ]
+    }
+  ]
+}

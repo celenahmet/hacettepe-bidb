@@ -1,0 +1,25 @@
+{
+  "slug": "organizasyonsemasi",
+  "dil": "tr",
+  "bolum": "Kurumsal",
+  "menuAdi": "Organizasyon Şeması",
+  "url": "https://bidb.hacettepe.edu.tr/tr/organizasyonsemasi",
+  "baslik": "Organizasyon Şeması",
+  "seo": {
+    "title": "Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı",
+    "description": "",
+    "keywords": ""
+  },
+  "paragraflar": [],
+  "baglantilar": [],
+  "gorseller": [
+    {
+      "src": "https://bidb.hacettepe.edu.tr/sayfa/tr/kurumsalsema180117.jpg",
+      "alt": ""
+    }
+  ],
+  "belgeler": [],
+  "govdeHtml": "<div class=\"icerik\">\n<p align=\"center\"><img src=\"/sayfa/tr/kurumsalsema180117.jpg\" /></p>\n\n</div>",
+  "karakter": 0,
+  "cekilme": "2026-07-21T14:33:52.850Z"
+}

@@ -1,0 +1,58 @@
+{
+  "slug": "webser",
+  "dil": "tr",
+  "bolum": "Servislerimiz",
+  "menuAdi": "WEB Servisleri",
+  "url": "https://bidb.hacettepe.edu.tr/tr/webser",
+  "baslik": "WEB Servisleri",
+  "seo": {
+    "title": "Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı",
+    "description": "",
+    "keywords": ""
+  },
+  "paragraflar": [
+    {
+      "tur": "p",
+      "metin": "Hacettepe Üniversitesi Ana Web Sitesi Hacettepe Üniversitesi'nin ana Web sitesi www.hacettepe.edu.tr adresinden Bilgi İşlem Dairesi sorumludur. Daire bünyesinde faaliyet gösteren Web Birimi, bu sitenin tasarım ve güncellemesini yapmaktadır. Sitede yer alması istenilen bilgiler, yapılması gereken düzeltmeler ve eklentiler için webmaster@hacettepe.edu.tr adresine başvurulabilir."
+    },
+    {
+      "tur": "li",
+      "metin": "Birimler Web Sayfaları için Web Servisi"
+    },
+    {
+      "tur": "li",
+      "metin": "Kişisel Web Sayfaları için Web Servisi"
+    },
+    {
+      "tur": "p",
+      "metin": "Lütfen bilişim ile ilgili yasal düzenlemeler sayfasından Kamu Kurumları İnternet Sitesi Kılavuzu ile İlgili 2007/4 Sayılı Başbakanlık Genelgesi inceleyiniz."
+    }
+  ],
+  "baglantilar": [
+    {
+      "metin": "www.hacettepe.edu.tr",
+      "href": "http://www.hacettepe.edu.tr/"
+    },
+    {
+      "metin": "webmaster@hacettepe.edu.tr",
+      "href": "mailto:webmaster@hacettepe.edu.tr"
+    },
+    {
+      "metin": "Birimler Web Sayfaları için Web Servisi",
+      "href": "https://bidb.hacettepe.edu.tr/tr/servis"
+    },
+    {
+      "metin": "Kişisel Web Sayfaları için Web Servisi",
+      "href": "https://bidb.hacettepe.edu.tr/tr/kisisel"
+    },
+    {
+      "metin": "bilişim ile ilgili yasal düzenlemeler",
+      "href": "https://www.btk.gov.tr/kanunlar"
+    }
+  ],
+  "gorseller": [],
+  "belgeler": [],
+  "govdeHtml": "<div class=\"icerik\">\n<p><STRONG>Hacettepe Üniversitesi Ana Web Sitesi</STRONG><BR>\n  Hacettepe Üniversitesi'nin   ana Web sitesi <A href=\"http://www.hacettepe.edu.tr/\" target=\"_new\">www.hacettepe.edu.tr</A> adresinden Bilgi İşlem Dairesi sorumludur.   Daire bünyesinde faaliyet gösteren Web Birimi, bu sitenin tasarım ve   güncellemesini yapmaktadır. Sitede yer alması istenilen bilgiler, yapılması   gereken düzeltmeler ve eklentiler için <A href=\"mailto:webmaster@hacettepe.edu.tr\">webmaster@hacettepe.edu.tr</A> adresine   başvurulabilir. </p>\n<UL>\n  <LI><A href=\"/tr/servis\">Birimler Web Sayfaları için Web   Servisi</A> </LI>\n  \n  <LI><A href=\"/tr/kisisel\">Kişisel Web Sayfaları için Web   Servisi</A> </LI>\n  \n  \n</UL>\n<p>Lütfen <A href=\"https://www.btk.gov.tr/kanunlar\" target=\"_blank\" >bilişim ile ilgili yasal düzenlemeler</A> sayfasından Kamu Kurumları İnternet Sitesi Kılavuzu ile İlgili 2007/4 Sayılı Başbakanlık Genelgesi inceleyiniz. </p>\n\n\n</div>",
+  "karakter": 612,
+  "cekilme": "2026-07-21T14:33:53.516Z"
+}

@@ -1,0 +1,143 @@
+{
+  "slug": "proxy",
+  "dil": "tr",
+  "bolum": "Servislerimiz",
+  "menuAdi": "Proxy Ayarları ve Kurulumu",
+  "url": "https://bidb.hacettepe.edu.tr/tr/proxy",
+  "baslik": "Proxy Ayarları",
+  "seo": {
+    "title": "Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı",
+    "description": "",
+    "keywords": ""
+  },
+  "paragraflar": [
+    {
+      "tur": "p",
+      "metin": "Proxy hizmeti nedir?"
+    },
+    {
+      "tur": "p",
+      "metin": "Proxy, internet üzerindeki bir bilgisayar ile internete bağlı diğer bilgisayarlar arasındaki iletişimi sağlayan yardımcı bir geçiş yolu sistemidir. Bir Proxy sunucusu, sizden aldığı istekleri yürütür ve sonucu yine size iletir."
+    },
+    {
+      "tur": "p",
+      "metin": "Proxy ne işe yarar?"
+    },
+    {
+      "tur": "li",
+      "metin": "Bir Proxy servisi sizin adınıza bilgi alma isteklerini yürütür ve sonucu size yine iletir. Bu bilgiler Proxy servisi üzerinde tutulur. Bir dahaki girişinizde Proxy servisi bu bilgileri sunucu olarak size çok hızlı aktarır."
+    },
+    {
+      "tur": "li",
+      "metin": "Proxy servisleri, uluslararası internet bağlantılarındaki yoğunluğu azaltmak, erişimleri hızlandırmak ve ağı daha etkin kullanmak için kullanılır."
+    },
+    {
+      "tur": "li",
+      "metin": "Bağlanılan yerleri kısıtlamak yada yasaklamak vb."
+    },
+    {
+      "tur": "li",
+      "metin": "Bunların yanında ip değiştirme ile engellenen sitelere ulaşmak içinde kullanılmaktadır."
+    },
+    {
+      "tur": "li",
+      "metin": "Tüm bunların yanında Proxy servisi gizlenmek için de kullanılmaktadır."
+    },
+    {
+      "tur": "p",
+      "metin": "Elektronik kaynaklara kampus dışından erişim"
+    },
+    {
+      "tur": "p",
+      "metin": "Sadece Hacettepe Üniversitesi mensupları elektronik kaynaklara uzaktan erişim sağlayabilirler. Bunun için bilgisayarlarına gerekli Proxy ayarlamalarını yapmaları gerekir."
+    },
+    {
+      "tur": "p",
+      "metin": "Proxy Ayarları için aşağıdaki dokümanları kullanabilirsiniz"
+    },
+    {
+      "tur": "li",
+      "metin": "Microsoft Edge Ayarları"
+    },
+    {
+      "tur": "li",
+      "metin": "Chrome İçin Proxy Ayarları"
+    },
+    {
+      "tur": "li",
+      "metin": "Macos Chrome Proxy Ayarları"
+    },
+    {
+      "tur": "li",
+      "metin": "Mozilla Firefox İçin Proxy Ayarları"
+    },
+    {
+      "tur": "li",
+      "metin": "Safari İçin Proxy Ayarları"
+    },
+    {
+      "tur": "li",
+      "metin": "Android Wifi İçin Proxy Ayarları"
+    },
+    {
+      "tur": "li",
+      "metin": "IOS Wifi İçin Proxy Ayarları"
+    }
+  ],
+  "baglantilar": [
+    {
+      "metin": "Microsoft Edge Ayarları",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/proxy-pdf/edgeproxy_2023.pdf"
+    },
+    {
+      "metin": "Chrome İçin Proxy Ayarları",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/proxy-pdf/chromeproxy_2023.pdf"
+    },
+    {
+      "metin": "Macos Chrome Proxy Ayarları",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/proxy-pdf/macos_chrome_proxy_ayarlari2021.pdf"
+    },
+    {
+      "metin": "Mozilla Firefox İçin Proxy Ayarları",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/proxy-pdf/firefoxproxy_2023.pdf"
+    },
+    {
+      "metin": "Safari İçin Proxy Ayarları",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/proxy-pdf/safari_proxy_ayarlari2021.pdf"
+    },
+    {
+      "metin": "Android Wifi İçin Proxy Ayarları IOS Wifi İçin Proxy Ayarları",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/proxy-pdf/android_proxy_ayarlari2021.pdf"
+    }
+  ],
+  "gorseller": [],
+  "belgeler": [
+    {
+      "metin": "Microsoft Edge Ayarları",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/proxy-pdf/edgeproxy_2023.pdf"
+    },
+    {
+      "metin": "Chrome İçin Proxy Ayarları",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/proxy-pdf/chromeproxy_2023.pdf"
+    },
+    {
+      "metin": "Macos Chrome Proxy Ayarları",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/proxy-pdf/macos_chrome_proxy_ayarlari2021.pdf"
+    },
+    {
+      "metin": "Mozilla Firefox İçin Proxy Ayarları",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/proxy-pdf/firefoxproxy_2023.pdf"
+    },
+    {
+      "metin": "Safari İçin Proxy Ayarları",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/proxy-pdf/safari_proxy_ayarlari2021.pdf"
+    },
+    {
+      "metin": "Android Wifi İçin Proxy Ayarları IOS Wifi İçin Proxy Ayarları",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/proxy-pdf/android_proxy_ayarlari2021.pdf"
+    }
+  ],
+  "govdeHtml": "<div class=\"icerik\">\n\n<p><STRONG>Proxy hizmeti nedir?</STRONG></p>\n<p> Proxy,  internet üzerindeki bir bilgisayar ile internete bağlı diğer bilgisayarlar  arasındaki iletişimi sağlayan yardımcı bir geçiş yolu sistemidir. Bir Proxy  sunucusu, sizden aldığı istekleri yürütür ve sonucu yine size iletir.</p>\n<p><STRONG>Proxy  ne işe yarar?</STRONG></p>\n<UL>\n  <LI>Bir  Proxy servisi sizin adınıza bilgi alma isteklerini yürütür ve sonucu size yine  iletir. Bu bilgiler Proxy servisi üzerinde tutulur. Bir dahaki girişinizde  Proxy servisi bu bilgileri sunucu olarak size çok hızlı aktarır.</LI>\n  <LI>Proxy  servisleri, uluslararası internet bağlantılarındaki yoğunluğu azaltmak,  erişimleri hızlandırmak ve ağı daha etkin kullanmak için kullanılır.</LI>\n  <LI>Bağlanılan  yerleri kısıtlamak yada yasaklamak vb.</LI>\n  <LI>Bunların  yanında ip değiştirme ile engellenen sitelere ulaşmak içinde kullanılmaktadır.</LI>\n  <LI>Tüm  bunların yanında Proxy servisi gizlenmek için de kullanılmaktadır.</LI>\n</UL>\n<p><STRONG>Elektronik  kaynaklara kampus dışından erişim</STRONG></p>\n<p>Sadece  Hacettepe Üniversitesi mensupları elektronik kaynaklara uzaktan erişim  sağlayabilirler. Bunun için bilgisayarlarına gerekli Proxy ayarlamalarını  yapmaları gerekir.</p>\n<p><STRONG>Proxy Ayarları için aşağıdaki dokümanları kullanabilirsiniz</STRONG></p>\n<UL>\n<LI><A href=\"/dosyalar/proxy-pdf/edgeproxy_2023.pdf\" target=\"_blank\">Microsoft Edge Ayarları</A></LI>\n  \n  <LI><A href=\"/dosyalar/proxy-pdf/chromeproxy_2023.pdf\" target=\"_blank\">Chrome İçin Proxy Ayarları</A></LI>\n<LI><A href=\"/dosyalar/proxy-pdf/macos_chrome_proxy_ayarlari2021.pdf\" target=\"_blank\">Macos Chrome Proxy Ayarları</A></LI>\n  <LI><A href=\"/dosyalar/proxy-pdf/firefoxproxy_2023.pdf\" target=\"_blank\">Mozilla Firefox İçin Proxy Ayarları</A></LI>\n  <LI><A href=\"/dosyalar/proxy-pdf/safari_proxy_ayarlari2021.pdf\" target=\"_blank\">Safari İçin Proxy Ayarları</A></LI>\n \n\n  <LI><A href=\"/dosyalar/proxy-pdf/android_proxy_ayarlari2021.pdf\" target=\"_blank\">Android Wifi İçin Proxy Ayarları</LI>\n  <LI><A href=\"/dosyalar/proxy-pdf/IOSWifiProxyAyarlariEkim2020.pdf\" target=\"_blank\">IOS Wifi İçin Proxy Ayarları</A></LI>\n</UL>\n\n\n\n</div>",
+  "karakter": 1310,
+  "cekilme": "2026-07-21T14:33:56.191Z"
+}

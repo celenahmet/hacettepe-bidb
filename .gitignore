@@ -1,0 +1,15 @@
+# Bağımlılıklar
+node_modules/
+target/
+dist/
+.angular/
+
+# Ortam
+.env
+*.log
+
+# Editör
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

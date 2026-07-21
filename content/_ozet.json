@@ -1,0 +1,306 @@
+[
+  {
+    "dil": "tr",
+    "slug": "geneltanitim",
+    "ad": "Genel Tanıtım",
+    "bolum": "Kurumsal",
+    "karakter": 6026,
+    "belge": 0
+  },
+  {
+    "dil": "tr",
+    "slug": "yonetim",
+    "ad": "Yönetim",
+    "bolum": "Kurumsal",
+    "karakter": 116,
+    "belge": 0
+  },
+  {
+    "dil": "tr",
+    "slug": "misyonvizyon",
+    "ad": "Misyon ve Vizyon",
+    "bolum": "Kurumsal",
+    "karakter": 545,
+    "belge": 0
+  },
+  {
+    "dil": "tr",
+    "slug": "bilgikorumaanapolitikamiz",
+    "ad": "Bilgi Güvenliği Politikası",
+    "bolum": "Kurumsal",
+    "karakter": 4428,
+    "belge": 0
+  },
+  {
+    "dil": "tr",
+    "slug": "personel",
+    "ad": "Personel",
+    "bolum": "Kurumsal",
+    "karakter": 1209,
+    "belge": 0
+  },
+  {
+    "dil": "tr",
+    "slug": "organizasyonsemasi",
+    "ad": "Organizasyon Şeması",
+    "bolum": "Kurumsal",
+    "karakter": 0,
+    "belge": 0
+  },
+  {
+    "dil": "tr",
+    "slug": "kk",
+    "ad": "Kurul ve Komisyonlar",
+    "bolum": "Kurumsal",
+    "karakter": 253,
+    "belge": 0
+  },
+  {
+    "dil": "tr",
+    "slug": "webser",
+    "ad": "WEB Servisleri",
+    "bolum": "Servislerimiz",
+    "karakter": 612,
+    "belge": 0
+  },
+  {
+    "dil": "tr",
+    "slug": "hu-iys",
+    "ad": "İçerik Yönetim Sistemi",
+    "bolum": "Servislerimiz",
+    "karakter": 2068,
+    "belge": 1
+  },
+  {
+    "dil": "tr",
+    "slug": "kablosuz",
+    "ad": "Kablosuz Erişim Servisleri",
+    "bolum": "Servislerimiz",
+    "karakter": 280,
+    "belge": 0
+  },
+  {
+    "dil": "tr",
+    "slug": "yazilim",
+    "ad": "Lisanslı Yazılım Sunucusu",
+    "bolum": "Servislerimiz",
+    "karakter": 1959,
+    "belge": 0
+  },
+  {
+    "dil": "tr",
+    "slug": "bilgidokuman",
+    "ad": "Bilgi ve Dokümanlar",
+    "bolum": "Servislerimiz",
+    "karakter": 184,
+    "belge": 0
+  },
+  {
+    "dil": "tr",
+    "slug": "eposta",
+    "ad": "E-Posta İşlemleri",
+    "bolum": "Servislerimiz",
+    "karakter": 175,
+    "belge": 0
+  },
+  {
+    "dil": "tr",
+    "slug": "e-posta",
+    "ad": "E-Posta Giriş",
+    "bolum": "Servislerimiz",
+    "karakter": 120,
+    "belge": 0
+  },
+  {
+    "dil": "tr",
+    "slug": "office365",
+    "ad": "Office 365",
+    "bolum": "Servislerimiz",
+    "karakter": 94,
+    "belge": 3
+  },
+  {
+    "dil": "tr",
+    "slug": "proxy",
+    "ad": "Proxy Ayarları ve Kurulumu",
+    "bolum": "Servislerimiz",
+    "karakter": 1310,
+    "belge": 6
+  },
+  {
+    "dil": "tr",
+    "slug": "sss",
+    "ad": "Sık Sorulan Sorular",
+    "bolum": "Servislerimiz",
+    "karakter": 5011,
+    "belge": 4
+  },
+  {
+    "dil": "tr",
+    "slug": "formlar",
+    "ad": "Formlar",
+    "bolum": "Servislerimiz",
+    "karakter": 279,
+    "belge": 10
+  },
+  {
+    "dil": "tr",
+    "slug": "bgys",
+    "ad": "Bilgi Güvenliği Yönetim Sistemi",
+    "bolum": "Kurallar ve İlkeler",
+    "karakter": 132,
+    "belge": 4
+  },
+  {
+    "dil": "tr",
+    "slug": "tarama",
+    "ad": "E-Posta Tarama Politikaları",
+    "bolum": "Kurallar ve İlkeler",
+    "karakter": 25,
+    "belge": 0
+  },
+  {
+    "dil": "tr",
+    "slug": "yayim",
+    "ad": "WEB Sayfası Yayım İlkeleri",
+    "bolum": "Kurallar ve İlkeler",
+    "karakter": 649,
+    "belge": 1
+  },
+  {
+    "dil": "tr",
+    "slug": "ogr_kural",
+    "ad": "Yurt ve Öğrenci Evleri Kuralları",
+    "bolum": "Kurallar ve İlkeler",
+    "karakter": 2484,
+    "belge": 0
+  },
+  {
+    "dil": "tr",
+    "slug": "pc_salon",
+    "ad": "PC Salonlarının Kullanım Kuralları",
+    "bolum": "Kurallar ve İlkeler",
+    "karakter": 3509,
+    "belge": 0
+  },
+  {
+    "dil": "tr",
+    "slug": "posta_kural",
+    "ad": "Dağıtım Listeleri Politikaları",
+    "bolum": "Kurallar ve İlkeler",
+    "karakter": 4261,
+    "belge": 0
+  },
+  {
+    "dil": "tr",
+    "slug": "hunet_kurallar",
+    "ad": "HUNET Kullanım İlkeleri",
+    "bolum": "Kurallar ve İlkeler",
+    "karakter": 7442,
+    "belge": 1
+  },
+  {
+    "dil": "tr",
+    "slug": "bilisim_ilke",
+    "ad": "HUNET Öğrenci Çerçeve Kuralları",
+    "bolum": "Kurallar ve İlkeler",
+    "karakter": 3012,
+    "belge": 0
+  },
+  {
+    "dil": "tr",
+    "slug": "hunet_protokol",
+    "ad": "HUNET Beytepe Yurt Erişim Protokolü",
+    "bolum": "Kurallar ve İlkeler",
+    "karakter": 2638,
+    "belge": 0
+  },
+  {
+    "dil": "tr",
+    "slug": "altyapi",
+    "ad": "Ağ Altyapısı",
+    "bolum": "Teknik Altyapı",
+    "karakter": 2484,
+    "belge": 0
+  },
+  {
+    "dil": "tr",
+    "slug": "donanim",
+    "ad": "Mevcut Donanım Bilgileri",
+    "bolum": "Teknik Altyapı",
+    "karakter": 939,
+    "belge": 0
+  },
+  {
+    "dil": "tr",
+    "slug": "erisim",
+    "ad": "Dış Erişim Kuralları",
+    "bolum": "Teknik Altyapı",
+    "karakter": 2400,
+    "belge": 0
+  },
+  {
+    "dil": "tr",
+    "slug": "iletisim",
+    "ad": "İletişim",
+    "bolum": "İletişim",
+    "karakter": 279,
+    "belge": 0
+  },
+  {
+    "dil": "tr",
+    "slug": "sorumluluksiniri",
+    "ad": "Sorumluluk Sınırı",
+    "bolum": "İletişim",
+    "karakter": 1367,
+    "belge": 0
+  },
+  {
+    "dil": "tr",
+    "slug": "erisilebilirlik",
+    "ad": "Erişilebilirlik Bildirimi",
+    "bolum": "İletişim",
+    "karakter": 1419,
+    "belge": 0
+  },
+  {
+    "dil": "en",
+    "slug": "overview",
+    "ad": "Overview",
+    "bolum": "Corporate",
+    "karakter": 548,
+    "belge": 0
+  },
+  {
+    "dil": "en",
+    "slug": "mv",
+    "ad": "Mission and Vision",
+    "bolum": "Corporate",
+    "karakter": 601,
+    "belge": 0
+  },
+  {
+    "dil": "en",
+    "slug": "yonetim",
+    "ad": "Administrative Organization",
+    "bolum": "Corporate",
+    "karakter": 101,
+    "belge": 0
+  },
+  {
+    "dil": "en",
+    "slug": "grup",
+    "ad": "Service Groups",
+    "bolum": "Services",
+    "karakter": 146,
+    "belge": 0
+  },
+  {
+    "dil": "en",
+    "slug": "iletisim",
+    "ad": "Contact",
+    "bolum": "Contact",
+    "karakter": 156,
+    "belge": 0
+  }
+]

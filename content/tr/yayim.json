@@ -1,0 +1,59 @@
+{
+  "slug": "yayim",
+  "dil": "tr",
+  "bolum": "Kurallar ve İlkeler",
+  "menuAdi": "WEB Sayfası Yayım İlkeleri",
+  "url": "https://bidb.hacettepe.edu.tr/tr/yayim",
+  "baslik": "WEB Sayfası Yayım İlkeleri",
+  "seo": {
+    "title": "Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı",
+    "description": "",
+    "keywords": ""
+  },
+  "paragraflar": [
+    {
+      "tur": "p",
+      "metin": "Hacettepe Üniversitesi Birim ve Kişisel Web sayfalarının hazırlanması ve yayımlanması ilkelerini kapsayan yönerge 02.07.2007 tarihinde Hacettepe Üniversitesi Senatosu'nca onaylanmıştır."
+    },
+    {
+      "tur": "p",
+      "metin": "Hacettepe Üniversitesi'ne bağlı tüm kurum, birim, bölüm ve kişilerin Web sayfalarını hazırlarken bu ilkelere uyması gerekmektedir."
+    },
+    {
+      "tur": "p",
+      "metin": "Bu ilkelerin tümüne aşağıdaki link'e tıklayarak erişebilirsiniz: Hacettepe Üniversitesi Web Sayfası Hazırlama ve Yayım İlkeleri (*.pdf formatındadır.)"
+    },
+    {
+      "tur": "p",
+      "metin": "5651 sayılı Kanun İnternet Ortamında Yapılan Yayınların Düzenlenmesi ve Bu Yayınlar Yoluyla İşlenen Suçlarla Mücadele Edilmesi Hakkında Kanun"
+    },
+    {
+      "tur": "p",
+      "metin": "Bilişim ile ilgili diğer Yasal Düzenlemeler"
+    }
+  ],
+  "baglantilar": [
+    {
+      "metin": "Hacettepe Üniversitesi Web Sayfası Hazırlama ve Yayım İlkeleri",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/web_sayfasi_ilkeleri.pdf"
+    },
+    {
+      "metin": "5651 sayılı Kanun İnternet Ortamında Yapılan Yayınların Düzenlenmesi ve Bu Yayınlar Yoluyla İşlenen Suçlarla Mücadele Edilmesi Hakkında Kanun",
+      "href": "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=5651&MevzuatTur=1&MevzuatTertip=5"
+    },
+    {
+      "metin": "Bilişim ile ilgili diğer Yasal Düzenlemeler",
+      "href": "https://www.btk.gov.tr/kanunlar"
+    }
+  ],
+  "gorseller": [],
+  "belgeler": [
+    {
+      "metin": "Hacettepe Üniversitesi Web Sayfası Hazırlama ve Yayım İlkeleri",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/web_sayfasi_ilkeleri.pdf"
+    }
+  ],
+  "govdeHtml": "<div class=\"icerik\">\n\n<p>Hacettepe Üniversitesi Birim ve Kişisel Web sayfalarının hazırlanması ve   yayımlanması ilkelerini kapsayan yönerge 02.07.2007 tarihinde Hacettepe   Üniversitesi Senatosu'nca onaylanmıştır.</p>\n<p>Hacettepe Üniversitesi'ne bağlı tüm kurum, birim, bölüm ve kişilerin Web   sayfalarını hazırlarken bu ilkelere uyması gerekmektedir.</p>\n<p>Bu ilkelerin tümüne aşağıdaki link'e tıklayarak erişebilirsiniz: <BR>\n    <BR>\n  <A href=\"/dosyalar/web_sayfasi_ilkeleri.pdf\">Hacettepe Üniversitesi Web Sayfası   Hazırlama ve Yayım İlkeleri</A> (*.pdf formatındadır.) </p>\n  \n  <p><a href=\"https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=5651&MevzuatTur=1&MevzuatTertip=5\" target=\"_blank\">5651 sayılı Kanun İnternet Ortamında Yapılan Yayınların Düzenlenmesi ve Bu Yayınlar Yoluyla İşlenen Suçlarla Mücadele Edilmesi Hakkında Kanun</a></p>\n  <p><a  href=\"https://www.btk.gov.tr/kanunlar\" target=\"_blank\">Bilişim ile ilgili diğer Yasal Düzenlemeler</a></p>\n  \n</div>",
+  "karakter": 649,
+  "cekilme": "2026-07-21T14:33:57.872Z"
+}

@@ -1,0 +1,57 @@
+{
+  "slug": "erisilebilirlik",
+  "dil": "tr",
+  "bolum": "İletişim",
+  "menuAdi": "Erişilebilirlik Bildirimi",
+  "url": "https://bidb.hacettepe.edu.tr/tr/erisilebilirlik",
+  "baslik": "Erişilebilirlik Bildirimi",
+  "seo": {
+    "title": "Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı",
+    "description": "",
+    "keywords": ""
+  },
+  "paragraflar": [
+    {
+      "tur": "p",
+      "metin": "1. Taahhüt Beyanı Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı olarak, dijital hizmetlerimizi engelli bireyler dahil tüm kullanıcılar için erişilebilir kılmayı taahhüt ediyoruz. Web sitemizi, herkesin bilgiye eşit ve bağımsız bir şekilde ulaşabilmesini sağlayacak standartlara getirmek için sürekli geliştiriyoruz."
+    },
+    {
+      "tur": "p",
+      "metin": "2. Uyumluluk Durumu Bu web sitesi, WCAG 2.2 Seviye AA (Web İçeriği Erişilebilirlik Kılavuzu) standartlarına büyük ölçüde uyumludur. Sitemizde şu an için aktif olan erişilebilirlik özellikleri şunlardır:"
+    },
+    {
+      "tur": "li",
+      "metin": "Erişilebilirlik Menüsü: Yazı boyutu ayarlama, kontrast seçenekleri, link vurgulama ve sesli okuma gibi araçlar mevcuttur."
+    },
+    {
+      "tur": "li",
+      "metin": "Klavye Navigasyonu: Fare kullanmadan sadece klavye ile sekmeler arasında gezinebilme desteği sağlanmaktadır."
+    },
+    {
+      "tur": "li",
+      "metin": "Görsel Betimlemeler: Önemli görseller için alternatif metin (alt-text) çalışmaları devam etmektedir."
+    },
+    {
+      "tur": "p",
+      "metin": "3. Bilinen Sınırlamalar Bazı eski arşiv belgeleri (PDF formatındaki eski yönergeler) veya üçüncü taraf entegrasyonları henüz tam erişilebilirlik standartlarını karşılamıyor olabilir. Bu içeriklerin erişilebilir versiyonları üzerinde çalışmalarımız sürmektedir. 4. Geri Bildirim ve İletişim Sitemizi kullanırken herhangi bir erişilebilirlik engeliyle karşılaşırsanız veya iyileştirme öneriniz varsa lütfen bizimle iletişime geçin:"
+    },
+    {
+      "tur": "li",
+      "metin": "E-posta: bidb@hacettepe.edu.tr"
+    },
+    {
+      "tur": "li",
+      "metin": "Telefon: +90 312 297 62 62"
+    },
+    {
+      "tur": "li",
+      "metin": "Adres: Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı, 06800 Beytepe / ANKARA"
+    }
+  ],
+  "baglantilar": [],
+  "gorseller": [],
+  "belgeler": [],
+  "govdeHtml": "<div class=\"icerik\">\n<p align=\"justify\"><strong>1. Taahhüt Beyanı</strong><br />\n  Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı olarak, dijital  hizmetlerimizi engelli bireyler dahil tüm kullanıcılar için erişilebilir  kılmayı taahhüt ediyoruz. Web sitemizi, herkesin bilgiye eşit ve bağımsız bir  şekilde ulaşabilmesini sağlayacak standartlara getirmek için sürekli  geliştiriyoruz.&nbsp; <br />\n</p><p align=\"justify\"><strong>2. Uyumluluk Durumu</strong><br />\n  Bu web sitesi,&nbsp;<strong>WCAG 2.2 Seviye AA</strong>&nbsp;(Web İçeriği Erişilebilirlik  Kılavuzu) standartlarına büyük ölçüde uyumludur. Sitemizde şu an için aktif  olan erişilebilirlik özellikleri şunlardır:&nbsp; </p>\n<ul>\n  <li><strong>Erişilebilirlik Menüsü:</strong>&nbsp;Yazı boyutu  ayarlama, kontrast seçenekleri, link vurgulama ve sesli okuma gibi araçlar  mevcuttur.</li>\n  <li><strong>Klavye Navigasyonu:</strong>&nbsp;Fare kullanmadan sadece klavye ile  sekmeler arasında gezinebilme desteği sağlanmaktadır.</li>\n  <li><strong>Görsel Betimlemeler:</strong>&nbsp;Önemli görseller için alternatif  metin (alt-text) çalışmaları devam etmektedir.&nbsp; </li>\n</ul>\n<p align=\"justify\"><strong>3. Bilinen Sınırlamalar</strong><br />\n  Bazı eski arşiv belgeleri (PDF formatındaki eski yönergeler) veya üçüncü taraf  entegrasyonları henüz tam erişilebilirlik standartlarını karşılamıyor olabilir.  Bu içeriklerin erişilebilir versiyonları üzerinde çalışmalarımız sürmektedir.&nbsp; <br />\n<p align=\"justify\"><strong>4. Geri Bildirim ve İletişim</strong><br />\n  Sitemizi kullanırken herhangi bir erişilebilirlik engeliyle karşılaşırsanız  veya iyileştirme öneriniz varsa lütfen bizimle iletişime geçin:</p>\n<ul>\n  <li><strong>E-posta:</strong>&nbsp;bidb@hacettepe.edu.tr</li>\n  <li><strong>Telefon:</strong>&nbsp;+90 312 297 62 62</li>\n  <li><strong>Adres:</strong>&nbsp;Hacettepe Üniversitesi Bilgi İşlem  Daire Başkanlığı, 06800 Beytepe / ANKARA&nbsp; </li>\n</ul>\n</p><p align=\"justify\"><strong>5. Onay ve Güncelleme Tarihi</strong><br />\nBu bildirim en son 28.04.2026 tarihinde güncellenmiştir\n\n</div>",
+  "karakter": 1419,
+  "cekilme": "2026-07-21T14:34:01.853Z"
+}

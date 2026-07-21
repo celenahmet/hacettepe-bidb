@@ -1,0 +1,479 @@
+{
+  "slug": "sss",
+  "dil": "tr",
+  "bolum": "Servislerimiz",
+  "menuAdi": "Sık Sorulan Sorular",
+  "url": "https://bidb.hacettepe.edu.tr/tr/sss",
+  "baslik": "Sık Sorulan Sorular",
+  "seo": {
+    "title": "Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı",
+    "description": "",
+    "keywords": ""
+  },
+  "paragraflar": [
+    {
+      "tur": "p",
+      "metin": "E-POSTA HİZMETİ"
+    },
+    {
+      "tur": "p",
+      "metin": "Üniversite mensubuyum elektronik posta hesabı nasıl alabilirim?"
+    },
+    {
+      "tur": "p",
+      "metin": "Bölüm/ anabilim dalı / fakülte / sempozyum / kongre vb. için kullanılmak üzere elektronik posta hesabı nasıl alabilirim?"
+    },
+    {
+      "tur": "p",
+      "metin": "Adıma tanımlanan elektronik posta hesabını ne için kullanabilirim?"
+    },
+    {
+      "tur": "li",
+      "metin": "İletişim için,"
+    },
+    {
+      "tur": "li",
+      "metin": "Kampüs içinde kablosuz ağlara bağlanmak için,"
+    },
+    {
+      "tur": "li",
+      "metin": "Kampüs dışından Kütüphane Kaynaklarına erişim için,"
+    },
+    {
+      "tur": "li",
+      "metin": "Yurt başvurusu yapmak için,"
+    },
+    {
+      "tur": "li",
+      "metin": "Yönetim Sistemlerine (Akademik ve İdari Personel) giriş işlemi için kullanabilirsiniz."
+    },
+    {
+      "tur": "p",
+      "metin": "Elektronik posta hesabımın şifresini unuttum, nasıl alabilirim?"
+    },
+    {
+      "tur": "p",
+      "metin": "Elektronik posta hesabımın kullanıcı adını unuttum nasıl öğrenebilirim?"
+    },
+    {
+      "tur": "p",
+      "metin": "Elektronik posta hesabımın şifresini ne kadar kullanabilirim?"
+    },
+    {
+      "tur": "p",
+      "metin": "Elektronik posta hesabımın şifresini nasıl değiştirebilirim / güncelleyebilirim?"
+    },
+    {
+      "tur": "p",
+      "metin": "Elektronik posta hesabımın şifresini değiştirirken nelere dikkat etmem gerekiyor?"
+    },
+    {
+      "tur": "li",
+      "metin": "Seçeceğiniz parola en az 8, en fazla 15 karakter olmalıdır."
+    },
+    {
+      "tur": "li",
+      "metin": "Seçeceğiniz parola içerisinde bir büyük harf, bir küçük harf, bir rakam ve bir özel karakter (~!@#?$%^&()_- ) mutlaka olmalıdır."
+    },
+    {
+      "tur": "li",
+      "metin": "Seçeceğiniz parola, teknik sınırlamalar nedeniyle (ı,İ,ğ,Ğ,ş,Ş,ü,Ü,ö,Ö,ç,Ç) harflerini içermemelidir."
+    },
+    {
+      "tur": "p",
+      "metin": "Elektronik posta hesabımın kullanıcı adı ve şifresi ile BİLSİS kullanıcı adı ve şifrem aynı mıdır?"
+    },
+    {
+      "tur": "p",
+      "metin": "Bilgi İşlem Daire Başkanlığı portal ekranından şifre alamıyorum, ne yapmam gerekir?"
+    },
+    {
+      "tur": "p",
+      "metin": "Elektronik posta hesabımı mezun olduktan veya üniversiteden ayrıldıktan sonra kullanabiliyor muyum?"
+    },
+    {
+      "tur": "p",
+      "metin": "Elektronik posta hesabından mail aktarımı nasıl yapabilirim?"
+    },
+    {
+      "tur": "p",
+      "metin": "Elektronik posta hesabımın kapatılması için ne yapmam gerekiyor?"
+    },
+    {
+      "tur": "p",
+      "metin": "Elektronik posta hesabımın kullanıcı adını değiştirmek için (zorunlu sebepler dahilinde) ne yapmam gerekiyor?"
+    },
+    {
+      "tur": "p",
+      "metin": "Haberleşme listesi oluşturmak mümkün müdür?"
+    },
+    {
+      "tur": "p",
+      "metin": "Haberleşme listesine erişim ve kullanım nasıl yapılabilir?"
+    },
+    {
+      "tur": "p",
+      "metin": "Yanlışlıkla maillerim silindi ne yapabilirim?"
+    },
+    {
+      "tur": "p",
+      "metin": "SUN-JAVA ara yüzünden hesabıma giriş yaptığımda inbox klasörüm görünmüyor neden?"
+    },
+    {
+      "tur": "p",
+      "metin": "Bulut depolama alanı için belirlenen kota nedir? Arttırmak için ne yapmalıyım?"
+    },
+    {
+      "tur": "p",
+      "metin": "Sistem(ler) üzerinde dışarıdan bağlantı yapmak ve sunuculara erişim için ne yapmam gerekiyor?"
+    },
+    {
+      "tur": "p",
+      "metin": "EBYS"
+    },
+    {
+      "tur": "p",
+      "metin": "Yeni Elektronik Belge Yönetim Sistemini (EBYS)"
+    },
+    {
+      "tur": "p",
+      "metin": "PROXY"
+    },
+    {
+      "tur": "p",
+      "metin": "Proxy hizmeti nedir?"
+    },
+    {
+      "tur": "p",
+      "metin": "Kütüphane kaynaklarına kampüs dışından nasıl erişim sağlayabilirim?"
+    },
+    {
+      "tur": "p",
+      "metin": "Proxy ayarlarını eksiksiz yapmama ve kullanıcı adımı, şifremi doğru girmeme rağmen, sürekli olarak aynı ekran karşıma geliyor, ne yapmalıyım?"
+    },
+    {
+      "tur": "p",
+      "metin": "İNTERNET"
+    },
+    {
+      "tur": "p",
+      "metin": "Kampüs içinde kablosuz ağlara nasıl bağlanabilirim?"
+    },
+    {
+      "tur": "p",
+      "metin": "Kablosuz ağlara neden bağlanamıyorum?"
+    },
+    {
+      "tur": "li",
+      "metin": "Şifrenizin süresi dolmuş olabilir."
+    },
+    {
+      "tur": "li",
+      "metin": "Cihaz için yapılan ayarlar sıfırlanmış olabilir."
+    },
+    {
+      "tur": "li",
+      "metin": "Cihazın sürümünün güncellenmesi gerekebilir."
+    },
+    {
+      "tur": "li",
+      "metin": "Cihazın daha önce bağlanmış olduğu kablosuz ağların unutturulması gerekebilir."
+    },
+    {
+      "tur": "p",
+      "metin": "Kablolu internete bağlanamıyorum ne yapabilirim?"
+    },
+    {
+      "tur": "p",
+      "metin": "İnternet prizi çekilmesi için ne yapa bilirim?"
+    },
+    {
+      "tur": "p",
+      "metin": "Network kablosu ihtiyacımızı nasıl karşılaya biliriz?"
+    },
+    {
+      "tur": "p",
+      "metin": "WEB SERVİSİ"
+    },
+    {
+      "tur": "p",
+      "metin": "Bölüm/ anabilim dalı / fakülte / sempozyum / kongre vb. için kullanılmak üzere web alanı nasıl alabilirim?"
+    },
+    {
+      "tur": "p",
+      "metin": "Hacettepe Üniversitesi internet sayfasında yer alması istenilen bilgiler, yapılması gereken düzeltmeler ve eklentiler için ne yapmam gerekiyor?"
+    },
+    {
+      "tur": "p",
+      "metin": "Kişisel web sayfası almak için ne yapmam gerekiyor?"
+    },
+    {
+      "tur": "p",
+      "metin": "FTP yaparken sorun yaşıyorum sebebi ne olabilir?"
+    },
+    {
+      "tur": "p",
+      "metin": "MYSQL kullanabiliyor muyum, ne yapmam gerekiyor?"
+    },
+    {
+      "tur": "p",
+      "metin": "İçerik Yönetim Sistemi nedir? Kimler kullanabilir?"
+    },
+    {
+      "tur": "li",
+      "metin": "Fakülteler"
+    },
+    {
+      "tur": "li",
+      "metin": "Bölümler"
+    },
+    {
+      "tur": "li",
+      "metin": "Birimler"
+    },
+    {
+      "tur": "li",
+      "metin": "Araştırma Merkezleri"
+    },
+    {
+      "tur": "li",
+      "metin": "Enstitüler"
+    },
+    {
+      "tur": "li",
+      "metin": "Yüksek Okullar"
+    },
+    {
+      "tur": "li",
+      "metin": "Meslek Yüksek Okulları"
+    },
+    {
+      "tur": "li",
+      "metin": "Öğrenci Toplulukları"
+    },
+    {
+      "tur": "li",
+      "metin": "Hacettepe Üniversitesi Tarafından Düzenlenen Kongreler"
+    },
+    {
+      "tur": "p",
+      "metin": "E-İMZA"
+    },
+    {
+      "tur": "p",
+      "metin": "Elektronik imzaya nasıl başvurabilirim?"
+    },
+    {
+      "tur": "p",
+      "metin": "HUYS"
+    },
+    {
+      "tur": "p",
+      "metin": "Yönetim Sistemlerine neden giriş yapamıyorum?"
+    },
+    {
+      "tur": "p",
+      "metin": "Yönetim Sistemlerine giriş yapabiliyorum ama Bireysel İşlemlere tıkladığımda yetkiniz yok uyarısı alıyorum, ne yapabilirim?"
+    },
+    {
+      "tur": "p",
+      "metin": "UYGULAMA VE PROGRAMLAR"
+    },
+    {
+      "tur": "p",
+      "metin": "SPSS uygulamasını MAC bilgisayarımda kullanabilir miyim?"
+    },
+    {
+      "tur": "p",
+      "metin": "Üniversitemiz eğitim amaçlı uygulamaları ücretsiz olarak sunmakta mıdır?"
+    },
+    {
+      "tur": "p",
+      "metin": "Eset Endpoint uygulaması Lisans/Güncelleme uyarısı veriyor. Ne yapmalıyım?"
+    },
+    {
+      "tur": "p",
+      "metin": "Office365 uygulamalarını kullanmak için ne yapmalıyım?"
+    },
+    {
+      "tur": "p",
+      "metin": "Office365 uygulamasını kullanmaya çalıştığımda lisans uyarısı alıyorum. Ne yapmalıyım?"
+    },
+    {
+      "tur": "p",
+      "metin": "Bilgisayarımdaki office uygulamasına hacettepe hesabımla giriş yaptığımda lisans hatası alıyorum ne yapmalıyım?"
+    },
+    {
+      "tur": "p",
+      "metin": "DİĞER"
+    },
+    {
+      "tur": "p",
+      "metin": "Windows/Office etkinleştirmesini (aktivasyonunu) yaparken hata alıyorum, ne yapabilirim?"
+    },
+    {
+      "tur": "p",
+      "metin": "Bilgisayarımda oluşan donanımsal arızalar için ne yapa bilirim?"
+    },
+    {
+      "tur": "p",
+      "metin": "Ağ yazıcısından çıktı alınamıyor, ne yapa bilirim?"
+    },
+    {
+      "tur": "p",
+      "metin": "Yurt başvurusu nasıl yapabilirim?"
+    },
+    {
+      "tur": "p",
+      "metin": "E-Öğrenme platformuna (Blackboard Uzaktan Eğitim Sistemi) giriş yapmak için ne yapmam gerekiyor?"
+    },
+    {
+      "tur": "p",
+      "metin": "Hacettepe Üniversitesi kimlik kartımı nasıl alabilirim?"
+    },
+    {
+      "tur": "p",
+      "metin": "Üniversite mensubuyum yazılım deposunu kullanabiliyor muyum?"
+    },
+    {
+      "tur": "p",
+      "metin": "Yazılım deposuna nasıl giriş yapabilirim?"
+    },
+    {
+      "tur": "p",
+      "metin": "BİLSİS sistemine giriş yapamıyorum, ne yapmam gerekir?"
+    },
+    {
+      "tur": "p",
+      "metin": "Transcript/diploma nerden alabilirim?"
+    },
+    {
+      "tur": "p",
+      "metin": "AVESİS, BAPSİS, DAPSİS sistemine giriş yaparken sorun yaşıyorum, ne yapabilirim?"
+    },
+    {
+      "tur": "p",
+      "metin": "NUCLEUS sistemine girişte sorun yaşıyorum, ne yapabilirim?"
+    },
+    {
+      "tur": "p",
+      "metin": "Enstitünün sistemine (prens.hacettepe.edu.tr) giriş yaparken sorun yaşıyorum, ne yapabilirim?"
+    },
+    {
+      "tur": "p",
+      "metin": "Genel duyuruları almak/almamak için ne yapmam gerekiyor?"
+    },
+    {
+      "tur": "p",
+      "metin": "Hastane tahlil sonuçlarına ulaşamıyorum ne yapa bilirim?"
+    }
+  ],
+  "baglantilar": [
+    {
+      "metin": "Detaylı bilgi için tıklayınız",
+      "href": "https://bidb.hacettepe.edu.tr/tr/epostaalma"
+    },
+    {
+      "metin": "portal.hacettepe.edu.tr",
+      "href": "portal.hacettepe.edu.tr"
+    },
+    {
+      "metin": "https://bidb.hacettepe.edu.tr/tr/eposta_gecis",
+      "href": "https://bidb.hacettepe.edu.tr/tr/eposta_gecis"
+    },
+    {
+      "metin": "E-posta İptal Formu",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/BGYS-F-12e-PostaiptalFormu.docx"
+    },
+    {
+      "metin": "haberlesme",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/haberlesme101023.pdf"
+    },
+    {
+      "metin": "e-posta kurtarma",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/e-postakurtarma101023.pdf"
+    },
+    {
+      "metin": "http://www.ebysbilgilendirme.hacettepe.edu.tr",
+      "href": "http://www.ebysbilgilendirme.hacettepe.edu.tr"
+    },
+    {
+      "metin": "https://bidb.hacettepe.edu.tr/tr/proxy",
+      "href": "https://bidb.hacettepe.edu.tr/tr/proxy"
+    },
+    {
+      "metin": "https://eduroam.hacettepe.edu.tr",
+      "href": "https://eduroam.hacettepe.edu.tr/"
+    },
+    {
+      "metin": "webmaster@hacettepe.edu.tr",
+      "href": "mailto:webmaster@hacettepe.edu.tr"
+    },
+    {
+      "metin": "bidb@hacettepe.edu.tr",
+      "href": "mailto:bidb@hacettepe.edu.tr"
+    },
+    {
+      "metin": "https://bidb.hacettepe.edu.tr/eimza/basvuru.php",
+      "href": "https://bidb.hacettepe.edu.tr/eimza/basvuru.php"
+    },
+    {
+      "metin": "eimza@hacettepe.edu.tr",
+      "href": "mailto:eimza@hacettepe.edu.tr"
+    },
+    {
+      "metin": "https://bidb.hacettepe.edu.tr/tr/office365",
+      "href": "https://bidb.hacettepe.edu.tr/tr/office365"
+    },
+    {
+      "metin": "https://bidbdestek.hacettepe.edu.tr",
+      "href": "https://bidbdestek.hacettepe.edu.tr"
+    },
+    {
+      "metin": "https://sksdb.hacettepe.edu.tr/bidbnew/category.php?id=3&title=barinma",
+      "href": "https://sksdb.hacettepe.edu.tr/bidbnew/category.php?id=3&title=barinma"
+    },
+    {
+      "metin": "https://hadi.hacettepe.edu.tr",
+      "href": "https://hadi.hacettepe.edu.tr"
+    },
+    {
+      "metin": "https://ydyohazirlik.hacettepe.edu.tr",
+      "href": "https://ydyohazirlik.hacettepe.edu.tr"
+    },
+    {
+      "metin": "https://tipmoodle.hacettepe.edu.tr",
+      "href": "https://tipmoodle.hacettepe.edu.tr"
+    },
+    {
+      "metin": "https://lisansustu.hacettepe.edu.tr",
+      "href": "https://lisansustu.hacettepe.edu.tr"
+    },
+    {
+      "metin": "istenmeyen_e-posta",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/istenmeyenposta101023.pdf"
+    }
+  ],
+  "gorseller": [],
+  "belgeler": [
+    {
+      "metin": "E-posta İptal Formu",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/BGYS-F-12e-PostaiptalFormu.docx"
+    },
+    {
+      "metin": "haberlesme",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/haberlesme101023.pdf"
+    },
+    {
+      "metin": "e-posta kurtarma",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/e-postakurtarma101023.pdf"
+    },
+    {
+      "metin": "istenmeyen_e-posta",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/istenmeyenposta101023.pdf"
+    }
+  ],
+  "govdeHtml": "<div class=\"icerik\">\n\n  \n  \n\n\n  \n   <div class=\"container\"> \n\t\t<div class=\"panel-group\" id=\"accordion\">\n<p style='color:red;font-weight: bold;font-size: 20px;'>E-POSTA HİZMETİ</p>\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse1\">Üniversite mensubuyum elektronik posta hesabı nasıl alabilirim?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse1\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\"><a href=\"/tr/epostaalma\">Detaylı bilgi için tıklayınız</a></div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse2\">Bölüm/ anabilim dalı / fakülte / sempozyum / kongre vb. için kullanılmak üzere elektronik posta hesabı nasıl alabilirim?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse2\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">Hacettepe Üniversitesi bünyesinde, fakülte, enstitü, bölüm, birim, üniversite ile ilgili bir topluluk, proje grubu, organizasyon vb. bir oluşum için ayrı bir e-posta hesabı almak mümkündür. Bunun için bağlı bulunduğunuz makamın (dekan, bölüm başkanı, müdürlük, vb.) yönetiminden dairemize yazılı bir istekte bulunulması gerekmektedir. Kurumsal Elektronik Posta Talep Formu doldurularak yazıya eklenmelidir.</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse3\">Adıma tanımlanan elektronik posta hesabını ne için kullanabilirim?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse3\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">\n<ol>\n<li>İletişim için,</li>\n<li>Kampüs içinde kablosuz ağlara bağlanmak için,</li>\n<li>Kampüs dışından Kütüphane Kaynaklarına erişim için,</li>\n<li>Yurt başvurusu yapmak için,</li>\n<li>Yönetim Sistemlerine (Akademik ve İdari Personel) giriş işlemi için kullanabilirsiniz.</li>\n</ol>\n</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse4\">Elektronik posta hesabımın şifresini unuttum, nasıl alabilirim?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse4\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">\n<a href=\"portal.hacettepe.edu.tr\" target=\"_blank\">portal.hacettepe.edu.tr</a> adresinden \"E-posta İşlemleri\" menüsünden \"Şifremi Unuttum\" butonunu kullanarak geçici şifrenizi alabilirsiniz.\n</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse5\">Elektronik posta hesabımın kullanıcı adını unuttum nasıl öğrenebilirim? </a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse5\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">Kullanıcı adınızı, Bilgi İşlem Daire Başkanlığı Portalından “Kullanıcı Adımı Unuttum” butonunu kullanarak öğrenmeniz gerekmektedir.</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse6\">Elektronik posta hesabımın şifresini ne kadar kullanabilirim?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse6\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">\nGüvenlik nedeniyle tarafınıza tanımlanan şifreyi 180 gün kullanabilmektesiniz. Bu nedenle şifrenizin kullanıma kapanmaması için 180 gün de bir güncellemeniz gerekmektedir.\n</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse7\">Elektronik posta hesabımın şifresini nasıl değiştirebilirim / güncelleyebilirim?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse7\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">\nBilgi İşlem Daire Başkanlığı Portalından “Şifre Güncelleme” butonunu kullanarak şifrenizi güncellemeniz gerekmektedir.\n</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse8\">Elektronik posta hesabımın şifresini değiştirirken nelere dikkat etmem gerekiyor?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse8\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">\n<ol>\n<li>Seçeceğiniz parola en az 8, en fazla 15 karakter olmalıdır.</li>\n<li>Seçeceğiniz parola içerisinde bir büyük harf, bir küçük harf, bir rakam ve bir özel karakter (~!@#?$%^&()_- ) mutlaka olmalıdır.</li>\n<li>Seçeceğiniz parola, teknik sınırlamalar nedeniyle (ı,İ,ğ,Ğ,ş,Ş,ü,Ü,ö,Ö,ç,Ç) harflerini içermemelidir.</li>\n</ol>\n</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse9\">Elektronik posta hesabımın kullanıcı adı ve şifresi ile BİLSİS kullanıcı adı ve şifrem aynı mıdır?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse9\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">\nAdınıza tanımlanan @hacettepe.edu.tr uzantılı elektronik posta hesabının kullanıcı adı ve şifresi BİLSİS şifrenizden farklıdır. Öğrenci Bilgi Sistemi (BİLSİS) için kullanıcı adı ve şifre Öğrenci İşleri Dairesi Başkanlığının Bilgi Sistemleri Müdürlüğü tarafından verilmektedir.\n</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse10\">Bilgi İşlem Daire Başkanlığı portal ekranından şifre alamıyorum, ne yapmam gerekir?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse10\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">\nBilgi İşlem Daire Başkanlığı portal ekranından şifre alabilmeniz için daha önceden bilgi güncellemesi yapmış olmanız gerekmektedir. Şifrenizi unutmanız halinde veya şifrenizin bloke olması halinde bilgi güncellemesi yapamayacağınız için bu tür durumlarda Çağrı Merkezi ile iletişime geçerek \"Bilgi Güncellemesi\" yaptırmanız gerekmektedir.\n</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse11\">Elektronik posta hesabımı mezun olduktan veya üniversiteden ayrıldıktan sonra kullanabiliyor muyum?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse11\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">\nElektronik posta hesabınız, Mezun olmanız veya Üniversitemiz ile ilişiğinizin kesilmesi durumunda Elektronik Posta Yönergesi ile belirlenen süre içinde kullanıma kapatılmaktadır.\nMezun hesabı almak isteyen mezunlarımız, Bilgi İşlem Daire Başkanlığı Portalından \"Yeni Hesap Açma (Mezun Hesabı)\" butonunu kullanarak kurumsal elektronik posta hesabı alabilir.\n</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse12\">Elektronik posta hesabından mail aktarımı nasıl yapabilirim?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse12\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">\n<a href=\"https://bidb.hacettepe.edu.tr/tr/eposta_gecis\" target=\"_blank\"> https://bidb.hacettepe.edu.tr/tr/eposta_gecis </a> bağlantı adresindeki ilgili yönergeleri izleyerek hesabınızı posta istemcisine kurmanız gerekmektedir.\n</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse13\">Elektronik posta hesabımın kapatılması için ne yapmam gerekiyor?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse13\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">\nAna sayfamızda yer alan \"Formlar\" başlığı altında yer alan <A href=\"/dosyalar/BGYS-F-12e-PostaiptalFormu.docx\">E-posta İptal Formu</A> nu doldurup imzaladıktan sonra Çağrı Merkezine iletmeniz gerekmektedir.\n</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse14\">Elektronik posta hesabımın kullanıcı adını değiştirmek için (zorunlu sebepler dahilinde) ne yapmam gerekiyor?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse14\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">\nAdınıza tanımlanan hesabın kullanıcı adı değişikliği ancak hesap kapatılıp yeni hesap açılarak değiştirilebilmektedir. Bunun için kullanıcının “E-posta İptal Formu”nu doldurarak Çağrı Merkezine şahsen veya mail yoluyla başvurması gerekmektedir.\n</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse15\">Haberleşme listesi oluşturmak mümkün müdür?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse15\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">\nMümkün ancak istediğiniz adres ile ilgili bölümümüze resmi yazı ile başvurmanız gerekmektedir. \n</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse16\">Haberleşme listesine erişim ve kullanım nasıl yapılabilir?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse16\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">\n<a href=\"https://bidb.hacettepe.edu.tr/dosyalar/haberlesme101023.pdf\" \" target=\"_blank\">haberlesme</a> linkine basarak dokümanı inceleyebilirsiniz.\n</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse17\">Yanlışlıkla maillerim silindi ne yapabilirim?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse17\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">\n<a href=\"https://bidb.hacettepe.edu.tr/dosyalar/e-postakurtarma101023.pdf\" target=\"_blank\">e-posta kurtarma</a> linkinden gerekli dokümana ulaşabilirsiniz.\n</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse18\">SUN-JAVA ara yüzünden hesabıma giriş yaptığımda inbox klasörüm görünmüyor neden?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse18\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">\nKullanıcı adı ve şifrenizle ara yüze giriş yaptığınızda inbox klasörünüzü göremiyorsanız, hesabınız spam mail yaydığı için sistem tarafından otomatik olarak engellenmiştir. Böyle bir durumda <a href=\"portal.hacettepe.edu.tr\">portal.hacettepe.edu.tr</a> adresinde  \"E-posta İşlemleri\" menüsünde yer alan \"Proxy-Spam kontrol\" butonunu kullanarak engeliniz kaldırmanız ve şifrenizi güvenlik nedeniyle değiştirmeniz gerekmektedir.\n<br>Engeli kaldıramamanız halinde Çağrı Merkezi ile iletişime geçmeniz gerekmektedir.\n</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse19\">Bulut depolama alanı için belirlenen kota nedir? Arttırmak için ne yapmalıyım?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse19\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">Her kullanıcıya 1 TB Onedrive bulut alanı verilmektedir. Bu alan arttırılamamaktadır.</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse20\">Sistem(ler) üzerinde dışarıdan bağlantı yapmak ve sunuculara erişim için ne yapmam gerekiyor?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse20\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">VPN bağlantısı yaparak kampüs dışından erişim sağlanabilmektedir. Bunun için dairemize yazılı bir istekte bulunulması gerekmektedir. VPN Bağlantı Talep Formu doldurularak yazıya eklenmelidir.</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t<p style='color:red;font-weight: bold;font-size: 20px;'>EBYS</p>\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse21\">Yeni Elektronik Belge Yönetim Sistemini (EBYS)</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse21\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">\nYeni EBYS kurulum, oturum açma, belge oluşturma, ıslak imzalı iş süreçleri, e-imza\nkurulum ve kullanımı, yardım bilgileri, sorun yaşanınca başvurulacak sorumlulara ait\niletişim bilgileri için <a href=\"http://www.ebysbilgilendirme.hacettepe.edu.tr\" target=\"_blank\">http://www.ebysbilgilendirme.hacettepe.edu.tr</a> adresi\nkullanılmalıdır.\n</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t<p style='color:red;font-weight: bold;font-size: 20px;'>PROXY</p>\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse22\">Proxy hizmeti nedir?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse22\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">\nProxy, internet üzerindeki bir bilgisayar ile internete bağlı diğer bilgisayarlar arasındaki iletişimi sağlayan yardımcı bir geçiş yolu sistemidir. Bir Proxy sunucusu, sizden aldığı istekleri yürütür ve sonucu yine size iletir.\n</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse23\">Kütüphane kaynaklarına kampüs dışından nasıl erişim sağlayabilirim?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse23\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">\nSadece Hacettepe Üniversitesi mensupları elektronik kaynaklara uzaktan erişim sağlayabilirler. Bunun için @hacettepe.edu.tr uzantılı elektronik posta hesabı almış olmanız ve cihazınıza gerekli Proxy ayarlarını yapmış olmanı gerekmektedir.\n<br>Proxy Ayarları için <a href=\"https://bidb.hacettepe.edu.tr/tr/proxy\" target=\"_blank\"> https://bidb.hacettepe.edu.tr/tr/proxy </a>adresini kullanabilirsiniz.\n\n\n</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse24\">Proxy ayarlarını eksiksiz yapmama ve kullanıcı adımı, şifremi doğru girmeme rağmen, sürekli olarak aynı ekran karşıma geliyor, ne yapmalıyım?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse24\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">Proxy ayarlarını yapmanıza ve kullanıcı adı şifrenizi girmenize rağmen bağlantı kuramamanız, hesabınızın sistem tarafından otomatik olarak engellendiğini göstermektedir. Engelin kaldırabilmesi için Çağrı Merkezi ile iletişime geçmeniz gerekmektedir.</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t<p style='color:red;font-weight: bold;font-size: 20px;'>İNTERNET</p>\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse25\">Kampüs içinde kablosuz ağlara nasıl bağlanabilirim?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse25\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">Üniversitemiz mensubu tüm akademik/idari personel ve öğrencilerimiz kampüslerimizde HACETTEPE ve EDUROAM ağlarına bağlanabilmektedir. Bunun için @hacettepe.edu.tr uzantılı elektronik posta hesabına sahip olmaları gerekmektedir.\nHACETTEPE ağına bağlanabilmek için ara yüze kullanıcı adı ve şifrenin yazılması yeterlidir. \nEDUROAM ağına bağlanabilmek için <a href=\"https://eduroam.hacettepe.edu.tr/\" target=\"_blank\">https://eduroam.hacettepe.edu.tr</a> internet adresini ziyaret etmek gerekmektedir.\n</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse26\">Kablosuz ağlara neden bağlanamıyorum?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse26\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">\nAşağıdaki nedenlerden dolayı kablosuz ağlara bağlanamıyor olabilirsiniz. \n<ol>\n<li>Şifrenizin süresi dolmuş olabilir.</li>\n<li>Cihaz için yapılan ayarlar sıfırlanmış olabilir.</li>\n<li>Cihazın sürümünün güncellenmesi gerekebilir.</li>\n<li>Cihazın daha önce bağlanmış olduğu kablosuz ağların unutturulması gerekebilir.</li>\n</ol>\n</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse27\">Kablolu internete bağlanamıyorum ne yapabilirim?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse27\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">Detaylı bilgi ve yardım için 0.312 297 62 62 telefon numarasından Çağrı Merkezi ile iletişime geçmeniz gerekmektedir.</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse28\">İnternet prizi çekilmesi için ne yapa bilirim?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse28\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">İnternet prizi çekilmesi işlemi için Yapı İşleri Dairesi Başkanlığı ile iletişime geçilmeli, işlem bittikten sonra Çağrı Merkezine hattın açılması için bilgi verilmesi gerekmektedir.</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse29\">Network kablosu ihtiyacımızı nasıl karşılaya biliriz?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse29\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">Sorun Bildirim Destek Sisteminden ne kadar kabloya ihtiyaç duyulduğu ile ilgili bilgi verilmesi halinde Network birimi tarafından yardımcı olunmaktadır.</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t<p style='color:red;font-weight: bold;font-size: 20px;'>WEB SERVİSİ</p>\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse30\">Bölüm/ anabilim dalı / fakülte / sempozyum / kongre vb. için kullanılmak üzere web alanı nasıl alabilirim?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse30\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">Hacettepe Üniversitesi bünyesinde, fakülte, enstitü, bölüm, birim, üniversite ile ilgili bir topluluk, proje grubu, organizasyon vb. bir oluşum için web alanı almak mümkündür. Bunun için bağlı bulunduğunuz makamın (dekan, bölüm başkanı, müdürlük, vb.) yönetiminden dairemize yazılı bir istekte bulunulması gerekmektedir. Web Kullanıcı Kodu Talep Formu doldurularak yazıya eklenmelidir.</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse31\">Hacettepe Üniversitesi internet sayfasında yer alması istenilen bilgiler, yapılması gereken düzeltmeler ve eklentiler için ne yapmam gerekiyor?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse31\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">Sitede yer alması istenilen bilgiler, yapılması gereken düzeltmeler ve eklentiler için <a href=\"mailto:webmaster@hacettepe.edu.tr\">webmaster@hacettepe.edu.tr</a> adresine başvurulması gerekmektedir.</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse32\">Kişisel web sayfası almak için ne yapmam gerekiyor?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse32\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">Hacettepe Üniversitesi elektronik posta hesabı alan tüm Üniversite mensuplarımızın kişisel web alanları hesabı açtırdıkları zaman tanımlanmaktadır. Web sayfalarınızı oluşturan dosyalar kişisel web sayfanızı taşıyan sunucuda FTP ile açacağınız public_html klasörü içerisinde yer almaktadır. Giriş sayfanızın (açılış sayfanızın) ismi index (.html, .htm, .php... gibi) olmalıdır. Web sayfanızı herhangi bir tarayıcı yardımı ile http://yunus.hacettepe.edu.tr/~kullanıcıadı adresinden görüntülemeniz gerekmektedir.</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse33\">FTP yaparken sorun yaşıyorum sebebi ne olabilir?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse33\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">Web sayfalarınızı oluşturan dosyalar kişisel web sayfanızı taşıyan sunucuda FTP ile açacağınız public_html klasörü içerisinde yer aldığından dolayı klasörünüz oluşturulmamış olabilir. \n<br>Şifrenizin süresi dolmuş olabilir.\n<br>Hatalı kullanıcı yada şifre giriyor olabilirsiniz. Böyle bir durumda <a href=\"mailto:bidb@hacettepe.edu.tr\">bidb@hacettepe.edu.tr</a> adresine mail göndermeniz veya Çağrı Merkezi ile iletişim kurmanız gerekmektedir.\n</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse34\">MYSQL kullanabiliyor muyum, ne yapmam gerekiyor?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse34\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">Tüm kullanıcılarımızın mysql kullanım hakkı bulunmaktadır. Mysql kullanmak isteyen kullanıcılarımız veri tabanını istemlerini <a href=\"mailto:webmaster@hacettepe.edu.tr\">webmaster@hacettepe.edu.tr</a> e-posta yolu ile bildirmeleri gerekmektedir.</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse35\">İçerik Yönetim Sistemi nedir? Kimler kullanabilir?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse35\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">\nHÜ-İYS, merkezi olarak web  sayfalarınızın içeriğini yönetebileceğiniz web tabanlı bir uygulamadır. Bu  uygulama ile web sitenize içerik girişi ve içerik düzenlemesi yapabilirsiniz.  Bu düzenlemeleri yaparken herhangi bir programa ihtiyaç duymadan tarayıcınız  üzerinden işlemlerinizi yapabilirsiniz.<br>\n  HÜ-İYS aşağıdaki birimler tarafından  kullanılabilir.\n<ul>\n  <li>Fakülteler</li>\n  <li>Bölümler</li>\n  <li>Birimler</li>\n  <li>Araştırma  Merkezleri</li>\n  <li>Enstitüler</li>\n  <li>Yüksek Okullar</li>\n  <li>Meslek Yüksek  Okulları</li>\n  <li>Öğrenci  Toplulukları</li>\n  <li>Hacettepe  Üniversitesi Tarafından Düzenlenen Kongreler</li>\n</ul>\n</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t<p style='color:red;font-weight: bold;font-size: 20px;'>E-İMZA</p>\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse36\">Elektronik imzaya nasıl başvurabilirim?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse36\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">Elektronik imza ile ilgili her türlü  bilgi ve yardım için E-imza Kullanma Rehberini (<a href=\"https://bidb.hacettepe.edu.tr/eimza/basvuru.php\">https://bidb.hacettepe.edu.tr/eimza/basvuru.php</a>) ziyaret etmeniz veya <a href=\"mailto:eimza@hacettepe.edu.tr\">eimza@hacettepe.edu.tr</a> adresine mail göndermeniz gerekmektedir.</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t<p style='color:red;font-weight: bold;font-size: 20px;'>HUYS</p>\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse37\">Yönetim Sistemlerine neden giriş yapamıyorum?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse37\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">Üniversitemiz akademik ve idari personelin sisteme giriş yapabilmesi için @hacettepe.edu.tr uzantılı elektronik posta hesabının olması gerekmektedir. Tanımlanan hesabın kullanıcı adı ve şifresi ile giriş yapıldığı için şifrenizin aktif olması, kullanıcı adınızı yazarken @hacettepe.edu.tr uzantısını yazmamanız gerekmektedir.</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse38\">Yönetim Sistemlerine giriş yapabiliyorum ama Bireysel İşlemlere tıkladığımda yetkiniz yok uyarısı alıyorum, ne yapabilirim?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse38\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">Kullanıcı adı ve şifrenizle sorunsuz bir şekilde sisteme giriş yapabildiğiniz halde “Bireysel İşlemler”e tıklandığında “yetkiniz yok” uyarı alıyorsanız, hesabınız için gerekli rol tanımlanması yapılmamış olabilir. Sorunun giderilmesi için Başkanlığımızı arayarak biriminizden sorumlu kişi ile iletişime geçmeniz gerekmektedir.</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t<p style='color:red;font-weight: bold;font-size: 20px;'>UYGULAMA VE PROGRAMLAR</p>\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse39\">SPSS uygulamasını MAC bilgisayarımda kullanabilir miyim? </a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse39\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">El Capitan sürümünden sonraki sürümlerde spss çalışmamaktadır. Tavsiyemiz kullanıcıların spss v23 için Windows 10 işletim sistemini kullanmalarıdır.</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse40\">Üniversitemiz eğitim amaçlı uygulamaları ücretsiz olarak sunmakta mıdır? </a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse40\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">Evet üniversitemiz eğitim amaçlı olarak birçok uygulamayı sunmaktadır. Bu uygulamalara, yazilimdeposu.hacettepe.edu.tr adresinden ulaşabilirsiniz. Uygulamaları sorunsuz kullanabilmek için uygulamayı yazilimdeposu.hacettepe.edu.tr adresinden indiriniz. Sayfadaki kurulum dokümanlarını okuyup oradaki adımları takip ediniz. Aksi halde lisans sorunları yaşayabilirsiniz.</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse41\">Eset Endpoint uygulaması Lisans/Güncelleme uyarısı veriyor. Ne yapmalıyım?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse41\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">Eset uygulamasını bilgisayarınızdan kaldırıp güncel uygulamayı yazilimdeposu.hacettepe.edu.tr den indirip bilgisayarınıza yükleyiniz. Uygulamayı bilgisayarınızdan kaldırırken Eset Management Agent’in de kaldırıldığından emin olunuz.</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse42\">Office365 uygulamalarını kullanmak için ne yapmalıyım?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse42\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\"><a href=\"https://bidb.hacettepe.edu.tr/tr/office365\" target=\"_blank\">https://bidb.hacettepe.edu.tr/tr/office365</a> adresi üzerinden tüm detaylara ulaşabilirsiniz.</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse43\">Office365 uygulamasını kullanmaya çalıştığımda lisans uyarısı alıyorum. Ne yapmalıyım?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse43\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">bidb@hacettepe.edu.tr eposta adresine durumu detaylı anlatır şekilde e-posta atınız. Sadece hacettepe uzantılı adresinizden attığınız e-postalara dönüş yapılacaktır.</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse44\">Bilgisayarımdaki office uygulamasına hacettepe hesabımla giriş yaptığımda lisans hatası alıyorum ne yapmalıyım?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse44\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">Office uygulamasını hacettepe hesabınızla sorunsuz kullanabilmek için, office.com dan office365 uygulamasını bilgisayarınıza indirip, bu uygulamayı kullanmalısınız. Detaylı bilgi için aşağıdaki linkteki talimatları inceleyiniz.\n<a href=\"https://bidb.hacettepe.edu.tr/tr/office365\" target=\"_blank\"> https://bidb.hacettepe.edu.tr/tr/office365</a>\n</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t<p style='color:red;font-weight: bold;font-size: 20px;'>DİĞER</p>\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse45\">Windows/Office etkinleştirmesini (aktivasyonunu) yaparken hata alıyorum, ne yapabilirim?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse45\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">Aldığınız hata kodunu Çağrı Merkezine bildirmeniz gerekmektedir.</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse46\">Bilgisayarımda oluşan donanımsal arızalar için ne yapa bilirim?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse46\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">Bilgi İşlem Daire Başkanlığı Sorun Bildirim Destek Sistemini (<a href=\"https://bidbdestek.hacettepe.edu.tr\">https://bidbdestek.hacettepe.edu.tr</a>) kullanarak, barkodlu bilgisayarınız için destek almanız gerekmektedir.</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse47\">Ağ yazıcısından çıktı alınamıyor, ne yapa bilirim?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse47\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">Bilgi İşlem Daire Başkanlığı Sorun Bildirim Destek Sisteminden (<a href=\"https://bidbdestek.hacettepe.edu.tr\">https://bidbdestek.hacettepe.edu.tr</a>) bildirimde bulunmanız gerekmektedir.</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse48\">Yurt başvurusu nasıl yapabilirim?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse48\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">Yurt başvuru işlemleri için Sağlık, Kültür ve Spor Daire Başkanlığının “Barınma Olanakları” sayfasının ziyaret edilmesi gerekmektedir. <a href=\"https://sksdb.hacettepe.edu.tr/bidbnew/category.php?id=3&title=barinma\" target=\"_blank\">https://sksdb.hacettepe.edu.tr/bidbnew/category.php?id=3&title=barinma</a></div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse49\">E-Öğrenme platformuna (Blackboard Uzaktan Eğitim Sistemi) giriş yapmak için ne yapmam gerekiyor?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse49\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">Ön Lisans ve Lisans öğrencileri<br>\n<a href=\"https://hadi.hacettepe.edu.tr\" target=\"_blank\">https://hadi.hacettepe.edu.tr</a>\n<br>\nYabancı Dil Hazırlık öğrencileri ve YDYO Kurs öğrencileri<br>\n<a href=\"https://ydyohazirlik.hacettepe.edu.tr\" target=\"_blank\">https://ydyohazirlik.hacettepe.edu.tr</a>\n<br>\nTıp Fakültesi öğrencileri,<br>\n<a href=\"https://tipmoodle.hacettepe.edu.tr\" target=\"_blank\">https://tipmoodle.hacettepe.edu.tr</a>\n<br>\nTezli ve Tezsiz Lisansüstü öğrencileri;<br>\n<a href=\"https://lisansustu.hacettepe.edu.tr\" target=\"_blank\">https://lisansustu.hacettepe.edu.tr</a>\n<br>\nüzerinden giriş yapmaları gerekmektedir.<br>\nDetaylı bilgi ve yardım için Uzaktan Eğitim Uygulama ve Araştırma Merkezi ile iletişime geçilmesi gerekmektedir.\n</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse50\">Hacettepe Üniversitesi kimlik kartımı nasıl alabilirim?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse50\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">Sağlık, Kültür ve Spor Daire Başkanlığına APK birimine HÜ-KART için başvurmanız gerekmektedir.</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse51\">Üniversite mensubuyum yazılım deposunu kullanabiliyor muyum?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse51\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">Hacettepe Üniversitesi elektronik posta hesabı alan tüm Üniversite mensuplarımız yazılım deposunu kullanabilmektedir. Ücretsiz olarak lisanslı yazılımlara erişim sağlayabilmektedirler.</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse52\">Yazılım deposuna nasıl giriş yapabilirim?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse52\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">Hacettepe Üniversitesi elektronik posta hesabınızın kullanıcı adı ve şifresi ile @hacettepe.edu.tr uzantısı olmadan giriş yapmanız gerekmektedir.</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse53\">BİLSİS sistemine giriş yapamıyorum, ne yapmam gerekir?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse53\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">0.312 297 65 70 (5 Hat) Beytepe / 0.312 305 21 41 Sıhhiye telefon numaralarından veya hureg@hacettepe.edu.tr e-posta adresinden Öğrenci İşleri Dairesi Başkanlığı Bilgi Sistemleri Müdürlüğü ile iletişime geçmeniz gerekmektedir.\n<br>BİLSİS şifresi kayıtlı e-postama gelmiyor, ne yapabilirim?\n<br>0.312 297 65 70 (5 Hat) Beytepe / 0.312 305 21 41 Sıhhiye telefon numaralarından veya hureg@hacettepe.edu.tr e-posta adresinden Öğrenci İşleri Dairesi Başkanlığı Bilgi Sistemleri Müdürlüğü ile iletişime geçmeniz gerekmektedir.</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse54\">Transcript/diploma nerden alabilirim?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse54\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">0.312 297 65 70 (5 Hat) Beytepe / 0.312 305 21 41 Sıhhiye telefon numaralarından veya hureg@hacettepe.edu.tr e-posta adresinden Öğrenci İşleri Dairesi Başkanlığı Bilgi Sistemleri Müdürlüğü ile iletişime geçmeniz gerekmektedir.</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse55\">AVESİS, BAPSİS, DAPSİS  sistemine giriş yaparken sorun yaşıyorum, ne yapabilirim?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse55\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">Giriş yetkilerinin kontrol edilebilmesi için kullanıcının @hacettepe.edu.tr uzantılı kurumsal elektronik posta adresinden bidb@hacettepe.edu.tr adresine mail göndermesi gerekmektedir.</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse56\">NUCLEUS sistemine girişte sorun yaşıyorum, ne yapabilirim?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse56\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">Her türlü bilgi ve yardım için 0.312 305 12 78-80 / 0.312 305 41 56 telefon numaralarını aramanız gerekmektedir.</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse57\">Enstitünün sistemine (prens.hacettepe.edu.tr) giriş yaparken sorun yaşıyorum, ne yapabilirim?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse57\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">Bağlı bulunduğunuz enstitü ile iletişime geçmeniz gerekmektedir.</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse58\">Genel duyuruları almak/almamak için ne yapmam gerekiyor?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse58\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">Gruba eklenme taleplerinizi bhim@hacettepe.edu.tr e-posta adresinden Basın ve Halkla İlişkiler Müdürlüğüne bildirmeniz gerekmektedir. Ancak tüm kampüsü bilgilendirmek amaçlı e-postalar gönderildiği için gruptan ayrılamazsınız. E-postanın tarafınıza ulaşmasını istemiyorsanız; arayüz üzerinden gereksiz posta kutunuza gitmesini sağlayabilirsiniz.<a href=\"https://bidb.hacettepe.edu.tr/dosyalar/istenmeyenposta101023.pdf\" \" target=\"_blank\">istenmeyen_e-posta</a> linkinden nasıl yapacağınız bilgisine ulaşabilirsiniz.</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t<div class=\"panel panel-default\">\n\n      <div class=\"panel-heading\">\n\n        <p class=\"panel-title\">\n\n          <a data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#collapse59\">Hastane tahlil sonuçlarına ulaşamıyorum ne yapa bilirim?</a>\n\n        </p>\n\n      </div>\n\n    \n      <div id=\"collapse59\" class=\"panel-collapse collapse\">\n\n        <div class=\"panel-body\">Detaylı bilgi ve yardım için 0.312 305 12 78-80 telefon numarasını aramanız gerekmektedir.</div>\n\n\t\t<p>&nbsp;</p>\n      </div>\n\n    </div>\n\n\t\n\t</div>\n</div>\n</div>",
+  "karakter": 5011,
+  "cekilme": "2026-07-21T14:33:56.533Z"
+}

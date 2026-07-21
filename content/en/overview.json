@@ -1,0 +1,41 @@
+{
+  "slug": "overview",
+  "dil": "en",
+  "bolum": "Corporate",
+  "menuAdi": "Overview",
+  "url": "https://bidb.hacettepe.edu.tr/en/overview",
+  "baslik": "Overview",
+  "seo": {
+    "title": "Hacettepe University Comnputer Center",
+    "description": "",
+    "keywords": ""
+  },
+  "paragraflar": [
+    {
+      "tur": "p",
+      "metin": "The Computer Center was first founded as a \"Data Processing Unit\" in 1968, but later it became an independent center. The main facilities and services provided by Computer Center in both campuses have a purpose;"
+    },
+    {
+      "tur": "li",
+      "metin": "to provide computer services for education and research,"
+    },
+    {
+      "tur": "li",
+      "metin": "to form, operate and manage the communications infrastructure (electronic network structure) in the campuses."
+    },
+    {
+      "tur": "li",
+      "metin": "to provide hardware, software and end-user support for academic and administrative units of the university."
+    },
+    {
+      "tur": "li",
+      "metin": "to provide computer use opportunities for students and academics."
+    }
+  ],
+  "baglantilar": [],
+  "gorseller": [],
+  "belgeler": [],
+  "govdeHtml": "<div class=\"icerik\">\n\n  <p>The  Computer Center was first founded as a \"Data Processing Unit\" in 1968, but later it became an  independent center.  The main  facilities and services provided by Computer Center in both campuses have a  purpose;</p>\n  <UL type=\"disc\">\n    <LI>to provide       computer services for education and research, </LI>\n    <LI>to form, operate       and manage the communications infrastructure       (electronic network structure) in the campuses. </LI>\n    <LI>to provide       hardware, software and end-user support for academic and administrative       units of the university. </LI>\n    <LI>to provide       computer use       opportunities       for students       and academics. </LI>\n  </UL>\n \n</div>",
+  "karakter": 548,
+  "cekilme": "2026-07-21T14:34:02.516Z"
+}

@@ -1,0 +1,96 @@
+{
+  "slug": "hu-iys",
+  "dil": "tr",
+  "bolum": "Servislerimiz",
+  "menuAdi": "İçerik Yönetim Sistemi",
+  "url": "https://bidb.hacettepe.edu.tr/tr/hu-iys",
+  "baslik": "Hacettepe Üniversitesi İçerik Yönetim Sistemi",
+  "seo": {
+    "title": "Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı",
+    "description": "",
+    "keywords": ""
+  },
+  "paragraflar": [
+    {
+      "tur": "p",
+      "metin": "Bilgi İşlem Daire Başkanlığı tarafından hazırlanan ve web sayfalarınızın içeriğini yönetebileceğiniz İçerik Yönetim Sistemi (HÜ-İYS) hizmete girmiştir."
+    },
+    {
+      "tur": "p",
+      "metin": "Bu sistem üniversitemiz birimler/bölümler web sayfalarını yöneten veya yönetecek olan sayfa sorumluları için hazırlanmıştır. Bireysel kullanıcılar sisteme giriş yaptığında yetki hatası alırlar."
+    },
+    {
+      "tur": "p",
+      "metin": "Mevcut sayfaların sistemi kullanması için dilekçe ile başvurması gerekmektedir. Dilekçe örneği aşağıdadır."
+    },
+    {
+      "tur": "td",
+      "metin": "HÜ-İYS Nedir? HÜ-İYS, merkezi olarak web sayfalarınızın içeriğini yönetebileceğiniz web tabanlı bir uygulamadır. Bu uygulama ile web sitenize içerik girişi ve içerik düzenlemesi yapabilirsiniz. Bu düzenlemeleri yaparken herhangi bir programa ihtiyaç duymadan tarayıcınız üzerinden işlemlerinizi yapabilirsiniz."
+    },
+    {
+      "tur": "td",
+      "metin": "Sisteme Giriş Sisteme http://hu-iys.hacettepe.edu.tr/ adresi üzerinden hacettepe.edu.tr eposta hesap bilgileriniz ile giriş yapabilirsiniz. Sistemi kullanmak için başka bir şifreye ihtiyacınız yoktur. Sayfa Sorumluluğu Sisteme giriş yaptığınızda sorumlu olduğunuz sayfalara müdahale edebilirsiniz. Eğer herhangi bir sayfa için sayfa sorumluluğu tanımlamanız yok ise sistemi kullanamazsınız."
+    },
+    {
+      "tur": "td",
+      "metin": "HÜ-İYS Bileşenleri Menüler Sayfalar Haber ve Duyurular Foto Galeri Video Galeri"
+    },
+    {
+      "tur": "td",
+      "metin": "Şablon Yapısı Sistem Bilgi İşlem Daire Başkanlığı tarafından hazırlanan şablonu kullanmaktadır. Şablon merkezi olarak değiştirildiğinde sistemi kullanan sayfalar otomatik olarak değişen şablonu kullanmaya başlayacaktır. Çoklu Dil Desteği Sistemde tanımlı sayfalar için çoklu dil desteği sağlanmaktadır."
+    },
+    {
+      "tur": "td",
+      "metin": "Dosya Yönetimi Sayfanızda kullanacağınız dosyalar(doküman, resim vs.) için her bir sayfa için ayrı olarak tanımlanmış dosya alanını kullanabilirsiniz."
+    },
+    {
+      "tur": "td",
+      "metin": "HÜ-İYS Kimler Kullanabilir? HÜ-İYS aşağıdaki birimler tarafından kullanılabilir. Fakülteler Bölümler Birimler Araştırma Merkezleri Enstitüler Yüksek Okullar Meslek Yüksek Okulları Öğrenci Toplulukları Hacettepe Üniversitesi Tarafından Düzenlenen Kongreler HÜ-İYS İçin Nasıl Başvurabilirim? HÜ-İYS Kullanmak için “HÜ-İYS Başvuru Formu” ile resmi yazı üzerinden başvurulması gerekmektedir."
+    }
+  ],
+  "baglantilar": [
+    {
+      "metin": "http://hu-iys.hacettepe.edu.tr/",
+      "href": "http://hu-iys.hacettepe.edu.tr/"
+    },
+    {
+      "metin": "“HÜ-İYS Başvuru Formu”",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/BGYS-F-23-IYSTalepFormurevizyon.docx"
+    }
+  ],
+  "gorseller": [
+    {
+      "src": "https://bidb.hacettepe.edu.tr/images/hu-iysicon01.png",
+      "alt": ""
+    },
+    {
+      "src": "https://bidb.hacettepe.edu.tr/images/hu-iysicon02.png",
+      "alt": ""
+    },
+    {
+      "src": "https://bidb.hacettepe.edu.tr/images/hu-iysicon03.png",
+      "alt": ""
+    },
+    {
+      "src": "https://bidb.hacettepe.edu.tr/images/hu-iysicon04.png",
+      "alt": ""
+    },
+    {
+      "src": "https://bidb.hacettepe.edu.tr/images/hu-iysicon05.png",
+      "alt": ""
+    },
+    {
+      "src": "https://bidb.hacettepe.edu.tr/images/hu-iysicon06.png",
+      "alt": ""
+    }
+  ],
+  "belgeler": [
+    {
+      "metin": "“HÜ-İYS Başvuru Formu”",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/BGYS-F-23-IYSTalepFormurevizyon.docx"
+    }
+  ],
+  "govdeHtml": "<div class=\"icerik\">\n<p>Bilgi İşlem  Daire Başkanlığı tarafından hazırlanan ve web sayfalarınızın içeriğini  yönetebileceğiniz İçerik Yönetim Sistemi (HÜ-İYS) hizmete girmiştir.</p>\n<p>Bu sistem üniversitemiz birimler/bölümler web sayfalarını yöneten veya yönetecek olan sayfa sorumluları için hazırlanmıştır. Bireysel kullanıcılar sisteme giriş yaptığında yetki hatası alırlar.</p>\n<p>Mevcut sayfaların sistemi kullanması için dilekçe ile başvurması gerekmektedir. Dilekçe örneği aşağıdadır.</p>\n<TABLE width=\"100%\" border=\"0\" cellpadding=\"5\">\n  <TBODY>\n    <TR>\n      <TD width=\"128\" align=\"left\" valign=\"middle\"><IMG src=\"/images/hu-iysicon01.png\"></TD>\n      <TD align=\"left\" valign=\"middle\"><STRONG>HÜ-İYS Nedir?</STRONG><BR>\n        HÜ-İYS,  merkezi olarak web sayfalarınızın içeriğini yönetebileceğiniz web tabanlı bir  uygulamadır. Bu uygulama ile web sitenize içerik girişi ve içerik düzenlemesi  yapabilirsiniz. Bu düzenlemeleri yaparken herhangi bir programa ihtiyaç  duymadan tarayıcınız üzerinden işlemlerinizi yapabilirsiniz.</TD>\n    </TR>\n    <TR>\n      <TD width=\"128\" align=\"left\" valign=\"middle\"><IMG src=\"/images/hu-iysicon02.png\"></TD>\n      <TD align=\"left\" valign=\"middle\"><p><STRONG>Sisteme Giriş</STRONG><BR>\n        Sisteme <A href=\"http://hu-iys.hacettepe.edu.tr/\">http://hu-iys.hacettepe.edu.tr/</A> adresi üzerinden hacettepe.edu.tr eposta hesap bilgileriniz ile  giriş yapabilirsiniz. Sistemi kullanmak için başka bir şifreye ihtiyacınız  yoktur.</p>\n          <p><STRONG>Sayfa Sorumluluğu</STRONG><BR>\n            Sisteme giriş yaptığınızda sorumlu olduğunuz sayfalara  müdahale edebilirsiniz. Eğer herhangi bir sayfa için sayfa sorumluluğu  tanımlamanız yok ise sistemi kullanamazsınız.</p></TD>\n    </TR>\n    <TR>\n      <TD width=\"128\" align=\"left\" valign=\"middle\"><IMG src=\"/images/hu-iysicon03.png\"></TD>\n      <TD align=\"left\" valign=\"middle\"><p><STRONG>HÜ-İYS Bileşenleri</STRONG></p>\n          <OL>\n            <LI>Menüler</LI>\n            <LI>Sayfalar</LI>\n            <LI>Haber ve Duyurular</LI>\n            <LI>Foto Galeri</LI>\n            <LI>Video Galeri</LI>\n          </OL></TD>\n    </TR>\n    <TR>\n      <TD width=\"128\" align=\"left\" valign=\"middle\"><IMG src=\"/images/hu-iysicon04.png\"></TD>\n      <TD align=\"left\" valign=\"middle\"><STRONG>Şablon Yapısı</STRONG><BR>\n        Sistem Bilgi  İşlem Daire Başkanlığı tarafından hazırlanan şablonu kullanmaktadır. Şablon  merkezi olarak değiştirildiğinde sistemi kullanan sayfalar otomatik olarak  değişen şablonu kullanmaya başlayacaktır. <BR>\n        <BR>\n        <STRONG>Çoklu Dil Desteği</STRONG><BR>\n        Sistemde tanımlı  sayfalar için çoklu dil desteği sağlanmaktadır.</TD>\n    </TR>\n    <TR>\n      <TD width=\"128\" align=\"left\" valign=\"middle\"><IMG src=\"/images/hu-iysicon05.png\"></TD>\n      <TD align=\"left\" valign=\"middle\"><STRONG>Dosya Yönetimi</STRONG><BR>\n        Sayfanızda  kullanacağınız dosyalar(doküman, resim vs.) için her bir sayfa için ayrı olarak  tanımlanmış dosya alanını kullanabilirsiniz.</TD>\n    </TR>\n    <TR>\n      <TD width=\"128\" align=\"left\" valign=\"middle\"><IMG src=\"/images/hu-iysicon06.png\"></TD>\n      <TD align=\"left\" valign=\"middle\"><p><STRONG>HÜ-İYS Kimler Kullanabilir?</STRONG><BR>\n        HÜ-İYS  aşağıdaki birimler tarafından kullanılabilir.</p>\n          <OL>\n            <LI>Fakülteler</LI>\n            <LI>Bölümler</LI>\n            <LI>Birimler</LI>\n            <LI>Araştırma Merkezleri</LI>\n            <LI>Enstitüler</LI>\n            <LI>Yüksek Okullar</LI>\n            <LI>Meslek Yüksek Okulları</LI>\n            <LI>Öğrenci Toplulukları</LI>\n            <LI>Hacettepe Üniversitesi Tarafından  Düzenlenen Kongreler</LI>\n          </OL>\n        <p><STRONG>HÜ-İYS İçin Nasıl Başvurabilirim?</STRONG><BR>\n          HÜ-İYS Kullanmak için <A href=\"/dosyalar/BGYS-F-23-IYSTalepFormurevizyon.docx\"><STRONG>“HÜ-İYS Başvuru Formu”</STRONG></A> ile resmi yazı üzerinden başvurulması gerekmektedir. </p></TD>\n    </TR>\n  </TBODY>\n</TABLE>\n</div>",
+  "karakter": 2068,
+  "cekilme": "2026-07-21T14:33:53.848Z"
+}

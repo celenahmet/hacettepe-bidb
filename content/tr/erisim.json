@@ -1,0 +1,53 @@
+{
+  "slug": "erisim",
+  "dil": "tr",
+  "bolum": "Teknik Altyapı",
+  "menuAdi": "Dış Erişim Kuralları",
+  "url": "https://bidb.hacettepe.edu.tr/tr/erisim",
+  "baslik": "Dış Erişim Kuralları",
+  "seo": {
+    "title": "Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı",
+    "description": "",
+    "keywords": ""
+  },
+  "paragraflar": [
+    {
+      "tur": "p",
+      "metin": "Firewall Üzerinde Tanımlı Kurallar"
+    },
+    {
+      "tur": "p",
+      "metin": "Peer-to-Peer Teknolojisini Kullanan Trafiğin Bastırılması"
+    },
+    {
+      "tur": "li",
+      "metin": "Yaptığımız Internet trafik analizleri göstermiştir ki, Internet trafiğimizde yaşadığımız yoğunluğun en büyük nedeni gün içinde bazı kullanıcılarımızın bilinçli ya da bilinçsiz olarak, hiç durmaksızın çeşitli dosya paylaşım programlarını (peer-to-peer programlar: örn. torrent clients, emule, e-donkey, vb.) kullanmaları olmuştur. Bu programlar çoğunlukla yüzlerce megabyte uzunluğundaki büyük dosyaları indirmek için kullanılmakta ve doğaları gereği aynı zamanda indirilen veya indirilmekte olan dosyaları da kampüs dışı kullanıcıların paylaşımına açmaktadırlar. Bu ise tek bir bilgisayarın aynı anda yüzlerce-binlerce noktaya bağlantı kurması anlamına gelmektedir. Kampüsümüzün Internet güvenliği için kullanmakta olduğumuz firewall cihazları başta olmak üzere Internet bağlantısını sağlamakta olan cihazlarımız -ne kadar güçlü olurlarsa olsunlar- bu düzeydeki bir trafiği kaldırabilmekte çok zorlanmaktadırlar. Bağlantı hızı ve kapasitesi ne kadar arttırılırsa arttırılsın, dünyada birçok üniversitenin de problemlerinden biri olan \"peer-to-peer\" programların kullanımının zaman içinde bunu da doyuma ulaştırağı öngörülemez değildir."
+    },
+    {
+      "tur": "li",
+      "metin": "Özellikle bazı kullanıcıların göz ardı ettikleri bir diğer konu, paylaşılan bazı dosyaların telif hakkı olup olmamasıdır. Bilindiği gibi bu tür dosyaların indirilmesi de dışarıya paylaştırılması da üniversitemize kayıtlı IP adresleri üzerinden olmaktadır. Dışarıya paylaşılan dosyaların kurumumuzu yasal olarak zor durumda bırakması söz konusu olabilmektedir."
+    },
+    {
+      "tur": "p",
+      "metin": "Kullanılan teknoloji mükemmel olmamasına rağmen, Internet bağlantı performansında önemli bir iyileşme yaşanmıştır. Amaç, kullanıcıları sınırlamak değil, özkaynakların paylaşımını iyileştirmekten ibarettir. Bu nedenle, ağ trafiğini yoğunlaştırdığı düşünülen diğer teknoloji, adres ve yöntemler şu an için engellenmemektedir. Dairemizin eğilimi, teknik engellemeleri arttırmak yerine kullanıcıların bilinçlenmesine katkı sağlamak ve lisanslı yazılımların kullanılmasını sağlayarak kampüslerde virüs/worm vb. zararlıların oluşturacağı gereksiz trafiği azaltmak yönündedir."
+    },
+    {
+      "tur": "p",
+      "metin": "Port Sınırlamaları"
+    },
+    {
+      "tur": "p",
+      "metin": "Eğer port engellemeleri nedeniyle çalışmanızın aksadığını düşünüyorsanız dairemizin Çağrı Merkezini arayabilir ya da cagrimerkezi@hacettepe.edu.tr adresine e-posta gönderebilirsiniz."
+    },
+    {
+      "tur": "p",
+      "metin": "Saldırı Tespit ve Önleme Sistemleri (IDS, IPS)"
+    }
+  ],
+  "baglantilar": [],
+  "gorseller": [],
+  "belgeler": [],
+  "govdeHtml": "<div class=\"icerik\">\n\n\n<p><STRONG>Firewall Üzerinde Tanımlı Kurallar</STRONG></p>\nHacettepe Üniversitesi bilişim   kaynaklarının kullanımını daha etkin ve verimli kılabilmek amacıyla   üniversitemiz ana Internet çıkışlarında bulunan \"Firewall\" ve \"Router\" cihazları   üzerinde bir dizi düzenleme yapılmıştır. Bu düzenlemeler, hem Internet   trafiğimizin sorunsuz olarak akmasını sağlamayı, hem de kullanıcılarımızı   dışarıdan gelebilecek bazı saldırılara karşı korumayı amaçlamaktadır.\n<p><STRONG>Peer-to-Peer Teknolojisini Kullanan Trafiğin Bastırılması</STRONG></p>\nHacettepe   Üniversitesi Bilgi İşlem Dairesi, 2006 yılı başından itibaren popüler bazı   peer-to-peer programların dosya transferini engellemek için bir donanım/yazılım   sistemini devreye sokmuştur. Bunun gerekçeleri şöyle özetlenebilir:\n<UL>\n  <LI>Yaptığımız Internet trafik analizleri göstermiştir ki, Internet trafiğimizde   yaşadığımız yoğunluğun en büyük nedeni gün içinde bazı kullanıcılarımızın   bilinçli ya da bilinçsiz olarak, hiç durmaksızın çeşitli dosya paylaşım   programlarını (peer-to-peer programlar: örn. torrent clients, emule, e-donkey,   vb.) kullanmaları olmuştur. Bu programlar çoğunlukla yüzlerce megabyte   uzunluğundaki büyük dosyaları indirmek için kullanılmakta ve doğaları gereği   aynı zamanda indirilen veya indirilmekte olan dosyaları da kampüs dışı   kullanıcıların paylaşımına açmaktadırlar. Bu ise tek bir bilgisayarın aynı anda   yüzlerce-binlerce noktaya bağlantı kurması anlamına gelmektedir. Kampüsümüzün   Internet güvenliği için kullanmakta olduğumuz firewall cihazları başta olmak   üzere Internet bağlantısını sağlamakta olan cihazlarımız -ne kadar güçlü   olurlarsa olsunlar- bu düzeydeki bir trafiği kaldırabilmekte çok   zorlanmaktadırlar. Bağlantı hızı ve kapasitesi ne kadar arttırılırsa   arttırılsın, dünyada birçok üniversitenin de problemlerinden biri olan   \"peer-to-peer\" programların kullanımının zaman içinde bunu da doyuma ulaştırağı   öngörülemez değildir. </LI>\n  <LI>Özellikle bazı kullanıcıların göz ardı ettikleri bir diğer konu, paylaşılan   bazı dosyaların telif hakkı olup olmamasıdır. Bilindiği gibi bu tür dosyaların   indirilmesi de dışarıya paylaştırılması da üniversitemize kayıtlı IP adresleri   üzerinden olmaktadır. Dışarıya paylaşılan dosyaların kurumumuzu yasal olarak zor   durumda bırakması söz konusu olabilmektedir. </LI>\n</UL>\n<p>Kullanılan teknoloji mükemmel olmamasına rağmen, Internet bağlantı   performansında önemli bir iyileşme yaşanmıştır. Amaç, kullanıcıları sınırlamak   değil, özkaynakların paylaşımını iyileştirmekten ibarettir. Bu nedenle, ağ   trafiğini yoğunlaştırdığı düşünülen diğer teknoloji, adres ve yöntemler şu an   için engellenmemektedir. Dairemizin eğilimi, teknik engellemeleri arttırmak   yerine kullanıcıların bilinçlenmesine katkı sağlamak ve lisanslı yazılımların   kullanılmasını sağlayarak kampüslerde virüs/worm vb. zararlıların oluşturacağı   gereksiz trafiği azaltmak yönündedir. </p>\n<p><STRONG>Port Sınırlamaları</STRONG></p>\nKullanıcıların Internet erişimine bir zarar vermeyen,   ancak kullanılan işletim sistemlerinin açıklarından yararlanarak bazı zararlı   programların ya da bilgisayar korsanlarının sistemlere girişlerini   kolaylaştıracak Internet port'ları kampüslerin WAN girişinde kapatılmıştır.   Üniversitenin farklı bölgelerinde, o yerin donanım altyapısı, Internet çıkış   kapasitesi, kullanıcı profili ve gereksinimleri doğrultusunda farklı   düzenlemeler yapılmaktadır.\n<p>Eğer port engellemeleri nedeniyle çalışmanızın aksadığını düşünüyorsanız   dairemizin Çağrı Merkezini arayabilir ya da cagrimerkezi@hacettepe.edu.tr adresine   e-posta gönderebilirsiniz. </p>\n<p><STRONG>Saldırı Tespit ve Önleme Sistemleri (IDS, IPS)</STRONG></p>\nYine üniversitemizin   farklı bölgelerinin gereksinimlerine paralel olarak kampüslerin WAN girişlerinde   Saldırı Tespit ve Önleme (Intrusion Detection and Prevention) sistemleri   kullanılmaktadır. Kuşkusuz bu sistemlerin hiç biri kusursuz değildir, ancak bazı   temel algoritmaları kullanarak yapılmaya teşebbüs edilen bir çok saldırıyı bloke   etmeyi başarmaktadır.\n</div>",
+  "karakter": 2400,
+  "cekilme": "2026-07-21T14:34:00.847Z"
+}

@@ -1,0 +1,42 @@
+{
+  "slug": "iletisim",
+  "dil": "tr",
+  "bolum": "İletişim",
+  "menuAdi": "İletişim",
+  "url": "https://bidb.hacettepe.edu.tr/tr/iletisim",
+  "baslik": "İletişim Bilgileri",
+  "seo": {
+    "title": "Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı",
+    "description": "",
+    "keywords": ""
+  },
+  "paragraflar": [
+    {
+      "tur": "p",
+      "metin": "Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı 06800 Beytepe / ANKARA Tel: +90 312 297 62 00 Faks: +90 312 299 20 88 E-Posta: bidb@hacettepe.edu.tr"
+    },
+    {
+      "tur": "p",
+      "metin": "Daire çalışanlarına ait iletişim bilgilerine Personel bağlantısından ulaşabilirsiniz."
+    },
+    {
+      "tur": "p",
+      "metin": "HÜ BİDB'ye ulaşım krokisi için tıklayınız."
+    }
+  ],
+  "baglantilar": [
+    {
+      "metin": "bidb@hacettepe.edu.tr",
+      "href": "mailto:bidb@hacettepe.edu.tr"
+    },
+    {
+      "metin": "Personel",
+      "href": "https://bidb.hacettepe.edu.tr/tr/personel"
+    }
+  ],
+  "gorseller": [],
+  "belgeler": [],
+  "govdeHtml": "<div class=\"icerik\">\n\n\n<p>Hacettepe Üniversitesi<BR>\n  Bilgi İşlem Daire Başkanlığı<BR>\n  06800 Beytepe / ANKARA<BR>\n  Tel: +90 312 297 62 00<BR>\n  Faks: +90 312 299 20 88<BR>\n  E-Posta: <A href=\"mailto:bidb@hacettepe.edu.tr\">bidb@hacettepe.edu.tr</A><BR>\n</p>\n<p>Daire çalışanlarına ait iletişim bilgilerine <A href=\"/tr/personel\">Personel</A> bağlantısından ulaşabilirsiniz.</p>\n<p><STRONG><A id=\"kroki_harita\" href=\"javascript:;\">HÜ BİDB'ye ulaşım krokisi için tıklayınız.</A></STRONG></p>\n</div>",
+  "karakter": 279,
+  "cekilme": "2026-07-21T14:34:01.179Z"
+}

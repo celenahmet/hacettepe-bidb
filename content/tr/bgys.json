@@ -1,0 +1,71 @@
+{
+  "slug": "bgys",
+  "dil": "tr",
+  "bolum": "Kurallar ve İlkeler",
+  "menuAdi": "Bilgi Güvenliği Yönetim Sistemi",
+  "url": "https://bidb.hacettepe.edu.tr/tr/bgys",
+  "baslik": "Bilgi Güvenliği Yönetim Sistemi",
+  "seo": {
+    "title": "Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı",
+    "description": "",
+    "keywords": ""
+  },
+  "paragraflar": [
+    {
+      "tur": "p",
+      "metin": "Bilgi Güvenliği Politikası"
+    },
+    {
+      "tur": "p",
+      "metin": "Bilgi Sistemleri Kabul Edilebilir Kullanım Politikası"
+    },
+    {
+      "tur": "p",
+      "metin": "Parola Politikası"
+    },
+    {
+      "tur": "p",
+      "metin": "Temiz Masa ve Temiz Ekran Politikası"
+    }
+  ],
+  "baglantilar": [
+    {
+      "metin": "Bilgi Güvenliği Politikası",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/BilgiGuvenligiPolitikasi.pdf"
+    },
+    {
+      "metin": "Bilgi Sistemleri Kabul Edilebilir Kullanım Politikası",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/BilgiSistemleriKabulEdilebilirKullanimPolitikasi.pdf"
+    },
+    {
+      "metin": "Parola Politikası",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/ParolaPolitikasi.pdf"
+    },
+    {
+      "metin": "Temiz Masa ve Temiz Ekran Politikası",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/TemizMasaveTemizEkranPolitikasi.pdf"
+    }
+  ],
+  "gorseller": [],
+  "belgeler": [
+    {
+      "metin": "Bilgi Güvenliği Politikası",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/BilgiGuvenligiPolitikasi.pdf"
+    },
+    {
+      "metin": "Bilgi Sistemleri Kabul Edilebilir Kullanım Politikası",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/BilgiSistemleriKabulEdilebilirKullanimPolitikasi.pdf"
+    },
+    {
+      "metin": "Parola Politikası",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/ParolaPolitikasi.pdf"
+    },
+    {
+      "metin": "Temiz Masa ve Temiz Ekran Politikası",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/TemizMasaveTemizEkranPolitikasi.pdf"
+    }
+  ],
+  "govdeHtml": "<div class=\"icerik\">\n\n\n<p><a href=\"/dosyalar/BilgiGuvenligiPolitikasi.pdf\" target=\"_blank\">Bilgi Güvenliği Politikası</a></p>\n<p><a href=\"/dosyalar/BilgiSistemleriKabulEdilebilirKullanimPolitikasi.pdf\" target=\"_blank\">Bilgi Sistemleri Kabul Edilebilir Kullanım Politikası</a></p>\n\n<p><a href=\"/dosyalar/ParolaPolitikasi.pdf\" target=\"_blank\">Parola Politikası</a></p>\n<p><a href=\"/dosyalar/TemizMasaveTemizEkranPolitikasi.pdf\" target=\"_blank\">Temiz Masa ve Temiz Ekran Politikası</a></p>\n\n\n</div>",
+  "karakter": 132,
+  "cekilme": "2026-07-21T14:33:57.199Z"
+}

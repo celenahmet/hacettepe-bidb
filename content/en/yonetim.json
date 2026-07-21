@@ -1,0 +1,54 @@
+{
+  "slug": "yonetim",
+  "dil": "en",
+  "bolum": "Corporate",
+  "menuAdi": "Administrative Organization",
+  "url": "https://bidb.hacettepe.edu.tr/en/yonetim",
+  "baslik": "Administrative Organization",
+  "seo": {
+    "title": "Hacettepe University Comnputer Center",
+    "description": "",
+    "keywords": ""
+  },
+  "paragraflar": [
+    {
+      "tur": "td",
+      "metin": "Mustafa Gökhan GÜZEL"
+    },
+    {
+      "tur": "td",
+      "metin": "Director"
+    },
+    {
+      "tur": "td",
+      "metin": "gokhan{at}hacettepe.edu.tr"
+    },
+    {
+      "tur": "td",
+      "metin": "Esin ALAN"
+    },
+    {
+      "tur": "td",
+      "metin": "Secretary"
+    },
+    {
+      "tur": "td",
+      "metin": "esin.alan{at}hacettepe.edu.tr"
+    }
+  ],
+  "baglantilar": [
+    {
+      "metin": "gokhan{at}hacettepe.edu.tr",
+      "href": "mailto:gokhan@hacettepe.edu.tr"
+    },
+    {
+      "metin": "esin.alan{at}hacettepe.edu.tr",
+      "href": "mailto:esin.alan@hacettepe.edu.tr"
+    }
+  ],
+  "gorseller": [],
+  "belgeler": [],
+  "govdeHtml": "<div class=\"icerik\">\n\n\n  <table class=\"table table-borderless\">\n\n    <tr>\n        <td>Mustafa Gökhan GÜZEL</td>\n        <td>Director</td>\n        <td><a href=\"mailto:gokhan@hacettepe.edu.tr\">gokhan{at}hacettepe.edu.tr</a></td>\n    </tr>      \n\n\n\n\n\n\n  \n  <tr>\n    <td>Esin ALAN</td>\n    <td>Secretary</td>\n\n    <td><a href=\"mailto:esin.alan@hacettepe.edu.tr\">esin.alan{at}hacettepe.edu.tr</a></td>\n  </tr>\n</table>\n \n</div>",
+  "karakter": 101,
+  "cekilme": "2026-07-21T14:34:03.180Z"
+}

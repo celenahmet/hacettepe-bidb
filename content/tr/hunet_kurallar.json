@@ -1,0 +1,139 @@
+{
+  "slug": "hunet_kurallar",
+  "dil": "tr",
+  "bolum": "Kurallar ve İlkeler",
+  "menuAdi": "HUNET Kullanım İlkeleri",
+  "url": "https://bidb.hacettepe.edu.tr/tr/hunet_kurallar",
+  "baslik": "HUNET Kullanım İlkeleri",
+  "seo": {
+    "title": "Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı",
+    "description": "",
+    "keywords": ""
+  },
+  "paragraflar": [
+    {
+      "tur": "p",
+      "metin": "1. Tanımlar"
+    },
+    {
+      "tur": "p",
+      "metin": "Bilişim Kaynağı: Hacettepe Üniversitesi kampüsleri dahilinde bulunan ve BİD'nin kurup yönettiği bilgisayar ağı (HUNET), bağlı olduğu tüm iç ve dış ağlar ile bu ağa bağlanan her türlü elektronik cihaz, bilgisayar ve yan ürünleri."
+    },
+    {
+      "tur": "p",
+      "metin": "HUNET: Hacettepe Üniversitesi dahilinde bölüm, birim, bina ve kampüs düzeyinde bilişim kaynaklarını bir ağ yapısı ile birbirine bağlayan ve Internet erişimini sağlayan ağa verilen genel ad."
+    },
+    {
+      "tur": "p",
+      "metin": "BİM: Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı bünyesinde faaliyet gösteren ve ağ, sunucu ve benzeri servislerin tümüne olan erişimi sağlayan sistemlerin bir araya geldiği ve yönetildiği merkez (Bilgi İşlem Merkezi)."
+    },
+    {
+      "tur": "p",
+      "metin": "Kampüs Kullanıcısı: Hacettepe Üniversitesi dahilinde bulunan bilişim kaynaklarını üniversite kampüsleri içinden erişerek kullanan akademik ve idari personel, öğrenci ya da kullanım hakkı tanınmış özel ya da tüzel kişi."
+    },
+    {
+      "tur": "p",
+      "metin": "Kampüs Dışı Kullanıcı: Hacettepe Üniversitesi dahilinde bulunan bilişim kaynaklarını üniversite kampüsleri dışından çeşitli yöntemlerle erişerek kullanan akademik ve idari personel, öğrenci ya da kullanım hakkı tanınmış özel ya da tüzel kişi."
+    },
+    {
+      "tur": "p",
+      "metin": "Ziyaretçi: Hacettepe Üniversitesi dahilinde olmayan, ancak çeşitli nedenlerle Hacettepe Üniversitesi bilişim kaynaklarına (WEB, FTP vb.) uzaktan erişenler ile üniversitenin personel ya da öğrencisi olmayıp kampüsler dahilinde bulunan bazı bilişim kaynaklarına (kablosuz ağ vb.) ulaşan kişi."
+    },
+    {
+      "tur": "p",
+      "metin": "2. Yetki Ve Sorumluluk Beyanı"
+    },
+    {
+      "tur": "p",
+      "metin": "Hacettepe Üniversitesi bilişim kaynakları kullanıcıları, Hacettepe Üniversitesi sunucuları üzerinde kendilerine tahsis edilen \"kullanıcı kodu/şifre\" ikilisi ve/veya IP (Internet Protocol) adresi kullanılarak gerçekleştirdikleri her türlü etkinlikten, Hacettepe Üniversitesi bilişim kaynaklarını kullanarak oluşturdukları ve/veya kendilerine tahsis edilen Hacettepe Üniversitesi bilişim kaynağı üzerinde bulundurdukları her türlü kaynağın (belge, doküman, yazılım, vb.) içeriğinden, kaynağın kullanımı hakkında yetkili makamlar tarafından talep edilen bilgilerin doğru ve eksiksiz verilmesinden, ilgili kaynağın kullanım kurallarına, üniversite yönetmeliklerine, Türkiye Cumhuriyeti yasalarına ve bunlara bağlı olan yönetmeliklere karşı birebir kendileri sorumludur."
+    },
+    {
+      "tur": "p",
+      "metin": "Hacettepe Üniversitesi yönetimi, Hacettepe Üniversitesi kullanıcıları ve özel kullanıcılar ile üçüncü kişi veya kuruluşlar arasında doğabilecek her türlü ihtilaf durumunda doğrudan taraf olma hakkını saklı tutar."
+    },
+    {
+      "tur": "p",
+      "metin": "3. Bilişim Kaynaklarının Kullanımı İçin Genel İlkeler"
+    },
+    {
+      "tur": "li",
+      "metin": "Hacettepe Üniversitesi bilişim kaynakları, bu kaynakları kullananlar tarafından boşa harcanmamalıdır."
+    },
+    {
+      "tur": "li",
+      "metin": "Hacettepe Üniversitesi bilişim kaynaklarını kullanıma sunan birimler, bu kaynakların kullanımı ile ilgili sorumluluğu da üstlenmiş sayılırlar. Kaynakların, birim veya bölüme bağlı bir kullanıcı tarafından kurallara uygun olmayan şekilde kullanılması halinde ilgili birim veya bölüm yönetimi ile BİD arasında işbirliği olanağı sağlanmalıdır."
+    },
+    {
+      "tur": "li",
+      "metin": "Kullanıcılar ağ üzerinden yolladıkları ve/veya aldıkları her türlü veri ile HUNET'e bağlı bilgisayarlarının içindeki bilgilerinin gizliliğinden, mahremiyetinden ve güvenliğinden kendileri sorumludur. Kullanıcı, bilgisayarındaki verilerin önemine bağlı olarak oluşabilecek herhangi bir virüs - korsan saldırısına ya da teknik kazalara karşı gerekli gördükçe yedekleme yapmalıdır."
+    },
+    {
+      "tur": "li",
+      "metin": "Bölüm veya birimler, kendilerine verilen bilişim kaynaklarını adil olarak ve üniversitenin diğer kullanıcılarının erişim haklarını engellemeyecek şekilde kullanmakla sorumludurlar. Yönetim, bu konuda BİD ile işbirliği yapılmalı ve BİD'nden aldıkları kullanım bilgilerini değerlendirerek, bu kurala aykırı bir hareket görüyorsa çalışanlarını ya da öğrencilerini uyarmalıdır."
+    },
+    {
+      "tur": "li",
+      "metin": "Bölüm veya birimler, kullanıcıların yarattığı giriş ve çıkış trafiğinden sorumludurlar. Bu konuda BİD'nden gelecek bilgileri ve uyarıları hızla değerlendirip, aykırı ve istenmeyen trafiği yaratan kullanıcıya gerekli yaptırımı en kısa zamanda yerine getirmelidirler."
+    },
+    {
+      "tur": "li",
+      "metin": "Kullanıcılar, çoğu zaman, bilgisayarlarında bulunan verilerin değerini önemsemedikleri için gerekli önlemleri almamakta, virüs vb. zararlıların bilgisayarlarında bulunmasından rahatsız olmamakta veya bunların varlığını tespit etmek için bir gayret göstermeyebilmektedirler. Ancak bu durumun, üniversitenin bilişim kaynaklarınının kullanımını da olumsuz derecede etkilediği çoğu zaman unutulmakta ya da bilinmemektedir. Bölüm veya birim yönetimleri kullanıcıları bu konuda da bilinçlendirmekle yükümlüdürler."
+    },
+    {
+      "tur": "li",
+      "metin": "BİD, güvenliği veya sistemin çalışmasını tehdit edebilecek bir problem tespit ettiğinde, kişi ya da alt birimin kimliğinin tespiti için ilgili bölüm ya da birim yönetimi ile hızlı ve sağlıklı bir işbirliği yapabilmeli; bu nedenle bölüm veya birim yönetimleri, kullanıcıların bağlantıları, IP / MAC adresleri, ağ erişim cihazı üzerinde hangi soketin hangi bilgisayara ulaştığı gibi konularda dökümantasyon yapmalı ve bu bilgilerin güncelliğini korumalıdır. Yönetimler tarafından mümkünse mutlaka yerel ağ yapısından sorumlu bir kişi görevlendirilmeli ve bu kişiye gerektiği zaman hızla ulaşabilmesi için BİD'ne gerekli erişim bilgileri verilmelidir."
+    },
+    {
+      "tur": "li",
+      "metin": "Birimler veya bölümler, BİD'nin binalarında kurup muhafaza sorumluluğunu verdiği kablolama sistemi, ağ erişim cihazları ve diğer teçhizat üzerinde, gerek yazılım gerekse donanım düzeyinde keyfi değişiklikler yapmamalı, bir gereksinim olduğu takdirde, o birimin daha önceden belirlenip BİD'ne bildirilmiş teknik sorumlusu tarafından BİD ile irtibata geçilmeli, gerekli değişiklik karşılıklı bilgilendirme ve onay sonucunda yapılmalıdır."
+    },
+    {
+      "tur": "li",
+      "metin": "HUNET ağına bağlanan yerel bilişim kaynakları üzerinden paylaştırılan bilgi ve dosyalar (bölüm sunucuları, bilgi paylaştırmak için kullanılan kişisel bilgisayarlar, vs.) kesinlikle genel bilgi paylaşımı kurallarına aykırı olmamalı, telif hakkı, yasallık, gizlilik, lisans koşulları vd. düzenlemelere aykırı düşmemelidir."
+    },
+    {
+      "tur": "li",
+      "metin": "Hacettepe Üniversitesi bilişim kaynakları üniversite yönetiminin bilgisi ve izni haricinde hiçbir surette ticari amaçla kullanılmamalı, ticari amaçla çalışan kuruluşlar arasında haksız rekabete sebep olmamalı, ticari gelir teminine olanak sağlamak için kullanılmamalıdır. Bu kaynaklar hiçbir surette devredilemez, kiralanılamaz ve satılamaz."
+    },
+    {
+      "tur": "li",
+      "metin": "Hacettepe Üniversitesi'nin iç kullanımına ait hiçbir haber, duyuru, bilgi ve belge, izin alınmadan HUNET aracılığı ile üçüncü şahıslara iletilmemeli veya iletilecek ortam oluşturulmamalıdır."
+    },
+    {
+      "tur": "li",
+      "metin": "Hacettepe Üniversitesi Bilişim kaynaklarının kullanılması için kullanıcılara verilmiş olan hiçbir şifre üçüncü şahıslara verilmemeli, üçüncü şahısların üniversite bilişim kaynaklarına HUNET aracılığı ile erişimine olanak sağlanmamalıdır."
+    },
+    {
+      "tur": "li",
+      "metin": "HUNET ve bağlı bilişim kaynakları hiçbir surette genel ahlaka aykırı materyali barındırmak ve iletmek; Türkiye Cumhuriyeti yasalarına, bunlara bağlı yönetmeliklere, Hacettepe Üniversitesi tarafından belirlenmiş kural ve ilkelere aykırı faaliyetlerde bulunmak; siyasi propaganda yapmak amacıyla kesinlikle kullanılmamalıdır."
+    },
+    {
+      "tur": "li",
+      "metin": "İstenmeyen bilgilerin paylaşımından önce \"yasal sorumluluk sınırı (disclaimer)\" koymak yukarıdaki kurallar çiğnendiği zaman bir mazeret olarak görülemez ve gösterilemez."
+    },
+    {
+      "tur": "li",
+      "metin": "Üniversitemiz internet hizmetini Türkiye Bilimsel ve Teknolojik Araştırma Kurumu'nun (TÜBİTAK) bir enstitüsü olan Ulusal Akademik Ağ ve Bilgi Merkezi (ULAKBİM) tarafından işletilen Ulusal Akademik Ağ'dan (ULAKNET) sağlamakta olup ULAKNET KULLANIM POLİTİKASI (UKP) ile belirlenen hükümlere tabiidir. UKP için lütfen tıklayınız."
+    },
+    {
+      "tur": "p",
+      "metin": "4. Uygulama Ve Yaptırımlar"
+    }
+  ],
+  "baglantilar": [
+    {
+      "metin": "UKP için lütfen tıklayınız.",
+      "href": "https://ulakbim.tubitak.gov.tr/sites/images/Ulakbim/ukp-v2011.pdf"
+    }
+  ],
+  "gorseller": [],
+  "belgeler": [
+    {
+      "metin": "UKP için lütfen tıklayınız.",
+      "href": "https://ulakbim.tubitak.gov.tr/sites/images/Ulakbim/ukp-v2011.pdf"
+    }
+  ],
+  "govdeHtml": "<div class=\"icerik\">\n<p><strong>1. Tanımlar</strong></p>\n<p><STRONG>Bilişim Kaynağı:</STRONG> Hacettepe Üniversitesi kampüsleri dahilinde bulunan   ve BİD'nin kurup yönettiği bilgisayar ağı (HUNET), bağlı olduğu tüm iç ve dış   ağlar ile bu ağa bağlanan her türlü elektronik cihaz, bilgisayar ve yan   ürünleri. </p>\n<p><STRONG>HUNET:</STRONG> Hacettepe Üniversitesi dahilinde bölüm, birim, bina ve kampüs   düzeyinde bilişim kaynaklarını bir ağ yapısı ile birbirine bağlayan ve Internet   erişimini sağlayan ağa verilen genel ad. </p>\n<p><STRONG>BİM:</STRONG> Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı bünyesinde   faaliyet gösteren ve ağ, sunucu ve benzeri servislerin tümüne olan erişimi   sağlayan sistemlerin bir araya geldiği ve yönetildiği merkez (Bilgi İşlem   Merkezi). </p>\n<p><STRONG>Kampüs Kullanıcısı:</STRONG> Hacettepe Üniversitesi dahilinde bulunan bilişim   kaynaklarını üniversite kampüsleri içinden erişerek kullanan akademik ve idari   personel, öğrenci ya da kullanım hakkı tanınmış özel ya da tüzel kişi. </p>\n<p><STRONG>Kampüs Dışı Kullanıcı:</STRONG> Hacettepe Üniversitesi dahilinde bulunan   bilişim kaynaklarını üniversite kampüsleri dışından çeşitli yöntemlerle erişerek   kullanan akademik ve idari personel, öğrenci ya da kullanım hakkı tanınmış özel   ya da tüzel kişi. </p>\n<p><STRONG>Ziyaretçi:</STRONG> Hacettepe Üniversitesi dahilinde olmayan, ancak çeşitli   nedenlerle Hacettepe Üniversitesi bilişim kaynaklarına (WEB, FTP vb.) uzaktan   erişenler ile üniversitenin personel ya da öğrencisi olmayıp kampüsler dahilinde   bulunan bazı bilişim kaynaklarına (kablosuz ağ vb.) ulaşan kişi. </p>\n<p><strong>2. Yetki Ve Sorumluluk Beyanı</strong></p>\nÜniversitemizde Internet ve Intranet   ağının kurulum ve işletmesine ait yetki ve sorumluluk Bilgi İşlem Dairesi   (BİD)'ne aittir. BİD, akademik, idari, eğitim ve araştırma amaçları   doğrultusunda bölüm ve birimlerin bilişim kaynaklarına ulaşabilmerini sağlamak   üzere oluşturulan altyapıyı kurmak, işletmek ve güncellemekle sorumludur. BİD,   bölüm ve birimlerde tespit edilen ana ağ erişim noktalarını kurar, Bilgi İşlem   Merkezi (BİM) ile iletişimi için gerekli kablolama faaliyetlerini yürütür, bu   noktalara kullanıcıların bağlanabilmesi için gerekli ağ anahtarlama cihazlarını   temin eder ve yerleştirir. Sistemi teknik düzeyde planlama ve uygulama   sorumluluk ve yetkisi BİD'ndedir. BİD, binalar içinde kurulan ana erişim   noktaları dışında kalan oda, ofis ve laboratuvar gibi alt birimlerin   bağlantılarından sorumlu değildir; bunlar birimin/bölümün kendi   sorumluluğundadır. Ancak BİD gereken durumlarda ve istek üzerine danışmanlık   hizmeti verebilir.\n<p>Hacettepe Üniversitesi bilişim kaynakları kullanıcıları, Hacettepe   Üniversitesi sunucuları üzerinde kendilerine tahsis edilen \"kullanıcı   kodu/şifre\" ikilisi ve/veya IP (Internet Protocol) adresi kullanılarak   gerçekleştirdikleri her türlü etkinlikten, Hacettepe Üniversitesi bilişim   kaynaklarını kullanarak oluşturdukları ve/veya kendilerine tahsis edilen   Hacettepe Üniversitesi bilişim kaynağı üzerinde bulundurdukları her türlü   kaynağın (belge, doküman, yazılım, vb.) içeriğinden, kaynağın kullanımı hakkında   yetkili makamlar tarafından talep edilen bilgilerin doğru ve eksiksiz   verilmesinden, ilgili kaynağın kullanım kurallarına, üniversite   yönetmeliklerine, Türkiye Cumhuriyeti yasalarına ve bunlara bağlı olan   yönetmeliklere karşı birebir kendileri sorumludur. </p>\n<p>Hacettepe Üniversitesi yönetimi, Hacettepe Üniversitesi kullanıcıları ve özel   kullanıcılar ile üçüncü kişi veya kuruluşlar arasında doğabilecek her türlü   ihtilaf durumunda doğrudan taraf olma hakkını saklı tutar. </p>\n<p><strong>3. Bilişim Kaynaklarının Kullanımı İçin Genel İlkeler</strong></p>\nBilişim   kaynaklarının, eğitim, öğretim, araştırma-geliştirme, hizmet ve idari   faaliyetler ile ilişkili olan kullanımı esastır. Bu amaçlar dışında kalan tüm   kullanımlar ancak ve ancak yukarıda adı geçen amaçlarla yapılan kullanımı   kısıtlamadığı ve aşağıdaki kural ve ilkelere aykırı olmadığı sürece mümkündür:\n<OL>\n  <LI>Hacettepe Üniversitesi bilişim kaynakları, bu kaynakları kullananlar   tarafından boşa harcanmamalıdır. </LI>\n  <LI>Hacettepe Üniversitesi bilişim kaynaklarını kullanıma sunan birimler, bu   kaynakların kullanımı ile ilgili sorumluluğu da üstlenmiş sayılırlar.   Kaynakların, birim veya bölüme bağlı bir kullanıcı tarafından kurallara uygun   olmayan şekilde kullanılması halinde ilgili birim veya bölüm yönetimi ile BİD   arasında işbirliği olanağı sağlanmalıdır. </LI>\n  <LI>Kullanıcılar ağ üzerinden yolladıkları ve/veya aldıkları her türlü veri ile   HUNET'e bağlı bilgisayarlarının içindeki bilgilerinin gizliliğinden,   mahremiyetinden ve güvenliğinden kendileri sorumludur. Kullanıcı,   bilgisayarındaki verilerin önemine bağlı olarak oluşabilecek herhangi bir virüs   - korsan saldırısına ya da teknik kazalara karşı gerekli gördükçe yedekleme   yapmalıdır. </LI>\n  <LI>Bölüm veya birimler, kendilerine verilen bilişim kaynaklarını adil olarak ve   üniversitenin diğer kullanıcılarının erişim haklarını engellemeyecek şekilde   kullanmakla sorumludurlar. Yönetim, bu konuda BİD ile işbirliği yapılmalı ve   BİD'nden aldıkları kullanım bilgilerini değerlendirerek, bu kurala aykırı bir   hareket görüyorsa çalışanlarını ya da öğrencilerini uyarmalıdır. </LI>\n  <LI>Bölüm veya birimler, kullanıcıların yarattığı giriş ve çıkış trafiğinden   sorumludurlar. Bu konuda BİD'nden gelecek bilgileri ve uyarıları hızla   değerlendirip, aykırı ve istenmeyen trafiği yaratan kullanıcıya gerekli   yaptırımı en kısa zamanda yerine getirmelidirler. </LI>\n  <LI>Kullanıcılar, çoğu zaman, bilgisayarlarında bulunan verilerin değerini   önemsemedikleri için gerekli önlemleri almamakta, virüs vb. zararlıların   bilgisayarlarında bulunmasından rahatsız olmamakta veya bunların varlığını   tespit etmek için bir gayret göstermeyebilmektedirler. Ancak bu durumun,   üniversitenin bilişim kaynaklarınının kullanımını da olumsuz derecede etkilediği   çoğu zaman unutulmakta ya da bilinmemektedir. Bölüm veya birim yönetimleri   kullanıcıları bu konuda da bilinçlendirmekle yükümlüdürler. </LI>\n  <LI>BİD, güvenliği veya sistemin çalışmasını tehdit edebilecek bir problem   tespit ettiğinde, kişi ya da alt birimin kimliğinin tespiti için ilgili bölüm ya   da birim yönetimi ile hızlı ve sağlıklı bir işbirliği yapabilmeli; bu nedenle   bölüm veya birim yönetimleri, kullanıcıların bağlantıları, IP / MAC adresleri,   ağ erişim cihazı üzerinde hangi soketin hangi bilgisayara ulaştığı gibi   konularda dökümantasyon yapmalı ve bu bilgilerin güncelliğini korumalıdır.   Yönetimler tarafından mümkünse mutlaka yerel ağ yapısından sorumlu bir kişi   görevlendirilmeli ve bu kişiye gerektiği zaman hızla ulaşabilmesi için BİD'ne   gerekli erişim bilgileri verilmelidir. </LI>\n  <LI>Birimler veya bölümler, BİD'nin binalarında kurup muhafaza sorumluluğunu   verdiği kablolama sistemi, ağ erişim cihazları ve diğer teçhizat üzerinde, gerek   yazılım gerekse donanım düzeyinde keyfi değişiklikler yapmamalı, bir gereksinim   olduğu takdirde, o birimin daha önceden belirlenip BİD'ne bildirilmiş teknik   sorumlusu tarafından BİD ile irtibata geçilmeli, gerekli değişiklik karşılıklı   bilgilendirme ve onay sonucunda yapılmalıdır. </LI>\n  <LI>HUNET ağına bağlanan yerel bilişim kaynakları üzerinden paylaştırılan bilgi   ve dosyalar (bölüm sunucuları, bilgi paylaştırmak için kullanılan kişisel   bilgisayarlar, vs.) kesinlikle genel bilgi paylaşımı kurallarına aykırı   olmamalı, telif hakkı, yasallık, gizlilik, lisans koşulları vd. düzenlemelere   aykırı düşmemelidir. </LI>\n  <LI>Hacettepe Üniversitesi bilişim kaynakları üniversite yönetiminin bilgisi ve   izni haricinde hiçbir surette ticari amaçla kullanılmamalı, ticari amaçla   çalışan kuruluşlar arasında haksız rekabete sebep olmamalı, ticari gelir   teminine olanak sağlamak için kullanılmamalıdır. Bu kaynaklar hiçbir surette   devredilemez, kiralanılamaz ve satılamaz. </LI>\n  <LI>Hacettepe Üniversitesi'nin iç kullanımına ait hiçbir haber, duyuru, bilgi ve   belge, izin alınmadan HUNET aracılığı ile üçüncü şahıslara iletilmemeli veya   iletilecek ortam oluşturulmamalıdır. </LI>\n  <LI>Hacettepe Üniversitesi Bilişim kaynaklarının kullanılması için kullanıcılara   verilmiş olan hiçbir şifre üçüncü şahıslara verilmemeli, üçüncü şahısların   üniversite bilişim kaynaklarına HUNET aracılığı ile erişimine olanak   sağlanmamalıdır. </LI>\n  <LI>HUNET ve bağlı bilişim kaynakları hiçbir surette genel ahlaka aykırı   materyali barındırmak ve iletmek; Türkiye Cumhuriyeti yasalarına, bunlara bağlı   yönetmeliklere, Hacettepe Üniversitesi tarafından belirlenmiş kural ve ilkelere   aykırı faaliyetlerde bulunmak; siyasi propaganda yapmak amacıyla kesinlikle   kullanılmamalıdır. </LI>\n  <LI>İstenmeyen bilgilerin paylaşımından önce \"yasal sorumluluk sınırı   (disclaimer)\" koymak yukarıdaki kurallar çiğnendiği zaman bir mazeret olarak   görülemez ve gösterilemez. </LI>\n  <LI>Üniversitemiz internet hizmetini Türkiye Bilimsel ve Teknolojik Araştırma Kurumu'nun (TÜBİTAK) bir enstitüsü olan  Ulusal Akademik Ağ ve Bilgi Merkezi (ULAKBİM) tarafından işletilen Ulusal Akademik Ağ'dan (ULAKNET)  sağlamakta olup ULAKNET KULLANIM POLİTİKASI (UKP) ile belirlenen hükümlere tabiidir. <A href=\"https://ulakbim.tubitak.gov.tr/sites/images/Ulakbim/ukp-v2011.pdf\" target=\"_blank\">UKP için lütfen tıklayınız.</A> </LI>\n</OL>\n<p><strong>4. Uygulama Ve Yaptırımlar</strong></p>\nSunulan bilişim kaynaklarının genel ilkelere   aykırı biçimde kullanılması durumunda Hacettepe Üniversitesi makamları,   kullanımın yoğunluğuna, kaynaklara veya kişi / kurumlara verilen zararın   büyüklüğüne göre kullanıcıyı sözlü ve/veya yazılı olarak uyarma, ağ bağlantısını   süreli veya süresiz olarak kesme, kullanıcı hesabını dondurma, üniversite içi   idari soruşturmanın başlatılması için gerekli girişimlerde bulunma ya da Türkiye   Cumhuriyeti yasaları doğrultusunda adli mekanizmaları harekete geçirme   işlemlerinden bir ya da birkaçına başvurabilir. \n</div>",
+  "karakter": 7442,
+  "cekilme": "2026-07-21T14:33:59.196Z"
+}

@@ -1,0 +1,82 @@
+{
+  "slug": "posta_kural",
+  "dil": "tr",
+  "bolum": "Kurallar ve İlkeler",
+  "menuAdi": "Dağıtım Listeleri Politikaları",
+  "url": "https://bidb.hacettepe.edu.tr/tr/posta_kural",
+  "baslik": "E-Posta Listeleri Kullanım Kuralları",
+  "seo": {
+    "title": "Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı",
+    "description": "",
+    "keywords": ""
+  },
+  "paragraflar": [
+    {
+      "tur": "p",
+      "metin": "\"GENEL\" Duyuru Listesi"
+    },
+    {
+      "tur": "p",
+      "metin": "Bu liste kontrollü (moderated) bir liste olup, sadece üniversite genelini ilgilendiren duyuruların yapılmasında kullanılmaktadır. Binlerce üyesi olan bu listeye gönderilen bir mesajın dahi o mesajın binlerce katı kadar trafik ve disk alanını işgal ettiği düşünülürse, buraya e-posta göndermek isteyen kullanıcılarımızın bazı kurallara dikkat etmeleri gerekmektedir:"
+    },
+    {
+      "tur": "li",
+      "metin": "Yapılacak duyuruların kapsamları şu konuların dışına çıkmamalıdır: Rektörlük duyuruları; Genel Sekreterlik duyuruları; Vefat, cenaze töreni ve kan ihtiyacı duyuruları; Üniversite genelini ilgilendiren elektrik, su, ve Internet gibi temel ihtiyaçlar hakkındaki duyurular; Basın ve Halkla İlişkiler ile SKS Dairesi tarafından düzenlenen sosyal ve kültürel etkinlikler hakkında duyurular; Akademik Birimler tarafından düzenlenen konferans, kongre ve sempozyum duyuruları."
+    },
+    {
+      "tur": "li",
+      "metin": "Yollancak mesajlar mümkün olduğunca düz yazı (plain text) olarak hazırlanmalıdır. HTML formatlama yapmaktan özellikle kaçınılmalıdır (yazılara renk, font şekilleri, arkaplan resimleri ya da renkleri, vb. biçimler vermek). Üniversitemizde pek çok farklı bilgisayar ve e-posta okuyucu programın olmasının yanısıra e-postalarına yurt dışından bambaşka ortamlarda erişen kullanıcılarımız da mevcuttur. HTML vb. formatlamalar bazı kullanıcılarımızın bu e-postaları hiç görüntüleyememesine bile neden olabilmektedir."
+    },
+    {
+      "tur": "li",
+      "metin": "Yollanacak mesajlar mümkün olduğunca e-posta programının içinde yazılmalıdır. Microsoft Word dökümanı vb. ortamlarda yazıp e-postaya eklenti yapılmasından kaçınılmalıdır. Burada hem yukarıdaki nedenler geçerlidir, hem de eklentilerin virüs vb. içerikleri taşıma olasılığı bulunmaktadır. Ayrıca eklentiler, düz yazının işgal ettiği yerin defalarca katı yer işgal etmekte ve hem trafiği zorlamakta hem de kotaların gereksiz yere dolmasına neden olmaktadırlar."
+    },
+    {
+      "tur": "li",
+      "metin": "Mesajlara bir eklenti (resim, uzun pdf/word/ppt dökümanları vb.) yapılması kesinlikle gerekiyorsa, bunun yerine ilgili eklenti dosyaları kişisel ya da bulunulan kurumun Web alanlarına yerleştirilmeli; e-posta mesajında da buralara kullanıcıların bağlanmasını sağlayacak linkler (örn. http://yunus.hacettepe.edu.tr/~kullanici/belge.pdf) verilmelidir. Eklenecek dosyaların uzunluğu kabaca 100-150 KB'nin altında kalıyorsa o zaman bu dosyalar doğrudan doğruya e-posta'ya da eklenebilir."
+    },
+    {
+      "tur": "li",
+      "metin": "Mesajlar eklentili dahi olsa eklentileri o an için açmaya uygun olmayan kullanıcılar için boş bir e-posta yerine kısaca o mesajın ne ile ilgili olduğu, kimin tarafından gönderildiği mesajın içine yazılmalıdır."
+    },
+    {
+      "tur": "li",
+      "metin": "Mesajların konusu, mesajın içeriği hakkında doğru ve yeterli bilgi verecek biçimde, ancak birkaç sözcüğü aşmayacak şekilde seçilmelidir. Örneğin, \"Vefat duyurusu\" yerine \"XXX YYY'nin babasının vefat duyurusu\" şeklinde bir konu satırı daha bilgilendirici olacaktır."
+    },
+    {
+      "tur": "li",
+      "metin": "Yollancak mesajlar reklam ve ticari menfaat içermemeli, genel toplumsal kurallara ve yasalara aykırı olmamalıdır."
+    },
+    {
+      "tur": "li",
+      "metin": "Bayram, yılbaşı vb. özel günler nedeniyle kutlama mesajları yollamak son derece iyi niyetli ve nazik bir davranış olabilir; ancak bu tür mesajların çok yoğun bir trafik yarattığı da unutulmamalıdır. Diğerinden örnek alan kişilerin kendilerinin de bu tür mesajlar yollamak istemesiyle bir çığ etkisinin de oluşabileceği göz önüne alınırsa, bu mesajları \"GENEL\" listesine yollamak yerine kişisel adreslere yollamak tercih edilmelidir."
+    },
+    {
+      "tur": "li",
+      "metin": "Yollanması planlanan mesajların iyi okunması, yollanmadan önce eksiklerinin düzeltilmesi, -varsa- yapılacak eklentilerin uzunluklarının kontrol edilmesi gereklidir. Eksik bilgi ile yollanan mesajların düzeltmeleri ile birlikte tekrar tekrar yollanması trafiği ve kotaları olumsuz yönde etkilemektedir. Mesajların sonunda genellikle yollayan kişinin adını, ünvanını ve bulunduğu birimi yazmaması sık rastlanan unutkanlıklardandır."
+    },
+    {
+      "tur": "p",
+      "metin": "Yukarıda özetlenen genel presipler sadece \"GENEL\" listesi için değil, benzeri çok üyesi olan tüm tartışma ve duyuru listeleri için de geçerlidir."
+    },
+    {
+      "tur": "p",
+      "metin": "Liste yönetimi, kullanıcılarımızın gönderdikleri mesajları yukarıdaki kurallara uymadıkları takdirde reddetme hakkına sahiptir. Bu konuda daha fazla bilgi almak için bhim@hacettepe.edu.tr e-posta adresine başvurulabilir."
+    },
+    {
+      "tur": "p",
+      "metin": "Hacettepe Üniversitesi Bilgi İşlem Dairesi, kullanıcılarımıza yukarıda sıralanan prensiplere uymakta gösterecekleri titizlik için teşekkür eder."
+    }
+  ],
+  "baglantilar": [
+    {
+      "metin": "bhim@hacettepe.edu.tr",
+      "href": "mailto:bhim@hacettepe.edu.tr"
+    }
+  ],
+  "gorseller": [],
+  "belgeler": [],
+  "govdeHtml": "<div class=\"icerik\">\n\n\n<p><strong>\"GENEL\" Duyuru Listesi</strong></p>\nKullanıcıların sıklıkla kullandığı liste \"GENEL   DUYURU LİSTESİ\"dir.<BR>\n\"Genel\" duyuru listesini kullanarak mesaj göndermek isteyen kullanıcılar, mesajlarını <A href=\"mailto:bhim@hacettepe.edu.tr\">bhim@hacettepe.edu.tr</A> adresine göndermelidir. \"Genel\" duyuru  listeden e-posta   almak isteyen yeni kullanıcılar ise <A href=\"mailto:bhim@hacettepe.edu.tr\">bhim@hacettepe.edu.tr</A> adresine Ad, Soyad ve   Bölüm bilgilerini göndererek kayıt yaptırmalıdırlar. Listenin yönetimi   Hacettepe Üniversitesi Basın ve Halkla İlişkiler Müdürlüğü tarafından   yapılmaktadır.\n<p>Bu liste kontrollü (moderated) bir liste olup, sadece üniversite genelini   ilgilendiren duyuruların yapılmasında kullanılmaktadır. Binlerce üyesi olan bu   listeye gönderilen bir mesajın dahi o mesajın binlerce katı kadar trafik ve disk   alanını işgal ettiği düşünülürse, buraya e-posta göndermek isteyen   kullanıcılarımızın bazı kurallara dikkat etmeleri gerekmektedir: </p>\n<p>  </p>\n<UL>\n  <LI><STRONG>Yapılacak duyuruların kapsamları şu konuların dışına çıkmamalıdır:</STRONG> Rektörlük duyuruları; Genel Sekreterlik duyuruları; Vefat, cenaze töreni ve kan   ihtiyacı duyuruları; Üniversite genelini ilgilendiren elektrik, su, ve Internet   gibi temel ihtiyaçlar hakkındaki duyurular; Basın ve Halkla İlişkiler ile SKS   Dairesi tarafından düzenlenen sosyal ve kültürel etkinlikler hakkında duyurular;   Akademik Birimler tarafından düzenlenen konferans, kongre ve sempozyum   duyuruları. </LI>\n  <LI><STRONG>Yollancak mesajlar mümkün olduğunca düz yazı (plain text) olarak   hazırlanmalıdır. HTML formatlama yapmaktan özellikle kaçınılmalıdır (yazılara   renk, font şekilleri, arkaplan resimleri ya da renkleri, vb. biçimler   vermek).</STRONG> Üniversitemizde pek çok farklı bilgisayar ve e-posta okuyucu   programın olmasının yanısıra e-postalarına yurt dışından bambaşka ortamlarda   erişen kullanıcılarımız da mevcuttur. HTML vb. formatlamalar bazı   kullanıcılarımızın bu e-postaları hiç görüntüleyememesine bile neden   olabilmektedir. </LI>\n  <LI><STRONG>Yollanacak mesajlar mümkün olduğunca e-posta programının içinde   yazılmalıdır. Microsoft Word dökümanı vb. ortamlarda yazıp e-postaya eklenti   yapılmasından kaçınılmalıdır.</STRONG> Burada hem yukarıdaki nedenler geçerlidir, hem   de eklentilerin virüs vb. içerikleri taşıma olasılığı bulunmaktadır. Ayrıca   eklentiler, düz yazının işgal ettiği yerin defalarca katı yer işgal etmekte ve   hem trafiği zorlamakta hem de kotaların gereksiz yere dolmasına neden   olmaktadırlar. </LI>\n  <LI><STRONG>Mesajlara bir eklenti (resim, uzun pdf/word/ppt dökümanları vb.)   yapılması kesinlikle gerekiyorsa, bunun yerine ilgili eklenti dosyaları kişisel   ya da bulunulan kurumun Web alanlarına yerleştirilmeli; e-posta mesajında da   buralara kullanıcıların bağlanmasını sağlayacak linkler (örn.   http://yunus.hacettepe.edu.tr/~kullanici/belge.pdf) verilmelidir.</STRONG> Eklenecek   dosyaların uzunluğu kabaca 100-150 KB'nin altında kalıyorsa o zaman bu dosyalar   doğrudan doğruya e-posta'ya da eklenebilir. </LI>\n  <LI><STRONG>Mesajlar eklentili dahi olsa eklentileri o an için açmaya uygun olmayan   kullanıcılar için boş bir e-posta yerine kısaca o mesajın ne ile ilgili olduğu,   kimin tarafından gönderildiği mesajın içine yazılmalıdır.</STRONG> </LI>\n  <LI><STRONG>Mesajların konusu, mesajın içeriği hakkında doğru ve yeterli bilgi   verecek biçimde, ancak birkaç sözcüğü aşmayacak şekilde seçilmelidir.</STRONG> Örneğin, \"Vefat duyurusu\" yerine \"XXX YYY'nin babasının vefat duyurusu\" şeklinde   bir konu satırı daha bilgilendirici olacaktır. </LI>\n  <LI><STRONG>Yollancak mesajlar reklam ve ticari menfaat içermemeli, genel toplumsal   kurallara ve yasalara aykırı olmamalıdır.</STRONG> </LI>\n  <LI><STRONG>Bayram, yılbaşı vb. özel günler nedeniyle kutlama mesajları yollamak son   derece iyi niyetli ve nazik bir davranış olabilir; ancak bu tür mesajların çok   yoğun bir trafik yarattığı da unutulmamalıdır.</STRONG> Diğerinden örnek alan   kişilerin kendilerinin de bu tür mesajlar yollamak istemesiyle bir çığ etkisinin   de oluşabileceği göz önüne alınırsa, bu mesajları \"GENEL\" listesine yollamak   yerine kişisel adreslere yollamak tercih edilmelidir. </LI>\n  <LI><STRONG>Yollanması planlanan mesajların iyi okunması, yollanmadan önce   eksiklerinin düzeltilmesi, -varsa- yapılacak eklentilerin uzunluklarının kontrol   edilmesi gereklidir.</STRONG> Eksik bilgi ile yollanan mesajların düzeltmeleri ile   birlikte tekrar tekrar yollanması trafiği ve kotaları olumsuz yönde   etkilemektedir. Mesajların sonunda genellikle yollayan kişinin adını, ünvanını   ve bulunduğu birimi yazmaması sık rastlanan unutkanlıklardandır. </LI>\n</UL>\n<p>Yukarıda özetlenen genel presipler sadece \"GENEL\" listesi için değil, benzeri   çok üyesi olan tüm tartışma ve duyuru listeleri için de geçerlidir. </p>\n<p>Liste yönetimi, kullanıcılarımızın gönderdikleri mesajları yukarıdaki   kurallara uymadıkları takdirde reddetme hakkına sahiptir. Bu konuda daha fazla   bilgi almak için bhim@hacettepe.edu.tr e-posta adresine başvurulabilir. </p>\n<p>Hacettepe Üniversitesi Bilgi İşlem Dairesi, kullanıcılarımıza yukarıda   sıralanan prensiplere uymakta gösterecekleri titizlik için teşekkür eder. </p>\n</div>",
+  "karakter": 4261,
+  "cekilme": "2026-07-21T14:33:58.866Z"
+}
