@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { DuyuruYonetim, Kisayol, SayfaYonetim, Slayt, YonetimApi } from './yonetim-api';
+import { DuyuruYonetim, Kisayol, MenuOgeYonetim, MenuYonetim, SayfaYonetim, Slayt, YonetimApi } from './yonetim-api';
 
 /** Yönetim paneli: giriş, sayfa SEO düzenleme ve duyuru yönetimi. */
 @Component({
@@ -42,6 +42,9 @@ import { DuyuruYonetim, Kisayol, SayfaYonetim, Slayt, YonetimApi } from './yonet
           </button>
           <button type="button" [class.etkin]="sekme() === 'kisayollar'" (click)="sekmeKisayol()">
             Kısayollar ({{ kisayollar().length }})
+          </button>
+          <button type="button" [class.etkin]="sekme() === 'menuler'" (click)="sekmeMenu()">
+            Menüler ({{ menuler().length }})
           </button>
         </nav>
 
@@ -184,6 +187,60 @@ import { DuyuruYonetim, Kisayol, SayfaYonetim, Slayt, YonetimApi } from './yonet
               }
             </tbody>
           </table>
+        } @else if (sekme() === 'menuler') {
+          @if (menuOge(); as md) {
+            <form class="duyuru-form" (ngSubmit)="ogeKaydet()">
+              <h2>{{ md.oge.id ? 'Bağlantıyı düzenle' : 'Yeni bağlantı' }}</h2>
+              <label for="metiket">Etiket</label>
+              <input id="metiket" name="metiket" [ngModel]="md.oge.etiket" (ngModelChange)="ogeAlan('etiket', $event)" required>
+
+              <label for="msayfa">Sayfa (iç bağlantı)</label>
+              <select id="msayfa" name="msayfa" [ngModel]="md.oge.sayfaId" (ngModelChange)="ogeAlan('sayfaId', $event ? +$event : null)">
+                <option [value]="null">— dış bağlantı kullan —</option>
+                @for (sf of sayfalar(); track sf.id) {
+                  <option [value]="sf.id">{{ sf.dil }}/{{ sf.slug }} — {{ sf.baslik }}</option>
+                }
+              </select>
+
+              <label for="mdis">Dış adres (sayfa seçilmediyse)</label>
+              <input id="mdis" name="mdis" [ngModel]="md.oge.disAdres" (ngModelChange)="ogeAlan('disAdres', $event)">
+
+              <label for="msira">Sıra</label>
+              <input id="msira" name="msira" type="number" [ngModel]="md.oge.sira" (ngModelChange)="ogeAlan('sira', +$event)">
+
+              <label class="onay">
+                <input type="checkbox" name="myeni" [ngModel]="md.oge.yeniSekme" (ngModelChange)="ogeAlan('yeniSekme', $event)"> Yeni sekmede açılsın
+              </label>
+
+              <span class="dugmeler">
+                <button type="submit">Kaydet</button>
+                <button type="button" class="ikincil" (click)="menuOge.set(null)">Vazgeç</button>
+              </span>
+            </form>
+          }
+
+          @for (m of menuler(); track m.id) {
+            <section class="menu-bolum">
+              <h2>{{ m.baslik }} <small>({{ m.dil }})</small></h2>
+              <button type="button" class="ikincil" (click)="ogeDuzenle(m.id, null)">Bağlantı ekle</button>
+              <table class="yonetim-tablo">
+                <thead><tr><th>Sıra</th><th>Etiket</th><th>Hedef</th><th></th></tr></thead>
+                <tbody>
+                  @for (o of m.ogeler; track o.id) {
+                    <tr>
+                      <td>{{ o.sira }}</td>
+                      <td>{{ o.etiket }}</td>
+                      <td><small>{{ o.sayfaYolu || o.disAdres }}</small></td>
+                      <td>
+                        <button type="button" class="ikincil" (click)="ogeDuzenle(m.id, o)">Düzenle</button>
+                        <button type="button" class="tehlike" (click)="ogeSil(o)">Sil</button>
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </section>
+          }
         } @else {
           <button type="button" (click)="kisayolDuzenle(null)">Yeni kısayol</button>
 
@@ -239,7 +296,7 @@ export class YonetimPanel {
   protected bilgi = signal('');
   protected calisiyor = signal(false);
 
-  protected sekme = signal<'sayfalar' | 'duyurular' | 'slider' | 'kisayollar'>('sayfalar');
+  protected sekme = signal<'sayfalar' | 'duyurular' | 'slider' | 'kisayollar' | 'menuler'>('sayfalar');
   protected sayfalar = signal<SayfaYonetim[]>([]);
   protected duyurular = signal<DuyuruYonetim[]>([]);
   protected secili = signal<SayfaYonetim | null>(null);
@@ -248,6 +305,8 @@ export class YonetimPanel {
   protected kisayollar = signal<Kisayol[]>([]);
   protected slayt = signal<Slayt | null>(null);
   protected kisayol = signal<Kisayol | null>(null);
+  protected menuler = signal<MenuYonetim[]>([]);
+  protected menuOge = signal<{ menuId: number; oge: MenuOgeYonetim } | null>(null);
 
   constructor() {
     if (this.api.girisYapildi()) this.sayfalariYukle();
@@ -391,6 +450,40 @@ export class YonetimPanel {
     if (!k.id) return;
     this.api.kisayolSil(k.id).subscribe({
       next: () => { this.kisayollar.update((l) => l.filter((x) => x.id !== k.id)); this.mesaj('Kısayol silindi.'); },
+      error: () => this.mesaj('Silinemedi.')
+    });
+  }
+
+  protected sekmeMenu(): void {
+    this.sekme.set('menuler');
+    this.api.menuler().subscribe((l) => this.menuler.set(l));
+  }
+
+  protected ogeDuzenle(menuId: number, o: MenuOgeYonetim | null): void {
+    this.menuOge.set({
+      menuId,
+      oge: o ? { ...o } : { id: null, etiket: '', sayfaId: null, sayfaYolu: null, disAdres: '', yeniSekme: false, sira: 0 }
+    });
+  }
+
+  protected ogeAlan(alan: keyof MenuOgeYonetim, deger: unknown): void {
+    const d = this.menuOge();
+    if (d) this.menuOge.set({ menuId: d.menuId, oge: { ...d.oge, [alan]: deger } as MenuOgeYonetim });
+  }
+
+  protected ogeKaydet(): void {
+    const d = this.menuOge();
+    if (!d) return;
+    this.api.menuOgeKaydet(d.menuId, d.oge).subscribe({
+      next: () => { this.menuOge.set(null); this.sekmeMenu(); this.mesaj('Menü bağlantısı kaydedildi.'); },
+      error: () => this.mesaj('Kaydedilemedi.')
+    });
+  }
+
+  protected ogeSil(o: MenuOgeYonetim): void {
+    if (!o.id) return;
+    this.api.menuOgeSil(o.id).subscribe({
+      next: () => { this.sekmeMenu(); this.mesaj('Bağlantı silindi.'); },
       error: () => this.mesaj('Silinemedi.')
     });
   }

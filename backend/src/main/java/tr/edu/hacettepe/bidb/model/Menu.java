@@ -37,4 +37,9 @@ public class Menu {
     public String getBaslik() { return baslik; }
     public int getSira() { return sira; }
     public List<MenuOge> getOgeler() { return ogeler; }
+
+    public void setDil(String dil) { this.dil = dil; }
+    public void setKonum(String konum) { this.konum = konum; }
+    public void setBaslik(String baslik) { this.baslik = baslik; }
+    public void setSira(int sira) { this.sira = sira; }
 }

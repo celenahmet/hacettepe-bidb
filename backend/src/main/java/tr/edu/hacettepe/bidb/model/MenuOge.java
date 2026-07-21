@@ -11,6 +11,9 @@ public class MenuOge {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "menu_id", nullable = false)
+    private Long menuId;
+
     @Column(nullable = false, length = 200)
     private String etiket;
 
@@ -28,9 +31,18 @@ public class MenuOge {
     private int sira = 0;
 
     public Long getId() { return id; }
+    public Long getMenuId() { return menuId; }
+    public void setMenuId(Long menuId) { this.menuId = menuId; }
+
     public String getEtiket() { return etiket; }
     public Sayfa getSayfa() { return sayfa; }
     public String getDisAdres() { return disAdres; }
     public boolean isYeniSekme() { return yeniSekme; }
     public int getSira() { return sira; }
+
+    public void setEtiket(String etiket) { this.etiket = etiket; }
+    public void setSayfa(Sayfa sayfa) { this.sayfa = sayfa; }
+    public void setDisAdres(String disAdres) { this.disAdres = disAdres; }
+    public void setYeniSekme(boolean yeniSekme) { this.yeniSekme = yeniSekme; }
+    public void setSira(int sira) { this.sira = sira; }
 }

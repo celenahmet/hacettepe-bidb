@@ -27,7 +27,7 @@ public class GuvenlikAyari {
             // API durum bilgisi tutmaz; oturum yerine temel kimlik doğrulama kullanılır
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(izin -> izin
-                .requestMatchers("/actuator/health").permitAll()
+                .requestMatchers("/actuator/health", "/error").permitAll()
                 // Yayın uçları: yalnızca okuma, herkese açık
                 .requestMatchers(HttpMethod.GET, "/api/tr/**", "/api/en/**").permitAll()
                 // Yönetim uçları

@@ -48,6 +48,25 @@ export interface Kisayol {
   yayinda: boolean;
 }
 
+export interface MenuOgeYonetim {
+  id: number | null;
+  etiket: string;
+  sayfaId: number | null;
+  sayfaYolu: string | null;
+  disAdres: string | null;
+  yeniSekme: boolean;
+  sira: number;
+}
+
+export interface MenuYonetim {
+  id: number;
+  dil: string;
+  konum: string;
+  baslik: string;
+  sira: number;
+  ogeler: MenuOgeYonetim[];
+}
+
 const OTURUM_ANAHTARI = 'bidb-yonetim';
 
 /** Yönetim uçlarına erişim. Kimlik bilgisi yalnızca tarayıcı oturumunda tutulur. */
@@ -140,6 +159,21 @@ export class YonetimApi {
 
   kisayolSil(id: number): Observable<void> {
     return this.http.delete<void>(`/api/yonetim/kisayollar/${id}`, { headers: this.basliklar() });
+  }
+
+  menuler(): Observable<MenuYonetim[]> {
+    return this.http.get<MenuYonetim[]>('/api/yonetim/menu', { headers: this.basliklar() });
+  }
+
+  menuOgeKaydet(menuId: number, o: MenuOgeYonetim): Observable<unknown> {
+    const govde = { menuId, etiket: o.etiket, sayfaId: o.sayfaId, disAdres: o.disAdres, yeniSekme: o.yeniSekme, sira: o.sira };
+    return o.id
+      ? this.http.put(`/api/yonetim/menu/oge/${o.id}`, govde, { headers: this.basliklar() })
+      : this.http.post('/api/yonetim/menu/oge', govde, { headers: this.basliklar() });
+  }
+
+  menuOgeSil(id: number): Observable<void> {
+    return this.http.delete<void>(`/api/yonetim/menu/oge/${id}`, { headers: this.basliklar() });
   }
 
   private basliklar(): HttpHeaders {
