@@ -1,0 +1,359 @@
+{
+  "tr": {
+    "slider": [
+      {
+        "gorsel": "https://bidb.hacettepe.edu.tr/images/r1.jpg",
+        "gorselAlt": "Bilgi İşlem Daire Başkanlığı tanıtım görseli",
+        "baslik": "Bilgi İşlem Daire Başkanlığı",
+        "ozet": ""
+      },
+      {
+        "gorsel": "https://bidb.hacettepe.edu.tr/images/ic1.jpg",
+        "gorselAlt": "Bilgi İşlem Daire Başkanlığı tanıtım görseli",
+        "baslik": "Bilgi İşlem Daire Başkanlığı",
+        "ozet": ""
+      },
+      {
+        "gorsel": "https://bidb.hacettepe.edu.tr/images/ic2.jpg",
+        "gorselAlt": "Bilgi İşlem Daire Başkanlığı tanıtım görseli",
+        "baslik": "Bilgi İşlem Daire Başkanlığı",
+        "ozet": ""
+      }
+    ],
+    "hizliErisim": [
+      {
+        "ad": "E-Posta İşlemleri",
+        "ikon": "https://bidb.hacettepe.edu.tr/images/icon/eposta.png",
+        "adres": "https://bidb.hacettepe.edu.tr/tr/eposta",
+        "yeniSekme": false
+      },
+      {
+        "ad": "E-Posta Giriş",
+        "ikon": "https://bidb.hacettepe.edu.tr/images/icon_exchange2.jpg",
+        "adres": "https://bidb.hacettepe.edu.tr/tr/e-posta",
+        "yeniSekme": false
+      },
+      {
+        "ad": "Office 365",
+        "ikon": "https://bidb.hacettepe.edu.tr/images/icon/office365.png",
+        "adres": "https://bidb.hacettepe.edu.tr/tr/office365",
+        "yeniSekme": false
+      },
+      {
+        "ad": "HÜ BİDB Portalı",
+        "ikon": "https://bidb.hacettepe.edu.tr/images/icon/portal.png",
+        "adres": "https://portal.hacettepe.edu.tr/",
+        "yeniSekme": true
+      },
+      {
+        "ad": "EBYS Bilgilendirme",
+        "ikon": "https://bidb.hacettepe.edu.tr/images/icon/ebys.png",
+        "adres": "http://ebysbilgilendirme.hacettepe.edu.tr/",
+        "yeniSekme": true
+      },
+      {
+        "ad": "E-İmza & Mobil İmza",
+        "ikon": "https://bidb.hacettepe.edu.tr/images/icon/eimza.png",
+        "adres": "https://bidb.hacettepe.edu.tr/eimza/",
+        "yeniSekme": true
+      },
+      {
+        "ad": "Proxy Ayarları ve Kurulumu",
+        "ikon": "https://bidb.hacettepe.edu.tr/images/icon/proxy.png",
+        "adres": "https://bidb.hacettepe.edu.tr/tr/proxy",
+        "yeniSekme": false
+      },
+      {
+        "ad": "Sorun Bildirim ve Destek Hizmetleri",
+        "ikon": "https://bidb.hacettepe.edu.tr/images/icon/yardim.png",
+        "adres": "https://bidbdestek.hacettepe.edu.tr",
+        "yeniSekme": true
+      },
+      {
+        "ad": "Sık Sorulan Sorular",
+        "ikon": "https://bidb.hacettepe.edu.tr/images/icon/sss.png",
+        "adres": "https://bidb.hacettepe.edu.tr/tr/sss",
+        "yeniSekme": false
+      },
+      {
+        "ad": "Formlar",
+        "ikon": "https://bidb.hacettepe.edu.tr/images/icon/form.png",
+        "adres": "https://bidb.hacettepe.edu.tr/tr/formlar",
+        "yeniSekme": false
+      },
+      {
+        "ad": "Bilgi ve Dokümanlar",
+        "ikon": "https://bidb.hacettepe.edu.tr/images/icon/bilgidokuman.png",
+        "adres": "https://bidb.hacettepe.edu.tr/tr/bilgidokuman",
+        "yeniSekme": false
+      },
+      {
+        "ad": "Yazılım Deposu",
+        "ikon": "https://bidb.hacettepe.edu.tr/images/icon/yazilimdeposu.png",
+        "adres": "https://yazilimdeposu.hacettepe.edu.tr/",
+        "yeniSekme": true
+      }
+    ],
+    "servisler": [
+      {
+        "ad": "Web Servisleri",
+        "adres": "https://bidb.hacettepe.edu.tr/tr/webser",
+        "gorsel": "https://bidb.hacettepe.edu.tr/images/hizmet1.png",
+        "yeniSekme": false
+      },
+      {
+        "ad": "HÜ İçerik Yönetim Sistemi",
+        "adres": "http://hu-iys.hacettepe.edu.tr/",
+        "gorsel": "https://bidb.hacettepe.edu.tr/images/hizmet2.png",
+        "yeniSekme": true
+      },
+      {
+        "ad": "Eğitim Fakültesi Mezun Bilgi Sistemi",
+        "adres": "http://egitimmezun.hacettepe.edu.tr/",
+        "gorsel": "https://bidb.hacettepe.edu.tr/images/hizmet_mezunbilgi.jpg",
+        "yeniSekme": true
+      },
+      {
+        "ad": "GSF Başvuru Sistemi",
+        "adres": "https://ozelyeteneksinavi.hacettepe.edu.tr/giris/",
+        "gorsel": "https://bidb.hacettepe.edu.tr/images/servis_gsf.png",
+        "yeniSekme": true
+      },
+      {
+        "ad": "Akademik Ön Değerlendirme Başvuru Sistemi",
+        "adres": "https://kriter.hacettepe.edu.tr",
+        "gorsel": "https://bidb.hacettepe.edu.tr/images/servis_akademik.png",
+        "yeniSekme": true
+      },
+      {
+        "ad": "Sticker Başvurusu",
+        "adres": "http://guvenlik.hacettepe.edu.tr/sticker/",
+        "gorsel": "https://bidb.hacettepe.edu.tr/images/servis_sticker.png",
+        "yeniSekme": true
+      },
+      {
+        "ad": "Portal",
+        "adres": "https://portal.hacettepe.edu.tr/",
+        "gorsel": "https://bidb.hacettepe.edu.tr/images/servis_portal.png",
+        "yeniSekme": true
+      }
+    ],
+    "duyurular": [
+      {
+        "baslik": "Microsoft OneDrive Depolama Kotaları Hakkında Bilgilendirme",
+        "adres": "https://bidb.hacettepe.edu.tr/dosyalar/onedriveduyuru230626.pdf",
+        "tarih": "23.06.2026",
+        "yeniSekme": true
+      },
+      {
+        "baslik": "Microsoft 365 Lisanslama ve Kullanım Değişikliği Hakkında",
+        "adres": "https://bidb.hacettepe.edu.tr/dosyalar/365A1plus_020626.pdf",
+        "tarih": "02.06.2026",
+        "yeniSekme": true
+      },
+      {
+        "baslik": "Sözleşmeli Bilişim Personeli Alımı İle İlgili Değerlendirme Sonucu",
+        "adres": "https://bidb.hacettepe.edu.tr/dosyalar/sozlesmeilan240426.pdf",
+        "tarih": "24.04.2026",
+        "yeniSekme": true
+      },
+      {
+        "baslik": "Sözleşmeli Bilişim Personeli Alımı İle İlgili Yazılı Sınav Sonuçları ve Sözlü Sınav Bilgileri",
+        "adres": "https://bidb.hacettepe.edu.tr/dosyalar/EK_5_sozlu_sinava_girmeye_hak_kazananlarin_ilani_090426.pdf",
+        "tarih": "09.04.2026",
+        "yeniSekme": true
+      },
+      {
+        "baslik": "Sözleşmeli Bilişim Personeli Alımı İle İlgili Ön İnceleme Sonucu Sınava Girmeye Hak Kazananların Listesi",
+        "adres": "https://bidb.hacettepe.edu.tr/dosyalar/EK_3_yazili_sinava_girmeye_hak_kazananlarin_ilani_310326.pdf",
+        "tarih": "31.03.2026",
+        "yeniSekme": true
+      },
+      {
+        "baslik": "iskur.hacettepe.edu.tr",
+        "adres": "https://iskur.hacettepe.edu.tr",
+        "tarih": "",
+        "yeniSekme": true
+      },
+      {
+        "baslik": "İŞKUR Gençlik Programı Noter Kurası Çekilişi",
+        "adres": "https://bidb.hacettepe.edu.tr/dosyalar/iskur_kuracekimi_151025.pdf",
+        "tarih": "15.10.2025",
+        "yeniSekme": true
+      },
+      {
+        "baslik": "2025-2026 Eğitim Öğretim Dönemi İŞKUR Gençlik Programı",
+        "adres": "https://pdb.hacettepe.edu.tr/duyuru/iskur_131025.pdf",
+        "tarih": "14.10.2025",
+        "yeniSekme": true
+      },
+      {
+        "baslik": "Sözleşmeli Bilişim Personeli Alımı Değerlendirme Sonucu",
+        "adres": "https://bidb.hacettepe.edu.tr/dosyalar/sozlesme_hak_kazananlarin_ilani290525.pdf",
+        "tarih": "29.05.2025",
+        "yeniSekme": true
+      },
+      {
+        "baslik": "Sözleşmeli Bilişim Personeli Alımı İle İlgili Yazılı Sınav Sonuçları ve Sözlü Sınav Bilgileri",
+        "adres": "https://bidb.hacettepe.edu.tr/dosyalar/Sozlu_sinava_girmeye_hak_kazananlarin_ilani_232025.pdf",
+        "tarih": "23.05.2025",
+        "yeniSekme": true
+      },
+      {
+        "baslik": "Sözleşmeli Bilişim Personeli Alımı İle İlgili Ön İnceleme Sonucu Sınava Girmeye Hak Kazananların Listesi",
+        "adres": "https://bidb.hacettepe.edu.tr/dosyalar/yazili_sinava_girmeye_hak_kazananlarin_ilani130525.pdf",
+        "tarih": "13.05.25",
+        "yeniSekme": true
+      },
+      {
+        "baslik": "Sözleşmeli Bilişim Personeli Alımı",
+        "adres": "https://bidb.hacettepe.edu.tr/tr/ilan_280425",
+        "tarih": "28.04.25",
+        "yeniSekme": false
+      },
+      {
+        "baslik": "İŞKUR Gençlik Programı, İş Sağlığı ve Güvenliği Eğitimi",
+        "adres": "https://bidb.hacettepe.edu.tr/tr/duy_iskur280225",
+        "tarih": "28.02.25",
+        "yeniSekme": false
+      },
+      {
+        "baslik": "İŞKUR Gençlik Programı Asıl Olarak Hak Kazanan Öğrencilerimiz",
+        "adres": "https://www.hacettepe.edu.tr/duyuru/rekduy/iskur240225.pdf",
+        "tarih": "24.02.25",
+        "yeniSekme": true
+      },
+      {
+        "baslik": "İŞKUR Gençlik Programı Çerçevesinde 19.02.2025 Tarihinde Yapılan Noter Çekilişi",
+        "adres": "https://bidb.hacettepe.edu.tr/dosyalar/sonuc200225.pdf",
+        "tarih": "20.02.25",
+        "yeniSekme": true
+      },
+      {
+        "baslik": "İşkur Gençlik Programı",
+        "adres": "https://bidb.hacettepe.edu.tr/dosyalar/iskurduyuru170225.pdf",
+        "tarih": "17.02.25",
+        "yeniSekme": true
+      },
+      {
+        "baslik": "VPN sistemi ile ilgili Bilgilendirme ve Bağlantı Kılavuzları",
+        "adres": "https://bidb.hacettepe.edu.tr/tr/VPN",
+        "tarih": "27.09.24",
+        "yeniSekme": false
+      },
+      {
+        "baslik": "Sözleşmeli Bilişim Personeli Alımı Değerlendirme Sonucu (22.12.23)",
+        "adres": "https://bidb.hacettepe.edu.tr/dosyalar/prsalimsonuc221223.pdf",
+        "tarih": "",
+        "yeniSekme": true
+      },
+      {
+        "baslik": "Sözleşmeli Bilişim Personeli Alımı İle İlgili Yazılı Sınav Sonuçları ve Sözlü Sınav Bilgileri (18.12.23)",
+        "adres": "https://bidb.hacettepe.edu.tr/dosyalar/SinavSonucuYazili181223.pdf",
+        "tarih": "",
+        "yeniSekme": true
+      },
+      {
+        "baslik": "Sözleşmeli Bilişim Personeli Alımı İle İlgili Ön İnceleme Sonucu Sınava Girmeye Hak Kazananların Listesi (11.12.23)",
+        "adres": "https://bidb.hacettepe.edu.tr/dosyalar/Sinav_web_141223.pdf",
+        "tarih": "",
+        "yeniSekme": true
+      },
+      {
+        "baslik": "Sözleşmeli Bilişim Personeli Alımı Sınav Sonuçları",
+        "adres": "https://bidb.hacettepe.edu.tr/dosyalar/SozlesmeYapmayaHakKazananlar_200623.pdf",
+        "tarih": "20.06.23",
+        "yeniSekme": true
+      },
+      {
+        "baslik": "Sözleşmeli Bilişim Personeli Alımı İle İlgili Yazılı Sınav Sonuçları ve Sözlü Sınav Bilgileri (16.06.23)",
+        "adres": "https://bidb.hacettepe.edu.tr/dosyalar/sinavsonuc160623.pdf",
+        "tarih": "",
+        "yeniSekme": true
+      },
+      {
+        "baslik": "Sözleşmeli Bilişim Personeli Alımı İle İlgili Ön İnceleme Sonucu Sınava Girmeye Hak Kazananların Listesi (14.06.23)",
+        "adres": "https://bidb.hacettepe.edu.tr/dosyalar/sozlesmeli_personel_140623.pdf",
+        "tarih": "",
+        "yeniSekme": true
+      },
+      {
+        "baslik": "Sözleşmeli Bilişim Personeli Duyurusu",
+        "adres": "https://bidb.hacettepe.edu.tr/dosyalar/bilisimduyuru300523.pdf",
+        "tarih": "30.05.23",
+        "yeniSekme": true
+      },
+      {
+        "baslik": "Mezun E-posta Hesabı Hakkında",
+        "adres": "https://bidb.hacettepe.edu.tr/tr/mezuneposta",
+        "tarih": "20.03.23",
+        "yeniSekme": false
+      }
+    ],
+    "sosyal": [
+      {
+        "ag": "instagram",
+        "url": "https://www.instagram.com/hacettepe_university/"
+      },
+      {
+        "ag": "facebook",
+        "url": "https://www.facebook.com/HacettepeUniversitesiKurumsal"
+      },
+      {
+        "ag": "twitter",
+        "url": "https://twitter.com/hacettepe1967"
+      }
+    ],
+    "iletisim": {
+      "telefonlar": [
+        "+90 312 297 62 62",
+        "+90 312 297 62 00",
+        "+90 312 299 20 88"
+      ],
+      "epostalar": [
+        "bhim@hacettepe.edu.tr",
+        "bidb@hacettepe.edu.tr"
+      ],
+      "faks": "+90 312 299 20 88",
+      "adres": "Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı 06800 Beytepe / ANKARA"
+    }
+  },
+  "en": {
+    "slider": [
+      {
+        "gorsel": "https://bidb.hacettepe.edu.tr/images/r1.jpg",
+        "gorselAlt": "Promotional image for the Directorate of Information Technology",
+        "baslik": "Computer Center",
+        "ozet": ""
+      }
+    ],
+    "hizliErisim": [],
+    "servisler": [],
+    "duyurular": [],
+    "sosyal": [
+      {
+        "ag": "instagram",
+        "url": "https://www.instagram.com/hacettepe_university/"
+      },
+      {
+        "ag": "facebook",
+        "url": "https://www.facebook.com/HacettepeUniversitesiKurumsal"
+      },
+      {
+        "ag": "twitter",
+        "url": "https://twitter.com/hacettepe1967"
+      }
+    ],
+    "iletisim": {
+      "telefonlar": [
+        "+90 312 297 62 00",
+        "+90 312 299 20 88"
+      ],
+      "epostalar": [
+        "bidb@hacettepe.edu.tr"
+      ],
+      "faks": "+90 312 299 20 88",
+      "adres": "Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı 06800 Beytepe / ANKARA"
+    }
+  }
+}

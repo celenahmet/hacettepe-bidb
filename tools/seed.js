@@ -94,15 +94,45 @@ yaz("");
   yaz("INSERT INTO sosyal_hesap (ag, adres, sira) VALUES (" + [q(s.ag), q(s.url), i].join(", ") + ");");
 });
 
-/* ---------- hızlı erişim ve iletişim ---------- */
+/* ---------- ana sayfa bileşenleri ---------- */
 const bilesenYolu = path.join(ICERIK, "_anasayfa-bilesenler.json");
 if (fs.existsSync(bilesenYolu)) {
   const b = JSON.parse(fs.readFileSync(bilesenYolu, "utf8"));
-  yaz("");
+
+  // Kaynak sitedeki iç adresler yeni adres yapısına çevrilir
+  const adres = (u) => String(u || "").replace(/^https?:\/\/bidb\.hacettepe\.edu\.tr(?=\/)/i, "");
+  const disMi = (u) => /^https?:\/\//i.test(u) && !/bidb\.hacettepe\.edu\.tr/i.test(u);
+
   ["tr", "en"].forEach((dil) => {
-    ((b[dil] && b[dil].hizliErisim) || []).forEach((h, i) => {
+    const v = b[dil] || {};
+
+    yaz("");
+    (v.slider || []).forEach((s, i) => {
+      yaz("INSERT INTO slider (dil, baslik, alt_baslik, gorsel_url, gorsel_alt, sira) VALUES (" +
+        [q(dil), q(s.baslik), q(s.ozet), q(adres(s.gorsel)), q(s.gorselAlt), i].join(", ") + ");");
+    });
+
+    yaz("");
+    (v.hizliErisim || []).forEach((h, i) => {
       yaz("INSERT INTO hizli_erisim (dil, ad, ikon_url, adres, yeni_sekme, sira) VALUES (" +
-        [q(dil), q(h.ad), q(h.ikon), q(h.href), h.href.startsWith("http") && !h.href.includes("bidb.hacettepe") ? "TRUE" : "FALSE", i].join(", ") + ");");
+        [q(dil), q(h.ad), q(adres(h.ikon)), q(adres(h.adres)), h.yeniSekme || disMi(h.adres) ? "TRUE" : "FALSE", i].join(", ") + ");");
+    });
+
+    // "Servisler ve Uygulamalar" karuseli de hızlı erişim tablosunda,
+    // ayrı bir sıra aralığında tutulur
+    yaz("");
+    (v.servisler || []).forEach((s, i) => {
+      yaz("INSERT INTO hizli_erisim (dil, ad, ikon_url, adres, yeni_sekme, sira) VALUES (" +
+        [q(dil), q(s.ad), q(adres(s.gorsel)), q(adres(s.adres)), s.yeniSekme || disMi(s.adres) ? "TRUE" : "FALSE", 100 + i].join(", ") + ");");
+    });
+
+    yaz("");
+    (v.duyurular || []).forEach((d) => {
+      // gg.aa.yyyy → yyyy-aa-gg
+      const p = (d.tarih || "").match(/(\d{2})[.\/](\d{2})[.\/](\d{2,4})/);
+      const tarih = p ? (p[3].length === 2 ? "20" + p[3] : p[3]) + "-" + p[2] + "-" + p[1] : null;
+      yaz("INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES (" +
+        [q(dil), q(d.baslik), tarih ? q(tarih) : "CURRENT_DATE", q(adres(d.adres))].join(", ") + ");");
     });
   });
 
@@ -110,7 +140,7 @@ if (fs.existsSync(bilesenYolu)) {
   const ayarlar = [
     ["iletisim_adres", il.adres || ""],
     ["iletisim_telefon", (il.telefonlar || []).join(" · ")],
-    ["iletisim_eposta", (il.epostalar || [])[0] || ""],
+    ["iletisim_eposta", (il.epostalar || []).join(" · ")],
     ["iletisim_faks", il.faks || ""]
   ];
   yaz("");

@@ -2660,3 +2660,64 @@ INSERT INTO menu_oge (menu_id, etiket, sayfa_id, sira) SELECT m.id, 'Contact', s
 INSERT INTO sosyal_hesap (ag, adres, sira) VALUES ('instagram', 'https://www.instagram.com/hacettepe_university/', 0);
 INSERT INTO sosyal_hesap (ag, adres, sira) VALUES ('facebook', 'https://www.facebook.com/HacettepeUniversitesiKurumsal', 1);
 INSERT INTO sosyal_hesap (ag, adres, sira) VALUES ('twitter', 'https://twitter.com/hacettepe1967', 2);
+
+INSERT INTO slider (dil, baslik, alt_baslik, gorsel_url, gorsel_alt, sira) VALUES ('tr', 'Bilgi İşlem Daire Başkanlığı', '', '/images/r1.jpg', 'Bilgi İşlem Daire Başkanlığı tanıtım görseli', 0);
+INSERT INTO slider (dil, baslik, alt_baslik, gorsel_url, gorsel_alt, sira) VALUES ('tr', 'Bilgi İşlem Daire Başkanlığı', '', '/images/ic1.jpg', 'Bilgi İşlem Daire Başkanlığı tanıtım görseli', 1);
+INSERT INTO slider (dil, baslik, alt_baslik, gorsel_url, gorsel_alt, sira) VALUES ('tr', 'Bilgi İşlem Daire Başkanlığı', '', '/images/ic2.jpg', 'Bilgi İşlem Daire Başkanlığı tanıtım görseli', 2);
+
+INSERT INTO hizli_erisim (dil, ad, ikon_url, adres, yeni_sekme, sira) VALUES ('tr', 'E-Posta İşlemleri', '/images/icon/eposta.png', '/tr/eposta', FALSE, 0);
+INSERT INTO hizli_erisim (dil, ad, ikon_url, adres, yeni_sekme, sira) VALUES ('tr', 'E-Posta Giriş', '/images/icon_exchange2.jpg', '/tr/e-posta', FALSE, 1);
+INSERT INTO hizli_erisim (dil, ad, ikon_url, adres, yeni_sekme, sira) VALUES ('tr', 'Office 365', '/images/icon/office365.png', '/tr/office365', FALSE, 2);
+INSERT INTO hizli_erisim (dil, ad, ikon_url, adres, yeni_sekme, sira) VALUES ('tr', 'HÜ BİDB Portalı', '/images/icon/portal.png', 'https://portal.hacettepe.edu.tr/', TRUE, 3);
+INSERT INTO hizli_erisim (dil, ad, ikon_url, adres, yeni_sekme, sira) VALUES ('tr', 'EBYS Bilgilendirme', '/images/icon/ebys.png', 'http://ebysbilgilendirme.hacettepe.edu.tr/', TRUE, 4);
+INSERT INTO hizli_erisim (dil, ad, ikon_url, adres, yeni_sekme, sira) VALUES ('tr', 'E-İmza & Mobil İmza', '/images/icon/eimza.png', '/eimza/', TRUE, 5);
+INSERT INTO hizli_erisim (dil, ad, ikon_url, adres, yeni_sekme, sira) VALUES ('tr', 'Proxy Ayarları ve Kurulumu', '/images/icon/proxy.png', '/tr/proxy', FALSE, 6);
+INSERT INTO hizli_erisim (dil, ad, ikon_url, adres, yeni_sekme, sira) VALUES ('tr', 'Sorun Bildirim ve Destek Hizmetleri', '/images/icon/yardim.png', 'https://bidbdestek.hacettepe.edu.tr', TRUE, 7);
+INSERT INTO hizli_erisim (dil, ad, ikon_url, adres, yeni_sekme, sira) VALUES ('tr', 'Sık Sorulan Sorular', '/images/icon/sss.png', '/tr/sss', FALSE, 8);
+INSERT INTO hizli_erisim (dil, ad, ikon_url, adres, yeni_sekme, sira) VALUES ('tr', 'Formlar', '/images/icon/form.png', '/tr/formlar', FALSE, 9);
+INSERT INTO hizli_erisim (dil, ad, ikon_url, adres, yeni_sekme, sira) VALUES ('tr', 'Bilgi ve Dokümanlar', '/images/icon/bilgidokuman.png', '/tr/bilgidokuman', FALSE, 10);
+INSERT INTO hizli_erisim (dil, ad, ikon_url, adres, yeni_sekme, sira) VALUES ('tr', 'Yazılım Deposu', '/images/icon/yazilimdeposu.png', 'https://yazilimdeposu.hacettepe.edu.tr/', TRUE, 11);
+
+INSERT INTO hizli_erisim (dil, ad, ikon_url, adres, yeni_sekme, sira) VALUES ('tr', 'Web Servisleri', '/images/hizmet1.png', '/tr/webser', FALSE, 100);
+INSERT INTO hizli_erisim (dil, ad, ikon_url, adres, yeni_sekme, sira) VALUES ('tr', 'HÜ İçerik Yönetim Sistemi', '/images/hizmet2.png', 'http://hu-iys.hacettepe.edu.tr/', TRUE, 101);
+INSERT INTO hizli_erisim (dil, ad, ikon_url, adres, yeni_sekme, sira) VALUES ('tr', 'Eğitim Fakültesi Mezun Bilgi Sistemi', '/images/hizmet_mezunbilgi.jpg', 'http://egitimmezun.hacettepe.edu.tr/', TRUE, 102);
+INSERT INTO hizli_erisim (dil, ad, ikon_url, adres, yeni_sekme, sira) VALUES ('tr', 'GSF Başvuru Sistemi', '/images/servis_gsf.png', 'https://ozelyeteneksinavi.hacettepe.edu.tr/giris/', TRUE, 103);
+INSERT INTO hizli_erisim (dil, ad, ikon_url, adres, yeni_sekme, sira) VALUES ('tr', 'Akademik Ön Değerlendirme Başvuru Sistemi', '/images/servis_akademik.png', 'https://kriter.hacettepe.edu.tr', TRUE, 104);
+INSERT INTO hizli_erisim (dil, ad, ikon_url, adres, yeni_sekme, sira) VALUES ('tr', 'Sticker Başvurusu', '/images/servis_sticker.png', 'http://guvenlik.hacettepe.edu.tr/sticker/', TRUE, 105);
+INSERT INTO hizli_erisim (dil, ad, ikon_url, adres, yeni_sekme, sira) VALUES ('tr', 'Portal', '/images/servis_portal.png', 'https://portal.hacettepe.edu.tr/', TRUE, 106);
+
+INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'Microsoft OneDrive Depolama Kotaları Hakkında Bilgilendirme', '2026-06-23', '/dosyalar/onedriveduyuru230626.pdf');
+INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'Microsoft 365 Lisanslama ve Kullanım Değişikliği Hakkında', '2026-06-02', '/dosyalar/365A1plus_020626.pdf');
+INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'Sözleşmeli Bilişim Personeli Alımı İle İlgili Değerlendirme Sonucu', '2026-04-24', '/dosyalar/sozlesmeilan240426.pdf');
+INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'Sözleşmeli Bilişim Personeli Alımı İle İlgili Yazılı Sınav Sonuçları ve Sözlü Sınav Bilgileri', '2026-04-09', '/dosyalar/EK_5_sozlu_sinava_girmeye_hak_kazananlarin_ilani_090426.pdf');
+INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'Sözleşmeli Bilişim Personeli Alımı İle İlgili Ön İnceleme Sonucu Sınava Girmeye Hak Kazananların Listesi', '2026-03-31', '/dosyalar/EK_3_yazili_sinava_girmeye_hak_kazananlarin_ilani_310326.pdf');
+INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'iskur.hacettepe.edu.tr', CURRENT_DATE, 'https://iskur.hacettepe.edu.tr');
+INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'İŞKUR Gençlik Programı Noter Kurası Çekilişi', '2025-10-15', '/dosyalar/iskur_kuracekimi_151025.pdf');
+INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', '2025-2026 Eğitim Öğretim Dönemi İŞKUR Gençlik Programı', '2025-10-14', 'https://pdb.hacettepe.edu.tr/duyuru/iskur_131025.pdf');
+INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'Sözleşmeli Bilişim Personeli Alımı Değerlendirme Sonucu', '2025-05-29', '/dosyalar/sozlesme_hak_kazananlarin_ilani290525.pdf');
+INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'Sözleşmeli Bilişim Personeli Alımı İle İlgili Yazılı Sınav Sonuçları ve Sözlü Sınav Bilgileri', '2025-05-23', '/dosyalar/Sozlu_sinava_girmeye_hak_kazananlarin_ilani_232025.pdf');
+INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'Sözleşmeli Bilişim Personeli Alımı İle İlgili Ön İnceleme Sonucu Sınava Girmeye Hak Kazananların Listesi', '2025-05-13', '/dosyalar/yazili_sinava_girmeye_hak_kazananlarin_ilani130525.pdf');
+INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'Sözleşmeli Bilişim Personeli Alımı', '2025-04-28', '/tr/ilan_280425');
+INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'İŞKUR Gençlik Programı, İş Sağlığı ve Güvenliği Eğitimi', '2025-02-28', '/tr/duy_iskur280225');
+INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'İŞKUR Gençlik Programı Asıl Olarak Hak Kazanan Öğrencilerimiz', '2025-02-24', 'https://www.hacettepe.edu.tr/duyuru/rekduy/iskur240225.pdf');
+INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'İŞKUR Gençlik Programı Çerçevesinde 19.02.2025 Tarihinde Yapılan Noter Çekilişi', '2025-02-20', '/dosyalar/sonuc200225.pdf');
+INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'İşkur Gençlik Programı', '2025-02-17', '/dosyalar/iskurduyuru170225.pdf');
+INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'VPN sistemi ile ilgili Bilgilendirme ve Bağlantı Kılavuzları', '2024-09-27', '/tr/VPN');
+INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'Sözleşmeli Bilişim Personeli Alımı Değerlendirme Sonucu (22.12.23)', CURRENT_DATE, '/dosyalar/prsalimsonuc221223.pdf');
+INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'Sözleşmeli Bilişim Personeli Alımı İle İlgili Yazılı Sınav Sonuçları ve Sözlü Sınav Bilgileri (18.12.23)', CURRENT_DATE, '/dosyalar/SinavSonucuYazili181223.pdf');
+INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'Sözleşmeli Bilişim Personeli Alımı İle İlgili Ön İnceleme Sonucu Sınava Girmeye Hak Kazananların Listesi (11.12.23)', CURRENT_DATE, '/dosyalar/Sinav_web_141223.pdf');
+INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'Sözleşmeli Bilişim Personeli Alımı Sınav Sonuçları', '2023-06-20', '/dosyalar/SozlesmeYapmayaHakKazananlar_200623.pdf');
+INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'Sözleşmeli Bilişim Personeli Alımı İle İlgili Yazılı Sınav Sonuçları ve Sözlü Sınav Bilgileri (16.06.23)', CURRENT_DATE, '/dosyalar/sinavsonuc160623.pdf');
+INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'Sözleşmeli Bilişim Personeli Alımı İle İlgili Ön İnceleme Sonucu Sınava Girmeye Hak Kazananların Listesi (14.06.23)', CURRENT_DATE, '/dosyalar/sozlesmeli_personel_140623.pdf');
+INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'Sözleşmeli Bilişim Personeli Duyurusu', '2023-05-30', '/dosyalar/bilisimduyuru300523.pdf');
+INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'Mezun E-posta Hesabı Hakkında', '2023-03-20', '/tr/mezuneposta');
+
+INSERT INTO slider (dil, baslik, alt_baslik, gorsel_url, gorsel_alt, sira) VALUES ('en', 'Computer Center', '', '/images/r1.jpg', 'Promotional image for the Directorate of Information Technology', 0);
+
+
+
+
+INSERT INTO ayar (anahtar, dil, deger) VALUES ('iletisim_adres', 'tr', 'Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı 06800 Beytepe / ANKARA');
+INSERT INTO ayar (anahtar, dil, deger) VALUES ('iletisim_telefon', 'tr', '+90 312 297 62 62 · +90 312 297 62 00 · +90 312 299 20 88');
+INSERT INTO ayar (anahtar, dil, deger) VALUES ('iletisim_eposta', 'tr', 'bhim@hacettepe.edu.tr · bidb@hacettepe.edu.tr');
+INSERT INTO ayar (anahtar, dil, deger) VALUES ('iletisim_faks', 'tr', '+90 312 299 20 88');
