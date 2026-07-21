@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { DuyuruYonetim, SayfaYonetim, YonetimApi } from './yonetim-api';
+import { DuyuruYonetim, Kisayol, SayfaYonetim, Slayt, YonetimApi } from './yonetim-api';
 
 /** Yönetim paneli: giriş, sayfa SEO düzenleme ve duyuru yönetimi. */
 @Component({
@@ -36,6 +36,12 @@ import { DuyuruYonetim, SayfaYonetim, YonetimApi } from './yonetim-api';
           </button>
           <button type="button" [class.etkin]="sekme() === 'duyurular'" (click)="sekmeDuyuru()">
             Duyurular ({{ duyurular().length }})
+          </button>
+          <button type="button" [class.etkin]="sekme() === 'slider'" (click)="sekmeSlider()">
+            Slider ({{ slaytlar().length }})
+          </button>
+          <button type="button" [class.etkin]="sekme() === 'kisayollar'" (click)="sekmeKisayol()">
+            Kısayollar ({{ kisayollar().length }})
           </button>
         </nav>
 
@@ -94,7 +100,7 @@ import { DuyuruYonetim, SayfaYonetim, YonetimApi } from './yonetim-api';
               }
             </tbody>
           </table>
-        } @else {
+        } @else if (sekme() === 'duyurular') {
           <form class="duyuru-form" (ngSubmit)="duyuruKaydet()">
             <h2>{{ duyuru().id ? 'Duyuruyu düzenle' : 'Yeni duyuru' }}</h2>
 
@@ -140,6 +146,85 @@ import { DuyuruYonetim, SayfaYonetim, YonetimApi } from './yonetim-api';
               }
             </tbody>
           </table>
+        } @else if (sekme() === 'slider') {
+          <button type="button" (click)="slaytDuzenle(null)">Yeni slayt</button>
+
+          @if (slayt(); as sl) {
+            <form class="duyuru-form" (ngSubmit)="slaytKaydet()">
+              <h2>{{ sl.id ? 'Slaytı düzenle' : 'Yeni slayt' }}</h2>
+              <label for="sbaslik">Başlık</label>
+              <input id="sbaslik" name="sbaslik" [ngModel]="sl.baslik" (ngModelChange)="slaytAlan('baslik', $event)">
+              <label for="sgorsel">Görsel adresi</label>
+              <input id="sgorsel" name="sgorsel" [ngModel]="sl.gorselUrl" (ngModelChange)="slaytAlan('gorselUrl', $event)" required>
+              <label for="salt">Görsel açıklaması (erişilebilirlik)</label>
+              <input id="salt" name="salt" [ngModel]="sl.gorselAlt" (ngModelChange)="slaytAlan('gorselAlt', $event)">
+              <label for="ssira">Sıra</label>
+              <input id="ssira" name="ssira" type="number" [ngModel]="sl.sira" (ngModelChange)="slaytAlan('sira', +$event)">
+              <span class="dugmeler">
+                <button type="submit">Kaydet</button>
+                <button type="button" class="ikincil" (click)="slayt.set(null)">Vazgeç</button>
+              </span>
+            </form>
+          }
+
+          <table class="yonetim-tablo">
+            <thead><tr><th>Sıra</th><th>Başlık</th><th>Görsel</th><th>Dil</th><th></th></tr></thead>
+            <tbody>
+              @for (sl of slaytlar(); track sl.id) {
+                <tr>
+                  <td>{{ sl.sira }}</td>
+                  <td>{{ sl.baslik }}</td>
+                  <td><small>{{ sl.gorselUrl }}</small></td>
+                  <td>{{ sl.dil }}</td>
+                  <td>
+                    <button type="button" class="ikincil" (click)="slaytDuzenle(sl)">Düzenle</button>
+                    <button type="button" class="tehlike" (click)="slaytSil(sl)">Sil</button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        } @else {
+          <button type="button" (click)="kisayolDuzenle(null)">Yeni kısayol</button>
+
+          @if (kisayol(); as ks) {
+            <form class="duyuru-form" (ngSubmit)="kisayolKaydet()">
+              <h2>{{ ks.id ? 'Kısayolu düzenle' : 'Yeni kısayol' }}</h2>
+              <label for="kad">Ad</label>
+              <input id="kad" name="kad" [ngModel]="ks.ad" (ngModelChange)="kisayolAlan('ad', $event)" required>
+              <label for="kadres">Adres</label>
+              <input id="kadres" name="kadres" [ngModel]="ks.adres" (ngModelChange)="kisayolAlan('adres', $event)" required>
+              <label for="kikon">İkon adresi</label>
+              <input id="kikon" name="kikon" [ngModel]="ks.ikonUrl" (ngModelChange)="kisayolAlan('ikonUrl', $event)">
+              <label for="ksira">Sıra (100 ve üzeri servis karuselinde görünür)</label>
+              <input id="ksira" name="ksira" type="number" [ngModel]="ks.sira" (ngModelChange)="kisayolAlan('sira', +$event)">
+              <label class="onay">
+                <input type="checkbox" name="kyeni" [ngModel]="ks.yeniSekme" (ngModelChange)="kisayolAlan('yeniSekme', $event)"> Yeni sekmede açılsın
+              </label>
+              <span class="dugmeler">
+                <button type="submit">Kaydet</button>
+                <button type="button" class="ikincil" (click)="kisayol.set(null)">Vazgeç</button>
+              </span>
+            </form>
+          }
+
+          <table class="yonetim-tablo">
+            <thead><tr><th>Sıra</th><th>Ad</th><th>Adres</th><th>Dil</th><th></th></tr></thead>
+            <tbody>
+              @for (ks of kisayollar(); track ks.id) {
+                <tr>
+                  <td>{{ ks.sira }}</td>
+                  <td>{{ ks.ad }}</td>
+                  <td><small>{{ ks.adres }}</small></td>
+                  <td>{{ ks.dil }}</td>
+                  <td>
+                    <button type="button" class="ikincil" (click)="kisayolDuzenle(ks)">Düzenle</button>
+                    <button type="button" class="tehlike" (click)="kisayolSil(ks)">Sil</button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
         }
       }
     </div>
@@ -154,11 +239,15 @@ export class YonetimPanel {
   protected bilgi = signal('');
   protected calisiyor = signal(false);
 
-  protected sekme = signal<'sayfalar' | 'duyurular'>('sayfalar');
+  protected sekme = signal<'sayfalar' | 'duyurular' | 'slider' | 'kisayollar'>('sayfalar');
   protected sayfalar = signal<SayfaYonetim[]>([]);
   protected duyurular = signal<DuyuruYonetim[]>([]);
   protected secili = signal<SayfaYonetim | null>(null);
   protected duyuru = signal<DuyuruYonetim>(this.bosDuyuru());
+  protected slaytlar = signal<Slayt[]>([]);
+  protected kisayollar = signal<Kisayol[]>([]);
+  protected slayt = signal<Slayt | null>(null);
+  protected kisayol = signal<Kisayol | null>(null);
 
   constructor() {
     if (this.api.girisYapildi()) this.sayfalariYukle();
@@ -242,6 +331,68 @@ export class YonetimPanel {
 
   protected duyuruSifirla(): void {
     this.duyuru.set(this.bosDuyuru());
+  }
+
+  protected sekmeSlider(): void {
+    this.sekme.set('slider');
+    this.api.slaytlar().subscribe((l) => this.slaytlar.set(l));
+  }
+
+  protected sekmeKisayol(): void {
+    this.sekme.set('kisayollar');
+    this.api.kisayollar().subscribe((l) => this.kisayollar.set(l));
+  }
+
+  protected slaytDuzenle(s: Slayt | null): void {
+    this.slayt.set(s ? { ...s } : { id: null, dil: 'tr', baslik: '', altBaslik: '', gorselUrl: '', gorselAlt: '', baglanti: null, sira: 0, yayinda: true });
+  }
+
+  protected slaytAlan(alan: keyof Slayt, deger: unknown): void {
+    const s = this.slayt();
+    if (s) this.slayt.set({ ...s, [alan]: deger } as Slayt);
+  }
+
+  protected slaytKaydet(): void {
+    const s = this.slayt();
+    if (!s) return;
+    this.api.slaytKaydet(s).subscribe({
+      next: () => { this.slayt.set(null); this.sekmeSlider(); this.mesaj('Slayt kaydedildi.'); },
+      error: () => this.mesaj('Slayt kaydedilemedi.')
+    });
+  }
+
+  protected slaytSil(s: Slayt): void {
+    if (!s.id) return;
+    this.api.slaytSil(s.id).subscribe({
+      next: () => { this.slaytlar.update((l) => l.filter((x) => x.id !== s.id)); this.mesaj('Slayt silindi.'); },
+      error: () => this.mesaj('Silinemedi.')
+    });
+  }
+
+  protected kisayolDuzenle(k: Kisayol | null): void {
+    this.kisayol.set(k ? { ...k } : { id: null, dil: 'tr', ad: '', ikonUrl: '', adres: '', yeniSekme: false, sira: 0, yayinda: true });
+  }
+
+  protected kisayolAlan(alan: keyof Kisayol, deger: unknown): void {
+    const k = this.kisayol();
+    if (k) this.kisayol.set({ ...k, [alan]: deger } as Kisayol);
+  }
+
+  protected kisayolKaydet(): void {
+    const k = this.kisayol();
+    if (!k) return;
+    this.api.kisayolKaydet(k).subscribe({
+      next: () => { this.kisayol.set(null); this.sekmeKisayol(); this.mesaj('Kısayol kaydedildi.'); },
+      error: () => this.mesaj('Kısayol kaydedilemedi.')
+    });
+  }
+
+  protected kisayolSil(k: Kisayol): void {
+    if (!k.id) return;
+    this.api.kisayolSil(k.id).subscribe({
+      next: () => { this.kisayollar.update((l) => l.filter((x) => x.id !== k.id)); this.mesaj('Kısayol silindi.'); },
+      error: () => this.mesaj('Silinemedi.')
+    });
   }
 
   private sayfalariYukle(): void {

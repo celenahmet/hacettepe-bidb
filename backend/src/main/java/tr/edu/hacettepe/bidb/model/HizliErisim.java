@@ -41,4 +41,12 @@ public class HizliErisim {
     public boolean isYeniSekme() { return yeniSekme; }
     public int getSira() { return sira; }
     public boolean isYayinda() { return yayinda; }
+
+    public void setDil(String dil) { this.dil = dil; }
+    public void setAd(String ad) { this.ad = ad; }
+    public void setIkonUrl(String ikonUrl) { this.ikonUrl = ikonUrl; }
+    public void setAdres(String adres) { this.adres = adres; }
+    public void setYeniSekme(boolean yeniSekme) { this.yeniSekme = yeniSekme; }
+    public void setSira(int sira) { this.sira = sira; }
+    public void setYayinda(boolean yayinda) { this.yayinda = yayinda; }
 }

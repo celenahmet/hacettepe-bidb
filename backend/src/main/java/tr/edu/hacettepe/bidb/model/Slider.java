@@ -50,4 +50,13 @@ public class Slider {
     public boolean isYayinda() { return yayinda; }
     public LocalDate getBaslangic() { return baslangic; }
     public LocalDate getBitis() { return bitis; }
+
+    public void setDil(String dil) { this.dil = dil; }
+    public void setBaslik(String baslik) { this.baslik = baslik; }
+    public void setAltBaslik(String altBaslik) { this.altBaslik = altBaslik; }
+    public void setGorselUrl(String gorselUrl) { this.gorselUrl = gorselUrl; }
+    public void setGorselAlt(String gorselAlt) { this.gorselAlt = gorselAlt; }
+    public void setBaglanti(String baglanti) { this.baglanti = baglanti; }
+    public void setSira(int sira) { this.sira = sira; }
+    public void setYayinda(boolean yayinda) { this.yayinda = yayinda; }
 }

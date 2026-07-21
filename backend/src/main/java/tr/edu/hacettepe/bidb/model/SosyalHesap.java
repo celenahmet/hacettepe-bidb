@@ -28,4 +28,9 @@ public class SosyalHesap {
     public String getAdres() { return adres; }
     public int getSira() { return sira; }
     public boolean isYayinda() { return yayinda; }
+
+    public void setAg(String ag) { this.ag = ag; }
+    public void setAdres(String adres) { this.adres = adres; }
+    public void setSira(int sira) { this.sira = sira; }
+    public void setYayinda(boolean yayinda) { this.yayinda = yayinda; }
 }

@@ -25,6 +25,29 @@ export interface DuyuruYonetim {
   disAdres: string | null;
 }
 
+export interface Slayt {
+  id: number | null;
+  dil: string;
+  baslik: string | null;
+  altBaslik: string | null;
+  gorselUrl: string;
+  gorselAlt: string | null;
+  baglanti: string | null;
+  sira: number;
+  yayinda: boolean;
+}
+
+export interface Kisayol {
+  id: number | null;
+  dil: string;
+  ad: string;
+  ikonUrl: string | null;
+  adres: string;
+  yeniSekme: boolean;
+  sira: number;
+  yayinda: boolean;
+}
+
 const OTURUM_ANAHTARI = 'bidb-yonetim';
 
 /** Yönetim uçlarına erişim. Kimlik bilgisi yalnızca tarayıcı oturumunda tutulur. */
@@ -89,6 +112,34 @@ export class YonetimApi {
 
   duyuruSil(id: number): Observable<void> {
     return this.http.delete<void>(`/api/yonetim/duyurular/${id}`, { headers: this.basliklar() });
+  }
+
+  slaytlar(): Observable<Slayt[]> {
+    return this.http.get<Slayt[]>('/api/yonetim/slider/liste', { headers: this.basliklar() });
+  }
+
+  slaytKaydet(s: Slayt): Observable<Slayt> {
+    return s.id
+      ? this.http.put<Slayt>(`/api/yonetim/slider/${s.id}`, s, { headers: this.basliklar() })
+      : this.http.post<Slayt>('/api/yonetim/slider', s, { headers: this.basliklar() });
+  }
+
+  slaytSil(id: number): Observable<void> {
+    return this.http.delete<void>(`/api/yonetim/slider/${id}`, { headers: this.basliklar() });
+  }
+
+  kisayollar(): Observable<Kisayol[]> {
+    return this.http.get<Kisayol[]>('/api/yonetim/kisayollar/liste', { headers: this.basliklar() });
+  }
+
+  kisayolKaydet(k: Kisayol): Observable<Kisayol> {
+    return k.id
+      ? this.http.put<Kisayol>(`/api/yonetim/kisayollar/${k.id}`, k, { headers: this.basliklar() })
+      : this.http.post<Kisayol>('/api/yonetim/kisayollar', k, { headers: this.basliklar() });
+  }
+
+  kisayolSil(id: number): Observable<void> {
+    return this.http.delete<void>(`/api/yonetim/kisayollar/${id}`, { headers: this.basliklar() });
   }
 
   private basliklar(): HttpHeaders {
