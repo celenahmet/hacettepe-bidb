@@ -78,8 +78,14 @@ app.use((_req, res, next) => {
  */
 app.use((req, res, next) => {
   const yol = req.path.replace(/\/+$/, '') || req.path;
-  // Kaynak sitede bazı adresler büyük harfliydi (/tr/VPN). Adresler küçük
-  // harfe indirgenir; tek bir sayfanın tek bir adresi olur.
+
+  // Yalnızca içerik sayfaları yönlendirilir. Varlık dosyalarının adında
+  // büyük harf bulunur (styles-CYIGEJUB.css gibi); onlara dokunulmazsa
+  // tarayıcı CSS ve JavaScript dosyalarını alamaz.
+  if (!/^\/(tr|en)(\/|$)/i.test(yol)) return next();
+
+  // Kaynak sitede bazı adresler büyük harfliydi (/tr/VPN). Sayfa adresleri
+  // küçük harfe indirgenir; tek bir sayfanın tek bir adresi olur.
   const kucuk = yol.toLowerCase();
   // Ana sayfa içeriği hem /tr hem /tr/home adresinden erişilebilirdi.
   // Aynı içeriğin iki adresi olması arama motorlarında bölünmeye yol açar;

@@ -90,6 +90,26 @@ async function durum(u) {
   [...disKaynak].slice(0, 10).forEach((x) => console.log("        " + x));
   rapor.push(["kaynak sunucu bağımlılığı", disKaynak.size, disKaynak.size]);
 
+  /* ---------- varlık dosyaları doğru türde mi ---------- */
+
+  // Durum kodu 200 olsa da yanlış içerik dönebilir: bir yönlendirme kuralı
+  // CSS/JS isteklerini sayfaya çevirirse tarayıcı dosyayı reddeder ve site
+  // stilsiz/çalışmaz hâle gelir. Bu yüzden içerik türü de denetlenir.
+  const anaHtml = await (await fetch(SITE + "/tr")).text();
+  const varliklar = [...anaHtml.matchAll(/(?:src|href)="([^"]+\.(?:js|css))"/g)].map((m) => m[1]);
+  const yanlisTur = [];
+  for (const v of new Set(varliklar)) {
+    const u = SITE + (v.startsWith("/") ? v : "/" + v);
+    const y = await fetch(u);
+    const tur = y.headers.get("content-type") || "";
+    const bekleniyor = v.endsWith(".css") ? "text/css" : "javascript";
+    if (!y.ok || !tur.includes(bekleniyor)) yanlisTur.push(v + " -> " + y.status + " " + tur);
+  }
+  console.log(bicim(new Set(varliklar).size) + "  " + "CSS/JS dosyası".padEnd(30) +
+    (yanlisTur.length ? "✗ " + yanlisTur.length + " YANLIŞ TÜR" : "✓ doğru türde"));
+  yanlisTur.forEach((x) => console.log("        " + x));
+  rapor.push(["varlık türü", varliklar.length, yanlisTur.length]);
+
   /* ---------- diğer kontroller ---------- */
   console.log("");
   const ekstra = [
