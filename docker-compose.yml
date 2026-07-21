@@ -41,6 +41,9 @@ services:
       SPRING_DATASOURCE_USERNAME: bidb
       SPRING_DATASOURCE_PASSWORD: bidb
       SPRING_PROFILES_ACTIVE: docker
+      # Yönetim uçları için kimlik bilgileri (üretimde mutlaka değiştirilmeli)
+      BIDB_YONETICI_KULLANICI: ${BIDB_YONETICI_KULLANICI:-yonetici}
+      BIDB_YONETICI_PAROLA: ${BIDB_YONETICI_PAROLA:-degistir-beni}
     ports:
       # 8080 geliştirme makinesinde başka bir servis tarafından kullanılabildiği için
       # dışarıya 8081 açılır; kap içi haberleşme yine 8080 üzerindendir.

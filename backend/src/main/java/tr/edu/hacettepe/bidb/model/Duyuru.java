@@ -41,4 +41,12 @@ public class Duyuru {
     public boolean isOneCikan() { return oneCikan; }
     public boolean isYayinda() { return yayinda; }
     public String getDisAdres() { return disAdres; }
+
+    public void setDil(String dil) { this.dil = dil; }
+    public void setBaslik(String baslik) { this.baslik = baslik; }
+    public void setOzet(String ozet) { this.ozet = ozet; }
+    public void setYayinTarihi(java.time.LocalDate yayinTarihi) { this.yayinTarihi = yayinTarihi; }
+    public void setOneCikan(boolean oneCikan) { this.oneCikan = oneCikan; }
+    public void setYayinda(boolean yayinda) { this.yayinda = yayinda; }
+    public void setDisAdres(String disAdres) { this.disAdres = disAdres; }
 }

@@ -34,5 +34,8 @@ management:
 
 # Geliştirmede Angular (4200) farklı porttan çağırır
 bidb:
+  yonetici:
+    kullanici: ${BIDB_YONETICI_KULLANICI:yonetici}
+    parola: ${BIDB_YONETICI_PAROLA:}
   cors:
     izinli-adresler: ${BIDB_CORS:http://localhost:4200,http://127.0.0.1:4200}
