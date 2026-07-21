@@ -1,17 +1,17 @@
 import { Component, Input, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
-import { Api } from '../cekirdek/api';
-import { Dil } from '../cekirdek/modeller';
+import { Api } from '../core/api.service';
+import { Language } from '../core/models';
 
 /** Sol menü. Bölümler API'den gelir; açılır-kapanır çalışır. */
 @Component({
-  selector: 'bidb-sol-menu',
+  selector: 'bidb-side-menu',
   imports: [RouterLink, RouterLinkActive, AsyncPipe],
   template: `
     <nav class="sol-menu" [attr.aria-label]="dil === 'en' ? 'Section menu' : 'Bölüm menüsü'">
       <a class="sol-menu-ana" [routerLink]="['/', dil]">
-        {{ dil === 'en' ? 'Home Page' : 'Ana Sayfa' }}
+        {{ dil === 'en' ? 'Home Page' : 'Ana Page' }}
       </a>
 
       @for (m of menuler$ | async; track m.baslik) {
@@ -33,12 +33,12 @@ import { Dil } from '../cekirdek/modeller';
     </nav>
   `
 })
-export class SolMenu {
-  @Input({ required: true }) set dilDegeri(d: Dil) {
+export class SideMenuComponent {
+  @Input({ required: true }) set dilDegeri(d: Language) {
     this.dil = d;
     this.menuler$ = this.api.menu(d);
   }
-  protected dil: Dil = 'tr';
+  protected dil: Language = 'tr';
   private api = inject(Api);
   protected menuler$ = this.api.menu('tr');
 }

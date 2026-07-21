@@ -1,22 +1,22 @@
 import { Component, inject, signal } from '@angular/core';
 import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { UstSerit } from './duzen/ust-serit';
-import { AltBilgi } from './duzen/alt-bilgi';
-import { Dil } from './cekirdek/modeller';
+import { HeaderComponent } from './layout/header.component';
+import { FooterComponent } from './layout/footer.component';
+import { Language } from './core/models';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, UstSerit, AltBilgi],
+  imports: [RouterOutlet, HeaderComponent, FooterComponent],
   template: `
-    <bidb-ust-serit [dil]="dil()"></bidb-ust-serit>
+    <bidb-header [dil]="dil()"></bidb-header>
     <router-outlet></router-outlet>
-    <bidb-alt-bilgi [dil]="dil()"></bidb-alt-bilgi>
+    <bidb-footer [dil]="dil()"></bidb-footer>
   `
 })
 export class App {
   private router = inject(Router);
-  protected dil = signal<Dil>('tr');
+  protected dil = signal<Language>('tr');
 
   constructor() {
     this.dilAyarla(this.router.url);

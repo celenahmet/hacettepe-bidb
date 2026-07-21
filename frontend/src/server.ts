@@ -8,7 +8,7 @@ import express from 'express';
 import compression from 'compression';
 import { join } from 'node:path';
 import { readdirSync } from 'node:fs';
-import { ESKI_YOLLAR } from './eski-yollar';
+import { LEGACY_ROUTES } from './legacy-routes';
 
 const browserDistFolder = join(import.meta.dirname, '../browser');
 
@@ -127,7 +127,7 @@ app.use(async (req, res, next) => {
   const anaSayfa = kucuk.match(/^\/(tr|en)\/home$/);
   const hedef = anaSayfa
     ? '/' + anaSayfa[1]
-    : ESKI_YOLLAR[kucuk] ?? panelYonlendirmeleri.get(kucuk) ?? (kucuk !== yol ? kucuk : undefined);
+    : LEGACY_ROUTES[kucuk] ?? panelYonlendirmeleri.get(kucuk) ?? (kucuk !== yol ? kucuk : undefined);
   if (!hedef) return next();
   const sorgu = req.originalUrl.slice(req.path.length);   // ?a=b kısmı korunur
   res.redirect(301, hedef + sorgu);

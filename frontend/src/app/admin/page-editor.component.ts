@@ -1,7 +1,7 @@
 import { Component, inject, input, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { BelgeYonetim, SayfaYonetim, Surum, YonetimApi } from './yonetim-api';
+import { AdminDocument, AdminPage, Revision, AdminApiService } from './admin-api.service';
 
 /**
  * Bir sayfanın tüm düzenlenebilir yönleri: metin, adres, belgeler ve
@@ -12,7 +12,7 @@ import { BelgeYonetim, SayfaYonetim, Surum, YonetimApi } from './yonetim-api';
  * değişiklik geri alınabilir.
  */
 @Component({
-  selector: 'bidb-sayfa-duzenle',
+  selector: 'bidb-page-editor',
   imports: [FormsModule],
   template: `
     <div class="duzenleyici">
@@ -37,7 +37,7 @@ import { BelgeYonetim, SayfaYonetim, Surum, YonetimApi } from './yonetim-api';
           Her kayıtta önceki hâl sürüm geçmişine eklenir.
         </p>
 
-        <label for="metin">Sayfa metni</label>
+        <label for="metin">Page metni</label>
         <textarea id="metin" name="metin" rows="18" class="kod"
                   [ngModel]="metin()" (ngModelChange)="metin.set($event)"></textarea>
 
@@ -58,7 +58,7 @@ import { BelgeYonetim, SayfaYonetim, Surum, YonetimApi } from './yonetim-api';
           </section>
         }
       } @else if (bolum() === 'adres') {
-        <label for="sbaslik2">Sayfa başlığı</label>
+        <label for="sbaslik2">Page başlığı</label>
         <input id="sbaslik2" name="sbaslik2" [ngModel]="yeniBaslik()" (ngModelChange)="yeniBaslik.set($event)">
 
         <label for="sslug">Adres</label>
@@ -99,7 +99,7 @@ import { BelgeYonetim, SayfaYonetim, Surum, YonetimApi } from './yonetim-api';
           </tbody>
         </table>
 
-        <button type="button" (click)="belgeEkle()">Belge satırı ekle</button>
+        <button type="button" (click)="belgeEkle()">Document satırı ekle</button>
       } @else {
         <p class="aciklama">
           En üstteki en yeni kayıttır. Bir sürüme dönmeden önce mevcut hâl de
@@ -138,11 +138,11 @@ import { BelgeYonetim, SayfaYonetim, Surum, YonetimApi } from './yonetim-api';
     .yonetim-tablo input { width: 100%; }
   `]
 })
-export class SayfaDuzenle {
-  private api = inject(YonetimApi);
+export class PageEditorComponent {
+  private api = inject(AdminApiService);
   private temizleyici = inject(DomSanitizer);
 
-  sayfa = input.required<SayfaYonetim>();
+  sayfa = input.required<AdminPage>();
   kapat = output<void>();
   degisti = output<void>();
 
@@ -157,8 +157,8 @@ export class SayfaDuzenle {
   protected yeniBaslik = signal('');
   protected yeniSlug = signal('');
 
-  protected belgeler = signal<BelgeYonetim[]>([]);
-  protected surumler = signal<Surum[]>([]);
+  protected belgeler = signal<AdminDocument[]>([]);
+  protected surumler = signal<Revision[]>([]);
   protected yukleniyor = signal(false);
 
   ngOnInit(): void {
@@ -199,7 +199,7 @@ export class SayfaDuzenle {
       next: () => {
         this.onizlendi.set(false);
         this.not.set('');
-        this.bildir('Sayfa yayınlandı. Önceki hâli sürüm geçmişinde.');
+        this.bildir('Page yayınlandı. Önceki hâli sürüm geçmişinde.');
         this.degisti.emit();
       },
       error: () => this.bildir('Kaydedilemedi.')
@@ -218,7 +218,7 @@ export class SayfaDuzenle {
   protected sayfaSil(): void {
     if (!confirm(`"${this.sayfa().baslik}" sayfası silinecek. Emin misiniz?`)) return;
     this.api.sayfaSil(this.sayfa().id).subscribe({
-      next: () => { this.bildir('Sayfa silindi.'); this.degisti.emit(); this.kapat.emit(); },
+      next: () => { this.bildir('Page silindi.'); this.degisti.emit(); this.kapat.emit(); },
       error: () => this.bildir('Silinemedi.')
     });
   }
@@ -230,25 +230,25 @@ export class SayfaDuzenle {
     this.api.belgeler(this.sayfa().id).subscribe((l) => this.belgeler.set(l));
   }
 
-  protected belgeAlan(b: BelgeYonetim, alan: keyof BelgeYonetim, deger: unknown): void {
-    this.belgeler.update((l) => l.map((x) => (x === b ? { ...x, [alan]: deger } as BelgeYonetim : x)));
+  protected belgeAlan(b: AdminDocument, alan: keyof AdminDocument, deger: unknown): void {
+    this.belgeler.update((l) => l.map((x) => (x === b ? { ...x, [alan]: deger } as AdminDocument : x)));
   }
 
   protected belgeEkle(): void {
     this.belgeler.update((l) => [...l, { id: null, ad: '', adres: '', sira: l.length }]);
   }
 
-  protected belgeKaydet(b: BelgeYonetim): void {
+  protected belgeKaydet(b: AdminDocument): void {
     this.api.belgeKaydet(this.sayfa().id, b).subscribe({
-      next: () => { this.bildir('Belge kaydedildi.'); this.belgeBolumu(); },
+      next: () => { this.bildir('Document kaydedildi.'); this.belgeBolumu(); },
       error: () => this.bildir('Kaydedilemedi.')
     });
   }
 
-  protected belgeSil(b: BelgeYonetim): void {
+  protected belgeSil(b: AdminDocument): void {
     if (!b.id) { this.belgeler.update((l) => l.filter((x) => x !== b)); return; }
     this.api.belgeSil(b.id).subscribe({
-      next: () => { this.belgeler.update((l) => l.filter((x) => x !== b)); this.bildir('Belge silindi.'); },
+      next: () => { this.belgeler.update((l) => l.filter((x) => x !== b)); this.bildir('Document silindi.'); },
       error: () => this.bildir('Silinemedi.')
     });
   }
@@ -280,11 +280,11 @@ export class SayfaDuzenle {
     this.api.surumler(this.sayfa().id).subscribe((l) => this.surumler.set(l));
   }
 
-  protected geriAl(s: Surum): void {
-    if (!confirm('Sayfa bu sürüme döndürülecek. Mevcut hâli yine de saklanacak. Devam edilsin mi?')) return;
+  protected geriAl(s: Revision): void {
+    if (!confirm('Page bu sürüme döndürülecek. Mevcut hâli yine de saklanacak. Devam edilsin mi?')) return;
     this.api.geriAl(this.sayfa().id, s.id).subscribe({
       next: () => {
-        this.bildir('Sayfa bu sürüme döndürüldü.');
+        this.bildir('Page bu sürüme döndürüldü.');
         this.api.sayfaTam(this.sayfa().dil, this.sayfa().slug)
           .subscribe((tam) => this.metin.set(tam?.icerikHtml ?? ''));
         this.surumBolumu();

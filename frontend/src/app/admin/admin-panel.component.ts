@@ -1,11 +1,11 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { SayfaDuzenle } from './sayfa-duzenle';
-import { DuyuruYonetim, Kisayol, MenuOgeYonetim, MenuYonetim, SayfaYonetim, Slayt, SosyalHesapYonetim, YonetimApi } from './yonetim-api';
+import { PageEditorComponent } from './page-editor.component';
+import { AdminNews, Shortcut, AdminMenuItem, AdminMenu, AdminPage, Slide, AdminSocialAccount, AdminApiService } from './admin-api.service';
 
 /** Alt bilgide görünen kurum bilgileri. */
-interface IletisimBilgi extends Record<string, string> {
+interface ContactInfo extends Record<string, string> {
   iletisim_adres: string;
   iletisim_telefon: string;
   iletisim_eposta: string;
@@ -14,8 +14,8 @@ interface IletisimBilgi extends Record<string, string> {
 
 /** Yönetim paneli: giriş, sayfa SEO düzenleme ve duyuru yönetimi. */
 @Component({
-  selector: 'bidb-yonetim-panel',
-  imports: [FormsModule, SayfaDuzenle],
+  selector: 'bidb-admin-panel',
+  imports: [FormsModule, PageEditorComponent],
   template: `
     <div class="kap yonetim">
       @if (!api.girisYapildi()) {
@@ -78,7 +78,7 @@ interface IletisimBilgi extends Record<string, string> {
             <form class="duyuru-form" (ngSubmit)="yeniSayfaKaydet()">
               <h2>Yeni sayfa</h2>
 
-              <label for="ysdil">Dil</label>
+              <label for="ysdil">Language</label>
               <select id="ysdil" name="ysdil" [ngModel]="ys.dil"
                       (ngModelChange)="yeniSayfaAlan('dil', $event)">
                 <option value="tr">Türkçe</option>
@@ -93,7 +93,7 @@ interface IletisimBilgi extends Record<string, string> {
               <input id="ysslug" name="ysslug" [ngModel]="ys.slug"
                      (ngModelChange)="yeniSayfaAlan('slug', $event)" required>
               <p class="aciklama">
-                Sayfa adresi: <code>{{ SITE }}/{{ ys.dil }}/{{ adresOnizleme(ys.slug) }}</code>
+                Page adresi: <code>{{ SITE }}/{{ ys.dil }}/{{ adresOnizleme(ys.slug) }}</code>
               </p>
 
               <span class="dugmeler">
@@ -105,7 +105,7 @@ interface IletisimBilgi extends Record<string, string> {
 
           <table class="yonetim-tablo">
             <thead>
-              <tr><th>Sayfa</th><th>Dil</th><th>İçerik</th><th>Yayında</th><th></th></tr>
+              <tr><th>Page</th><th>Language</th><th>İçerik</th><th>Yayında</th><th></th></tr>
             </thead>
             <tbody>
               @for (s of sayfalar(); track s.id) {
@@ -123,7 +123,7 @@ interface IletisimBilgi extends Record<string, string> {
                 @if (acikSayfa()?.id === s.id) {
                   <tr class="duzenleme">
                     <td colspan="5">
-                      <bidb-sayfa-duzenle [sayfa]="s" (kapat)="acikSayfa.set(null)"
+                      <bidb-page-editor [sayfa]="s" (kapat)="acikSayfa.set(null)"
                                           (degisti)="sayfalariTazele()" />
                     </td>
                   </tr>
@@ -213,7 +213,7 @@ interface IletisimBilgi extends Record<string, string> {
             <input id="dadres" name="disAdres" [ngModel]="duyuru().disAdres"
                    (ngModelChange)="duyuruAlan('disAdres', $event)">
 
-            <label for="ddil">Dil</label>
+            <label for="ddil">Language</label>
             <select id="ddil" name="dil" [ngModel]="duyuru().dil" (ngModelChange)="duyuruAlan('dil', $event)">
               <option value="tr">Türkçe</option>
               <option value="en">İngilizce</option>
@@ -241,7 +241,7 @@ interface IletisimBilgi extends Record<string, string> {
           </form>
 
           <table class="yonetim-tablo">
-            <thead><tr><th>Tarih</th><th>Görsel</th><th>Başlık</th><th>Adres</th><th>Dil</th><th></th></tr></thead>
+            <thead><tr><th>Tarih</th><th>Görsel</th><th>Başlık</th><th>Adres</th><th>Language</th><th></th></tr></thead>
             <tbody>
               @for (d of duyurular(); track d.id) {
                 <tr>
@@ -270,7 +270,7 @@ interface IletisimBilgi extends Record<string, string> {
 
           @if (slayt(); as sl) {
             <form class="duyuru-form" (ngSubmit)="slaytKaydet()">
-              <h2>{{ sl.id ? 'Slaytı düzenle' : 'Yeni slayt' }}</h2>
+              <h2>{{ sl.id ? 'Slideı düzenle' : 'Yeni slayt' }}</h2>
               <label for="sbaslik">Başlık</label>
               <input id="sbaslik" name="sbaslik" [ngModel]="sl.baslik" (ngModelChange)="slaytAlan('baslik', $event)">
               <label for="sgorsel">Görsel adresi</label>
@@ -287,7 +287,7 @@ interface IletisimBilgi extends Record<string, string> {
           }
 
           <table class="yonetim-tablo">
-            <thead><tr><th>Sıra</th><th>Başlık</th><th>Görsel</th><th>Dil</th><th></th></tr></thead>
+            <thead><tr><th>Sıra</th><th>Başlık</th><th>Görsel</th><th>Language</th><th></th></tr></thead>
             <tbody>
               @for (sl of slaytlar(); track sl.id) {
                 <tr>
@@ -310,7 +310,7 @@ interface IletisimBilgi extends Record<string, string> {
               <label for="metiket">Etiket</label>
               <input id="metiket" name="metiket" [ngModel]="md.oge.etiket" (ngModelChange)="ogeAlan('etiket', $event)" required>
 
-              <label for="msayfa">Sayfa (iç bağlantı)</label>
+              <label for="msayfa">Page (iç bağlantı)</label>
               <select id="msayfa" name="msayfa" [ngModel]="md.oge.sayfaId" (ngModelChange)="ogeAlan('sayfaId', $event ? +$event : null)">
                 <option [value]="null">— dış bağlantı kullan —</option>
                 @for (sf of sayfalar(); track sf.id) {
@@ -342,7 +342,7 @@ interface IletisimBilgi extends Record<string, string> {
               <h2>{{ mb.id ? 'Bölümü düzenle' : 'Yeni bölüm' }}</h2>
               <label for="bbaslik">Bölüm başlığı</label>
               <input id="bbaslik" name="bbaslik" [ngModel]="mb.baslik" (ngModelChange)="bolumAlan('baslik', $event)" required>
-              <label for="bdil">Dil</label>
+              <label for="bdil">Language</label>
               <select id="bdil" name="bdil" [ngModel]="mb.dil" (ngModelChange)="bolumAlan('dil', $event)">
                 <option value="tr">Türkçe</option>
                 <option value="en">İngilizce</option>
@@ -419,7 +419,7 @@ interface IletisimBilgi extends Record<string, string> {
           </table>
         } @else if (sekme() === 'iletisim') {
           <p class="aciklama">
-            Sayfa altında görünen kurum bilgileri. Birden çok telefon veya
+            Page altında görünen kurum bilgileri. Birden çok telefon veya
             e-posta için aralarına " · " koyabilirsiniz.
           </p>
 
@@ -468,7 +468,7 @@ interface IletisimBilgi extends Record<string, string> {
           }
 
           <table class="yonetim-tablo">
-            <thead><tr><th>Sıra</th><th>Ad</th><th>Adres</th><th>Dil</th><th></th></tr></thead>
+            <thead><tr><th>Sıra</th><th>Ad</th><th>Adres</th><th>Language</th><th></th></tr></thead>
             <tbody>
               @for (ks of kisayollar(); track ks.id) {
                 <tr>
@@ -489,8 +489,8 @@ interface IletisimBilgi extends Record<string, string> {
     </div>
   `
 })
-export class YonetimPanel {
-  protected api = inject(YonetimApi);
+export class AdminPanelComponent {
+  protected api = inject(AdminApiService);
   private temizleyici = inject(DomSanitizer);
 
   protected kullanici = '';
@@ -500,27 +500,27 @@ export class YonetimPanel {
   protected calisiyor = signal(false);
 
   protected sekme = signal<'sayfalar' | 'duyurular' | 'slider' | 'kisayollar' | 'menuler' | 'sosyal' | 'iletisim'>('sayfalar');
-  protected sayfalar = signal<SayfaYonetim[]>([]);
-  protected duyurular = signal<DuyuruYonetim[]>([]);
-  protected secili = signal<SayfaYonetim | null>(null);
-  protected duyuru = signal<DuyuruYonetim>(this.bosDuyuru());
-  protected slaytlar = signal<Slayt[]>([]);
-  protected kisayollar = signal<Kisayol[]>([]);
-  protected slayt = signal<Slayt | null>(null);
-  protected kisayol = signal<Kisayol | null>(null);
-  protected menuler = signal<MenuYonetim[]>([]);
-  protected menuOge = signal<{ menuId: number; oge: MenuOgeYonetim } | null>(null);
+  protected sayfalar = signal<AdminPage[]>([]);
+  protected duyurular = signal<AdminNews[]>([]);
+  protected secili = signal<AdminPage | null>(null);
+  protected duyuru = signal<AdminNews>(this.bosDuyuru());
+  protected slaytlar = signal<Slide[]>([]);
+  protected kisayollar = signal<Shortcut[]>([]);
+  protected slayt = signal<Slide | null>(null);
+  protected kisayol = signal<Shortcut | null>(null);
+  protected menuler = signal<AdminMenu[]>([]);
+  protected menuOge = signal<{ menuId: number; oge: AdminMenuItem } | null>(null);
   protected menuBolum = signal<{ id: number | null; dil: string; konum: string; baslik: string; sira: number } | null>(null);
-  protected sosyalHesaplar = signal<SosyalHesapYonetim[]>([]);
-  protected sosyalHesap = signal<SosyalHesapYonetim | null>(null);
-  protected acikSayfa = signal<SayfaYonetim | null>(null);
+  protected sosyalHesaplar = signal<AdminSocialAccount[]>([]);
+  protected sosyalHesap = signal<AdminSocialAccount | null>(null);
+  protected acikSayfa = signal<AdminPage | null>(null);
   protected gorselYukleniyor = signal(false);
 
   /** Adres önizlemelerinde gösterilen site adresi. */
   protected readonly SITE = 'bidb.hacettepe.edu.tr';
   protected duyuruOnizleme = signal<SafeHtml | null>(null);
   protected yeniSayfa = signal<{ dil: string; slug: string; baslik: string } | null>(null);
-  protected iletisim = signal<IletisimBilgi>({
+  protected iletisim = signal<ContactInfo>({
     iletisim_adres: '', iletisim_telefon: '', iletisim_eposta: '', iletisim_faks: ''
   });
 
@@ -549,17 +549,17 @@ export class YonetimPanel {
     });
   }
 
-  protected duzenle(s: SayfaYonetim): void {
+  protected duzenle(s: AdminPage): void {
     this.secili.set(this.secili()?.id === s.id ? null : { ...s });
   }
 
-  protected alanDegis(alan: keyof SayfaYonetim, deger: unknown): void {
+  protected alanDegis(alan: keyof AdminPage, deger: unknown): void {
     const s = this.secili();
-    if (s) this.secili.set({ ...s, [alan]: deger } as SayfaYonetim);
+    if (s) this.secili.set({ ...s, [alan]: deger } as AdminPage);
   }
 
-  protected duyuruAlan(alan: keyof DuyuruYonetim, deger: unknown): void {
-    this.duyuru.set({ ...this.duyuru(), [alan]: deger } as DuyuruYonetim);
+  protected duyuruAlan(alan: keyof AdminNews, deger: unknown): void {
+    this.duyuru.set({ ...this.duyuru(), [alan]: deger } as AdminNews);
   }
 
   protected seoKaydet(): void {
@@ -593,7 +593,7 @@ export class YonetimPanel {
     });
   }
 
-  protected duyuruSil(d: DuyuruYonetim): void {
+  protected duyuruSil(d: AdminNews): void {
     if (!d.id) return;
     this.api.duyuruSil(d.id).subscribe({
       next: () => {
@@ -604,7 +604,7 @@ export class YonetimPanel {
     });
   }
 
-  protected duyuruDuzenle(d: DuyuruYonetim): void {
+  protected duyuruDuzenle(d: AdminNews): void {
     this.duyuru.set({ ...d });
   }
 
@@ -622,39 +622,39 @@ export class YonetimPanel {
     this.api.kisayollar().subscribe((l) => this.kisayollar.set(l));
   }
 
-  protected slaytDuzenle(s: Slayt | null): void {
+  protected slaytDuzenle(s: Slide | null): void {
     this.slayt.set(s ? { ...s } : { id: null, dil: 'tr', baslik: '', altBaslik: '', gorselUrl: '', gorselAlt: '', baglanti: null, sira: 0, yayinda: true });
   }
 
-  protected slaytAlan(alan: keyof Slayt, deger: unknown): void {
+  protected slaytAlan(alan: keyof Slide, deger: unknown): void {
     const s = this.slayt();
-    if (s) this.slayt.set({ ...s, [alan]: deger } as Slayt);
+    if (s) this.slayt.set({ ...s, [alan]: deger } as Slide);
   }
 
   protected slaytKaydet(): void {
     const s = this.slayt();
     if (!s) return;
     this.api.slaytKaydet(s).subscribe({
-      next: () => { this.slayt.set(null); this.sekmeSlider(); this.mesaj('Slayt kaydedildi.'); },
-      error: () => this.mesaj('Slayt kaydedilemedi.')
+      next: () => { this.slayt.set(null); this.sekmeSlider(); this.mesaj('Slide kaydedildi.'); },
+      error: () => this.mesaj('Slide kaydedilemedi.')
     });
   }
 
-  protected slaytSil(s: Slayt): void {
+  protected slaytSil(s: Slide): void {
     if (!s.id) return;
     this.api.slaytSil(s.id).subscribe({
-      next: () => { this.slaytlar.update((l) => l.filter((x) => x.id !== s.id)); this.mesaj('Slayt silindi.'); },
+      next: () => { this.slaytlar.update((l) => l.filter((x) => x.id !== s.id)); this.mesaj('Slide silindi.'); },
       error: () => this.mesaj('Silinemedi.')
     });
   }
 
-  protected kisayolDuzenle(k: Kisayol | null): void {
+  protected kisayolDuzenle(k: Shortcut | null): void {
     this.kisayol.set(k ? { ...k } : { id: null, dil: 'tr', ad: '', ikonUrl: '', adres: '', yeniSekme: false, sira: 0, yayinda: true });
   }
 
-  protected kisayolAlan(alan: keyof Kisayol, deger: unknown): void {
+  protected kisayolAlan(alan: keyof Shortcut, deger: unknown): void {
     const k = this.kisayol();
-    if (k) this.kisayol.set({ ...k, [alan]: deger } as Kisayol);
+    if (k) this.kisayol.set({ ...k, [alan]: deger } as Shortcut);
   }
 
   protected kisayolKaydet(): void {
@@ -666,7 +666,7 @@ export class YonetimPanel {
     });
   }
 
-  protected kisayolSil(k: Kisayol): void {
+  protected kisayolSil(k: Shortcut): void {
     if (!k.id) return;
     this.api.kisayolSil(k.id).subscribe({
       next: () => { this.kisayollar.update((l) => l.filter((x) => x.id !== k.id)); this.mesaj('Kısayol silindi.'); },
@@ -679,16 +679,16 @@ export class YonetimPanel {
     this.api.menuler().subscribe((l) => this.menuler.set(l));
   }
 
-  protected ogeDuzenle(menuId: number, o: MenuOgeYonetim | null): void {
+  protected ogeDuzenle(menuId: number, o: AdminMenuItem | null): void {
     this.menuOge.set({
       menuId,
       oge: o ? { ...o } : { id: null, etiket: '', sayfaId: null, sayfaYolu: null, disAdres: '', yeniSekme: false, sira: 0 }
     });
   }
 
-  protected ogeAlan(alan: keyof MenuOgeYonetim, deger: unknown): void {
+  protected ogeAlan(alan: keyof AdminMenuItem, deger: unknown): void {
     const d = this.menuOge();
-    if (d) this.menuOge.set({ menuId: d.menuId, oge: { ...d.oge, [alan]: deger } as MenuOgeYonetim });
+    if (d) this.menuOge.set({ menuId: d.menuId, oge: { ...d.oge, [alan]: deger } as AdminMenuItem });
   }
 
   protected ogeKaydet(): void {
@@ -700,7 +700,7 @@ export class YonetimPanel {
     });
   }
 
-  protected ogeSil(o: MenuOgeYonetim): void {
+  protected ogeSil(o: AdminMenuItem): void {
     if (!o.id) return;
     this.api.menuOgeSil(o.id).subscribe({
       next: () => { this.sekmeMenu(); this.mesaj('Bağlantı silindi.'); },
@@ -713,13 +713,13 @@ export class YonetimPanel {
     this.api.sosyalHesaplar().subscribe((l) => this.sosyalHesaplar.set(l));
   }
 
-  protected sosyalDuzenle(s: SosyalHesapYonetim | null): void {
+  protected sosyalDuzenle(s: AdminSocialAccount | null): void {
     this.sosyalHesap.set(s ? { ...s } : { id: null, ag: '', adres: '', sira: 0, yayinda: true });
   }
 
-  protected sosyalAlan(alan: keyof SosyalHesapYonetim, deger: unknown): void {
+  protected sosyalAlan(alan: keyof AdminSocialAccount, deger: unknown): void {
     const s = this.sosyalHesap();
-    if (s) this.sosyalHesap.set({ ...s, [alan]: deger } as SosyalHesapYonetim);
+    if (s) this.sosyalHesap.set({ ...s, [alan]: deger } as AdminSocialAccount);
   }
 
   protected sosyalKaydet(): void {
@@ -731,7 +731,7 @@ export class YonetimPanel {
     });
   }
 
-  protected sosyalSil(s: SosyalHesapYonetim): void {
+  protected sosyalSil(s: AdminSocialAccount): void {
     if (!s.id) return;
     this.api.sosyalSil(s.id).subscribe({
       next: () => { this.sosyalHesaplar.update((l) => l.filter((x) => x.id !== s.id)); this.mesaj('Hesap silindi.'); },
@@ -739,7 +739,7 @@ export class YonetimPanel {
     });
   }
 
-  protected bolumDuzenle(m: MenuYonetim | null): void {
+  protected bolumDuzenle(m: AdminMenu | null): void {
     this.menuBolum.set(m
       ? { id: m.id, dil: m.dil, konum: m.konum, baslik: m.baslik, sira: m.sira }
       : { id: null, dil: 'tr', konum: 'sol', baslik: '', sira: 0 });
@@ -759,7 +759,7 @@ export class YonetimPanel {
     });
   }
 
-  protected bolumSil(m: MenuYonetim): void {
+  protected bolumSil(m: AdminMenu): void {
     this.api.menuBolumSil(m.id).subscribe({
       next: () => { this.sekmeMenu(); this.mesaj('Menü bölümü silindi.'); },
       error: () => this.mesaj('Silinemedi.')
@@ -767,7 +767,7 @@ export class YonetimPanel {
   }
 
   /** Sayfanın tüm düzenlenebilir yönlerini açar. */
-  protected sayfaAc(s: SayfaYonetim): void {
+  protected sayfaAc(s: AdminPage): void {
     this.secili.set(null);
     this.acikSayfa.set(this.acikSayfa()?.id === s.id ? null : s);
   }
@@ -802,7 +802,7 @@ export class YonetimPanel {
             this.secili.set({ ...yeni });
           }
         });
-        this.mesaj('Sayfa oluşturuldu. Metnini ve arama motoru bilgilerini şimdi girebilirsiniz.');
+        this.mesaj('Page oluşturuldu. Metnini ve arama motoru bilgilerini şimdi girebilirsiniz.');
       },
       error: (e) => this.mesaj(typeof e?.error === 'string' ? e.error : 'Oluşturulamadı.')
     });
@@ -847,13 +847,13 @@ export class YonetimPanel {
   protected sekmeIletisim(): void {
     this.sekme.set('iletisim');
     this.api.ayarlar().subscribe((l) => {
-      const m = { ...this.iletisim() } as IletisimBilgi;
-      l.filter((a) => a.dil === 'tr').forEach((a) => (m[a.anahtar as keyof IletisimBilgi] = a.deger));
+      const m = { ...this.iletisim() } as ContactInfo;
+      l.filter((a) => a.dil === 'tr').forEach((a) => (m[a.anahtar as keyof ContactInfo] = a.deger));
       this.iletisim.set(m);
     });
   }
 
-  protected iletisimAlan(anahtar: keyof IletisimBilgi, deger: unknown): void {
+  protected iletisimAlan(anahtar: keyof ContactInfo, deger: unknown): void {
     this.iletisim.set({ ...this.iletisim(), [anahtar]: deger as string });
   }
 
@@ -883,7 +883,7 @@ export class YonetimPanel {
     });
   }
 
-  private bosDuyuru(): DuyuruYonetim {
+  private bosDuyuru(): AdminNews {
     return {
       id: null,
       dil: 'tr',

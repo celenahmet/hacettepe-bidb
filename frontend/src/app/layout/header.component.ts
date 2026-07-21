@@ -1,12 +1,12 @@
 import { Component, Input, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
-import { Api } from '../cekirdek/api';
-import { Dil } from '../cekirdek/modeller';
+import { Api } from '../core/api.service';
+import { Language } from '../core/models';
 
 /** Logo, sosyal medya bağlantıları ve dil değiştirici. */
 @Component({
-  selector: 'bidb-ust-serit',
+  selector: 'bidb-header',
   imports: [RouterLink, AsyncPipe],
   template: `
     <a class="atla" href="#ana-icerik">{{ dil === 'en' ? 'Skip to content' : 'İçeriğe atla' }}</a>
@@ -42,8 +42,8 @@ import { Dil } from '../cekirdek/modeller';
     </header>
   `
 })
-export class UstSerit {
-  @Input({ required: true }) dil!: Dil;
+export class HeaderComponent {
+  @Input({ required: true }) dil!: Language;
   private api = inject(Api);
   protected sosyal$ = this.api.sosyal('tr');
 }

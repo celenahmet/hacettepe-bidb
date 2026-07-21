@@ -4,9 +4,9 @@ import { HttpClient } from '@angular/common/http';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { switchMap, tap } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { SolMenu } from '../duzen/sol-menu';
-import { Dil } from '../cekirdek/modeller';
-import { Seo } from '../cekirdek/seo';
+import { SideMenuComponent } from '../layout/side-menu.component';
+import { Language } from '../core/models';
+import { Seo } from '../core/seo.service';
 
 interface Haber {
   id: number;
@@ -22,11 +22,11 @@ interface Haber {
 
 /** Görselli haber sayfası: /tr/duyuru/<slug> */
 @Component({
-  selector: 'bidb-haber-sayfasi',
-  imports: [SolMenu, RouterLink],
+  selector: 'bidb-news-page',
+  imports: [SideMenuComponent, RouterLink],
   template: `
     <div class="kap sayfa-duzen">
-      <bidb-sol-menu [dilDegeri]="dil()" />
+      <bidb-side-menu [dilDegeri]="dil()" />
 
       <div class="icerik-alani">
         @if (haber(); as h) {
@@ -53,7 +53,7 @@ interface Haber {
             }
           </article>
         } @else {
-          <h1 class="sayfa-baslik">{{ dil() === 'en' ? 'Page not found' : 'Sayfa bulunamadı' }}</h1>
+          <h1 class="sayfa-baslik">{{ dil() === 'en' ? 'Page not found' : 'Page bulunamadı' }}</h1>
           <p><a [routerLink]="['/', dil()]">{{ dil() === 'en' ? 'Home page' : 'Ana sayfa' }}</a></p>
         }
       </div>
@@ -67,19 +67,19 @@ interface Haber {
     .haber-ek { margin-top: 24px; padding-top: 14px; border-top: 1px solid var(--cizgi); }
   `]
 })
-export class HaberSayfasi {
+export class NewsPageComponent {
   private rota = inject(ActivatedRoute);
   private http = inject(HttpClient);
   private seo = inject(Seo);
   private temizleyici = inject(DomSanitizer);
 
-  protected dil = signal<Dil>('tr');
+  protected dil = signal<Language>('tr');
   protected govde = signal<SafeHtml | null>(null);
 
   protected haber = toSignal(
     this.rota.paramMap.pipe(
       switchMap((p) => {
-        const dil = (p.get('dil') as Dil) ?? 'tr';
+        const dil = (p.get('dil') as Language) ?? 'tr';
         const slug = p.get('slug') ?? '';
         this.dil.set(dil);
         return this.http.get<Haber>(`/api/${dil}/duyuru/${slug}`).pipe(

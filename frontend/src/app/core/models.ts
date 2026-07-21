@@ -1,12 +1,12 @@
 /** Backend'den gelen veri yapıları. */
 
-export interface Belge {
+export interface Document {
   ad: string;
   adres: string;
   tur: string | null;
 }
 
-export interface Sayfa {
+export interface Page {
   slug: string;
   dil: string;
   baslik: string;
@@ -14,12 +14,12 @@ export interface Sayfa {
   seoTitle: string | null;
   seoDescription: string | null;
   seoKeywords: string | null;
-  belgeler: Belge[];
+  belgeler: Document[];
   /** Diğer dilde karşılığı var mı (hreflang için) */
   cevirisiVar?: boolean;
 }
 
-export interface MenuOge {
+export interface MenuItem {
   etiket: string;
   adres: string;
   yeniSekme: boolean;
@@ -27,10 +27,10 @@ export interface MenuOge {
 
 export interface Menu {
   baslik: string;
-  ogeler: MenuOge[];
+  ogeler: MenuItem[];
 }
 
-export interface Slayt {
+export interface Slide {
   baslik: string | null;
   altBaslik: string | null;
   gorselUrl: string;
@@ -38,19 +38,19 @@ export interface Slayt {
   baglanti: string | null;
 }
 
-export interface SosyalHesap {
+export interface SocialAccount {
   ag: string;
   adres: string;
 }
 
-export interface Kisayol {
+export interface Shortcut {
   ad: string;
   ikonUrl: string | null;
   adres: string;
   yeniSekme: boolean;
 }
 
-export interface DuyuruOzet {
+export interface NewsSummary {
   baslik: string;
   tarih: string;
   adres: string | null;
@@ -62,11 +62,11 @@ export interface DuyuruOzet {
 }
 
 /** Ana sayfanın tüm bileşenleri tek istekte gelir. */
-export interface AnaSayfaVerisi {
-  slider: Slayt[];
-  kisayollar: Kisayol[];
-  servisler: Kisayol[];
-  duyurular: DuyuruOzet[];
+export interface HomeData {
+  slider: Slide[];
+  kisayollar: Shortcut[];
+  servisler: Shortcut[];
+  duyurular: NewsSummary[];
 }
 
-export type Dil = 'tr' | 'en';
+export type Language = 'tr' | 'en';

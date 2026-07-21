@@ -1,7 +1,7 @@
 import { Component, Input, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { RouterLink } from '@angular/router';
-import { Dil } from '../cekirdek/modeller';
+import { Language } from '../core/models';
 
 /**
  * Sayfa altı: adres, telefon ve yasal bağlantılar.
@@ -11,7 +11,7 @@ import { Dil } from '../cekirdek/modeller';
  * bilgiler ilk yanıtın HTML'inde yer alır.
  */
 @Component({
-  selector: 'bidb-alt-bilgi',
+  selector: 'bidb-footer',
   imports: [RouterLink],
   template: `
     <footer class="alt">
@@ -51,8 +51,8 @@ import { Dil } from '../cekirdek/modeller';
     </footer>
   `
 })
-export class AltBilgi {
-  @Input({ required: true }) dil!: Dil;
+export class FooterComponent {
+  @Input({ required: true }) dil!: Language;
 
   private http = inject(HttpClient);
 

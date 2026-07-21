@@ -2,16 +2,16 @@ import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { switchMap, tap } from 'rxjs/operators';
-import { Api } from '../cekirdek/api';
-import { Seo } from '../cekirdek/seo';
-import { Dil } from '../cekirdek/modeller';
+import { Api } from '../core/api.service';
+import { Seo } from '../core/seo.service';
+import { Language } from '../core/models';
 import { RouterLink } from '@angular/router';
-import { SolMenu } from '../duzen/sol-menu';
+import { SideMenuComponent } from '../layout/side-menu.component';
 
 /** Ana sayfa: slider, kısayollar, duyurular ve servisler. */
 @Component({
-  selector: 'bidb-ana-sayfa',
-  imports: [SolMenu, AsyncPipe, DatePipe, RouterLink],
+  selector: 'bidb-home-page',
+  imports: [SideMenuComponent, AsyncPipe, DatePipe, RouterLink],
   template: `
     @if (veri$ | async; as v) {
       <section class="slider" [attr.aria-label]="metin('Öne çıkanlar', 'Featured')">
@@ -32,7 +32,7 @@ import { SolMenu } from '../duzen/sol-menu';
 
       <div class="kap sayfa-duzen">
         <aside class="yan">
-          <bidb-sol-menu [dilDegeri]="dil()"></bidb-sol-menu>
+          <bidb-side-menu [dilDegeri]="dil()"></bidb-side-menu>
         </aside>
 
         <main id="ana-icerik" class="icerik-alani">
@@ -103,20 +103,20 @@ import { SolMenu } from '../duzen/sol-menu';
     }
   `
 })
-export class AnaSayfa {
+export class HomePageComponent {
   private rota = inject(ActivatedRoute);
   private api = inject(Api);
   private seo = inject(Seo);
 
-  protected dil = signal<Dil>('tr');
+  protected dil = signal<Language>('tr');
 
   protected veri$ = this.rota.paramMap.pipe(
     tap((p) => {
-      const dil = (p.get('dil') as Dil) ?? 'tr';
+      const dil = (p.get('dil') as Language) ?? 'tr';
       this.dil.set(dil);
       this.seo.uygula(null, dil, `/${dil}`);
     }),
-    switchMap((p) => this.api.anaSayfa((p.get('dil') as Dil) ?? 'tr'))
+    switchMap((p) => this.api.anaSayfa((p.get('dil') as Language) ?? 'tr'))
   );
 
   protected metin(tr: string, en: string): string {

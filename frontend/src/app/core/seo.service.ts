@@ -1,9 +1,9 @@
 import { Injectable, inject } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
-import { Dil, Sayfa } from './modeller';
+import { Language, Page } from './models';
 
-const SITE_ADI = {
+const SITE_NAME = {
   tr: 'Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı',
   en: 'Hacettepe University Department of Information Technology'
 };
@@ -11,7 +11,7 @@ const SITE_ADI = {
 /** Kaynak sitede her sayfada tekrarlanan, sayfaya özgü olmayan başlıklar.
  *  Bunlar görüldüğünde sayfa adından başlık üretilir; aksi hâlde onlarca
  *  sayfa arama sonuçlarında aynı başlıkla görünür. */
-const KAYNAK_GENEL_BASLIK = [
+const GENERIC_SOURCE_TITLES = [
   'Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı',
   'Hacettepe University Comnputer Center',   // kaynaktaki yazım hatasıyla
   'Hacettepe University Computer Center'
@@ -25,8 +25,8 @@ export class Seo {
   private meta = inject(Meta);
   private belge = inject(DOCUMENT);
 
-  uygula(sayfa: Sayfa | null, dil: Dil, yol: string): void {
-    const siteAdi = SITE_ADI[dil];
+  uygula(sayfa: Page | null, dil: Language, yol: string): void {
+    const siteAdi = SITE_NAME[dil];
     // Kaynak sitede tüm sayfalar aynı <title> değerini taşıyor. Sayfaya özgü
     // başlık, arama sonuçlarında ayırt edilebilirlik için tercih edilir.
     //
@@ -36,7 +36,7 @@ export class Seo {
     const genelMi =
       !kaynakBaslik ||
       kaynakBaslik === siteAdi ||
-      KAYNAK_GENEL_BASLIK.some((b) => b.toLowerCase() === kaynakBaslik.toLowerCase());
+      GENERIC_SOURCE_TITLES.some((b) => b.toLowerCase() === kaynakBaslik.toLowerCase());
     const baslik = sayfa
       ? (genelMi ? `${sayfa.baslik} — ${siteAdi}` : kaynakBaslik)
       : siteAdi;

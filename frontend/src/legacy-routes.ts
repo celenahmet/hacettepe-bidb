@@ -7,7 +7,7 @@
 
    Bu dosya tools/slug-map.js kaynağından üretilmiştir; elle düzenlemeyin. */
 
-export const ESKI_YOLLAR: Record<string, string> = {
+export const LEGACY_ROUTES: Record<string, string> = {
   '/tr/anasayfa': '/tr/home',
   '/tr/geneltanitim': '/tr/about',
   '/tr/yonetim': '/tr/management',
