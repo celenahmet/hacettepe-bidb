@@ -220,6 +220,19 @@ async function yayindakiYollar(): Promise<Set<string>> {
 /** İstenen adres bir içerik sayfası mı, ve böyle bir sayfa var mı? */
 async function sayfaYok(yol: string): Promise<boolean> {
   const p = yol.replace(/\/+$/, '');
+
+  // Haber sayfası: /tr/duyuru/<slug>. Yayından kaldırılmış bir haberin adresi
+  // "bulunamadı" ekranını 200 durumuyla döndürüyordu.
+  const haber = p.match(/^\/(tr|en)\/duyuru\/([^/]+)$/);
+  if (haber) {
+    try {
+      const y = await fetch(`${API_TABAN}/api/${haber[1]}/duyuru/${encodeURIComponent(haber[2])}`);
+      return y.status === 404;
+    } catch {
+      return false;
+    }
+  }
+
   if (!/^\/(tr|en)\/[^/]+$/.test(p)) return false;   // ana sayfa, panel, dosyalar
 
   const yollar = await yayindakiYollar();

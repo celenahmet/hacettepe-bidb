@@ -68,10 +68,29 @@ biçiminde bir başlık üretir.
 
 Ana sayfadaki "Haber ve Duyurular" listesini yönetir.
 
-- **Başlık**: listede görünen metin
-- **Yayın tarihi**: liste bu tarihe göre sıralanır, en yeni en üstte
-- **Bağlantı**: bir belge adresi (`/dosyalar/duyuru.pdf`) veya site içi sayfa (`/tr/contact`)
-- **Dil**: duyuru yalnızca seçilen dildeki sitede görünür
+Bir duyuru iki biçimde yayımlanabilir:
+
+**1. Kısa duyuru** — yalnızca başlık ve bir bağlantı. Listeden tıklanınca
+belgeye veya dış adrese gider.
+
+**2. Görselli haber** — görsel, özet ve metin içerir; kendi sayfasında açılır.
+Bunun için **Haber adresi** alanını doldurun; adres şu biçimde oluşur:
+
+    bidb.hacettepe.edu.tr/tr/duyuru/yeni-eposta-sistemi
+
+| Alan | Açıklama |
+|---|---|
+| Başlık | Listede ve haber sayfasında görünür |
+| Özet | Liste görünümünde başlığın altında |
+| Görsel | Yükleyin; listede küçük, haberde büyük görünür |
+| Görsel açıklaması | Görme engelliler ve arama motorları için |
+| Haber adresi | Doldurulursa haber kendi sayfasında açılır |
+| Haber metni | HTML |
+| Bağlantı | Haber sayfası yoksa tıklandığında buraya gider |
+| Yayın tarihi | Liste bu tarihe göre sıralanır, en yeni en üstte |
+| Dil | Duyuru yalnızca seçilen dildeki sitede görünür |
+
+**Önizle** düğmesiyle haberin nasıl görüneceğini kaydetmeden görebilirsiniz.
 
 Ana sayfada en yeni 12 duyuru gösterilir; eskiler kayıtta kalır.
 

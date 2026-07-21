@@ -23,6 +23,11 @@ export interface DuyuruYonetim {
   oneCikan: boolean;
   yayinda: boolean;
   disAdres: string | null;
+  /** Doldurulursa haber kendi sayfasında açılır: /tr/duyuru/<slug> */
+  slug: string | null;
+  gorselUrl: string | null;
+  gorselAlt: string | null;
+  icerikHtml: string | null;
 }
 
 export interface Slayt {

@@ -33,6 +33,19 @@ public class Duyuru {
     @Column(name = "dis_adres", length = 500)
     private String disAdres;
 
+    /** Haber kendi sayfasında yayımlanacaksa adresi: /tr/duyuru/<slug> */
+    @Column(length = 200)
+    private String slug;
+
+    @Column(name = "gorsel_url", length = 500)
+    private String gorselUrl;
+
+    @Column(name = "gorsel_alt", length = 300)
+    private String gorselAlt;
+
+    @Column(name = "icerik_html", columnDefinition = "text")
+    private String icerikHtml;
+
     public Long getId() { return id; }
     public String getDil() { return dil; }
     public String getBaslik() { return baslik; }
@@ -49,4 +62,13 @@ public class Duyuru {
     public void setOneCikan(boolean oneCikan) { this.oneCikan = oneCikan; }
     public void setYayinda(boolean yayinda) { this.yayinda = yayinda; }
     public void setDisAdres(String disAdres) { this.disAdres = disAdres; }
+
+    public String getSlug() { return slug; }
+    public void setSlug(String slug) { this.slug = slug; }
+    public String getGorselUrl() { return gorselUrl; }
+    public void setGorselUrl(String gorselUrl) { this.gorselUrl = gorselUrl; }
+    public String getGorselAlt() { return gorselAlt; }
+    public void setGorselAlt(String gorselAlt) { this.gorselAlt = gorselAlt; }
+    public String getIcerikHtml() { return icerikHtml; }
+    public void setIcerikHtml(String icerikHtml) { this.icerikHtml = icerikHtml; }
 }

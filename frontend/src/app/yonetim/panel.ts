@@ -1,5 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { SayfaDuzenle } from './sayfa-duzenle';
 import { DuyuruYonetim, Kisayol, MenuOgeYonetim, MenuYonetim, SayfaYonetim, Slayt, SosyalHesapYonetim, YonetimApi } from './yonetim-api';
 
@@ -91,7 +92,9 @@ interface IletisimBilgi extends Record<string, string> {
               <label for="ysslug">Adres (kısa ve İngilizce olmalı)</label>
               <input id="ysslug" name="ysslug" [ngModel]="ys.slug"
                      (ngModelChange)="yeniSayfaAlan('slug', $event)" required>
-              <p class="aciklama">Sayfa adresi: <code>/{{ ys.dil }}/{{ ys.slug }}</code></p>
+              <p class="aciklama">
+                Sayfa adresi: <code>{{ SITE }}/{{ ys.dil }}/{{ adresOnizleme(ys.slug) }}</code>
+              </p>
 
               <span class="dugmeler">
                 <button type="submit">Oluştur</button>
@@ -171,7 +174,42 @@ interface IletisimBilgi extends Record<string, string> {
             <input id="dtarih" name="yayinTarihi" type="date" [ngModel]="duyuru().yayinTarihi"
                    (ngModelChange)="duyuruAlan('yayinTarihi', $event)" required>
 
-            <label for="dadres">Bağlantı (belge veya sayfa adresi)</label>
+            <label for="dozet">Özet (listede başlığın altında görünür)</label>
+            <textarea id="dozet" name="ozet" rows="2" [ngModel]="duyuru().ozet"
+                      (ngModelChange)="duyuruAlan('ozet', $event)"></textarea>
+
+            <div class="yukleme">
+              <label for="dgorsel">Görsel</label>
+              <input id="dgorsel" type="file" accept="image/*" (change)="duyuruGorselSec($event)">
+              @if (gorselYukleniyor()) { <small>Yükleniyor…</small> }
+              @if (duyuru().gorselUrl) {
+                <div class="gorsel-onizleme">
+                  <img [src]="duyuru().gorselUrl" alt="">
+                  <button type="button" class="ikincil" (click)="duyuruAlan('gorselUrl', null)">Görseli kaldır</button>
+                </div>
+                <label for="dgorselalt">Görsel açıklaması (görme engelliler ve arama motorları için)</label>
+                <input id="dgorselalt" name="gorselAlt" [ngModel]="duyuru().gorselAlt"
+                       (ngModelChange)="duyuruAlan('gorselAlt', $event)">
+              }
+            </div>
+
+            <label for="dslug">Haber adresi
+              <small>— doldurursanız haber kendi sayfasında açılır</small>
+            </label>
+            <input id="dslug" name="slug" [ngModel]="duyuru().slug"
+                   (ngModelChange)="duyuruAlan('slug', $event)"
+                   placeholder="örn. yeni-eposta-sistemi">
+            @if (duyuru().slug) {
+              <p class="aciklama">
+                Haber adresi: <code>{{ SITE }}/{{ duyuru().dil }}/duyuru/{{ adresOnizleme(duyuru().slug) }}</code>
+              </p>
+            }
+
+            <label for="dicerik">Haber metni (HTML)</label>
+            <textarea id="dicerik" name="icerikHtml" rows="10" class="kod" [ngModel]="duyuru().icerikHtml"
+                      (ngModelChange)="duyuruAlan('icerikHtml', $event)"></textarea>
+
+            <label for="dadres">Bağlantı (belge veya dış adres — haber sayfası yoksa buraya gidilir)</label>
             <input id="dadres" name="disAdres" [ngModel]="duyuru().disAdres"
                    (ngModelChange)="duyuruAlan('disAdres', $event)">
 
@@ -183,19 +221,41 @@ interface IletisimBilgi extends Record<string, string> {
 
             <span class="dugmeler">
               <button type="submit">{{ duyuru().id ? 'Güncelle' : 'Ekle' }}</button>
+              <button type="button" class="ikincil" (click)="duyuruOnizle()">Önizle</button>
               @if (duyuru().id) {
                 <button type="button" class="ikincil" (click)="duyuruSifirla()">Vazgeç</button>
               }
             </span>
+
+            @if (duyuruOnizleme(); as ono) {
+              <section class="onizleme">
+                <h3>Önizleme</h3>
+                @if (duyuru().gorselUrl) {
+                  <img class="haber-gorsel" [src]="duyuru().gorselUrl" [alt]="duyuru().gorselAlt || ''">
+                }
+                <h4>{{ duyuru().baslik }}</h4>
+                @if (duyuru().ozet) { <p>{{ duyuru().ozet }}</p> }
+                <div class="icerik" [innerHTML]="ono"></div>
+              </section>
+            }
           </form>
 
           <table class="yonetim-tablo">
-            <thead><tr><th>Tarih</th><th>Başlık</th><th>Dil</th><th></th></tr></thead>
+            <thead><tr><th>Tarih</th><th>Görsel</th><th>Başlık</th><th>Adres</th><th>Dil</th><th></th></tr></thead>
             <tbody>
               @for (d of duyurular(); track d.id) {
                 <tr>
-                  <td>{{ d.yayinTarihi }}</td>
+                  <td><small>{{ d.yayinTarihi }}</small></td>
+                  <td>
+                    @if (d.gorselUrl) {
+                      <img [src]="d.gorselUrl" alt="" class="kucuk-gorsel">
+                    } @else { <span class="soluk">—</span> }
+                  </td>
                   <td>{{ d.baslik }}</td>
+                  <td>
+                    @if (d.slug) { <small><code>/{{ d.dil }}/duyuru/{{ d.slug }}</code></small> }
+                    @else { <span class="soluk">bağlantı</span> }
+                  </td>
                   <td>{{ d.dil }}</td>
                   <td>
                     <button type="button" class="ikincil" (click)="duyuruDuzenle(d)">Düzenle</button>
@@ -431,6 +491,7 @@ interface IletisimBilgi extends Record<string, string> {
 })
 export class YonetimPanel {
   protected api = inject(YonetimApi);
+  private temizleyici = inject(DomSanitizer);
 
   protected kullanici = '';
   protected parola = '';
@@ -453,13 +514,21 @@ export class YonetimPanel {
   protected sosyalHesaplar = signal<SosyalHesapYonetim[]>([]);
   protected sosyalHesap = signal<SosyalHesapYonetim | null>(null);
   protected acikSayfa = signal<SayfaYonetim | null>(null);
+  protected gorselYukleniyor = signal(false);
+
+  /** Adres önizlemelerinde gösterilen site adresi. */
+  protected readonly SITE = 'bidb.hacettepe.edu.tr';
+  protected duyuruOnizleme = signal<SafeHtml | null>(null);
   protected yeniSayfa = signal<{ dil: string; slug: string; baslik: string } | null>(null);
   protected iletisim = signal<IletisimBilgi>({
     iletisim_adres: '', iletisim_telefon: '', iletisim_eposta: '', iletisim_faks: ''
   });
 
   constructor() {
-    if (this.api.girisYapildi()) this.sayfalariYukle();
+    if (this.api.girisYapildi()) {
+      this.sayfalariYukle();
+      this.sayilariYukle();
+    }
   }
 
   protected giris(): void {
@@ -469,6 +538,7 @@ export class YonetimPanel {
       next: (liste) => {
         this.api.girisOnayla();
         this.sayfalar.set(liste);
+        this.sayilariYukle();
         this.calisiyor.set(false);
         this.parola = '';
       },
@@ -719,9 +789,59 @@ export class YonetimPanel {
     const y = this.yeniSayfa();
     if (!y) return;
     this.api.sayfaEkle({ ...y, icerikHtml: '<div class="icerik"><p></p></div>' }).subscribe({
-      next: () => { this.yeniSayfa.set(null); this.sayfalariTazele(); this.mesaj('Sayfa oluşturuldu.'); },
+      next: (olusan) => {
+        this.yeniSayfa.set(null);
+        // Yeni sayfa oluşturulur oluşturulmaz metin ve SEO alanları açılır;
+        // kullanıcı 70 satırlık listede sayfayı aramak zorunda kalmaz.
+        const id = (olusan as { id?: number })?.id;
+        this.api.sayfalar().subscribe((l) => {
+          this.sayfalar.set(l);
+          const yeni = l.find((x) => x.id === id);
+          if (yeni) {
+            this.acikSayfa.set(yeni);
+            this.secili.set({ ...yeni });
+          }
+        });
+        this.mesaj('Sayfa oluşturuldu. Metnini ve arama motoru bilgilerini şimdi girebilirsiniz.');
+      },
       error: (e) => this.mesaj(typeof e?.error === 'string' ? e.error : 'Oluşturulamadı.')
     });
+  }
+
+  /** Duyuru görseli yüklenir ve adresi forma yazılır. */
+  protected duyuruGorselSec(olay: Event): void {
+    const girdi = olay.target as HTMLInputElement;
+    const dosya = girdi.files?.[0];
+    if (!dosya) return;
+    this.gorselYukleniyor.set(true);
+    this.api.dosyaYukle(dosya).subscribe({
+      next: (s) => {
+        this.gorselYukleniyor.set(false);
+        girdi.value = '';
+        this.duyuruAlan('gorselUrl', s.adres);
+        if (!this.duyuru().gorselAlt) this.duyuruAlan('gorselAlt', this.duyuru().baslik);
+      },
+      error: (e) => {
+        this.gorselYukleniyor.set(false);
+        this.mesaj(typeof e?.error === 'string' ? e.error : 'Görsel yüklenemedi.');
+      }
+    });
+  }
+
+  /**
+   * Adresin sunucuda alacağı hâli gösterir: Türkçe karakterler dönüştürülür,
+   * boşluklar tireye çevrilir. Sunucudaki sadeleştirmenin aynısıdır.
+   */
+  protected adresOnizleme(ham: string | null): string {
+    if (!ham) return '';
+    return ham.trim().toLocaleLowerCase('tr')
+      .replace(/ı/g, 'i').replace(/ğ/g, 'g').replace(/ü/g, 'u')
+      .replace(/ş/g, 's').replace(/ö/g, 'o').replace(/ç/g, 'c')
+      .replace(/[^a-z0-9-]+/g, '-').replace(/-{2,}/g, '-').replace(/^-|-$/g, '');
+  }
+
+  protected duyuruOnizle(): void {
+    this.duyuruOnizleme.set(this.temizleyici.bypassSecurityTrustHtml(this.duyuru().icerikHtml ?? ''));
   }
 
   protected sekmeIletisim(): void {
@@ -744,6 +864,18 @@ export class YonetimPanel {
     });
   }
 
+  /**
+   * Sekme başlıklarındaki sayılar, o sekme açılmadan da doğru görünsün diye
+   * girişten sonra bir kez yüklenir. Önceden hepsi (0) görünüyordu.
+   */
+  private sayilariYukle(): void {
+    this.api.duyurular().subscribe((l) => this.duyurular.set(l));
+    this.api.slaytlar().subscribe((l) => this.slaytlar.set(l));
+    this.api.kisayollar().subscribe((l) => this.kisayollar.set(l));
+    this.api.menuler().subscribe((l) => this.menuler.set(l));
+    this.api.sosyalHesaplar().subscribe((l) => this.sosyalHesaplar.set(l));
+  }
+
   private sayfalariYukle(): void {
     this.api.sayfalar().subscribe({
       next: (l) => this.sayfalar.set(l),
@@ -760,7 +892,11 @@ export class YonetimPanel {
       yayinTarihi: new Date().toISOString().slice(0, 10),
       oneCikan: false,
       yayinda: true,
-      disAdres: null
+      disAdres: null,
+      slug: null,
+      gorselUrl: null,
+      gorselAlt: null,
+      icerikHtml: null
     };
   }
 

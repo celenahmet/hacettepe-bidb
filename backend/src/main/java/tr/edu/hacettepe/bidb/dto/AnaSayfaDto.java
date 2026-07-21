@@ -19,9 +19,14 @@ public record AnaSayfaDto(
         }
     }
 
-    public record DuyuruDto(String baslik, LocalDate tarih, String adres) {
+    public record DuyuruDto(String baslik, LocalDate tarih, String adres,
+                            String ozet, String gorselUrl, String gorselAlt, boolean kendiSayfasi) {
         public static DuyuruDto of(Duyuru d) {
-            return new DuyuruDto(d.getBaslik(), d.getYayinTarihi(), d.getDisAdres());
+            // Haberin kendi sayfası varsa oraya, yoksa verilen bağlantıya gidilir
+            boolean kendi = d.getSlug() != null && !d.getSlug().isBlank();
+            String adres = kendi ? "/" + d.getDil() + "/duyuru/" + d.getSlug() : d.getDisAdres();
+            return new DuyuruDto(d.getBaslik(), d.getYayinTarihi(), adres,
+                    d.getOzet(), d.getGorselUrl(), d.getGorselAlt(), kendi);
         }
     }
 }

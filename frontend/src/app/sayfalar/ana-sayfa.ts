@@ -5,12 +5,13 @@ import { switchMap, tap } from 'rxjs/operators';
 import { Api } from '../cekirdek/api';
 import { Seo } from '../cekirdek/seo';
 import { Dil } from '../cekirdek/modeller';
+import { RouterLink } from '@angular/router';
 import { SolMenu } from '../duzen/sol-menu';
 
 /** Ana sayfa: slider, kısayollar, duyurular ve servisler. */
 @Component({
   selector: 'bidb-ana-sayfa',
-  imports: [SolMenu, AsyncPipe, DatePipe],
+  imports: [SolMenu, AsyncPipe, DatePipe, RouterLink],
   template: `
     @if (veri$ | async; as v) {
       <section class="slider" [attr.aria-label]="metin('Öne çıkanlar', 'Featured')">
@@ -59,8 +60,20 @@ import { SolMenu } from '../duzen/sol-menu';
               <h2>{{ metin('Haber ve Duyurular', 'News and Announcements') }}</h2>
               <ul>
                 @for (d of v.duyurular; track d.baslik) {
-                  <li>
-                    <a [href]="d.adres" target="_blank" rel="noopener">{{ d.baslik }}</a>
+                  <li [class.gorselli]="d.gorselUrl">
+                    @if (d.gorselUrl) {
+                      <a [routerLink]="d.adres" class="duyuru-gorsel">
+                        <img [src]="d.gorselUrl" [alt]="d.gorselAlt || d.baslik" loading="lazy" width="120" height="80">
+                      </a>
+                    }
+                    <span class="duyuru-yazi">
+                      @if (d.kendiSayfasi) {
+                        <a [routerLink]="d.adres">{{ d.baslik }}</a>
+                      } @else {
+                        <a [href]="d.adres" target="_blank" rel="noopener">{{ d.baslik }}</a>
+                      }
+                      @if (d.ozet) { <small class="duyuru-ozet">{{ d.ozet }}</small> }
+                    </span>
                     <time [attr.datetime]="d.tarih">{{ d.tarih | date: 'dd.MM.yyyy' }}</time>
                   </li>
                 }

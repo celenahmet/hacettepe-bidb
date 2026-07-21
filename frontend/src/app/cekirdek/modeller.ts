@@ -54,6 +54,11 @@ export interface DuyuruOzet {
   baslik: string;
   tarih: string;
   adres: string | null;
+  ozet: string | null;
+  gorselUrl: string | null;
+  gorselAlt: string | null;
+  /** Haberin kendi sayfası varsa site içi bağlantı, yoksa dış bağlantıdır */
+  kendiSayfasi: boolean;
 }
 
 /** Ana sayfanın tüm bileşenleri tek istekte gelir. */
