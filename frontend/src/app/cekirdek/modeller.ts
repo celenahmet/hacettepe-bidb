@@ -41,4 +41,25 @@ export interface SosyalHesap {
   adres: string;
 }
 
+export interface Kisayol {
+  ad: string;
+  ikonUrl: string | null;
+  adres: string;
+  yeniSekme: boolean;
+}
+
+export interface DuyuruOzet {
+  baslik: string;
+  tarih: string;
+  adres: string | null;
+}
+
+/** Ana sayfanın tüm bileşenleri tek istekte gelir. */
+export interface AnaSayfaVerisi {
+  slider: Slayt[];
+  kisayollar: Kisayol[];
+  servisler: Kisayol[];
+  duyurular: DuyuruOzet[];
+}
+
 export type Dil = 'tr' | 'en';

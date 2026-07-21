@@ -2691,7 +2691,6 @@ INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'Microso
 INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'Sözleşmeli Bilişim Personeli Alımı İle İlgili Değerlendirme Sonucu', '2026-04-24', '/dosyalar/sozlesmeilan240426.pdf');
 INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'Sözleşmeli Bilişim Personeli Alımı İle İlgili Yazılı Sınav Sonuçları ve Sözlü Sınav Bilgileri', '2026-04-09', '/dosyalar/EK_5_sozlu_sinava_girmeye_hak_kazananlarin_ilani_090426.pdf');
 INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'Sözleşmeli Bilişim Personeli Alımı İle İlgili Ön İnceleme Sonucu Sınava Girmeye Hak Kazananların Listesi', '2026-03-31', '/dosyalar/EK_3_yazili_sinava_girmeye_hak_kazananlarin_ilani_310326.pdf');
-INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'iskur.hacettepe.edu.tr', CURRENT_DATE, 'https://iskur.hacettepe.edu.tr');
 INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'İŞKUR Gençlik Programı Noter Kurası Çekilişi', '2025-10-15', '/dosyalar/iskur_kuracekimi_151025.pdf');
 INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', '2025-2026 Eğitim Öğretim Dönemi İŞKUR Gençlik Programı', '2025-10-14', 'https://pdb.hacettepe.edu.tr/duyuru/iskur_131025.pdf');
 INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'Sözleşmeli Bilişim Personeli Alımı Değerlendirme Sonucu', '2025-05-29', '/dosyalar/sozlesme_hak_kazananlarin_ilani290525.pdf');
@@ -2703,12 +2702,12 @@ INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'İŞKUR
 INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'İŞKUR Gençlik Programı Çerçevesinde 19.02.2025 Tarihinde Yapılan Noter Çekilişi', '2025-02-20', '/dosyalar/sonuc200225.pdf');
 INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'İşkur Gençlik Programı', '2025-02-17', '/dosyalar/iskurduyuru170225.pdf');
 INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'VPN sistemi ile ilgili Bilgilendirme ve Bağlantı Kılavuzları', '2024-09-27', '/tr/VPN');
-INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'Sözleşmeli Bilişim Personeli Alımı Değerlendirme Sonucu (22.12.23)', CURRENT_DATE, '/dosyalar/prsalimsonuc221223.pdf');
-INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'Sözleşmeli Bilişim Personeli Alımı İle İlgili Yazılı Sınav Sonuçları ve Sözlü Sınav Bilgileri (18.12.23)', CURRENT_DATE, '/dosyalar/SinavSonucuYazili181223.pdf');
-INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'Sözleşmeli Bilişim Personeli Alımı İle İlgili Ön İnceleme Sonucu Sınava Girmeye Hak Kazananların Listesi (11.12.23)', CURRENT_DATE, '/dosyalar/Sinav_web_141223.pdf');
+INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'Sözleşmeli Bilişim Personeli Alımı Değerlendirme Sonucu', '2023-12-22', '/dosyalar/prsalimsonuc221223.pdf');
+INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'Sözleşmeli Bilişim Personeli Alımı İle İlgili Yazılı Sınav Sonuçları ve Sözlü Sınav Bilgileri', '2023-12-18', '/dosyalar/SinavSonucuYazili181223.pdf');
+INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'Sözleşmeli Bilişim Personeli Alımı İle İlgili Ön İnceleme Sonucu Sınava Girmeye Hak Kazananların Listesi', '2023-12-11', '/dosyalar/Sinav_web_141223.pdf');
 INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'Sözleşmeli Bilişim Personeli Alımı Sınav Sonuçları', '2023-06-20', '/dosyalar/SozlesmeYapmayaHakKazananlar_200623.pdf');
-INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'Sözleşmeli Bilişim Personeli Alımı İle İlgili Yazılı Sınav Sonuçları ve Sözlü Sınav Bilgileri (16.06.23)', CURRENT_DATE, '/dosyalar/sinavsonuc160623.pdf');
-INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'Sözleşmeli Bilişim Personeli Alımı İle İlgili Ön İnceleme Sonucu Sınava Girmeye Hak Kazananların Listesi (14.06.23)', CURRENT_DATE, '/dosyalar/sozlesmeli_personel_140623.pdf');
+INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'Sözleşmeli Bilişim Personeli Alımı İle İlgili Yazılı Sınav Sonuçları ve Sözlü Sınav Bilgileri', '2023-06-16', '/dosyalar/sinavsonuc160623.pdf');
+INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'Sözleşmeli Bilişim Personeli Alımı İle İlgili Ön İnceleme Sonucu Sınava Girmeye Hak Kazananların Listesi', '2023-06-14', '/dosyalar/sozlesmeli_personel_140623.pdf');
 INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'Sözleşmeli Bilişim Personeli Duyurusu', '2023-05-30', '/dosyalar/bilisimduyuru300523.pdf');
 INSERT INTO duyuru (dil, baslik, yayin_tarihi, dis_adres) VALUES ('tr', 'Mezun E-posta Hesabı Hakkında', '2023-03-20', '/tr/mezuneposta');
 

@@ -96,12 +96,25 @@ function duyurular(html) {
   const re = /<a[^>]+href=["']([^"']+)["']([^>]*)>([\s\S]*?)<\/a>\s*\(?\s*(\d{2}[.\/]\d{2}[.\/]\d{2,4})?\s*\)?/gi;
   let m;
   while ((m = re.exec(blok))) {
-    const baslik = X.duz(m[3]);
+    let baslik = X.duz(m[3]);
     if (baslik.length < 8) continue;
+    // Metin içinde geçen çıplak adresler duyuru başlığı değildir
+    if (/^(?:https?:\/\/)?[a-z0-9.-]+\.[a-z]{2,6}(?:\/\S*)?$/i.test(baslik)) continue;
+
+    // Tarih kimi duyuruda bağlantının ardında, kimisinde başlığın sonunda yer alır
+    let tarih = m[4] || "";
+    if (!tarih) {
+      const icTarih = baslik.match(/\(?\s*(\d{2}[.\/]\d{2}[.\/]\d{2,4})\s*\)?\s*$/);
+      if (icTarih) {
+        tarih = icTarih[1];
+        baslik = baslik.slice(0, icTarih.index).replace(/[\s(]+$/, "").trim();
+      }
+    }
+
     out.push({
       baslik,
       adres: mutlak(m[1]),
-      tarih: m[4] || "",
+      tarih,
       yeniSekme: /target=["']_blank["']/i.test(m[2])
     });
   }

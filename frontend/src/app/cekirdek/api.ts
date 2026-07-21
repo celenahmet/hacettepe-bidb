@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Dil, Menu, Sayfa, Slayt, SosyalHesap } from './modeller';
+import { AnaSayfaVerisi, Dil, Menu, Sayfa, Slayt, SosyalHesap } from './modeller';
 
 /** Backend REST servisine erişim.
  *  Adres, ortam değişkeninden (API_URL) veya varsayılan olarak
@@ -19,6 +19,12 @@ export class Api {
     return this.http
       .get<Sayfa>(`${this.taban}/api/${dil}/sayfa/${slug}`)
       .pipe(catchError(() => of(null)));
+  }
+
+  anaSayfa(dil: Dil): Observable<AnaSayfaVerisi> {
+    return this.http
+      .get<AnaSayfaVerisi>(`${this.taban}/api/${dil}/anasayfa`)
+      .pipe(catchError(() => of({ slider: [], kisayollar: [], servisler: [], duyurular: [] })));
   }
 
   menu(dil: Dil, konum = 'sol'): Observable<Menu[]> {
