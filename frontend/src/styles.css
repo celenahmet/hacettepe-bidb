@@ -220,3 +220,26 @@ img { max-width: 100%; height: auto; }
   .kisayollar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .servis-listesi { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* ---------- dar ekran düzeltmeleri ---------- */
+
+/* Kaynak içerikteki tablolar dar ekranda sayfayı taşırmasın diye
+   kendi içinde yatay kaydırılır. */
+.icerik table {
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Uzun adres ve dosya adları satır sonunda bölünür */
+.icerik a, .belgeler a, .duyurular li a { overflow-wrap: anywhere; }
+
+@media (max-width: 620px) {
+  /* Üst menü tek satıra sığmıyordu; alt satıra sarılır */
+  .ust-ic { flex-direction: column; align-items: flex-start; }
+  .ust-menu { flex-wrap: wrap; gap: 12px; row-gap: 8px; }
+  .sosyal { gap: 12px; }
+
+  /* Dokunmatik hedefler için asgari yükseklik */
+  .ust-menu > a, .dil-secim a, .sosyal a { padding: 6px 0; }
+}
