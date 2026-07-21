@@ -1,0 +1,86 @@
+{
+  "slug": "epostaalma",
+  "dil": "tr",
+  "bolum": "",
+  "menuAdi": "E-Posta Hesabı Alma",
+  "url": "https://bidb.hacettepe.edu.tr/tr/epostaalma",
+  "baslik": "Yeni E-posta Açma",
+  "seo": {
+    "title": "Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı",
+    "description": "",
+    "keywords": ""
+  },
+  "paragraflar": [
+    {
+      "tur": "p",
+      "metin": "Kişisel e-posta Hesabı Almak için:"
+    },
+    {
+      "tur": "li",
+      "metin": "Yeni kayıt yaptıran ön lisans, lisans öğrencilerimiz için;"
+    },
+    {
+      "tur": "p",
+      "metin": "Kayıt yaptırdıkları tarihten sonra Bilgi İşlem Daire Başkanlığı tarafından @hacettepe.edu.tr uzantılı kurumsal elektronik posta hesapları otomatik açılarak, BİLSİS’te (Öğrenci Bilgi Sistemi) kayıtlı cep telefonu numarasına veya e-posta adresine mesaj olarak gönderilmektedir. Mesajın ulaşmaması durumunda; Bilgi İşlem Daire Başkanlığı Portal sayfasından \"Kullanıcı Adımı Unuttum\" ve \"Şifremi Unuttum\" butonlarını kullanarak hesap bilgilerine ulaşmaları gerekmektedir."
+    },
+    {
+      "tur": "li",
+      "metin": "Hacettepe Üniversitesi Yüksek Lisans ve Doktora Öğrencilerimiz için;"
+    },
+    {
+      "tur": "p",
+      "metin": "Kayıt yaptırdıkları tarihten sonra Bilgi İşlem Daire Başkanlığı tarafından @hacettepe.edu.tr uzantılı kurumsal elektronik posta hesapları otomatik açılarak, PRENS’te (Enstitü Öğrenci Bilgi Sistemi) kayıtlı cep telefonu numarasına veya e-posta adresine mesaj olarak gönderilmektedir. Mesajın ulaşmaması durumunda; Bilgi İşlem Daire Başkanlığı Portal sayfasından \"Kullanıcı Adımı Unuttum\" ve \"Şifremi Unuttum\" butonlarını kullanarak hesap bilgilerine ulaşmaları gerekmektedir."
+    },
+    {
+      "tur": "li",
+      "metin": "Hacettepe Üniversitesi \"Akademik\" ve \"İdari\" personelimiz;"
+    },
+    {
+      "tur": "p",
+      "metin": "Elektronik posta hesabı almak isteyen akademik/idari personelimizin 0.312 297 62 62 telefon numarasından Çağrı Merkezi ile iletişime geçmesi gerekmektedir."
+    },
+    {
+      "tur": "p",
+      "metin": "Kurumsal e-posta Hesabı Almak için:"
+    },
+    {
+      "tur": "p",
+      "metin": "Hacettepe Üniversitesi bünyesinde, fakülte, enstitü, bölüm, birim, üniversite ile ilgili bir topluluk, proje grubu, organizasyon vb. bir oluşum için ayrı bir e-posta hesabı almak mümkündür. Bunun için bağlı bulunduğunuz makamın (dekan, bölüm başkanı, müdürlük, vb.) yönetiminden dairemize yazılı bir istekte bulunulması gerekmektedir. İstekte, bu hesabın açık olarak ne amaçla açılacağı, kimin sorumlu olacağı ve ne kadar süre ile açık kalacağı belirtilmelidir."
+    },
+    {
+      "tur": "p",
+      "metin": "Mezun E-posta Hesabı Almak için:"
+    },
+    {
+      "tur": "p",
+      "metin": "Hacettepe Üniversitesi Elektronik Posta Sistemlerinde kullanıcılarımızın daha verimli ve etkili bir şekilde iletişim kurmasına yardımcı olmak amacıyla iyileştirme ve geliştirme çalışmaları yapılmış, 11 Mayıs 2022 tarihinden itibaren yeni e-posta sistemi (Microsoft Exchange) kullanılmaya başlanmıştır."
+    },
+    {
+      "tur": "p",
+      "metin": "Mezun öğrencilerimizin Üniversitemize bağlılıkları göz önünde bulundurularak, yürürlüğe giren 8.12.2022 tarih ve 2022-000 sayılı Senato kararına istinaden Hacettepe Üniversitesi mezunlarının Mezunlar Derneği üyesi olmadan kurumsal e-posta almalarına olanak sağlanmıştır."
+    },
+    {
+      "tur": "p",
+      "metin": "Detaylı Bilgi İçin tıklayınız"
+    },
+    {
+      "tur": "p",
+      "metin": "İlgili formlar için tıklayınız."
+    }
+  ],
+  "baglantilar": [
+    {
+      "metin": "Detaylı Bilgi İçin tıklayınız",
+      "href": "https://bidb.hacettepe.edu.tr/tr/mezuneposta"
+    },
+    {
+      "metin": "tıklayınız.",
+      "href": "https://bidb.hacettepe.edu.tr/tr/formlar/"
+    }
+  ],
+  "gorseller": [],
+  "belgeler": [],
+  "govdeHtml": "<div class=\"icerik\">\n<p>Kişisel e-posta Hesabı Almak için:</p>\n<ul>\n  <li><strong>Yeni kayıt yaptıran ön lisans, lisans öğrencilerimiz için;</strong></li>\n</ul>\n<p>Kayıt yaptırdıkları tarihten sonra Bilgi İşlem Daire Başkanlığı tarafından @hacettepe.edu.tr uzantılı kurumsal elektronik posta hesapları otomatik açılarak, BİLSİS&rsquo;te (Öğrenci Bilgi Sistemi) kayıtlı cep telefonu numarasına veya e-posta adresine mesaj olarak gönderilmektedir.<br>\n  Mesajın ulaşmaması durumunda; Bilgi İşlem Daire Başkanlığı Portal sayfasından &ldquo;Kullanıcı Adımı Unuttum&rdquo; ve &ldquo;Şifremi Unuttum&rdquo; butonlarını kullanarak hesap bilgilerine ulaşmaları gerekmektedir.</p>\n<ul>\n  <li><strong>Hacettepe Üniversitesi Yüksek Lisans ve Doktora Öğrencilerimiz için;</strong></li>\n</ul>\n<p>Kayıt yaptırdıkları tarihten sonra Bilgi İşlem Daire Başkanlığı tarafından @hacettepe.edu.tr uzantılı kurumsal elektronik posta hesapları otomatik açılarak, PRENS&rsquo;te (Enstitü Öğrenci Bilgi Sistemi) kayıtlı cep telefonu numarasına veya e-posta adresine mesaj olarak gönderilmektedir.<br>\n  Mesajın ulaşmaması durumunda; Bilgi İşlem Daire Başkanlığı Portal sayfasından &ldquo;Kullanıcı Adımı Unuttum&rdquo; ve &ldquo;Şifremi Unuttum&rdquo; butonlarını kullanarak hesap bilgilerine ulaşmaları gerekmektedir.</p>\n<ul>\n  <li><strong>Hacettepe Üniversitesi &ldquo;Akademik&rdquo; ve &ldquo;İdari&rdquo; personelimiz;</strong></li>\n</ul>\n<p>Elektronik posta hesabı almak isteyen akademik/idari personelimizin 0.312 297 62 62 telefon numarasından Çağrı Merkezi ile iletişime geçmesi gerekmektedir.</p>\n\n<p> <STRONG>Kurumsal e-posta Hesabı  Almak için:</STRONG></p>\n<p> Hacettepe Üniversitesi  bünyesinde, fakülte, enstitü, bölüm, birim, üniversite ile ilgili bir topluluk,  proje grubu, organizasyon vb. bir oluşum için ayrı bir e-posta hesabı almak  mümkündür. Bunun için bağlı bulunduğunuz makamın (dekan, bölüm başkanı,  müdürlük, vb.) yönetiminden dairemize yazılı bir istekte bulunulması  gerekmektedir. İstekte, bu hesabın açık olarak ne amaçla açılacağı, kimin  sorumlu olacağı ve ne kadar süre ile açık kalacağı belirtilmelidir. </p>\n\n<p> <STRONG>Mezun E-posta Hesabı  Almak için:</STRONG></p>\n<p>\n  Hacettepe Üniversitesi Elektronik Posta Sistemlerinde kullanıcılarımızın daha verimli ve etkili bir şekilde iletişim kurmasına yardımcı olmak amacıyla iyileştirme ve geliştirme çalışmaları yapılmış, 11 Mayıs 2022 tarihinden itibaren <strong>yeni e-posta sistemi (Microsoft Exchange)</strong> kullanılmaya başlanmıştır.</p><p>\n  Mezun öğrencilerimizin Üniversitemize bağlılıkları göz önünde bulundurularak, yürürlüğe giren <strong><em>8.12.2022 tarih ve 2022-000 sayılı Senato kararına</em></strong> istinaden Hacettepe Üniversitesi mezunlarının Mezunlar Derneği üyesi olmadan kurumsal e-posta almalarına olanak sağlanmıştır. </p>\n  <p><a href=\"/tr/mezuneposta\">Detaylı Bilgi İçin tıklayınız</a></p>\n\n\n<p><STRONG>İlgili formlar için<a href=\"/tr/formlar/\"> tıklayınız.</a></STRONG></p>\n</div>",
+  "karakter": 2473,
+  "cekilme": "2026-07-21T19:24:37.201Z"
+}

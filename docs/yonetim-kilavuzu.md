@@ -37,7 +37,7 @@ Ana sayfadaki "Haber ve Duyurular" listesini yönetir.
 
 - **Başlık**: listede görünen metin
 - **Yayın tarihi**: liste bu tarihe göre sıralanır, en yeni en üstte
-- **Bağlantı**: bir belge adresi (`/dosyalar/duyuru.pdf`) veya site içi sayfa (`/tr/iletisim`)
+- **Bağlantı**: bir belge adresi (`/dosyalar/duyuru.pdf`) veya site içi sayfa (`/tr/contact`)
 - **Dil**: duyuru yalnızca seçilen dildeki sitede görünür
 
 Ana sayfada en yeni 12 duyuru gösterilir; eskiler kayıtta kalır.
@@ -66,7 +66,7 @@ Ana sayfadaki ikonlu bağlantı ızgarası ve servis karuseli aynı listeden yö
 | 0 – 99 | Üstteki ikon ızgarası |
 | 100 ve üzeri | "Servisler ve Uygulamalar" bölümü |
 
-- **Adres**: site içi (`/tr/sss`) veya dış adres (`https://portal.hacettepe.edu.tr/`)
+- **Adres**: site içi (`/tr/faq`) veya dış adres (`https://portal.hacettepe.edu.tr/`)
 - **Yeni sekmede açılsın**: dış bağlantılar için işaretleyin
 
 ---
@@ -93,6 +93,20 @@ Bölüm silindiğinde içindeki bağlantılar da silinir.
 
 Bu bilgiler ayrıca arama motorlarına kurumun resmî hesapları olarak bildirilir;
 yanlış adres girilmesi kurum eşleştirmesini bozabilir.
+
+---
+
+## Adres yapısı
+
+Sayfa adresleri İngilizcedir ve iki dilde aynıdır; yalnızca ön ek değişir:
+
+    /tr/about      ·      /en/about
+
+Eski Türkçe adresler (`/tr/geneltanitim` gibi) kalıcı yönlendirme ile yeni
+adreslere taşınmıştır; arama motorlarındaki ve dış sitelerdeki bağlantılar
+kırılmaz. Eşleme tek bir dosyada tutulur: `tools/slug-map.js`.
+
+Yeni bir sayfanın adresi de İngilizce ve kısa olmalıdır.
 
 ---
 

@@ -1,0 +1,33 @@
+{
+  "slug": "dblidyasorgui",
+  "dil": "tr",
+  "bolum": "",
+  "menuAdi": "dblidyasorgui",
+  "url": "https://bidb.hacettepe.edu.tr/tr/dblidyasorgui",
+  "baslik": "Veritabanı Kontrol Sayfası",
+  "seo": {
+    "title": "Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı",
+    "description": "",
+    "keywords": ""
+  },
+  "paragraflar": [
+    {
+      "tur": "td",
+      "metin": "Veritabanı Adı: (dbname)"
+    },
+    {
+      "tur": "td",
+      "metin": "Veritabanı Kulanıcı Adı: (dbuser)"
+    },
+    {
+      "tur": "td",
+      "metin": "Veritabanı Şifre:"
+    }
+  ],
+  "baglantilar": [],
+  "gorseller": [],
+  "belgeler": [],
+  "govdeHtml": "<div class=\"icerik\">\n\n<p>\nBu sayfadan 193.140.239.9 ip li sunucu üzerindeki veri tabanı bilgilerinizi kontrol edebilirsiniz.\n\n<p>\n<FORM ACTION='/hizmetlerweb/wkb/dblidya.php' METHOD='post'>\n<table>\n\t\t<tr>\n\t\t<td>Veritabanı Adı:<br><span class=\"small\">(dbname)</span></td>\n\t\t<td><input TYPE='text' NAME='db' class='fe' AUTOCOMPLETE=OFF><td>\n\t\t</tr>\n<tr>\n                <td>Veritabanı Kulanıcı Adı:<br><span class=\"small\">(dbuser)</span></td>\n                <td><input TYPE='text' NAME='user' class='fe' AUTOCOMPLETE=OFF><td>\n                </tr>\n\t\t<tr>\n\t\t<td>Veritabanı Şifre:</td>\n\t\t<td><input TYPE='password' NAME='pw' class='fe' AUTOCOMPLETE=OFF><td>\n\t\t</tr>\n\t\n        \t\t\t\n\t\t<tr>\n\t\t<td colspan='2'><center>\n\t\t<input type='hidden' name='submitted' value='1'>\n\t\t<input TYPE='submit' VALUE='Kontrol Et' class='fe'><input type='reset' value='TEMİZLE' class='fe'></center></td>\n\t\t</tr>\n\t\t</table>\n</form>\n\n \n</div>",
+  "karakter": 74,
+  "cekilme": "2026-07-21T19:29:08.637Z"
+}

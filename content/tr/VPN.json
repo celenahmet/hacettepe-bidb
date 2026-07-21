@@ -1,0 +1,59 @@
+{
+  "slug": "VPN",
+  "dil": "tr",
+  "bolum": "",
+  "menuAdi": "VPN",
+  "url": "https://bidb.hacettepe.edu.tr/tr/VPN",
+  "baslik": "VPN sistemi ile ilgili Bilgilendirme ve Bağlantı Kılavuzları",
+  "seo": {
+    "title": "Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı",
+    "description": "",
+    "keywords": ""
+  },
+  "paragraflar": [
+    {
+      "tur": "p",
+      "metin": "Sayın Kullanıcımız;"
+    },
+    {
+      "tur": "p",
+      "metin": "VPN uygulamamızda değişiklik olmuştur."
+    },
+    {
+      "tur": "p",
+      "metin": "Yeni uygulamamıza tarayıcınızda https://vpn.hacettepe.edu.tr adresine Hacettepe E-posta kullanıcı adı ve şifrenizle giriş yaptıktan sonra İşletim Sistemi’nize göre uygun olan uygulamayı yükleyerek erişim sağlayabilirsiniz."
+    },
+    {
+      "tur": "p",
+      "metin": "Kurulum dökümanına buradan erişebilirsiniz."
+    },
+    {
+      "tur": "p",
+      "metin": "Herhangi bir sorun ile karşılaşmanız durumunda system@hacettepe.edu.tr adresine e-posta yolu ile bilgi vermeniz rica olunur."
+    }
+  ],
+  "baglantilar": [
+    {
+      "metin": "https://vpn.hacettepe.edu.tr",
+      "href": "https://vpn.hacettepe.edu.tr/"
+    },
+    {
+      "metin": "Kurulum dökümanına buradan erişebilirsiniz.",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/hu_vpn_erisim_klavuzu.pdf"
+    },
+    {
+      "metin": "system@hacettepe.edu.tr",
+      "href": "mailto:system@hacettepe.edu.tr"
+    }
+  ],
+  "gorseller": [],
+  "belgeler": [
+    {
+      "metin": "Kurulum dökümanına buradan erişebilirsiniz.",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/hu_vpn_erisim_klavuzu.pdf"
+    }
+  ],
+  "govdeHtml": "<div class=\"icerik\">\n<p>Sayın Kullanıcımız;</p>\n<p>VPN uygulamamızda değişiklik olmuştur.</p>\n<p>Yeni uygulamamıza tarayıcınızda  <a href=\"https://vpn.hacettepe.edu.tr/\" target=\"_blank\" rel=\"noopener noreferrer\">https://vpn.hacettepe.edu.tr</a>  adresine Hacettepe E-posta kullanıcı adı ve şifrenizle giriş yaptıktan sonra İşletim Sistemi’nize göre uygun olan uygulamayı yükleyerek erişim sağlayabilirsiniz.</p>\n<p><a href=\"/dosyalar/hu_vpn_erisim_klavuzu.pdf\" target=\"_blank\">Kurulum dökümanına buradan erişebilirsiniz.</a></p>\n<p>Herhangi bir sorun ile karşılaşmanız durumunda <a href=\"mailto:system@hacettepe.edu.tr\">system@hacettepe.edu.tr</a> adresine e-posta yolu ile bilgi vermeniz rica olunur.</p>\n\n\n  \n</div>",
+  "karakter": 446,
+  "cekilme": "2026-07-21T19:24:33.764Z"
+}

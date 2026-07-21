@@ -15,6 +15,8 @@ export interface Sayfa {
   seoDescription: string | null;
   seoKeywords: string | null;
   belgeler: Belge[];
+  /** Diğer dilde karşılığı var mı (hreflang için) */
+  cevirisiVar?: boolean;
 }
 
 export interface MenuOge {

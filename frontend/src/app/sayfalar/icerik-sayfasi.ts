@@ -58,7 +58,7 @@ export class IcerikSayfasi {
     this.rota.paramMap.pipe(
       switchMap((p) => {
         const dil = (p.get('dil') as Dil) ?? 'tr';
-        const slug = p.get('slug') ?? 'anasayfa';
+        const slug = p.get('slug') ?? 'home';
         this.dil.set(dil);
         return this.api.sayfa(dil, slug).pipe(
           tap((s) => {

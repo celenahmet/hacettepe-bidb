@@ -1,0 +1,137 @@
+{
+  "slug": "spam",
+  "dil": "tr",
+  "bolum": "",
+  "menuAdi": "İstenmeyen E-Posta",
+  "url": "https://bidb.hacettepe.edu.tr/tr/spam",
+  "baslik": "SPAM ve PHISHING Hakkında",
+  "seo": {
+    "title": "Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı",
+    "description": "",
+    "keywords": ""
+  },
+  "paragraflar": [
+    {
+      "tur": "p",
+      "metin": "Spam"
+    },
+    {
+      "tur": "p",
+      "metin": "Hemen hemen her e-posta kullanıcısı her gün posta kutusunda istemediği bir çok reklam vs. amaçlı e-posta ile karşılaşmaktadır. Internet dünyasında alıcının istemi dışında gönderilen bu tür mesajların tümüne SPAM adı verilmektedir. Spam, aslında 1960'lı yılların sonunda İngiltere'de satılan bir konserve markasıydı. 1970 yılında İngiltere televizyonunun ünlü komedi programı Monty Phyton'da, işlenmiş gıda yemek istemeyen bir çiftin bir lokantanın menüsünde Spam içeren ürünlerden başka birşey bulamayıp bu ürünü yemek zorunda kalmaları konu edilmişti. O tarihte çok popüler olan bu skeçten ilham alınarak istenmeyen reklam amaçlı e-postalara da Spam adı verilmeye başlanmıştır."
+    },
+    {
+      "tur": "p",
+      "metin": "Spam mesajlar günümüzde dünya günlük Internet posta trafiğinin %70'inden fazlasını oluşturmaktadır. Spam göndericileri genellikle Viagra türevi ilaçlar, ünlü saat markalarının kopyaları, zor durumdaki bir Afrika ülkesinin sürgündeki kralının para transfer istekleri vb. konularda alıcıları ikna etmeye çalışan e-postalar yollarlar. Bu e-postaların genellikle uzak doğu, doğu Avrupa ve kuzey Amerika'dan geldiği tespit edilmektedir. Spam ile ilgili istatistiklere göre spam mesaj alanların yaklaşık binde biri bu mesajlara inanmakta ve söyleneni yapmaktadırlar. Bu da, bir anda milyonlarca kişiye spam gönderildiğine göre çok büyük bir müşteri kitlesi anlamına gelmektedir. Çeşitli yasal takipler sonucu yakalanan bazı spam göndericilerinin bu yolla milyonlarca dolara sahip olduğu gözlenmiştir."
+    },
+    {
+      "tur": "p",
+      "metin": "Spam mesajları sadece sahtekarlık amaçlı mesajlar olarak göstermek doğru olmayabilir. Yerli veya yabancı birçok kişi ya da firma, ürün ve hizmetlerini en kısa ve ucuz yoldan insanlara tanıtabilmek amacıyla toplu e-postalar göndermektedirler. Ancak gerek bu şekilde gelen mesajların güvenilirliğinin olmaması, gerekse öyle ya da böyle alıcının istemi dışında geliyor olmaları bunların da aynı kategoride değerlendirilmelerine neden olmaktadır."
+    },
+    {
+      "tur": "p",
+      "metin": "E-posta mesajlarında teknik olarak yollayanın adını ve adresini gerçek dışı olarak her şekilde göstermek mümkündür. Örneğin ilk bakışta gönderen kişi olarak sizin ad ve adresinizin görüldüğü bir mesaj, herhangi bir başka kişiye sizin veya bağlı bulunduğunuz kurumun hiç ilgisi olmadan gönderilebilir. Mesajın başlık kısmının detayları özel olarak incelenip gönderildiği IP adresi bulunabilse dahi, uzman korsanlar bulundukları yerden başka yerlere ve oralardan da yine başka yerlere bağlanıp oradan yalan adresli mesajlar atabilirler ve bunların tespiti pratikte imkansız denecek kadar zor olabilir. Bu nedenle spam'ı yollayan da isterse gerçek kimliğini ve yerini kolayca gizleyebilir."
+    },
+    {
+      "tur": "p",
+      "metin": "Spam yollayıcılarının beslenme kaynağı, spam yollanacak e-posta adresleridir. Bir spam'cı ne kadar çok e-posta adresine sahipse o kadar çok müşteri potansiyeli var demektir. Bu nedenle e-posta adresleri ayrıca alınıp satılan ticari bir değer haline de dönüşmüştür. Hatta, el altından yüzbinlerce e-posta adresinin depolandığı CD'ler bile satılmakta; üstelik bunların reklamları da yine Spam mesajlarla yapılmaktadır."
+    },
+    {
+      "tur": "p",
+      "metin": "E-posta adreslerini ele geçirmenin çeşitli yolları vardır. Ancak çoğu zaman bu adresler, adres sahiplerinin kendileri tarafından bilinçsizce spam'cı kişilere ulaştırılmaktadır:"
+    },
+    {
+      "tur": "li",
+      "metin": "\"Bedava Üyelik\" gerektiren siteler: Şarkı sözü sitelerinden forumlara kadar birçok site, kullanımının ücretsiz olduğunu, ancak sadece e-posta adresi ile üyelik gerektiğini söylerler. Eğer site, özel olarak aldığı e-posta adresini kimseye vermeyeceğini ve spam amaçlı olarak kullanmayacağını açıkça ifade etmiyorsa büyük bir ihtimalle bu adres bir veritabanında spam'cılara satılmak üzere depolanacaktır. Hatta kimi siteler bunu açıkça yazsalar dahi kullanıcılardan topladıkları adresleri spam amaçlı olarak kullanmaktadırlar."
+    },
+    {
+      "tur": "li",
+      "metin": "E-Posta yönlendirmeleri (forwarding): Bazen e-posta ile bir tanıdıktan gelen mesaj, fıkra, resim, vs. çok hoşa gider ve kullanıcı da hemen bunu kendi tanıdıklarına yönlendirir. Yönlendirirken e-postanın içinde daha önce gönderenlerin de adresleri birikir. Sonunda dağ gibi biriken bu mesajlar bir spam'cının eline geçer. Bu, alıcıların herhangi birinin bilgisayarında bulunan bir casus yazılım ile olabileceği gibi, alıcının kendisi spam'cılara para karşılığında adres satan bir kişi bile olabilir. Bazı mesajlar özellikle kullanıcıların duygularını sömürecek şekilde hazırlanır. Örneğin çok popüler bir ürünün aslında kanserojen olması; milli ve manevi değerlere hakaret içeren web sitelerini protesto etmek için oy kullanılması; aslında hiç olmayan kanserli bir kıza yardım istekleri; şans getireceğine inandırılan mesajlar ve bir çoğu buna örnek olabilir."
+    },
+    {
+      "tur": "li",
+      "metin": "Web siteleri: Dünyadaki Web sitelerini dolaşıp veri toplayan robot yazılımlar mevcuttur. Bunlar, siteleri tararlar ve içlerinde geçen e-posta adreslerini bulmaya çalışırlar. En çok yakalamaya çalıştıkları karakter \"@\" işaretidir. Bu nedenle bazı sitelerde e-posta adresleri, \"filanca (at) falanca.com\" şeklinde yazılırlar ki bu tür robotlara daha az takılsın."
+    },
+    {
+      "tur": "li",
+      "metin": "Bilgisayar virüsleri: Kişinin bilgisayarına giren ve bu amaçla tasarlanmış bir virüs, kişinin haberi olmadan e-posta programının (Outlook vb.) adres defterindeki ve hatta birikmiş tüm e-postalardaki adresleri toplayıp yine Internet üzerinden spam'cılara ulaştırabilmektedir."
+    },
+    {
+      "tur": "p",
+      "metin": "Spam'dan korunmak için tam bir formül olmasa da, en azından bazı önlemler almak, bunların sayısını azaltmakta etkili olabilir:"
+    },
+    {
+      "tur": "li",
+      "metin": "Ücretsiz e-posta adresi veren bir yerden (GMail, Yahoo, Hotmail, vb.) ayrı bir adres almak ve üye olunmasını isteyen sitelere e-posta adresi olarak bunu vermek. Zaman zaman da bu adresle girip biriken tüm postaları (ki bu sizin normal adresiniz olmadığına göre faydalı bir e-posta gelmesi beklenmemektedir) tek bir hamle ile temizlemek."
+    },
+    {
+      "tur": "li",
+      "metin": "Bazı yazılı formlarda da e-posta adresi sorulmaktadır. Eğer çok güvenilen bir yer değilse bunlara da yukarıdaki işlem uygulanabilir."
+    },
+    {
+      "tur": "li",
+      "metin": "Gelen ve başka insanlara forward'lamak istediğiniz mesajların içeriği ile oynayıp varsa içerdiği başka e-posta adres başlıklarını silmek ve göndereceğiniz kişilerin e-posta adreslerini \"To (Kime)\" satırı yerine \"BCC\" satırına yazmak. BCC (Blind Carbon Copy) ile e-posta yollanmış bir kişinin adresi diğer alıcılar tarafından görülmeyecektir. Bu da adreslerin yayılmasını engelleyecektir."
+    },
+    {
+      "tur": "li",
+      "metin": "Spam'cıya varlığınızı sezdirmemek. Gelen herhangi bir istenmeyen mesajda \"bu mesajı almak istemiyorsanız şurayı tıklayın ya da şuraya mesaj atın\" benzeri bir ibare bulunabilir. Bunlara uyup cevap vermek, spam'ı alanı o listeden çıkarmayacağı gibi, spam'cıya da o adresin gerçekten geçerli ve okunan bir adres olduğu bilgisini verir ve bu daha sizin spam'cının adres defterindeki yerinizi perçinler."
+    },
+    {
+      "tur": "li",
+      "metin": "Gelen mesajları bir başkasına ya da bir tartışma listesine \"forward\"lamadan önce içeriğinin doğruluğunu kontrol etmek. Örneğin Atatürk'e karşı düşmanlık içerdiği iddia edilen ve \"aman sakın siteye girip sayacını arttırmayın, şuraya tıklayıp protesto edin ve çevrenizdekilere yollayın\" gibi bir söylem içindeki mesajda bahsedilen site gerçekte hiç olmayabilir ya da yıllar önce açılıp kapanmıştır. Bu tür mesajlara \"hoax\", \"scam\", \"con\" vs. isimler verilir. Bunların doğruluğunu kontrol etmek için popüler arama motorları kullanılabilir. Örneğin Google'da \"hoax checking\" kelimeleri girilirse e-posta ile dolaşan \"şehir efsanelerine\" ait sitelere ulaşmak mümkündür."
+    },
+    {
+      "tur": "li",
+      "metin": "Kişisel Web sitelerine mümkün olduğunca e-posta adreslerini formal olmayan yöntemlerle (\"falanca (-at-) filanca (nokta) com\" gibi) yazmak. Bu yöntemle otomatik tarama robotları sitenize girdiği zaman bunun bir e-posta adresi olduğunu anlamayacaktır."
+    },
+    {
+      "tur": "li",
+      "metin": "Antispyware ve antivirüs programları kullanmak."
+    },
+    {
+      "tur": "li",
+      "metin": "Yasal olmayan veya kaynağı belirsiz yazılımları yüklememek, çalıştırmamak. Şifre kırıcı, şifresi kırılmış, yasal olmayan programların ve oyunların çoğu birer Trojan (Truva Atı)'dır. Yani bunların perde arkasındaki işlevi bir şekilde zarar vermektir. Bunlar aynı zamanda spam'cılara sizin ve adres defterinizdeki kişilerin adreslerini yollamak için çalışabilirler. Siz bu programları kendi rızanızla yükleyip çalıştırdığınız için virüs sayılmazlar ve antivirüs programları da sizi uyarmaz."
+    },
+    {
+      "tur": "p",
+      "metin": "Hacettepe Üniversitesi Bilgi İşlem Dairesi, @hacettepe.edu.tr uzantılı e-posta adresleri üzerinde Spam kontrolu yapmakta ve şüpheli mesajlar \"Junk Mail\" klasörüne atılmaktadır. Bu klasör de belirli aralıklarla -kota problemleri nedeniyle- otomatik olarak silinmektedir."
+    },
+    {
+      "tur": "p",
+      "metin": "Bir mesajın Spam olup olmadığını anlamak insan için kolay olsa da bilgisayar için durum aynı değildir. Otomatik tarayıcılar bazı popüler anahtar kelimeleri (örneğin Viagra gibi) mesaj içinde ararlar, mesajın \"from\" satırındaki ismin anormal sayıda kişiye mesaj atıp atmadığını tespit etmeye çalışırlar, hatta dünya üzerinde belirli noktalara kurulu spam veritabanlarına bağlantı kurarak yeni anahtar kelimeleri edinip kontrollerini bunları kullanarak yapmaya çalışırlar. Spam yollayıcıları da diğer yandan bu tarayıcılara yakalanmamak için anahtar kelimeleri bozarak yazarlar (örneğin \"\\/ | A AA GG rA\" gibi) ya da yazıları normal metin yerine bir resim dosyasının içinde yazıp o dosyayı eklenti olarak gönderirler veya akla gelmeyen bambaşka metodlar keşfederler. Bu teknik savaş karşılıklı devam eder. Bu nedenle hiç bir spam tarayıcısı bu tür mesajları yüzde yüz oranında filtreleyememektedir."
+    },
+    {
+      "tur": "p",
+      "metin": "Sorunun çözümü, ülkelerin spam ile ilgili yasal düzenlemeler yapmasında görünse de, kişilerin virüs ve spyware gibi zararlılardan kendilerini korumaları, ücretsiz sitelere e-posta adreslerini verirken iki kere düşünmeleri ve kaynağı belirsiz programları çalıştırmamaları da bir o kadar önem taşımaktadır."
+    },
+    {
+      "tur": "p",
+      "metin": "Phıshıng"
+    },
+    {
+      "tur": "p",
+      "metin": "Balık tutmak anlamına gelen \"fishing\" sözcüğünün bozulması ile elde edilen bu sözcük, Internet üzerinde \"balık\" olarak gördükleri kullanıcılara e-postalar atıp onları yönlendirerek menfaat sağlamaya çalışmak ya da zarar vermek anlamında kullanılmaktadır."
+    },
+    {
+      "tur": "p",
+      "metin": "Bu tür e-posta mesajları kullanıcıların bilgisizliklerinden yararlanarak kendi kendilerine zarar vermelerini sağlamaya çalışırlar. Örneğin \"Şu tarihte filanca virüs tüm dünyada Internet üzerinden saldırıya geçecek. O tarihte sakın bilgisayarlarınızı açmayın!\" türünden bir mesaj olsa olsa sizi kendi rızanızla o gün bilgisayar kullanımından mahrum etmekten başka bir işe yaramayacaktır. Ya da, daha kötüsü, \"Dikkat! Bilgisayarınızın Windows/System dizini altında falanca.dll adında bir dosya görüyorsanız bilgisayarınıza filanca virüsü bulaşmış demektir. Derhal o dosyayı silin ve bilgisayarınızı kapayıp açın!\" gibi bir e-posta, belki de sisteminiz için gerekli bir dosyayı size kendi ellerinizle sildirterek bilgisayarınızı çalışmaz hale getirmeyi başarabilecektir."
+    },
+    {
+      "tur": "p",
+      "metin": "Bunların dışında, unutulmamalıdır ki, bankalar başta olmak üzere hiç bir ciddi kuruluş kişisel bilgilerinizi e-posta yoluyla almaya ya da değiştirmeye kalkışmaz. E-Posta yazıp \"kişisel bilgilerinizi değiştirmek için şuraya tıklayın\" demez. Teknik hilelerle e-posta'nın içinde tıklamanız istenen link, sahiden de gerçek bankanın adresi gibi gösterilebilir. Ancak o link tıklandığında aslında gerçek bankanın web sayfasının taklidi olan bambaşka bir adrese yönlendirebilir ve kullanıcı bunu farketmez. Bu gibi durumlarda en iyi yöntem, ilgili kurumu arayıp durumu doğrulatmaktır."
+    },
+    {
+      "tur": "p",
+      "metin": "Kredi kartı numaraları, kişisel bilgiler, e-posta dahil her türlü şifre hiç bir zaman e-posta ile açıkça yollanmamalıdır. Bir e-posta teknik olarak gideceği yere varana kadar bir çok noktadan geçmektedir. Bu noktalarda e-postaların içeriğinin \"dinlenmesi\" her zaman mümkündür."
+    },
+    {
+      "tur": "p",
+      "metin": "Özellikle Kablosuz Internet'in kullanıldığı alanlarda mecbur kalınmadıkça banka gibi yerlere girilmemeli, kredi kartı, şifre vs. ile ilgili işlemler nereyle olursa olsun yapılmamalıdır. Havadaki sinyaller üçüncü şahıslar tarafından dinlenebilir. Sinyaller şifreli dahi olsa unutulmamalıdır ki tüm şifreleme yöntemleri sadece kırılıncaya kadar güvenlidir."
+    }
+  ],
+  "baglantilar": [],
+  "gorseller": [],
+  "belgeler": [],
+  "govdeHtml": "<div class=\"icerik\">\n<p><strong>Spam</strong></p>\n<p>Hemen hemen her e-posta kullanıcısı her gün posta kutusunda   istemediği bir çok reklam vs. amaçlı e-posta ile karşılaşmaktadır. Internet   dünyasında alıcının istemi dışında gönderilen bu tür mesajların tümüne SPAM adı   verilmektedir. Spam, aslında 1960'lı yılların sonunda İngiltere'de satılan bir   konserve markasıydı. 1970 yılında İngiltere televizyonunun ünlü komedi programı   Monty Phyton'da, işlenmiş gıda yemek istemeyen bir çiftin bir lokantanın   menüsünde Spam içeren ürünlerden başka birşey bulamayıp bu ürünü yemek zorunda   kalmaları konu edilmişti. O tarihte çok popüler olan bu skeçten ilham alınarak   istenmeyen reklam amaçlı e-postalara da Spam adı verilmeye başlanmıştır.</p>\n<p>Spam mesajlar günümüzde dünya günlük Internet posta trafiğinin %70'inden   fazlasını oluşturmaktadır. Spam göndericileri genellikle Viagra türevi ilaçlar,   ünlü saat markalarının kopyaları, zor durumdaki bir Afrika ülkesinin sürgündeki   kralının para transfer istekleri vb. konularda alıcıları ikna etmeye çalışan   e-postalar yollarlar. Bu e-postaların genellikle uzak doğu, doğu Avrupa ve kuzey   Amerika'dan geldiği tespit edilmektedir. Spam ile ilgili istatistiklere göre   spam mesaj alanların yaklaşık binde biri bu mesajlara inanmakta ve söyleneni   yapmaktadırlar. Bu da, bir anda milyonlarca kişiye spam gönderildiğine göre çok   büyük bir müşteri kitlesi anlamına gelmektedir. Çeşitli yasal takipler sonucu   yakalanan bazı spam göndericilerinin bu yolla milyonlarca dolara sahip olduğu   gözlenmiştir. </p>\n<p>Spam mesajları sadece sahtekarlık amaçlı mesajlar olarak göstermek doğru   olmayabilir. Yerli veya yabancı birçok kişi ya da firma, ürün ve hizmetlerini en   kısa ve ucuz yoldan insanlara tanıtabilmek amacıyla toplu e-postalar   göndermektedirler. Ancak gerek bu şekilde gelen mesajların güvenilirliğinin   olmaması, gerekse öyle ya da böyle alıcının istemi dışında geliyor olmaları   bunların da aynı kategoride değerlendirilmelerine neden olmaktadır. </p>\n<p>E-posta mesajlarında teknik olarak yollayanın adını ve adresini gerçek dışı   olarak her şekilde göstermek mümkündür. Örneğin ilk bakışta gönderen kişi olarak   sizin ad ve adresinizin görüldüğü bir mesaj, herhangi bir başka kişiye sizin   veya bağlı bulunduğunuz kurumun hiç ilgisi olmadan gönderilebilir. Mesajın   başlık kısmının detayları özel olarak incelenip gönderildiği IP adresi   bulunabilse dahi, uzman korsanlar bulundukları yerden başka yerlere ve oralardan   da yine başka yerlere bağlanıp oradan yalan adresli mesajlar atabilirler ve   bunların tespiti pratikte imkansız denecek kadar zor olabilir. Bu nedenle spam'ı   yollayan da isterse gerçek kimliğini ve yerini kolayca gizleyebilir. </p>\n<p>Spam yollayıcılarının beslenme kaynağı, spam yollanacak e-posta adresleridir.   Bir spam'cı ne kadar çok e-posta adresine sahipse o kadar çok müşteri   potansiyeli var demektir. Bu nedenle e-posta adresleri ayrıca alınıp satılan   ticari bir değer haline de dönüşmüştür. Hatta, el altından yüzbinlerce e-posta   adresinin depolandığı CD'ler bile satılmakta; üstelik bunların reklamları da   yine Spam mesajlarla yapılmaktadır. </p>\n<p>E-posta adreslerini ele geçirmenin çeşitli yolları vardır. Ancak çoğu zaman   bu adresler, adres sahiplerinin kendileri tarafından bilinçsizce spam'cı   kişilere ulaştırılmaktadır: </p>\n<OL>\n  <LI><STRONG>\"Bedava Üyelik\" gerektiren siteler:</STRONG> Şarkı sözü sitelerinden forumlara   kadar birçok site, kullanımının ücretsiz olduğunu, ancak sadece e-posta adresi   ile üyelik gerektiğini söylerler. Eğer site, özel olarak aldığı e-posta adresini   kimseye vermeyeceğini ve spam amaçlı olarak kullanmayacağını açıkça ifade   etmiyorsa büyük bir ihtimalle bu adres bir veritabanında spam'cılara satılmak   üzere depolanacaktır. Hatta kimi siteler bunu açıkça yazsalar dahi   kullanıcılardan topladıkları adresleri spam amaçlı olarak kullanmaktadırlar. <BR>\n      <BR>\n  </LI>\n  <LI><STRONG>E-Posta yönlendirmeleri (forwarding):</STRONG> Bazen e-posta ile bir   tanıdıktan gelen mesaj, fıkra, resim, vs. çok hoşa gider ve kullanıcı da hemen   bunu kendi tanıdıklarına yönlendirir. Yönlendirirken e-postanın içinde daha önce   gönderenlerin de adresleri birikir. Sonunda dağ gibi biriken bu mesajlar bir   spam'cının eline geçer. Bu, alıcıların herhangi birinin bilgisayarında bulunan   bir casus yazılım ile olabileceği gibi, alıcının kendisi spam'cılara para   karşılığında adres satan bir kişi bile olabilir. Bazı mesajlar özellikle   kullanıcıların duygularını sömürecek şekilde hazırlanır. Örneğin çok popüler bir   ürünün aslında kanserojen olması; milli ve manevi değerlere hakaret içeren web   sitelerini protesto etmek için oy kullanılması; aslında hiç olmayan kanserli bir   kıza yardım istekleri; şans getireceğine inandırılan mesajlar ve bir çoğu buna   örnek olabilir. <BR>\n      <BR>\n  </LI>\n  <LI><STRONG>Web siteleri:</STRONG> Dünyadaki Web sitelerini dolaşıp veri toplayan robot   yazılımlar mevcuttur. Bunlar, siteleri tararlar ve içlerinde geçen e-posta   adreslerini bulmaya çalışırlar. En çok yakalamaya çalıştıkları karakter \"@\"   işaretidir. Bu nedenle bazı sitelerde e-posta adresleri, \"filanca (at)   falanca.com\" şeklinde yazılırlar ki bu tür robotlara daha az takılsın. <BR>\n      <BR>\n  </LI>\n  <LI><STRONG>Bilgisayar virüsleri:</STRONG> Kişinin bilgisayarına giren ve bu amaçla   tasarlanmış bir virüs, kişinin haberi olmadan e-posta programının (Outlook vb.)   adres defterindeki ve hatta birikmiş tüm e-postalardaki adresleri toplayıp yine   Internet üzerinden spam'cılara ulaştırabilmektedir. </LI>\n</OL>\n<p>Spam'dan korunmak için tam bir formül olmasa da, en azından bazı önlemler   almak, bunların sayısını azaltmakta etkili olabilir: </p>\n<p>  </p>\n<OL>\n  <LI><STRONG>Ücretsiz e-posta adresi veren bir yerden (GMail, Yahoo, Hotmail, vb.)   ayrı bir adres almak ve üye olunmasını isteyen sitelere e-posta adresi olarak   bunu vermek.</STRONG> Zaman zaman da bu adresle girip biriken tüm postaları (ki bu   sizin normal adresiniz olmadığına göre faydalı bir e-posta gelmesi   beklenmemektedir) tek bir hamle ile temizlemek. <BR>\n      <BR>\n  </LI>\n  <LI>Bazı yazılı formlarda da e-posta adresi sorulmaktadır. Eğer çok güvenilen   bir yer değilse bunlara da yukarıdaki işlem uygulanabilir. <BR>\n      <BR>\n  </LI>\n  <LI><STRONG>Gelen ve başka insanlara forward'lamak istediğiniz mesajların içeriği ile   oynayıp varsa içerdiği başka e-posta adres başlıklarını silmek ve göndereceğiniz   kişilerin e-posta adreslerini \"To (Kime)\" satırı yerine \"BCC\" satırına   yazmak.</STRONG> BCC (Blind Carbon Copy) ile e-posta yollanmış bir kişinin adresi   diğer alıcılar tarafından görülmeyecektir. Bu da adreslerin yayılmasını   engelleyecektir. <BR>\n      <BR>\n  </LI>\n  <LI><STRONG>Spam'cıya varlığınızı sezdirmemek.</STRONG> Gelen herhangi bir istenmeyen   mesajda \"bu mesajı almak istemiyorsanız şurayı tıklayın ya da şuraya mesaj atın\"   benzeri bir ibare bulunabilir. Bunlara uyup cevap vermek, spam'ı alanı o   listeden çıkarmayacağı gibi, spam'cıya da o adresin gerçekten geçerli ve okunan   bir adres olduğu bilgisini verir ve bu daha sizin spam'cının adres defterindeki   yerinizi perçinler. <BR>\n      <BR>\n  </LI>\n  <LI><STRONG>Gelen mesajları bir başkasına ya da bir tartışma listesine   \"forward\"lamadan önce içeriğinin doğruluğunu kontrol etmek.</STRONG> Örneğin   Atatürk'e karşı düşmanlık içerdiği iddia edilen ve \"aman sakın siteye girip   sayacını arttırmayın, şuraya tıklayıp protesto edin ve çevrenizdekilere   yollayın\" gibi bir söylem içindeki mesajda bahsedilen site gerçekte hiç   olmayabilir ya da yıllar önce açılıp kapanmıştır. Bu tür mesajlara \"hoax\",   \"scam\", \"con\" vs. isimler verilir. Bunların doğruluğunu kontrol etmek için   popüler arama motorları kullanılabilir. Örneğin Google'da \"hoax checking\"   kelimeleri girilirse e-posta ile dolaşan \"şehir efsanelerine\" ait sitelere   ulaşmak mümkündür. <BR>\n      <BR>\n  </LI>\n  <LI><STRONG>Kişisel Web sitelerine mümkün olduğunca e-posta adreslerini formal   olmayan yöntemlerle (\"falanca (-at-) filanca (nokta) com\" gibi) yazmak.</STRONG> Bu   yöntemle otomatik tarama robotları sitenize girdiği zaman bunun bir e-posta   adresi olduğunu anlamayacaktır. <BR>\n      <BR>\n  </LI>\n  <LI><STRONG>Antispyware ve antivirüs programları kullanmak.</STRONG> <BR>\n      <BR>\n  </LI>\n  <LI><STRONG>Yasal olmayan veya kaynağı belirsiz yazılımları yüklememek,   çalıştırmamak.</STRONG> Şifre kırıcı, şifresi kırılmış, yasal olmayan programların ve   oyunların çoğu birer Trojan (Truva Atı)'dır. Yani bunların perde arkasındaki   işlevi bir şekilde zarar vermektir. Bunlar aynı zamanda spam'cılara sizin ve   adres defterinizdeki kişilerin adreslerini yollamak için çalışabilirler. Siz bu   programları kendi rızanızla yükleyip çalıştırdığınız için virüs sayılmazlar ve   antivirüs programları da sizi uyarmaz. </LI>\n</OL>\n<p>Hacettepe Üniversitesi Bilgi İşlem Dairesi, @hacettepe.edu.tr uzantılı   e-posta adresleri üzerinde Spam kontrolu yapmakta ve şüpheli mesajlar \"Junk   Mail\" klasörüne atılmaktadır. Bu klasör de belirli aralıklarla -kota problemleri   nedeniyle- otomatik olarak silinmektedir. </p>\n<p>Bir mesajın Spam olup olmadığını anlamak insan için kolay olsa da bilgisayar   için durum aynı değildir. Otomatik tarayıcılar bazı popüler anahtar kelimeleri   (örneğin Viagra gibi) mesaj içinde ararlar, mesajın \"from\" satırındaki ismin   anormal sayıda kişiye mesaj atıp atmadığını tespit etmeye çalışırlar, hatta   dünya üzerinde belirli noktalara kurulu spam veritabanlarına bağlantı kurarak   yeni anahtar kelimeleri edinip kontrollerini bunları kullanarak yapmaya   çalışırlar. Spam yollayıcıları da diğer yandan bu tarayıcılara yakalanmamak için   anahtar kelimeleri bozarak yazarlar (örneğin \"\\/ | A AA GG rA\" gibi) ya da   yazıları normal metin yerine bir resim dosyasının içinde yazıp o dosyayı eklenti   olarak gönderirler veya akla gelmeyen bambaşka metodlar keşfederler. Bu teknik   savaş karşılıklı devam eder. Bu nedenle hiç bir spam tarayıcısı bu tür mesajları   yüzde yüz oranında filtreleyememektedir. </p>\n<p>Sorunun çözümü, ülkelerin spam ile ilgili yasal düzenlemeler yapmasında   görünse de, kişilerin virüs ve spyware gibi zararlılardan kendilerini   korumaları, ücretsiz sitelere e-posta adreslerini verirken iki kere düşünmeleri   ve kaynağı belirsiz programları çalıştırmamaları da bir o kadar önem   taşımaktadır. </p>\n<p><STRONG>Phıshıng</STRONG></p>\n<p>Balık tutmak anlamına gelen \"fishing\" sözcüğünün bozulması ile   elde edilen bu sözcük, Internet üzerinde \"balık\" olarak gördükleri kullanıcılara   e-postalar atıp onları yönlendirerek menfaat sağlamaya çalışmak ya da zarar   vermek anlamında kullanılmaktadır. </p>\n<p>Bu tür e-posta mesajları kullanıcıların bilgisizliklerinden yararlanarak   kendi kendilerine zarar vermelerini sağlamaya çalışırlar. Örneğin \"Şu tarihte   filanca virüs tüm dünyada Internet üzerinden saldırıya geçecek. O tarihte sakın   bilgisayarlarınızı açmayın!\" türünden bir mesaj olsa olsa sizi kendi rızanızla o   gün bilgisayar kullanımından mahrum etmekten başka bir işe yaramayacaktır. Ya   da, daha kötüsü, \"Dikkat! Bilgisayarınızın Windows/System dizini altında   falanca.dll adında bir dosya görüyorsanız bilgisayarınıza filanca virüsü   bulaşmış demektir. Derhal o dosyayı silin ve bilgisayarınızı kapayıp açın!\" gibi   bir e-posta, belki de sisteminiz için gerekli bir dosyayı size kendi ellerinizle   sildirterek bilgisayarınızı çalışmaz hale getirmeyi başarabilecektir. </p>\n<p>Bunların dışında, unutulmamalıdır ki, bankalar başta olmak üzere hiç bir   ciddi kuruluş kişisel bilgilerinizi e-posta yoluyla almaya ya da değiştirmeye   kalkışmaz. E-Posta yazıp \"kişisel bilgilerinizi değiştirmek için şuraya   tıklayın\" demez. Teknik hilelerle e-posta'nın içinde tıklamanız istenen link,   sahiden de gerçek bankanın adresi gibi gösterilebilir. Ancak o link   tıklandığında aslında gerçek bankanın web sayfasının taklidi olan bambaşka bir   adrese yönlendirebilir ve kullanıcı bunu farketmez. Bu gibi durumlarda en iyi   yöntem, ilgili kurumu arayıp durumu doğrulatmaktır. </p>\n<p>Kredi kartı numaraları, kişisel bilgiler, e-posta dahil her türlü şifre hiç   bir zaman e-posta ile açıkça yollanmamalıdır. Bir e-posta teknik olarak gideceği   yere varana kadar bir çok noktadan geçmektedir. Bu noktalarda e-postaların   içeriğinin \"dinlenmesi\" her zaman mümkündür. </p>\n<p>Özellikle Kablosuz Internet'in kullanıldığı alanlarda mecbur kalınmadıkça   banka gibi yerlere girilmemeli, kredi kartı, şifre vs. ile ilgili işlemler   nereyle olursa olsun yapılmamalıdır. Havadaki sinyaller üçüncü şahıslar   tarafından dinlenebilir. Sinyaller şifreli dahi olsa unutulmamalıdır ki tüm   şifreleme yöntemleri sadece kırılıncaya kadar güvenlidir. </p>\n</div>",
+  "karakter": 11744,
+  "cekilme": "2026-07-21T19:24:35.487Z"
+}

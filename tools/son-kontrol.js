@@ -21,8 +21,8 @@ function govdeMetni(html) {
 (async () => {
   /* --- sayfalar --- */
   const sayfalar = [
-    ["/tr", 800], ["/tr/geneltanitim", 3000], ["/tr/sss", 10000],
-    ["/tr/formlar", 300], ["/tr/iletisim", 100], ["/en/overview", 300]
+    ["/tr", 800], ["/tr/about", 3000], ["/tr/faq", 10000],
+    ["/tr/forms", 300], ["/tr/contact", 100], ["/en/about", 300]
   ];
   for (const [yol, asgari] of sayfalar) {
     const { durum, govde } = await metin(SITE + yol);
@@ -31,20 +31,20 @@ function govdeMetni(html) {
   }
 
   /* --- SEO etiketleri --- */
-  const { govde: gt } = await metin(SITE + "/tr/geneltanitim");
+  const { govde: gt } = await metin(SITE + "/tr/about");
   kontrol("sayfaya özgü başlık", /<title>Genel Tanıtım/.test(gt));
   kontrol("html lang doğru", /<html[^>]+lang="tr"/.test(gt));
   kontrol("canonical bağlantısı", /rel="canonical"/.test(gt));
   kontrol("hreflang tr/en", /hreflang="tr"/.test(gt) && /hreflang="en"/.test(gt));
   kontrol("og:title", /property="og:title"/.test(gt));
 
-  const { govde: ge } = await metin(SITE + "/en/overview");
+  const { govde: ge } = await metin(SITE + "/en/about");
   kontrol("İngilizce sayfa lang=en", /<html[^>]+lang="en"/.test(ge));
 
   /* --- gezinme --- */
   kontrol("sol menü sunucuda", (gt.match(/class="sol-bolum"/g) || []).length >= 4);
   kontrol("içeriğe atla bağlantısı", /class="atla"/.test(gt));
-  kontrol("belge listesi", (await metin(SITE + "/tr/formlar")).govde.includes("belge-tur"));
+  kontrol("belge listesi", (await metin(SITE + "/tr/forms")).govde.includes("belge-tur"));
 
   /* --- ana sayfa bileşenleri --- */
   const { govde: ana } = await metin(SITE + "/tr");
@@ -60,7 +60,7 @@ function govdeMetni(html) {
   }
 
   /* --- API --- */
-  for (const u of ["/api/tr/menu", "/api/tr/anasayfa", "/api/tr/sayfa/geneltanitim", "/api/en/sayfa/overview", "/api/tr/sosyal"]) {
+  for (const u of ["/api/tr/menu", "/api/tr/anasayfa", "/api/tr/sayfa/about", "/api/en/sayfa/about", "/api/tr/sosyal"]) {
     const y = await fetch(API + u);
     kontrol("API " + u, y.status === 200, String(y.status));
   }

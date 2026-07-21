@@ -1,0 +1,159 @@
+{
+  "slug": "servis",
+  "dil": "tr",
+  "bolum": "",
+  "menuAdi": "Servisler",
+  "url": "https://bidb.hacettepe.edu.tr/tr/servis",
+  "baslik": "Birimler Web Sayfaları için Web Servisi",
+  "seo": {
+    "title": "Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı",
+    "description": "",
+    "keywords": ""
+  },
+  "paragraflar": [
+    {
+      "tur": "li",
+      "metin": "Başvuru Şekli"
+    },
+    {
+      "tur": "li",
+      "metin": "Kullanıcı Kodu Sorumlularının Sahip Olması Gereken Özellikler"
+    },
+    {
+      "tur": "li",
+      "metin": "Kullanıcı Kodunun Açılması"
+    },
+    {
+      "tur": "li",
+      "metin": "Yeni Şifre Talebi"
+    },
+    {
+      "tur": "li",
+      "metin": "Alias (Sanal) E-posta Hizmeti"
+    },
+    {
+      "tur": "li",
+      "metin": "Teknik Özellikler"
+    },
+    {
+      "tur": "li",
+      "metin": "Başvuru Dilekçesi Örneği (FTP ile yönetilecek web sayfaları için)"
+    },
+    {
+      "tur": "li",
+      "metin": "Web sayfaları içeriği yönetmek için Web İçerik Yönetim Sistemi (HÜ-İYS)"
+    },
+    {
+      "tur": "li",
+      "metin": "Soru ve Sorunlarınız İçin İletişim"
+    },
+    {
+      "tur": "p",
+      "metin": "1. Başvuru Şekli"
+    },
+    {
+      "tur": "p",
+      "metin": "Öğrenci toplulukları kullanıcı kodu edinebilmek için öncelikle HÜ Sağlık, Kültür ve Spor Daire Başkanlığı'na başvurmalıdır. Sağlık, Kültür ve Spor Daire Başkanlığı'nın ilgili yazısı esas alınarak kullanıcı kodu açılmaktadır."
+    },
+    {
+      "tur": "p",
+      "metin": "Etkinlik ve organizasyonlar, kullanıcı kodu açtırmak için organizasyonu düzenleyen birim yöneticisi tarafından onaylanmış bir dilekçe ile BİDB'ye başvurmalıdır."
+    },
+    {
+      "tur": "p",
+      "metin": "Başvuru dilekçesinde kullanıcı kodu talebinin gerekçeleri, kullanıcı kodundan sorumlu olacak kişi/kişilerin adı ve soyadı, ünvanı, telefon numarası ve Hacettepe uzantılı e-posta adresi belirtilmelidir."
+    },
+    {
+      "tur": "p",
+      "metin": "2. Kullanıcı Kodu Sorumlularının Sahip Olması Gereken Özellikler Kullanıcı koduna sahip olan kişi/kişiler, alias (sanal) adresin yönlendirildiği kişilerdir. Bu kişi/kişilerin HTML bilgisine veya web sayfası hazırlamaya yönelik araçları kullanabilme becerisine sahip olmaları gerekmektedir."
+    },
+    {
+      "tur": "p",
+      "metin": "3. Kullanıcı Kodunun Açılması Kullanıcı kodu isteği HÜ BİDB'ye ulaştıktan ve ilgili makamlarca onaylandıktan sonra kullanıcı kodunun açılması için gerekli işlemler yapılır. Kullanıcı kodu ve web sayfası ile ilgili tüm bilgiler, kod açıldıktan sonra sorumlu kişi/kişilerin Hacettepe uzantılı e-posta adresine gönderilir."
+    },
+    {
+      "tur": "p",
+      "metin": "4. Yeni Şifre Talebi Kullanıcı koduna ait şifrenin unutulması veya kaybolması durumunda varolan kullanıcı kodu için yeni bir şifre oluşturulur ve sayfa sorumlusunun e-posta adresine gönderilir. Yeni şifre talebi için web sayfasından sorumlu olan kişi/kişilerin webmaster@hacettepe.edu.tr adresine başvurmaları gerekmektedir. Öğrenci topluluklarının yeni şifre talepleri, topluluğun akademik danışmanının ilgisi ile gerçekleşir."
+    },
+    {
+      "tur": "p",
+      "metin": "5. Alias (Sanal) E-posta Hizmeti Kullanıcı kodu açıldığında e-posta adresi olarak kullanıcıkodumaster@hacettepe.edu.tr şeklinde bir adres verilir. Bu alias (sanal) bir adrestir. Bu adresin kullanıcı adı ve şifresi yoktur. Sadece yönlendirmelidir. Bu adres kullanıcı kodu sorumlularına yönlendirilmiştir. Bu kişilerin e-posta adresleri \"hacettepe\" uzantılı olmak zorundadır. Örneğin: webmaster@hacettepe.edu.tr alias bir adrestir ve Web Birimi' nde çalışan personele yönlendirilmiştir. Bu adrese e-posta atıldığında, e-posta bu birimde çalışan tüm personele gelir. Bu postaya cevap vermek icin personel kendi kişisel e-posta hesabını kullanır."
+    },
+    {
+      "tur": "p",
+      "metin": "6. Teknik Özellikler"
+    },
+    {
+      "tur": "p",
+      "metin": "Güvenlik nedeniyle web sunucusuna Hacettepe Üniversitesi yerleşkeleri dışından ftp yapılamamaktadır."
+    },
+    {
+      "tur": "p",
+      "metin": "Web sunucusunun karakter seti ISO-8859-9 dur. UTF-8 karakter seti kullanılmamaktadır."
+    },
+    {
+      "tur": "p",
+      "metin": "Web sayfalarında PHP, MySQL desteği verilmektedir."
+    },
+    {
+      "tur": "p",
+      "metin": "7. Soru ve Sorunlarınız İçin İletişim Kullanıcı kodu ile ilgili soru/sorunlar, detaylı açıklama (varsa hata mesajları ile birlikte) webmaster@hacettepe.edu.tr adresine iletilmelidir."
+    },
+    {
+      "tur": "p",
+      "metin": "Web kullanıcıları bu metinde yer alan bilgileri periyodik olarak izlemek ve olası değişikliklerden haberdar olmakla yükümlüdürler."
+    }
+  ],
+  "baglantilar": [
+    {
+      "metin": "Başvuru Şekli",
+      "href": "https://bidb.hacettepe.edu.tr/tr/servis#5"
+    },
+    {
+      "metin": "Kullanıcı Kodu Sorumlularının Sahip Olması Gereken Özellikler",
+      "href": "https://bidb.hacettepe.edu.tr/tr/servis#6"
+    },
+    {
+      "metin": "Kullanıcı Kodunun Açılması",
+      "href": "https://bidb.hacettepe.edu.tr/tr/servis#7"
+    },
+    {
+      "metin": "Yeni Şifre Talebi",
+      "href": "https://bidb.hacettepe.edu.tr/tr/servis#8"
+    },
+    {
+      "metin": "Alias (Sanal) E-posta Hizmeti",
+      "href": "https://bidb.hacettepe.edu.tr/tr/servis#9"
+    },
+    {
+      "metin": "Teknik Özellikler",
+      "href": "https://bidb.hacettepe.edu.tr/tr/servis#11"
+    },
+    {
+      "metin": "Başvuru Dilekçesi Örneği",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/BGYS-F-12WebKullaniciKoduTalepFormurevizyon.docx"
+    },
+    {
+      "metin": "Web sayfaları içeriği yönetmek için Web İçerik Yönetim Sistemi (HÜ-İYS)",
+      "href": "https://bidb.hacettepe.edu.tr/tr/hu-iys"
+    },
+    {
+      "metin": "Soru ve Sorunlarınız İçin İletişim",
+      "href": "https://bidb.hacettepe.edu.tr/tr/servis#12"
+    },
+    {
+      "metin": "webmaster@hacettepe.edu.tr",
+      "href": "mailto:webmaster@hacettepe.edu.tr"
+    }
+  ],
+  "gorseller": [],
+  "belgeler": [
+    {
+      "metin": "Başvuru Dilekçesi Örneği",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/BGYS-F-12WebKullaniciKoduTalepFormurevizyon.docx"
+    }
+  ],
+  "govdeHtml": "<div class=\"icerik\">\n  \n  <ol>\n    <li><a href=\"/tr/servis#5\">Başvuru Şekli</a></li>\n    <li><a href=\"/tr/servis#6\">Kullanıcı Kodu Sorumlularının Sahip Olması Gereken Özellikler</a></li>\n    <li><a href=\"/tr/servis#7\">Kullanıcı Kodunun Açılması</a></li>\n    <li><a href=\"/tr/servis#8\">Yeni Şifre Talebi</a></li>\n    <li><a href=\"/tr/servis#9\">Alias (Sanal) E-posta Hizmeti</a></li>\n    <li><a href=\"/tr/servis#11\">Teknik Özellikler</a></li>\n    \n    <li><a href=\"/dosyalar/BGYS-F-12WebKullaniciKoduTalepFormurevizyon.docx\">Başvuru Dilekçesi Örneği</a> (FTP ile yönetilecek web sayfaları için)</li>\n    <li><a href=\"/tr/hu-iys\">Web sayfaları içeriği yönetmek için Web İçerik Yönetim Sistemi (HÜ-İYS) </a></li>\n    <li><a href=\"/tr/servis#12\">Soru ve Sorunlarınız İçin İletişim</a></li>\n  </ol>\n  <p><strong><a name=\"5\"></a>1. Başvuru Şekli</strong><br>\n  </p>\n  <p>Öğrenci toplulukları kullanıcı kodu edinebilmek için öncelikle HÜ   Sağlık, Kültür ve Spor Daire Başkanlığı'na başvurmalıdır. Sağlık,   Kültür ve Spor Daire Başkanlığı'nın ilgili yazısı esas alınarak   kullanıcı kodu açılmaktadır.</p>\n  <p>Etkinlik ve organizasyonlar, kullanıcı kodu açtırmak için   organizasyonu düzenleyen birim yöneticisi tarafından onaylanmış bir   dilekçe ile BİDB'ye başvurmalıdır. </p>\n  <p>Başvuru dilekçesinde kullanıcı kodu talebinin gerekçeleri, kullanıcı   kodundan sorumlu olacak kişi/kişilerin adı ve soyadı, ünvanı, telefon   numarası ve  Hacettepe uzantılı e-posta adresi belirtilmelidir.</p>\n  <p><strong><a name=\"6\"></a>2. Kullanıcı Kodu Sorumlularının Sahip Olması Gereken Özellikler</strong><br>\n    Kullanıcı koduna sahip olan kişi/kişiler, alias (sanal) adresin                       yönlendirildiği kişilerdir. Bu kişi/kişilerin HTML bilgisine veya                       web sayfası hazırlamaya yönelik araçları kullanabilme becerisine                       sahip olmaları gerekmektedir.</p>\n  <p><strong><a name=\"7\"></a>3. Kullanıcı Kodunun Açılması</strong><br>\n    Kullanıcı kodu isteği HÜ BİDB'ye ulaştıktan ve ilgili makamlarca   onaylandıktan sonra kullanıcı kodunun açılması için gerekli   işlemler yapılır. Kullanıcı kodu ve web sayfası ile ilgili tüm bilgiler,   kod açıldıktan sonra sorumlu kişi/kişilerin Hacettepe uzantılı e-posta adresine gönderilir.</p>\n  <p><strong><a name=\"8\"></a>4. Yeni Şifre Talebi</strong><br>\n    Kullanıcı koduna ait şifrenin unutulması veya kaybolması durumunda varolan kullanıcı kodu için yeni bir şifre oluşturulur   ve sayfa sorumlusunun e-posta adresine gönderilir. Yeni şifre talebi için web sayfasından sorumlu olan kişi/kişilerin <a href=\"mailto:webmaster@hacettepe.edu.tr\">webmaster@hacettepe.edu.tr</a> adresine başvurmaları gerekmektedir. Öğrenci topluluklarının yeni şifre   talepleri, topluluğun akademik danışmanının ilgisi ile gerçekleşir.</p>\n  <p><strong><a name=\"9\"></a>5. Alias (Sanal) E-posta Hizmeti</strong><br>\n    Kullanıcı kodu açıldığında e-posta adresi olarak  kullanıcıkodumaster@hacettepe.edu.tr    şeklinde bir adres verilir.  Bu alias (sanal) bir adrestir. Bu adresin kullanıcı    adı ve şifresi yoktur. Sadece yönlendirmelidir. Bu adres kullanıcı kodu sorumlularına    yönlendirilmiştir. Bu kişilerin e-posta adresleri \"hacettepe\" uzantılı olmak    zorundadır.<br>\n    Örneğin: webmaster@hacettepe.edu.tr alias bir adrestir ve Web Birimi'  nde çalışan  personele yönlendirilmiştir. Bu adrese e-posta atıldığında, e-posta  bu birimde çalışan tüm personele gelir. Bu postaya cevap vermek icin personel  kendi kişisel e-posta hesabını kullanır. </p>\n  <p><strong><a name=\"11\"></a>6. Teknik Özellikler</strong><br>\n  </p>\n  <p>Güvenlik nedeniyle web sunucusuna Hacettepe Üniversitesi yerleşkeleri dışından ftp yapılamamaktadır. </p>\n  <p>Web sunucusunun karakter seti ISO-8859-9 dur. UTF-8 karakter seti kullanılmamaktadır. </p>\n  <p> Web sayfalarında PHP, MySQL desteği verilmektedir.</p>\n \n  <p><strong><a name=\"12\"></a>7. Soru ve Sorunlarınız İçin İletişim</strong><br>\n    Kullanıcı kodu ile ilgili soru/sorunlar, detaylı açıklama                       (varsa hata mesajları ile birlikte) <a href=\"mailto:webmaster@hacettepe.edu.tr\">webmaster@hacettepe.edu.tr</a> adresine iletilmelidir. </p>\n  <hr>\n  HACETTEPE ÜNIVERSITESI-BİDB'nin web kullanıcıları servis politikasında   diğer kişi ve kurumlara haber vermeden değişiklik yapma hakkı   saklıdır. Ayrıca, HACETTEPE ÜNIVERSITESI-BİDB merkezi web sunucusu   üzerinde herhangi bir zamanda teknik değişiklikler yapma hakkına   sahiptir. Bu değişiklikleri önceden kullanıcılara bildirebileceği gibi,   anlık olarak yapılabilecek değişikliklerin önceden duyurulamamasıda   mümkün olabilir.\n  <p>Web kullanıcıları bu metinde yer alan bilgileri   periyodik olarak izlemek ve olası değişikliklerden haberdar olmakla   yükümlüdürler.</p>\n</div>",
+  "karakter": 3178,
+  "cekilme": "2026-07-21T19:24:34.782Z"
+}

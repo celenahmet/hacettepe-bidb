@@ -1,0 +1,54 @@
+{
+  "slug": "stylecc50kaldirilmasi",
+  "dil": "tr",
+  "bolum": "",
+  "menuAdi": "stylecc50kaldirilmasi",
+  "url": "https://bidb.hacettepe.edu.tr/tr/stylecc50kaldirilmasi",
+  "baslik": "50. yıl logolarının web sayfasından kaldırılması hakkında",
+  "seo": {
+    "title": "Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı",
+    "description": "",
+    "keywords": ""
+  },
+  "paragraflar": [
+    {
+      "tur": "p",
+      "metin": "Hacettepe Üniversitesi'nin kuruluşunun 50.yılı nedeniyle Hacettepe Üniversitesi logosuna eklenen 50.yıl logoları 50.yılın sona ermesi nedeniyle web sayfalarından kaldırılmaktadır."
+    },
+    {
+      "tur": "p",
+      "metin": "50.yıl logosunu kaldırmak için Hacettepe Üniversitesi birimlerince kullanılan tasarımda style.css dosyasında yapılması gereken değişiklikler aşağıdaki gibidir. (style.css son haline http://www.bidb.hacettepe.edu.tr/sablon2017/css/style.css adresinden ulaşabilirsiniz.)"
+    },
+    {
+      "tur": "p",
+      "metin": "1- banner50 ve banner50_en classlarında width 10px yapılıp background kapatılmalıdır. 2- banner ve banner_en classlarında width 930px yapılmalıdır"
+    },
+    {
+      "tur": "p",
+      "metin": "Düzenlenmiş classlar aşağıdaki gibidir."
+    },
+    {
+      "tur": "p",
+      "metin": "#banner50{ width:10px; height:100px; /*background:url(../images/banner50.png) no-repeat left center;*/ float:left; } #banner50_en{ width:10px; height:100px; /*background:url(../images/banner50_en.png) no-repeat left center;*/ float:left; } #banner{ width:930px; height:100px; background:url(../images/banner.png) no-repeat left center; float:left; } #banner_en{ width:930px; height:100px; background:url(../images/banner_en.png) no-repeat left center; float:left; }"
+    },
+    {
+      "tur": "p",
+      "metin": "Web sayfalarını içerik yönetim sistemi ile yöneten web sayfalarından 50.yıl logosu kaldırılmıştır."
+    },
+    {
+      "tur": "p",
+      "metin": "İlginizi rica ederiz. Bilgi İşlem Daire Başkanlığı"
+    }
+  ],
+  "baglantilar": [
+    {
+      "metin": "http://www.bidb.hacettepe.edu.tr/sablon2017/css/style.css",
+      "href": "https://bidb.hacettepe.edu.tr/sablon2017/css/style.css"
+    }
+  ],
+  "gorseller": [],
+  "belgeler": [],
+  "govdeHtml": "<div class=\"icerik\">\n<p>Hacettepe  Üniversitesi'nin kuruluşunun 50.yılı nedeniyle Hacettepe Üniversitesi logosuna  eklenen 50.yıl logoları 50.yılın sona ermesi nedeniyle web sayfalarından  kaldırılmaktadır.</p>\n<p>50.yıl  logosunu kaldırmak için Hacettepe Üniversitesi birimlerince kullanılan  tasarımda style.css dosyasında yapılması gereken değişiklikler aşağıdaki  gibidir.<br>\n(style.css son haline <a href=\"/sablon2017/css/style.css\" target=\"_blank\">http://www.bidb.hacettepe.edu.tr/sablon2017/css/style.css</a> adresinden ulaşabilirsiniz.)</p>\n<p>1-  banner50 ve banner50_en classlarında width 10px yapılıp background  kapatılmalıdır.<br>\n  2-  banner ve banner_en classlarında width 930px yapılmalıdır</p>\n<p>Düzenlenmiş  classlar aşağıdaki gibidir.<br>\n</p>\n<p>#banner50{<br>\n  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  width:10px;<br>\n  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  height:100px;<br>\n  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  /*background:url(../images/banner50.png) no-repeat left center;*/<br>\n  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  float:left;<br>\n  }<br>\n  #banner50_en{<br>\n  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  width:10px;<br>\n  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  height:100px;<br>\n  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  /*background:url(../images/banner50_en.png) no-repeat left center;*/<br>\n  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  float:left;<br>\n  }<br>\n  #banner{<br>\n  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  width:930px;<br>\n  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  height:100px;<br>\n  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  background:url(../images/banner.png) no-repeat left center;<br>\n  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  float:left;<br>\n  }<br>\n  #banner_en{<br>\n  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  width:930px;<br>\n  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  height:100px;<br>\n  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  background:url(../images/banner_en.png) no-repeat left center;<br>\n  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  float:left;<br>\n}</p>\n<p>Web  sayfalarını içerik yönetim sistemi ile yöneten web sayfalarından 50.yıl logosu  kaldırılmıştır.</p>\n<p>İlginizi  rica ederiz.<br>\nBilgi  İşlem Daire Başkanlığı</p>\n</div>",
+  "karakter": 1245,
+  "cekilme": "2026-07-21T19:29:07.178Z"
+}

@@ -1,0 +1,118 @@
+{
+  "slug": "bil_onlem",
+  "dil": "tr",
+  "bolum": "",
+  "menuAdi": "Bilişim Güvenliği Önlemleri",
+  "url": "https://bidb.hacettepe.edu.tr/tr/bil_onlem",
+  "baslik": "Bilgisayar Kazaları için Önlemler",
+  "seo": {
+    "title": "Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı",
+    "description": "",
+    "keywords": ""
+  },
+  "paragraflar": [
+    {
+      "tur": "p",
+      "metin": "Bilgisayara Zarar Verebilecek Unsurlar"
+    },
+    {
+      "tur": "li",
+      "metin": "Donanımda meydana gelebilecek arızalar. Kişisel bilgisayarlar için üretilen donanım parçaları belirli bir ömre sahiptir. Özellikle verilerin depolandığı ana parça olan \"sabit disk (hard disk)\", içinde binlerce devir/dakika ile dönen çok hassas disklerin bulunduğu bir cihazdır. Diskler aynı eski pikaplar gibi, ama bu kez manyetik olarak, vakum içinde dönen bu disklere mikronlarla ölçülebilecek kadar çok yaklaşan ancak değmeyen kafalarla okunur ve yazılırlar. Dolayısıyla bu hassas cihazlar, en çok çalışırken hareket ettirilmekle, çalışırken ani darbeler almakla zarar görürler. Bir de bunlara üretim sırasında biçilen ömür de eklendiğinde (ki bu da garanti süresinden bir miktar tahmin edilebilir), sabit disklerin gün gelip arıza yapma ve içindeki verileri kaybetme olasılığı göz ardı edilemez bir tehlikedir."
+    },
+    {
+      "tur": "li",
+      "metin": "Elektrik kesinti ve arızaları. Bilgisayar, eğer özel bir koruması yoksa, elektrikte oluşabilecek ani kesintilere karşı son derece hassas olabilir. Tam bir dosya diske yazılıyorken, işletim sistemi geri planda disk düzenlemesi yaparken ya da bilgisayar açılıp kapanıyorken bilgisayarın aniden elektriğinin kesilmesi sabit diskte büyük veri kayıplarına neden olabilir. Benzer biçimde ani ve büyük voltaj değişimleri de bilgisayara ve içindeki verilere zarar verebilir."
+    },
+    {
+      "tur": "li",
+      "metin": "Topraklama sorunu ve statik elektrikten doğan arızalar. Bilgisayarın içinde bulunan çipler, elektronik doğaları gereği statik elektrik birikmesi ile akan akıma karşı son derece duyarlıdırlar. Özellikle bilgisayara bir donanım takıp çıkarırken bu hassasiyet daha da artar. Benzer şekilde, binaların elektrik tesisatlarında topraklamanın düzgün yapılmaması sonucunda bilgisayar kasaları ile dış dünya arasında kayda değer akım akabilecek düzeyde potansiyel farkı oluşabilir ve bu istenmeyen akım da, bilgisayarın monitör, usb, ethernet (ağ), seri/paralel port vb. uçları üzerinden akabilir. Bu ise donanımın arızalanmasına, hatta yanlış zamanda arızlanan donanım yüzünden bazı verilerin de kaybolmasına neden olabilir."
+    },
+    {
+      "tur": "li",
+      "metin": "Aşırı ısınma. Bilgisayarların ömrünü kısaltan etkenlerden biri ve belki de en önemlisi ısınma sorunudur. Ucuz ve bilinçsiz seçilmiş bilgisayar kasaları, kurallarına uygun takılmamış soğutucu elemanları ve bilgisayarların aşırı yüklenmesi ısınmaya ve buna bağlı geçici ya da kalıcı arızalara yol açabilirler."
+    },
+    {
+      "tur": "li",
+      "metin": "Bilgisayar korsanlarının saldırısı. Her ne şekilde olursa olsun, hiç bir önlem, Internet ağına bağlı bir bilgisayarı yüzde yüz koruduğu garantisini veremez. Bilgisayar korsanları, ister gerçek kişi isterse robot olsun, bir açık bulup bilgisayarınıza girebilir veya kullanılmasını engelleyecek ölçüde zarar verebilirler. Belki bilgisayarınız donanımsal olarak zarar görmez, ancak içindeki verileri kaybetmenin maliyeti donanım maliyetini defalarca aşabilir."
+    },
+    {
+      "tur": "li",
+      "metin": "Virüs ve diğer zararlı programlar. Yine aynı öngörü ile, hiç bir antivirüs vb. koruyucu yazılım, bilgisayarınızı yüzde yüz virüs ve diğer zararlılardan koruyacağını iddia edemez. Zaten bu iddia gerçek olsaydı bu durum hem zarar veren hem de koruyan taraf için bir son anlamına gelirdi. Virüsler basit zararlar verip örneğin Spam mail atmak ya da Internet bağlantısını yavaşlatmak gibi aktivitelerde bulunabilecekleri gibi, bilgisayardaki verileri bir daha geri getirilemez şekilde silebilecek güce de sahip olabilirler."
+    },
+    {
+      "tur": "li",
+      "metin": "Kullanıcı hataları. Kullanıcılar zaman zaman bilinçsiz de olsa gerek donanımsal gerekse yazılımsal anlamda bilgisayara zarar verebilirler. Bir ek donanımın yanlış takılması ya da takılırken yapılan hatalar, yazılımların yanlış yüklenmesi, yanlışlıkla silinen/formatlanan dosyalar/diskler, hatalı yüklenen aygıt sürücüleri ve diğer pek çok davranış kullanıcı hatalarına örnek olabilir."
+    },
+    {
+      "tur": "li",
+      "metin": "Yüklü yazılımların ya da işletim sisteminin içindeki hatalar. Bazı yazılım paketleri (özellikle kaynağı belirsiz olanlar) kendi bünyelerindeki hatalardan dolayı bilgisayara zarar verebilir, hatta işletim sistemini kullanılamaz hale getirebilirler. Bu, ilk yükleme sırasında olabileceği gibi, kullanım sırasında belirli bir işi yaparken, belirli kombinasyonda işlerin birlikte yapılmasıyla, başka uyumsuz programların aynı anda çalışmasıyla ya da yazılım paketini tamamen kaldırırken ortaya çıkabilir. Bazı yazılımların hataları birikmedikçe kendini belli etmez; dolayısıyla bazı hatalar zaman içinde kendini gösterebilir."
+    },
+    {
+      "tur": "p",
+      "metin": "Alınması Faydalı Önlemler"
+    },
+    {
+      "tur": "li",
+      "metin": "Verilerinizi daima, periyodik olarak ve üşenmeden yedekleyin."
+    },
+    {
+      "tur": "li",
+      "metin": "Mutlaka bir Kesintisiz Güç Kaynağı (UPS, Uninterruptable Power Supply) ve Aşırı Akım Koruyucu (Surge Protector) kullanın."
+    },
+    {
+      "tur": "li",
+      "metin": "BIOS ayarları ile elektrik kesilip gelince bilgisayarın kendiliğinden açılmamasını sağlayın.Bilgisayarızın BIOS ayarlarından \"Elektrik kesildiği zaman tekrar geldiğinde ne yapması\" gerektiğine ait ayarı bulun (bu genellikle \"Power on failure\" şeklinde geçer) \"son kaldığı durum nasılsa (last state)\" maddesi yerine \"kapalı kal (off)\" maddesini seçin. Bu, ardışık ve sık elektrik kesilmelerinde ve ardarda oluşabilecek dalgalanmalarda bilgisayarın hasar görmesini büyük oranda engelleyecektir."
+    },
+    {
+      "tur": "li",
+      "metin": "Bilgisayara yeni bir donanım takarken prizden çekin, kendinizi topraklayın."
+    },
+    {
+      "tur": "li",
+      "metin": "Bilgisayar çalışırken (USB ve Ethernet dışında) fare, seri port, paralel port, tuş takımı vs. hiç bir sokete birşey takmayın, çıkarmayın."
+    },
+    {
+      "tur": "li",
+      "metin": "Bilgisayar virüslerinden ve saldırılardan korunma önerileri başlıklı yazımızda önerilenleri uygulayın."
+    },
+    {
+      "tur": "li",
+      "metin": "Bilgisayar üzerinde tam olarak neyi nasıl yapmak gerektiğinden emin değilseniz donanımsal veya yazılımsal değişikliklere gitmeyin."
+    },
+    {
+      "tur": "li",
+      "metin": "Mümkünse ısınma bilgilerini gösteren ve güncel anakartlarla birlikte verilen yazılımları yükleyin/yükletin ve zaman zaman cihazın iç sıcaklık durumunu kontrol edin."
+    },
+    {
+      "tur": "li",
+      "metin": "Binanızın ve bulunduğunuz odanın prizlerinin topraklamasına dikkat edin."
+    },
+    {
+      "tur": "li",
+      "metin": "Vücudunuzda statik elektrik yüklüyken bilgisayara dokunmamaya çalışın."
+    },
+    {
+      "tur": "li",
+      "metin": "Bilgisayarınızı gereksiz yere açık bırakmayın."
+    },
+    {
+      "tur": "li",
+      "metin": "Bilgisayarınızı kapatırken mutlaka kuralına uygun davranın."
+    },
+    {
+      "tur": "li",
+      "metin": "Bilgisayarınızı açıkken asla hareket ettirmeyin, bulunduğu masayı sarsmayın, titretmeyin."
+    }
+  ],
+  "baglantilar": [
+    {
+      "metin": "Bilgisayar virüslerinden ve saldırılardan korunma önerileri",
+      "href": "https://bidb.hacettepe.edu.tr/tr/viruslere-karsi-korunma"
+    }
+  ],
+  "gorseller": [],
+  "belgeler": [],
+  "govdeHtml": "<div class=\"icerik\">\n\n<p><STRONG>Bilgisayara Zarar Verebilecek Unsurlar</STRONG></p>\n<STRONG>Bilgisayarı gerek donanım gerekse   içinde bulunan veriler açısından tehdit eden etkenler şunlar olabilir:</STRONG>\n<UL>\n  <LI><STRONG>Donanımda meydana gelebilecek arızalar.</STRONG> Kişisel bilgisayarlar için   üretilen donanım parçaları belirli bir ömre sahiptir. Özellikle verilerin   depolandığı ana parça olan \"sabit disk (hard disk)\", içinde binlerce   devir/dakika ile dönen çok hassas disklerin bulunduğu bir cihazdır. Diskler aynı   eski pikaplar gibi, ama bu kez manyetik olarak, vakum içinde dönen bu disklere   mikronlarla ölçülebilecek kadar çok yaklaşan ancak değmeyen kafalarla okunur ve   yazılırlar. Dolayısıyla bu hassas cihazlar, en çok çalışırken hareket   ettirilmekle, çalışırken ani darbeler almakla zarar görürler. Bir de bunlara   üretim sırasında biçilen ömür de eklendiğinde (ki bu da garanti süresinden bir   miktar tahmin edilebilir), sabit disklerin gün gelip arıza yapma ve içindeki   verileri kaybetme olasılığı göz ardı edilemez bir tehlikedir. </LI>\n  <LI><STRONG>Elektrik kesinti ve arızaları.</STRONG> Bilgisayar, eğer özel bir koruması   yoksa, elektrikte oluşabilecek ani kesintilere karşı son derece hassas olabilir.   Tam bir dosya diske yazılıyorken, işletim sistemi geri planda disk düzenlemesi   yaparken ya da bilgisayar açılıp kapanıyorken bilgisayarın aniden elektriğinin   kesilmesi sabit diskte büyük veri kayıplarına neden olabilir. Benzer biçimde ani   ve büyük voltaj değişimleri de bilgisayara ve içindeki verilere zarar verebilir. </LI>\n  <LI><STRONG>Topraklama sorunu ve statik elektrikten doğan arızalar.</STRONG> Bilgisayarın   içinde bulunan çipler, elektronik doğaları gereği statik elektrik birikmesi ile   akan akıma karşı son derece duyarlıdırlar. Özellikle bilgisayara bir donanım   takıp çıkarırken bu hassasiyet daha da artar. Benzer şekilde, binaların elektrik   tesisatlarında topraklamanın düzgün yapılmaması sonucunda bilgisayar kasaları   ile dış dünya arasında kayda değer akım akabilecek düzeyde potansiyel farkı   oluşabilir ve bu istenmeyen akım da, bilgisayarın monitör, usb, ethernet (ağ),   seri/paralel port vb. uçları üzerinden akabilir. Bu ise donanımın   arızalanmasına, hatta yanlış zamanda arızlanan donanım yüzünden bazı verilerin   de kaybolmasına neden olabilir. </LI>\n  <LI><STRONG>Aşırı ısınma.</STRONG> Bilgisayarların ömrünü kısaltan etkenlerden biri ve   belki de en önemlisi ısınma sorunudur. Ucuz ve bilinçsiz seçilmiş bilgisayar   kasaları, kurallarına uygun takılmamış soğutucu elemanları ve bilgisayarların   aşırı yüklenmesi ısınmaya ve buna bağlı geçici ya da kalıcı arızalara yol   açabilirler. </LI>\n  <LI><STRONG>Bilgisayar korsanlarının saldırısı.</STRONG> Her ne şekilde olursa olsun, hiç   bir önlem, Internet ağına bağlı bir bilgisayarı yüzde yüz koruduğu garantisini   veremez. Bilgisayar korsanları, ister gerçek kişi isterse robot olsun, bir açık   bulup bilgisayarınıza girebilir veya kullanılmasını engelleyecek ölçüde zarar   verebilirler. Belki bilgisayarınız donanımsal olarak zarar görmez, ancak   içindeki verileri kaybetmenin maliyeti donanım maliyetini defalarca aşabilir. </LI>\n  <LI><STRONG>Virüs ve diğer zararlı programlar.</STRONG> Yine aynı öngörü ile, hiç bir   antivirüs vb. koruyucu yazılım, bilgisayarınızı yüzde yüz virüs ve diğer   zararlılardan koruyacağını iddia edemez. Zaten bu iddia gerçek olsaydı bu durum   hem zarar veren hem de koruyan taraf için bir son anlamına gelirdi. Virüsler   basit zararlar verip örneğin Spam mail atmak ya da Internet bağlantısını   yavaşlatmak gibi aktivitelerde bulunabilecekleri gibi, bilgisayardaki verileri   bir daha geri getirilemez şekilde silebilecek güce de sahip olabilirler. </LI>\n  <LI><STRONG>Kullanıcı hataları.</STRONG> Kullanıcılar zaman zaman bilinçsiz de olsa gerek   donanımsal gerekse yazılımsal anlamda bilgisayara zarar verebilirler. Bir ek   donanımın yanlış takılması ya da takılırken yapılan hatalar, yazılımların yanlış   yüklenmesi, yanlışlıkla silinen/formatlanan dosyalar/diskler, hatalı yüklenen   aygıt sürücüleri ve diğer pek çok davranış kullanıcı hatalarına örnek olabilir. </LI>\n  <LI><STRONG>Yüklü yazılımların ya da işletim sisteminin içindeki hatalar.</STRONG> Bazı   yazılım paketleri (özellikle kaynağı belirsiz olanlar) kendi bünyelerindeki   hatalardan dolayı bilgisayara zarar verebilir, hatta işletim sistemini   kullanılamaz hale getirebilirler. Bu, ilk yükleme sırasında olabileceği gibi,   kullanım sırasında belirli bir işi yaparken, belirli kombinasyonda işlerin   birlikte yapılmasıyla, başka uyumsuz programların aynı anda çalışmasıyla ya da   yazılım paketini tamamen kaldırırken ortaya çıkabilir. Bazı yazılımların   hataları birikmedikçe kendini belli etmez; dolayısıyla bazı hatalar zaman içinde   kendini gösterebilir. </LI>\n</UL>\n<p><STRONG>Alınması Faydalı Önlemler</STRONG></p>\nYukarıdaki bilgiler ışığında bir bilgisayar   kullanıcısının dikkat etmesi gereken noktalar ve alması gerekli önlemleri şöyle   sıralamak mümkündür:\n<UL>\n  <LI>Verilerinizi daima, periyodik olarak ve üşenmeden yedekleyin.</LI>\n  <LI>Mutlaka bir Kesintisiz Güç Kaynağı (UPS, Uninterruptable Power Supply) ve   Aşırı Akım Koruyucu (Surge Protector) kullanın. </LI>\n  <LI>BIOS ayarları ile elektrik kesilip gelince bilgisayarın kendiliğinden   açılmamasını sağlayın.Bilgisayarızın BIOS ayarlarından \"Elektrik kesildiği   zaman tekrar geldiğinde ne yapması\" gerektiğine ait ayarı bulun (bu genellikle   \"Power on failure\" şeklinde geçer) \"son kaldığı durum nasılsa (last state)\"   maddesi yerine \"kapalı kal (off)\" maddesini seçin. Bu, ardışık ve sık elektrik   kesilmelerinde ve ardarda oluşabilecek dalgalanmalarda bilgisayarın hasar   görmesini büyük oranda engelleyecektir. </LI>\n  <LI>Bilgisayara yeni bir donanım takarken prizden çekin, kendinizi   topraklayın. </LI>\n  <LI>Bilgisayar çalışırken (USB ve Ethernet dışında) fare, seri port, paralel   port, tuş takımı vs. hiç bir sokete birşey takmayın, çıkarmayın. </LI>\n  <LI><A href=\"/tr/viruslere-karsi-korunma\">Bilgisayar virüslerinden ve   saldırılardan korunma önerileri</A> başlıklı yazımızda önerilenleri   uygulayın. </LI>\n  <LI>Bilgisayar üzerinde tam olarak neyi nasıl yapmak gerektiğinden emin   değilseniz donanımsal veya yazılımsal değişikliklere gitmeyin. </LI>\n  <LI>Mümkünse ısınma bilgilerini gösteren ve güncel anakartlarla birlikte   verilen yazılımları yükleyin/yükletin ve zaman zaman cihazın iç sıcaklık   durumunu kontrol edin.</LI>\n  <LI>Binanızın ve bulunduğunuz odanın prizlerinin topraklamasına dikkat   edin.</LI>\n  <LI>Vücudunuzda statik elektrik yüklüyken bilgisayara dokunmamaya   çalışın. </LI>\n  <LI>Bilgisayarınızı gereksiz yere açık bırakmayın.</LI>\n  <LI>Bilgisayarınızı kapatırken mutlaka kuralına uygun davranın.</LI>\n  <LI>Bilgisayarınızı açıkken asla hareket ettirmeyin, bulunduğu masayı   sarsmayın, titretmeyin. </LI>\n</UL>\n</div>",
+  "karakter": 5964,
+  "cekilme": "2026-07-21T19:24:36.177Z"
+}

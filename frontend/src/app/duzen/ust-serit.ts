@@ -23,7 +23,7 @@ import { Dil } from '../cekirdek/modeller';
 
         <nav class="ust-menu" [attr.aria-label]="dil === 'en' ? 'Main menu' : 'Ana menü'">
           <a [routerLink]="['/', dil]">{{ dil === 'en' ? 'HOME PAGE' : 'ANA SAYFA' }}</a>
-          <a [routerLink]="['/', dil, 'iletisim']">{{ dil === 'en' ? 'CONTACT' : 'İLETİŞİM' }}</a>
+          <a [routerLink]="['/', dil, 'contact']">{{ dil === 'en' ? 'CONTACT' : 'İLETİŞİM' }}</a>
 
           <span class="dil-secim">
             <a [routerLink]="['/tr']" [class.etkin]="dil === 'tr'">TR</a>

@@ -10,7 +10,26 @@
    Kullanım:  node tools/verify-content.js                                    */
 
 const { execFileSync } = require("child_process");
+const fs = require("fs");
+const path = require("path");
+const { yeniSlug } = require("./slug-map");
 const X = require("./extract.js");
+
+/* Yeni adres -> kaynak sitedeki özgün adres.
+
+   Adres tahmin edilmez: içerik dosyalarında kayıtlı olan gerçek kaynak
+   adresi kullanılır. Kaynak sitede bazı adresler büyük harfli (/tr/VPN)
+   ve yeniden kurulan adres o sayfayı bulamıyordu. */
+const KAYNAK_SLUG = {};
+for (const dil of ["tr", "en"]) {
+  const dizin = path.join(__dirname, "..", "content", dil);
+  if (!fs.existsSync(dizin)) continue;
+  for (const f of fs.readdirSync(dizin).filter((x) => x.endsWith(".json") && !x.startsWith("_"))) {
+    const veri = JSON.parse(fs.readFileSync(path.join(dizin, f), "utf8"));
+    const ozgun = (String(veri.url || "").match(/\/(?:tr|en)\/([^/?#]+)/) || [])[1] || veri.slug;
+    KAYNAK_SLUG[dil + "/" + yeniSlug(dil, veri.slug)] = ozgun;
+  }
+}
 
 const ORIGIN = "https://bidb.hacettepe.edu.tr";
 const KAP = "bidb-db";
@@ -45,7 +64,7 @@ function farkNoktasi(a, b) {
   // İçerik satır sonu barındırdığı için satır bazlı değil, JSON olarak okunur
   const kayitlar = JSON.parse(psql(
     "SELECT coalesce(json_agg(json_build_object('dil', dil, 'slug', slug, 'html', icerik_html) " +
-    "ORDER BY dil, slug)::text, '[]') FROM sayfa WHERE slug <> 'anasayfa';"
+    "ORDER BY dil, slug)::text, '[]') FROM sayfa WHERE slug <> 'home';"
   ).trim());
 
   console.log("SAYFA".padEnd(34) + "KAYNAK".padStart(8) + "VERİTABANI".padStart(12) + "   SONUÇ");
@@ -58,7 +77,8 @@ function farkNoktasi(a, b) {
     const { dil, slug, html } = kayit;
     let canli;
     try {
-      canli = await getir(ORIGIN + "/" + dil + "/" + slug);
+      const kaynakSlug = KAYNAK_SLUG[dil + "/" + slug] || slug;
+      canli = await getir(ORIGIN + "/" + dil + "/" + kaynakSlug);
     } catch (e) {
       console.log((dil + "/" + slug).padEnd(34) + "        indirilemedi: " + e.message);
       continue;

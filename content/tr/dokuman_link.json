@@ -1,0 +1,54 @@
+{
+  "slug": "dokuman_link",
+  "dil": "tr",
+  "bolum": "",
+  "menuAdi": "Doküman Bağlantıları",
+  "url": "https://bidb.hacettepe.edu.tr/tr/dokuman_link",
+  "baslik": "Yararlı Dokümanlar ve Bağlantılar",
+  "seo": {
+    "title": "Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı",
+    "description": "",
+    "keywords": ""
+  },
+  "paragraflar": [
+    {
+      "tur": "p",
+      "metin": "Aşağıda kullanıcılarımız için yararlı olabileceğini düşündüğümüz bazı dış adreslere bağlantılar bulunmaktadır. Bu bağlantıların sürekliliği, geçerliliği ve güncelliği tarafımızdan zaman zaman kontrol edilse de, oluşabilecek kopukluklar ve sitelerin geçerliliğini kaybetmesi gibi durumların da oluşabileceğini kullaıcılarımızın bilgilerine sunarız. Burada verilen bağlantılara zaman içinde yeni eklemeler / çıkarımlar yapılabilmektedir."
+    },
+    {
+      "tur": "p",
+      "metin": "Yararlı Bağlantı'lar"
+    },
+    {
+      "tur": "li",
+      "metin": "ULAKBİM, Ulusal Akademik Ağ ve Bilgi Merkezi: www.ulakbim.gov.tr"
+    },
+    {
+      "tur": "li",
+      "metin": "Türk Anti-Spam Organizasyonu: www.spam.org.tr"
+    },
+    {
+      "tur": "li",
+      "metin": "Ulaknet'ten Türkçe Güvenlik Dokümanları: csirt.ulakbim.gov.tr/dokumanlar"
+    }
+  ],
+  "baglantilar": [
+    {
+      "metin": "www.ulakbim.gov.tr",
+      "href": "http://www.ulakbim.gov.tr/"
+    },
+    {
+      "metin": "www.spam.org.tr",
+      "href": "http://www.spam.org.tr/"
+    },
+    {
+      "metin": "csirt.ulakbim.gov.tr/dokumanlar",
+      "href": "http://csirt.ulakbim.gov.tr/dokumanlar/"
+    }
+  ],
+  "gorseller": [],
+  "belgeler": [],
+  "govdeHtml": "<div class=\"icerik\">\n<p>Aşağıda kullanıcılarımız için yararlı olabileceğini düşündüğümüz bazı dış   adreslere bağlantılar bulunmaktadır. Bu bağlantıların sürekliliği, geçerliliği   ve güncelliği tarafımızdan zaman zaman kontrol edilse de, oluşabilecek   kopukluklar ve sitelerin geçerliliğini kaybetmesi gibi durumların da   oluşabileceğini kullaıcılarımızın bilgilerine sunarız.    \n<p>Burada verilen bağlantılara zaman içinde yeni eklemeler / çıkarımlar   yapılabilmektedir. </p>\n<p><STRONG>Yararlı Bağlantı'lar </STRONG></p>\n<UL>\n  <LI>ULAKBİM, Ulusal Akademik Ağ ve Bilgi Merkezi: <A href=\"http://www.ulakbim.gov.tr/\" target=\"_new\">www.ulakbim.gov.tr</A> <BR>\n  </LI>\n  <LI>Türk Anti-Spam Organizasyonu: <A href=\"http://www.spam.org.tr/\" target=\"_new\">www.spam.org.tr</A> <BR>\n  </LI>\n  <LI>Ulaknet'ten Türkçe Güvenlik Dokümanları: <A href=\"http://csirt.ulakbim.gov.tr/dokumanlar/\" target=\"_new\">csirt.ulakbim.gov.tr/dokumanlar</A> <BR>\n  </LI>\n  <LI>Ulaknet'ten Türkçe Güvenlik Dokümanları: <A href=\"http://csirt.ulakbim.gov.tr/dokumanlar/\" target=\"_new\">csirt.ulakbim.gov.tr/dokumanlar</A> </LI>\n</UL>\n\n\n</div>",
+  "karakter": 636,
+  "cekilme": "2026-07-21T19:24:36.871Z"
+}

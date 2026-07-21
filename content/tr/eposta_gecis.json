@@ -1,0 +1,287 @@
+{
+  "slug": "eposta_gecis",
+  "dil": "tr",
+  "bolum": "",
+  "menuAdi": "E-Posta Geçişi",
+  "url": "https://bidb.hacettepe.edu.tr/tr/eposta_gecis",
+  "baslik": "Hacettepe Üniversitesi Yeni E-posta Hizmeti (Microsoft Exchange Servisi) Hakkında Bilgilendirme",
+  "seo": {
+    "title": "Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı",
+    "description": "",
+    "keywords": ""
+  },
+  "paragraflar": [
+    {
+      "tur": "p",
+      "metin": "Kurulum Ayarları"
+    },
+    {
+      "tur": "p",
+      "metin": "Mail Arayüzü Üzerinden Giriş"
+    },
+    {
+      "tur": "p",
+      "metin": "Outlook Mail Hesabı Ayarları"
+    },
+    {
+      "tur": "p",
+      "metin": "Android Cihazlarda Outlook Mail Hesabı Ayarları"
+    },
+    {
+      "tur": "p",
+      "metin": "Android Mail Hesabı Ayarları"
+    },
+    {
+      "tur": "p",
+      "metin": "IOS Mail Hesabı Ayarları"
+    },
+    {
+      "tur": "p",
+      "metin": "MacOS Mail Hesabı Ayarları"
+    },
+    {
+      "tur": "p",
+      "metin": "Neden e-posta servisini değiştiriyoruz?"
+    },
+    {
+      "tur": "p",
+      "metin": "Üniversitemizde kullanmış olduğumuz e-posta sistemini:"
+    },
+    {
+      "tur": "li",
+      "metin": "Kullanıcı yönetimini sağlıklı ve güvenli yapabilmek,"
+    },
+    {
+      "tur": "li",
+      "metin": "Gelişen teknolojiye ayak uydurabilmek,"
+    },
+    {
+      "tur": "li",
+      "metin": "Günümüz siber güvenlik ihtiyaçlarına ayak uydurabilmek,"
+    },
+    {
+      "tur": "li",
+      "metin": "Daha güvenilir ve daha kullanıcı dostu hizmet sağlayabilmek,"
+    },
+    {
+      "tur": "li",
+      "metin": "Olası sorunlarda zaman ve maddi açıdan ekonomik çözümleri bulabilmek,"
+    },
+    {
+      "tur": "li",
+      "metin": "Geçmişten gelen veri kirliliğini belirli bir oranda temizlemek"
+    },
+    {
+      "tur": "p",
+      "metin": "Amacıyla değiştiriyoruz."
+    },
+    {
+      "tur": "p",
+      "metin": "Yapılacak bu değişiklikle beraber:"
+    },
+    {
+      "tur": "li",
+      "metin": "Microsoft’un Exchange servisi kullanılacaktır."
+    },
+    {
+      "tur": "li",
+      "metin": "E-postalarınız yeni sisteme taşınmış olacaktır."
+    },
+    {
+      "tur": "li",
+      "metin": "Her kullanıcıya epostalarını saklayabilecekleri alan 5 GB olarak belirlenmiştir."
+    },
+    {
+      "tur": "li",
+      "metin": "Hacettepe Üniversitesi öğrencileri için 100 GB Onedrive bulut alanı"
+    },
+    {
+      "tur": "li",
+      "metin": "Kullanıcı bilgileri ve e-postalar Hacettepe Bilgi İşlem Daire Başkanlığı’mızdaki sunucularımızda tutulacaktır."
+    },
+    {
+      "tur": "li",
+      "metin": "Yeni sistemle beraber sunmuş olduğumuz diğer Microsoft hizmetleri daha uyumlu çalışabilecektir."
+    },
+    {
+      "tur": "li",
+      "metin": "Eski sistemde eposta kullanıcı adı ve şifrenizle kullanabildiğiniz hizmetleri yeni sistemde de kullanmaya devam edebileceksiniz. (Kablosuz internet hizmeti, yazilimdeposu ..vb)"
+    },
+    {
+      "tur": "p",
+      "metin": "Uyarı-1: Her kullanıcı 24 saatlik süre içerisinde dışarıya maksimum 50 mail gönderebilecektir. Uyarı-2: Her kullanıcının bir mailde gönderebileceği maksimum e-posta büyüklüğü 25 MB olacaktır. Uyarı-3: Her bir mailde mailin iletilebileceği alıcı sayısı 30 olacaktır."
+    },
+    {
+      "tur": "p",
+      "metin": "Yeni e-posta sistemini kullanabilmeniz için,"
+    },
+    {
+      "tur": "li",
+      "metin": "portal.hacettepe.edu.tr adresine gidiniz."
+    },
+    {
+      "tur": "li",
+      "metin": "Bilgi güncelleme işlemini yapınız. (Bilgi Güncelleme) Karşınıza çıkan ekranda Bilgi Güncelleme butonuna tıklayınız. Mevcut eposta kullanıcı adınız ve şifrenizi kullanarak giriş yapınız."
+    },
+    {
+      "tur": "li",
+      "metin": "Bilgi güncelleme ekranındaki boşlukları eksiksiz ve hatasız doldurunuz."
+    },
+    {
+      "tur": "li",
+      "metin": "E-posta Kullanıcı Sözleşmesini onaylayınız."
+    },
+    {
+      "tur": "li",
+      "metin": "Bilgi güncelleme ekranında alınan bilgiler MERNİS üzerinden doğrulanmak amacıyla istenmektedir. Sistemimize kaydedilmemektedir."
+    },
+    {
+      "tur": "li",
+      "metin": "Bilgi Güncelleme Dokümanı (.PDF)"
+    },
+    {
+      "tur": "li",
+      "metin": "Şifre güncelleme işlemini yapınız. Bu sayfada eski şifrenizi girdikten sonra yeni şifrenizi belirleyiniz."
+    },
+    {
+      "tur": "li",
+      "metin": "Yeni şifrenizin; en az 8 karakter olmasına, en az 1 büyük harf, 1 küçük harf, 1 rakam ve 1 özel karakter içermesine, Türkçe karakter kullanılmamasına dikkat edilmelidir."
+    },
+    {
+      "tur": "li",
+      "metin": "Şifre Güncelleme Dokümanı (.PDF)"
+    },
+    {
+      "tur": "li",
+      "metin": "posta.hacettepe.edu.tr adresine giriş yaparak yeni eposta servisini kullanmaya başlayabilirsiniz."
+    },
+    {
+      "tur": "li",
+      "metin": "Yeni eposta sistemi aktif şekilde kullanılmaya başlandıktan sonra geçiş süreci tamamlanana kadar kullanıcılarımız eskiposta.hacettepe.edu.tr adresinden eski eposta kutularına erişilebilecektir. eskiposta.hacettepe.edu.tr adresi yeni e-posta sisteminin devreye alınması ile aktif hale gelecektir."
+    },
+    {
+      "tur": "p",
+      "metin": "Uyarı-1: Her kullanıcı 5 dk lık süre içerisinde dışarıya maksimum 200 mail gönderebilecektir. Uyarı-2: Şifrenizi kullandığınız son 3 şifrenizden farklı yapmanız sizin güvenliğiniz için önemlidir. Uyarı-3: Bilgi İşlem personeli dâhil hiç kimse sizden şahsi şifrenizi paylaşmanızı istemez. Bu sebeple şifrenizi kimseyle paylaşmayınız. Uyarı-4: Şifrenizi en fazla 90 günde bir değiştirilmesi zorunludur. Uyarı-5: Adımları doğru tamamladıktan sonra yine hata alırsanız lütfen yardım için Çağrı Merkezi ile iletişime geçiniz. 0 312 297 6262"
+    },
+    {
+      "tur": "p",
+      "metin": "Eski E-Posta Yedek Alma İşlemleri"
+    },
+    {
+      "tur": "p",
+      "metin": "Eski E-Posta Yedek Alma İşlemleri (Videolu Anlatım)"
+    },
+    {
+      "tur": "p",
+      "metin": "HÜ E-Posta Yönergesi"
+    }
+  ],
+  "baglantilar": [
+    {
+      "metin": "Mail Arayüzü Üzerinden Giriş",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/yenimail/web_arayuz_giris.pdf"
+    },
+    {
+      "metin": "Outlook Mail Hesabı Ayarları",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/yenimail/outlook_kurulum.pdf"
+    },
+    {
+      "metin": "Android Cihazlarda Outlook Mail Hesabı Ayarları",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/yenimail/android_outlook_191125.pdf"
+    },
+    {
+      "metin": "Android Mail Hesabı Ayarları",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/yenimail/Android_posta_kurulum_250522.pdf"
+    },
+    {
+      "metin": "IOS Mail Hesabı Ayarları",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/yenimail/ios_kurulum_250522.pdf"
+    },
+    {
+      "metin": "MacOS Mail Hesabı Ayarları",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/yenimail/MACOSkurulum2.pdf"
+    },
+    {
+      "metin": "portal.hacettepe.edu.tr",
+      "href": "https://portal.hacettepe.edu.tr"
+    },
+    {
+      "metin": "(Bilgi Güncelleme)",
+      "href": "https://portal.hacettepe.edu.tr/hesap/bilgiguncelleme"
+    },
+    {
+      "metin": "Bilgi Güncelleme Dokümanı (.PDF)",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/BilgiGuncellemeDokuman.pdf"
+    },
+    {
+      "metin": "Şifre Güncelleme Dokümanı (.PDF)",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/SifreGuncelleme.pdf"
+    },
+    {
+      "metin": "posta.hacettepe.edu.tr",
+      "href": "https://posta.hacettepe.edu.tr"
+    },
+    {
+      "metin": "eskiposta.hacettepe.edu.tr",
+      "href": "https://eskiposta.hacettepe.edu.tr"
+    },
+    {
+      "metin": "Eski E-Posta Yedek Alma İşlemleri",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/EskiEpostaYedekAlmaIslemleri.pdf"
+    },
+    {
+      "metin": "Eski E-Posta Yedek Alma İşlemleri (Videolu Anlatım)",
+      "href": "https://bidb.hacettepe.edu.tr/tr/eski_eposta_yedekalma_video"
+    },
+    {
+      "metin": "HÜ E-Posta Yönergesi",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/epostayonergesi_300120.pdf"
+    }
+  ],
+  "gorseller": [],
+  "belgeler": [
+    {
+      "metin": "Mail Arayüzü Üzerinden Giriş",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/yenimail/web_arayuz_giris.pdf"
+    },
+    {
+      "metin": "Outlook Mail Hesabı Ayarları",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/yenimail/outlook_kurulum.pdf"
+    },
+    {
+      "metin": "Android Cihazlarda Outlook Mail Hesabı Ayarları",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/yenimail/android_outlook_191125.pdf"
+    },
+    {
+      "metin": "Android Mail Hesabı Ayarları",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/yenimail/Android_posta_kurulum_250522.pdf"
+    },
+    {
+      "metin": "IOS Mail Hesabı Ayarları",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/yenimail/ios_kurulum_250522.pdf"
+    },
+    {
+      "metin": "MacOS Mail Hesabı Ayarları",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/yenimail/MACOSkurulum2.pdf"
+    },
+    {
+      "metin": "Bilgi Güncelleme Dokümanı (.PDF)",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/BilgiGuncellemeDokuman.pdf"
+    },
+    {
+      "metin": "Şifre Güncelleme Dokümanı (.PDF)",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/SifreGuncelleme.pdf"
+    },
+    {
+      "metin": "Eski E-Posta Yedek Alma İşlemleri",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/EskiEpostaYedekAlmaIslemleri.pdf"
+    },
+    {
+      "metin": "HÜ E-Posta Yönergesi",
+      "href": "https://bidb.hacettepe.edu.tr/dosyalar/epostayonergesi_300120.pdf"
+    }
+  ],
+  "govdeHtml": "<div class=\"icerik\">\n\n\n        <p class=\"mt-0\"><strong>Kurulum Ayarları</strong></p>\n    \n\n    <p><a href=\"/dosyalar/yenimail/web_arayuz_giris.pdf\" target=\"_blank\">Mail Arayüzü Üzerinden Giriş</a></p>\n       <p><a href=\"/dosyalar/yenimail/outlook_kurulum.pdf\" target=\"_blank\">Outlook Mail Hesabı Ayarları</a></p>   \n <p><a href=\"/dosyalar/yenimail/android_outlook_191125.pdf\" target=\"_blank\">Android Cihazlarda Outlook Mail Hesabı Ayarları</a></p>\n        <p><a href=\"/dosyalar/yenimail/Android_posta_kurulum_250522.pdf\" target=\"_blank\">Android Mail Hesabı Ayarları</a></p>\n        <p><a href=\"/dosyalar/yenimail/ios_kurulum_250522.pdf\" target=\"_blank\">IOS Mail Hesabı Ayarları</a></p>\n        <p><a href=\"/dosyalar/yenimail/MACOSkurulum2.pdf\" target=\"_blank\">MacOS Mail Hesabı Ayarları</a></p>\n\n\n        <p></p>\n\n\n<p><strong>Neden e-posta servisini değiştiriyoruz?</strong></p>\n <p>Üniversitemizde kullanmış olduğumuz e-posta sistemini:</p>\n<ul>\n  <li>Kullanıcı yönetimini sağlıklı ve güvenli yapabilmek,</li>\n  <li>Gelişen teknolojiye ayak uydurabilmek,</li>\n  <li>Günümüz siber güvenlik ihtiyaçlarına ayak uydurabilmek,</li>\n  <li>Daha güvenilir ve daha kullanıcı dostu hizmet sağlayabilmek,</li>\n  <li>Olası sorunlarda zaman ve maddi açıdan ekonomik çözümleri bulabilmek,</li>\n  <li>Geçmişten gelen veri kirliliğini belirli bir oranda temizlemek</li>\n</ul>\n<p>Amacıyla değiştiriyoruz.</p>\n\n<p><strong>Yapılacak bu değişiklikle beraber:</strong></p>\n<ul>\n  <li>Microsoft&rsquo;un Exchange servisi kullanılacaktır.</li>\n  <li>E-postalarınız yeni sisteme taşınmış olacaktır.</li>\n  <li>Her kullanıcıya epostalarını saklayabilecekleri alan <span class=\"text-danger\">5 GB</span> olarak belirlenmiştir.</li>\n  <li>Hacettepe Üniversitesi öğrencileri için  <span class=\"text-danger\">100 GB Onedrive</span> bulut alanı </li>\n  <li>Kullanıcı bilgileri ve e-postalar Hacettepe Bilgi İşlem Daire Başkanlığı&rsquo;mızdaki sunucularımızda tutulacaktır. </li>\n  <li>Yeni sistemle beraber sunmuş olduğumuz diğer Microsoft hizmetleri daha uyumlu çalışabilecektir. </li>\n  <li>Eski sistemde eposta kullanıcı adı ve şifrenizle kullanabildiğiniz hizmetleri yeni sistemde de kullanmaya devam edebileceksiniz. (Kablosuz internet hizmeti, yazilimdeposu ..vb)</li>\n</ul>\n\n<div class=\"uyari alert alert-warning\">\n  <p>Uyarı-1: Her kullanıcı 24 saatlik süre içerisinde dışarıya maksimum<strong> </strong>50 mail gönderebilecektir.<br>\n  Uyarı-2: Her kullanıcının bir mailde gönderebileceği maksimum e-posta büyüklüğü <strong>25 MB</strong> olacaktır.<br>\n  Uyarı-3: Her bir mailde mailin iletilebileceği <strong>alıcı sayısı 30</strong> olacaktır.</p>\n</div>\n\n\n\n<p><strong>Yeni e-posta sistemini kullanabilmeniz için,</strong></p>\n<ol>\n  <li><a href=\"https://portal.hacettepe.edu.tr\" target=\"_blank\">portal.hacettepe.edu.tr</a> adresine gidiniz.<strong></strong></li>\n\n  <li>Bilgi güncelleme işlemini yapınız. <a href=\"https://portal.hacettepe.edu.tr/hesap/bilgiguncelleme\" target=\"_blank\">(Bilgi Güncelleme)</a>\n  <ul>\n    <li>Karşınıza çıkan ekranda Bilgi Güncelleme butonuna tıklayınız. Mevcut eposta kullanıcı adınız ve şifrenizi kullanarak giriş yapınız.</li>\n    <li>Bilgi güncelleme ekranındaki boşlukları eksiksiz ve hatasız doldurunuz.</li>\n    <li>E-posta Kullanıcı Sözleşmesini onaylayınız.</li>\n    <li class=\"text-danger\">Bilgi güncelleme ekranında alınan bilgiler MERNİS üzerinden doğrulanmak amacıyla istenmektedir. Sistemimize kaydedilmemektedir.</li>\n    <li>\n      <div class=\"embed-responsive embed-responsive-16by9 mb-3\">\n  <iframe class=\"embed-responsive-item\" src=\"https://www.youtube.com/embed/1q2ingOIwEY\" allowfullscreen></iframe>\n</div>\n    </li>\n    <li><a href=\"/dosyalar/BilgiGuncellemeDokuman.pdf\" target=\"_blank\"><strong>Bilgi Güncelleme Dokümanı (.PDF)</strong></a></li>\n  </ul>\n  </li>\n  <li>Şifre güncelleme işlemini yapınız.\n    <ul>\n      <li>Bu sayfada eski şifrenizi girdikten sonra yeni şifrenizi belirleyiniz. </li>\n  <li>Yeni şifrenizin; en az 8 karakter olmasına, en az 1 büyük harf, 1 küçük harf, 1 rakam ve 1 özel karakter içermesine, Türkçe karakter kullanılmamasına dikkat edilmelidir.</li>\n  <li>\n      <div class=\"embed-responsive embed-responsive-16by9 mb-3\">\n  <iframe class=\"embed-responsive-item\" src=\"https://www.youtube.com/embed/CmwHF20CFrw\" allowfullscreen></iframe>\n</div>\n    </li>\n\n    <li><a href=\"/dosyalar/SifreGuncelleme.pdf\" target=\"_blank\"><strong>Şifre Güncelleme Dokümanı (.PDF)</strong></a></li>\n\n    </ul>\n  </li>\n  \n  <li><strong><a href=\"https://posta.hacettepe.edu.tr\" target=\"_blank\">posta.hacettepe.edu.tr</a></strong> adresine giriş yaparak yeni eposta servisini kullanmaya başlayabilirsiniz.</li>\n  <li>Yeni eposta sistemi aktif şekilde kullanılmaya başlandıktan sonra geçiş süreci tamamlanana kadar kullanıcılarımız <a href=\"https://eskiposta.hacettepe.edu.tr\" target=\"_blank\">eskiposta.hacettepe.edu.tr</a> adresinden eski eposta kutularına erişilebilecektir. <a href=\"https://eskiposta.hacettepe.edu.tr\" target=\"_blank\">eskiposta.hacettepe.edu.tr</a>  adresi yeni e-posta sisteminin devreye alınması ile aktif hale gelecektir.</li>\n</ol>\n\n<div class=\"uyari alert alert-warning\">\n<p>Uyarı-1: Her kullanıcı 5 dk lık süre içerisinde dışarıya maksimum 200 mail gönderebilecektir.<br>\n  Uyarı-2: Şifrenizi kullandığınız son 3 şifrenizden farklı yapmanız sizin güvenliğiniz için önemlidir.<br>\n  Uyarı-3: Bilgi İşlem personeli dâhil hiç kimse sizden şahsi şifrenizi paylaşmanızı istemez. Bu sebeple şifrenizi kimseyle paylaşmayınız.<br>\n  Uyarı-4: Şifrenizi en fazla 90 günde bir değiştirilmesi zorunludur.<br>\n  Uyarı-5: Adımları doğru tamamladıktan sonra yine hata alırsanız lütfen yardım için Çağrı Merkezi ile iletişime geçiniz. 0 312 297 6262</p>\n</div>\n\n\n\n\n\n    \n\n\n<p></p>\n<p><a href=\"/dosyalar/EskiEpostaYedekAlmaIslemleri.pdf\" target=\"_blank\">Eski E-Posta Yedek Alma İşlemleri</a></p>\n<p><a href=\"/tr/eski_eposta_yedekalma_video\">Eski E-Posta Yedek Alma İşlemleri (Videolu Anlatım)</a></p>\n<p><a href=\"https://bidb.hacettepe.edu.tr/dosyalar/epostayonergesi_300120.pdf\" target=\"_blank\">HÜ E-Posta Yönergesi</a></p>\n\n\n</div>",
+  "karakter": 3450,
+  "cekilme": "2026-07-21T19:24:37.874Z"
+}

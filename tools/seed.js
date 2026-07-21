@@ -9,6 +9,7 @@
 
 const fs = require("fs");
 const path = require("path");
+const { yeniSlug, yoluCevir } = require("./slug-map");
 
 const KOK = path.join(__dirname, "..");
 const ICERIK = path.join(KOK, "content");
@@ -18,12 +19,17 @@ const KAYNAK = "https://bidb.hacettepe.edu.tr";
 /* Tek tırnak kaçışı — PostgreSQL metin sabiti */
 const q = (v) => (v === null || v === undefined ? "NULL" : "'" + String(v).replace(/'/g, "''") + "'");
 
-/* Kaynak sitedeki iç bağlantılar yeni sitenin adreslerine çevrilir.
-   Dış bağlantılar ve belge adresleri olduğu gibi bırakılır. */
+/* Kaynak sitedeki iç bağlantılar yeni sitenin adreslerine çevrilir:
+   .../tr/geneltanitim  ->  /tr/about        (eşleme: slug-map.js)
+
+   Yalnızca bağlantının HEDEFİ değişir. Bağlantının görünen metni ve
+   sayfa içeriği olduğu gibi kalır; dış bağlantılar ve belge adresleri
+   hiç ellenmez. */
 function adresCevir(html) {
   return String(html).replace(
     /(href|src)=(["'])(https?:\/\/bidb\.hacettepe\.edu\.tr)?\/(tr|en)\/([a-z0-9_-]+)\2/gi,
-    (tam, oz, tirnak, kok, dil, slug) => oz + "=" + tirnak + "/" + dil + "/" + slug + tirnak
+    (tam, oz, tirnak, kok, dil, slug) =>
+      oz + "=" + tirnak + "/" + dil + "/" + yeniSlug(dil.toLowerCase(), slug) + tirnak
   );
 }
 
@@ -33,7 +39,7 @@ function sayfaOku(dil) {
   return fs.readdirSync(dizin)
     .filter((f) => f.endsWith(".json"))
     .map((f) => JSON.parse(fs.readFileSync(path.join(dizin, f), "utf8")))
-    .map((s) => ({ ...s, slug: s.slug || "anasayfa" }));
+    .map((s) => ({ ...s, slug: yeniSlug(dil, s.slug || "anasayfa") }));
 }
 
 const satirlar = [];
@@ -77,7 +83,8 @@ const menu = JSON.parse(fs.readFileSync(path.join(ICERIK, "_menu.json"), "utf8")
   (menu[dil] || []).forEach((bolum, bi) => {
     yaz("");
     yaz("INSERT INTO menu (dil, konum, baslik, sira) VALUES (" + [q(dil), q("sol"), q(bolum.bolum), bi].join(", ") + ");");
-    bolum.sayfalar.forEach(([slug, ad], si) => {
+    bolum.sayfalar.forEach(([eskiSlug, ad], si) => {
+      const slug = yeniSlug(dil, eskiSlug);
       yaz(
         "INSERT INTO menu_oge (menu_id, etiket, sayfa_id, sira) SELECT m.id, " + q(ad) + ", s.id, " + si +
         " FROM menu m JOIN sayfa s ON s.slug = " + q(slug) + " AND s.dil = " + q(dil) +
@@ -100,7 +107,7 @@ if (fs.existsSync(bilesenYolu)) {
   const b = JSON.parse(fs.readFileSync(bilesenYolu, "utf8"));
 
   // Kaynak sitedeki iç adresler yeni adres yapısına çevrilir
-  const adres = (u) => String(u || "").replace(/^https?:\/\/bidb\.hacettepe\.edu\.tr(?=\/)/i, "");
+  const adres = (u) => yoluCevir(String(u || "").replace(/^https?:\/\/bidb\.hacettepe\.edu\.tr(?=\/)/i, ""));
   const disMi = (u) => /^https?:\/\//i.test(u) && !/bidb\.hacettepe\.edu\.tr/i.test(u);
 
   ["tr", "en"].forEach((dil) => {

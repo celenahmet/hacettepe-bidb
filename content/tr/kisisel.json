@@ -1,0 +1,110 @@
+{
+  "slug": "kisisel",
+  "dil": "tr",
+  "bolum": "",
+  "menuAdi": "Kişisel Sayfalar",
+  "url": "https://bidb.hacettepe.edu.tr/tr/kisisel",
+  "baslik": "Kişisel Web Sayfaları için Web Servisi",
+  "seo": {
+    "title": "Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı",
+    "description": "",
+    "keywords": ""
+  },
+  "paragraflar": [
+    {
+      "tur": "li",
+      "metin": "FTP Bağlantı Ayarları"
+    },
+    {
+      "tur": "li",
+      "metin": "Genel Bilgiler"
+    },
+    {
+      "tur": "li",
+      "metin": "MYSQL Kullanımı"
+    },
+    {
+      "tur": "li",
+      "metin": "Veritabanı Kontrol Sayfası"
+    },
+    {
+      "tur": "li",
+      "metin": "Kota"
+    },
+    {
+      "tur": "p",
+      "metin": "FTP Bağlantı Ayarları:"
+    },
+    {
+      "tur": "p",
+      "metin": "FTP programında kullanılacak bağlantı bilgileri aşağıdaki gibidir. Host/URL: yunus.hacettepe.edu.tr Kullanıcı Adı/Username: kullanıcıadı (hacettepe uzantılı epostanızın @işaretinden önceki kısmıdır) Şifre/Password: hacettepe eposta adresinizin şifresi"
+    },
+    {
+      "tur": "p",
+      "metin": "Genel Bilgiler:"
+    },
+    {
+      "tur": "p",
+      "metin": "Web sayfalarınızı oluşturan dosyalar kişisel web sayfanızı taşıyan sunucuda FTP ile açacağınız public_html klasörü içerisinde yer almalıdır."
+    },
+    {
+      "tur": "p",
+      "metin": "Giriş sayfanızın (açılış sayfanızın) ismi index(.html, .htm, .php... gibi) olmalıdır."
+    },
+    {
+      "tur": "p",
+      "metin": "Web sayfanızı herhangi bir tarayıcı yardımı ile http://yunus.hacettepe.edu.tr/~kullanıcıadı adresinden görüntüleyebilirsiniz."
+    },
+    {
+      "tur": "p",
+      "metin": "CGI Hakkı Tüm kullanıcılarımızın cgi kullanım hakkı bulunmaktadır. public_html dizini içindeki tüm dizinlerde CGI kullanım hakkı bulunmaktadır. CGI' larınızın \"action\" kısmına CGI nızın bulunduğu yeri tanımlamanız yeterlidir. CGI' ınıza web üzerinden erişmeyi deneyince \"Not Found\" biçiminde hata veriyor ise; CGI programlarınızı sisteme doğru biçimde yerleştirdikten sonra, bu programlara referansları özel bir biçimde vermelisiniz. Kişisel web sayfaları için public_html dizinine yerleştireceğiniz bir \"deneme\" CGI programı, http://yunus.hacettepe.edu.tr/~kullanıcıadı/deneme adresinden erişilebilir olacaktır."
+    },
+    {
+      "tur": "p",
+      "metin": "MYSQL Kullanımı Tüm kullanıcılarımızın mysql kullanım hakkı bulunmaktadır. Mysql kullanmak isteyen kullanıcılarımız veri tabanını istemlerini webmaster@hacettepe.edu.tr e-posta yolu ile bildirmeleri gerekmektedir."
+    },
+    {
+      "tur": "p",
+      "metin": "Web Kota Uygulaması Öğrenci kullanıcıları için 100MB büyüklüğünde disk alanı ayrılmıştır."
+    },
+    {
+      "tur": "p",
+      "metin": "Kişisel web sayfası hazırlama ve yayınlama ile ilgili karşılaşacağınız soru ve sorunlar için webmaster@hacettepe.edu.tr adresine e-posta atabilirsiniz."
+    },
+    {
+      "tur": "p",
+      "metin": "HACETTEPE ÜNIVERSITESI-BİDB'nin web kullanıcıları servis politikasında diğer kişi ve kurumlara haber vermeden değişiklik yapma hakkı saklıdır. Ayrıca, HACETTEPE ÜNIVERSITESI-BİDB merkezi web sunucusu üzerinde herhangi bir zamanda teknik değişiklikler yapma hakkına sahiptir. Bu değişiklikleri önceden kullanıcılara bildirebileceği gibi, anlık olarak yapılabilecek değişikliklerin önceden duyurula maması da mümkün olabilir. Web kullanıcıları bu metinde yer alan bilgileri periyodik olarak izlemek ve olası değişikliklerden haberdar olmakla yükümlüdürler."
+    }
+  ],
+  "baglantilar": [
+    {
+      "metin": "FTP Bağlantı Ayarları",
+      "href": "https://bidb.hacettepe.edu.tr/tr/kisisel#2"
+    },
+    {
+      "metin": "Genel Bilgiler",
+      "href": "https://bidb.hacettepe.edu.tr/tr/kisisel#21"
+    },
+    {
+      "metin": "MYSQL Kullanımı",
+      "href": "https://bidb.hacettepe.edu.tr/tr/kisisel#4"
+    },
+    {
+      "metin": "Veritabanı Kontrol Sayfası",
+      "href": "https://bidb.hacettepe.edu.tr/tr/dblidyasorgui"
+    },
+    {
+      "metin": "Kota",
+      "href": "https://bidb.hacettepe.edu.tr/tr/kisisel#5"
+    },
+    {
+      "metin": "webmaster@hacettepe.edu.tr",
+      "href": "mailto:webmaster@hacettepe.edu.tr"
+    }
+  ],
+  "gorseller": [],
+  "belgeler": [],
+  "govdeHtml": "<div class=\"icerik\">\n\n  <ul>\n    <li><a href=\"/tr/kisisel#2\">FTP Bağlantı Ayarları</a></li>\n    <li><a href=\"/tr/kisisel#21\">Genel Bilgiler</a></li>\n    <li><a href=\"/tr/kisisel#4\">MYSQL Kullanımı</a> </li>\n    <li><a href=\"/tr/dblidyasorgui\">Veritabanı Kontrol Sayfası</a></li>\n    <li><a href=\"/tr/kisisel#5\">Kota</a></li>\n  </ul>\n  <p><strong><a name=\"2\"></a>FTP Bağlantı Ayarları: </strong><br>\n  </p>\n  <p>FTP programında kullanılacak bağlantı bilgileri aşağıdaki gibidir.<br>\n    Host/URL: yunus.hacettepe.edu.tr<br>\n    Kullanıcı Adı/Username: kullanıcıadı (hacettepe uzantılı epostanızın @işaretinden önceki kısmıdır)<br>\n    Şifre/Password: hacettepe eposta adresinizin şifresi </p>\n  <p><strong><a name=\"21\"></a>Genel Bilgiler: </strong></p>\n  <p>Web sayfalarınızı oluşturan dosyalar kişisel web sayfanızı taşıyan sunucuda FTP ile açacağınız public_html klasörü içerisinde yer almalıdır.</p>\n  <p>Giriş sayfanızın (açılış sayfanızın) ismi index(.html, .htm, .php... gibi) olmalıdır.</p>\n  <p>Web sayfanızı herhangi bir tarayıcı yardımı ile         http://yunus.hacettepe.edu.tr/~kullanıcıadı adresinden   görüntüleyebilirsiniz.</p>\n  <p><strong>CGI Hakkı </strong><br>\n    Tüm kullanıcılarımızın cgi kullanım hakkı bulunmaktadır. public_html                       dizini içindeki tüm dizinlerde CGI kullanım hakkı bulunmaktadır.                       CGI' larınızın \"action\" kısmına CGI nızın bulunduğu yeri tanımlamanız                       yeterlidir. CGI' ınıza web üzerinden erişmeyi deneyince \"Not                       Found\" biçiminde hata veriyor ise; <br>\n    CGI programlarınızı sisteme doğru biçimde yerleştirdikten                       sonra, bu programlara referansları özel bir biçimde vermelisiniz. <br>\n    Kişisel web sayfaları için public_html dizinine yerleştireceğiniz                       bir \"deneme\" CGI programı, http://yunus.hacettepe.edu.tr/~kullanıcıadı/deneme                                             adresinden erişilebilir olacaktır. </p>\n  <p><strong><a name=\"4\"></a>MYSQL Kullanımı </strong><br>\n    Tüm kullanıcılarımızın mysql kullanım hakkı bulunmaktadır. Mysql kullanmak isteyen kullanıcılarımız veri tabanını istemlerini <a href=\"mailto:webmaster@hacettepe.edu.tr\">webmaster@hacettepe.edu.tr</a> e-posta yolu ile bildirmeleri gerekmektedir. </p>\n  <p><strong><a name=\"5\"></a>Web Kota Uygulaması</strong><br>\n    Öğrenci kullanıcıları için 100MB büyüklüğünde disk alanı ayrılmıştır. </p>\n  <p>Kişisel web sayfası hazırlama ve yayınlama ile ilgili karşılaşacağınız soru ve sorunlar için <a href=\"mailto:webmaster@hacettepe.edu.tr\">webmaster@hacettepe.edu.tr</a> adresine e-posta atabilirsiniz. </p>\n  <p> </p>\n  <p>HACETTEPE ÜNIVERSITESI-BİDB'nin web kullanıcıları   servis politikasında diğer kişi ve kurumlara haber vermeden değişiklik   yapma hakkı saklıdır.   Ayrıca, HACETTEPE ÜNIVERSITESI-BİDB merkezi web sunucusu üzerinde   herhangi bir zamanda teknik değişiklikler yapma hakkına sahiptir. Bu   değişiklikleri önceden kullanıcılara bildirebileceği gibi, anlık olarak   yapılabilecek değişikliklerin önceden duyurula maması da mümkün   olabilir.   Web kullanıcıları bu metinde yer alan bilgileri periyodik olarak izlemek   ve olası değişikliklerden haberdar olmakla yükümlüdürler.</p>\n</div>",
+  "karakter": 2337,
+  "cekilme": "2026-07-21T19:24:35.147Z"
+}

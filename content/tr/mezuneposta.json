@@ -1,0 +1,74 @@
+{
+  "slug": "mezuneposta",
+  "dil": "tr",
+  "bolum": "",
+  "menuAdi": "Mezun E-Postası",
+  "url": "https://bidb.hacettepe.edu.tr/tr/mezuneposta",
+  "baslik": "Hacettepe Üniversitesi Mezun Hesabı",
+  "seo": {
+    "title": "Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı",
+    "description": "",
+    "keywords": ""
+  },
+  "paragraflar": [
+    {
+      "tur": "p",
+      "metin": "Hacettepe Üniversitesi Elektronik Posta Sistemlerinde kullanıcılarımızın daha verimli ve etkili bir şekilde iletişim kurmasına yardımcı olmak amacıyla iyileştirme ve geliştirme çalışmaları yapılmış, 11 Mayıs 2022 tarihinden itibaren yeni e-posta sistemi (Microsoft Exchange) kullanılmaya başlanmıştır."
+    },
+    {
+      "tur": "p",
+      "metin": "Mezun öğrencilerimizin Üniversitemize bağlılıkları göz önünde bulundurularak, yürürlüğe giren 8.12.2022 tarih ve 2022-000 sayılı Senato kararına istinaden Hacettepe Üniversitesi mezunlarının Mezunlar Derneği üyesi olmadan kurumsal e-posta almalarına olanak sağlanmıştır."
+    },
+    {
+      "tur": "p",
+      "metin": "Mezun Hesabını Kimler Alabilir? Üniversitemizin ön lisans, lisans, yüksek lisans ve doktora programlarını tamamlayarak mezun olmuş tüm Üniversite mensuplarımız bu hizmetten faydalanabilmektedir."
+    },
+    {
+      "tur": "p",
+      "metin": "Mezun Hesabımı Nasıl Alabilirim? E-posta Yönergesine göre @hacettepe.edu.tr uzantılı mevcut kurumsal elektronik posta hesapları mezuniyet tarihinden 90 gün sonra kullanıma kapatılmaktadır. Kullanıcı hesabının kapatılmasından sonra mezunun kendisi tarafından,"
+    },
+    {
+      "tur": "p",
+      "metin": "1- https://portal.hacettepe.edu.tr adresinden \"Yeni Hesap Açma\" butonunu kullanarak veya 2-Mezun olduğunu gösteren bir belge ile Bilgi İşlem Daire Başkanlığına şahsen başvurularak e-posta hesabı açılabilmektedir. Mezun Hesabının Alt Alan Adı Nedir? Açılacak mezun hesaplarında \"@\" işaretinden sonra, \"mezun.hacettepe.edu.tr\" alt alan adı kullanılacaktır. Mezun Hesabı ile Hangi Hizmetlerden Faydalanabilirim?"
+    },
+    {
+      "tur": "li",
+      "metin": "Tanımlanacak mezun hesapları sadece iletişim için kullanabilecektir."
+    },
+    {
+      "tur": "li",
+      "metin": "Microsoft’un Office 365 Mail Hizmeti kullanılacaktır."
+    },
+    {
+      "tur": "li",
+      "metin": "Sunulan mail hizmetinde her kullanıcıya epostalarını saklayabilecekleri 50gb alan verilmiştir."
+    },
+    {
+      "tur": "p",
+      "metin": "Üniversitemizin yaptığı protokoller ve anlaşmalar gereği mezun hesabı alacak kullanıcılarımız proxy (e-kaynak) hizmetinden, yazılım deposundaki yazılımlardan, Office programları gibi hizmetlerimizden faydalanamayacaklardır."
+    },
+    {
+      "tur": "p",
+      "metin": "Mezun Hesabıma Nasıl Giriş Yapabilirim? Bilgi İşlem Daire Başkanlığı Portalından mezun hesabı açıldıktan sonra https://outlook.office.com/ ara yüzünden oturum açarak hesabınıza erişim sağlamanız gerekmektedir."
+    },
+    {
+      "tur": "p",
+      "metin": "Mezun Hesabımın Kullanıcı Adını Unuttum Nasıl Öğrenebilirim? Bilgi İşlem Daire Başkanlığı Portalından \"Kullanıcı Adımı Unuttum\" butonunu kullanarak kullanıcı adınızı hatırlamanız gerekmektedir."
+    },
+    {
+      "tur": "p",
+      "metin": "Mezun Hesabımın Şifresini Unuttum Nasıl Öğrenebilrim? Bilgi İşlem Daire Başkanlığı Portalından \"Şifremi Unuttum\" butonunu kullanarak yeniden şifre oluşturmanız gerekmektedir."
+    }
+  ],
+  "baglantilar": [
+    {
+      "metin": "https://outlook.office.com/",
+      "href": "https://outlook.office.com/"
+    }
+  ],
+  "gorseller": [],
+  "belgeler": [],
+  "govdeHtml": "<div class=\"icerik\">\n<p>\n  Hacettepe Üniversitesi Elektronik Posta Sistemlerinde kullanıcılarımızın daha verimli ve etkili bir şekilde iletişim kurmasına yardımcı olmak amacıyla iyileştirme ve geliştirme çalışmaları yapılmış, 11 Mayıs 2022 tarihinden itibaren <strong>yeni e-posta sistemi (Microsoft Exchange)</strong> kullanılmaya başlanmıştır.</p><p>\n  Mezun öğrencilerimizin Üniversitemize bağlılıkları göz önünde bulundurularak, yürürlüğe giren <strong><em>8.12.2022 tarih ve 2022-000 sayılı Senato kararına</em></strong> istinaden Hacettepe Üniversitesi mezunlarının Mezunlar Derneği üyesi olmadan kurumsal e-posta almalarına olanak sağlanmıştır. </p><p>\n  <strong>Mezun Hesabını Kimler Alabilir?</strong><br>\n  Üniversitemizin ön lisans, lisans, yüksek lisans ve doktora programlarını tamamlayarak mezun olmuş tüm Üniversite mensuplarımız bu hizmetten faydalanabilmektedir.</p><p>\n  <strong>Mezun Hesabımı Nasıl Alabilirim?</strong><br>\n  E-posta Yönergesine göre <strong>@hacettepe.edu.tr</strong> uzantılı mevcut kurumsal elektronik posta hesapları mezuniyet tarihinden 90 gün sonra kullanıma kapatılmaktadır. Kullanıcı hesabının kapatılmasından sonra mezunun kendisi tarafından, </p><p>\n  1- <strong>https://portal.hacettepe.edu.tr</strong> adresinden <strong>&ldquo;Yeni Hesap Açma&rdquo;</strong> butonunu kullanarak veya<br>\n  2-Mezun olduğunu gösteren bir belge ile Bilgi İşlem Daire Başkanlığına şahsen başvurularak e-posta hesabı açılabilmektedir.<br>\n  <strong>Mezun Hesabının Alt Alan Adı Nedir?</strong><br>\n  Açılacak mezun hesaplarında &ldquo;@&rdquo; işaretinden sonra, &ldquo;mezun.hacettepe.edu.tr&rdquo; alt alan adı kullanılacaktır.<br>\n  <strong>Mezun Hesabı ile Hangi Hizmetlerden Faydalanabilirim?</strong></p>\n<ul>\n  <li>Tanımlanacak mezun hesapları sadece iletişim için kullanabilecektir. </li>\n  <li>Microsoft&rsquo;un Office 365 Mail Hizmeti kullanılacaktır.</li>\n  <li>Sunulan mail hizmetinde her kullanıcıya epostalarını saklayabilecekleri 50gb alan verilmiştir.</li>\n</ul>\n<p><em>Üniversitemizin yaptığı protokoller ve anlaşmalar gereği mezun hesabı alacak kullanıcılarımız proxy (e-kaynak) hizmetinden, yazılım deposundaki yazılımlardan, Office programları gibi hizmetlerimizden <strong>faydalanamayacaklardır.</strong></em></p><p>\n  <strong>Mezun Hesabıma Nasıl Giriş Yapabilirim?</strong><br>\n  Bilgi İşlem Daire Başkanlığı Portalından mezun hesabı açıldıktan sonra <a href=\"https://outlook.office.com/\" target=\"_blank\">https://outlook.office.com/</a> ara yüzünden oturum açarak hesabınıza erişim sağlamanız gerekmektedir.</p><p>\n  <strong>Mezun Hesabımın Kullanıcı Adını Unuttum Nasıl Öğrenebilirim?</strong><br>\n  Bilgi İşlem Daire Başkanlığı Portalından &ldquo;Kullanıcı Adımı Unuttum&rdquo; butonunu kullanarak kullanıcı adınızı hatırlamanız gerekmektedir.</p><p>\n  <strong>Mezun Hesabımın Şifresini Unuttum Nasıl Öğrenebilrim?</strong><br>\n  Bilgi İşlem Daire Başkanlığı Portalından &ldquo;Şifremi Unuttum&rdquo; butonunu kullanarak yeniden şifre oluşturmanız gerekmektedir.</p>\n</div>",
+  "karakter": 2445,
+  "cekilme": "2026-07-21T19:24:34.092Z"
+}

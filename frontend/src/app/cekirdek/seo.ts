@@ -39,13 +39,24 @@ export class Seo {
 
     this.belge.documentElement.lang = dil;
     this.baglantiAyarla('canonical', yol);
-    this.baglantiAyarla('alternate', yol.replace(/^\/(tr|en)/, '/tr'), 'tr');
-    this.baglantiAyarla('alternate', yol.replace(/^\/(tr|en)/, '/en'), 'en');
+    // hreflang yalnızca karşılığı gerçekten var olan sayfa için verilir.
+    // Var olmayan bir çeviriyi bildirmek arama motorlarında hata üretir.
+    const digerDil = dil === 'en' ? 'tr' : 'en';
+    this.baglantiAyarla('alternate', yol, dil);
+    if (sayfa?.cevirisiVar) {
+      this.baglantiAyarla('alternate', yol.replace(/^\/(tr|en)/, '/' + digerDil), digerDil);
+    } else {
+      this.baglantiKaldir('alternate', digerDil);
+    }
   }
 
   private ayarla(ad: string, icerik: string): void {
     if (icerik) this.meta.updateTag({ name: ad, content: icerik });
     else this.meta.removeTag(`name='${ad}'`);
+  }
+
+  private baglantiKaldir(iliski: string, dil: string): void {
+    this.belge.head.querySelector(`link[rel="${iliski}"][hreflang="${dil}"]`)?.remove();
   }
 
   private baglantiAyarla(iliski: string, yol: string, dil?: string): void {

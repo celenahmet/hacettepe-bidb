@@ -15,20 +15,26 @@ public record SayfaDto(
         String seoTitle,
         String seoDescription,
         String seoKeywords,
-        List<BelgeDto> belgeler
+        List<BelgeDto> belgeler,
+        /** Bu sayfanın diğer dilde karşılığı var mı (hreflang için). */
+        boolean cevirisiVar
 ) {
     public static SayfaDto of(Sayfa s) {
+        return of(s, false);
+    }
+
+    public static SayfaDto of(Sayfa s, boolean cevirisiVar) {
         return new SayfaDto(
                 s.getSlug(), s.getDil(), s.getBaslik(), s.getIcerikHtml(),
                 s.getSeoTitle(), s.getSeoDescription(), s.getSeoKeywords(),
-                s.getBelgeler().stream().map(BelgeDto::of).toList()
+                s.getBelgeler().stream().map(BelgeDto::of).toList(), cevirisiVar
         );
     }
 
     /** Liste görünümleri için içerik olmadan. */
     public static SayfaDto ozet(Sayfa s) {
         return new SayfaDto(s.getSlug(), s.getDil(), s.getBaslik(), null,
-                s.getSeoTitle(), s.getSeoDescription(), s.getSeoKeywords(), List.of());
+                s.getSeoTitle(), s.getSeoDescription(), s.getSeoKeywords(), List.of(), false);
     }
 
     public record BelgeDto(String ad, String adres, String tur) {

@@ -21,8 +21,8 @@ import { Dil } from '../cekirdek/modeller';
           <dd><a href="mailto:bidb@hacettepe.edu.tr">bidb&#64;hacettepe.edu.tr</a></dd>
         </dl>
         <p class="alt-baglantilar">
-          <a [routerLink]="['/', dil, 'sorumluluksiniri']">{{ dil === 'en' ? 'Disclaimer' : 'Sorumluluk Sınırı' }}</a>
-          <a [routerLink]="['/', dil, 'erisilebilirlik']">{{ dil === 'en' ? 'Accessibility Statement' : 'Erişilebilirlik Bildirimi' }}</a>
+          <a [routerLink]="['/', dil, 'disclaimer']">{{ dil === 'en' ? 'Disclaimer' : 'Sorumluluk Sınırı' }}</a>
+          <a [routerLink]="['/', dil, 'accessibility']">{{ dil === 'en' ? 'Accessibility Statement' : 'Erişilebilirlik Bildirimi' }}</a>
         </p>
       </div>
     </footer>

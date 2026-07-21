@@ -1,0 +1,106 @@
+{
+  "slug": "baglanti_onlem",
+  "dil": "tr",
+  "bolum": "",
+  "menuAdi": "Bağlantı Güvenliği Önlemleri",
+  "url": "https://bidb.hacettepe.edu.tr/tr/baglanti_onlem",
+  "baslik": "HÜ Internet Bağlantısı Hakkında",
+  "seo": {
+    "title": "Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı",
+    "description": "",
+    "keywords": ""
+  },
+  "paragraflar": [
+    {
+      "tur": "p",
+      "metin": "Kullanıcılar zaman zaman Internet üzerinden bağlantı kurmak istedikleri yerlere bağlanamamakta ya da olağandan daha yavaş hızlarda bağlanabilmektedirler. Bu durumda kullanıcının ilk aklına gelen, üniversitemizin dış bağlantısında oluşabilecek bir arıza olasılığıdır. Oysa, son kullanıcının bilgisayarından dünyanın diğer ucundaki bir Web sunucusuna bağlantı kurana kadar çok çeşitli yollardan geçen Internet paketleri, bu yolların herhangi bir aşamasında takılabilmektedirler. Kullanıcı, bağlantı hızından şüphelendiği zaman sorunun nerede olduğunu bazı testler yaparak kendi de tahmin edebilir. Burada bu konuda bazı yardımcı bilgiler verilecektir."
+    },
+    {
+      "tur": "p",
+      "metin": "Ancak bu bilgileri vermeden önce üniversitemizin dış dünya ile hangi rotalardan ve hangi hızlarda bağlantı kurduğuna kısaca değinmekte yarar vardır."
+    },
+    {
+      "tur": "p",
+      "metin": "Hacettepe Üniversitesi'nin Dış Dünyaya Bağlantısı"
+    },
+    {
+      "tur": "p",
+      "metin": "Üniversitemizin iki ana kampüsü dışındaki birim ve bölümlerinin bağlantıları ise önce bu kampüslerden birine yapılmakta, okullar daha sonra buradan dünyaya açılmaktadırlar. Bu konudaki detaylı bilgi için Ağ Altyapısı bölümüne başvurulabilir."
+    },
+    {
+      "tur": "p",
+      "metin": "Dünyadaki farklı kuruluşlar farklı ISS (Internet Servis Sağlayıcı, ISP) şirketlerinden servis alarak Internet hizmeti verirler. Bu ISS'ler de daha büyük omurgaları işleten başka ISS'lere bağlanırlar. Ve bu şema katmanlar halinde gelişir. Bunlar arasındaki rotalar (route) çok büyük kapasiteli \"router\" cihazları ile çizilir ve dinamik olarak optimum rota hesaplanmaya çalışılır."
+    },
+    {
+      "tur": "p",
+      "metin": "Hacettepe Üniversitesi'nde bir bilgisayar kullanıcısı Web üzerinden ABD'de bulunan bir gazeteye bağlanmak isterse aslında onlarca noktadan geçen paketlerle trafik sağlanır ve bu da saniyenin küçük bir bölümünde hesaplanır. Tüm dünyanın paketlerinin aynı anayollar üzerinde gidip geldiği düşünüldüğünde, ve paketlerin (Internet trafiğini oluşturan küçük veri blokları) teker teker bir yerden diğerine gittiği onaylanarak trafiğin aktığı göz önüne alındığında bazı paketlerin \"yolda kaybolması\", teyit (acknowledge) beklerken zaman aşımına uğraması normaldir. Bir de bunların üzerine var olan milyonlarca bağlantının anlık ya da uzun süreli kesintileri eklenince kullanıcı bir yere bağlanmada sorun yaşarsa \"bağlantı yine yavaş\" diye şikayet etmekle yetinecektir."
+    },
+    {
+      "tur": "p",
+      "metin": "Bu noktada bir kullanıcı için bağlantı yavaşlığının nereden kaynaklandığını anlamak kolay olmayabilir. Burada bazı pratik testlerden bahsetmek meraklısı için uygun olacaktır:"
+    },
+    {
+      "tur": "p",
+      "metin": "Bağlantım Nerede Yavaşlıyor? Nasıl Anlarım?"
+    },
+    {
+      "tur": "li",
+      "metin": "Kullanıcı öncelikle kendisine en yakın sunucu ile bağlantısını kontrol ederek işe başlayabilir: Örneğin bulunduğu bölümdeki başka bilgisayarlara olan bağlantısını kontol eder. Bunun için pratik bir yöntem \"PING\" komutudur. Hem Widnows'ta hem de Linux'ta bulunan bu komut ile bilgisayarınızdan bir noktaya birkaç Byte'lık bir paket yollar ve kaç saniyede (milisaniyede) geri döndüğünü ölçersiniz. Bunun için PING yapılacak bilgisayarın kişisel firewall'u ve/veya arada bulunan ağ anahtarlama cihazlarının buna izin vermesi gerekir. Hacettepe'nin farklı noktalarında ağ güvenliği nedeniyle bazı ping trafiği kasten engellenmektedir. [Ping komutu, Windows'da Başlat->Çalıştır->cmd yazarak elde edilen siyah komut penceresinde \"ping karşı_ip_adresi\" komutu yazılarak çalıştırılır. Genellikle aynı ağ içinde iki bilgisayarın birbirini 1-2 ms'den daha yavaş ping'lemesi beklenmez.]"
+    },
+    {
+      "tur": "li",
+      "metin": "İçinde bulunulan kurumun bir Web sitesi denenebilir. Örneğin Beytepe'de çalışanların www.hacettepe.edu.tr'ye ne kadar hızlı eriştiklerine, Sıhhiye'de çalışanların ise örneğin orada bulunan www.hacettepe.com.tr adresine ne kadar hızlı eriştiklerine bakmaları gerekir. Sıhhiye Beytepe'ye erişimi (ya da tersi) karşılıklı olarak bu adresleri deneyerek test edebilir."
+    },
+    {
+      "tur": "li",
+      "metin": "Bağlı bulunulan en yakın dış ISS'ye bağlantının kontrolü yapılabilir. Hacettepe için bu yer Ulakbim'dir. Ulakbim'in Web sitesi www.ulak.net.tr adresi bunun için bir test adresi olabilir. Merak edenler bu kurumun dosya paylaşım sitelerinden uygun boyda dosyalar indirmeyi deneyerek hız tespiti yapabilirler. Örneğin ftp.ulak.net.tr adresi geniş bir dosya arşivi sunmaktadır. Ya da daha meraklısı \"traceroute\" komutunu kullanarak Ulaknet'e ulaşmayı deneyebilir. Bu komut yine Windows'ta ve Linux'ta mevcuttur. Windows'daki versiyonu \"tracert\"dir. Yine komut satırından ping yerine bu komut (ve ardından gidilecek adres) yazılırsa komut sıra ile bu noktaya ulaşmak için geçtiği ara noktaları (router'lar) ve bunlara paketlerin gitme sürelerini (ping'deki gibi) yazacaktır. \"*\" konulan yerler ise ulaşılamayan yerlerdir. \"Ulaşamama\" ya gerçekten o noktadaki arıza nedeniyle bir ulaşamamadır, ya da sistemler güvenlikleri gereği cevap vermeyerek ulaşılamıyormuş izlenimi yaratırlar. Bu noktada kullanıcı daha fazla ilerleyemez. Bu noktaya kadar herşey normalse kullanıcı en azından Hacettepe Üniversitesi dahilinde bir sorunun olmadığını düşünebilir. Sorunun Hacettepe'den sonra nerede olduğunu anlamak için devam etmek gerekir:"
+    },
+    {
+      "tur": "li",
+      "metin": "Diğer üniversitelere erişim denenebilir. Buna en yakın yerler olan Ankara, ODTÜ, Bilkent, Gazi gibi üniversitelerin Web sayfalarına bağlanma test edilerek başlanabilir. Hatta bu yazının yazıldığı tarih itibariyle ODTÜ'nün Web adresine \"traceroute\" ile gitmek mümkündür. Beytepe'de Elektronik Mühendisliği Bölümü'ndeki bir PC'den örnek bir traceroute sonucu şöyledir: C:\\>tracert www.metu.edu.tr Tracing route to midyat.general.services.metu.edu.tr [144.122.144.160] over a maximum of 30 hops: 1 4 ms 9 ms 9 ms 193.140.221.254 ---> Elektronik Müh. Router'ı 2 13 ms <1 ms <1 ms 192.168.6.126 ---> Kampüs Router'ı 3 8 ms <1 ms 1 ms 192.168.216.250 ---> Kampüs çıkış Router'ı 4 8 ms 1 ms 1 ms 193.140.0.29 ---> Ulakbim Router'ı 5 7 ms 1 ms 1 ms 193.140.10.114 ---> ODTÜ çıkış Router'ı 6 10 ms 1 ms 1 ms 144.122.2.199 ---> ODTÜ Servis Router'ı 7 2 ms 1 ms <1 ms 144.122.144.160 ---> ODTÜ WEB sunucusu Trace complete."
+    },
+    {
+      "tur": "li",
+      "metin": "İstanbul üniversitelerine bağlantı denenebilir. Bu test, Ulakbim'in Türk Telekom aracılığı ile sağladığı şehirlerarası özel devrenin durumu ile ilgili bir bilgi verebilir."
+    },
+    {
+      "tur": "li",
+      "metin": "Yurt dışı bir ticari kuruluşun Web sitesine bağlantı denenebilir. Bu test hem ABD hem de Avrupa'daki birer kuruluş için ayrı ayrı yapılabilir. Bununla hem TTNet-Ulakbim arası bağlantı hakkında, hem de TTNet'in farklı yurt dışı çıkışlarındaki durum hakkında kabaca bir fikir elde edilebilir."
+    },
+    {
+      "tur": "li",
+      "metin": "Son olarak yurt dışında bulunan bir üniversitenin Web sitesine bağlantı denenebilir. Ulaknet'in dünya akademik ağına olan bağlantısı Türk Telekom'dan farklı bir kuruluş aracılığı ile yapıldığı için bu test sorun hakkında bir fikir verebilir. Sorun Ulaknet'in Ankara binası çevresinde ise bu bağlantı da yapılamayacaktır."
+    },
+    {
+      "tur": "p",
+      "metin": "Sade bir kullanıcı için gerek olmasa da, meraklı kullanıcıların Internet üzerinde araştırma yapmaları, TCP/IP haberleşme protokollerinin nasıl çalıştığını öğrenmeye çalışmaları önerilebilir. Hacettepe Üniversitesi Bilgi İşlem Dairesi'nin ana Web sayfasında öngörülen ya da oluşmuş problemlerden kullanıcılar haberdar edilmektedir."
+    },
+    {
+      "tur": "p",
+      "metin": "Yine meraklı kullanıcılar, Ulakbim'in ağ istatistiklerini gösteren Web sayfalarını ve buradaki grafikleri inceleyebilirler. Buradan hem omurga trafiğine hem de tek tek üniversitelerin çıkış grafiklerine erişilebilir. Eğer günlük trafikte belirli bir anda bariz kesintiler göze çarpıyorsa o noktada bir arıza oluştuğu düşünülebilir. Ulakbim'in ağ istatistiklerine ait sayfanın adresi:"
+    },
+    {
+      "tur": "p",
+      "metin": "https://stat.ulakbim.gov.tr/ulaknet/"
+    },
+    {
+      "tur": "p",
+      "metin": "Kullanıcılar bu adreste verilen bağlantılardan bir çok farklı bilgiye ulaşabilirler."
+    }
+  ],
+  "baglantilar": [
+    {
+      "metin": "Ağ Altyapısı",
+      "href": "https://bidb.hacettepe.edu.tr/tr/altyapi"
+    },
+    {
+      "metin": "https://stat.ulakbim.gov.tr/ulaknet/",
+      "href": "https://stat.ulakbim.gov.tr/ulaknet/"
+    }
+  ],
+  "gorseller": [],
+  "belgeler": [],
+  "govdeHtml": "<div class=\"icerik\">\n\n<p>Kullanıcılar zaman zaman Internet üzerinden bağlantı kurmak   istedikleri yerlere bağlanamamakta ya da olağandan daha yavaş hızlarda   bağlanabilmektedirler. Bu durumda kullanıcının ilk aklına gelen, üniversitemizin   dış bağlantısında oluşabilecek bir arıza olasılığıdır. Oysa, son kullanıcının   bilgisayarından dünyanın diğer ucundaki bir Web sunucusuna bağlantı kurana kadar   çok çeşitli yollardan geçen Internet paketleri, bu yolların herhangi bir   aşamasında takılabilmektedirler.\n<p>Kullanıcı, bağlantı hızından şüphelendiği zaman sorunun nerede olduğunu bazı   testler yaparak kendi de tahmin edebilir. Burada bu konuda bazı yardımcı   bilgiler verilecektir. </p>\n<p>Ancak bu bilgileri vermeden önce üniversitemizin dış dünya ile hangi   rotalardan ve hangi hızlarda bağlantı kurduğuna kısaca değinmekte yarar vardır. </p>\n<p><strong>Hacettepe Üniversitesi'nin Dış Dünyaya Bağlantısı</strong></p>\n\n<p>Üniversitemizin iki ana kampüsü   dışındaki birim ve bölümlerinin bağlantıları ise önce bu kampüslerden birine   yapılmakta, okullar daha sonra buradan dünyaya açılmaktadırlar. Bu konudaki   detaylı bilgi için <a href=\"/tr/altyapi\">Ağ   Altyapısı</a> bölümüne başvurulabilir.\n</p>\n<p>Dünyadaki farklı kuruluşlar farklı ISS (Internet Servis Sağlayıcı, ISP)   şirketlerinden servis alarak Internet hizmeti verirler. Bu ISS'ler de daha büyük   omurgaları işleten başka ISS'lere bağlanırlar. Ve bu şema katmanlar halinde   gelişir. Bunlar arasındaki rotalar (route) çok büyük kapasiteli &quot;router&quot;   cihazları ile çizilir ve dinamik olarak optimum rota hesaplanmaya çalışılır. </p>\n<p>Hacettepe Üniversitesi'nde bir bilgisayar kullanıcısı Web üzerinden ABD'de   bulunan bir gazeteye bağlanmak isterse aslında onlarca noktadan geçen paketlerle   trafik sağlanır ve bu da saniyenin küçük bir bölümünde hesaplanır. Tüm dünyanın   paketlerinin aynı anayollar üzerinde gidip geldiği düşünüldüğünde, ve paketlerin   (Internet trafiğini oluşturan küçük veri blokları) teker teker bir yerden   diğerine gittiği onaylanarak trafiğin aktığı göz önüne alındığında bazı   paketlerin &quot;yolda kaybolması&quot;, teyit (acknowledge) beklerken zaman aşımına   uğraması normaldir. Bir de bunların üzerine var olan milyonlarca bağlantının   anlık ya da uzun süreli kesintileri eklenince kullanıcı bir yere bağlanmada   sorun yaşarsa &quot;bağlantı yine yavaş&quot; diye şikayet etmekle yetinecektir. </p>\n<p>Bu noktada bir kullanıcı için bağlantı yavaşlığının nereden kaynaklandığını   anlamak kolay olmayabilir. Burada bazı pratik testlerden bahsetmek meraklısı   için uygun olacaktır: </p>\n\n<p><strong>Bağlantım Nerede Yavaşlıyor? Nasıl Anlarım?</strong></p>\n<ol>\n  <li><strong>Kullanıcı öncelikle kendisine en yakın sunucu ile bağlantısını kontrol   ederek işe başlayabilir:</strong> Örneğin bulunduğu bölümdeki başka bilgisayarlara   olan bağlantısını kontol eder. Bunun için pratik bir yöntem &quot;PING&quot; komutudur.   Hem Widnows'ta hem de Linux'ta bulunan bu komut ile bilgisayarınızdan bir   noktaya birkaç Byte'lık bir paket yollar ve kaç saniyede (milisaniyede) geri   döndüğünü ölçersiniz. Bunun için PING yapılacak bilgisayarın kişisel firewall'u   ve/veya arada bulunan ağ anahtarlama cihazlarının buna izin vermesi gerekir.   Hacettepe'nin farklı noktalarında ağ güvenliği nedeniyle bazı ping trafiği   kasten engellenmektedir. [Ping komutu, Windows'da Başlat-&gt;Çalıştır-&gt;cmd   yazarak elde edilen siyah komut penceresinde &quot;ping karşı_ip_adresi&quot; komutu   yazılarak çalıştırılır. Genellikle aynı ağ içinde iki bilgisayarın birbirini 1-2   ms'den daha yavaş ping'lemesi beklenmez.] </li>\n  <li><strong>İçinde bulunulan kurumun bir Web sitesi denenebilir.</strong> Örneğin   Beytepe'de çalışanların www.hacettepe.edu.tr'ye ne kadar hızlı eriştiklerine,   Sıhhiye'de çalışanların ise örneğin orada bulunan www.hacettepe.com.tr adresine   ne kadar hızlı eriştiklerine bakmaları gerekir. Sıhhiye Beytepe'ye erişimi (ya   da tersi) karşılıklı olarak bu adresleri deneyerek test edebilir. </li>\n  <li><strong>Bağlı bulunulan en yakın dış ISS'ye bağlantının kontrolü yapılabilir.</strong> Hacettepe için bu yer Ulakbim'dir. Ulakbim'in Web sitesi www.ulak.net.tr adresi   bunun için bir test adresi olabilir. Merak edenler bu kurumun dosya paylaşım   sitelerinden uygun boyda dosyalar indirmeyi deneyerek hız tespiti yapabilirler.   Örneğin ftp.ulak.net.tr adresi geniş bir dosya arşivi sunmaktadır. Ya da daha   meraklısı &quot;traceroute&quot; komutunu kullanarak Ulaknet'e ulaşmayı deneyebilir. Bu   komut yine Windows'ta ve Linux'ta mevcuttur. Windows'daki versiyonu   &quot;tracert&quot;dir. Yine komut satırından ping yerine bu komut (ve ardından gidilecek   adres) yazılırsa komut sıra ile bu noktaya ulaşmak için geçtiği ara noktaları   (router'lar) ve bunlara paketlerin gitme sürelerini (ping'deki gibi) yazacaktır.   &quot;*&quot; konulan yerler ise ulaşılamayan yerlerdir. &quot;Ulaşamama&quot; ya gerçekten o   noktadaki arıza nedeniyle bir ulaşamamadır, ya da sistemler güvenlikleri gereği   cevap vermeyerek ulaşılamıyormuş izlenimi yaratırlar. Bu noktada kullanıcı daha   fazla ilerleyemez.\n    <p><strong>Bu noktaya kadar herşey normalse kullanıcı en azından Hacettepe   Üniversitesi dahilinde bir sorunun olmadığını düşünebilir. Sorunun Hacettepe'den   sonra nerede olduğunu anlamak için devam etmek gerekir:</strong> </p>\n  </li>\n  <li><strong>Diğer üniversitelere erişim denenebilir.</strong> Buna en yakın yerler olan   Ankara, ODTÜ, Bilkent, Gazi gibi üniversitelerin Web sayfalarına bağlanma test   edilerek başlanabilir. Hatta bu yazının yazıldığı tarih itibariyle ODTÜ'nün Web   adresine &quot;traceroute&quot; ile gitmek mümkündür. Beytepe'de Elektronik Mühendisliği   Bölümü'ndeki bir PC'den örnek bir traceroute sonucu şöyledir:\n    <pre>C:\\&gt;tracert www.metu.edu.tr    Tracing route to midyat.general.services.metu.edu.tr [144.122.144.160] over  a maximum of 30 hops:      1     4 ms     9 ms     9 ms  193.140.221.254  ---&gt; Elektronik Müh. Router'ı    2    13 ms    &lt;1 ms    &lt;1 ms  192.168.6.126    ---&gt; Kampüs Router'ı    3     8 ms    &lt;1 ms     1 ms  192.168.216.250  ---&gt; Kampüs çıkış Router'ı    4     8 ms     1 ms     1 ms  193.140.0.29     ---&gt; Ulakbim Router'ı    5     7 ms     1 ms     1 ms  193.140.10.114   ---&gt; ODTÜ çıkış Router'ı    6    10 ms     1 ms     1 ms  144.122.2.199    ---&gt; ODTÜ Servis Router'ı    7     2 ms     1 ms    &lt;1 ms  144.122.144.160  ---&gt; ODTÜ WEB sunucusu    Trace complete.  </pre>\n  </li>\n  <li><strong>İstanbul üniversitelerine bağlantı denenebilir.</strong> Bu test, Ulakbim'in   Türk Telekom aracılığı ile sağladığı şehirlerarası özel devrenin durumu ile   ilgili bir bilgi verebilir. </li>\n  <li><strong>Yurt dışı bir ticari kuruluşun Web sitesine bağlantı denenebilir.</strong> Bu   test hem ABD hem de Avrupa'daki birer kuruluş için ayrı ayrı yapılabilir.   Bununla hem TTNet-Ulakbim arası bağlantı hakkında, hem de TTNet'in farklı yurt   dışı çıkışlarındaki durum hakkında kabaca bir fikir elde edilebilir. </li>\n  <li><strong>Son olarak yurt dışında bulunan bir üniversitenin Web sitesine bağlantı   denenebilir.</strong> Ulaknet'in dünya akademik ağına olan bağlantısı Türk   Telekom'dan farklı bir kuruluş aracılığı ile yapıldığı için bu test sorun   hakkında bir fikir verebilir. Sorun Ulaknet'in Ankara binası çevresinde ise bu   bağlantı da yapılamayacaktır. </li>\n</ol>\nYukarıdaki testler kuşkusuz ki   kullanıcıya basit bir fikir vermek amacıyla önerilmiştir, kesin bir yargıya   varmayı sağlamaz. Adreslerin değişimi, kurumların erişim politikalarını   değiştirmeleri her zaman olasıdır. Internet'te yapılabilecek küçük bir arama ile   hız testi yapmayı sağlayan siteler bulunabilir. Ancak bunlar genellikle   kendilerine en yakın bağlantı kuran kullanıcıları düşünerek hazırlanmış   testlerdir. Uzak kullanıcılar için hiç bir anlam ifade etmeyebilir.\n<p>Sade bir kullanıcı için gerek olmasa da, meraklı kullanıcıların Internet   üzerinde araştırma yapmaları, TCP/IP haberleşme protokollerinin nasıl   çalıştığını öğrenmeye çalışmaları önerilebilir. Hacettepe Üniversitesi Bilgi   İşlem Dairesi'nin ana Web sayfasında öngörülen ya da oluşmuş problemlerden   kullanıcılar haberdar edilmektedir. </p>\n<p>Yine meraklı kullanıcılar, Ulakbim'in ağ istatistiklerini gösteren Web   sayfalarını ve buradaki grafikleri inceleyebilirler. Buradan hem omurga   trafiğine hem de tek tek üniversitelerin çıkış grafiklerine erişilebilir. Eğer   günlük trafikte belirli bir anda bariz kesintiler göze çarpıyorsa o noktada bir   arıza oluştuğu düşünülebilir. Ulakbim'in ağ istatistiklerine ait sayfanın   adresi: </p>\n<p><a href=\"https://stat.ulakbim.gov.tr/ulaknet/\" target=\"_blank\">https://stat.ulakbim.gov.tr/ulaknet/</a> </p>\n<p>Kullanıcılar bu adreste verilen bağlantılardan bir çok farklı bilgiye   ulaşabilirler. </p>\n\n\n</div>",
+  "karakter": 7429,
+  "cekilme": "2026-07-21T19:24:36.524Z"
+}

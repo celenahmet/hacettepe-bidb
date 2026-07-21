@@ -20,8 +20,10 @@ public class SayfaController {
 
     @GetMapping("/sayfa/{slug}")
     public ResponseEntity<SayfaDto> sayfa(@PathVariable String dil, @PathVariable String slug) {
+        // Diğer dildeki karşılığı varsa hreflang bağlantısı verilebilir
+        boolean cevirisiVar = sayfalar.bul(slug, dil.equals("en") ? "tr" : "en").isPresent();
         return sayfalar.bul(slug, dil)
-                .map(SayfaDto::of)
+                .map(s -> SayfaDto.of(s, cevirisiVar))
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }

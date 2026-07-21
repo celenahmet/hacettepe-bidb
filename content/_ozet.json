@@ -302,5 +302,125 @@
     "bolum": "Contact",
     "karakter": 156,
     "belge": 0
+  },
+  {
+    "dil": "tr",
+    "slug": "VPN",
+    "ad": "VPN",
+    "bolum": "",
+    "karakter": 446,
+    "belge": 1
+  },
+  {
+    "dil": "tr",
+    "slug": "mezuneposta",
+    "ad": "Mezun E-Postası",
+    "bolum": "",
+    "karakter": 2445,
+    "belge": 0
+  },
+  {
+    "dil": "tr",
+    "slug": "arsiv",
+    "ad": "Arşiv",
+    "bolum": "",
+    "karakter": 3415,
+    "belge": 13
+  },
+  {
+    "dil": "tr",
+    "slug": "servis",
+    "ad": "Servisler",
+    "bolum": "",
+    "karakter": 3178,
+    "belge": 1
+  },
+  {
+    "dil": "tr",
+    "slug": "kisisel",
+    "ad": "Kişisel Sayfalar",
+    "bolum": "",
+    "karakter": 2337,
+    "belge": 0
+  },
+  {
+    "dil": "tr",
+    "slug": "spam",
+    "ad": "İstenmeyen E-Posta",
+    "bolum": "",
+    "karakter": 11744,
+    "belge": 0
+  },
+  {
+    "dil": "tr",
+    "slug": "guvenlik",
+    "ad": "Güvenlik",
+    "bolum": "",
+    "karakter": 17412,
+    "belge": 0
+  },
+  {
+    "dil": "tr",
+    "slug": "bil_onlem",
+    "ad": "Bilişim Güvenliği Önlemleri",
+    "bolum": "",
+    "karakter": 5964,
+    "belge": 0
+  },
+  {
+    "dil": "tr",
+    "slug": "baglanti_onlem",
+    "ad": "Bağlantı Güvenliği Önlemleri",
+    "bolum": "",
+    "karakter": 7429,
+    "belge": 0
+  },
+  {
+    "dil": "tr",
+    "slug": "dokuman_link",
+    "ad": "Doküman Bağlantıları",
+    "bolum": "",
+    "karakter": 636,
+    "belge": 0
+  },
+  {
+    "dil": "tr",
+    "slug": "epostaalma",
+    "ad": "E-Posta Hesabı Alma",
+    "bolum": "",
+    "karakter": 2473,
+    "belge": 0
+  },
+  {
+    "dil": "tr",
+    "slug": "proxy_spam_kntr",
+    "ad": "Proxy ve Spam Kontrolü",
+    "bolum": "",
+    "karakter": 1739,
+    "belge": 0
+  },
+  {
+    "dil": "tr",
+    "slug": "eposta_gecis",
+    "ad": "E-Posta Geçişi",
+    "bolum": "",
+    "karakter": 3450,
+    "belge": 10
+  },
+  {
+    "dil": "tr",
+    "slug": "ilan_280425",
+    "ad": "İlan",
+    "bolum": "",
+    "karakter": 14855,
+    "belge": 2
+  },
+  {
+    "dil": "tr",
+    "slug": "duy_iskur280225",
+    "ad": "İŞKUR Duyurusu",
+    "bolum": "",
+    "karakter": 551,
+    "belge": 0
   }
 ]

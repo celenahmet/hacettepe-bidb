@@ -1,0 +1,35 @@
+{
+  "slug": "duyuru121120",
+  "dil": "tr",
+  "bolum": "",
+  "menuAdi": "duyuru121120",
+  "url": "https://bidb.hacettepe.edu.tr/tr/duyuru121120",
+  "baslik": "Güvenli E-Posta Bilgilendirme Metni",
+  "seo": {
+    "title": "Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı",
+    "description": "",
+    "keywords": ""
+  },
+  "paragraflar": [
+    {
+      "tur": "p",
+      "metin": "T.C. Cumhurbaşkanlığı, Dijital Dönüşüm Ofisi, 24 Temmuz 2020 tarihli Bilgi ve İletişim Güvenliği Rehberi( https://cbddo.gov.tr/SharedFolderServer/Genel/File/bg_rehber.pdf ), 3.1.4.8 tedbir maddesinde belirtilen; \"Sahte ya da bütünlüğü bozulmuş e-postaların geçerli etki alanlarına sızma ihtimalini azaltmak için SPF, DKIM vb. teknoloji ve standartlar kullanılmalıdır.\" ilkesi gereği, güvenli e-posta alışverişi yapabilmek için gerekli çalışmalar başkanlıgımız tarafından yapılmıştır. Bu kapsamda diger kurumların e-posta haberleşmelerini sağlıklı yapabilmeleri için kendi alan adı sunucularında PTR, SPF, DKIM alan adı kayıtlarını ve DMARC politikalarını devreye almaları/ güncellemeleri tavsiye edilmektedir. DNS kayıtlarında yukarıda bahsi geçen kayıtları güncellemeyen/yayımlamayan kurumlar ile gerçekleşen e-posta haberleşmesi kurumumuz politikaları geregi şüpheli/istenmeyen (SPAM) e-posta olarak işaretlenecektir. Önemle bilginize."
+    }
+  ],
+  "baglantilar": [
+    {
+      "metin": "https://cbddo.gov.tr/SharedFolderServer/Genel/File/bg_rehber.pdf",
+      "href": "https://cbddo.gov.tr/SharedFolderServer/Genel/File/bg_rehber.pdf"
+    }
+  ],
+  "gorseller": [],
+  "belgeler": [
+    {
+      "metin": "https://cbddo.gov.tr/SharedFolderServer/Genel/File/bg_rehber.pdf",
+      "href": "https://cbddo.gov.tr/SharedFolderServer/Genel/File/bg_rehber.pdf"
+    }
+  ],
+  "govdeHtml": "<div class=\"icerik\">\n\n<p>T.C. Cumhurbaşkanlığı, Dijital Dönüşüm Ofisi, 24 Temmuz 2020 tarihli Bilgi ve İletişim Güvenliği Rehberi(<a href=\"https://cbddo.gov.tr/SharedFolderServer/Genel/File/bg_rehber.pdf\" target=\"_blank\">https://cbddo.gov.tr/SharedFolderServer/Genel/File/bg_rehber.pdf</a>), 3.1.4.8 tedbir maddesinde belirtilen;<br />\n<br />\n&quot;Sahte ya da bütünlüğü bozulmuş e-postaların geçerli etki alanlarına sızma ihtimalini azaltmak için SPF, DKIM vb. teknoloji ve standartlar kullanılmalıdır.&quot;<br />\nilkesi gereği, güvenli e-posta alışverişi yapabilmek için gerekli çalışmalar başkanlıgımız tarafından yapılmıştır.<br />\n<br />\nBu kapsamda diger kurumların e-posta haberleşmelerini sağlıklı yapabilmeleri için kendi alan adı sunucularında PTR, SPF, DKIM alan adı kayıtlarını ve DMARC politikalarını devreye almaları/ güncellemeleri tavsiye edilmektedir.<br />\n<br />\nDNS kayıtlarında yukarıda bahsi geçen kayıtları güncellemeyen/yayımlamayan kurumlar ile gerçekleşen e-posta haberleşmesi kurumumuz politikaları geregi şüpheli/istenmeyen (SPAM) e-posta olarak işaretlenecektir.<br />\n<br />\nÖnemle bilginize.</p>\n</div>",
+  "karakter": 937,
+  "cekilme": "2026-07-21T19:29:05.122Z"
+}

@@ -1,0 +1,54 @@
+{
+  "slug": "duyuru110520",
+  "dil": "tr",
+  "bolum": "",
+  "menuAdi": "duyuru110520",
+  "url": "https://bidb.hacettepe.edu.tr/tr/duyuru110520",
+  "baslik": "Kampüs İçerisinden Ulaşılabilen Uygulamalar",
+  "seo": {
+    "title": "Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı",
+    "description": "",
+    "keywords": ""
+  },
+  "paragraflar": [
+    {
+      "tur": "p",
+      "metin": "Değerli Hacettepeliler, Uzaktan eğitim sürecinde öğretim üyelerimiz ve öğrencilerimizin yazılımlara daha rahat ulaşabilmeleri için önemli bir duyuruyu sizlere paylaşmak isteriz."
+    },
+    {
+      "tur": "p",
+      "metin": "Kampüs içerisinden ulaşılabilen aşağıdaki listedeki uygulamalar VPN servisi üzerinden erişime açılmıştır. Bu çerçevede,"
+    },
+    {
+      "tur": "li",
+      "metin": "ARCGIS"
+    },
+    {
+      "tur": "li",
+      "metin": "SPSS"
+    },
+    {
+      "tur": "li",
+      "metin": "Matlab Akademik & Classroom"
+    },
+    {
+      "tur": "li",
+      "metin": "Simapro"
+    },
+    {
+      "tur": "p",
+      "metin": "yazılımların kampüs dışında kullanılabilmesi için VPN bağlantısının sağlanması gerekmektedir. VPN yazılımının indirilmesi ve kurulum kılavuzu için http://www.bidb.hacettepe.edu.tr/tr/VPN adresini ziyaret ediniz."
+    }
+  ],
+  "baglantilar": [
+    {
+      "metin": "http://www.bidb.hacettepe.edu.tr/tr/VPN",
+      "href": "http://www.bidb.hacettepe.edu.tr/tr/VPN"
+    }
+  ],
+  "gorseller": [],
+  "belgeler": [],
+  "govdeHtml": "<div class=\"icerik\">\n\n<p>Değerli Hacettepeliler,<br />\nUzaktan eğitim s&uuml;recinde &ouml;ğretim &uuml;yelerimiz ve &ouml;ğrencilerimizin yazılımlara daha rahat ulaşabilmeleri i&ccedil;in &ouml;nemli bir duyuruyu sizlere paylaşmak isteriz.</p>\n\n\n\n<p>Kamp&uuml;s i&ccedil;erisinden ulaşılabilen aşağıdaki listedeki uygulamalar VPN servisi &uuml;zerinden erişime a&ccedil;ılmıştır. Bu &ccedil;er&ccedil;evede,</p>\n\n<ul>\n\t<li>ARCGIS</li>\n\t<li>SPSS</li>\n\t<li>Matlab Akademik &amp; Classroom</li>\n\t\n\t<li>Simapro</li>\n</ul>\n\n<p>yazılımların kamp&uuml;s dışında kullanılabilmesi i&ccedil;in VPN bağlantısının sağlanması gerekmektedir.<br />\n<strong>VPN yazılımının indirilmesi ve kurulum kılavuzu i&ccedil;in <a href=\"http://www.bidb.hacettepe.edu.tr/tr/VPN\" target=\"_blank\">http://www.bidb.hacettepe.edu.tr/tr/VPN</a> adresini ziyaret ediniz.</strong></p>\n\n\n\n</div>",
+  "karakter": 551,
+  "cekilme": "2026-07-21T19:29:05.403Z"
+}

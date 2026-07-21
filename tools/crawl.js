@@ -42,6 +42,17 @@ const MENU_EN = [
   { bolum: "Contact", sayfalar: [ ["iletisim", "Contact"] ] }
 ];
 
+/* Menüde yer almayan, ancak sayfa içeriklerinden bağlantı verilen sayfalar.
+   Bunlar olmadan kopya eksik kalır ve site içi bağlantılar kırılır. */
+const MENU_DISI_TR = [
+  ["VPN", "VPN"], ["mezuneposta", "Mezun E-Postası"], ["arsiv", "Arşiv"],
+  ["servis", "Servisler"], ["kisisel", "Kişisel Sayfalar"], ["spam", "İstenmeyen E-Posta"],
+  ["guvenlik", "Güvenlik"], ["bil_onlem", "Bilişim Güvenliği Önlemleri"],
+  ["baglanti_onlem", "Bağlantı Güvenliği Önlemleri"], ["dokuman_link", "Doküman Bağlantıları"],
+  ["epostaalma", "E-Posta Hesabı Alma"], ["proxy_spam_kntr", "Proxy ve Spam Kontrolü"],
+  ["eposta_gecis", "E-Posta Geçişi"], ["ilan_280425", "İlan"], ["duy_iskur280225", "İŞKUR Duyurusu"]
+];
+
 const bekle = (ms) => new Promise((r) => setTimeout(r, ms));
 
 
@@ -108,6 +119,22 @@ function sayfaCoz(html, dil, slug, bolum, ad) {
         await bekle(BEKLEME);
       }
     }
+  }
+
+  // Menüde olmayan, içerikten bağlantı verilen sayfalar
+  for (const [slug, ad] of MENU_DISI_TR) {
+    try {
+      const html = await getir(ORIGIN + "/tr/" + slug);
+      const veri = sayfaCoz(html, "tr", slug, "", ad);
+      fs.writeFileSync(path.join(OUT, "tr", slug + ".json"), JSON.stringify(veri, null, 2), "utf8");
+      ozet.push({ dil: "tr", slug, ad, bolum: "", karakter: veri.karakter, belge: veri.belgeler.length });
+      console.log("  ✓ " + ("tr/" + slug).padEnd(32) + String(veri.karakter).padStart(6) + " karakter (menü dışı)");
+      ok++;
+    } catch (e) {
+      console.log("  ✗ tr/" + slug + " → " + e.message);
+      hata++;
+    }
+    await bekle(BEKLEME);
   }
 
   // Sol menü ve sosyal medya doğrudan kaynak sayfadan okunur
