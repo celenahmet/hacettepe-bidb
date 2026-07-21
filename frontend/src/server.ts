@@ -7,6 +7,7 @@ import {
 import express from 'express';
 import compression from 'compression';
 import { join } from 'node:path';
+import { readdirSync } from 'node:fs';
 import { ESKI_YOLLAR } from './eski-yollar';
 
 const browserDistFolder = join(import.meta.dirname, '../browser');
@@ -210,6 +211,35 @@ app.get('/robots.txt', (_req, res) => {
   res.type('text/plain').send(
     ['User-agent: *', 'Disallow: /yonetim', 'Disallow: /api/', '', `Sitemap: ${SITE_ADRESI}/sitemap.xml`, ''].join('\n'),
   );
+});
+
+/**
+ * Varlık dosyaları için büyük/küçük harf toleransı.
+ *
+ * Daha önce sunucu, büyük harf içeren tüm adresleri küçük harfe kalıcı (301)
+ * yönlendiriyordu. Angular'ın ürettiği dosya adlarında büyük harf bulunduğu
+ * için (styles-CYIGEJUB.css) bu dosyalar da yönlendiriliyordu. Yönlendirme
+ * kuralı düzeltildi, ancak "kalıcı" yönlendirmeyi görmüş tarayıcılar bunu
+ * diskte saklar ve düzeltmeden sonra da küçük harfli adresi istemeyi sürdürür.
+ *
+ * Bu yüzden küçük harfli istek doğru dosyaya eşlenir; kullanıcıların önbellek
+ * temizlemesi gerekmez.
+ */
+const varlikEsleme = new Map<string, string>();
+try {
+  for (const ad of readdirSync(browserDistFolder)) {
+    if (/\.(js|css)$/i.test(ad)) varlikEsleme.set(ad.toLowerCase(), ad);
+  }
+} catch {
+  // Derleme çıktısı yoksa (geliştirme sunucusu) eşleme boş kalır
+}
+
+app.use((req, res, next) => {
+  const ad = req.path.slice(1);
+  if (!/^[^/]+\.(js|css)$/i.test(ad)) return next();
+  const gercek = varlikEsleme.get(ad.toLowerCase());
+  if (!gercek || gercek === ad) return next();
+  res.sendFile(join(browserDistFolder, gercek));
 });
 
 /**
