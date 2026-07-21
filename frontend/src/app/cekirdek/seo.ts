@@ -8,6 +8,15 @@ const SITE_ADI = {
   en: 'Hacettepe University Department of Information Technology'
 };
 
+/** Kaynak sitede her sayfada tekrarlanan, sayfaya özgü olmayan başlıklar.
+ *  Bunlar görüldüğünde sayfa adından başlık üretilir; aksi hâlde onlarca
+ *  sayfa arama sonuçlarında aynı başlıkla görünür. */
+const KAYNAK_GENEL_BASLIK = [
+  'Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı',
+  'Hacettepe University Comnputer Center',   // kaynaktaki yazım hatasıyla
+  'Hacettepe University Computer Center'
+];
+
 /** Sayfa başlığı ve meta etiketleri. Sunucu tarafı render sayesinde
  *  bu değerler ilk yanıtın HTML'inde yer alır. */
 @Injectable({ providedIn: 'root' })
@@ -20,8 +29,14 @@ export class Seo {
     const siteAdi = SITE_ADI[dil];
     // Kaynak sitede tüm sayfalar aynı <title> değerini taşıyor. Sayfaya özgü
     // başlık, arama sonuçlarında ayırt edilebilirlik için tercih edilir.
+    //
+    // Kaynaktaki genel başlıklar site adıyla birebir aynı değil (İngilizce
+    // tarafta yazım hatası da var), bu yüzden ayrıca listelenir.
     const kaynakBaslik = sayfa?.seoTitle?.trim() ?? '';
-    const genelMi = !kaynakBaslik || kaynakBaslik === siteAdi;
+    const genelMi =
+      !kaynakBaslik ||
+      kaynakBaslik === siteAdi ||
+      KAYNAK_GENEL_BASLIK.some((b) => b.toLowerCase() === kaynakBaslik.toLowerCase());
     const baslik = sayfa
       ? (genelMi ? `${sayfa.baslik} — ${siteAdi}` : kaynakBaslik)
       : siteAdi;

@@ -17,7 +17,9 @@ public record SayfaDto(
         String seoKeywords,
         List<BelgeDto> belgeler,
         /** Bu sayfanın diğer dilde karşılığı var mı (hreflang için). */
-        boolean cevirisiVar
+        boolean cevirisiVar,
+        /** Sayfa kaynakta hata metni döndürüyor mu (site haritasına alınmaz). */
+        boolean hataliIcerik
 ) {
     public static SayfaDto of(Sayfa s) {
         return of(s, false);
@@ -27,14 +29,22 @@ public record SayfaDto(
         return new SayfaDto(
                 s.getSlug(), s.getDil(), s.getBaslik(), s.getIcerikHtml(),
                 s.getSeoTitle(), s.getSeoDescription(), s.getSeoKeywords(),
-                s.getBelgeler().stream().map(BelgeDto::of).toList(), cevirisiVar
+                s.getBelgeler().stream().map(BelgeDto::of).toList(), cevirisiVar, hataliMi(s)
         );
     }
 
     /** Liste görünümleri için içerik olmadan. */
     public static SayfaDto ozet(Sayfa s) {
         return new SayfaDto(s.getSlug(), s.getDil(), s.getBaslik(), null,
-                s.getSeoTitle(), s.getSeoDescription(), s.getSeoKeywords(), List.of(), false);
+                s.getSeoTitle(), s.getSeoDescription(), s.getSeoKeywords(), List.of(), false, hataliMi(s));
+    }
+
+    /** Kaynak sitede içeriği olmayan, hata metni dönen sayfalar. Kopya
+     *  sadık kalsın diye içerik değiştirilmez; yalnızca site haritasında
+     *  ilan edilmezler. */
+    private static boolean hataliMi(Sayfa s) {
+        String h = s.getIcerikHtml();
+        return h != null && h.contains("Böyle bir sayfa bulunmamaktadır");
     }
 
     public record BelgeDto(String ad, String adres, String tur) {

@@ -23,6 +23,45 @@ const izinliHostlar = (process.env['ALLOWED_HOSTS'] ?? 'localhost,127.0.0.1,bidb
 
 const angularApp = new AngularNodeAppEngine({ allowedHosts: izinliHostlar } as never);
 
+/* ---------- güvenlik başlıkları ---------- */
+
+// Sunucu yazılımını tanıtan başlık kaldırılır: saldırgana bilgi vermez.
+app.disable('x-powered-by');
+
+/**
+ * İçerik güvenliği politikası.
+ *
+ * Sayfa metinlerinde satır içi stil (style="…") bulunuyor ve Angular
+ * sunucu tarafı çizimde durum aktarımı için satır içi betik üretiyor;
+ * bu ikisine izin verilir. Satır içi olay işleyicisi (onclick vb.) ve
+ * <script> etiketi içerikte hiç yok — denetlendi.
+ *
+ * Gömülü videolar yalnızca YouTube'dan gelir.
+ */
+const GUVENLIK_POLITIKASI = [
+  "default-src 'self'",
+  "script-src 'self' 'unsafe-inline'",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data:",
+  "font-src 'self' data:",
+  "frame-src https://www.youtube.com https://youtube.com",
+  "connect-src 'self'",
+  "object-src 'none'",          // eklenti içeriği yok
+  "base-uri 'self'",            // <base> ile adres kaçırma engellenir
+  "form-action 'self'",
+  "frame-ancestors 'self'"      // başka sitede çerçevelenemez (tıklama hırsızlığı)
+].join('; ');
+
+app.use((_req, res, next) => {
+  res.setHeader('Content-Security-Policy', GUVENLIK_POLITIKASI);
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  res.setHeader('Permissions-Policy', 'geolocation=(), microphone=(), camera=()');
+  // Yalnızca HTTPS üzerinden anlamlıdır; tarayıcı düz HTTP'de yok sayar.
+  res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+  next();
+});
+
 /**
  * Eski adresler kalıcı olarak (301) yeni İngilizce adreslere taşınır.
  * Mevcut sitenin adresleri arama motorlarında ve dış bağlantılarda kayıtlı
@@ -34,7 +73,13 @@ app.use((req, res, next) => {
   // Kaynak sitede bazı adresler büyük harfliydi (/tr/VPN). Adresler küçük
   // harfe indirgenir; tek bir sayfanın tek bir adresi olur.
   const kucuk = yol.toLowerCase();
-  const hedef = ESKI_YOLLAR[kucuk] ?? (kucuk !== yol ? kucuk : undefined);
+  // Ana sayfa içeriği hem /tr hem /tr/home adresinden erişilebilirdi.
+  // Aynı içeriğin iki adresi olması arama motorlarında bölünmeye yol açar;
+  // tek geçerli adres /tr olsun.
+  const anaSayfa = kucuk.match(/^\/(tr|en)\/home$/);
+  const hedef = anaSayfa
+    ? '/' + anaSayfa[1]
+    : ESKI_YOLLAR[kucuk] ?? (kucuk !== yol ? kucuk : undefined);
   if (!hedef) return next();
   const sorgu = req.originalUrl.slice(req.path.length);   // ?a=b kısmı korunur
   res.redirect(301, hedef + sorgu);
@@ -94,6 +139,9 @@ const SITE_ADRESI = process.env['SITE_ADRESI'] ?? 'https://bidb.hacettepe.edu.tr
 
 let yolOnbellek: { yollar: Set<string>; zaman: number } | null = null;
 
+/** Kaynakta hata metni dönen sayfalar; site haritasında ilan edilmezler. */
+const hataliSayfalar = new Set<string>();
+
 /**
  * Yayındaki sayfaların adreslerini döndürür. Liste her istekte değil,
  * dakikada bir tazelenir; panelden yapılan değişiklik en geç bir dakika
@@ -106,7 +154,12 @@ async function yayindakiYollar(): Promise<Set<string>> {
     try {
       const y = await fetch(`${API_TABAN}/api/${dil}/sayfalar`);
       if (!y.ok) continue;
-      for (const s of (await y.json()) as { slug: string }[]) yollar.add(`/${dil}/${s.slug}`);
+      for (const s of (await y.json()) as { slug: string; hataliIcerik?: boolean }[]) {
+        // Kaynakta hata metni dönen sayfalar erişilebilir kalır, ancak
+        // site haritasına girmez (bkz. hataliSayfalar)
+        if (s.hataliIcerik) hataliSayfalar.add(`/${dil}/${s.slug}`);
+        yollar.add(`/${dil}/${s.slug}`);
+      }
     } catch {
       // Sayfa listesi alınamazsa doğrulama yapılmaz; site yine de çalışır.
       return yolOnbellek?.yollar ?? new Set<string>();
@@ -127,7 +180,10 @@ async function sayfaYok(yol: string): Promise<boolean> {
 /* ---------- site haritası ve robots ---------- */
 
 app.get('/sitemap.xml', async (_req, res) => {
-  const yollar = [...(await yayindakiYollar())].sort();
+  const yollar = [...(await yayindakiYollar())]
+    .filter((y) => !/^\/(tr|en)\/home$/.test(y))   // ana sayfanın ikinci adresi
+    .filter((y) => !hataliSayfalar.has(y))         // kaynakta içeriği olmayan sayfalar
+    .sort();
   const girdiler = ['/tr', '/en', ...yollar]
     .map((y) => `  <url><loc>${SITE_ADRESI}${y}</loc></url>`)
     .join('\n');
