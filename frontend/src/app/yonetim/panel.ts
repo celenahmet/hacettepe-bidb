@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { DuyuruYonetim, Kisayol, MenuOgeYonetim, MenuYonetim, SayfaYonetim, Slayt, YonetimApi } from './yonetim-api';
+import { DuyuruYonetim, Kisayol, MenuOgeYonetim, MenuYonetim, SayfaYonetim, Slayt, SosyalHesapYonetim, YonetimApi } from './yonetim-api';
 
 /** Yönetim paneli: giriş, sayfa SEO düzenleme ve duyuru yönetimi. */
 @Component({
@@ -45,6 +45,9 @@ import { DuyuruYonetim, Kisayol, MenuOgeYonetim, MenuYonetim, SayfaYonetim, Slay
           </button>
           <button type="button" [class.etkin]="sekme() === 'menuler'" (click)="sekmeMenu()">
             Menüler ({{ menuler().length }})
+          </button>
+          <button type="button" [class.etkin]="sekme() === 'sosyal'" (click)="sekmeSosyal()">
+            Sosyal Medya ({{ sosyalHesaplar().length }})
           </button>
         </nav>
 
@@ -219,10 +222,35 @@ import { DuyuruYonetim, Kisayol, MenuOgeYonetim, MenuYonetim, SayfaYonetim, Slay
             </form>
           }
 
+          <button type="button" (click)="bolumDuzenle(null)">Yeni menü bölümü</button>
+
+          @if (menuBolum(); as mb) {
+            <form class="duyuru-form" (ngSubmit)="bolumKaydet()">
+              <h2>{{ mb.id ? 'Bölümü düzenle' : 'Yeni bölüm' }}</h2>
+              <label for="bbaslik">Bölüm başlığı</label>
+              <input id="bbaslik" name="bbaslik" [ngModel]="mb.baslik" (ngModelChange)="bolumAlan('baslik', $event)" required>
+              <label for="bdil">Dil</label>
+              <select id="bdil" name="bdil" [ngModel]="mb.dil" (ngModelChange)="bolumAlan('dil', $event)">
+                <option value="tr">Türkçe</option>
+                <option value="en">İngilizce</option>
+              </select>
+              <label for="bsira">Sıra</label>
+              <input id="bsira" name="bsira" type="number" [ngModel]="mb.sira" (ngModelChange)="bolumAlan('sira', +$event)">
+              <span class="dugmeler">
+                <button type="submit">Kaydet</button>
+                <button type="button" class="ikincil" (click)="menuBolum.set(null)">Vazgeç</button>
+              </span>
+            </form>
+          }
+
           @for (m of menuler(); track m.id) {
             <section class="menu-bolum">
               <h2>{{ m.baslik }} <small>({{ m.dil }})</small></h2>
-              <button type="button" class="ikincil" (click)="ogeDuzenle(m.id, null)">Bağlantı ekle</button>
+              <span class="dugmeler">
+                <button type="button" class="ikincil" (click)="ogeDuzenle(m.id, null)">Bağlantı ekle</button>
+                <button type="button" class="ikincil" (click)="bolumDuzenle(m)">Bölümü düzenle</button>
+                <button type="button" class="tehlike" (click)="bolumSil(m)">Bölümü sil</button>
+              </span>
               <table class="yonetim-tablo">
                 <thead><tr><th>Sıra</th><th>Etiket</th><th>Hedef</th><th></th></tr></thead>
                 <tbody>
@@ -241,6 +269,41 @@ import { DuyuruYonetim, Kisayol, MenuOgeYonetim, MenuYonetim, SayfaYonetim, Slay
               </table>
             </section>
           }
+        } @else if (sekme() === 'sosyal') {
+          <button type="button" (click)="sosyalDuzenle(null)">Yeni hesap</button>
+
+          @if (sosyalHesap(); as sh) {
+            <form class="duyuru-form" (ngSubmit)="sosyalKaydet()">
+              <h2>{{ sh.id ? 'Hesabı düzenle' : 'Yeni hesap' }}</h2>
+              <label for="sag">Ağ (instagram, facebook, twitter, youtube, linkedin)</label>
+              <input id="sag" name="sag" [ngModel]="sh.ag" (ngModelChange)="sosyalAlan('ag', $event)" required>
+              <label for="sadres">Adres</label>
+              <input id="sadres" name="sadres" [ngModel]="sh.adres" (ngModelChange)="sosyalAlan('adres', $event)" required>
+              <label for="ssira2">Sıra</label>
+              <input id="ssira2" name="ssira2" type="number" [ngModel]="sh.sira" (ngModelChange)="sosyalAlan('sira', +$event)">
+              <span class="dugmeler">
+                <button type="submit">Kaydet</button>
+                <button type="button" class="ikincil" (click)="sosyalHesap.set(null)">Vazgeç</button>
+              </span>
+            </form>
+          }
+
+          <table class="yonetim-tablo">
+            <thead><tr><th>Sıra</th><th>Ağ</th><th>Adres</th><th></th></tr></thead>
+            <tbody>
+              @for (sh of sosyalHesaplar(); track sh.id) {
+                <tr>
+                  <td>{{ sh.sira }}</td>
+                  <td>{{ sh.ag }}</td>
+                  <td><small>{{ sh.adres }}</small></td>
+                  <td>
+                    <button type="button" class="ikincil" (click)="sosyalDuzenle(sh)">Düzenle</button>
+                    <button type="button" class="tehlike" (click)="sosyalSil(sh)">Sil</button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
         } @else {
           <button type="button" (click)="kisayolDuzenle(null)">Yeni kısayol</button>
 
@@ -296,7 +359,7 @@ export class YonetimPanel {
   protected bilgi = signal('');
   protected calisiyor = signal(false);
 
-  protected sekme = signal<'sayfalar' | 'duyurular' | 'slider' | 'kisayollar' | 'menuler'>('sayfalar');
+  protected sekme = signal<'sayfalar' | 'duyurular' | 'slider' | 'kisayollar' | 'menuler' | 'sosyal'>('sayfalar');
   protected sayfalar = signal<SayfaYonetim[]>([]);
   protected duyurular = signal<DuyuruYonetim[]>([]);
   protected secili = signal<SayfaYonetim | null>(null);
@@ -307,6 +370,9 @@ export class YonetimPanel {
   protected kisayol = signal<Kisayol | null>(null);
   protected menuler = signal<MenuYonetim[]>([]);
   protected menuOge = signal<{ menuId: number; oge: MenuOgeYonetim } | null>(null);
+  protected menuBolum = signal<{ id: number | null; dil: string; konum: string; baslik: string; sira: number } | null>(null);
+  protected sosyalHesaplar = signal<SosyalHesapYonetim[]>([]);
+  protected sosyalHesap = signal<SosyalHesapYonetim | null>(null);
 
   constructor() {
     if (this.api.girisYapildi()) this.sayfalariYukle();
@@ -484,6 +550,64 @@ export class YonetimPanel {
     if (!o.id) return;
     this.api.menuOgeSil(o.id).subscribe({
       next: () => { this.sekmeMenu(); this.mesaj('Bağlantı silindi.'); },
+      error: () => this.mesaj('Silinemedi.')
+    });
+  }
+
+  protected sekmeSosyal(): void {
+    this.sekme.set('sosyal');
+    this.api.sosyalHesaplar().subscribe((l) => this.sosyalHesaplar.set(l));
+  }
+
+  protected sosyalDuzenle(s: SosyalHesapYonetim | null): void {
+    this.sosyalHesap.set(s ? { ...s } : { id: null, ag: '', adres: '', sira: 0, yayinda: true });
+  }
+
+  protected sosyalAlan(alan: keyof SosyalHesapYonetim, deger: unknown): void {
+    const s = this.sosyalHesap();
+    if (s) this.sosyalHesap.set({ ...s, [alan]: deger } as SosyalHesapYonetim);
+  }
+
+  protected sosyalKaydet(): void {
+    const s = this.sosyalHesap();
+    if (!s) return;
+    this.api.sosyalKaydet(s).subscribe({
+      next: () => { this.sosyalHesap.set(null); this.sekmeSosyal(); this.mesaj('Sosyal medya hesabı kaydedildi.'); },
+      error: () => this.mesaj('Kaydedilemedi.')
+    });
+  }
+
+  protected sosyalSil(s: SosyalHesapYonetim): void {
+    if (!s.id) return;
+    this.api.sosyalSil(s.id).subscribe({
+      next: () => { this.sosyalHesaplar.update((l) => l.filter((x) => x.id !== s.id)); this.mesaj('Hesap silindi.'); },
+      error: () => this.mesaj('Silinemedi.')
+    });
+  }
+
+  protected bolumDuzenle(m: MenuYonetim | null): void {
+    this.menuBolum.set(m
+      ? { id: m.id, dil: m.dil, konum: m.konum, baslik: m.baslik, sira: m.sira }
+      : { id: null, dil: 'tr', konum: 'sol', baslik: '', sira: 0 });
+  }
+
+  protected bolumAlan(alan: 'dil' | 'konum' | 'baslik' | 'sira', deger: unknown): void {
+    const m = this.menuBolum();
+    if (m) this.menuBolum.set({ ...m, [alan]: deger });
+  }
+
+  protected bolumKaydet(): void {
+    const m = this.menuBolum();
+    if (!m) return;
+    this.api.menuBolumKaydet(m).subscribe({
+      next: () => { this.menuBolum.set(null); this.sekmeMenu(); this.mesaj('Menü bölümü kaydedildi.'); },
+      error: () => this.mesaj('Kaydedilemedi.')
+    });
+  }
+
+  protected bolumSil(m: MenuYonetim): void {
+    this.api.menuBolumSil(m.id).subscribe({
+      next: () => { this.sekmeMenu(); this.mesaj('Menü bölümü silindi.'); },
       error: () => this.mesaj('Silinemedi.')
     });
   }

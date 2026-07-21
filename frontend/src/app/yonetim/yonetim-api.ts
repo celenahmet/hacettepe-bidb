@@ -67,6 +67,14 @@ export interface MenuYonetim {
   ogeler: MenuOgeYonetim[];
 }
 
+export interface SosyalHesapYonetim {
+  id: number | null;
+  ag: string;
+  adres: string;
+  sira: number;
+  yayinda: boolean;
+}
+
 const OTURUM_ANAHTARI = 'bidb-yonetim';
 
 /** Yönetim uçlarına erişim. Kimlik bilgisi yalnızca tarayıcı oturumunda tutulur. */
@@ -174,6 +182,30 @@ export class YonetimApi {
 
   menuOgeSil(id: number): Observable<void> {
     return this.http.delete<void>(`/api/yonetim/menu/oge/${id}`, { headers: this.basliklar() });
+  }
+
+  sosyalHesaplar(): Observable<SosyalHesapYonetim[]> {
+    return this.http.get<SosyalHesapYonetim[]>('/api/yonetim/sosyal', { headers: this.basliklar() });
+  }
+
+  sosyalKaydet(s: SosyalHesapYonetim): Observable<unknown> {
+    return s.id
+      ? this.http.put(`/api/yonetim/sosyal/${s.id}`, s, { headers: this.basliklar() })
+      : this.http.post('/api/yonetim/sosyal', s, { headers: this.basliklar() });
+  }
+
+  sosyalSil(id: number): Observable<void> {
+    return this.http.delete<void>(`/api/yonetim/sosyal/${id}`, { headers: this.basliklar() });
+  }
+
+  menuBolumKaydet(m: { id: number | null; dil: string; konum: string; baslik: string; sira: number }): Observable<unknown> {
+    return m.id
+      ? this.http.put(`/api/yonetim/menu/${m.id}`, m, { headers: this.basliklar() })
+      : this.http.post('/api/yonetim/menu', m, { headers: this.basliklar() });
+  }
+
+  menuBolumSil(id: number): Observable<void> {
+    return this.http.delete<void>(`/api/yonetim/menu/${id}`, { headers: this.basliklar() });
   }
 
   private basliklar(): HttpHeaders {
