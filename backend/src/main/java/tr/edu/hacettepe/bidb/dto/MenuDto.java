@@ -1,7 +1,7 @@
 package tr.edu.hacettepe.bidb.dto;
 
 import tr.edu.hacettepe.bidb.model.Menu;
-import tr.edu.hacettepe.bidb.model.MenuOge;
+import tr.edu.hacettepe.bidb.model.MenuItem;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ public record MenuDto(String baslik, List<OgeDto> ogeler) {
     }
 
     public record OgeDto(String etiket, String adres, boolean yeniSekme) {
-        public static OgeDto of(MenuOge o) {
+        public static OgeDto of(MenuItem o) {
             // İç bağlantılar /tr/<slug> biçiminde üretilir
             String adres = o.getSayfa() != null
                     ? "/" + o.getSayfa().getDil() + "/" + o.getSayfa().getSlug()

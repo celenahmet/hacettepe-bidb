@@ -17,5 +17,5 @@ public interface MenuRepo extends JpaRepository<Menu, Long> {
            WHERE m.dil = :dil AND m.konum = :konum
            ORDER BY m.sira
            """)
-    List<Menu> menuGetir(@Param("dil") String dil, @Param("konum") String konum);
+    List<Menu> findByLanguageAndPosition(@Param("dil") String dil, @Param("konum") String konum);
 }

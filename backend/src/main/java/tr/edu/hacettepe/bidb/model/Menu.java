@@ -29,14 +29,14 @@ public class Menu {
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "menu_id")
     @OrderBy("sira ASC")
-    private List<MenuOge> ogeler = new ArrayList<>();
+    private List<MenuItem> ogeler = new ArrayList<>();
 
     public Long getId() { return id; }
     public String getDil() { return dil; }
     public String getKonum() { return konum; }
     public String getBaslik() { return baslik; }
     public int getSira() { return sira; }
-    public List<MenuOge> getOgeler() { return ogeler; }
+    public List<MenuItem> getOgeler() { return ogeler; }
 
     public void setDil(String dil) { this.dil = dil; }
     public void setKonum(String konum) { this.konum = konum; }

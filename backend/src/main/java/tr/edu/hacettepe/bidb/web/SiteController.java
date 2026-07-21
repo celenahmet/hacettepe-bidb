@@ -3,14 +3,14 @@ package tr.edu.hacettepe.bidb.web;
 import org.springframework.web.bind.annotation.*;
 import tr.edu.hacettepe.bidb.dto.MenuDto;
 import tr.edu.hacettepe.bidb.dto.SliderDto;
-import tr.edu.hacettepe.bidb.model.SosyalHesap;
+import tr.edu.hacettepe.bidb.model.SocialAccount;
 import tr.edu.hacettepe.bidb.repo.MenuRepo;
 import tr.edu.hacettepe.bidb.repo.SliderRepo;
-import tr.edu.hacettepe.bidb.repo.SosyalHesapRepo;
-import tr.edu.hacettepe.bidb.repo.AyarRepo;
-import tr.edu.hacettepe.bidb.repo.YonlendirmeRepo;
-import tr.edu.hacettepe.bidb.model.Ayar;
-import tr.edu.hacettepe.bidb.model.Yonlendirme;
+import tr.edu.hacettepe.bidb.repo.SocialAccountRepo;
+import tr.edu.hacettepe.bidb.repo.SettingRepo;
+import tr.edu.hacettepe.bidb.repo.RedirectRepo;
+import tr.edu.hacettepe.bidb.model.Setting;
+import tr.edu.hacettepe.bidb.model.Redirect;
 
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -24,12 +24,12 @@ public class SiteController {
 
     private final MenuRepo menuler;
     private final SliderRepo sliderlar;
-    private final SosyalHesapRepo sosyal;
-    private final AyarRepo ayarlar;
-    private final YonlendirmeRepo yonlendirmeler;
+    private final SocialAccountRepo sosyal;
+    private final SettingRepo ayarlar;
+    private final RedirectRepo yonlendirmeler;
 
-    public SiteController(MenuRepo menuler, SliderRepo sliderlar, SosyalHesapRepo sosyal,
-                          AyarRepo ayarlar, YonlendirmeRepo yonlendirmeler) {
+    public SiteController(MenuRepo menuler, SliderRepo sliderlar, SocialAccountRepo sosyal,
+                          SettingRepo ayarlar, RedirectRepo yonlendirmeler) {
         this.menuler = menuler;
         this.sliderlar = sliderlar;
         this.sosyal = sosyal;
@@ -40,7 +40,7 @@ public class SiteController {
     @GetMapping("/menu")
     public List<MenuDto> menu(@PathVariable String dil,
                               @RequestParam(defaultValue = "sol") String konum) {
-        return menuler.menuGetir(dil, konum).stream().map(MenuDto::of).toList();
+        return menuler.findByLanguageAndPosition(dil, konum).stream().map(MenuDto::of).toList();
     }
 
     @GetMapping("/slider")
@@ -53,18 +53,18 @@ public class SiteController {
     public Map<String, String> ayarlar(@PathVariable String dil) {
         return ayarlar.findByDilOrderByAnahtarAsc(dil).stream()
                 .filter(a -> a.getDeger() != null)
-                .collect(Collectors.toMap(Ayar::getAnahtar, Ayar::getDeger, (a, b) -> a));
+                .collect(Collectors.toMap(Setting::getAnahtar, Setting::getDeger, (a, b) -> a));
     }
 
     /** Adres değişikliklerinden doğan yönlendirmeler (ön yüz sunucusu kullanır). */
     @GetMapping("/yonlendirmeler")
     public Map<String, String> yonlendirmeler(@PathVariable String dil) {
         return yonlendirmeler.findAll().stream()
-                .collect(Collectors.toMap(Yonlendirme::getEskiYol, Yonlendirme::getYeniYol, (a, b) -> a));
+                .collect(Collectors.toMap(Redirect::getEskiYol, Redirect::getYeniYol, (a, b) -> a));
     }
 
     @GetMapping("/sosyal")
-    public List<SosyalHesap> sosyalHesaplar(@PathVariable String dil) {
+    public List<SocialAccount> sosyalHesaplar(@PathVariable String dil) {
         return sosyal.findByYayindaTrueOrderBySiraAsc();
     }
 }
