@@ -5,6 +5,7 @@ import {
   writeResponseToNodeResponse,
 } from '@angular/ssr/node';
 import express from 'express';
+import compression from 'compression';
 import { join } from 'node:path';
 import { ESKI_YOLLAR } from './eski-yollar';
 
@@ -22,6 +23,13 @@ const izinliHostlar = (process.env['ALLOWED_HOSTS'] ?? 'localhost,127.0.0.1,bidb
   .filter(Boolean);
 
 const angularApp = new AngularNodeAppEngine({ allowedHosts: izinliHostlar } as never);
+
+/**
+ * Yanıtlar sıkıştırılarak gönderilir. Sayfa metinleri uzun olduğu için
+ * (Sık Sorulan Sorular sayfası ~115 KB) bu, indirilen veriyi belirgin
+ * biçimde azaltır ve yavaş bağlantılarda açılışı hızlandırır.
+ */
+app.use(compression());
 
 /* ---------- güvenlik başlıkları ---------- */
 
@@ -221,11 +229,19 @@ app.use(async (req, res, next) => {
     const bulunamadi = await sayfaYok(req.path);
     const yanit = await angularApp.handle(req);
     if (!yanit) return next();
-    // Durum kodu yanıtın kendisinden okunduğu için yeni bir yanıt oluşturulur
-    const son = bulunamadi
-      ? new Response(yanit.body, { status: 404, headers: yanit.headers })
-      : yanit;
-    return writeResponseToNodeResponse(son, res);
+
+    // Durum kodu ve başlıklar yanıtın kendisinden okunur; bu yüzden
+    // değiştirilecekse yeni bir yanıt oluşturulmalıdır.
+    //
+    // Content-Length mutlaka düşürülür: gövde sıkıştırıldığında bu değer
+    // yanlış kalır ve tarayıcı sayfayı yarıda keser.
+    const basliklar = new Headers(yanit.headers);
+    basliklar.delete('content-length');
+
+    return writeResponseToNodeResponse(
+      new Response(yanit.body, { status: bulunamadi ? 404 : yanit.status, headers: basliklar }),
+      res,
+    );
   } catch (e) {
     return next(e);
   }
