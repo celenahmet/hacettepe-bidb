@@ -21,9 +21,42 @@ Sitedeki tüm sayfalar listelenir. Her sayfa için düzenlenebilenler:
 | Anahtar kelimeler | Sayfa üst bilgisi |
 | Yayında | Kapatılırsa sayfa ziyaretçilere görünmez |
 
-**Sayfa metinleri panelden değiştirilemez.** Kurumdan geldiği hâliyle korunur.
-Bu kasıtlı bir kısıtlamadır: içeriğin yanlışlıkla bozulması mümkün değildir.
-Metin değişikliği gerekirse geliştirme ekibiyle iletişime geçilmelidir.
+**Düzenle** düğmesi sayfanın dört yönünü açar:
+
+| Bölüm | Ne yapılır |
+|---|---|
+| Metin | Sayfa içeriği. Yayınlamadan önce önizleme zorunludur. |
+| Başlık ve adres | Sayfa adı ve adresi; sayfayı silme |
+| Belgeler | Sayfaya bağlı PDF/Word dosyaları, yeni dosya yükleme |
+| Sürüm geçmişi | Eski hâlleri görme ve geri dönme |
+
+### Metin düzenleme
+
+Metin HTML olarak saklanır. **Önizle** düğmesine basmadan yayınlayamazsınız;
+bu, yanlışlıkla bozuk bir sayfa yayınlamayı engeller.
+
+Her kayıtta sayfanın önceki hâli sürüm geçmişine eklenir. Yanlış bir
+değişiklik yaptıysanız **Sürüm geçmişi** bölümünden tek tıkla geri
+dönebilirsiniz — geri almadan önce mevcut hâl de saklandığı için geri alma
+işlemi de geri alınabilir.
+
+Kaynak sitedeki ilk hâl "Kaynak sitedeki ilk hâli" açıklamasıyla kalıcı
+olarak korunur; her zaman o noktaya dönebilirsiniz.
+
+### Adres değiştirme
+
+Bir sayfanın adresini değiştirdiğinizde eski adres yenisine yönlendirilir.
+Dışarıdan verilmiş bağlantılar ve arama sonuçları kırılmaz.
+
+Adres kısa ve İngilizce olmalıdır. Türkçe karakterler otomatik dönüştürülür
+(*Deneme Sayfası* → `deneme-sayfasi`).
+
+### Belge yükleme
+
+PDF, Word, Excel, sunum ve görsel dosyaları yüklenebilir; en fazla 25 MB.
+Web sayfası ve betik dosyalarına güvenlik gereği izin verilmez.
+
+Yüklenen dosya listeye eklenir; **satırı kaydetmeyi unutmayın**.
 
 Başlık alanı boş bırakılırsa site otomatik olarak
 `Sayfa Adı — Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı`
@@ -81,6 +114,16 @@ Sol menüdeki bölümler ve bağlantılar.
   tutarsız bir kayıt oluşamaz.
 
 Bölüm silindiğinde içindeki bağlantılar da silinir.
+
+---
+
+## İletişim Bilgileri
+
+Sayfa altında görünen kurum bilgileri: adres, telefon, e-posta, faks.
+Bu bilgiler koda gömülü değildir; buradan değiştirdiğinizde sitenin
+tamamında güncellenir.
+
+Birden çok telefon veya e-posta için aralarına ` · ` koyun.
 
 ---
 

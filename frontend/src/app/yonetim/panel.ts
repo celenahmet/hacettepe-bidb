@@ -1,11 +1,20 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { SayfaDuzenle } from './sayfa-duzenle';
 import { DuyuruYonetim, Kisayol, MenuOgeYonetim, MenuYonetim, SayfaYonetim, Slayt, SosyalHesapYonetim, YonetimApi } from './yonetim-api';
+
+/** Alt bilgide görünen kurum bilgileri. */
+interface IletisimBilgi extends Record<string, string> {
+  iletisim_adres: string;
+  iletisim_telefon: string;
+  iletisim_eposta: string;
+  iletisim_faks: string;
+}
 
 /** Yönetim paneli: giriş, sayfa SEO düzenleme ve duyuru yönetimi. */
 @Component({
   selector: 'bidb-yonetim-panel',
-  imports: [FormsModule],
+  imports: [FormsModule, SayfaDuzenle],
   template: `
     <div class="kap yonetim">
       @if (!api.girisYapildi()) {
@@ -49,15 +58,47 @@ import { DuyuruYonetim, Kisayol, MenuOgeYonetim, MenuYonetim, SayfaYonetim, Slay
           <button type="button" [class.etkin]="sekme() === 'sosyal'" (click)="sekmeSosyal()">
             Sosyal Medya ({{ sosyalHesaplar().length }})
           </button>
+          <button type="button" [class.etkin]="sekme() === 'iletisim'" (click)="sekmeIletisim()">
+            İletişim Bilgileri
+          </button>
         </nav>
 
         @if (bilgi()) { <p class="bilgi" role="status">{{ bilgi() }}</p> }
 
         @if (sekme() === 'sayfalar') {
           <p class="aciklama">
-            Sayfa metinleri kurumdan geldiği gibi korunur ve buradan değiştirilemez.
-            Yalnızca arama motoru bilgileri ve yayın durumu düzenlenir.
+            "Düzenle" ile sayfanın metnini, adresini ve belgelerini yönetebilir,
+            sürüm geçmişinden eski bir hâle dönebilirsiniz.
           </p>
+
+          <button type="button" (click)="yeniSayfaAc()">Yeni sayfa</button>
+
+          @if (yeniSayfa(); as ys) {
+            <form class="duyuru-form" (ngSubmit)="yeniSayfaKaydet()">
+              <h2>Yeni sayfa</h2>
+
+              <label for="ysdil">Dil</label>
+              <select id="ysdil" name="ysdil" [ngModel]="ys.dil"
+                      (ngModelChange)="yeniSayfaAlan('dil', $event)">
+                <option value="tr">Türkçe</option>
+                <option value="en">İngilizce</option>
+              </select>
+
+              <label for="ysbaslik">Başlık</label>
+              <input id="ysbaslik" name="ysbaslik" [ngModel]="ys.baslik"
+                     (ngModelChange)="yeniSayfaAlan('baslik', $event)" required>
+
+              <label for="ysslug">Adres (kısa ve İngilizce olmalı)</label>
+              <input id="ysslug" name="ysslug" [ngModel]="ys.slug"
+                     (ngModelChange)="yeniSayfaAlan('slug', $event)" required>
+              <p class="aciklama">Sayfa adresi: <code>/{{ ys.dil }}/{{ ys.slug }}</code></p>
+
+              <span class="dugmeler">
+                <button type="submit">Oluştur</button>
+                <button type="button" class="ikincil" (click)="yeniSayfa.set(null)">Vazgeç</button>
+              </span>
+            </form>
+          }
 
           <table class="yonetim-tablo">
             <thead>
@@ -70,8 +111,20 @@ import { DuyuruYonetim, Kisayol, MenuOgeYonetim, MenuYonetim, SayfaYonetim, Slay
                   <td>{{ s.dil }}</td>
                   <td>{{ s.icerikUzunlugu }} krkt</td>
                   <td>{{ s.yayinda ? 'Evet' : 'Hayır' }}</td>
-                  <td><button type="button" class="ikincil" (click)="duzenle(s)">SEO düzenle</button></td>
+                  <td>
+                    <button type="button" class="ikincil" (click)="duzenle(s)">SEO</button>
+                    <button type="button" (click)="sayfaAc(s)">Düzenle</button>
+                  </td>
                 </tr>
+
+                @if (acikSayfa()?.id === s.id) {
+                  <tr class="duzenleme">
+                    <td colspan="5">
+                      <bidb-sayfa-duzenle [sayfa]="s" (kapat)="acikSayfa.set(null)"
+                                          (degisti)="sayfalariTazele()" />
+                    </td>
+                  </tr>
+                }
 
                 @if (secili()?.id === s.id) {
                   <tr class="duzenleme">
@@ -304,6 +357,32 @@ import { DuyuruYonetim, Kisayol, MenuOgeYonetim, MenuYonetim, SayfaYonetim, Slay
               }
             </tbody>
           </table>
+        } @else if (sekme() === 'iletisim') {
+          <p class="aciklama">
+            Sayfa altında görünen kurum bilgileri. Birden çok telefon veya
+            e-posta için aralarına " · " koyabilirsiniz.
+          </p>
+
+          <form class="duyuru-form" (ngSubmit)="iletisimKaydet()">
+            <label for="iadres">Adres</label>
+            <input id="iadres" name="iadres" [ngModel]="iletisim().iletisim_adres"
+                   (ngModelChange)="iletisimAlan('iletisim_adres', $event)">
+
+            <label for="itel">Telefon</label>
+            <input id="itel" name="itel" [ngModel]="iletisim().iletisim_telefon"
+                   (ngModelChange)="iletisimAlan('iletisim_telefon', $event)">
+
+            <label for="ieposta">E-posta</label>
+            <input id="ieposta" name="ieposta" [ngModel]="iletisim().iletisim_eposta"
+                   (ngModelChange)="iletisimAlan('iletisim_eposta', $event)">
+
+            <label for="ifaks">Faks</label>
+            <input id="ifaks" name="ifaks" [ngModel]="iletisim().iletisim_faks"
+                   (ngModelChange)="iletisimAlan('iletisim_faks', $event)">
+
+            <span class="dugmeler"><button type="submit">Kaydet</button></span>
+          </form>
+
         } @else {
           <button type="button" (click)="kisayolDuzenle(null)">Yeni kısayol</button>
 
@@ -359,7 +438,7 @@ export class YonetimPanel {
   protected bilgi = signal('');
   protected calisiyor = signal(false);
 
-  protected sekme = signal<'sayfalar' | 'duyurular' | 'slider' | 'kisayollar' | 'menuler' | 'sosyal'>('sayfalar');
+  protected sekme = signal<'sayfalar' | 'duyurular' | 'slider' | 'kisayollar' | 'menuler' | 'sosyal' | 'iletisim'>('sayfalar');
   protected sayfalar = signal<SayfaYonetim[]>([]);
   protected duyurular = signal<DuyuruYonetim[]>([]);
   protected secili = signal<SayfaYonetim | null>(null);
@@ -373,6 +452,11 @@ export class YonetimPanel {
   protected menuBolum = signal<{ id: number | null; dil: string; konum: string; baslik: string; sira: number } | null>(null);
   protected sosyalHesaplar = signal<SosyalHesapYonetim[]>([]);
   protected sosyalHesap = signal<SosyalHesapYonetim | null>(null);
+  protected acikSayfa = signal<SayfaYonetim | null>(null);
+  protected yeniSayfa = signal<{ dil: string; slug: string; baslik: string } | null>(null);
+  protected iletisim = signal<IletisimBilgi>({
+    iletisim_adres: '', iletisim_telefon: '', iletisim_eposta: '', iletisim_faks: ''
+  });
 
   constructor() {
     if (this.api.girisYapildi()) this.sayfalariYukle();
@@ -609,6 +693,54 @@ export class YonetimPanel {
     this.api.menuBolumSil(m.id).subscribe({
       next: () => { this.sekmeMenu(); this.mesaj('Menü bölümü silindi.'); },
       error: () => this.mesaj('Silinemedi.')
+    });
+  }
+
+  /** Sayfanın tüm düzenlenebilir yönlerini açar. */
+  protected sayfaAc(s: SayfaYonetim): void {
+    this.secili.set(null);
+    this.acikSayfa.set(this.acikSayfa()?.id === s.id ? null : s);
+  }
+
+  protected sayfalariTazele(): void {
+    this.api.sayfalar().subscribe((l) => this.sayfalar.set(l));
+  }
+
+  protected yeniSayfaAc(): void {
+    this.yeniSayfa.set({ dil: 'tr', slug: '', baslik: '' });
+  }
+
+  protected yeniSayfaAlan(alan: 'dil' | 'slug' | 'baslik', deger: unknown): void {
+    const y = this.yeniSayfa();
+    if (y) this.yeniSayfa.set({ ...y, [alan]: deger as string });
+  }
+
+  protected yeniSayfaKaydet(): void {
+    const y = this.yeniSayfa();
+    if (!y) return;
+    this.api.sayfaEkle({ ...y, icerikHtml: '<div class="icerik"><p></p></div>' }).subscribe({
+      next: () => { this.yeniSayfa.set(null); this.sayfalariTazele(); this.mesaj('Sayfa oluşturuldu.'); },
+      error: (e) => this.mesaj(typeof e?.error === 'string' ? e.error : 'Oluşturulamadı.')
+    });
+  }
+
+  protected sekmeIletisim(): void {
+    this.sekme.set('iletisim');
+    this.api.ayarlar().subscribe((l) => {
+      const m = { ...this.iletisim() } as IletisimBilgi;
+      l.filter((a) => a.dil === 'tr').forEach((a) => (m[a.anahtar as keyof IletisimBilgi] = a.deger));
+      this.iletisim.set(m);
+    });
+  }
+
+  protected iletisimAlan(anahtar: keyof IletisimBilgi, deger: unknown): void {
+    this.iletisim.set({ ...this.iletisim(), [anahtar]: deger as string });
+  }
+
+  protected iletisimKaydet(): void {
+    this.api.ayarKaydet(this.iletisim()).subscribe({
+      next: () => this.mesaj('İletişim bilgileri kaydedildi.'),
+      error: () => this.mesaj('Kaydedilemedi.')
     });
   }
 

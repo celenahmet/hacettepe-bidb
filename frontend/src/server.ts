@@ -72,18 +72,51 @@ app.use((_req, res, next) => {
 });
 
 /**
+ * Panelden yapılan adres değişikliklerinden doğan yönlendirmeler.
+ *
+ * ESKI_YOLLAR aktarımdan gelen sabit eşlemedir; bu tablo ise sonradan
+ * yönetim panelinden bir sayfanın adresi değiştirildiğinde oluşur.
+ * Dakikada bir tazelenir.
+ */
+const panelYonlendirmeleri = new Map<string, string>();
+let yonlendirmeZamani = 0;
+
+/** Tabloyu en fazla dakikada bir tazeler. */
+async function yonlendirmeleriHazirla(): Promise<void> {
+  if (Date.now() - yonlendirmeZamani < 60_000) return;
+  yonlendirmeZamani = Date.now();
+  await yonlendirmeleriTazele();
+}
+
+async function yonlendirmeleriTazele(): Promise<void> {
+  try {
+    const y = await fetch(`${API_TABAN}/api/tr/yonlendirmeler`);
+    if (!y.ok) return;
+    const veri = (await y.json()) as Record<string, string>;
+    panelYonlendirmeleri.clear();
+    for (const [eski, yeni] of Object.entries(veri)) {
+      panelYonlendirmeleri.set(eski.toLowerCase(), yeni);
+    }
+  } catch {
+    // Backend erişilemezse eldeki tablo korunur; site çalışmaya devam eder.
+  }
+}
+
+/**
  * Eski adresler kalıcı olarak (301) yeni İngilizce adreslere taşınır.
  * Mevcut sitenin adresleri arama motorlarında ve dış bağlantılarda kayıtlı
  * olduğu için, /tr/geneltanitim gibi bir istek /tr/about adresine yönlendirilir.
  * Böylece hiçbir bağlantı kırılmaz.
  */
-app.use((req, res, next) => {
+app.use(async (req, res, next) => {
   const yol = req.path.replace(/\/+$/, '') || req.path;
 
   // Yalnızca içerik sayfaları yönlendirilir. Varlık dosyalarının adında
   // büyük harf bulunur (styles-CYIGEJUB.css gibi); onlara dokunulmazsa
   // tarayıcı CSS ve JavaScript dosyalarını alamaz.
   if (!/^\/(tr|en)(\/|$)/i.test(yol)) return next();
+
+  await yonlendirmeleriHazirla();
 
   // Kaynak sitede bazı adresler büyük harfliydi (/tr/VPN). Sayfa adresleri
   // küçük harfe indirgenir; tek bir sayfanın tek bir adresi olur.
@@ -94,7 +127,7 @@ app.use((req, res, next) => {
   const anaSayfa = kucuk.match(/^\/(tr|en)\/home$/);
   const hedef = anaSayfa
     ? '/' + anaSayfa[1]
-    : ESKI_YOLLAR[kucuk] ?? (kucuk !== yol ? kucuk : undefined);
+    : ESKI_YOLLAR[kucuk] ?? panelYonlendirmeleri.get(kucuk) ?? (kucuk !== yol ? kucuk : undefined);
   if (!hedef) return next();
   const sorgu = req.originalUrl.slice(req.path.length);   // ?a=b kısmı korunur
   res.redirect(301, hedef + sorgu);
@@ -188,8 +221,17 @@ async function yayindakiYollar(): Promise<Set<string>> {
 async function sayfaYok(yol: string): Promise<boolean> {
   const p = yol.replace(/\/+$/, '');
   if (!/^\/(tr|en)\/[^/]+$/.test(p)) return false;   // ana sayfa, panel, dosyalar
+
   const yollar = await yayindakiYollar();
-  return yollar.size > 0 && !yollar.has(p.toLowerCase());
+  if (yollar.size === 0) return false;
+  if (yollar.has(p.toLowerCase())) return false;
+
+  // Listede yok: panelden yeni eklenmiş olabilir. "Sayfa yok" demeden önce
+  // liste bir kez tazelenir; aksi hâlde yeni sayfa bir dakika boyunca
+  // bulunamadı görünürdü.
+  yolOnbellek = null;
+  const tazelenmis = await yayindakiYollar();
+  return tazelenmis.size > 0 && !tazelenmis.has(p.toLowerCase());
 }
 
 /* ---------- site haritası ve robots ---------- */
@@ -241,6 +283,22 @@ app.use((req, res, next) => {
   if (!gercek || gercek === ad) return next();
   res.sendFile(join(browserDistFolder, gercek));
 });
+
+/**
+ * Panelden yüklenen belgeler. Backend bu dizine yazar, ön yüz sunar;
+ * ikisi aynı Docker birimini paylaşır. Aktarımdan gelen belgeler ise
+ * uygulama imajındaki public/dosyalar altındadır ve aşağıdaki genel
+ * statik sunum tarafından karşılanır.
+ */
+app.use(
+  '/dosyalar',
+  express.static(process.env['BIDB_DOSYA_DIZINI'] ?? '/veri/dosyalar', {
+    maxAge: '1d',
+    index: false,
+    redirect: false,
+    fallthrough: true
+  }),
+);
 
 /**
  * Serve static files from /browser

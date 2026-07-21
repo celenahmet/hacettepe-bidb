@@ -75,6 +75,32 @@ export interface SosyalHesapYonetim {
   yayinda: boolean;
 }
 
+export interface Surum {
+  id: number;
+  baslik: string;
+  aciklama: string | null;
+  kaydeden: string;
+  zaman: string;
+  uzunluk: number;
+}
+
+export interface BelgeYonetim {
+  id: number | null;
+  ad: string;
+  adres: string;
+  tur?: string | null;
+  sira: number;
+}
+
+export interface YuklenenDosya {
+  id: number;
+  dosyaAdi: string;
+  ozgunAd: string;
+  boyut: number;
+  yukleyen: string;
+  yukleme: string;
+}
+
 const OTURUM_ANAHTARI = 'bidb-yonetim';
 
 /** Yönetim uçlarına erişim. Kimlik bilgisi yalnızca tarayıcı oturumunda tutulur. */
@@ -206,6 +232,90 @@ export class YonetimApi {
 
   menuBolumSil(id: number): Observable<void> {
     return this.http.delete<void>(`/api/yonetim/menu/${id}`, { headers: this.basliklar() });
+  }
+
+  /* ---------- sayfa metni ve sürümler ---------- */
+
+  /** Sayfanın içeriğiyle birlikte tam hâli (liste görünümünde metin gelmez). */
+  sayfaTam(dil: string, slug: string): Observable<{ icerikHtml: string; baslik: string } | null> {
+    return this.http.get<{ icerikHtml: string; baslik: string }>(`/api/${dil}/sayfa/${slug}`);
+  }
+
+  icerikKaydet(id: number, veri: { baslik: string; icerikHtml: string; aciklama: string }): Observable<unknown> {
+    return this.http.put(`/api/yonetim/sayfa/${id}/icerik`, veri, { headers: this.basliklar() });
+  }
+
+  surumler(id: number): Observable<Surum[]> {
+    return this.http.get<Surum[]>(`/api/yonetim/sayfa/${id}/surumler`, { headers: this.basliklar() });
+  }
+
+  surumIcerik(surumId: number): Observable<{ icerikHtml: string; baslik: string }> {
+    return this.http.get<{ icerikHtml: string; baslik: string }>(
+      `/api/yonetim/sayfa/surum/${surumId}`, { headers: this.basliklar() });
+  }
+
+  geriAl(id: number, surumId: number): Observable<unknown> {
+    return this.http.post(`/api/yonetim/sayfa/${id}/geri-al/${surumId}`, {}, { headers: this.basliklar() });
+  }
+
+  /* ---------- sayfa ekleme, silme, adres ---------- */
+
+  sayfaEkle(veri: { dil: string; slug: string; baslik: string; icerikHtml: string }): Observable<unknown> {
+    return this.http.post('/api/yonetim/sayfa', veri, { headers: this.basliklar() });
+  }
+
+  adresDegistir(id: number, veri: { slug: string; baslik: string }): Observable<unknown> {
+    return this.http.put(`/api/yonetim/sayfa/${id}/adres`, veri, { headers: this.basliklar() });
+  }
+
+  sayfaSil(id: number): Observable<void> {
+    return this.http.delete<void>(`/api/yonetim/sayfa/${id}`, { headers: this.basliklar() });
+  }
+
+  /* ---------- sayfaya bağlı belgeler ---------- */
+
+  belgeler(sayfaId: number): Observable<BelgeYonetim[]> {
+    return this.http.get<BelgeYonetim[]>(`/api/yonetim/sayfa/${sayfaId}/belgeler`, { headers: this.basliklar() });
+  }
+
+  belgeKaydet(sayfaId: number, b: BelgeYonetim): Observable<unknown> {
+    return b.id
+      ? this.http.put(`/api/yonetim/sayfa/belge/${b.id}`, b, { headers: this.basliklar() })
+      : this.http.post(`/api/yonetim/sayfa/${sayfaId}/belgeler`, b, { headers: this.basliklar() });
+  }
+
+  belgeSil(belgeId: number): Observable<void> {
+    return this.http.delete<void>(`/api/yonetim/sayfa/belge/${belgeId}`, { headers: this.basliklar() });
+  }
+
+  /* ---------- dosya yükleme ---------- */
+
+  /** Dosya gönderirken Content-Type tarayıcı tarafından belirlenmelidir;
+   *  bu yüzden yalnızca kimlik başlığı gönderilir. */
+  dosyaYukle(dosya: File): Observable<{ adres: string; dosyaAdi: string; boyut: number }> {
+    const govde = new FormData();
+    govde.append('dosya', dosya);
+    return this.http.post<{ adres: string; dosyaAdi: string; boyut: number }>(
+      '/api/yonetim/dosya', govde, { headers: new HttpHeaders({ Authorization: this.kimlik }) });
+  }
+
+  yuklenenler(): Observable<YuklenenDosya[]> {
+    return this.http.get<YuklenenDosya[]>('/api/yonetim/dosya', { headers: this.basliklar() });
+  }
+
+  dosyaSil(id: number): Observable<void> {
+    return this.http.delete<void>(`/api/yonetim/dosya/${id}`, { headers: this.basliklar() });
+  }
+
+  /* ---------- iletişim bilgileri ---------- */
+
+  ayarlar(): Observable<{ anahtar: string; dil: string; deger: string }[]> {
+    return this.http.get<{ anahtar: string; dil: string; deger: string }[]>(
+      '/api/yonetim/ayarlar', { headers: this.basliklar() });
+  }
+
+  ayarKaydet(degerler: Record<string, string>): Observable<unknown> {
+    return this.http.put('/api/yonetim/ayarlar', degerler, { headers: this.basliklar() });
   }
 
   private basliklar(): HttpHeaders {
