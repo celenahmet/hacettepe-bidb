@@ -223,8 +223,13 @@
   .icerik > :first-child { margin-top: 0; }
 
   /* Giriş paragrafı biraz daha büyük ve koyu: metne ritim ve giriş noktası
-     verir. Klasik bir yayıncılık aracı, süs değil. */
-  .icerik > p:first-of-type {
+     verir. Klasik bir yayıncılık aracı, süs değil.
+
+     Yalnızca gerçekten "giriş" olduğunda uygulanır: altında başlık, liste
+     ya da tablo varsa o paragraf aşağıyı takdim ediyordur. Sayfa üst üste
+     paragraflarla başlıyorsa (misyon ve vizyon gibi) bunlar eşit ağırlıkta
+     kardeş metinlerdir; birini büyütmek olmayan bir öncelik uydurur. */
+  .icerik > p:first-of-type:has(+ :is(h2, h3, h4, ul, ol, table, blockquote)) {
     font-size: var(--olcu-lg);
     line-height: 1.65;
     color: var(--metin);

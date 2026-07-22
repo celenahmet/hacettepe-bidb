@@ -1,0 +1,136 @@
+/* Organizasyon şeması.
+
+   Şema bir hiyerarşi olduğu için işaretlemede iç içe liste olarak durur;
+   bu dosya yalnızca o yapıyı görünür kılar. Kutu, gölge ve renkli zemin
+   kullanılmaz: hiyerarşi hiza, boşluk ve ince çizgiyle anlatılır. Bunlar
+   moda olmadıkları için eskimezler de.
+
+   Klasik kutulu şemaların iki bilinen sorunu vardır: dar ekranda taşarlar
+   ve bir birim eklendiğinde denge bozulur. Buradaki düzen sütun sayısını
+   ekrana bırakır, birim sayısına değil. */
+
+@layer kamu {
+
+  .icerik .sema {
+    margin: var(--bosluk-6) 0 var(--bosluk-5);
+    max-width: none;              /* şema metin sütunundan geniştir */
+  }
+
+  .icerik .sema ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-width: none;
+  }
+
+  .icerik .sema li { margin: 0; }
+
+  /* ---- Başkan: şemanın çıpası ------------------------------------- */
+
+  /* Tek satırlık bir başlık bandı. Altındaki dalların hepsi buradan
+     çıktığı için tam genişlikte durur ve kırmızı bir çizgiyle biter —
+     bu çizgi aynı zamanda dallara giden ortak gövdedir. */
+  .icerik .sema-baskan {
+    display: block;
+    padding-bottom: var(--bosluk-3);
+    border-bottom: 2px solid var(--hu-kirmizi);
+    font-size: var(--olcu-xl);
+    font-weight: var(--kalinlik-kalin);
+    line-height: var(--satir-sik);
+    color: var(--hu-lacivert);
+    letter-spacing: 0.01em;
+  }
+
+  /* ---- Dallar ------------------------------------------------------ */
+
+  /* Üç dal: İdari yardımcılık, doğrudan bağlı birim, Teknik yardımcılık.
+     Özgün şemadaki sol–orta–sağ okuma sırası korunur.
+     auto-fit sayesinde dar ekranda kendiliğinden alt alta iner; ayrı bir
+     kırılma noktası tanımlamaya gerek kalmaz. */
+  .icerik .sema-dal {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 0;
+  }
+
+  /* Dallar arasındaki ayrım, kutuyla değil dikey hairline ile yapılır.
+     İlk dalda çizgi olmaz; komşusu olana çizgi düşer. */
+  .icerik .sema-dal > li {
+    padding: var(--bosluk-5) var(--bosluk-5) var(--bosluk-5) 0;
+    border-top: 1px solid var(--cizgi);
+    margin-top: -1px;             /* satır sarınca çizgiler üst üste binmesin */
+  }
+
+  .icerik .sema-dal > li + li {
+    padding-left: var(--bosluk-5);
+    border-left: 1px solid var(--cizgi);
+  }
+
+  /* Dalın adı: yardımcılık ya da doğrudan bağlı birim */
+  .icerik .sema-ad {
+    display: block;
+    font-size: var(--olcu-md);
+    font-weight: var(--kalinlik-kalin);
+    line-height: var(--satir-sik);
+    color: var(--hu-lacivert);
+  }
+
+  /* ---- Birimler ---------------------------------------------------- */
+
+  /* Birimler, bağlı oldukları dalın altında girintili bir liste hâlinde
+     durur. Her satırın önündeki kısa çizgi, madde imi değil bağlantı
+     göstergesidir: bağlılığı anlatır. */
+  .icerik .sema-birim {
+    margin-top: var(--bosluk-3);
+  }
+
+  .icerik .sema-birim > li {
+    position: relative;
+    padding: var(--bosluk-2) 0 var(--bosluk-2) var(--bosluk-5);
+    font-size: var(--olcu-sm);
+    line-height: var(--satir-normal);
+    color: var(--metin-2);
+  }
+
+  .icerik .sema-birim > li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 1.05em;
+    width: 0.75rem;
+    height: 1px;
+    background: var(--cizgi-koyu);
+  }
+
+  /* Birimleri dala bağlayan dikey gövde: ilk satırın ortasından son
+     satırın ortasına kadar uzanır, boşlukta asılı kalmaz. */
+  .icerik .sema-birim > li::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--cizgi-koyu);
+  }
+
+  .icerik .sema-birim > li:first-child::after { top: 1.05em; }
+  .icerik .sema-birim > li:last-child::after { bottom: calc(100% - 1.05em); }
+
+  /* Tek satırlık dalda (ilk ve son aynı öğe) dikey gövdeye gerek yok. */
+  .icerik .sema-birim > li:only-child::after { display: none; }
+
+  /* ---- Dar ekran ---------------------------------------------------- */
+
+  /* Sütunlar alt alta indiğinde dikey ayraç anlamını yitirir; ayrımı
+     yatay çizgi üstlenir. Girinti de azalır ki metne yer kalsın. */
+  @media (max-width: 52rem) {
+    .icerik .sema-dal > li,
+    .icerik .sema-dal > li + li {
+      padding: var(--bosluk-5) 0;
+      border-left: 0;
+    }
+
+    .icerik .sema-baskan { font-size: var(--olcu-lg); }
+  }
+}

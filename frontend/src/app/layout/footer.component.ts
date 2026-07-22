@@ -99,7 +99,7 @@ interface SocialAccount {
           <span class="alt-etiket">{{ language === 'en' ? 'Corporate' : 'Kurumsal' }}</span>
           <ul>
             <li><a [routerLink]="['/', language, 'about']">{{ language === 'en' ? 'Overview' : 'Genel Tanıtım' }}</a></li>
-            <li><a [routerLink]="['/', language, 'management']">{{ language === 'en' ? 'Administration' : 'Yönetim' }}</a></li>
+            <li><a [routerLink]="['/', language, 'org-chart']">{{ language === 'en' ? 'Organisation Chart' : 'Organizasyon Şeması' }}</a></li>
             <li><a [routerLink]="['/', language, 'mission-vision']">{{ language === 'en' ? 'Mission and Vision' : 'Misyon ve Vizyon' }}</a></li>
             @if (language === 'tr') {
               <li><a routerLink="/tr/staff">Personel</a></li>
