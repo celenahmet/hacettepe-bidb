@@ -196,6 +196,30 @@ yıl, sayı ve IP dizilerinin yanlışlıkla numaraya dönüşmesi engellenir.
 
 ---
 
+## Birim listesi (Genel Tanıtım)
+
+Sayfa, başkanlığın 11 biriminin tanıtımından oluşuyor. Her paragraf
+"**Birim Adı (Yerleşke):** açıklama" kalıbında; düz paragraf yığını olarak
+okunduğunda birimler birbirine karışıyordu.
+
+Birim adı kendi satırında başlık gibi okunur, açıklama altında tam ölçüde
+akar, birimler ince çizgiyle ayrılır. Sol kenardaki ince işaret üzerine
+gelindiğinde kurumsal kırmızıya döner.
+
+**Denenip vazgeçilenler:**
+
+- *Üç sütunlu ızgara* (ad | açıklama): açıklama uzunlukları çok değişken
+  olduğu için ad sütununda büyük boşluklar kalıyor, sayfa dengesizleşiyordu.
+- *Sıra numarası*: listeye bilgi katmıyor, yalnızca gürültü ekliyordu.
+
+Yalnızca paragrafın **ilk** vurgusu başlığa dönüştürülür. Bazı açıklamaların
+içinde de vurgulu terimler var (BYS, Bİ gibi); hepsi blok yapıldığında metin
+satır satır bölünüyordu.
+
+Tümü sunum katmanındadır; içerik HTML dosyasına tek bir etiket eklenmez.
+
+---
+
 ## Bağlantı dizini kartları
 
 Bazı sayfalar (Bilgi ve Dokümanlar, Formlar, Kişisel Sayfalar) yalnızca

@@ -28,12 +28,16 @@
      kırmızıyla belirtilir — alt çizgi kullanılmaz. */
   .ust { border-bottom: 1px solid var(--cizgi); background: var(--yuzey); }
 
-  /* Kurum adı büyük harf; okunabilirlik için harf aralığı hafifçe açılır */
+  /* Kurum adı büyük harf; okunabilirlik için harf aralığı hafifçe açılır.
+     Büyük harf, aynı puntoda küçük harften daha iri göründüğü için ölçü
+     bir kademe düşürülür. */
   .logo-yazi strong {
     text-transform: uppercase;
     letter-spacing: 0.02em;
-    font-size: 1.18rem;
+    font-size: 1.02rem;
   }
+  .logo-yazi small { font-size: 0.92rem; }
+  .logo img { width: 40px; height: 45px; }
 
   .ust-ic { min-height: 88px; gap: var(--bosluk-5); }
 
