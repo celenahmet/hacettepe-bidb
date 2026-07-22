@@ -39,6 +39,7 @@ import { Language, Slide } from '../core/models';
                (mouseenter)="durdur()" (mouseleave)="basla()"
                (focusin)="durdur()" (focusout)="basla()"
                (keydown.arrowleft)="oncekiSlayt()" (keydown.arrowright)="sonrakiSlayt()"
+               (touchstart)="dokunusBasladi($event)" (touchend)="dokunusBitti($event)"
                tabindex="-1">
 
         <div class="hero-govde">
@@ -64,7 +65,7 @@ import { Language, Slide } from '../core/models';
                  geçiş fark edilmezdi. -->
             @for (s of gecerliListe(); track etkin()) {
               <div class="hero-panel">
-                <h2 class="hero-baslik">{{ s.title }}</h2>
+                <h2 class="hero-baslik"><span>{{ s.title }}</span></h2>
                 @if (s.subtitle) { <p class="hero-ozet">{{ s.subtitle }}</p> }
                 @if (s.linkUrl) {
                   <a class="hero-baglanti" [routerLink]="s.linkUrl">
@@ -165,6 +166,31 @@ export class HeroSliderComponent implements OnDestroy {
   /** Elle geçildiğinde sayaç sıfırlanır: yeni slayt hemen kaçmasın. */
   protected gec(i: number): void {
     this.etkin.set(i);
+    this.basla();
+  }
+
+  /* ---- parmakla kaydırma ----
+
+     Dar ekranda gösterge çizgileri küçük kalıyor; kaydırmak, dokunmatik
+     ekranda slayt gezinmenin beklenen yolu. Eşik 45px: bu değerin altındaki
+     hareketler kaydırma değil, sayfayı aşağı kaydırırken oluşan yanlışlıkla
+     yatay sapmalardır. */
+  private dokunusX = 0;
+  private dokunusY = 0;
+
+  protected dokunusBasladi(olay: TouchEvent): void {
+    this.dokunusX = olay.changedTouches[0].clientX;
+    this.dokunusY = olay.changedTouches[0].clientY;
+    this.durdur();
+  }
+
+  protected dokunusBitti(olay: TouchEvent): void {
+    const dx = olay.changedTouches[0].clientX - this.dokunusX;
+    const dy = olay.changedTouches[0].clientY - this.dokunusY;
+    // Dikey hareket baskınsa sayfa kaydırılıyordur, slayt değişmemeli.
+    if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) {
+      dx < 0 ? this.sonrakiSlayt() : this.oncekiSlayt();
+    }
     this.basla();
   }
 }

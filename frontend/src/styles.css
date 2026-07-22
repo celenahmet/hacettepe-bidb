@@ -119,6 +119,13 @@
     border-bottom: 1px solid var(--cizgi); background: var(--beyaz); cursor: pointer;
   }
   .sol-menu-ana:hover, .sol-bolum > summary:hover { background: var(--zemin); text-decoration: none; }
+
+  /* Ana Sayfa ve Haberler, altlarındaki bölüm başlıklarıyla aynı ağırlıkta.
+     Daha ince olduklarında menünün en üstündeki iki satır, altındaki
+     başlıklardan bir kademe geride duruyor ve sıralama yanlış okunuyordu:
+     ikisi de bölüm başlığı düzeyinde birer varış noktası. */
+  .sol-menu-ana { font-weight: 500; }
+  .sol-menu-ana.etkin { color: var(--kirmizi); }
   .sol-bolum > summary { list-style: none; position: relative; font-weight: 500; }
   .sol-bolum > summary::-webkit-details-marker { display: none; }
   .sol-bolum > summary::after {

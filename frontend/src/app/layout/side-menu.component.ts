@@ -10,8 +10,12 @@ import { Language } from '../core/models';
   imports: [RouterLink, RouterLinkActive, AsyncPipe],
   template: `
     <nav class="sol-menu" [attr.aria-label]="language === 'en' ? 'Section menu' : 'Bölüm menüsü'">
-      <a class="sol-menu-ana" [routerLink]="['/', language]">
+      <a class="sol-menu-ana" [routerLink]="['/', language]" routerLinkActive="etkin"
+         [routerLinkActiveOptions]="{ exact: true }">
         {{ language === 'en' ? 'Home Page' : 'Ana Sayfa' }}
+      </a>
+      <a class="sol-menu-ana" [routerLink]="['/', language, 'news']" routerLinkActive="etkin">
+        {{ language === 'en' ? 'News and Announcements' : 'Haberler ve Duyurular' }}
       </a>
 
       @for (m of menus$ | async; track m.title) {

@@ -109,9 +109,8 @@
      Gecikmeler sabit ve azalan: başlık önce, açıklama sonra, bağlantı en
      son. Okuma sırasıyla aynı. */
 
-  .hero-baslik { animation: hero-giris 560ms 60ms cubic-bezier(0.2, 0.8, 0.2, 1) both; }
-  .hero-ozet   { animation: hero-giris 560ms 140ms cubic-bezier(0.2, 0.8, 0.2, 1) both; }
-  .hero-baglanti { animation: hero-giris 560ms 220ms cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+  .hero-ozet   { animation: hero-giris 560ms 200ms cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+  .hero-baglanti { animation: hero-giris 560ms 300ms cubic-bezier(0.2, 0.8, 0.2, 1) both; }
 
   @keyframes hero-giris {
     from { opacity: 0; transform: translateY(14px); }
@@ -123,13 +122,29 @@
     to   { transform: scaleY(1); }
   }
 
+  /* Başlık maskenin ardından yükselerek açılır: dış öge bir pencere, iç
+     öge onun içinde aşağıdan yukarı kayar. Sönümlemeye göre daha belirgin
+     ama daha sessiz bir giriş — harfler yerinde belirmez, satır bir bütün
+     olarak ortaya çıkar. Yayıncılıkta bilinen bir açılış; bir efekt
+     kitaplığına değil taşmanın gizlenmesine dayandığı için eskimez. */
   .hero-baslik {
     margin: 0;
+    overflow: hidden;
     font-size: var(--olcu-4xl);
     letter-spacing: -0.01em;
     font-weight: var(--kalinlik-kalin);
     line-height: var(--satir-sik);
     color: #fff;
+  }
+
+  .hero-baslik > span {
+    display: block;
+    animation: hero-perde 620ms cubic-bezier(0.16, 0.84, 0.24, 1) both;
+  }
+
+  @keyframes hero-perde {
+    from { transform: translateY(105%); }
+    to   { transform: none; }
   }
 
   .hero-ozet {
@@ -201,6 +216,11 @@
   }
 
   .hero-izler button:hover { background: rgb(255 255 255 / 70%); }
+
+  .hero-izler button:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 4px;
+  }
 
   /* Görülen çizgi ince ama tıklama alanı parmak için yeterli olmalı. */
   .hero-izler button::before {
@@ -274,7 +294,7 @@
   @media (prefers-reduced-motion: reduce) {
     .hero-gorseller img { transition: none; }
     .hero-panel::before,
-    .hero-baslik,
+    .hero-baslik > span,
     .hero-ozet,
     .hero-baglanti { animation: none; }
     .hero-izler button.etkin .hero-iz-dolgu { animation: none; transform: scaleX(1); }
