@@ -56,7 +56,38 @@ interface SocialAccount {
               <span class="alt-etiket">{{ language === 'en' ? 'Follow us' : 'Bizi takip edin' }}</span>
               <p>
                 @for (s of sosyal(); track s.id) {
-                  <a [href]="s.url" target="_blank" rel="noopener">{{ agAdi(s.network) }}</a>
+                  <a [href]="s.url" target="_blank" rel="noopener"
+                     [attr.aria-label]="agAdi(s.network)" [attr.title]="agAdi(s.network)">
+                    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"
+                         fill="none" stroke="currentColor" stroke-width="1.6">
+                      @switch (s.network) {
+                        @case ("instagram") {
+                          <rect x="3.5" y="3.5" width="17" height="17" rx="4.5"/>
+                          <circle cx="12" cy="12" r="4"/>
+                          <circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/>
+                        }
+                        @case ("facebook") {
+                          <path d="M14.5 8.5h2.2V5.4h-2.4c-2.3 0-3.6 1.4-3.6 3.6v1.8H8.5v3.1h2.2V21h3.3v-7.1h2.4l.4-3.1h-2.8V9.4c0-.6.2-.9.9-.9z"
+                                stroke="none" fill="currentColor"/>
+                        }
+                        @case ("twitter") {
+                          <path d="M4.5 4.5l15 15M19.5 4.5l-15 15"/>
+                        }
+                        @case ("linkedin") {
+                          <rect x="3.5" y="3.5" width="17" height="17" rx="2"/>
+                          <path d="M7.5 10.5V17M7.5 7.6v.01M11.5 17v-4a2.5 2.5 0 015 0v4"/>
+                        }
+                        @case ("youtube") {
+                          <rect x="3" y="6" width="18" height="12" rx="3"/>
+                          <path d="M10.5 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"/>
+                        }
+                        @default {
+                          <circle cx="12" cy="12" r="8.5"/>
+                          <path d="M3.5 12h17M12 3.5c2.2 2.4 3.3 5.3 3.3 8.5s-1.1 6.1-3.3 8.5"/>
+                        }
+                      }
+                    </svg>
+                  </a>
                 }
               </p>
             </div>

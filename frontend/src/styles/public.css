@@ -22,6 +22,122 @@
  */
 
 @layer kamu {
+  /* ================= üst şerit ================= */
+
+  /* Ana gezinme: hap veya kutu yok. Etkin ve üzerine gelinen öğe kurumsal
+     kırmızıyla belirtilir — alt çizgi kullanılmaz. */
+  .ust { border-bottom: 1px solid var(--cizgi); background: var(--yuzey); }
+
+  .ust-ic { min-height: 88px; gap: var(--bosluk-5); }
+
+  .ust-menu {
+    display: flex;
+    align-items: center;
+    gap: var(--bosluk-5);
+    font-size: var(--olcu-sm);
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .ust-menu > a,
+  .acilir > button {
+    padding: var(--bosluk-2) 0;
+    border: 0;
+    background: none;
+    color: var(--metin);
+    font-family: inherit;
+    font-size: var(--olcu-sm);
+    font-weight: var(--kalinlik-orta);
+    cursor: pointer;
+  }
+  .ust-menu > a:hover,
+  .acilir > button:hover { color: var(--hu-kirmizi); }
+
+  /* ---------- açılır bölüm ---------- */
+
+  .acilir { position: relative; display: inline-flex; }
+
+  .acilir > button { display: inline-flex; align-items: center; gap: var(--bosluk-2); }
+
+  /* Ok: küçük bir üçgen; ikon yazı tipi kullanılmaz */
+  .acilir .ok {
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 5px solid currentColor;
+    transition: transform var(--gecis-hizli);
+  }
+  .acilir.acik > button { color: var(--hu-kirmizi); }
+  .acilir.acik .ok { transform: rotate(180deg); }
+
+  .acilir-liste {
+    position: absolute;
+    top: calc(100% + var(--bosluk-2));
+    left: 0;
+    z-index: 20;
+    display: none;
+    min-width: 250px;
+    padding: var(--bosluk-2) 0;
+    border: 1px solid var(--cizgi-koyu);
+    border-top: 2px solid var(--hu-kirmizi);
+    background: var(--yuzey);
+  }
+  .acilir.acik .acilir-liste { display: block; }
+
+  .acilir-liste a {
+    display: block;
+    padding: 9px var(--bosluk-4);
+    color: var(--metin-2);
+    font-size: var(--olcu-sm);
+  }
+  .acilir-liste a:hover { background: var(--yuzey-2); color: var(--hu-kirmizi); }
+
+  /* ---------- dil seçimi ---------- */
+
+  .dil-secim {
+    display: inline-flex;
+    gap: var(--bosluk-2);
+    padding-left: var(--bosluk-5);
+    border-left: 1px solid var(--cizgi);
+    font-size: var(--olcu-xs);
+    font-weight: var(--kalinlik-kalin);
+    letter-spacing: 0.06em;
+  }
+  .dil-secim a { color: var(--metin-3); }
+  .dil-secim a.etkin { color: var(--hu-kirmizi); }
+  .dil-secim a:hover { color: var(--metin); }
+
+  /* ---------- dar ekran menü düğmesi ---------- */
+
+  .menu-dugmesi {
+    display: none;
+    align-items: center;
+    gap: var(--bosluk-2);
+    padding: var(--bosluk-2) var(--bosluk-3);
+    border: 1px solid var(--cizgi-koyu);
+    border-radius: 2px;
+    background: none;
+    color: var(--metin);
+    font-family: inherit;
+    font-size: var(--olcu-xs);
+    font-weight: var(--kalinlik-kalin);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  /* Üç çizgi: ikon yazı tipi yerine kenarlıklarla çizilir */
+  .menu-dugmesi .cizgiler {
+    width: 16px;
+    height: 2px;
+    background: currentColor;
+    box-shadow: 0 -5px 0 currentColor, 0 5px 0 currentColor;
+  }
+
+  .ust a:focus-visible,
+  .ust button:focus-visible { outline: 2px solid var(--hu-kirmizi); outline-offset: 2px; }
+
   /* ================= sayfa iskeleti ================= */
 
   /* Sol menü sabit, içerik sütunu ölçülü. Geniş ekranda içeriğin sonsuz
@@ -318,15 +434,20 @@
   }
 
   .alt-sosyal { margin-top: var(--bosluk-5); }
-  .alt-sosyal p { display: flex; flex-wrap: wrap; gap: var(--bosluk-4); margin: 0; }
+  .alt-sosyal p { display: flex; flex-wrap: wrap; gap: var(--bosluk-3); margin: 0; }
 
   /* Sosyal hesaplar yuvarlak ikon kutusu değil, sade metin bağlantısıdır */
-  /* Alt çizgi yok: ayrım renk ve üzerine gelme durumuyla kurulur */
+  /* Sosyal hesaplar yalnızca burada ve yalnızca ikonla gösterilir.
+     Kutu veya daire içine alınmaz; ikonun kendisi yeterlidir. */
   .alt-sosyal a {
-    color: var(--metin);
-    font-weight: var(--kalinlik-orta);
+    display: inline-flex;
+    padding: var(--bosluk-2);
+    margin: calc(-1 * var(--bosluk-2));    /* tıklama alanı büyür, hizalama bozulmaz */
+    color: var(--metin-2);
+    transition: color var(--gecis-hizli);
   }
   .alt-sosyal a:hover { color: var(--hu-kirmizi); }
+  .alt-sosyal svg { display: block; }
 
   .alt-sutun ul { margin: 0; padding: 0; list-style: none; }
   .alt-sutun li + li { margin-top: var(--bosluk-3); }
@@ -370,7 +491,61 @@
   /* ================= dar ekran ================= */
 
   @media (max-width: 900px) {
-    .sayfa-duzen { gap: var(--bosluk-5); padding-top: var(--bosluk-5); }
+    /* Dar ekranda tek sütun. Bu kural olmadan sol menü sabit genişliğini
+       koruyor ve içerik sütununa yalnızca birkaç piksel kalıyordu. */
+    .sayfa-duzen {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--bosluk-5);
+      padding-top: var(--bosluk-5);
+    }
+
+    .icerik-alani { max-width: none; }
+
+    /* Üst menü panele dönüşür; düğmeyle açılır.
+       Eski kural dar ekranda başlığı dikey diziyordu; logo ve menü düğmesi
+       aynı satırda kalmalı. */
+    .ust-ic {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 0;
+      padding-top: var(--bosluk-3);
+      padding-bottom: var(--bosluk-3);
+    }
+    /* Logo daralabilmeli, düğme daralmamalı: aksi hâlde düğme satırdan taşar */
+    .logo { flex: 1 1 auto; min-width: 0; }
+    .logo-yazi { min-width: 0; }
+    .logo-yazi strong { font-size: var(--olcu-md); }
+    .logo-yazi small { font-size: var(--olcu-xs); }
+    .menu-dugmesi { display: inline-flex; flex: none; margin-left: var(--bosluk-3); }
+
+    .ust-menu {
+      display: none;
+      flex-basis: 100%;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      margin-top: var(--bosluk-3);
+      border-top: 1px solid var(--cizgi);
+    }
+    .ust-menu.acik { display: flex; }
+
+    .ust-menu > a,
+    .acilir > button { padding: var(--bosluk-3) 0; border-bottom: 1px solid var(--cizgi); }
+
+    .acilir { display: block; }
+    .acilir > button { width: 100%; justify-content: space-between; }
+    .acilir-liste {
+      position: static;
+      min-width: 0;
+      border: 0;
+      border-bottom: 1px solid var(--cizgi);
+      background: var(--yuzey-2);
+    }
+
+    .dil-secim { padding: var(--bosluk-3) 0 0; border-left: 0; }
 
     .sayfa-baslik { font-size: var(--olcu-2xl); }
 

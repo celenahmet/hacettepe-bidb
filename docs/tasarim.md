@@ -121,6 +121,32 @@ ve alt bilgisi panelde gösterilmez; çalışma yüzeyi bölünmez.
 
 ---
 
+## Üst şerit
+
+Sol menü sayfa içi ayrıntıyı taşır; üst şerit sitenin ana bölümlerine her
+sayfadan erişim verir.
+
+| Öğe | İçeriği |
+|---|---|
+| Ana Sayfa | — |
+| Kurumsal | Sol menünün ilk bölümü (aynı kaynak, ayrı liste tutulmaz) |
+| Servis ve Uygulamalar | Ana sayfadaki servis karuselinin kayıtları |
+| Hakkımızda · İletişim | Doğrudan bağlantı |
+| TR · EN | En sağda, ince çizgiyle ayrılmış |
+
+Her iki açılır başlık da **veriden** gelir; panelden düzenlenince üst menü
+de değişir. Sıra sabittir: iki istek hangi sırayla dönerse dönsün başlıklar
+aynı yerde durur.
+
+**Sosyal medya üst şeritten kaldırılmıştır.** Yalnızca alt bilgide ve
+yalnızca ikonla yer alır; ikonlar kutu veya daire içine alınmaz.
+
+Açılır liste klavyeyle kullanılabilir: `aria-expanded` bildirilir, Esc
+kapatır, dışarı tıklamak kapatır. Dar ekranda üst menü panele dönüşür ve
+"Menü" düğmesiyle açılır.
+
+---
+
 ## İçerik sayfası
 
 **Başlık bloğu.** Sayfa başlığının üstünde, sayfanın ait olduğu menü bölümü
