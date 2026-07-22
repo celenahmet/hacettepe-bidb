@@ -298,3 +298,49 @@
     .eimza-nav-grup { grid-template-columns: 1fr; }
   }
 }
+
+@layer kamu {
+  /* ---- İçerik içindeki açılır bölümler (e-imza) ----
+
+     Kaynak e-imza sayfaları <details>/<summary> kullanıyor ama Tailwind
+     sınıflarıyla (list-none, group-open:rotate-45); bu sınıflar bu sitede
+     yüklü olmadığından hem tarayıcının varsayılan ▶ imi hem de kaynağın
+     "+" işareti aynı anda görünüyordu. İçeriğe dokunmadan, yalnızca sunum
+     düzeltiliyor: varsayılan im gizlenir, "+" açılınca 45° dönüp ×'e
+     dönüşür. FAQ/SSS bileşeni .icerik dışında olduğu için etkilenmez. */
+  .icerik details {
+    border-bottom: 1px solid var(--cizgi);
+  }
+
+  .icerik details > summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--bosluk-4);
+    padding: var(--bosluk-4) 0;
+    list-style: none;
+    cursor: pointer;
+    color: var(--hu-lacivert);
+    transition: color var(--gecis-hizli);
+  }
+  .icerik details > summary::-webkit-details-marker { display: none; }
+  .icerik details > summary:hover { color: var(--hu-kirmizi); }
+
+  /* "+" işareti: özetin son ögesi. Açılınca 45° döner ve kırmızıya geçer. */
+  .icerik details > summary > span:last-child {
+    flex: none;
+    font-size: var(--olcu-2xl);
+    font-weight: 300;
+    line-height: 1;
+    color: var(--metin-3);
+    transition: transform var(--gecis), color var(--gecis);
+  }
+  .icerik details[open] > summary > span:last-child {
+    transform: rotate(45deg);
+    color: var(--hu-kirmizi);
+  }
+
+  /* Açılan gövde: özetten ayrılsın diye altına küçük boşluk. */
+  .icerik details[open] > summary { color: var(--hu-kirmizi); }
+  .icerik details > *:not(summary) { padding: 0 0 var(--bosluk-4); }
+}
