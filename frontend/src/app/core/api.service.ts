@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { HomeData, Language, Menu, Page, Slide, SocialAccount } from './models';
+import { HomeData, Language, Menu, Page, Slide, SocialAccount, StaffUnit } from './models';
 
 /** Backend REST servisine erişim.
  *  Adres, ortam değişkeninden (API_URL) veya varsayılan olarak
@@ -36,6 +36,13 @@ export class Api {
   slider(language: Language): Observable<Slide[]> {
     return this.http
       .get<Slide[]>(`${this.taban}/api/${language}/slides`)
+      .pipe(catchError(() => of([])));
+  }
+
+  /** Personel listesi; birim ve kişi kayıtlarından gelir, HTML değildir. */
+  personel(language: Language): Observable<StaffUnit[]> {
+    return this.http
+      .get<StaffUnit[]>(`${this.taban}/api/${language}/staff`)
       .pipe(catchError(() => of([])));
   }
 

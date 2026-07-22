@@ -8,11 +8,12 @@ import { Seo } from '../core/seo.service';
 import { icerigiHazirla } from '../core/icerik-bicim';
 import { Language, Page } from '../core/models';
 import { SideMenuComponent } from '../layout/side-menu.component';
+import { StaffListComponent } from './staff-list.component';
 
 /** /tr/<slug> ve /en/<slug> adreslerindeki içerik sayfası. */
 @Component({
   selector: 'bidb-content-page',
-  imports: [SideMenuComponent],
+  imports: [SideMenuComponent, StaffListComponent],
   template: `
     <div class="kap sayfa-duzen">
       <aside class="yan">
@@ -26,6 +27,13 @@ import { SideMenuComponent } from '../layout/side-menu.component';
             <h1 class="sayfa-baslik">{{ s.title }}</h1>
           </header>
           <div class="icerik" [innerHTML]="govde()"></div>
+
+          <!-- Personel listesi HTML olarak saklanmaz; birim ve kişi
+               kayıtlarından üretilir. Sayfa kaydı başlık, adres, menü bağı
+               ve arama motoru bilgileri için durmayı sürdürür. -->
+          @if (s.slug === 'staff') {
+            <bidb-staff-list [dilDegeri]="language()"></bidb-staff-list>
+          }
 
           @if (s.documents.length) {
             <section class="belgeler">

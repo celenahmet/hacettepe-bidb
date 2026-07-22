@@ -35,7 +35,8 @@ for (const dil of ["tr", "en"]) {
    Bu sayfalar karşılaştırılmaz; gerekçe kayıt altında kalır ki ileride
    "acaba yanlışlıkla mı bozuldu?" sorusu doğmasın. */
 const BILINCLI_SAPMA = {
-  "tr/org-chart": "Yönetim sayfasıyla birleştirildi (kurum kararı)"
+  "tr/org-chart": "Yönetim sayfasıyla birleştirildi (kurum kararı)",
+  "tr/staff": "Yapısal veriye taşındı — node tools/personel-denetim.js ile denetlenir"
 };
 
 const ORIGIN = "https://bidb.hacettepe.edu.tr";

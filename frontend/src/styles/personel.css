@@ -1,0 +1,160 @@
+/* Personel listesi.
+
+   Bu sayfa organizasyon şemasıyla aynı dili konuşur (styles/sema.css):
+   kutu, gölge ve renkli zemin yok; ayrımlar ince çizgiyle, başlıklar
+   kurumsal lacivertle yapılır. Şema kurumun nasıl örgütlendiğini, bu sayfa
+   o örgütte kimin çalıştığını gösterir — ikisi arka arkaya okunduğunda
+   kopukluk olmamalı.
+
+   Sayfa bir rehberdir: burada aranan şey "bu birimde kim var" ya da
+   "bu kişi nerede çalışıyor" sorusudur. Bu yüzden tarama kolaylığı,
+   görsel gösterişin önünde tutuldu. Fotoğraflar küçük ve hizalı durur;
+   listeyi süslemek yerine kişiyi tanımaya yarar. */
+
+@layer kamu {
+
+  .personel {
+    margin-top: var(--bosluk-6);
+  }
+
+  /* ---- Birim ------------------------------------------------------- */
+
+  /* Birimler, şemadaki dallarla aynı ölçüde ayrılır. Ayrımı boşluk
+     yapar; çizgi yalnızca boşluğun yetmediği yerde devreye girer. */
+  .personel-birim + .personel-birim {
+    margin-top: var(--bosluk-6);
+    padding-top: var(--bosluk-6);
+    border-top: 1px solid var(--cizgi);
+  }
+
+  .icerik + .personel .personel-birim:first-child { margin-top: 0; }
+
+  .personel-birim-ad {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: var(--bosluk-3);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: var(--olcu-lg);
+    font-weight: var(--kalinlik-kalin);
+    line-height: var(--satir-sik);
+    color: var(--hu-lacivert);
+  }
+
+  /* Yerleşke bir alt bilgidir, adın parçası değil: aynı birimin iki
+     ekibini ayırır ama başlığın ağırlığını taşımaz. */
+  .personel-yerleske {
+    font-size: var(--olcu-xs);
+    font-weight: var(--kalinlik-orta);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--metin-3);
+  }
+
+  .personel-telefon {
+    margin: var(--bosluk-2) 0 0;
+    font-size: var(--olcu-sm);
+    color: var(--metin-2);
+  }
+
+  .personel-telefon a { color: inherit; }
+  .personel-telefon a:hover { color: var(--hu-kirmizi); }
+
+  /* ---- Kişiler ------------------------------------------------------ */
+
+  /* Çok sütunlu bir ızgara: 53 kişilik bir listeyi tek sütunda okutmak
+     gereksiz kaydırma yaratır. Sütun sayısını ekran belirler, kişi sayısı
+     değil — bir birime kişi eklendiğinde düzen bozulmaz. */
+  .personel-liste {
+    list-style: none;
+    margin: var(--bosluk-4) 0 0;
+    padding: 0;
+    max-width: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+    gap: var(--bosluk-1) var(--bosluk-5);
+  }
+
+  .personel-kisi {
+    display: flex;
+    align-items: center;
+    gap: var(--bosluk-3);
+    padding: var(--bosluk-2) 0;
+    min-width: 0;
+  }
+
+  /* ---- Fotoğraf ve varsayılan ikon ---------------------------------- */
+
+  /* Hafifçe yuvarlatılmış kare: sayfanın geri kalanı dik açılı bir ızgara
+     üzerine kurulu, daire bu düzene yabancı kalıyordu. Boyut küçük
+     tutuldu — fotoğraf burada bir portre galerisi değil, tanımayı
+     kolaylaştıran bir işaret. */
+  .personel-gorsel {
+    flex: none;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: var(--kose-sm);
+    overflow: hidden;
+    background: var(--yuzey-3);
+    display: block;
+  }
+
+  .personel-gorsel img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Fotoğrafı olmayan kişi için nötr bir siluet. Listede boşluk bırakmak
+     ya da baş harf yazmak yerine sessiz bir yer tutucu: hizayı korur,
+     dikkati kendine çekmez. */
+  .personel-gorsel svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    fill: var(--cizgi-koyu);
+  }
+
+  /* ---- Ad ve unvan --------------------------------------------------- */
+
+  .personel-bilgi {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .personel-ad {
+    font-size: var(--olcu-sm);
+    line-height: var(--satir-sik);
+    color: var(--metin);
+  }
+
+  /* Birim sorumlusunu kaynak sayfa adın sonundaki yıldızla gösteriyordu;
+     yıldız sayfanın en altındaki tek satırlık açıklamaya bağlıydı ve
+     ekran okuyucuda hiçbir şey ifade etmiyordu. Yerine görevin adı
+     yazılıyor — açıklamaya ihtiyaç bırakmıyor. */
+  .personel-kisi.sorumlu .personel-ad {
+    font-weight: var(--kalinlik-kalin);
+    color: var(--hu-lacivert);
+  }
+
+  .personel-unvan,
+  .personel-not {
+    font-size: var(--olcu-xs);
+    line-height: var(--satir-sik);
+    color: var(--metin-3);
+  }
+
+  .personel-kisi.sorumlu .personel-unvan { color: var(--hu-kirmizi); }
+
+  /* ---- Dar ekran ----------------------------------------------------- */
+
+  @media (max-width: 40rem) {
+    .personel-gorsel { width: 2.25rem; height: 2.25rem; }
+    .personel-liste { gap: 0; }
+  }
+}

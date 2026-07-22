@@ -69,4 +69,22 @@ export interface HomeData {
   news: NewsSummary[];
 }
 
+export interface StaffMember {
+  fullName: string;
+  roleTitle: string | null;
+  note: string | null;
+  /** Birim sorumlusu; kaynak sayfada adın sonundaki yıldızla gösteriliyordu */
+  lead: boolean;
+  photoUrl: string | null;
+  /** Fotoğraf yoksa gösterilecek varsayılan ikon: 'kadin' | 'erkek' | null */
+  avatar: string | null;
+}
+
+export interface StaffUnit {
+  name: string;
+  campus: string | null;
+  phone: string | null;
+  members: StaffMember[];
+}
+
 export type Language = 'tr' | 'en';
