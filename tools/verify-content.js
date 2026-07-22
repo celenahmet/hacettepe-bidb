@@ -36,6 +36,7 @@ for (const dil of ["tr", "en"]) {
    "acaba yanlışlıkla mı bozuldu?" sorusu doğmasın. */
 const BILINCLI_SAPMA = {
   "tr/org-chart": "Yönetim sayfasıyla birleştirildi (kurum kararı)",
+  "tr/about": "Kaynakta yok — kurum için yeni yazıldı (Hakkımızda)",
   "tr/staff": "Yapısal veriye taşındı — node tools/personel-denetim.js ile denetlenir"
 };
 

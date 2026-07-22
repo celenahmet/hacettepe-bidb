@@ -12,7 +12,7 @@
 /** Türkçe taraftaki eski slug -> yeni slug */
 const TR = {
   anasayfa: "home",
-  geneltanitim: "about",
+  geneltanitim: "overview",       // /tr/about ayrı bir Hakkımızda sayfasına ayrıldı
   yonetim: "org-chart",          // Organizasyon Şeması ile birleştirildi
   misyonvizyon: "mission-vision",
   bilgikorumaanapolitikamiz: "security-policy",

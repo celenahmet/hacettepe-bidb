@@ -8,7 +8,7 @@
 
 export const LEGACY_ROUTES: Record<string, string> = {
   '/tr/anasayfa': '/tr/home',
-  '/tr/geneltanitim': '/tr/about',
+  '/tr/geneltanitim': '/tr/overview',
   '/tr/yonetim': '/tr/org-chart',
   '/tr/misyonvizyon': '/tr/mission-vision',
   '/tr/bilgikorumaanapolitikamiz': '/tr/security-policy',
