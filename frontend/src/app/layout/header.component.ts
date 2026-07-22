@@ -1,4 +1,5 @@
-import { Component, ElementRef, HostListener, Input, computed, inject, signal } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, inject, signal } from '@angular/core';
+import { forkJoin } from 'rxjs';
 import { RouterLink } from '@angular/router';
 import { Api } from '../core/api.service';
 import { Language, Menu } from '../core/models';
@@ -97,25 +98,28 @@ export class HeaderComponent {
    *
    * İkisi de veriden gelir; panelden düzenlenince üst menü de değişir.
    */
-  private kurumsal = signal<Menu | null>(null);
-  private servisler = signal<Menu | null>(null);
-
-  /* Sıra sabittir: iki istek hangi sırayla dönerse dönsün, başlıklar
-     her zaman Kurumsal → Servis ve Uygulamalar olarak dizilir. */
-  protected acilirBolumler = computed(() =>
-    [this.kurumsal(), this.servisler()].filter((b): b is Menu => b !== null && b.items.length > 0)
-  );
+  /* İki başlık TEK ADIMDA yerleşir.
+     Önce iki istek ayrı ayrı yazılıyordu; hangisi önce dönerse liste önce
+     tek başlıkla, sonra iki başlıkla çiziliyordu. Sunucuda oluşan sıra ile
+     tarayıcıda oluşan sıra farklı olduğu için, tarayıcı hazır işaretlemeyi
+     devralırken düğümleri yanlış eşleştiriyor ve iki menünün bağlantıları
+     birbirine karışıyordu. Ara durum olmayınca eşleştirilecek yanlış düğüm
+     de kalmıyor. */
+  protected acilirBolumler = signal<Menu[]>([]);
 
   ngOnInit(): void {
-    this.api.menu(this.language).subscribe((menuler) => {
-      this.kurumsal.set(menuler.length ? menuler[0] : null);
-    });
-
-    this.api.anaSayfa(this.language).subscribe((veri) => {
-      this.servisler.set({
-        title: this.language === "en" ? "Our Services" : "Hizmetlerimiz",
-        items: veri.services.map((s) => ({ label: s.name, url: s.url, newTab: s.newTab }))
-      });
+    forkJoin({
+      menuler: this.api.menu(this.language),
+      anaSayfa: this.api.anaSayfa(this.language)
+    }).subscribe(({ menuler, anaSayfa }) => {
+      const kurumsal = menuler.length ? menuler[0] : null;
+      const servisler: Menu = {
+        title: this.language === 'en' ? 'Our Services' : 'Hizmetlerimiz',
+        items: anaSayfa.services.map((s) => ({ label: s.name, url: s.url, newTab: s.newTab }))
+      };
+      // Sıra sabit: Kurumsal → Hizmetlerimiz.
+      this.acilirBolumler.set([kurumsal, servisler]
+        .filter((b): b is Menu => b !== null && b.items.length > 0));
     });
   }
 

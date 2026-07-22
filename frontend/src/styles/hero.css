@@ -76,28 +76,57 @@
   }
 
   .hero-panel {
+    position: relative;
     pointer-events: auto;
     max-width: 38rem;
     margin-bottom: var(--bosluk-8);
-    padding-left: var(--bosluk-4);
-    /* Kırmızı çizgi, kutunun bıraktığı boşluğu doldurmuyor; metin bloğunun
-       nerede başladığını gösteren tek işaret olarak kalıyor. */
-    border-left: 3px solid var(--hu-kirmizi);
+    padding-left: var(--bosluk-5);
     text-shadow: 0 1px 3px rgb(0 0 0 / 55%);
   }
 
-  .hero-etiket {
-    margin: 0 0 var(--bosluk-2);
-    font-size: var(--olcu-xs);
-    font-weight: var(--kalinlik-orta);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: rgb(255 255 255 / 78%);
+  /* Kırmızı çizgi, metin bloğunun nerede başladığını gösteren tek işaret.
+     Kenarlık yerine ayrı bir öge: yalnızca böyle çizilerek girebiliyor. */
+  .hero-panel::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--hu-kirmizi);
+    transform-origin: top;
+    animation: hero-cizgi 520ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+
+  /* ---- Giriş hareketi -----------------------------------------------
+
+     Slayt değişince metin yerinde belirmez; kısa bir mesafeden yukarı
+     doğru gelir ve satırlar sırayla girer. Hareketin amacı süs değil:
+     fotoğraf sönümlenirken metin de değiştiği için, sırayla giren satırlar
+     "bu artık başka bir slayt" bilgisini taşır. Mesafe küçük (14px) ve
+     süre kısa tutuldu; büyüdüğünde gösteriye dönüşür.
+
+     Gecikmeler sabit ve azalan: başlık önce, açıklama sonra, bağlantı en
+     son. Okuma sırasıyla aynı. */
+
+  .hero-baslik { animation: hero-giris 560ms 60ms cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+  .hero-ozet   { animation: hero-giris 560ms 140ms cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+  .hero-baglanti { animation: hero-giris 560ms 220ms cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+
+  @keyframes hero-giris {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  @keyframes hero-cizgi {
+    from { transform: scaleY(0); }
+    to   { transform: scaleY(1); }
   }
 
   .hero-baslik {
     margin: 0;
-    font-size: var(--olcu-3xl);
+    font-size: var(--olcu-4xl);
+    letter-spacing: -0.01em;
     font-weight: var(--kalinlik-kalin);
     line-height: var(--satir-sik);
     color: #fff;
@@ -222,8 +251,7 @@
       text-shadow: none;
     }
 
-    .hero-etiket { color: var(--metin-3); }
-    .hero-baslik { font-size: var(--olcu-xl); color: var(--hu-lacivert); }
+    .hero-baslik { font-size: var(--olcu-2xl); color: var(--hu-lacivert); }
     .hero-ozet { font-size: var(--olcu-sm); color: var(--metin-2); }
     .hero-baglanti { color: var(--hu-kirmizi); border-bottom-color: transparent; }
 
@@ -245,6 +273,10 @@
      etkin gösterge düz renkle işaretlenir. */
   @media (prefers-reduced-motion: reduce) {
     .hero-gorseller img { transition: none; }
+    .hero-panel::before,
+    .hero-baslik,
+    .hero-ozet,
+    .hero-baglanti { animation: none; }
     .hero-izler button.etkin .hero-iz-dolgu { animation: none; transform: scaleX(1); }
     .hero-baglanti::after { transition: none; }
   }

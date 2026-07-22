@@ -59,9 +59,11 @@ import { Language, Slide } from '../core/models';
           </div>
 
           <div class="kap hero-kap">
-            @if (gecerli(); as s) {
+            <!-- Slayt değişince bu blok yeniden kurulur: düğüm yenilenmeden
+                 CSS animasyonu baştan çalışmaz, metin sessizce değişir ve
+                 geçiş fark edilmezdi. -->
+            @for (s of gecerliListe(); track etkin()) {
               <div class="hero-panel">
-                <p class="hero-etiket">{{ dilDegeri === 'en' ? 'Our services' : 'Hizmetlerimiz' }}</p>
                 <h2 class="hero-baslik">{{ s.title }}</h2>
                 @if (s.subtitle) { <p class="hero-ozet">{{ s.subtitle }}</p> }
                 @if (s.linkUrl) {
@@ -120,6 +122,13 @@ export class HeroSliderComponent implements OnDestroy {
 
   protected gecerli(): Slide | null {
     return this.slaytlar[this.etkin()] ?? null;
+  }
+
+  /** Şablonun tek elemanlı döngüyle çizebilmesi için; @for düğümü
+      yenilediği için giriş animasyonu her slaytta baştan çalışır. */
+  protected gecerliListe(): Slide[] {
+    const s = this.gecerli();
+    return s ? [s] : [];
   }
 
   /** 1920'lik adresten 960'lık sürümü türetir; ayrı bir alan tutmaya gerek yok. */

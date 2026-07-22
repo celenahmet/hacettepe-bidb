@@ -82,19 +82,39 @@
   .acilir.acik > button { color: var(--hu-kirmizi); }
   .acilir.acik .ok { transform: rotate(180deg); }
 
+  /* Açılır liste yarı saydam: altındaki fotoğraf silinmez, görünmeyi
+     sürdürür. Ziyaretçi menüyü açtığında sayfayla bağını kaybetmez —
+     nereye geldiğini ve altta ne olduğunu görür.
+
+     Saydamlık %12'de tutuldu. Daha fazlası fotoğrafın deseni yazının
+     arkasından geçtiği için okumayı zorlaştırır; bulanıklaştırma (blur)
+     ise bu sorunu çözerken kurumsal sadeliği bozar ve zayıf cihazlarda
+     kaydırmayı yavaşlatır. */
   .acilir-liste {
     position: absolute;
     top: calc(100% + var(--bosluk-2));
     left: 0;
     z-index: 20;
-    display: none;
     min-width: 250px;
     padding: var(--bosluk-2) 0;
     border: 1px solid var(--cizgi-koyu);
     border-top: 2px solid var(--hu-kirmizi);
-    background: var(--yuzey);
+    background: rgb(255 255 255 / 88%);
+    box-shadow: var(--golge-2);
+
+    /* display:none yerine görünürlük: kapalıyken tıklanamaz ve klavye
+       sırasından çıkar, ama açılışı hareketlendirilebilir. */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-4px);
+    transition: opacity var(--gecis), transform var(--gecis), visibility var(--gecis);
   }
-  .acilir.acik .acilir-liste { display: block; }
+
+  .acilir.acik .acilir-liste {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
 
   .acilir-liste a {
     display: block;
@@ -102,7 +122,7 @@
     color: var(--metin-2);
     font-size: var(--olcu-sm);
   }
-  .acilir-liste a:hover { background: var(--yuzey-2); color: var(--hu-kirmizi); }
+  .acilir-liste a:hover { background: rgb(255 255 255 / 75%); color: var(--hu-kirmizi); }
 
   /* ---------- dil seçimi ---------- */
 
