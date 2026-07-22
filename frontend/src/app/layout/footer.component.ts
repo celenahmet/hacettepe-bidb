@@ -1,7 +1,7 @@
 import { Component, Input, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { RouterLink } from '@angular/router';
-import { Language } from '../core/models';
+import { Language, Menu } from '../core/models';
 
 /** Alt bilgideki tek bir iletişim kaydı. */
 interface ContactChannel {
@@ -95,18 +95,16 @@ interface SocialAccount {
         </div>
 
         <!-- kurumsal -->
-        <nav class="alt-sutun" [attr.aria-label]="language === 'en' ? 'Corporate' : 'Kurumsal'">
-          <span class="alt-etiket">{{ language === 'en' ? 'Corporate' : 'Kurumsal' }}</span>
-          <ul>
-            <li><a [routerLink]="['/', language, 'overview']">{{ language === 'en' ? 'Overview' : 'Genel Tanıtım' }}</a></li>
-            <li><a [routerLink]="['/', language, 'org-chart']">{{ language === 'en' ? 'Organisation Chart' : 'Organizasyon Şeması' }}</a></li>
-            <li><a [routerLink]="['/', language, 'mission-vision']">{{ language === 'en' ? 'Mission and Vision' : 'Misyon ve Vizyon' }}</a></li>
-            @if (language === 'tr') {
-              <li><a routerLink="/tr/staff">Personel</a></li>
-              <li><a routerLink="/tr/security-policy">Bilgi Güvenliği Politikası</a></li>
-            }
-          </ul>
-        </nav>
+        @if (kurumsal(); as k) {
+          <nav class="alt-sutun" [attr.aria-label]="k.title">
+            <span class="alt-etiket">{{ k.title }}</span>
+            <ul>
+              @for (o of k.items; track o.url) {
+                <li><a [routerLink]="o.url">{{ o.label }}</a></li>
+              }
+            </ul>
+          </nav>
+        }
 
         <!-- servisler -->
         @if (language === 'tr') {
@@ -175,6 +173,12 @@ export class FooterComponent {
 
   protected readonly yil = new Date().getFullYear();
   protected kanallar = signal<ContactChannel[]>([]);
+
+  /* Kurumsal sütunu menü verisinden okunur. Önce elle yazılmış bir liste
+     vardı; İngilizce sürümde karşılığı olmayan sayfalara bağlanıyordu ve
+     bir sayfanın adresi değiştiğinde burası sessizce kırılıyordu. Üst
+     şerit de aynı kaynaktan besleniyor — iki yerde ayrı liste tutulmaz. */
+  protected kurumsal = signal<Menu | null>(null);
   protected sosyal = signal<SocialAccount[]>([]);
 
   ngOnInit(): void {
@@ -182,6 +186,8 @@ export class FooterComponent {
       .subscribe((l) => this.kanallar.set(l));
     this.http.get<SocialAccount[]>(`/api/${this.language}/social-accounts`)
       .subscribe((l) => this.sosyal.set(l));
+    this.http.get<Menu[]>(`/api/${this.language}/menus`)
+      .subscribe((l) => this.kurumsal.set(l.length ? l[0] : null));
   }
 
   protected tur(t: string): ContactChannel[] {

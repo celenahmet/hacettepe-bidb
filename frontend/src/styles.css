@@ -23,6 +23,7 @@
 @import "./styles/kutuk.css";
 @import "./styles/sema.css";
 @import "./styles/personel.css";
+@import "./styles/hero.css";
 @import "./styles/admin.css";
 
 @layer site {

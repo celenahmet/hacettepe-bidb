@@ -113,7 +113,7 @@ export class HeaderComponent {
 
     this.api.anaSayfa(this.language).subscribe((veri) => {
       this.servisler.set({
-        title: this.language === "en" ? "Services and Applications" : "Servis ve Uygulamalar",
+        title: this.language === "en" ? "Our Services" : "Hizmetlerimiz",
         items: veri.services.map((s) => ({ label: s.name, url: s.url, newTab: s.newTab }))
       });
     });

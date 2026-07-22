@@ -1,0 +1,166 @@
+import { Component, Input, OnDestroy, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { Language, Slide } from '../core/models';
+
+/**
+ * Ana sayfa görsel alanı.
+ *
+ * TASARIM KARARLARI
+ *
+ * Metin, görselin üstünde koyu bir geçiş katmanında yüzmüyor; kendi düz
+ * zeminli panelinde duruyor ve görselin üstüne biniyor. Geçiş katmanı
+ * (gradient scrim) yaygın bir çözüm ama fotoğrafı karartarak bozar ve
+ * metnin okunurluğu her görselde farklı çıkar. Düz panel her görselde aynı
+ * kontrastı verir ve mimari bir düzen kurar.
+ *
+ * Geçiş yalnızca sönümlemeyle yapılır, kaydırmayla değil. Kayan slaytlar
+ * gözü izlemeye zorlar; kurumsal bir sayfada gereksiz bir hareket.
+ *
+ * Göstergeler süslü noktalar değil, dolan çizgiler: kaç slayt olduğunu ve
+ * sıradakine ne kadar kaldığını gösterirler. Bilgi taşıdıkları için
+ * duruyorlar.
+ *
+ * ERİŞİLEBİLİRLİK
+ * - İmleç veya klavye odağı alan üzerindeyken dönme durur.
+ * - Sol/sağ ok tuşlarıyla gezinilir.
+ * - Hareket azaltma tercihi açıksa dönme hiç başlamaz (CSS'te geçiş de
+ *   kapanır); ziyaretçi slaytlar arasında kendisi geçer.
+ * - Etkin slaytın başlığı ekran okuyucuya bildirilir.
+ */
+@Component({
+  selector: 'bidb-hero-slider',
+  imports: [RouterLink],
+  template: `
+    @if (slaytlar.length) {
+      <section class="hero"
+               [attr.aria-label]="dilDegeri === 'en' ? 'Featured' : 'Öne çıkanlar'"
+               (mouseenter)="durdur()" (mouseleave)="basla()"
+               (focusin)="durdur()" (focusout)="basla()"
+               (keydown.arrowleft)="oncekiSlayt()" (keydown.arrowright)="sonrakiSlayt()"
+               tabindex="-1">
+
+        <div class="hero-govde">
+          <!-- görseller: hepsi basılır, yalnızca etkin olan görünür.
+               Böylece geçişte yeniden indirme olmaz. -->
+          <div class="hero-gorseller">
+            @for (s of slaytlar; track s.imageUrl; let i = $index) {
+              <img [class.etkin]="i === etkin()"
+                   [src]="s.imageUrl"
+                   [srcset]="darSurum(s.imageUrl) + ' 960w, ' + s.imageUrl + ' 1920w'"
+                   sizes="100vw"
+                   [alt]="i === etkin() ? (s.imageAlt ?? '') : ''"
+                   [attr.aria-hidden]="i === etkin() ? null : 'true'"
+                   [attr.loading]="i === 0 ? 'eager' : 'lazy'"
+                   [attr.fetchpriority]="i === 0 ? 'high' : null"
+                   width="1920" height="825">
+            }
+          </div>
+
+          <div class="kap hero-kap">
+            @if (gecerli(); as s) {
+              <div class="hero-panel">
+                <p class="hero-etiket">{{ dilDegeri === 'en' ? 'Our services' : 'Hizmetlerimiz' }}</p>
+                <h2 class="hero-baslik">{{ s.title }}</h2>
+                @if (s.subtitle) { <p class="hero-ozet">{{ s.subtitle }}</p> }
+                @if (s.linkUrl) {
+                  <a class="hero-baglanti" [routerLink]="s.linkUrl">
+                    {{ dilDegeri === 'en' ? 'Read more' : 'Ayrıntılar' }}
+                  </a>
+                }
+              </div>
+            }
+          </div>
+        </div>
+
+        <!-- denetimler -->
+        <div class="kap hero-denetim">
+          <button type="button" class="hero-ok" (click)="oncekiSlayt()"
+                  [attr.aria-label]="dilDegeri === 'en' ? 'Previous' : 'Önceki'">
+            <span aria-hidden="true">&#8592;</span>
+          </button>
+
+          <ol class="hero-izler">
+            @for (s of slaytlar; track s.imageUrl; let i = $index) {
+              <li>
+                <button type="button"
+                        [class.etkin]="i === etkin()"
+                        [class.gecmis]="i < etkin()"
+                        [attr.aria-current]="i === etkin() ? 'true' : null"
+                        (click)="gec(i)">
+                  <span class="hero-iz-dolgu" [style.animation-duration.ms]="SURE"></span>
+                  <span class="sr-only">{{ s.title }}</span>
+                </button>
+              </li>
+            }
+          </ol>
+
+          <button type="button" class="hero-ok" (click)="sonrakiSlayt()"
+                  [attr.aria-label]="dilDegeri === 'en' ? 'Next' : 'Sonraki'">
+            <span aria-hidden="true">&#8594;</span>
+          </button>
+        </div>
+
+        <p class="sr-only" aria-live="polite">{{ gecerli()?.title }}</p>
+      </section>
+    }
+  `
+})
+export class HeroSliderComponent implements OnDestroy {
+  @Input({ required: true }) dilDegeri!: Language;
+  @Input() slaytlar: Slide[] = [];
+
+  /** Slayt başına bekleme süresi. */
+  protected readonly SURE = 10000;
+
+  protected etkin = signal(0);
+  private sayac: ReturnType<typeof setInterval> | null = null;
+
+  ngOnInit(): void {
+    this.basla();
+  }
+
+  ngOnDestroy(): void {
+    this.durdur();
+  }
+
+  protected gecerli(): Slide | null {
+    return this.slaytlar[this.etkin()] ?? null;
+  }
+
+  /** 1920'lik adresten 960'lık sürümü türetir; ayrı bir alan tutmaya gerek yok. */
+  protected darSurum(adres: string): string {
+    return adres.replace('-1920.webp', '-960.webp');
+  }
+
+  protected basla(): void {
+    this.durdur();
+    if (this.slaytlar.length < 2) return;
+    // Sunucuda çalışırken zamanlayıcı kurulmaz; sunucu tarafı işleme
+    // zamanlayıcıyı bekleyip yanıtı geciktirir.
+    if (typeof window === 'undefined') return;
+    // Hareket azaltma tercihinde kendiliğinden dönmez.
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
+    this.sayac = setInterval(() => this.sonrakiSlayt(), this.SURE);
+  }
+
+  protected durdur(): void {
+    if (this.sayac !== null) {
+      clearInterval(this.sayac);
+      this.sayac = null;
+    }
+  }
+
+  protected sonrakiSlayt(): void {
+    this.etkin.update((i) => (i + 1) % this.slaytlar.length);
+  }
+
+  protected oncekiSlayt(): void {
+    this.etkin.update((i) => (i - 1 + this.slaytlar.length) % this.slaytlar.length);
+  }
+
+  /** Elle geçildiğinde sayaç sıfırlanır: yeni slayt hemen kaçmasın. */
+  protected gec(i: number): void {
+    this.etkin.set(i);
+    this.basla();
+  }
+}

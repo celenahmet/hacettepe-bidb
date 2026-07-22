@@ -7,28 +7,15 @@ import { Seo } from '../core/seo.service';
 import { Language } from '../core/models';
 import { RouterLink } from '@angular/router';
 import { SideMenuComponent } from '../layout/side-menu.component';
+import { HeroSliderComponent } from '../layout/hero-slider.component';
 
 /** Ana sayfa: slider, kısayollar, news ve services. */
 @Component({
   selector: 'bidb-home-page',
-  imports: [SideMenuComponent, AsyncPipe, DatePipe, RouterLink],
+  imports: [SideMenuComponent, HeroSliderComponent, AsyncPipe, DatePipe, RouterLink],
   template: `
     @if (veri$ | async; as v) {
-      <section class="slider" [attr.aria-label]="metin('Öne çıkanlar', 'Featured')">
-        @for (s of v.slider; track s.imageUrl; let sortOrder = $index) {
-          @if (sortOrder === 0) {
-            <div class="slayt" [style.background-image]="'url(' + s.imageUrl + ')'"
-                 role="img" [attr.aria-label]="s.imageAlt">
-              <div class="kap">
-                <div class="slayt-yazi">
-                  <div class="slayt-baslik">{{ s.title }}</div>
-                  @if (s.subtitle) { <div class="slayt-ozet">{{ s.subtitle }}</div> }
-                </div>
-              </div>
-            </div>
-          }
-        }
-      </section>
+      <bidb-hero-slider [dilDegeri]="language()" [slaytlar]="v.slider"></bidb-hero-slider>
 
       <div class="kap sayfa-duzen">
         <aside class="yan">

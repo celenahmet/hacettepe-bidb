@@ -1,0 +1,240 @@
+/* Ana sayfa görsel alanı.
+
+   Metin, fotoğrafın üstünde koyu bir geçiş katmanında yüzmüyor; düz zeminli
+   kendi panelinde duruyor ve fotoğrafın üstüne biniyor. Bunun iki nedeni var:
+   geçiş katmanı fotoğrafı karartarak bozar, ve okunurluk her fotoğrafta
+   farklı çıkar — açık gökyüzünde beyaz metin kaybolur. Düz panel her
+   fotoğrafta aynı kontrastı verir.
+
+   Panelin fotoğrafın üstüne binmesi, iki ayrı kutu yan yana durmasından
+   daha güçlü bir düzen kurar: katman hissi verir, hazır şablonlarda pek
+   görülmez ve moda bir efekte değil yerleşime dayandığı için eskimez.
+
+   Dar ekranda panel fotoğrafın altına iner. 390px'te fotoğrafın üstündeki
+   metin, hangi çözüm kullanılırsa kullanılsın okumayı zorlaştırır. */
+
+@layer kamu {
+
+  .hero {
+    position: relative;
+    background: var(--yuzey-2);
+    border-bottom: 1px solid var(--cizgi);
+    outline: 0;
+  }
+
+  .hero-govde {
+    position: relative;
+  }
+
+  /* ---- Fotoğraflar ------------------------------------------------- */
+
+  /* Sabit en-boy oranı: farklı oranlardaki fotoğraflar aynı çerçeveye
+     oturur, slayt değişince sayfa zıplamaz. */
+  .hero-gorseller {
+    position: relative;
+    aspect-ratio: 21 / 8;
+    max-height: 30rem;
+    overflow: hidden;
+    background: var(--yuzey-3);
+  }
+
+  .hero-gorseller img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 700ms ease;
+  }
+
+  .hero-gorseller img.etkin { opacity: 1; }
+
+  /* ---- Metin paneli -------------------------------------------------- */
+
+  .hero-kap {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    pointer-events: none;      /* panel dışında fotoğraf tıklanabilir kalsın */
+  }
+
+  .hero-panel {
+    pointer-events: auto;
+    max-width: 34rem;
+    margin-bottom: calc(-1 * var(--bosluk-6));   /* alt şeride biner */
+    padding: var(--bosluk-6);
+    background: var(--yuzey);
+    border-top: 3px solid var(--hu-kirmizi);
+    box-shadow: var(--golge-2);
+  }
+
+  .hero-etiket {
+    margin: 0 0 var(--bosluk-2);
+    font-size: var(--olcu-xs);
+    font-weight: var(--kalinlik-orta);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--metin-3);
+  }
+
+  .hero-baslik {
+    margin: 0;
+    font-size: var(--olcu-2xl);
+    font-weight: var(--kalinlik-kalin);
+    line-height: var(--satir-sik);
+    color: var(--hu-lacivert);
+  }
+
+  .hero-ozet {
+    margin: var(--bosluk-3) 0 0;
+    font-size: var(--olcu-sm);
+    line-height: var(--satir-normal);
+    color: var(--metin-2);
+  }
+
+  .hero-baglanti {
+    display: inline-block;
+    margin-top: var(--bosluk-4);
+    font-size: var(--olcu-sm);
+    font-weight: var(--kalinlik-orta);
+    color: var(--hu-kirmizi);
+  }
+
+  .hero-baglanti::after {
+    content: " →";
+    /* Ok, bağlantının devam ettiğini gösterir; imleç üstündeyken bir adım
+       ilerler — hareket küçük ve amaçlı. */
+    display: inline-block;
+    transition: transform var(--gecis);
+  }
+
+  .hero-baglanti:hover::after { transform: translateX(3px); }
+
+  /* ---- Denetimler ---------------------------------------------------- */
+
+  .hero-denetim {
+    display: flex;
+    align-items: center;
+    gap: var(--bosluk-4);
+    padding-top: var(--bosluk-5);
+    padding-bottom: var(--bosluk-4);
+    /* Panel aşağı bindiği için denetimler sağa yaslanır; sol taraf paneline
+       kalır. */
+    justify-content: flex-end;
+  }
+
+  .hero-ok {
+    flex: none;
+    width: 2.25rem;
+    height: 2.25rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--cizgi-koyu);
+    border-radius: var(--kose-sm);
+    background: var(--yuzey);
+    color: var(--metin-2);
+    font-size: var(--olcu-md);
+    cursor: pointer;
+    transition: border-color var(--gecis), color var(--gecis);
+  }
+
+  .hero-ok:hover {
+    border-color: var(--hu-kirmizi);
+    color: var(--hu-kirmizi);
+  }
+
+  /* Göstergeler: nokta değil çizgi. Etkin olan süre boyunca dolar, yani
+     "sıradakine ne kadar kaldı" sorusunu yanıtlar. Nokta bunu yapamaz. */
+  .hero-izler {
+    display: flex;
+    align-items: center;
+    gap: var(--bosluk-2);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .hero-izler button {
+    display: block;
+    position: relative;
+    width: 2.5rem;
+    height: 3px;
+    padding: 0;
+    border: 0;
+    background: var(--cizgi-koyu);
+    cursor: pointer;
+    overflow: hidden;
+  }
+
+  /* Görülen çizgi ince ama tıklama alanı parmak için yeterli olmalı. */
+  .hero-izler button::before {
+    content: "";
+    position: absolute;
+    inset: -10px -2px;
+  }
+
+  .hero-izler button.gecmis { background: var(--metin-3); }
+
+  .hero-iz-dolgu {
+    position: absolute;
+    inset: 0;
+    transform-origin: left;
+    transform: scaleX(0);
+    background: var(--hu-kirmizi);
+  }
+
+  .hero-izler button.etkin .hero-iz-dolgu {
+    animation-name: hero-dolum;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+  }
+
+  @keyframes hero-dolum {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+  }
+
+  /* ---- Dar ekran ------------------------------------------------------ */
+
+  /* Panel fotoğrafın altına iner. Fotoğrafın üstündeki metin bu genişlikte
+     hangi çözümle olursa olsun okumayı zorlaştırır. */
+  @media (max-width: 56rem) {
+    .hero-gorseller { aspect-ratio: 16 / 9; }
+
+    .hero-kap {
+      position: static;
+      display: block;
+    }
+
+    .hero-panel {
+      max-width: none;
+      margin: 0;
+      padding: var(--bosluk-5) 0;
+      border-top: 0;
+      box-shadow: none;
+      background: transparent;
+    }
+
+    .hero-baslik { font-size: var(--olcu-xl); }
+
+    .hero-denetim {
+      justify-content: space-between;
+      padding-top: 0;
+      padding-bottom: var(--bosluk-5);
+    }
+  }
+
+  /* ---- Hareket azaltma ------------------------------------------------- */
+
+  /* Kendiliğinden dönme bileşende zaten kapanıyor; burada sönümleme ve
+     dolum çubuğu da durur. Dolum çubuğu dolmayınca yanıltıcı olmasın diye
+     etkin gösterge düz renkle işaretlenir. */
+  @media (prefers-reduced-motion: reduce) {
+    .hero-gorseller img { transition: none; }
+    .hero-izler button.etkin .hero-iz-dolgu { animation: none; transform: scaleX(1); }
+    .hero-baglanti::after { transition: none; }
+  }
+}
