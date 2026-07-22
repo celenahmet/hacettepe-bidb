@@ -1,0 +1,94 @@
+/* Veri tabloları.
+
+   Aktarılan içerikte iki farklı tablo kalıbı var:
+
+   A) Başlıklı tablo — <thead> içinde tek bir birleştirilmiş hücre tablonun
+      ADINI taşır ("Hacettepe Üniversitesi Wan / Extranet Bağlantıları"),
+      sütun adları ise <tbody>'nin ilk satırındadır. HTML açısından yanlış
+      bir kurgu ama içerik değiştirilmiyor; burada sunum düzeltiliyor.
+
+   B) Düz liste tablosu — başlığı olmayan, ad/görev/e-posta üçlüsü gibi.
+
+   İkisini ayırmak için :has() kullanılıyor: "thead'inde birleştirilmiş
+   hücre bulunan tablo" kalıbı A'yı kesin olarak tanımlar. Sınıf eklemek
+   içeriğe dokunmayı gerektirirdi.
+
+   Tablo adı bir başlık gibi davranır: kırmızı çizginin üstünde, lacivert
+   ve büyükçe. Sütun adları ise küçük, boşluklu büyük harf — tablonun
+   içinde bir bilgi değil, okuma anahtarıdır. Bu ikisini aynı ağırlıkta
+   yazmak, tablonun neyi listelediğini görünmez kılıyordu. */
+
+@layer kamu {
+
+  .icerik table {
+    margin: var(--bosluk-6) 0;
+  }
+
+  /* ---- A) Adı olan tablolar ------------------------------------------ */
+
+  /* Ad satırı: hücre değil başlık gibi görünür. */
+  .icerik table:has(thead th[colspan]) thead th {
+    padding: 0 0 var(--bosluk-3);
+    border: 0;
+    border-bottom: 2px solid var(--hu-kirmizi);
+    background: none;
+    font-size: var(--olcu-lg);
+    font-weight: var(--kalinlik-kalin);
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--hu-lacivert);
+  }
+
+  .icerik table:has(thead th[colspan]) thead th strong { font-weight: inherit; }
+
+  /* Gövdenin ilk satırı gerçekte sütun adlarıdır. */
+  .icerik table:has(thead th[colspan]) tbody tr:first-child td {
+    padding-top: var(--bosluk-4);
+    padding-bottom: var(--bosluk-2);
+    border-bottom: 1px solid var(--cizgi-koyu);
+    font-size: var(--olcu-xs);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--metin-3);
+  }
+
+  /* İlk sütunu öne çıkaran genel kural bu satırda geçerli olmamalı:
+     sütun adı bir veri değil. */
+  .icerik table:has(thead th[colspan]) tbody tr:first-child td:first-child {
+    font-weight: 700;
+    color: var(--metin-3);
+  }
+
+  /* ---- Satırlar -------------------------------------------------------- */
+
+  .icerik table td {
+    padding: var(--bosluk-3) var(--bosluk-4) var(--bosluk-3) 0;
+    line-height: var(--satir-normal);
+  }
+
+  /* Satır vurgusu: uzun listelerde göz satırı kaybetmesin. Zebra deseni
+     yerine imleçle vurgu — desen, okunmayan bir gürültü katmanı ekler. */
+  .icerik table tbody tr:hover td { background: var(--yuzey-2); }
+
+  .icerik table:has(thead th[colspan]) tbody tr:first-child:hover td {
+    background: none;
+  }
+
+  /* Son satırın alt çizgisi tabloyu kapatır; ayrıca dış çerçeveye gerek
+     kalmaz. */
+  .icerik table tbody tr:last-child td { border-bottom: 1px solid var(--cizgi-koyu); }
+
+  /* İkinci sütun genelde niteliktir (bağlantı tipi, görev, e-posta):
+     satırın konusundan bir tık geride durur. */
+  .icerik table:has(thead th[colspan]) tbody td:last-child {
+    color: var(--metin-2);
+  }
+
+  /* ---- Dar ekran -------------------------------------------------------- */
+
+  @media (max-width: 40rem) {
+    .icerik table:has(thead th[colspan]) thead th { font-size: var(--olcu-md); }
+    .icerik table td { padding-right: var(--bosluk-3); }
+  }
+}
