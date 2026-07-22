@@ -11,7 +11,7 @@ import { Language } from '../core/models';
   template: `
     <nav class="sol-menu" [attr.aria-label]="language === 'en' ? 'Section menu' : 'Bölüm menüsü'">
       <a class="sol-menu-ana" [routerLink]="['/', language]">
-        {{ language === 'en' ? 'Home Page' : 'Ana Page' }}
+        {{ language === 'en' ? 'Home Page' : 'Ana Sayfa' }}
       </a>
 
       @for (m of menus$ | async; track m.title) {

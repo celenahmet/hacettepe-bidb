@@ -37,7 +37,7 @@ import { AdminDocument, AdminPage, Revision, AdminApiService } from './admin-api
           Her kayıtta önceki hâl sürüm geçmişine eklenir.
         </p>
 
-        <label for="metin">Page metni</label>
+        <label for="metin">Sayfa metni</label>
         <textarea id="metin" name="metin" rows="18" class="kod"
                   [ngModel]="metin()" (ngModelChange)="metin.set($event)"></textarea>
 
@@ -58,7 +58,7 @@ import { AdminDocument, AdminPage, Revision, AdminApiService } from './admin-api
           </section>
         }
       } @else if (bolum() === 'url') {
-        <label for="sbaslik2">Page başlığı</label>
+        <label for="sbaslik2">Sayfa başlığı</label>
         <input id="sbaslik2" name="sbaslik2" [ngModel]="yeniBaslik()" (ngModelChange)="yeniBaslik.set($event)">
 
         <label for="sslug">Adres</label>
@@ -99,7 +99,7 @@ import { AdminDocument, AdminPage, Revision, AdminApiService } from './admin-api
           </tbody>
         </table>
 
-        <button type="button" (click)="belgeEkle()">Document satırı ekle</button>
+        <button type="button" (click)="belgeEkle()">Belge satırı ekle</button>
       } @else {
         <p class="aciklama">
           En üstteki en yeni kayıttır. Bir sürüme dönmeden önce mevcut hâl de
@@ -199,7 +199,7 @@ export class PageEditorComponent {
       next: () => {
         this.onizlendi.set(false);
         this.not.set('');
-        this.bildir('Page yayınlandı. Önceki hâli sürüm geçmişinde.');
+        this.bildir('Sayfa yayınlandı. Önceki hâli sürüm geçmişinde.');
         this.degisti.emit();
       },
       error: () => this.bildir('Kaydedilemedi.')
@@ -218,7 +218,7 @@ export class PageEditorComponent {
   protected deletePage(): void {
     if (!confirm(`"${this.sayfa().title}" sayfası silinecek. Emin misiniz?`)) return;
     this.api.deletePage(this.sayfa().id).subscribe({
-      next: () => { this.bildir('Page silindi.'); this.degisti.emit(); this.kapat.emit(); },
+      next: () => { this.bildir('Sayfa silindi.'); this.degisti.emit(); this.kapat.emit(); },
       error: () => this.bildir('Silinemedi.')
     });
   }
@@ -240,7 +240,7 @@ export class PageEditorComponent {
 
   protected saveDocument(b: AdminDocument): void {
     this.api.saveDocument(this.sayfa().id, b).subscribe({
-      next: () => { this.bildir('Document kaydedildi.'); this.belgeBolumu(); },
+      next: () => { this.bildir('Belge kaydedildi.'); this.belgeBolumu(); },
       error: () => this.bildir('Kaydedilemedi.')
     });
   }
@@ -248,7 +248,7 @@ export class PageEditorComponent {
   protected deleteDocument(b: AdminDocument): void {
     if (!b.id) { this.documents.update((l) => l.filter((x) => x !== b)); return; }
     this.api.deleteDocument(b.id).subscribe({
-      next: () => { this.documents.update((l) => l.filter((x) => x !== b)); this.bildir('Document silindi.'); },
+      next: () => { this.documents.update((l) => l.filter((x) => x !== b)); this.bildir('Belge silindi.'); },
       error: () => this.bildir('Silinemedi.')
     });
   }
@@ -281,10 +281,10 @@ export class PageEditorComponent {
   }
 
   protected restoreRevision(s: Revision): void {
-    if (!confirm('Page bu sürüme döndürülecek. Mevcut hâli yine de saklanacak. Devam edilsin mi?')) return;
+    if (!confirm('Sayfa bu sürüme döndürülecek. Mevcut hâli yine de saklanacak. Devam edilsin mi?')) return;
     this.api.restoreRevision(this.sayfa().id, s.id).subscribe({
       next: () => {
-        this.bildir('Page bu sürüme döndürüldü.');
+        this.bildir('Sayfa bu sürüme döndürüldü.');
         this.api.fullPage(this.sayfa().language, this.sayfa().slug)
           .subscribe((tam) => this.metin.set(tam?.contentHtml ?? ''));
         this.surumBolumu();

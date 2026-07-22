@@ -38,7 +38,7 @@ import { SideMenuComponent } from '../layout/side-menu.component';
             </section>
           }
         } @else {
-          <h1 class="sayfa-baslik">{{ language() === 'en' ? 'Page not found' : 'Page bulunamadı' }}</h1>
+          <h1 class="sayfa-baslik">{{ language() === 'en' ? 'Page not found' : 'Sayfa bulunamadı' }}</h1>
           <p>{{ language() === 'en' ? 'The address may have changed or the page may have been removed.' : 'Adres değişmiş veya sayfa kaldırılmış olabilir.' }}</p>
         }
       </main>

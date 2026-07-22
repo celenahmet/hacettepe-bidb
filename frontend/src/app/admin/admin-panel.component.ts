@@ -93,7 +93,7 @@ interface ContactInfo extends Record<string, string> {
               <input id="ysslug" name="ysslug" [ngModel]="ys.slug"
                      (ngModelChange)="yeniSayfaAlan('slug', $event)" required>
               <p class="aciklama">
-                Page adresi: <code>{{ SITE }}/{{ ys.language }}/{{ adresOnizleme(ys.slug) }}</code>
+                Sayfa adresi: <code>{{ SITE }}/{{ ys.language }}/{{ adresOnizleme(ys.slug) }}</code>
               </p>
 
               <span class="dugmeler">
@@ -281,7 +281,7 @@ interface ContactInfo extends Record<string, string> {
 
           @if (slideItem(); as sl) {
             <form class="duyuru-form" (ngSubmit)="saveSlide()">
-              <h2>{{ sl.id ? 'Slideı düzenle' : 'Yeni slideItem' }}</h2>
+              <h2>{{ sl.id ? 'Slaytı düzenle' : 'Yeni slideItem' }}</h2>
               <label for="sbaslik">Başlık</label>
               <input id="sbaslik" name="sbaslik" [ngModel]="sl.title" (ngModelChange)="slaytAlan('title', $event)">
               <label for="sgorsel">Görsel adresi</label>
@@ -337,7 +337,7 @@ interface ContactInfo extends Record<string, string> {
               <label for="metiket">Etiket</label>
               <input id="metiket" name="metiket" [ngModel]="md.oge.label" (ngModelChange)="ogeAlan('label', $event)" required>
 
-              <label for="msayfa">Page (iç bağlantı)</label>
+              <label for="msayfa">Sayfa (iç bağlantı)</label>
               <select id="msayfa" name="msayfa" [ngModel]="md.oge.pageId" (ngModelChange)="ogeAlan('pageId', $event ? +$event : null)">
                 <option [value]="null">— dış bağlantı kullan —</option>
                 @for (sf of pages(); track sf.id) {
@@ -714,15 +714,15 @@ export class AdminPanelComponent {
     const s = this.slideItem();
     if (!s) return;
     this.api.saveSlide(s).subscribe({
-      next: () => { this.slideItem.set(null); this.sekmeSlider(); this.mesaj('Slide kaydedildi.'); },
-      error: () => this.mesaj('Slide kaydedilemedi.')
+      next: () => { this.slideItem.set(null); this.sekmeSlider(); this.mesaj('Slayt kaydedildi.'); },
+      error: () => this.mesaj('Slayt kaydedilemedi.')
     });
   }
 
   protected deleteSlide(s: Slide): void {
     if (!s.id) return;
     this.api.deleteSlide(s.id).subscribe({
-      next: () => { this.slides.update((l) => l.filter((x) => x.id !== s.id)); this.mesaj('Slide silindi.'); },
+      next: () => { this.slides.update((l) => l.filter((x) => x.id !== s.id)); this.mesaj('Slayt silindi.'); },
       error: () => this.mesaj('Silinemedi.')
     });
   }
@@ -881,7 +881,7 @@ export class AdminPanelComponent {
             this.secili.set({ ...yeni });
           }
         });
-        this.mesaj('Page oluşturuldu. Metnini ve arama motoru bilgilerini şimdi girebilirsiniz.');
+        this.mesaj('Sayfa oluşturuldu. Metnini ve arama motoru bilgilerini şimdi girebilirsiniz.');
       },
       error: (e) => this.mesaj(typeof e?.error === 'string' ? e.error : 'Oluşturulamadı.')
     });

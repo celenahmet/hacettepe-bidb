@@ -53,7 +53,7 @@ interface Haber {
             }
           </article>
         } @else {
-          <h1 class="sayfa-baslik">{{ language() === 'en' ? 'Page not found' : 'Page bulunamadı' }}</h1>
+          <h1 class="sayfa-baslik">{{ language() === 'en' ? 'Page not found' : 'Sayfa bulunamadı' }}</h1>
           <p><a [routerLink]="['/', language()]">{{ language() === 'en' ? 'Home page' : 'Ana sayfa' }}</a></p>
         }
       </div>
