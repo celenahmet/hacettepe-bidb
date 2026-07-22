@@ -1,11 +1,16 @@
-/* Sık Sorulan Sorular — arama, kategori süzgeci, açılır sorular.
+/* Sık Sorulan Sorular — arama, kategori süzgeci, açılır kartlar.
 
    Kaynak bir Bootstrap akordeonuydu ama açan JavaScript yüklenmediği için
    bütün cevaplar açık duruyordu. Şimdi her soru kendi details/summary
    ögesinde: yerel, JavaScript'siz, klavye ve ekran okuyucuyla uyumlu.
 
-   Tasarım sayfanın geri kalanıyla aynı dili konuşur: kutu ve gölge yok,
-   ayrımlar ince çizgiyle, kırmızı yalnızca açık sorunun işareti. */
+   ── FERAHLIK ──────────────────────────────────────────────────────────
+
+   Sorular önce sık, iç içe geçmiş satırlardı. Şimdi her biri ayrı bir
+   kart: aralarında boşluk, yumuşatılmış köşe, ince çerçeve. Kalabalık bir
+   listede gözün bir soruyu diğerinden ayırması için ayrım çizgisi değil
+   boşluk kullanılıyor. Soru metni ağır lacivert-kalın değil, sakin bir
+   koyulukta; kart açılınca kırmızıya döner. */
 
 @layer kamu {
 
@@ -14,22 +19,14 @@
   /* ---- Arama ve süzgeç ------------------------------------------------ */
 
   .sss-arac {
-    position: sticky;
-    top: 0;
-    z-index: 3;
     display: flex;
-    flex-wrap: wrap;
-    gap: var(--bosluk-3) var(--bosluk-5);
-    align-items: center;
-    padding: var(--bosluk-4) 0;
-    margin-bottom: var(--bosluk-4);
-    background: var(--yuzey);
-    border-bottom: 1px solid var(--cizgi);
+    flex-direction: column;
+    gap: var(--bosluk-4);
+    margin-bottom: var(--bosluk-6);
   }
 
   .sss-arama {
     position: relative;
-    flex: 1 1 18rem;
     display: flex;
     align-items: center;
   }
@@ -43,9 +40,9 @@
 
   .sss-arama input {
     width: 100%;
-    padding: 0.7rem var(--bosluk-6) 0.7rem calc(var(--bosluk-6) + var(--bosluk-3));
+    padding: 0.85rem var(--bosluk-6) 0.85rem calc(var(--bosluk-6) + var(--bosluk-3));
     border: 1px solid var(--cizgi-koyu);
-    border-radius: var(--kose-md);
+    border-radius: var(--kose-lg);
     font: inherit;
     font-size: var(--olcu-md);
     color: var(--metin);
@@ -62,8 +59,8 @@
   .sss-temizle {
     position: absolute;
     right: var(--bosluk-3);
-    width: 1.75rem;
-    height: 1.75rem;
+    width: 1.9rem;
+    height: 1.9rem;
     border: 0;
     border-radius: var(--kose-tam);
     background: var(--yuzey-3);
@@ -74,7 +71,7 @@
   }
   .sss-temizle:hover { background: var(--cizgi-koyu); color: var(--metin); }
 
-  /* Kategori süzgeci: sekmeye benzer düğmeler. Etkin olan kırmızı zeminli. */
+  /* Kategori süzgeci: sekme benzeri düğmeler, her birinde soru sayısı. */
   .sss-suzgec {
     display: flex;
     flex-wrap: wrap;
@@ -82,7 +79,10 @@
   }
 
   .sss-suzgec button {
-    padding: 0.4rem 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--bosluk-2);
+    padding: 0.45rem 0.9rem;
     border: 1px solid var(--cizgi-koyu);
     border-radius: var(--kose-tam);
     background: var(--yuzey);
@@ -101,65 +101,115 @@
     color: #fff;
   }
 
+  /* Sayaç rozeti: düğmenin içinde küçük bir sayı. */
+  .sss-say {
+    min-width: 1.4rem;
+    padding: 1px 6px;
+    border-radius: var(--kose-tam);
+    background: var(--yuzey-3);
+    font-size: var(--olcu-xs);
+    font-weight: var(--kalinlik-orta);
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+    color: var(--metin-3);
+  }
+  .sss-suzgec button.etkin .sss-say { background: rgb(255 255 255 / 22%); color: #fff; }
+
   /* ---- Bölüm başlığı -------------------------------------------------- */
 
-  .sss-bolum + .sss-bolum { margin-top: var(--bosluk-6); }
+  .sss-bolum + .sss-bolum { margin-top: var(--bosluk-7); }
 
   .sss-baslik {
-    margin: 0 0 var(--bosluk-3);
+    margin: 0 0 var(--bosluk-4);
     padding: 0 0 0 var(--bosluk-4);
     border-left: 3px solid var(--hu-kirmizi);
     font-size: var(--olcu-lg);
     font-weight: var(--kalinlik-kalin);
+    letter-spacing: -0.01em;
     color: var(--hu-lacivert);
   }
 
-  /* ---- Soru (details/summary) ---------------------------------------- */
+  /* ---- Soru kartı (details/summary) ---------------------------------- */
 
   .sss-oge {
-    border-bottom: 1px solid var(--cizgi);
+    border: 1px solid var(--cizgi);
+    border-radius: var(--kose-lg);
+    background: var(--yuzey);
+    overflow: hidden;
+    transition: border-color var(--gecis), box-shadow var(--gecis);
+  }
+
+  .sss-oge + .sss-oge { margin-top: var(--bosluk-3); }
+
+  .sss-oge:hover { border-color: var(--cizgi-koyu); }
+
+  .sss-oge[open] {
+    border-color: var(--cizgi-koyu);
+    box-shadow: var(--golge-1);
   }
 
   .sss-oge > summary {
     display: flex;
     align-items: center;
-    gap: var(--bosluk-3);
-    padding: var(--bosluk-4) 2rem var(--bosluk-4) 0;
+    gap: var(--bosluk-4);
+    padding: var(--bosluk-4) var(--bosluk-5);
     position: relative;
     list-style: none;
     cursor: pointer;
     font-size: var(--olcu-md);
     font-weight: var(--kalinlik-orta);
-    line-height: 1.4;
+    line-height: 1.45;
     color: var(--metin);
     transition: color var(--gecis-hizli);
   }
 
   .sss-oge > summary::-webkit-details-marker { display: none; }
   .sss-oge > summary:hover { color: var(--hu-kirmizi); }
-
-  /* Artı/eksi işareti: iki çizgi, açılınca biri kaybolur. */
-  .sss-oge > summary::before,
-  .sss-oge > summary::after {
-    content: "";
-    position: absolute;
-    right: 4px;
-    top: 50%;
-    width: 13px;
-    height: 2px;
-    background: var(--metin-3);
-    transition: transform var(--gecis), background var(--gecis);
-  }
-  .sss-oge > summary::after { transform: rotate(90deg); }
-  .sss-oge[open] > summary::before { background: var(--hu-kirmizi); }
-  .sss-oge[open] > summary::after { transform: rotate(0); opacity: 0; }
   .sss-oge[open] > summary { color: var(--hu-kirmizi); font-weight: var(--kalinlik-kalin); }
 
+  /* Yuvarlak +/− düğmesi sağda: soru metnini itmez, sabit ölçüde durur. */
+  .sss-isaret {
+    flex: none;
+    margin-left: auto;
+    width: 1.85rem;
+    height: 1.85rem;
+    position: relative;
+    border-radius: var(--kose-tam);
+    background: var(--yuzey-2);
+    transition: background var(--gecis);
+  }
+
+  .sss-oge[open] .sss-isaret { background: var(--hu-kirmizi); }
+
+  .sss-isaret::before,
+  .sss-isaret::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 11px;
+    height: 2px;
+    transform: translate(-50%, -50%);
+    background: var(--metin-2);
+    transition: transform var(--gecis), background var(--gecis), opacity var(--gecis);
+  }
+  .sss-isaret::after { transform: translate(-50%, -50%) rotate(90deg); }
+  .sss-oge[open] .sss-isaret::before { background: #fff; }
+  .sss-oge[open] .sss-isaret::after { transform: translate(-50%, -50%) rotate(0); opacity: 0; }
+
   .sss-cevap {
-    padding: 0 2rem var(--bosluk-5) 0;
+    padding: 0 var(--bosluk-5) var(--bosluk-5);
     font-size: var(--olcu-sm);
     line-height: var(--satir-genis);
     color: var(--metin-2);
+  }
+
+  /* Cevabın üstünde soruyla arasını ayıran ince bir çizgi: soru ile cevap
+     aynı kart içinde ama ayrı bilgiler. */
+  .sss-cevap {
+    margin-top: 0;
+    border-top: 1px solid var(--cizgi);
+    padding-top: var(--bosluk-4);
   }
 
   .sss-cevap a { color: var(--hu-kirmizi); }
@@ -168,14 +218,16 @@
   .sss-cevap ul { margin: var(--bosluk-2) 0; padding-left: var(--bosluk-5); }
   .sss-cevap li { margin-bottom: var(--bosluk-1); }
   .sss-cevap p { margin: 0 0 var(--bosluk-2); }
+  .sss-cevap p:last-child { margin-bottom: 0; }
 
   .sss-bos {
-    padding: var(--bosluk-6) 0;
+    padding: var(--bosluk-7) 0;
+    text-align: center;
     color: var(--metin-2);
   }
 
   @media (max-width: 40rem) {
-    .sss-arac { position: static; }
-    .sss-arama { flex-basis: 100%; }
+    .sss-oge > summary { padding: var(--bosluk-4); font-size: var(--olcu-sm); }
+    .sss-cevap { padding-left: var(--bosluk-4); padding-right: var(--bosluk-4); }
   }
 }

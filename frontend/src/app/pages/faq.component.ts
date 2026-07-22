@@ -58,10 +58,14 @@ interface Kategori {
             <button type="button" [class.etkin]="etkinKategori() === null"
                     (click)="etkinKategori.set(null)">
               {{ dilDegeri === 'en' ? 'All' : 'Tümü' }}
+              <span class="sss-say">{{ toplamSoru() }}</span>
             </button>
             @for (k of kategoriler(); track k.ad) {
               <button type="button" [class.etkin]="etkinKategori() === k.ad"
-                      (click)="etkinKategori.set(k.ad)">{{ k.ad }}</button>
+                      (click)="etkinKategori.set(k.ad)">
+                {{ k.ad }}
+                <span class="sss-say">{{ k.sorular.length }}</span>
+              </button>
             }
           </div>
         }
@@ -73,7 +77,10 @@ interface Kategori {
             @if (k.ad) { <h2 class="sss-baslik">{{ k.ad }}</h2> }
             @for (s of k.sorular; track s.soru) {
               <details class="sss-oge" [open]="sorgu().length > 0">
-                <summary>{{ s.soru }}</summary>
+                <summary>
+                  <span>{{ s.soru }}</span>
+                  <span class="sss-isaret" aria-hidden="true"></span>
+                </summary>
                 <div class="sss-cevap" [innerHTML]="guvenli(s.cevapHtml)"></div>
               </details>
             }
@@ -102,6 +109,10 @@ export class FaqComponent {
 
   protected sorgu = signal('');
   protected etkinKategori = signal<string | null>(null);
+
+  /** "Tümü" düğmesindeki sayaç için toplam soru sayısı. */
+  protected toplamSoru = computed(() =>
+    this._kategoriler().reduce((t, k) => t + k.sorular.length, 0));
 
   /** Arama + kategoriyle süzülmüş sonuç. */
   protected sonuc = computed<Kategori[]>(() => {
