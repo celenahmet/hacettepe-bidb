@@ -2,7 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { PageEditorComponent } from './page-editor.component';
-import { AdminNews, Shortcut, AdminMenuItem, AdminMenu, AdminPage, Slide, AdminSocialAccount, AdminApiService } from './admin-api.service';
+import { AdminNews, Shortcut, AdminMenuItem, AdminMenu, AdminPage, Slide, AdminSocialAccount, AdminApiService, ContactChannel } from './admin-api.service';
 
 /** Alt bilgide görünen kurum bilgileri. */
 interface ContactInfo extends Record<string, string> {
@@ -419,29 +419,68 @@ interface ContactInfo extends Record<string, string> {
           </table>
         } @else if (sekme() === 'iletisim') {
           <p class="aciklama">
-            Page altında görünen kurum bilgileri. Birden çok telefon veya
-            e-posta için aralarına " · " koyabilirsiniz.
+            Alt bilgide görünen kurum bilgileri. Her telefon ve e-posta ayrı
+            bir kayıttır; sıra numarası görüntüleme sırasını belirler.
           </p>
 
-          <form class="duyuru-form" (ngSubmit)="iletisimKaydet()">
-            <label for="iadres">Adres</label>
-            <input id="iadres" name="iadres" [ngModel]="iletisim().iletisim_adres"
-                   (ngModelChange)="iletisimAlan('iletisim_adres', $event)">
+          <button type="button" (click)="kanalDuzenle(null)">Yeni kayıt</button>
 
-            <label for="itel">Telefon</label>
-            <input id="itel" name="itel" [ngModel]="iletisim().iletisim_telefon"
-                   (ngModelChange)="iletisimAlan('iletisim_telefon', $event)">
+          @if (kanal(); as k) {
+            <form class="duyuru-form" (ngSubmit)="kanalKaydet()">
+              <h2>{{ k.id ? 'Kaydı düzenle' : 'Yeni kayıt' }}</h2>
 
-            <label for="ieposta">E-posta</label>
-            <input id="ieposta" name="ieposta" [ngModel]="iletisim().iletisim_eposta"
-                   (ngModelChange)="iletisimAlan('iletisim_eposta', $event)">
+              <label for="ktur">Tür</label>
+              <select id="ktur" name="ktur" [ngModel]="k.type" (ngModelChange)="kanalAlan('type', $event)">
+                <option value="address">Adres</option>
+                <option value="phone">Telefon</option>
+                <option value="email">E-posta</option>
+                <option value="fax">Faks</option>
+              </select>
 
-            <label for="ifaks">Faks</label>
-            <input id="ifaks" name="ifaks" [ngModel]="iletisim().iletisim_faks"
-                   (ngModelChange)="iletisimAlan('iletisim_faks', $event)">
+              <label for="kdeger">Değer</label>
+              <input id="kdeger" name="kdeger" [ngModel]="k.value"
+                     (ngModelChange)="kanalAlan('value', $event)" required>
 
-            <span class="dugmeler"><button type="submit">Kaydet</button></span>
-          </form>
+              <label for="ketiket">Etiket (isteğe bağlı)</label>
+              <input id="ketiket" name="ketiket" [ngModel]="k.label"
+                     (ngModelChange)="kanalAlan('label', $event)"
+                     placeholder="örn. Daire Başkanlığı">
+
+              <label for="ksira">Sıra</label>
+              <input id="ksira" name="ksira" type="number" [ngModel]="k.sortOrder"
+                     (ngModelChange)="kanalAlan('sortOrder', +$event)">
+
+              <label for="kdil">Dil</label>
+              <select id="kdil" name="kdil" [ngModel]="k.language" (ngModelChange)="kanalAlan('language', $event)">
+                <option value="tr">Türkçe</option>
+                <option value="en">İngilizce</option>
+              </select>
+
+              <span class="dugmeler">
+                <button type="submit">Kaydet</button>
+                <button type="button" class="ikincil" (click)="kanal.set(null)">Vazgeç</button>
+              </span>
+            </form>
+          }
+
+          <table class="yonetim-tablo">
+            <thead><tr><th>Tür</th><th>Sıra</th><th>Değer</th><th>Etiket</th><th>Dil</th><th></th></tr></thead>
+            <tbody>
+              @for (k of kanallar(); track k.id) {
+                <tr>
+                  <td>{{ turAdi(k.type) }}</td>
+                  <td>{{ k.sortOrder }}</td>
+                  <td>{{ k.value }}</td>
+                  <td><small>{{ k.label || '—' }}</small></td>
+                  <td>{{ k.language }}</td>
+                  <td>
+                    <button type="button" class="ikincil" (click)="kanalDuzenle(k)">Düzenle</button>
+                    <button type="button" class="tehlike" (click)="kanalSil(k)">Sil</button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
 
         } @else {
           <button type="button" (click)="kisayolDuzenle(null)">Yeni kısayol</button>
@@ -515,6 +554,8 @@ export class AdminPanelComponent {
   protected socialAccount = signal<AdminSocialAccount | null>(null);
   protected acikSayfa = signal<AdminPage | null>(null);
   protected gorselYukleniyor = signal(false);
+  protected kanallar = signal<ContactChannel[]>([]);
+  protected kanal = signal<ContactChannel | null>(null);
 
   /** Adres önizlemelerinde gösterilen site adresi. */
   protected readonly SITE = 'bidb.hacettepe.edu.tr';
@@ -846,28 +887,41 @@ export class AdminPanelComponent {
 
   protected sekmeIletisim(): void {
     this.sekme.set('iletisim');
-    this.api.settings().subscribe((l) => {
-      const m = { ...this.iletisim() } as ContactInfo;
-      l.filter((a) => a.language === 'tr').forEach((a) => (m[a.name as keyof ContactInfo] = a.value));
-      this.iletisim.set(m);
-    });
+    this.api.contactChannels().subscribe((l) => this.kanallar.set(l));
   }
 
-  protected iletisimAlan(name: keyof ContactInfo, value: unknown): void {
-    this.iletisim.set({ ...this.iletisim(), [name]: value as string });
+  protected turAdi(t: string): string {
+    return { address: 'Adres', phone: 'Telefon', email: 'E-posta', fax: 'Faks' }[t] ?? t;
   }
 
-  protected iletisimKaydet(): void {
-    this.api.saveSettings(this.iletisim()).subscribe({
-      next: () => this.mesaj('İletişim bilgileri kaydedildi.'),
+  protected kanalDuzenle(k: ContactChannel | null): void {
+    this.kanal.set(k
+      ? { ...k }
+      : { id: null, language: 'tr', type: 'phone', label: null, value: '', sortOrder: 0, published: true });
+  }
+
+  protected kanalAlan(alan: keyof ContactChannel, deger: unknown): void {
+    const k = this.kanal();
+    if (k) this.kanal.set({ ...k, [alan]: deger } as ContactChannel);
+  }
+
+  protected kanalKaydet(): void {
+    const k = this.kanal();
+    if (!k) return;
+    this.api.saveContactChannel(k).subscribe({
+      next: () => { this.kanal.set(null); this.sekmeIletisim(); this.mesaj('İletişim bilgisi kaydedildi.'); },
       error: () => this.mesaj('Kaydedilemedi.')
     });
   }
 
-  /**
-   * Sekme başlıklarındaki sayılar, o sekme açılmadan da doğru görünsün diye
-   * girişten sonra bir kez yüklenir. Önceden hepsi (0) görünüyordu.
-   */
+  protected kanalSil(k: ContactChannel): void {
+    if (!k.id) return;
+    this.api.deleteContactChannel(k.id).subscribe({
+      next: () => { this.kanallar.update((l) => l.filter((x) => x.id !== k.id)); this.mesaj('Kayıt silindi.'); },
+      error: () => this.mesaj('Silinemedi.')
+    });
+  }
+
   private sayilariYukle(): void {
     this.api.news().subscribe((l) => this.news.set(l));
     this.api.slides().subscribe((l) => this.slides.set(l));

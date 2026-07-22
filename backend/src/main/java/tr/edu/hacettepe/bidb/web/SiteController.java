@@ -9,6 +9,8 @@ import tr.edu.hacettepe.bidb.repo.SliderRepo;
 import tr.edu.hacettepe.bidb.repo.SocialAccountRepo;
 import tr.edu.hacettepe.bidb.repo.SettingRepo;
 import tr.edu.hacettepe.bidb.repo.RedirectRepo;
+import tr.edu.hacettepe.bidb.repo.ContactChannelRepo;
+import tr.edu.hacettepe.bidb.model.ContactChannel;
 import tr.edu.hacettepe.bidb.model.Setting;
 import tr.edu.hacettepe.bidb.model.Redirect;
 
@@ -27,14 +29,17 @@ public class SiteController {
     private final SocialAccountRepo sosyal;
     private final SettingRepo ayarlar;
     private final RedirectRepo yonlendirmeler;
+    private final ContactChannelRepo contactChannels;
 
     public SiteController(MenuRepo menuler, SliderRepo sliderlar, SocialAccountRepo sosyal,
-                          SettingRepo ayarlar, RedirectRepo yonlendirmeler) {
+                          SettingRepo ayarlar, RedirectRepo yonlendirmeler,
+                          ContactChannelRepo contactChannels) {
         this.menuler = menuler;
         this.sliderlar = sliderlar;
         this.sosyal = sosyal;
         this.ayarlar = ayarlar;
         this.yonlendirmeler = yonlendirmeler;
+        this.contactChannels = contactChannels;
     }
 
     @GetMapping("/menus")
@@ -49,6 +54,12 @@ public class SiteController {
     }
 
     /** Alt bilgide görünen iletişim bilgileri. Panelden düzenlenir. */
+    /** Alt bilgideki iletişim bilgileri; her değer ayrı kayıt. */
+    @GetMapping("/contact-channels")
+    public List<ContactChannel> contactChannels(@PathVariable String language) {
+        return contactChannels.findByLanguageAndPublishedTrueOrderByTypeAscSortOrderAsc(language);
+    }
+
     @GetMapping("/settings")
     public Map<String, String> ayarlar(@PathVariable String language) {
         return ayarlar.findByLanguageOrderByNameAsc(language).stream()

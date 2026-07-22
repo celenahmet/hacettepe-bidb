@@ -106,6 +106,17 @@ export interface UploadedFile {
   uploadedAt: string;
 }
 
+export interface ContactChannel {
+  id: number | null;
+  language: string;
+  /** address | phone | email | fax */
+  type: string;
+  label: string | null;
+  value: string;
+  sortOrder: number;
+  published: boolean;
+}
+
 const SESSION_KEY = 'bidb-yonetim';
 
 /** Yönetim uçlarına erişim. Kimlik bilgisi yalnızca tarayıcı oturumunda tutulur. */
@@ -313,6 +324,20 @@ export class AdminApiService {
   }
 
   /* ---------- iletişim bilgileri ---------- */
+
+  contactChannels(): Observable<ContactChannel[]> {
+    return this.http.get<ContactChannel[]>('/api/admin/contact-channels', { headers: this.basliklar() });
+  }
+
+  saveContactChannel(c: ContactChannel): Observable<unknown> {
+    return c.id
+      ? this.http.put(`/api/admin/contact-channels/${c.id}`, c, { headers: this.basliklar() })
+      : this.http.post('/api/admin/contact-channels', c, { headers: this.basliklar() });
+  }
+
+  deleteContactChannel(id: number): Observable<void> {
+    return this.http.delete<void>(`/api/admin/contact-channels/${id}`, { headers: this.basliklar() });
+  }
 
   settings(): Observable<{ name: string; language: string; value: string }[]> {
     return this.http.get<{ name: string; language: string; value: string }[]>(

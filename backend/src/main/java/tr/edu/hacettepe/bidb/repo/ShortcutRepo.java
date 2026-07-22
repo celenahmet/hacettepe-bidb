@@ -6,6 +6,6 @@ import tr.edu.hacettepe.bidb.model.Shortcut;
 import java.util.List;
 
 public interface ShortcutRepo extends JpaRepository<Shortcut, Long> {
-    /** Kısayollar (sıra < 100) ve services (sıra >= 100) birlikte, sıraya göre. */
+    /** Kısayollar ve servisler birlikte; ayrım type sütununda. */
     List<Shortcut> findByLanguageAndPublishedTrueOrderBySortOrderAsc(String language);
 }

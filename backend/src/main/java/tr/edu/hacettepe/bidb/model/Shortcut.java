@@ -27,7 +27,12 @@ public class Shortcut {
     @Column(name = "new_tab", nullable = false)
     private boolean newTab = false;
 
-    @Column(nullable = false)
+    /** shortcut = ikon ızgarası, service = "Servisler ve Uygulamalar" karuseli.
+     *  Önceden bu ayrım sıra numarasından (100 ve üzeri) çıkarılıyordu. */
+    @Column(nullable = false, length = 20)
+    private String type = "shortcut";
+
+    @Column(name = "sort_order", nullable = false)
     private int sortOrder = 0;
 
     @Column(nullable = false)
@@ -39,6 +44,8 @@ public class Shortcut {
     public String getIconUrl() { return iconUrl; }
     public String getUrl() { return url; }
     public boolean isNewTab() { return newTab; }
+    public String getType() { return type; }
+    public void setType(String type) { this.type = type; }
     public int getSortOrder() { return sortOrder; }
     public boolean isPublished() { return published; }
 

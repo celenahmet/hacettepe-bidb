@@ -16,9 +16,6 @@ import java.util.List;
 @RequestMapping("/api/{language}")
 public class HomeController {
 
-    /** 100 ve üzeri sıra değerleri servis karuselini gösterir. */
-    private static final int SERVIS_SIRA_ESIGI = 100;
-
     private final SliderRepo sliderlar;
     private final ShortcutRepo shortcuts;
     private final NewsRepo news;
@@ -35,9 +32,9 @@ public class HomeController {
 
         return new HomeDto(
                 sliderlar.findByLanguageAndPublishedTrueOrderBySortOrderAsc(language).stream().map(SliderDto::of).toList(),
-                tumu.stream().filter(h -> h.getSortOrder() < SERVIS_SIRA_ESIGI)
+                tumu.stream().filter(h -> !"service".equals(h.getType()))
                         .map(HomeDto.KisayolDto::of).toList(),
-                tumu.stream().filter(h -> h.getSortOrder() >= SERVIS_SIRA_ESIGI)
+                tumu.stream().filter(h -> "service".equals(h.getType()))
                         .map(HomeDto.KisayolDto::of).toList(),
                 news.findByLanguageAndPublishedTrueOrderByPublishedOnDesc(language, Limit.of(12)).stream()
                         .map(HomeDto.NewsDto::of).toList()

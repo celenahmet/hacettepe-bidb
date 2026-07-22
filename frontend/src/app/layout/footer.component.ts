@@ -3,12 +3,22 @@ import { HttpClient } from '@angular/common/http';
 import { RouterLink } from '@angular/router';
 import { Language } from '../core/models';
 
+/** Alt bilgideki tek bir iletişim kaydı. */
+interface ContactChannel {
+  id: number;
+  language: string;
+  /** address | phone | email | fax */
+  type: string;
+  label: string | null;
+  value: string;
+  sortOrder: number;
+}
+
 /**
  * Sayfa altı: adres, telefon ve yasal bağlantılar.
  *
- * İletişim bilgileri koda gömülü değildir; veritabanından okunur ve
- * yönetim panelinden düzenlenir. Sunucu tarafı çizimde de yüklendiği için
- * bilgiler ilk yanıtın HTML'inde yer alır.
+ * İletişim bilgileri koda gömülü değildir; her değer veritabanında kendi
+ * kaydıdır ve yönetim panelinden düzenlenir.
  */
 @Component({
   selector: 'bidb-footer',
@@ -16,28 +26,34 @@ import { Language } from '../core/models';
   template: `
     <footer class="alt">
       <div class="kap alt-ic">
-        @if (url()) { <p class="alt-adres">{{ url() }}</p> }
+        @for (a of tur('address'); track a.id) {
+          <p class="alt-adres">{{ a.value }}</p>
+        }
 
         <dl class="alt-iletisim">
-          @if (telefonlar().length) {
+          @if (tur('phone').length) {
             <dt>{{ language === 'en' ? 'Contact us' : 'Bize Ulaşın' }}</dt>
             <dd>
-              @for (t of telefonlar(); track t; let son = $last) {
-                <a [href]="'tel:' + telBaglanti(t)">{{ t }}</a>{{ son ? '' : ' · ' }}
+              @for (t of tur('phone'); track t.id; let son = $last) {
+                <a [href]="'tel:' + telBaglanti(t.value)">{{ t.value }}</a>{{ son ? '' : ' · ' }}
               }
             </dd>
           }
 
-          @if (faks()) {
+          @if (tur('fax').length) {
             <dt>{{ language === 'en' ? 'Fax' : 'Faks' }}</dt>
-            <dd>{{ faks() }}</dd>
+            <dd>
+              @for (f of tur('fax'); track f.id; let son = $last) {
+                {{ f.value }}{{ son ? '' : ' · ' }}
+              }
+            </dd>
           }
 
-          @if (epostalar().length) {
+          @if (tur('email').length) {
             <dt>{{ language === 'en' ? 'E-mail' : 'E-Posta' }}</dt>
             <dd>
-              @for (e of epostalar(); track e; let son = $last) {
-                <a [href]="'mailto:' + e">{{ e }}</a>{{ son ? '' : ' · ' }}
+              @for (e of tur('email'); track e.id; let son = $last) {
+                <a [href]="'mailto:' + e.value">{{ e.value }}</a>{{ son ? '' : ' · ' }}
               }
             </dd>
           }
@@ -56,23 +72,17 @@ export class FooterComponent {
 
   private http = inject(HttpClient);
 
-  protected url = signal('');
-  protected faks = signal('');
-  protected telefonlar = signal<string[]>([]);
-  protected epostalar = signal<string[]>([]);
+  protected kanallar = signal<ContactChannel[]>([]);
 
   ngOnInit(): void {
-    this.http.get<Record<string, string>>(`/api/${this.language}/settings`).subscribe((a) => {
-      this.url.set(a['iletisim_adres'] ?? '');
-      this.faks.set(a['iletisim_faks'] ?? '');
-      // Birden çok numara/adres " · " ile ayrılarak tek alanda tutulur
-      this.telefonlar.set(this.ayir(a['iletisim_telefon']));
-      this.epostalar.set(this.ayir(a['iletisim_eposta']));
-    });
+    this.http
+      .get<ContactChannel[]>(`/api/${this.language}/contact-channels`)
+      .subscribe((l) => this.kanallar.set(l));
   }
 
-  private ayir(value: string | undefined): string[] {
-    return (value ?? '').split('·').map((p) => p.trim()).filter(Boolean);
+  /** Belirli türdeki kayıtlar, sıra numarasına göre. */
+  protected tur(t: string): ContactChannel[] {
+    return this.kanallar().filter((k) => k.type === t);
   }
 
   /** "+90 312 297 62 62" -> "+903122976262" */
