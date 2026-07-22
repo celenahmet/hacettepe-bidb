@@ -64,6 +64,34 @@ function yalnizcaBaglanti(madde: string): boolean {
 }
 
 /**
+ * Ardışık "yalnızca bağlantı içeren paragraflar"ı bir dizin listesine çevirir.
+ *
+ * Bazı kaynak sayfalar (Office 365 gibi) bağlantı listesini <ul><li> yerine
+ * arka arkaya <p><a>…</a></p> olarak yazmış. Bunlar dizin olarak
+ * tanınmıyor, düz bağlantı satırları gibi kalıyordu. İki ya da daha çok
+ * böyle paragraf art arda geldiğinde tek bir <ul class="baglanti-dizini">'ye
+ * dönüştürülür — böylece aynı kart ızgarası ve ikonları kazanırlar.
+ *
+ * Yalnızca içinde bağlantıdan başka görünür metin olmayan paragraflar
+ * gruplanır; araya metin girerse grup orada biter.
+ */
+export function paragrafBaglantilariniDizinYap(html: string): string {
+  // Tek bir "yalnızca bağlantı" paragrafı: baştan sona <a>…</a>, yanında
+  // yalnızca boşluk ya da <br> olabilir.
+  const P = '<p\\b[^>]*>\\s*(?:<a\\b[^>]*>[\\s\\S]*?<\\/a>)\\s*(?:<br\\s*\\/?>\\s*)?<\\/p>';
+  const RUN = new RegExp(`(?:${P}\\s*){2,}`, 'gi');
+  const TEK = new RegExp(P, 'gi');
+
+  return String(html).replace(RUN, (blok) => {
+    const maddeler = (blok.match(TEK) || []).map((p) => {
+      const bag = (p.match(/<a\b[^>]*>[\s\S]*?<\/a>/i) || [''])[0];
+      return `<li>${bag}</li>`;
+    });
+    return `<ul class="baglanti-dizini">${maddeler.join('')}</ul>`;
+  });
+}
+
+/**
  * Yalnızca bağlantı içeren `<ul>` öğelerine `baglanti-dizini` sınıfını ekler.
  * Metin içeren listelere dokunmaz.
  */
@@ -127,8 +155,13 @@ export function iletisimBaglantilari(html: string): string {
 
 /** Sayfa gövdesine uygulanan tüm sunum düzeltmeleri. */
 export function icerigiHazirla(html: string): string {
-  // Sıra önemli: önce bozuk işaretleme onarılır, sonra dizin tespiti
-  // yapılır. Ters sırada, kapanmamış bir etiket yüzünden liste dizin
-  // sayılmaz ve onarım geç kalırdı.
-  return baglantiDizinleriniIsaretle(iletisimBaglantilari(bagliMaddeleriOnar(html)));
+  // Sıra önemli: önce bozuk işaretleme onarılır, sonra paragraf-bağlantı
+  // dizinleri listeye çevrilir, sonra <ul> dizinleri işaretlenir, en son
+  // iletişim bağlantıları kurulur. Ters sırada, kapanmamış bir etiket
+  // yüzünden liste dizin sayılmaz ve onarım geç kalırdı.
+  return baglantiDizinleriniIsaretle(
+    paragrafBaglantilariniDizinYap(
+      iletisimBaglantilari(bagliMaddeleriOnar(html))
+    )
+  );
 }

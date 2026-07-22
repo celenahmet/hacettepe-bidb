@@ -196,3 +196,154 @@
     }
   }
 }
+
+@layer kamu {
+  .icerik ul.baglanti-dizini {
+    --marka-chrome: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E %3Ccircle cx='24' cy='24' r='22' fill='%23fff'/%3E %3Cpath fill='%23EA4335' d='M24 2a22 22 0 0 1 19 11H24a11 11 0 0 0-9.5 5.5L6 9A22 22 0 0 1 24 2z'/%3E %3Cpath fill='%23FBBC05' d='M6 9l8.5 9.5A11 11 0 0 0 15 30L6.5 40A22 22 0 0 1 6 9z'/%3E %3Cpath fill='%2334A853' d='M6.5 40L15 30a11 11 0 0 0 15 4l-6 12A22 22 0 0 1 6.5 40z'/%3E %3Cpath fill='%234285F4' d='M43 13a22 22 0 0 1-19 33l9-16a11 11 0 0 0-2-17z'/%3E %3Ccircle cx='24' cy='24' r='9' fill='%23fff'/%3E %3Ccircle cx='24' cy='24' r='7' fill='%234285F4'/%3E %3C/svg%3E");
+    --marka-firefox: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E %3Ccircle cx='24' cy='25' r='20' fill='%23FF7139'/%3E %3Cpath fill='%23FFA337' d='M24 6c7 4 9 10 8 15-1-3-3-5-6-6 4 6 2 13-4 16-7 3-14-2-14-9 0-4 2-7 5-9-1 4 0 7 3 8-3-5 0-12 6-14-2-2-5-3-8-2 2-4 6-6 10-6z'/%3E %3Cpath fill='%23E24E1B' d='M35 20c2 4 2 9 0 13-3 6-11 9-17 6 5 2 11-1 13-6 2-4 2-9-1-13 2 0 4 0 5 0z'/%3E %3Ccircle cx='24' cy='25' r='7' fill='%23FFCE44'/%3E %3C/svg%3E");
+    --marka-edge: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E %3Cpath fill='%230C79C0' d='M43 27c0 10-9 17-19 17-6 0-12-3-15-8 3 3 7 4 11 3 6-1 10-5 11-10 1-6-3-11-9-11-4 0-7 2-8 5-1-8 5-16 14-16 8 0 15 6 15 14 0 6 0 6 0 6z'/%3E %3Cpath fill='%2333B9E0' d='M9 12a17 17 0 0 1 30 6c-2-4-6-7-11-7-8 0-14 8-13 16 0 4 2 8 5 10-8-2-14-9-14-18 0-5 1-9 3-13z'/%3E %3Cpath fill='%232C7CD5' d='M6 25c0-5 1-9 3-13-1 3-1 6 0 9 2 6 8 10 14 9 4-1 6-3 7-6 0 5-4 9-10 10-8 1-14-4-14-9z'/%3E %3C/svg%3E");
+    --marka-safari: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E %3Ccircle cx='24' cy='24' r='21' fill='%231E9BF0'/%3E %3Ccircle cx='24' cy='24' r='21' fill='none' stroke='%23fff' stroke-width='2' opacity='.5'/%3E %3Cpath fill='%23fff' d='M27 21l11-9-9 11z'/%3E %3Cpath fill='%23F8402C' d='M21 27L10 36l9-11z'/%3E %3Ccircle cx='24' cy='24' r='2.5' fill='%23fff'/%3E %3C/svg%3E");
+    --marka-android: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E %3Cpath fill='%233DDC84' d='M10 20a2 2 0 0 1 2 2v10a2 2 0 0 1-4 0V22a2 2 0 0 1 2-2zm28 0a2 2 0 0 1 2 2v10a2 2 0 0 1-4 0V22a2 2 0 0 1 2-2zM14 20h20v13a3 3 0 0 1-3 3h-1v5a2 2 0 0 1-4 0v-5h-4v5a2 2 0 0 1-4 0v-5h-1a3 3 0 0 1-3-3z'/%3E %3Cpath fill='%233DDC84' d='M14 18a10 10 0 0 1 20 0zM18 13a1.3 1.3 0 1 0 0 .01zM30 13a1.3 1.3 0 1 0 0 .01z'/%3E %3Cpath stroke='%233DDC84' stroke-width='1.6' stroke-linecap='round' d='M16 9l-2-3M32 9l2-3'/%3E %3C/svg%3E");
+    --marka-apple: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E %3Cpath fill='%23333' d='M32 25c0-5 4-7 4-7-2-3-6-4-7-4-3 0-5 2-7 2s-4-2-7-2c-4 0-8 3-8 9 0 6 4 14 8 14 2 0 3-1 6-1s4 1 6 1c3 0 6-5 7-8-4-2-1-4-1-4z'/%3E %3Cpath fill='%23333' d='M27 8c1-1 2-3 2-5-2 0-4 1-5 3-1 1-2 3-2 5 2 0 4-2 5-3z'/%3E %3C/svg%3E");
+    --marka-office: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E %3Cpath fill='%23EB3C00' d='M28 5L8 12v24l8 4V15l12-3v24l-12-4 12 8 12-4V9z'/%3E %3C/svg%3E");
+    --marka-teams: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E %3Crect x='6' y='14' width='22' height='22' rx='3' fill='%235059C9'/%3E %3Cpath fill='%23fff' d='M11 19h12v3h-4.5v11h-3V22H11z'/%3E %3Ccircle cx='34' cy='12' r='5' fill='%237B83EB'/%3E %3Cpath fill='%237B83EB' d='M42 22c0-2-2-4-4-4h-8v13a6 6 0 0 0 12 0z'/%3E %3Ccircle cx='23' cy='11' r='6' fill='%235059C9'/%3E %3C/svg%3E");
+  }
+}
+
+@layer kamu {
+  /* ================= Büyük ve ferah kart ızgarası =================
+
+     Kartlar önce dar ve sıkışıktı: 248px sütun, 24px ikon, ölçülü dolgu.
+     Bir servis dizini bundan daha nefes almalı. Sütun tabanı büyüdü, dolgu
+     açıldı, ikon 24 → 40px'e çıktı. İkon artık kartın ana görsel ögesi,
+     iliştirilmiş bir işaret değil. */
+
+  .icerik ul.baglanti-dizini {
+    grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+    gap: 0;
+  }
+
+  .icerik ul.baglanti-dizini > li > a {
+    grid-template-columns: 40px minmax(0, 1fr);
+    gap: var(--bosluk-4);
+    padding: var(--bosluk-5);
+    font-size: var(--olcu-md);
+    font-weight: var(--kalinlik-orta);
+    line-height: 1.4;
+  }
+
+  .icerik ul.baglanti-dizini > li > a::before {
+    width: 40px;
+    height: 40px;
+  }
+
+  /* İmleçle ikon hafifçe büyür: kartın canlandığını gösteren küçük bir
+     hareket. Marka ikonları renkli olduğu için renk değişmiyor, yalnızca
+     ölçek. */
+  .icerik ul.baglanti-dizini > li > a::before {
+    transition: transform var(--gecis), background-color var(--gecis-hizli);
+  }
+  .icerik ul.baglanti-dizini > li > a:hover::before { transform: scale(1.08); }
+
+  /* ---------- renkli marka ikonları ----------
+
+     Tek renkli maske yerine tam renkli SVG basılır (background-image).
+     Bir tarayıcının ya da uygulamanın kendi logosu, gri bir simgeden çok
+     daha hızlı tanınır. Maske ve kırmızı dolgu bu hücrelerde kapatılır. */
+
+  .icerik ul.baglanti-dizini a[href*="edge"]::before,
+  .icerik ul.baglanti-dizini a[href*="chrome"]::before,
+  .icerik ul.baglanti-dizini a[href*="firefox"]::before,
+  .icerik ul.baglanti-dizini a[href*="safari"]::before,
+  .icerik ul.baglanti-dizini a[href*="android"]::before,
+  .icerik ul.baglanti-dizini a[href*="IOS"]::before,
+  .icerik ul.baglanti-dizini a[href*="ios"]::before,
+  .icerik ul.baglanti-dizini a[href*="Office"]::before,
+  .icerik ul.baglanti-dizini a[href*="office"]::before,
+  .icerik ul.baglanti-dizini a[href*="Teams"]::before,
+  .icerik ul.baglanti-dizini a[href*="teams"]::before {
+    -webkit-mask: none;
+    mask: none;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+  }
+
+  /* Tarayıcılar */
+  .icerik ul.baglanti-dizini a[href*="edge"]::before    { background-image: var(--marka-edge); }
+  /* macos_chrome de chrome içerir; ikisi de Chrome logosu alır. */
+  .icerik ul.baglanti-dizini a[href*="chrome"]::before  { background-image: var(--marka-chrome); }
+  .icerik ul.baglanti-dizini a[href*="firefox"]::before { background-image: var(--marka-firefox); }
+  .icerik ul.baglanti-dizini a[href*="safari"]::before  { background-image: var(--marka-safari); }
+
+  /* Platformlar */
+  .icerik ul.baglanti-dizini a[href*="android"]::before { background-image: var(--marka-android); }
+  .icerik ul.baglanti-dizini a[href*="IOS"]::before,
+  .icerik ul.baglanti-dizini a[href*="ios"]::before     { background-image: var(--marka-apple); }
+
+  /* Microsoft ürünleri: Teams önce gelir; "Office" hem Office 365 hem
+     genel Microsoft PDF'lerini kapsar. */
+  .icerik ul.baglanti-dizini a[href*="Office"]::before,
+  .icerik ul.baglanti-dizini a[href*="office"]::before  { background-image: var(--marka-office); }
+  .icerik ul.baglanti-dizini a[href*="Teams"]::before,
+  .icerik ul.baglanti-dizini a[href*="teams"]::before   { background-image: var(--marka-teams); }
+
+  @media (max-width: 620px) {
+    .icerik ul.baglanti-dizini > li > a::before { width: 34px; height: 34px; }
+    .icerik ul.baglanti-dizini > li > a { padding: var(--bosluk-4); }
+  }
+}
+
+@layer kamu {
+  .icerik ul.baglanti-dizini {
+    --dosya-pdf: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E %3Cpath fill='%23fff' stroke='%23D93843' stroke-width='1.4' d='M13 3.2H6.2v17.6h11.6V8z'/%3E %3Cpath fill='none' stroke='%23D93843' stroke-width='1.4' d='M13 3.2V8h4.8'/%3E %3Crect x='4.5' y='13' width='15' height='6.4' rx='1' fill='%23D93843'/%3E %3Ctext x='12' y='17.9' font-family='Arial,Helvetica,sans-serif' font-size='4.4' font-weight='700' fill='%23fff' text-anchor='middle'%3EPDF%3C/text%3E %3C/svg%3E");
+    --dosya-word: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E %3Cpath fill='%23fff' stroke='%232B579A' stroke-width='1.4' d='M13 3.2H6.2v17.6h11.6V8z'/%3E %3Cpath fill='none' stroke='%232B579A' stroke-width='1.4' d='M13 3.2V8h4.8'/%3E %3Crect x='4.5' y='13' width='15' height='6.4' rx='1' fill='%232B579A'/%3E %3Ctext x='12' y='17.9' font-family='Arial,Helvetica,sans-serif' font-size='4.4' font-weight='700' fill='%23fff' text-anchor='middle'%3EDOC%3C/text%3E %3C/svg%3E");
+    --dosya-excel: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E %3Cpath fill='%23fff' stroke='%23217346' stroke-width='1.4' d='M13 3.2H6.2v17.6h11.6V8z'/%3E %3Cpath fill='none' stroke='%23217346' stroke-width='1.4' d='M13 3.2V8h4.8'/%3E %3Crect x='4.5' y='13' width='15' height='6.4' rx='1' fill='%23217346'/%3E %3Ctext x='12' y='17.9' font-family='Arial,Helvetica,sans-serif' font-size='4.4' font-weight='700' fill='%23fff' text-anchor='middle'%3EXLS%3C/text%3E %3C/svg%3E");
+    --dosya-ppt: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E %3Cpath fill='%23fff' stroke='%23C43E1C' stroke-width='1.4' d='M13 3.2H6.2v17.6h11.6V8z'/%3E %3Cpath fill='none' stroke='%23C43E1C' stroke-width='1.4' d='M13 3.2V8h4.8'/%3E %3Crect x='4.5' y='13' width='15' height='6.4' rx='1' fill='%23C43E1C'/%3E %3Ctext x='12' y='17.9' font-family='Arial,Helvetica,sans-serif' font-size='4.4' font-weight='700' fill='%23fff' text-anchor='middle'%3EPPT%3C/text%3E %3C/svg%3E");
+  }
+
+  /* Renkli dosya türü ikonları; uzantıya göre. Marka ikonlarıyla aynı
+     mantık: maske kapanır, tam renkli SVG basılır. Konudan ikon
+     çıkarılamadığında bunlar devreye girer ve dizine renk katar. */
+  .icerik ul.baglanti-dizini a[href$='.pdf']::before,
+  .icerik ul.baglanti-dizini a[href$='.PDF']::before,
+  .icerik ul.baglanti-dizini a[href$='.doc']::before,
+  .icerik ul.baglanti-dizini a[href$='.docx']::before,
+  .icerik ul.baglanti-dizini a[href$='.xls']::before,
+  .icerik ul.baglanti-dizini a[href$='.xlsx']::before,
+  .icerik ul.baglanti-dizini a[href$='.ppt']::before,
+  .icerik ul.baglanti-dizini a[href$='.pptx']::before {
+    -webkit-mask: none;
+    mask: none;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+  }
+
+  .icerik ul.baglanti-dizini a[href$='.pdf']::before,
+  .icerik ul.baglanti-dizini a[href$='.PDF']::before { background-image: var(--dosya-pdf); }
+  .icerik ul.baglanti-dizini a[href$='.doc']::before,
+  .icerik ul.baglanti-dizini a[href$='.docx']::before { background-image: var(--dosya-word); }
+  .icerik ul.baglanti-dizini a[href$='.xls']::before,
+  .icerik ul.baglanti-dizini a[href$='.xlsx']::before { background-image: var(--dosya-excel); }
+  .icerik ul.baglanti-dizini a[href$='.ppt']::before,
+  .icerik ul.baglanti-dizini a[href$='.pptx']::before { background-image: var(--dosya-ppt); }
+
+  /* MARKA ÖNCELİĞİ: marka bağlantıları da .pdf ile bitiyor (edgeproxy.pdf,
+     HU-Office_365...pdf). Eşit özgüllükte, kaynak sırası kazanır; bu yüzden
+     marka atamaları dosya türü kurallarından SONRA yeniden yazılır ki bir
+     tarayıcı ya da Office logosu genel PDF ikonuna düşmesin. */
+  .icerik ul.baglanti-dizini a[href*='edge']::before    { background-image: var(--marka-edge); }
+  .icerik ul.baglanti-dizini a[href*='chrome']::before  { background-image: var(--marka-chrome); }
+  .icerik ul.baglanti-dizini a[href*='firefox']::before { background-image: var(--marka-firefox); }
+  .icerik ul.baglanti-dizini a[href*='safari']::before  { background-image: var(--marka-safari); }
+  .icerik ul.baglanti-dizini a[href*='android']::before { background-image: var(--marka-android); }
+  .icerik ul.baglanti-dizini a[href*='IOS']::before,
+  .icerik ul.baglanti-dizini a[href*='ios']::before     { background-image: var(--marka-apple); }
+  .icerik ul.baglanti-dizini a[href*='Office']::before,
+  .icerik ul.baglanti-dizini a[href*='office']::before  { background-image: var(--marka-office); }
+  .icerik ul.baglanti-dizini a[href*='Teams']::before,
+  .icerik ul.baglanti-dizini a[href*='teams']::before   { background-image: var(--marka-teams); }
+}
