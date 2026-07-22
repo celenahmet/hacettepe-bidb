@@ -11,11 +11,12 @@ import { SideMenuComponent } from '../layout/side-menu.component';
 import { StaffListComponent } from './staff-list.component';
 import { ContactBlockComponent } from './contact-block.component';
 import { FaqComponent } from './faq.component';
+import { EImzaNavComponent } from './e-imza-nav.component';
 
 /** /tr/<slug> ve /en/<slug> adreslerindeki içerik sayfası. */
 @Component({
   selector: 'bidb-content-page',
-  imports: [SideMenuComponent, StaffListComponent, ContactBlockComponent, FaqComponent],
+  imports: [SideMenuComponent, StaffListComponent, ContactBlockComponent, FaqComponent, EImzaNavComponent],
   template: `
     <div class="kap sayfa-duzen">
       <aside class="yan">
@@ -28,6 +29,10 @@ import { FaqComponent } from './faq.component';
             @if (bolum(); as b) { <p class="sayfa-bolum">{{ b }}</p> }
             <h1 class="sayfa-baslik">{{ s.title }}</h1>
           </header>
+          @if (s.slug.startsWith('e-signature')) {
+            <bidb-eimza-nav [dilDegeri]="language()"></bidb-eimza-nav>
+          }
+
           @if (s.slug === 'faq') {
             <!-- SSS: kaynak akordeon HTML'i arama+filtreli modern bir
                  akordeona ayrıştırılır; içerik birebir korunur. -->

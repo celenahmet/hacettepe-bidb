@@ -231,3 +231,70 @@
     .sss-cevap { padding-left: var(--bosluk-4); padding-right: var(--bosluk-4); }
   }
 }
+
+@layer kamu {
+  /* ---- E-İmza rehberi alt-gezinmesi ----
+
+     Kaynak alt sistemin sol menüsünün yerini tutar; e-imza sayfalarının
+     üstünde tek bir kart olarak duruyor. Gruplar kaynağın yapısıyla aynı. */
+  .eimza-nav {
+    margin-bottom: var(--bosluk-6);
+    padding: var(--bosluk-4) var(--bosluk-5);
+    border: 1px solid var(--cizgi);
+    border-radius: var(--kose-lg);
+    background: var(--yuzey-2);
+  }
+
+  .eimza-nav-ust {
+    display: flex;
+    align-items: center;
+    gap: var(--bosluk-3);
+    padding-bottom: var(--bosluk-3);
+    margin-bottom: var(--bosluk-3);
+    border-bottom: 1px solid var(--cizgi);
+    font-size: var(--olcu-md);
+    font-weight: var(--kalinlik-kalin);
+    color: var(--hu-lacivert);
+  }
+  .eimza-nav-ust svg { color: var(--hu-kirmizi); }
+  .eimza-nav-ust.etkin { color: var(--hu-kirmizi); }
+
+  .eimza-nav-grup {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
+    gap: var(--bosluk-2) var(--bosluk-5);
+    align-items: baseline;
+    padding: var(--bosluk-2) 0;
+  }
+  .eimza-nav-grup + .eimza-nav-grup { border-top: 1px dashed var(--cizgi); }
+
+  .eimza-nav-grup-ad {
+    font-size: var(--olcu-xs);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--metin-3);
+  }
+  /* Başlıksız grup: bağlantılar tam genişlik. */
+  .eimza-nav-grup:not(:has(.eimza-nav-grup-ad)) { grid-template-columns: 1fr; }
+
+  .eimza-nav-grup ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--bosluk-2) var(--bosluk-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .eimza-nav-grup li { margin: 0; }
+  .eimza-nav-grup a {
+    font-size: var(--olcu-sm);
+    color: var(--metin-2);
+  }
+  .eimza-nav-grup a:hover { color: var(--hu-kirmizi); }
+  .eimza-nav-grup a.etkin { color: var(--hu-kirmizi); font-weight: var(--kalinlik-orta); }
+
+  @media (max-width: 40rem) {
+    .eimza-nav-grup { grid-template-columns: 1fr; }
+  }
+}

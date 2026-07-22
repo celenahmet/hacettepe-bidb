@@ -37,6 +37,22 @@ for (const dil of ["tr", "en"]) {
 const BILINCLI_SAPMA = {
   "tr/org-chart": "Yönetim sayfasıyla birleştirildi (kurum kararı)",
   "tr/about": "Kaynakta yok — kurum için yeni yazıldı (Hakkımızda)",
+  "tr/e-signature": "E-imza alt sisteminden birebir alındı (eimza/*.php)",
+  "tr/e-signature-about": "E-imza alt sisteminden birebir alındı (eimza/*.php)",
+  "tr/e-signature-legislation": "E-imza alt sisteminden birebir alındı (eimza/*.php)",
+  "tr/e-signature-application": "E-imza alt sisteminden birebir alındı (eimza/*.php)",
+  "tr/e-signature-workflow": "E-imza alt sisteminden birebir alındı (eimza/*.php)",
+  "tr/e-signature-certificate-received": "E-imza alt sisteminden birebir alındı (eimza/*.php)",
+  "tr/e-signature-java": "E-imza alt sisteminden birebir alındı (eimza/*.php)",
+  "tr/e-signature-remote-desktop": "E-imza alt sisteminden birebir alındı (eimza/*.php)",
+  "tr/e-signature-security-word": "E-imza alt sisteminden birebir alındı (eimza/*.php)",
+  "tr/e-signature-renewal": "E-imza alt sisteminden birebir alındı (eimza/*.php)",
+  "tr/e-signature-update": "E-imza alt sisteminden birebir alındı (eimza/*.php)",
+  "tr/e-signature-cancellation": "E-imza alt sisteminden birebir alındı (eimza/*.php)",
+  "tr/e-signature-info-update": "E-imza alt sisteminden birebir alındı (eimza/*.php)",
+  "tr/e-signature-password": "E-imza alt sisteminden birebir alındı (eimza/*.php)",
+  "tr/e-signature-unit-officers": "E-imza alt sisteminden birebir alındı (eimza/*.php)",
+  "tr/e-signature-faq": "E-imza alt sisteminden birebir alındı (eimza/*.php)",
   "tr/staff": "Yapısal veriye taşındı — node tools/personel-denetim.js ile denetlenir"
 };
 
