@@ -140,14 +140,38 @@ ziyaretçilerin alışık olduğu gezinme görünümü korunur.
 
 ---
 
+## Bağlantı dizini kartları
+
+Bazı sayfalar (Bilgi ve Dokümanlar, Formlar, Kişisel Sayfalar) yalnızca
+bağlantılardan oluşan madde imli listeler içeriyordu. Bu, bir servis
+dizinini göstermenin en zayıf biçimi: her madde aynı ağırlıkta ve taranması
+güç.
+
+Bu listeler **hücreleri ortak çizgi paylaşan bir ızgaraya** dönüşür.
+Aralarında boşluk bırakılan yüzen kartlar yerine tek bir blok oluşturan
+bitişik hücreler — kurumsal bir dizin görünümü. Üzerine gelindiğinde yüzey
+tonu değişir ve solda kırmızı bir çubuk belirir.
+
+**İkonlar** bağlantı adresine göre atanır (ağ, kalkan, sunucu, posta,
+kablosuz, anahtar, belge, indirme). Çizgi biçiminde, tek renk ve tutarlı;
+ikon yazı tipi veya emoji kullanılmaz. SVG maskesi olarak basıldıkları için
+renkleri kurumsal kırmızıdan gelir.
+
+**Yalnızca bağlantı içeren listeler** dönüştürülür; yönerge maddeleri gibi
+metin listeleri etkilenmez. Ayrım, çizim sırasında eklenen bir sınıfla
+yapılır (`core/icerik-bicim.ts`) — saklanan içerik değişmez. CSS ile
+yapılamıyor çünkü `:has()` bir `:not()` içinde kullanılamıyor.
+
+---
+
 ## Alt bilgi
 
 Dört sütunlu **asimetrik** ızgara: kurum kimliği solda geniş alanda,
 gezinme ve iletişim sağda dar sütunlarda. Eşit genişlikte dört kutu yerine
 asimetri, hazır şablon görünümünden uzaklaştırır ve okuma sırasını belirler.
 
-Koyu yüzey sayfayı kurumsal bir kapanışla bitirir ve içerik alanından net
-biçimde ayırır. Sosyal medya hesapları yuvarlak ikon kutuları değil, sade
+Açık yüzey kullanılır; ayrımı renk bloğu değil, üstteki tek çizgi ve boşluk
+kurar. Alt şerit hafif zemin farkıyla ayrılır. Sosyal medya hesapları yuvarlak ikon kutuları değil, sade
 metin bağlantılarıdır.
 
 Dar ekranda dört sütun ikiye, 620px altında tek sütuna iner; kurum sütunu

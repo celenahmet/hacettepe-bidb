@@ -1,0 +1,167 @@
+/* Bağlantı listelerinin kart ızgarasına dönüştürülmesi.
+ *
+ * SORUN: Aktarılan içerikte "Bilgi ve Dokümanlar" gibi sayfalar, yalnızca
+ * bağlantılardan oluşan madde imli listeler içeriyor. Bu, bir servis
+ * dizinini göstermenin en zayıf biçimi: hepsi aynı ağırlıkta, taranması güç.
+ *
+ * KISIT: İçerik HTML'i değiştirilemez. Dolayısıyla kart yapısı da ikonlar da
+ * yalnızca CSS ile üretilir; tek bir etiket eklenmez.
+ *
+ * ÇÖZÜM:
+ *   1. Yalnızca bağlantı içeren listeler çizim sırasında "baglanti-dizini"
+ *      sınıfıyla işaretlenir (bkz. core/icerik-bicim.ts). Metin listeleri
+ *      (yönerge maddeleri gibi) etkilenmez. Bu işaretleme CSS ile
+ *      yapılamıyor: :has() bir :not() içinde kullanılamıyor.
+ *   2. Liste, hücreleri ortak çizgileri paylaşan bir ızgaraya dönüşür.
+ *      Aralarında boşluk bırakılan yüzen kartlar yerine, tek bir blok
+ *      oluşturan bitişik hücreler — kurumsal bir dizin görünümü.
+ *   3. İkonlar, bağlantı adresine göre maske olarak atanır. Çizgi
+ *      biçiminde, tek renk, tutarlı; emoji veya ikon yazı tipi yok.
+ *
+ * Sınıf eklenmezse liste normal görünür; içerik hiçbir durumda kaybolmaz.
+ */
+
+@layer kamu {
+  /* ---------- ikon kümesi ---------- */
+
+  .icerik {
+    --ikon-varsayilan: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='square'%3E%3Cpath d='M4 12h14M13 7l5 5-5 5'/%3E%3C/svg%3E");
+
+    --ikon-belge: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='square'%3E%3Cpath d='M13 3H6v18h12V8z'/%3E%3Cpath d='M13 3v5h5'/%3E%3Cpath d='M9 12.5h6M9 16h6'/%3E%3C/svg%3E");
+
+    --ikon-kalkan: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='square'%3E%3Cpath d='M12 3l7 3v5.5c0 4.3-2.9 7.4-7 8.5-4.1-1.1-7-4.2-7-8.5V6z'/%3E%3Cpath d='M9.5 12l1.8 1.8 3.4-3.6'/%3E%3C/svg%3E");
+
+    --ikon-ag: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='square'%3E%3Ccircle cx='12' cy='12' r='8.5'/%3E%3Cpath d='M3.5 12h17M12 3.5c2.2 2.4 3.3 5.3 3.3 8.5s-1.1 6.1-3.3 8.5c-2.2-2.4-3.3-5.3-3.3-8.5S9.8 5.9 12 3.5z'/%3E%3C/svg%3E");
+
+    --ikon-posta: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='square'%3E%3Cpath d='M3.5 6h17v12h-17z'/%3E%3Cpath d='M3.5 6.5l8.5 6 8.5-6'/%3E%3C/svg%3E");
+
+    --ikon-sunucu: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='square'%3E%3Cpath d='M3.5 4.5h17v6h-17zM3.5 13.5h17v6h-17z'/%3E%3Cpath d='M7 7.5h.01M7 16.5h.01'/%3E%3C/svg%3E");
+
+    --ikon-anahtar: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='square'%3E%3Ccircle cx='8' cy='12' r='4'/%3E%3Cpath d='M12 12h9M17.5 12v3.5M20.5 12v2.5'/%3E%3C/svg%3E");
+
+    --ikon-kablosuz: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='square'%3E%3Cpath d='M4 9.5a12 12 0 0116 0M7 13a8 8 0 0110 0M10 16.5a3.5 3.5 0 014 0'/%3E%3Cpath d='M12 20h.01'/%3E%3C/svg%3E");
+
+    --ikon-indir: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='square'%3E%3Cpath d='M12 4v11M7.5 10.5L12 15l4.5-4.5'/%3E%3Cpath d='M4.5 19.5h15'/%3E%3C/svg%3E");
+  }
+
+  /* ---------- yalnızca bağlantı içeren listeler ---------- */
+
+  /* "İçinde bağlantıdan başka bir şey olan madde bulunmayan liste" */
+  .icerik ul.baglanti-dizini {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(232px, 1fr));
+    max-width: none;
+    margin: var(--bosluk-5) 0 var(--bosluk-6);
+    padding: 0;
+    list-style: none;
+
+    /* Hücreler ortak çizgi paylaşır: aralarında boşluk olan yüzen kartlar
+       yerine tek bir blok oluşur. */
+    border-top: 1px solid var(--cizgi);
+    border-left: 1px solid var(--cizgi);
+  }
+
+  .icerik ul.baglanti-dizini > li {
+    margin: 0;
+    border-right: 1px solid var(--cizgi);
+    border-bottom: 1px solid var(--cizgi);
+  }
+
+  .icerik ul.baglanti-dizini > li::marker { content: none; }
+
+  .icerik ul.baglanti-dizini > li > a {
+    display: flex;
+    flex-direction: column;
+    gap: var(--bosluk-3);
+    height: 100%;
+    padding: var(--bosluk-4) var(--bosluk-4) var(--bosluk-5);
+    background: none;
+    box-shadow: none;
+    color: var(--metin);
+    font-weight: var(--kalinlik-orta);
+    line-height: var(--satir-sik);
+    transition: background var(--gecis-hizli), color var(--gecis-hizli),
+                box-shadow var(--gecis-hizli);
+  }
+
+  /* İkon: maske olarak basılır, rengi kurumsal kırmızıdır */
+  .icerik ul.baglanti-dizini > li > a::before {
+    content: "";
+    width: 22px;
+    height: 22px;
+    background-color: var(--hu-kirmizi);
+    -webkit-mask: var(--ikon, var(--ikon-varsayilan)) center / contain no-repeat;
+    mask: var(--ikon, var(--ikon-varsayilan)) center / contain no-repeat;
+    transition: background-color var(--gecis-hizli);
+  }
+
+  /* Üzerine gelince: yüzey tonu ve solda kırmızı çubuk.
+     Çubuk iç gölgeyle çizilir; kenarlık eklemek düzeni kaydırırdı. */
+  .icerik ul.baglanti-dizini > li > a:hover {
+    background: var(--yuzey-2);
+    color: var(--hu-kirmizi);
+    box-shadow: inset 3px 0 0 var(--hu-kirmizi);
+  }
+
+  .icerik ul.baglanti-dizini > li > a:focus-visible {
+    outline: 2px solid var(--hu-kirmizi);
+    outline-offset: -2px;
+  }
+
+  /* ---------- adrese göre ikon eşlemesi ---------- */
+
+  .icerik a[href*="vpn"],
+  .icerik a[href*="connection-security"] { --ikon: var(--ikon-ag); }
+
+  .icerik a[href*="spam"],
+  .icerik a[href*="security"],
+  .icerik a[href*="guvenlik"],
+  .icerik a[href*="virus"],
+  .icerik a[href*="isms"] { --ikon: var(--ikon-kalkan); }
+
+  .icerik a[href*="proxy"],
+  .icerik a[href*="server"],
+  .icerik a[href*="network"],
+  .icerik a[href*="hardware"] { --ikon: var(--ikon-sunucu); }
+
+  .icerik a[href*="email"],
+  .icerik a[href*="webmail"],
+  .icerik a[href*="posta"],
+  .icerik a[href*="office365"] { --ikon: var(--ikon-posta); }
+
+  .icerik a[href*="wireless"],
+  .icerik a[href*="kablosuz"] { --ikon: var(--ikon-kablosuz); }
+
+  .icerik a[href*="password"],
+  .icerik a[href*="sifre"],
+  .icerik a[href*="account"] { --ikon: var(--ikon-anahtar); }
+
+  .icerik a[href*="document"],
+  .icerik a[href*="forms"],
+  .icerik a[href*="policy"],
+  .icerik a[href*="rules"] { --ikon: var(--ikon-belge); }
+
+  .icerik a[href$=".pdf"],
+  .icerik a[href$=".doc"],
+  .icerik a[href$=".docx"],
+  .icerik a[href*="/dosyalar/"] { --ikon: var(--ikon-indir); }
+
+  /* ---------- dar ekran ---------- */
+
+  @media (max-width: 620px) {
+    .icerik ul.baglanti-dizini {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .icerik ul.baglanti-dizini > li > a {
+      flex-direction: row;
+      align-items: center;
+      gap: var(--bosluk-3);
+      padding: var(--bosluk-4);
+    }
+    .icerik ul.baglanti-dizini > li > a::before {
+      flex: none;
+      width: 20px;
+      height: 20px;
+    }
+  }
+}

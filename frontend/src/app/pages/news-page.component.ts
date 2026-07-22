@@ -7,6 +7,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { SideMenuComponent } from '../layout/side-menu.component';
 import { Language } from '../core/models';
 import { Seo } from '../core/seo.service';
+import { baglantiDizinleriniIsaretle } from '../core/icerik-bicim';
 
 interface Haber {
   id: number;
@@ -89,7 +90,7 @@ export class NewsPageComponent {
               language,
               `/${language}/newsItem/${slug}`
             );
-            this.govde.set(h.contentHtml ? this.temizleyici.bypassSecurityTrustHtml(h.contentHtml) : null);
+            this.govde.set(h.contentHtml ? this.temizleyici.bypassSecurityTrustHtml(baglantiDizinleriniIsaretle(h.contentHtml)) : null);
           })
         );
       })

@@ -19,6 +19,7 @@
 @import "./styles/tokens.css";
 @import "./styles/legacy-content.css";
 @import "./styles/public.css";
+@import "./styles/kartlar.css";
 @import "./styles/admin.css";
 
 @layer site {

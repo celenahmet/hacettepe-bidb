@@ -218,14 +218,14 @@
 
   /* ================= alt bilgi ================= */
 
-  /* Koyu yüzey, sayfayı kurumsal bir kapanışla bitirir ve içerik alanından
-     net biçimde ayrılır. Kutu yok; sütunlar boşlukla ayrışır. */
+  /* Açık yüzey: sayfayla aynı zemin, üstte tek bir çizgiyle ayrılır.
+     Ayrımı renk bloğu değil, çizgi ve boşluk kurar. Kutu yok. */
   .alt {
     margin-top: var(--bosluk-8);
     padding: 0;
-    border-top: 0;
-    background: var(--yuzey-ters);
-    color: rgb(255 255 255 / 78%);
+    border-top: 1px solid var(--cizgi);
+    background: var(--yuzey);
+    color: var(--metin-2);
     font-size: var(--olcu-sm);
   }
 
@@ -244,21 +244,21 @@
     display: block;
     font-size: var(--olcu-md);
     font-weight: var(--kalinlik-kalin);
-    color: #fff;
+    color: var(--metin);
     line-height: var(--satir-sik);
   }
   .alt-marka small {
     display: block;
     margin-top: 2px;
     font-size: var(--olcu-sm);
-    color: rgb(255 255 255 / 62%);
+    color: var(--metin-2);
   }
 
   .alt-adres {
     max-width: 42ch;
     margin: var(--bosluk-4) 0 0;
     line-height: var(--satir-genis);
-    color: rgb(255 255 255 / 62%);
+    color: var(--metin-2);
   }
 
   /* Bölüm etiketleri: küçük punto, geniş harf aralığı, kırmızı vurgu */
@@ -269,7 +269,7 @@
     font-weight: var(--kalinlik-kalin);
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: var(--hu-kirmizi-acik);
+    color: var(--hu-kirmizi);
   }
 
   .alt-sosyal { margin-top: var(--bosluk-5); }
@@ -278,16 +278,16 @@
   /* Sosyal hesaplar yuvarlak ikon kutusu değil, sade metin bağlantısıdır */
   /* Alt çizgi yok: ayrım renk ve üzerine gelme durumuyla kurulur */
   .alt-sosyal a {
-    color: rgb(255 255 255 / 82%);
+    color: var(--metin);
     font-weight: var(--kalinlik-orta);
   }
-  .alt-sosyal a:hover { color: var(--hu-kirmizi-acik); }
+  .alt-sosyal a:hover { color: var(--hu-kirmizi); }
 
   .alt-sutun ul { margin: 0; padding: 0; list-style: none; }
   .alt-sutun li + li { margin-top: var(--bosluk-3); }
 
-  .alt-sutun a { color: rgb(255 255 255 / 78%); }
-  .alt-sutun a:hover { color: #fff; }
+  .alt-sutun a { color: var(--metin-2); }
+  .alt-sutun a:hover { color: var(--hu-kirmizi); }
 
   .alt-iletisim {
     display: block;          /* eski iki sütunlu ızgara kuralını geçersiz kılar */
@@ -299,12 +299,13 @@
     font-size: var(--olcu-xs);
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: rgb(255 255 255 / 45%);
+    color: var(--metin-3);
   }
   .alt-iletisim dd { margin: 0 0 2px; overflow-wrap: anywhere; }
 
   /* Alt şerit: telif ve yasal bağlantılar */
-  .alt-serit { border-top: 1px solid rgb(255 255 255 / 12%); }
+  /* Alt şerit: hafif zemin farkıyla ayrılır */
+  .alt-serit { border-top: 1px solid var(--cizgi); background: var(--yuzey-2); }
   .alt-serit-ic {
     display: flex;
     flex-wrap: wrap;
@@ -314,12 +315,12 @@
     padding-top: var(--bosluk-4);
     padding-bottom: var(--bosluk-4);
   }
-  .alt-serit small { color: rgb(255 255 255 / 52%); font-size: var(--olcu-xs); }
+  .alt-serit small { color: var(--metin-3); font-size: var(--olcu-xs); }
   .alt-baglantilar { display: flex; gap: var(--bosluk-5); margin: 0; }
-  .alt-baglantilar a { font-size: var(--olcu-xs); color: rgb(255 255 255 / 68%); }
-  .alt-baglantilar a:hover { color: #fff; }
+  .alt-baglantilar a { font-size: var(--olcu-xs); color: var(--metin-2); }
+  .alt-baglantilar a:hover { color: var(--hu-kirmizi); }
 
-  .alt a:focus-visible { outline: 2px solid var(--hu-kirmizi-acik); outline-offset: 2px; }
+  .alt a:focus-visible { outline: 2px solid var(--hu-kirmizi); outline-offset: 2px; }
 
   /* ================= dar ekran ================= */
 

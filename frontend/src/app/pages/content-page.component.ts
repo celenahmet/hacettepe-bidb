@@ -5,6 +5,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { switchMap, map, tap } from 'rxjs/operators';
 import { Api } from '../core/api.service';
 import { Seo } from '../core/seo.service';
+import { baglantiDizinleriniIsaretle } from '../core/icerik-bicim';
 import { Language, Page } from '../core/models';
 import { SideMenuComponent } from '../layout/side-menu.component';
 
@@ -65,7 +66,7 @@ export class ContentPageComponent {
             this.seo.uygula(s, language, `/${language}/${slug}`);
             // İçerik kaynaktan birebir alındığı ve kurum tarafından yönetildiği için
             // olduğu gibi basılır.
-            this.govde.set(this.temizleyici.bypassSecurityTrustHtml(s?.contentHtml ?? ''));
+            this.govde.set(this.temizleyici.bypassSecurityTrustHtml(baglantiDizinleriniIsaretle(s?.contentHtml ?? '')));
           }),
           map((s) => s as Page | null)
         );
