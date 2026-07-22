@@ -92,3 +92,81 @@
     .icerik table td { padding-right: var(--bosluk-3); }
   }
 }
+
+@layer kamu {
+  /* ================= Kadro / kurul tabloları =================
+
+     Başlıksız (thead'siz) ve bağlantı içermeyen tablolar bir kadro
+     listesidir: kurul üyeleri, komisyon üyeleri gibi. table-bordered'ın
+     kutu ızgarası bu içeriğe ağır geliyordu; ayrımlar yalnızca satır
+     çizgisiyle yapılıyor.
+
+     Bağlantı içeren tablolar (yönetim: ad/görev/e-posta) dışarıda
+     bırakılıyor: son sütunu rol rozetine çevirmek e-postayı bozardı. */
+
+  .icerik table:not(:has(thead)):not(:has(a)) {
+    border: 0;
+    margin: var(--bosluk-5) 0;
+  }
+
+  .icerik table:not(:has(thead)):not(:has(a)) td {
+    padding: var(--bosluk-3) var(--bosluk-4) var(--bosluk-3) 0;
+    border: 0;
+    border-bottom: 1px solid var(--cizgi);
+    vertical-align: middle;
+    background: none;
+  }
+
+  .icerik table:not(:has(thead)):not(:has(a)) tr:hover td { background: var(--yuzey-2); }
+
+  /* Ad: satırın konusu, kurumsal lacivert. */
+  .icerik table:not(:has(thead)):not(:has(a)) td:first-child {
+    font-weight: var(--kalinlik-kalin);
+    color: var(--hu-lacivert);
+    white-space: nowrap;
+  }
+
+  /* Orta sütun(lar): unvan, bir tık geride. */
+  .icerik table:not(:has(thead)):not(:has(a)) td:not(:first-child):not(:last-child) {
+    color: var(--metin-2);
+    font-size: var(--olcu-sm);
+  }
+
+  /* Son sütun: rol/görev rozeti. Sağa yaslı, ince çerçeveli. Üç sütundan
+     az tabloda son sütun zaten unvandır; rozet yine de sade durur. */
+  .icerik table:not(:has(thead)):not(:has(a)) td:last-child {
+    text-align: right;
+  }
+
+  .icerik table:not(:has(thead)):not(:has(a)) td:last-child::after {
+    content: attr(data-rol);
+  }
+
+  /* Rozet görünümü, yalnızca üç veya daha çok sütunlu tablolarda (kurul
+     kadrosu) uygulanır: iki sütunlu basit tabloda son sütun rozet değil
+     düz metindir. :has ile satırdaki hücre sayısı denetlenemediğinden,
+     rozet stilini genel tutup yalnızca hafif bir çerçeveyle veriyoruz. */
+  .icerik table:not(:has(thead)):not(:has(a)) td:last-child:not(:first-child):not(:nth-child(2)) {
+    display: inline-block;
+    margin: 2px 0;
+    padding: 2px var(--bosluk-3);
+    border: 1px solid var(--cizgi-koyu);
+    border-radius: var(--kose-tam);
+    font-size: var(--olcu-xs);
+    font-weight: var(--kalinlik-orta);
+    color: var(--metin-2);
+    white-space: nowrap;
+  }
+
+  /* "Başkan" rolü öne çıkar: en üst satırdaki rol kırmızı zeminli. */
+  .icerik table:not(:has(thead)):not(:has(a)) tr:first-child td:last-child:not(:first-child):not(:nth-child(2)) {
+    border-color: var(--hu-kirmizi);
+    background: var(--hu-kirmizi);
+    color: #fff;
+  }
+
+  /* Komisyon adı: tablodan hemen önceki kalın paragraf bir başlık gibi. */
+  .icerik p:has(> b:only-child) + table:not(:has(thead)) {
+    margin-top: var(--bosluk-2);
+  }
+}
