@@ -7,9 +7,10 @@ import { Language, Slide } from '../core/models';
  *
  * TASARIM KARARLARI
  *
- * Metnin ardında kutu yok; doğrudan fotoğrafın üstünde duruyor. Okunurluk,
- * metnin altına zemin koyarak değil fotoğrafın tamamı eşit biçimde
- * koyulaştırılarak sağlanıyor — ayrıntısı styles/hero.css içinde.
+ * Okunurluk üç katmanla kuruluyor: fotoğrafın yalnızca metin tarafına inen
+ * yumuşak bir karartma, metin bloğunun ardında kenarları eriyen bir
+ * bulanıklık, ve dar bir metin gölgesi. Üçü birlikte fotoğrafı kapatmadan
+ * metni öne çıkarıyor — ayrıntısı ve gerekçesi styles/hero.css içinde.
  *
  * Geçiş yalnızca sönümlemeyle yapılır, kaydırmayla değil. Kayan slaytlar
  * gözü izlemeye zorlar; kurumsal bir sayfada gereksiz bir hareket.
@@ -48,6 +49,7 @@ import { Language, Slide } from '../core/models';
           <div class="hero-gorseller">
             @for (s of slaytlar; track s.imageUrl; let i = $index) {
               <img [class.etkin]="i === etkin()"
+                   class="hero-gorsel"
                    [src]="s.imageUrl"
                    [srcset]="darSurum(s.imageUrl) + ' 960w, ' + s.imageUrl + ' 1920w'"
                    sizes="100vw"
@@ -65,11 +67,18 @@ import { Language, Slide } from '../core/models';
                  geçiş fark edilmezdi. -->
             @for (s of gecerliListe(); track etkin()) {
               <div class="hero-panel">
+                <!-- Sayaç, slogan yerine geçen tek üst satır: kaçıncı
+                     slaytta olunduğunu söyler, yani bilgi taşır. -->
+                <p class="hero-sayac">
+                  <span>{{ sirali(etkin() + 1) }}</span>
+                  <i aria-hidden="true"></i>
+                  {{ sirali(slaytlar.length) }}
+                </p>
                 <h2 class="hero-baslik"><span>{{ s.title }}</span></h2>
                 @if (s.subtitle) { <p class="hero-ozet">{{ s.subtitle }}</p> }
                 @if (s.linkUrl) {
-                  <a class="hero-baglanti" [routerLink]="s.linkUrl">
-                    {{ dilDegeri === 'en' ? 'Read more' : 'Ayrıntılar' }}
+                  <a class="hero-dugme" [routerLink]="s.linkUrl">
+                    <span>{{ dilDegeri === 'en' ? 'Read more' : 'Ayrıntılar' }}</span>
                   </a>
                 }
               </div>
@@ -130,6 +139,12 @@ export class HeroSliderComponent implements OnDestroy {
   protected gecerliListe(): Slide[] {
     const s = this.gecerli();
     return s ? [s] : [];
+  }
+
+  /** İki haneli sıra numarası: 1 yerine 01. Tek haneli sayılar sayaçta
+      hizayı bozar ve geçici bir değer gibi görünür. */
+  protected sirali(n: number): string {
+    return n < 10 ? '0' + n : String(n);
   }
 
   /** 1920'lik adresten 960'lık sürümü türetir; ayrı bir alan tutmaya gerek yok. */
