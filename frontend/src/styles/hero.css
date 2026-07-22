@@ -3,7 +3,7 @@
    Amaç yalnızca bilgi vermek değil; ilk bakışta kalite hissi veren bir
    açılış kurmak. Ama gösteriyle değil, üç şeyle: ölçü, katman ve ışık.
 
-   ── OKUNURLUK ÜÇ KATMANLA KURULUR ────────────────────────────────────
+   ── OKUNURLUK İKİ KATMANLA KURULUR ───────────────────────────────────
 
    1. LOKAL KARARTMA. Fotoğrafın tamamı değil, yalnızca metnin bulunduğu
       sol taraf koyulaşır; sağ kenara doğru tamamen açılır. Fotoğrafın
@@ -11,15 +11,13 @@
       fotoğrafı görür. Eşit karartma her yeri aynı ölçüde soldurur;
       alttan gelen düz bir geçiş ise fotoğrafın alt yarısını yutar.
 
-   2. ERİYEN BULANIKLIK. Metin bloğunun ardındaki alan hafifçe bulanır.
-      Kenarı yok: bulanıklık bir maskeyle sağa ve dikeyde eriyerek biter,
-      yani "fotoğrafın üstüne konmuş bir kutu" değil "fotoğrafın o bölgede
-      yumuşaması" olarak okunur. Kutunun kendisi kurumsal bir sayfada ucuz
-      durur; yumuşama durmaz.
+   2. DAR METİN GÖLGESİ. Yalnızca harf kenarını tutacak kadar. Karartmanın
+      yetmediği açık noktalarda (gökyüzü, beton) devreye girer. Büyüdüğünde
+      metin kabartma gibi görünür ve ucuzlar.
 
-   3. DAR METİN GÖLGESİ. Yalnızca harf kenarını tutacak kadar. Karartma ve
-      bulanıklığın yetmediği açık noktalarda (gökyüzü, beton) devreye
-      girer. Büyüdüğünde metin kabartma gibi görünür ve ucuzlar.
+   Metnin ardında bir bulanıklık katmanı denendi ve kaldırıldı: fotoğrafın
+   o bölgesini eritiyor, karartmayla üst üste binince sol taraf gereğinden
+   fazla işlenmiş görünüyordu. İki katman aynı işi yapıyorsa biri fazladır.
 
    ── HAREKET ───────────────────────────────────────────────────────────
 
@@ -52,11 +50,14 @@
 
   /* ---- Fotoğraf katmanı ---------------------------------------------- */
 
+  /* Alt kenardan kırpıldı: 16/7 yerine 16/6. Fotoğrafların ilgi noktası
+     üst yarıda; alttaki fazlalık yalnızca sayfanın gerçek içeriğini aşağı
+     itiyordu. */
   .hero-gorseller {
     position: relative;
-    aspect-ratio: 16 / 7;
-    min-height: 27rem;
-    max-height: 38rem;
+    aspect-ratio: 16 / 6;
+    min-height: 24rem;
+    max-height: 33rem;
     overflow: hidden;
     background: var(--yuzey-ters);
   }
@@ -69,11 +70,15 @@
     object-fit: cover;
     opacity: 0;
     transform: scale(1.06);
-    transition: opacity 900ms ease;
+    /* Giren ve çıkan fotoğraf aynı eğriyle değil: çıkan hızlı çekilir,
+       giren yavaş yerleşir. Eşit süreli bir sönümlemede iki fotoğraf
+       ortada yarı yarıya görünüp bulanık bir ara kare oluşturuyordu. */
+    transition: opacity 500ms cubic-bezier(0.4, 0, 1, 1);
   }
 
   .hero-gorsel.etkin {
     opacity: 1;
+    transition: opacity 1100ms cubic-bezier(0.22, 0.61, 0.36, 1);
     /* Yakınlaşma yalnızca görünen fotoğrafta çalışır; süresi slayt
        süresiyle aynı olduğu için hareket tam geçiş anında biter. */
     animation: hero-yaklas 10s linear forwards;
@@ -100,17 +105,23 @@
         rgb(9 16 28 / 8%) 78%,
         rgb(9 16 28 / 4%) 100%),
       linear-gradient(to top,
-        rgb(9 16 28 / 38%) 0%,
-        rgb(9 16 28 / 0%) 28%);
+        rgb(9 16 28 / 52%) 0%,
+        rgb(9 16 28 / 18%) 34%,
+        rgb(9 16 28 / 0%) 62%);
   }
 
   /* ---- Metin bloğu ---------------------------------------------------- */
 
+  /* Metin dikeyde ortalanmıyor, alta yaslanıyor: başlangıç noktasını
+     başlığın kendisi belirlesin. Ortalanan blok, açıklama uzunluğu
+     değiştikçe her slaytta başka yükseklikte duruyor ve başlık yerinde
+     durmuyordu. Alta yaslandığında başlık her slaytta aynı hizadan
+     başlar. */
   .hero-kap {
     position: absolute;
     inset: 0;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     pointer-events: none;
     z-index: 1;
   }
@@ -119,37 +130,9 @@
     position: relative;
     pointer-events: auto;
     max-width: 40rem;
-    padding: var(--bosluk-6) var(--bosluk-6) var(--bosluk-6) var(--bosluk-5);
-    margin-left: calc(-1 * var(--bosluk-5));
+    /* Alt boşluk denetim düğmelerinin şeridini boş bırakır. */
+    padding: 0 var(--bosluk-6) var(--bosluk-8) 0;
     text-shadow: 0 1px 2px rgb(0 0 0 / 45%);
-  }
-
-  /* Eriyen bulanıklık. Ayrı bir ögede durur ki maske yalnızca ona
-     uygulansın; metnin kendisi maskeden etkilenmez. */
-  .hero-panel::after {
-    content: "";
-    position: absolute;
-    inset: -1rem -2rem -1rem -3rem;
-    z-index: -1;
-    backdrop-filter: blur(16px) saturate(115%);
-    -webkit-backdrop-filter: blur(16px) saturate(115%);
-    /* Kenarları eritir: sağa ve dikeyde biterek çerçeveyi görünmez kılar.
-       İki maske kesişerek köşeleri de yumuşatır. */
-    mask-image:
-      linear-gradient(to right, #000 0%, #000 52%, transparent 100%),
-      linear-gradient(to bottom, transparent 0%, #000 16%, #000 84%, transparent 100%);
-    -webkit-mask-image:
-      linear-gradient(to right, #000 0%, #000 52%, transparent 100%),
-      linear-gradient(to bottom, transparent 0%, #000 16%, #000 84%, transparent 100%);
-    mask-composite: intersect;
-    -webkit-mask-composite: source-in;
-  }
-
-  /* Bulanıklığı desteklemeyen tarayıcıda katman hiç çizilmez; lokal
-     karartma ve metin gölgesi okunurluğu tek başına taşır. Yarı saydam
-     koyu bir kutuya düşmek, tam da kaçınılan görüntüyü üretirdi. */
-  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-    .hero-panel::after { display: none; }
   }
 
   /* Başlık maskenin ardından yükselerek açılır: dış öge bir pencere, iç
@@ -168,7 +151,7 @@
 
   .hero-baslik > span {
     display: block;
-    animation: hero-perde 700ms cubic-bezier(0.16, 0.84, 0.24, 1) both;
+    animation: hero-perde 760ms 60ms cubic-bezier(0.16, 0.84, 0.24, 1) both;
   }
 
   @keyframes hero-perde {
@@ -182,7 +165,7 @@
     font-size: var(--olcu-lg);
     line-height: 1.55;
     color: rgb(255 255 255 / 86%);
-    animation: hero-giris 620ms 180ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    animation: hero-giris 700ms 260ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
   }
 
   /* ---- Düğme ------------------------------------------------------- */
@@ -204,7 +187,7 @@
     color: #fff;
     text-shadow: none;
     transition: background var(--gecis), border-color var(--gecis), color var(--gecis);
-    animation: hero-giris 620ms 300ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    animation: hero-giris 700ms 400ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
   }
 
   .hero-dugme::after {
@@ -226,7 +209,7 @@
   }
 
   @keyframes hero-giris {
-    from { opacity: 0; transform: translateY(14px); }
+    from { opacity: 0; transform: translateY(16px); }
     to   { opacity: 1; transform: none; }
   }
 
@@ -279,9 +262,16 @@
   /* ---- Dar ekran -------------------------------------------------------- */
 
   @media (max-width: 56rem) {
+    /* Bölüm zemini beyaza döner. Koyu zemin masaüstünde fotoğrafın
+       oturduğu çerçeve içindi; dar ekranda metin fotoğrafın ALTINA indiği
+       için o koyuluk metnin arkasına geçiyor ve lacivert başlığı
+       yutuyordu. */
+    .hero { background: var(--yuzey); }
+
     .hero-gorseller {
       aspect-ratio: 4 / 3;
       min-height: 0;
+      max-height: none;
     }
 
     /* Metin altta olduğu için soldan karartmaya gerek yok; yalnızca
@@ -299,12 +289,9 @@
 
     .hero-panel {
       max-width: none;
-      margin-left: 0;
       padding: var(--bosluk-5) 0 var(--bosluk-4);
       text-shadow: none;
     }
-
-    .hero-panel::after { display: none; }
 
     .hero-baslik { font-size: var(--olcu-2xl); color: var(--hu-lacivert); }
     .hero-ozet { font-size: var(--olcu-md); color: var(--metin-2); }
