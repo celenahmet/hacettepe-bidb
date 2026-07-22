@@ -1,0 +1,196 @@
+/* Aktarılan içeriğin taşıdığı eski sınıflar.
+ *
+ * Sayfa metinleri kaynak siteden birebir alındı ve DEĞİŞTİRİLEMEZ. İçlerinde
+ * kaynak sitenin Bootstrap 3 sınıfları (col-md-6, card, panel-*) ve siteye
+ * özgü sınıflar (icerik, kisayol) gömülü. Bootstrap'i projeye dâhil etmek
+ * yerine, yalnızca içerikte gerçekten geçen 53 sınıf burada karşılanır.
+ *
+ * Tümü `.icerik` altına kapsanmıştır: yeni tasarımın sınıf adları bunlarla
+ * çakışamaz, eski kurallar dışarı sızamaz.
+ *
+ * ÖNEMLİ: `.collapse` Bootstrap'te gizlidir. Burada GİZLENMEZ — gizlenirse
+ * içerikteki 59 blok kullanıcıya görünmez olur ki bu, içeriği değiştirmekle
+ * aynı kapıya çıkar.
+ */
+
+@layer legacy {
+  .icerik {
+    font-size: var(--olcu-md);
+    line-height: var(--satir-normal);
+    color: var(--metin);
+  }
+
+  /* ---------- ızgara ---------- */
+
+  .icerik .container { width: 100%; max-width: 100%; padding: 0; }
+
+  .icerik .row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--bosluk-4);
+    margin: 0 0 var(--bosluk-4);
+  }
+  .icerik .row.no-gutters { gap: 0; }
+
+  /* Bootstrap 12'lik ızgara; yalnızca içerikte geçen genişlikler */
+  .icerik [class*="col-"] { flex: 1 1 240px; min-width: 0; }
+  .icerik .col-4 { flex: 0 1 calc(33.333% - var(--bosluk-4)); }
+  .icerik .col-md-2 { flex: 0 1 calc(16.666% - var(--bosluk-4)); }
+  .icerik .col-lg-3 { flex: 0 1 calc(25% - var(--bosluk-4)); }
+  .icerik .col-md-12,
+  .icerik .col-sm-12 { flex: 1 1 100%; }
+
+  @media (max-width: 720px) {
+    .icerik [class*="col-"] { flex: 1 1 100%; }
+  }
+
+  /* ---------- kart ---------- */
+
+  .icerik .card {
+    border: 1px solid var(--cizgi);
+    border-radius: var(--kose-md);
+    background: var(--yuzey);
+    overflow: hidden;
+  }
+  .icerik .card-body { padding: var(--bosluk-4); }
+  .icerik .card-title2 {
+    margin: 0 0 var(--bosluk-2);
+    font-size: var(--olcu-lg);
+    font-weight: var(--kalinlik-kalin);
+    color: var(--hu-lacivert);
+  }
+  .icerik .h-100 { height: 100%; }
+
+  /* ---------- uyarı kutusu ---------- */
+
+  .icerik .alert {
+    padding: var(--bosluk-3) var(--bosluk-4);
+    border: 1px solid var(--cizgi);
+    border-left: 3px solid var(--metin-3);
+    border-radius: 0 var(--kose-sm) var(--kose-sm) 0;
+    margin: 0 0 var(--bosluk-4);
+  }
+  .icerik .alert-warning {
+    background: #fdf6e3;
+    border-left-color: var(--uyari);
+    color: #6b4e00;
+  }
+  .icerik .uyari { color: var(--uyari); }
+
+  /* ---------- tablo ---------- */
+
+  .icerik .table-responsive { overflow-x: auto; }
+  .icerik table.table { width: 100%; border-collapse: collapse; }
+  .icerik .table-bordered th,
+  .icerik .table-bordered td { border: 1px solid var(--cizgi); }
+  .icerik .table-borderless th,
+  .icerik .table-borderless td { border: 0; }
+  .icerik .table-sm th,
+  .icerik .table-sm td { padding: var(--bosluk-2) var(--bosluk-3); }
+  .icerik .table-hover tbody tr:hover { background: var(--yuzey-2); }
+
+  /* ---------- gömülü video ---------- */
+
+  .icerik .embed-responsive {
+    position: relative;
+    display: block;
+    width: 100%;
+    max-width: 720px;
+    overflow: hidden;
+    border-radius: var(--kose-md);
+  }
+  .icerik .embed-responsive-16by9 { aspect-ratio: 16 / 9; }
+  .icerik .embed-responsive-item,
+  .icerik .embed-responsive iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  /* ---------- Bootstrap 3 akordeon (panel-*) ----------
+     Kaynakta açılır-kapanır panel olarak kullanılmış. Bootstrap'in JavaScript'i
+     olmadığı için içerik açık gösterilir; başlıklar bölüm başlığı gibi
+     biçimlendirilir. İçerik gizlenmez. */
+
+  .icerik .panel-group { margin: 0 0 var(--bosluk-5); }
+
+  .icerik .panel {
+    border: 1px solid var(--cizgi);
+    border-radius: var(--kose-md);
+    background: var(--yuzey);
+    margin-bottom: var(--bosluk-3);
+    overflow: hidden;
+  }
+
+  .icerik .panel-heading {
+    padding: var(--bosluk-3) var(--bosluk-4);
+    background: var(--yuzey-2);
+    border-bottom: 1px solid var(--cizgi);
+  }
+
+  .icerik .panel-title {
+    margin: 0;
+    font-size: var(--olcu-md);
+    font-weight: var(--kalinlik-kalin);
+    line-height: var(--satir-sik);
+  }
+  .icerik .panel-title a { color: var(--hu-lacivert); }
+  .icerik .panel-title a:hover { color: var(--hu-kirmizi); }
+
+  .icerik .panel-body { padding: var(--bosluk-4); }
+
+  /* Bootstrap'te gizlidir; burada bilinçli olarak görünür bırakılır */
+  .icerik .panel-collapse,
+  .icerik .collapse { display: block; }
+
+  /* ---------- kaynak siteye özgü ---------- */
+
+  .icerik .genel { margin-bottom: var(--bosluk-4); }
+  .icerik .small { font-size: var(--olcu-sm); color: var(--metin-2); }
+
+  .icerik .kisayollar,
+  .icerik .servisler_liste,
+  .icerik .duyurular_liste {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--bosluk-4);
+    padding: 0;
+    list-style: none;
+  }
+
+  .icerik .kisayol,
+  .icerik .servis {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--bosluk-2);
+    text-align: center;
+    font-size: var(--olcu-sm);
+  }
+
+  .icerik .duyurular_ana { margin-bottom: var(--bosluk-5); }
+  .icerik .duyurular_tum { display: inline-block; margin-top: var(--bosluk-3); }
+
+  /* Kaynakta karusel eklentisiyle kullanılmış; eklenti yok, düz liste olarak
+     gösterilir. Yatay taşma engellenir. */
+  .icerik .owl-carousel,
+  .icerik .owl-theme {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--bosluk-4);
+    overflow-x: auto;
+  }
+  .icerik .owl-carousel .item { flex: 0 0 auto; }
+
+  /* ---------- aralık ve hizalama yardımcıları ---------- */
+
+  .icerik .mt-0 { margin-top: 0; }
+  .icerik .mt-4 { margin-top: var(--bosluk-5); }
+  .icerik .mb-2 { margin-bottom: var(--bosluk-2); }
+  .icerik .mb-3 { margin-bottom: var(--bosluk-3); }
+  .icerik .mb-4 { margin-bottom: var(--bosluk-5); }
+  .icerik .text-center { text-align: center; }
+  .icerik .text-danger { color: var(--hu-kirmizi); }
+}

@@ -1,0 +1,116 @@
+/* Tasarım değişkenleri (design tokens).
+ *
+ * Tüm görsel kararlar burada tanımlanır; bileşenler sabit değer kullanmaz.
+ * Renk paleti veya tipografi değiştirilecekse yalnızca bu dosya düzenlenir.
+ *
+ * Hacettepe kurumsal renkleri temel alınmıştır; ölçekler 4px tabanlıdır.
+ */
+
+@layer tokens {
+  :root {
+    /* ---------- renk: marka ---------- */
+    --hu-kirmizi: #b31821;
+    --hu-kirmizi-koyu: #8e1119;
+    --hu-kirmizi-acik: #d94a52;
+    --hu-lacivert: #1b3f74;
+    --hu-mavi: #2f6fb5;
+
+    /* ---------- renk: yüzey ve metin ---------- */
+    --yuzey: #ffffff;
+    --yuzey-2: #f7f9fb;
+    --yuzey-3: #eef2f6;
+    --yuzey-ters: #16202e;
+
+    --metin: #1c2530;
+    --metin-2: #4a5765;
+    --metin-3: #6f7d8c;
+    --metin-ters: #f2f5f8;
+
+    --cizgi: #e1e6ec;
+    --cizgi-koyu: #c8d1da;
+
+    /* ---------- renk: durum ---------- */
+    --basari: #1f7a3d;
+    --uyari: #9a6b00;
+    --hata: #b3261e;
+    --bilgi: var(--hu-mavi);
+
+    /* ---------- tipografi ---------- */
+    --yazi-govde: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --yazi-baslik: var(--yazi-govde);
+    --yazi-kod: "Cascadia Mono", Consolas, "Courier New", monospace;
+
+    /* 1.200 (minor third) ölçeği, 16px tabanlı */
+    --olcu-xs: 0.75rem;
+    --olcu-sm: 0.875rem;
+    --olcu-md: 1rem;
+    --olcu-lg: 1.125rem;
+    --olcu-xl: 1.35rem;
+    --olcu-2xl: 1.62rem;
+    --olcu-3xl: 1.95rem;
+    --olcu-4xl: 2.35rem;
+
+    --satir-sik: 1.3;
+    --satir-normal: 1.6;
+    --satir-genis: 1.75;
+
+    --kalinlik-normal: 400;
+    --kalinlik-orta: 500;
+    --kalinlik-kalin: 600;
+
+    /* ---------- boşluk (4px tabanlı) ---------- */
+    --bosluk-1: 0.25rem;
+    --bosluk-2: 0.5rem;
+    --bosluk-3: 0.75rem;
+    --bosluk-4: 1rem;
+    --bosluk-5: 1.5rem;
+    --bosluk-6: 2rem;
+    --bosluk-7: 3rem;
+    --bosluk-8: 4rem;
+
+    /* ---------- biçim ---------- */
+    --kose-sm: 3px;
+    --kose-md: 6px;
+    --kose-lg: 10px;
+    --kose-tam: 999px;
+
+    --golge-1: 0 1px 2px rgb(16 24 40 / 6%);
+    --golge-2: 0 2px 8px rgb(16 24 40 / 8%);
+    --golge-3: 0 8px 24px rgb(16 24 40 / 12%);
+
+    /* ---------- düzen ---------- */
+    --kap-genislik: 1180px;
+    --kap-dar: 820px;
+    --sol-menu-genislik: 268px;
+
+    /* ---------- hareket ---------- */
+    --gecis-hizli: 120ms ease;
+    --gecis: 180ms ease;
+    --gecis-yavas: 320ms ease;
+  }
+
+  /* ---------- eski değişken adları (köprü) ----------
+   *
+   * Mevcut bileşen stilleri bu adları kullanıyor. Bileşenler yeni tasarıma
+   * geçtikçe bu bölüm küçülecek; hepsi taşındığında tamamen kaldırılacak.
+   * Böylece tasarım yenilemesi tek seferde değil, parça parça yapılabilir.
+   */
+  :root {
+    --lacivert: var(--hu-lacivert);
+    --mavi: var(--hu-mavi);
+    --kirmizi: var(--hu-kirmizi);
+    --metin-acik: var(--metin-2);
+    --zemin: var(--yuzey-2);
+    --beyaz: var(--yuzey);
+    --kap: var(--kap-genislik);
+  }
+
+  /* Hareketi azalt tercihi olan kullanıcılar için geçişler kapatılır. */
+  @media (prefers-reduced-motion: reduce) {
+    :root {
+      --gecis-hizli: 0ms;
+      --gecis: 0ms;
+      --gecis-yavas: 0ms;
+    }
+  }
+}
