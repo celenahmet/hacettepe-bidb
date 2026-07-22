@@ -1,87 +1,207 @@
 /* Organizasyon şeması.
 
-   Şema bir hiyerarşi olduğu için işaretlemede iç içe liste olarak durur;
-   bu dosya yalnızca o yapıyı görünür kılar. Kutu, gölge ve renkli zemin
-   kullanılmaz: hiyerarşi hiza, boşluk ve ince çizgiyle anlatılır. Bunlar
-   moda olmadıkları için eskimezler de.
+   Gerçek bir şema: düğümler ve onları bağlayan çizgiler. Hiyerarşi
+   işaretlemede iç içe liste olarak duruyor, bu dosya o yapıyı çiziyor.
 
-   Klasik kutulu şemaların iki bilinen sorunu vardır: dar ekranda taşarlar
-   ve bir birim eklendiğinde denge bozulur. Buradaki düzen sütun sayısını
-   ekrana bırakır, birim sayısına değil. */
+   ÜÇ TASARIM KARARI
+
+   1. "İdari ve Mali İşler Birimi" iki yardımcılıkla aynı hizada, üçüncü
+      bir sütun olarak durmuyor. O birim bir yardımcılık değil, doğrudan
+      Daire Başkanına bağlı tek bir kalem; gövdeden ayrılan bir yan dal
+      olarak çiziliyor. Eşit sütuna konduğunda altında kocaman bir boşluk
+      kalıyordu — boşluk bir çizim kazası değil, yanlış eşitlemenin
+      sonucuydu. Doğru yere konunca denge kendiliğinden kuruluyor.
+
+   2. Düğümler kutu ama gölgesiz, yuvarlaksız, tek renkli. Şema düğüm
+      gerektirir; bir kutunun sınırı bilgidir, süs değil. Başkan düğümü
+      dolu lacivert — şemanın çıpası tek bakışta bulunmalı. Alt düzeyler
+      beyaz zemin ve ince çizgiyle; ağırlık aşağı indikçe azalıyor.
+
+   3. Bağlantı çizgileri 1px hairline. Şemanın anlattığı şey bağlılık
+      olduğu için çizgiler gerçekten çiziliyor; girinti ile ima edilmiyor.
+
+   Dar ekranda şema düşey bir listeye dönüşüyor: yan yana kutular 390px'e
+   sığmaz, sığdırılmaya çalışıldığında okunmaz hâle gelir. */
 
 @layer kamu {
 
   .icerik .sema {
-    margin: var(--bosluk-6) 0 var(--bosluk-5);
-    max-width: none;              /* şema metin sütunundan geniştir */
+    --sema-ara: 3rem;          /* iki yardımcılık sütunu arası */
+    --sema-govde: 6rem;        /* başkandan yatay bara inen gövde */
+    --sema-dus: 2rem;          /* bardan yardımcılık düğümüne düşen çizgi */
+    --sema-cizgi: var(--cizgi-koyu);
+
+    margin: var(--bosluk-7) 0 var(--bosluk-6);
+    max-width: none;
   }
 
+  /* Sıfırlama yalnızca listeye özgü ne varsa onu kapsar. Boşluk BURADA
+     verilmez: ".icerik .sema ul" seçicisi ".icerik .sema-dal"dan daha
+     özgül olduğu için dalların kendi boşluklarını eziyordu. */
   .icerik .sema ul {
     list-style: none;
-    margin: 0;
     padding: 0;
     max-width: none;
   }
 
   .icerik .sema li { margin: 0; }
 
-  /* ---- Başkan: şemanın çıpası ------------------------------------- */
+  /* ---- Düğüm ------------------------------------------------------- */
 
-  /* Tek satırlık bir başlık bandı. Altındaki dalların hepsi buradan
-     çıktığı için tam genişlikte durur ve kırmızı bir çizgiyle biter —
-     bu çizgi aynı zamanda dallara giden ortak gövdedir. */
-  .icerik .sema-baskan {
+  .icerik .sema-dugum {
+    /* inline-block + text-align yerine blok + otomatik kenar boşluğu:
+       aktarılan içeriğin ".icerik li { text-align: left }" kuralı
+       ortalamayı eziyordu. Kutuyu kendi kenar boşluğuyla ortalamak o
+       kuraldan etkilenmez. */
     display: block;
-    padding-bottom: var(--bosluk-3);
-    border-bottom: 2px solid var(--hu-kirmizi);
-    font-size: var(--olcu-xl);
+    width: max-content;
+    max-width: 100%;
+    padding: var(--bosluk-3) var(--bosluk-5);
+    border: 1px solid var(--sema-cizgi);
+    border-radius: var(--kose-sm);
+    background: var(--yuzey);
+    font-size: var(--olcu-sm);
     font-weight: var(--kalinlik-kalin);
     line-height: var(--satir-sik);
     color: var(--hu-lacivert);
+    white-space: nowrap;
+  }
+
+  /* Yardımcılığın alanı ("İdari" / "Teknik") adın parçası ama ondan bir
+     tık hafif: hangi yardımcılık olduğunu ayırır, başlığı bölmez. */
+  .icerik .sema-dugum b {
+    font-weight: var(--kalinlik-orta);
+    color: var(--metin-2);
+  }
+
+  /* ---- Başkan ------------------------------------------------------- */
+
+  .icerik .sema-baskan {
+    margin-inline: auto;
+    padding: var(--bosluk-4) var(--bosluk-6);
+    border-color: var(--hu-lacivert);
+    background: var(--hu-lacivert);
+    font-size: var(--olcu-md);
+    color: #fff;
     letter-spacing: 0.01em;
   }
 
-  /* ---- Dallar ------------------------------------------------------ */
+  .icerik .sema-kol > .sema-dugum { margin-inline: auto; }
 
-  /* Üç dal: İdari yardımcılık, doğrudan bağlı birim, Teknik yardımcılık.
-     Özgün şemadaki sol–orta–sağ okuma sırası korunur.
-     auto-fit sayesinde dar ekranda kendiliğinden alt alta iner; ayrı bir
-     kırılma noktası tanımlamaya gerek kalmaz. */
-  .icerik .sema-dal {
+  /* ---- Gövde ve dallar ---------------------------------------------- */
+
+  .icerik .sema ul.sema-dal {
+    position: relative;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-    gap: 0;
+    grid-template-columns: 1fr 1fr;
+    column-gap: var(--sema-ara);
+    margin-top: var(--sema-govde);
   }
 
-  /* Dallar arasındaki ayrım, kutuyla değil dikey hairline ile yapılır.
-     İlk dalda çizgi olmaz; komşusu olana çizgi düşer. */
-  .icerik .sema-dal > li {
-    padding: var(--bosluk-5) var(--bosluk-5) var(--bosluk-5) 0;
-    border-top: 1px solid var(--cizgi);
-    margin-top: -1px;             /* satır sarınca çizgiler üst üste binmesin */
+  /* Başkandan aşağı inen gövde çizgisi. */
+  .icerik .sema-dal::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: calc(-1 * var(--sema-govde));
+    width: 1px;
+    height: var(--sema-govde);
+    background: var(--sema-cizgi);
   }
 
-  .icerik .sema-dal > li + li {
-    padding-left: var(--bosluk-5);
-    border-left: 1px solid var(--cizgi);
+  /* ---- Yan dal: doğrudan Başkana bağlı birim -------------------------- */
+
+  /* Gövdenin yanına asılır; akıştan çıktığı için ızgarada yer kaplamaz ve
+     iki yardımcılık sütunu bozulmaz. */
+  /* Gövdenin ortasına asılır: Başkan düğümünün altında, yardımcılık
+     barının üstünde. Yatay uzaklık Başkan kutusunun yarısından fazla
+     olmalı, yoksa iki kutu üst üste biner. */
+  .icerik .sema-yan {
+    position: absolute;
+    bottom: calc(100% + 1.1rem);
+    left: calc(50% + 3rem);
   }
 
-  /* Dalın adı: yardımcılık ya da doğrudan bağlı birim */
-  .icerik .sema-ad {
-    display: block;
-    font-size: var(--olcu-md);
-    font-weight: var(--kalinlik-kalin);
-    line-height: var(--satir-sik);
-    color: var(--hu-lacivert);
+  /* Gövdeye bağlayan yatay çizgi. */
+  .icerik .sema-yan::before {
+    content: "";
+    position: absolute;
+    left: -3rem;
+    top: 50%;
+    width: 3rem;
+    height: 1px;
+    background: var(--sema-cizgi);
   }
 
-  /* ---- Birimler ---------------------------------------------------- */
+  .icerik .sema-yan .sema-dugum {
+    font-weight: var(--kalinlik-orta);
+    color: var(--metin-2);
+  }
 
-  /* Birimler, bağlı oldukları dalın altında girintili bir liste hâlinde
-     durur. Her satırın önündeki kısa çizgi, madde imi değil bağlantı
-     göstergesidir: bağlılığı anlatır. */
-  .icerik .sema-birim {
-    margin-top: var(--bosluk-3);
+  /* ---- Yardımcılık sütunları ------------------------------------------ */
+
+  .icerik .sema-kol {
+    position: relative;
+    padding-top: var(--sema-dus);
+  }
+
+  /* Bardan düğüme inen dikey çizgi. */
+  .icerik .sema-kol::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 1px;
+    height: var(--sema-dus);
+    background: var(--sema-cizgi);
+  }
+
+  /* Yatay bar, iki parça hâlinde her sütunun kendi merkezinden boşluğun
+     ortasına kadar çizilir. Tek parça çizilseydi sütun merkezleriyle
+     hizalanması boşluk genişliğine bağlı kalırdı. */
+  .icerik .sema-kol::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    height: 1px;
+    background: var(--sema-cizgi);
+  }
+
+  /* Sondan sayılır: yan dal da bir <li> olduğu için baştan sayınca sıra
+     kayıyor ve bar yanlış sütuna çiziliyordu. */
+  .icerik .sema-kol:nth-last-of-type(2)::after {
+    left: 50%;
+    right: calc(-1 * var(--sema-ara) / 2);
+  }
+
+  .icerik .sema-kol:last-of-type::after {
+    right: 50%;
+    left: calc(-1 * var(--sema-ara) / 2);
+  }
+
+  /* ---- Birimler -------------------------------------------------------- */
+
+  /* Birimler, bağlı oldukları yardımcılığın altında sola hizalı bir liste.
+     Her satırın önündeki kısa çizgi bağlılığı gösterir; soldaki dikey
+     gövde ilk satırın ortasında başlayıp son satırın ortasında biter,
+     boşlukta asılı kalmaz. */
+  .icerik .sema ul.sema-birim {
+    margin: var(--bosluk-4) auto 0;
+    padding-top: var(--bosluk-4);
+    max-width: 22rem;
+    text-align: left;
+    position: relative;
+  }
+
+  /* Yardımcılık düğümünden birim listesine inen çizgi. */
+  .icerik .sema-birim::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 1px;
+    height: var(--bosluk-4);
+    background: var(--sema-cizgi);
   }
 
   .icerik .sema-birim > li {
@@ -99,11 +219,9 @@
     top: 1.05em;
     width: 0.75rem;
     height: 1px;
-    background: var(--cizgi-koyu);
+    background: var(--sema-cizgi);
   }
 
-  /* Birimleri dala bağlayan dikey gövde: ilk satırın ortasından son
-     satırın ortasına kadar uzanır, boşlukta asılı kalmaz. */
   .icerik .sema-birim > li::after {
     content: "";
     position: absolute;
@@ -111,26 +229,70 @@
     top: 0;
     bottom: 0;
     width: 1px;
-    background: var(--cizgi-koyu);
+    background: var(--sema-cizgi);
   }
 
   .icerik .sema-birim > li:first-child::after { top: 1.05em; }
   .icerik .sema-birim > li:last-child::after { bottom: calc(100% - 1.05em); }
-
-  /* Tek satırlık dalda (ilk ve son aynı öğe) dikey gövdeye gerek yok. */
   .icerik .sema-birim > li:only-child::after { display: none; }
 
-  /* ---- Dar ekran ---------------------------------------------------- */
+  /* ---- Dar ekran -------------------------------------------------------- */
 
-  /* Sütunlar alt alta indiğinde dikey ayraç anlamını yitirir; ayrımı
-     yatay çizgi üstlenir. Girinti de azalır ki metne yer kalsın. */
-  @media (max-width: 52rem) {
-    .icerik .sema-dal > li,
-    .icerik .sema-dal > li + li {
-      padding: var(--bosluk-5) 0;
-      border-left: 0;
+  /* Yan yana kutular 390px'e sığmaz. Şema düşey bir listeye dönüşür:
+     düğümler tam genişlik, bağlantılar tek bir sol gövde çizgisiyle. */
+  @media (max-width: 60rem) {
+    .icerik .sema-dugum {
+      width: auto;
+      white-space: normal;
     }
 
-    .icerik .sema-baskan { font-size: var(--olcu-lg); }
+    .icerik .sema-baskan,
+    .icerik .sema-kol > .sema-dugum { margin-inline: 0; }
+
+    .icerik .sema ul.sema-dal {
+      display: block;
+      margin-top: var(--bosluk-5);
+      padding-left: var(--bosluk-5);
+      border-left: 1px solid var(--sema-cizgi);
+    }
+
+    .icerik .sema-dal::before { display: none; }
+
+    /* Yan dal akışa geri döner ve sırada başa geçer: Başkana doğrudan
+       bağlı olduğu için yardımcılıklardan önce okunmalı. */
+    .icerik .sema-yan {
+      position: static;
+      margin-bottom: var(--bosluk-5);
+    }
+
+    .icerik .sema li { margin: 0; }
+
+    .icerik .sema-yan::before {
+      left: calc(-1 * var(--bosluk-5));
+      width: var(--bosluk-5);
+    }
+
+    .icerik .sema-kol {
+      padding-top: 0;
+    }
+
+    .icerik .sema-kol + .sema-kol { margin-top: var(--bosluk-5); }
+
+    .icerik .sema-kol::before {
+      left: calc(-1 * var(--bosluk-5));
+      top: 1.3rem;
+      width: var(--bosluk-5);
+      height: 1px;
+    }
+
+    .icerik .sema-kol::after { display: none; }
+
+    .icerik .sema ul.sema-birim {
+      margin-left: 0;
+      max-width: none;
+      padding-top: var(--bosluk-3);
+    }
+
+    .icerik .sema-birim::before { display: none; }
   }
 }
