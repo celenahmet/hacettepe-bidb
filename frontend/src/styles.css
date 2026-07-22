@@ -14,10 +14,11 @@
  * altında kapsandığı için yeni tasarıma sızamaz.
  */
 
-@layer tokens, base, layout, site, legacy, panel, utility;
+@layer tokens, base, layout, legacy, site, kamu, panel, utility;
 
 @import "./styles/tokens.css";
 @import "./styles/legacy-content.css";
+@import "./styles/public.css";
 @import "./styles/admin.css";
 
 @layer site {
@@ -42,7 +43,7 @@
   }
 
   a { color: var(--mavi); text-decoration: none; }
-  a:hover { text-decoration: underline; }
+  a:hover { text-decoration: none; }
 
   img { max-width: 100%; height: auto; }
 

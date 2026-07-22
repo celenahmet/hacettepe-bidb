@@ -121,6 +121,40 @@ ve alt bilgisi panelde gösterilmez; çalışma yüzeyi bölünmez.
 
 ---
 
+## İçerik sayfası
+
+**Başlık kurumsal kırmızıdır** ve alt çizgi taşımaz; ayrım renk, punto ve
+boşlukla kurulur.
+
+**Ölçü kuralı:** okunan metin 72 karakterle sınırlıdır, ancak tablo ve
+görsel gibi taranan öğeler sütunun tamamını kullanır. Tabloyu metin
+ölçüsüne sıkıştırmak sütunları gereksiz daraltırdı.
+
+**Hizalama:** kaynak içerikte eski `align="justify"` niteliği bulunuyor.
+Türkçede tireleme olmadan iki yana yaslama kelime aralarında düzensiz
+boşluklar oluşturur ve okumayı yavaşlatır. Nitelik içeriğin parçası olduğu
+için silinmez; yalnızca sunum sola hizalanır.
+
+**Sol menünün tasarımı bilinçli olarak değiştirilmemiştir.** Kurumun ve
+ziyaretçilerin alışık olduğu gezinme görünümü korunur.
+
+---
+
+## Alt bilgi
+
+Dört sütunlu **asimetrik** ızgara: kurum kimliği solda geniş alanda,
+gezinme ve iletişim sağda dar sütunlarda. Eşit genişlikte dört kutu yerine
+asimetri, hazır şablon görünümünden uzaklaştırır ve okuma sırasını belirler.
+
+Koyu yüzey sayfayı kurumsal bir kapanışla bitirir ve içerik alanından net
+biçimde ayırır. Sosyal medya hesapları yuvarlak ikon kutuları değil, sade
+metin bağlantılarıdır.
+
+Dar ekranda dört sütun ikiye, 620px altında tek sütuna iner; kurum sütunu
+tam genişliğe geçer.
+
+---
+
 ## Aktarılan içerik ve eski sınıflar
 
 Sayfa metinleri kaynak siteden birebir alınmıştır ve **değiştirilemez**.

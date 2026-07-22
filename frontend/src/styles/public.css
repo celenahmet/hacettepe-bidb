@@ -1,0 +1,342 @@
+/* Ziyaretçi sayfaları — içerik alanının görsel dili.
+ *
+ * Tasarım kararları ve gerekçeleri:
+ *
+ *   · ALTI ÇİZGİ YOK. Ne başlıklarda ne bağlantılarda alt çizgi kullanılır.
+ *     Bağlantılar renk ve ağırlık farkıyla, üzerine gelindiğinde zemin
+ *     tonuyla ayrışır. (Erişilebilirlik notu: gövde metnindeki bağlantılar
+ *     yalnızca renkle değil, orta kalınlıkla da ayrışır.)
+ *
+ *   · DİKEY İŞARET. Başlıklar kırmızı bir dikey çizgiyle işaretlenir.
+ *     Yatay çizgi alt çizgi gibi okunurdu; dikey işaret hem ayırt edici
+ *     hem de kurumsal belge dilinde yerleşiktir.
+ *
+ *   · ÖLÇÜLÜ SATIR UZUNLUĞU. Gövde metni 72 karakteri aşmaz. Okunabilirliğin
+ *     en belirleyici ölçüsü satır uzunluğudur.
+ *
+ *   · KUTU YOK. Belgeler, tablolar ve alt bölümler karta hapsedilmez;
+ *     ince çizgi ve boşlukla ayrılır.
+ *
+ * İçerik metinleri kaynaktan birebir alınmıştır ve DEĞİŞTİRİLMEZ; burada
+ * yalnızca sunum tanımlanır.
+ */
+
+@layer kamu {
+  /* ================= sayfa iskeleti ================= */
+
+  .sayfa-duzen {
+    gap: var(--bosluk-7);
+    padding-top: var(--bosluk-6);
+    padding-bottom: var(--bosluk-8);
+    align-items: start;
+  }
+
+  .icerik-alani { min-width: 0; }
+
+  /* ================= sayfa başlığı ================= */
+
+  /* Sayfa başlığı kurumsal kırmızıdır (mevcut temadan gelen ton korunur).
+     Alt çizgi kullanılmaz; ayrım renk, punto ve boşlukla kurulur. */
+  .sayfa-baslik {
+    margin: 0 0 var(--bosluk-5);
+    padding: 0;
+    border-bottom: 0;
+    font-size: var(--olcu-3xl);
+    font-weight: var(--kalinlik-kalin);
+    line-height: var(--satir-sik);
+    letter-spacing: -0.02em;
+    color: var(--hu-kirmizi);
+  }
+
+  /* ================= gövde metni ================= */
+
+  /* Ölçü kuralı: OKUNAN metin 72 karakterle sınırlanır, ancak tablo ve
+     görsel gibi taranan öğeler sütunun tamamını kullanır. Tabloyu metin
+     ölçüsüne sıkıştırmak sütunları gereksiz daraltırdı. */
+  .icerik {
+    max-width: none;
+    font-size: var(--olcu-md);
+    line-height: var(--satir-genis);
+    color: var(--metin);
+  }
+
+  .icerik p,
+  .icerik ul,
+  .icerik ol,
+  .icerik blockquote,
+  .icerik h2,
+  .icerik h3,
+  .icerik h4 { max-width: 72ch; }
+
+  .icerik > :first-child { margin-top: 0; }
+
+  .icerik p { margin: 0 0 var(--bosluk-4); }
+
+  /* Kaynak içerikte eski align="justify" niteliği bulunuyor. Türkçede
+     tireleme olmadan iki yana yaslama, kelime araları arasında düzensiz
+     boşluklar ("nehirler") oluşturur ve okumayı yavaşlatır. Nitelik
+     içeriğin parçası olduğu için silinmez; yalnızca sunum düzeltilir. */
+  .icerik [align="justify"],
+  .icerik p,
+  .icerik li { text-align: left; }
+
+  /* Ara başlıklar: kurumsal lacivert, öncesinde geniş boşluk.
+     Boşluk, çizgiden daha güçlü bir ayırıcıdır. */
+  .icerik h2,
+  .icerik h3,
+  .icerik h4 {
+    margin: var(--bosluk-6) 0 var(--bosluk-3);
+    font-weight: var(--kalinlik-kalin);
+    line-height: var(--satir-sik);
+    letter-spacing: -0.01em;
+    color: var(--hu-lacivert);
+  }
+
+  .icerik h2 { font-size: var(--olcu-xl); }
+  .icerik h3 { font-size: var(--olcu-lg); }
+  .icerik h4 { font-size: var(--olcu-md); }
+
+  .icerik strong,
+  .icerik b { font-weight: var(--kalinlik-kalin); }
+
+  /* Bağlantılar: alt çizgi yerine renk + ağırlık; üzerine gelince zemin */
+  .icerik a {
+    color: var(--hu-mavi);
+    font-weight: var(--kalinlik-orta);
+    text-decoration: none;
+    border-radius: 2px;
+    transition: color var(--gecis-hizli), background var(--gecis-hizli);
+  }
+
+  .icerik a:hover {
+    color: var(--hu-kirmizi);
+    background: #f4f7fa;
+    box-shadow: 0 0 0 3px #f4f7fa;        /* zemin metne yapışmasın */
+  }
+
+  .icerik a:focus-visible {
+    outline: 2px solid var(--hu-kirmizi);
+    outline-offset: 2px;
+  }
+
+  /* Listeler */
+  .icerik ul,
+  .icerik ol { margin: 0 0 var(--bosluk-4); padding-left: var(--bosluk-5); }
+  .icerik li { margin-bottom: var(--bosluk-2); }
+  .icerik li::marker { color: var(--metin-3); }
+
+  /* Tablolar: dış çerçeve yok, satırlar ince çizgiyle ayrılır */
+  .icerik table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 0 var(--bosluk-5);
+    font-size: var(--olcu-sm);
+  }
+
+  .icerik th {
+    padding: var(--bosluk-2) var(--bosluk-3);
+    border: 0;
+    border-bottom: 2px solid var(--metin);
+    background: none;
+    font-size: 11px;
+    font-weight: var(--kalinlik-kalin);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--metin-2);
+    text-align: left;
+  }
+
+  .icerik td {
+    padding: var(--bosluk-3);
+    border: 0;
+    border-bottom: 1px solid var(--cizgi);
+    vertical-align: top;
+  }
+
+  .icerik img { border-radius: 2px; }
+
+  /* Alıntı ve vurgu blokları */
+  .icerik blockquote {
+    margin: 0 0 var(--bosluk-4);
+    padding-left: var(--bosluk-4);
+    border-left: 2px solid var(--cizgi-koyu);
+    color: var(--metin-2);
+  }
+
+  /* ================= belgeler ================= */
+
+  .belgeler {
+    max-width: 72ch;
+    margin-top: var(--bosluk-7);
+    padding-top: var(--bosluk-5);
+    border-top: 1px solid var(--cizgi);
+  }
+
+  .belgeler h2 {
+    margin: 0 0 var(--bosluk-4);
+    font-size: 11px;
+    font-weight: var(--kalinlik-kalin);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--metin-3);
+  }
+
+  .belgeler ul { margin: 0; padding: 0; list-style: none; }
+
+  .belgeler li + li { border-top: 1px solid var(--cizgi); }
+
+  .belgeler a {
+    display: flex;
+    align-items: baseline;
+    gap: var(--bosluk-4);
+    padding: var(--bosluk-3) var(--bosluk-2);
+    color: var(--metin);
+    text-decoration: none;
+    transition: background var(--gecis-hizli), color var(--gecis-hizli);
+  }
+
+  .belgeler a:hover { background: var(--yuzey-2); color: var(--hu-kirmizi); }
+
+  .belgeler a:focus-visible { outline: 2px solid var(--hu-kirmizi); outline-offset: -2px; }
+
+  /* Dosya türü: tek boşluklu yazı, kutu değil sade işaret */
+  .belge-tur {
+    flex: none;
+    min-width: 3.5em;
+    padding: 0;
+    background: none;
+    border-radius: 0;
+    font-family: var(--yazi-kod);
+    font-size: 11px;
+    font-weight: var(--kalinlik-kalin);
+    letter-spacing: 0.06em;
+    color: var(--hu-kirmizi);
+  }
+
+  /* Sol menünün tasarımı bilinçli olarak DEĞİŞTİRİLMEZ; kurumun alışık
+     olduğu gezinme görünümü korunur. İlgili kurallar site katmanındadır. */
+
+  /* ================= alt bilgi ================= */
+
+  /* Koyu yüzey, sayfayı kurumsal bir kapanışla bitirir ve içerik alanından
+     net biçimde ayrılır. Kutu yok; sütunlar boşlukla ayrışır. */
+  .alt {
+    margin-top: var(--bosluk-8);
+    padding: 0;
+    border-top: 0;
+    background: var(--yuzey-ters);
+    color: rgb(255 255 255 / 78%);
+    font-size: var(--olcu-sm);
+  }
+
+  /* Asimetrik ızgara: kurum sütunu geniş, gezinme sütunları dar */
+  .alt-izgara {
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) repeat(3, minmax(0, 1fr));
+    gap: var(--bosluk-7) var(--bosluk-6);
+    padding-top: var(--bosluk-7);
+    padding-bottom: var(--bosluk-6);
+  }
+
+  .alt-marka { display: flex; align-items: flex-start; gap: var(--bosluk-3); }
+  .alt-marka img { flex: none; }
+  .alt-marka strong {
+    display: block;
+    font-size: var(--olcu-md);
+    font-weight: var(--kalinlik-kalin);
+    color: #fff;
+    line-height: var(--satir-sik);
+  }
+  .alt-marka small {
+    display: block;
+    margin-top: 2px;
+    font-size: var(--olcu-sm);
+    color: rgb(255 255 255 / 62%);
+  }
+
+  .alt-adres {
+    max-width: 42ch;
+    margin: var(--bosluk-4) 0 0;
+    line-height: var(--satir-genis);
+    color: rgb(255 255 255 / 62%);
+  }
+
+  /* Bölüm etiketleri: küçük punto, geniş harf aralığı, kırmızı vurgu */
+  .alt-etiket {
+    display: block;
+    margin-bottom: var(--bosluk-3);
+    font-size: 10px;
+    font-weight: var(--kalinlik-kalin);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--hu-kirmizi-acik);
+  }
+
+  .alt-sosyal { margin-top: var(--bosluk-5); }
+  .alt-sosyal p { display: flex; flex-wrap: wrap; gap: var(--bosluk-4); margin: 0; }
+
+  /* Sosyal hesaplar yuvarlak ikon kutusu değil, sade metin bağlantısıdır */
+  /* Alt çizgi yok: ayrım renk ve üzerine gelme durumuyla kurulur */
+  .alt-sosyal a {
+    color: rgb(255 255 255 / 82%);
+    font-weight: var(--kalinlik-orta);
+  }
+  .alt-sosyal a:hover { color: var(--hu-kirmizi-acik); }
+
+  .alt-sutun ul { margin: 0; padding: 0; list-style: none; }
+  .alt-sutun li + li { margin-top: var(--bosluk-3); }
+
+  .alt-sutun a { color: rgb(255 255 255 / 78%); }
+  .alt-sutun a:hover { color: #fff; }
+
+  .alt-iletisim {
+    display: block;          /* eski iki sütunlu ızgara kuralını geçersiz kılar */
+    grid-template-columns: none;
+  }
+  .alt-iletisim dl { margin: 0 0 var(--bosluk-4); }
+  .alt-iletisim dt {
+    margin-bottom: 2px;
+    font-size: var(--olcu-xs);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgb(255 255 255 / 45%);
+  }
+  .alt-iletisim dd { margin: 0 0 2px; overflow-wrap: anywhere; }
+
+  /* Alt şerit: telif ve yasal bağlantılar */
+  .alt-serit { border-top: 1px solid rgb(255 255 255 / 12%); }
+  .alt-serit-ic {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--bosluk-3);
+    padding-top: var(--bosluk-4);
+    padding-bottom: var(--bosluk-4);
+  }
+  .alt-serit small { color: rgb(255 255 255 / 52%); font-size: var(--olcu-xs); }
+  .alt-baglantilar { display: flex; gap: var(--bosluk-5); margin: 0; }
+  .alt-baglantilar a { font-size: var(--olcu-xs); color: rgb(255 255 255 / 68%); }
+  .alt-baglantilar a:hover { color: #fff; }
+
+  .alt a:focus-visible { outline: 2px solid var(--hu-kirmizi-acik); outline-offset: 2px; }
+
+  /* ================= dar ekran ================= */
+
+  @media (max-width: 900px) {
+    .sayfa-duzen { gap: var(--bosluk-5); padding-top: var(--bosluk-5); }
+
+    .sayfa-baslik { font-size: var(--olcu-2xl); }
+
+    .icerik table { display: block; overflow-x: auto; }
+
+    /* Alt bilgi: dört sütun ikiye, sonra tek sütuna iner */
+    .alt-izgara { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--bosluk-6) var(--bosluk-5); }
+    .alt-kurum { grid-column: 1 / -1; }
+  }
+
+  @media (max-width: 620px) {
+    .alt-izgara { grid-template-columns: minmax(0, 1fr); }
+    .alt-serit-ic { flex-direction: column; align-items: flex-start; }
+  }
+}
