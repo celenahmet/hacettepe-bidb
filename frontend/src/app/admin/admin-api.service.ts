@@ -122,6 +122,33 @@ export interface ContactChannel {
   published: boolean;
 }
 
+export interface StaffMember {
+  id: number | null;
+  fullName: string;
+  /** Yalnızca yönetim kadrosunda dolu: "Daire Başkanı" gibi */
+  roleTitle: string | null;
+  /** Adın yanındaki açıklama: "(e-imza)" */
+  note: string | null;
+  /** Birim sorumlusu */
+  lead: boolean;
+  photoUrl: string | null;
+  /** Fotoğraf yoksa gösterilecek varsayılan ikon: 'kadin' | 'erkek' | null */
+  avatar: string | null;
+  sortOrder: number;
+}
+
+export interface StaffUnit {
+  id: number | null;
+  language: string;
+  name: string;
+  /** Beytepe / Sıhhiye; birim tek yerleşkedeyse boş */
+  campus: string | null;
+  phone: string | null;
+  sortOrder: number;
+  published: boolean;
+  members: StaffMember[];
+}
+
 const SESSION_KEY = 'bidb-yonetim';
 
 /** Yönetim uçlarına erişim. Kimlik bilgisi yalnızca tarayıcı oturumunda tutulur. */
@@ -342,6 +369,38 @@ export class AdminApiService {
 
   deleteContactChannel(id: number): Observable<void> {
     return this.http.delete<void>(`/api/admin/contact-channels/${id}`, { headers: this.basliklar() });
+  }
+
+  /* ---------- personel ---------- */
+
+  staffUnits(): Observable<StaffUnit[]> {
+    return this.http.get<StaffUnit[]>('/api/admin/staff/units', { headers: this.basliklar() });
+  }
+
+  saveStaffUnit(b: StaffUnit): Observable<unknown> {
+    return b.id
+      ? this.http.put(`/api/admin/staff/units/${b.id}`, b, { headers: this.basliklar() })
+      : this.http.post('/api/admin/staff/units', b, { headers: this.basliklar() });
+  }
+
+  deleteStaffUnit(id: number): Observable<void> {
+    return this.http.delete<void>(`/api/admin/staff/units/${id}`, { headers: this.basliklar() });
+  }
+
+  saveStaffMember(unitId: number, k: StaffMember): Observable<unknown> {
+    return k.id
+      ? this.http.put(`/api/admin/staff/members/${k.id}`, k, { headers: this.basliklar() })
+      : this.http.post(`/api/admin/staff/units/${unitId}/members`, k, { headers: this.basliklar() });
+  }
+
+  deleteStaffMember(id: number): Observable<void> {
+    return this.http.delete<void>(`/api/admin/staff/members/${id}`, { headers: this.basliklar() });
+  }
+
+  /** Kaydı bir sıra yukarı ya da aşağı taşır; komşusuyla yer değiştirir. */
+  moveStaff(tur: 'units' | 'members', id: number, yon: 'up' | 'down'): Observable<void> {
+    return this.http.post<void>(`/api/admin/staff/${tur}/${id}/move?direction=${yon}`, {},
+      { headers: this.basliklar() });
   }
 
   settings(): Observable<{ name: string; language: string; value: string }[]> {

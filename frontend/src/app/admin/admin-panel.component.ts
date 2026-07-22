@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { PageEditorComponent } from './page-editor.component';
+import { StaffEditorComponent } from './staff-editor.component';
 import { AdminNews, Shortcut, AdminMenuItem, AdminMenu, AdminPage, Slide, AdminSocialAccount, AdminApiService, ContactChannel } from './admin-api.service';
 
 /** Alt bilgide görünen kurum bilgileri. */
@@ -15,7 +16,7 @@ interface ContactInfo extends Record<string, string> {
 /** Yönetim paneli: giriş, sayfa SEO düzenleme ve duyuru yönetimi. */
 @Component({
   selector: 'bidb-admin-panel',
-  imports: [FormsModule, PageEditorComponent],
+  imports: [FormsModule, PageEditorComponent, StaffEditorComponent],
   template: `
     <div class="yonetim">
       @if (!api.girisYapildi()) {
@@ -96,6 +97,10 @@ interface ContactInfo extends Record<string, string> {
           <button type="button" [class.etkin]="sekme() === 'iletisim'" (click)="sekmeIletisim()">
             <span class="no">07</span>
             <span>İletişim Bilgileri</span>
+          </button>
+          <button type="button" [class.etkin]="sekme() === 'personel'" (click)="sekme.set('personel')">
+            <span class="no">08</span>
+            <span>Personel</span>
           </button>
             </div>
 
@@ -580,7 +585,7 @@ interface ContactInfo extends Record<string, string> {
 
           </div>
 
-        } @else {
+        } @else if (sekme() === 'shortcuts') {
           <button type="button" (click)="kisayolDuzenle(null)">Yeni kısayol</button>
 
           @if (shortcutItem(); as ks) {
@@ -636,6 +641,12 @@ interface ContactInfo extends Record<string, string> {
             </table>
 
           </div>
+        } @else if (sekme() === 'personel') {
+
+          <!-- Personel sayfası HTML metni değil, birim ve kişi kayıtlarıdır;
+               düzenlemesi kendi bileşeninde durur. -->
+          <bidb-staff-editor></bidb-staff-editor>
+
         }
             </div>
           </main>
@@ -654,7 +665,8 @@ export class AdminPanelComponent {
     shortcuts: { no: '04', ad: 'Kısayollar' },
     menus: { no: '05', ad: 'Menüler' },
     sosyal: { no: '06', ad: 'Sosyal Medya' },
-    iletisim: { no: '07', ad: 'İletişim Bilgileri' }
+    iletisim: { no: '07', ad: 'İletişim Bilgileri' },
+    personel: { no: '08', ad: 'Personel' }
   };
 
   protected bolumNo(): string {
@@ -673,7 +685,7 @@ export class AdminPanelComponent {
   protected bilgi = signal('');
   protected calisiyor = signal(false);
 
-  protected sekme = signal<'pages' | 'news' | 'slider' | 'shortcuts' | 'menus' | 'sosyal' | 'iletisim'>('pages');
+  protected sekme = signal<'pages' | 'news' | 'slider' | 'shortcuts' | 'menus' | 'sosyal' | 'iletisim' | 'personel'>('pages');
   protected pages = signal<AdminPage[]>([]);
   protected news = signal<AdminNews[]>([]);
   protected secili = signal<AdminPage | null>(null);

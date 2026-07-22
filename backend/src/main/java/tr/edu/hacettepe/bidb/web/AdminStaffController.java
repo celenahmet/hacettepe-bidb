@@ -38,17 +38,21 @@ public class AdminStaffController {
     public record UnitView(Long id, String language, String name, String campus, String phone,
                            int sortOrder, boolean published, List<MemberView> members) {}
 
+    private static MemberView view(StaffMember k) {
+        return new MemberView(k.getId(), k.getFullName(), k.getRoleTitle(), k.getNote(),
+                k.isLead(), k.getPhotoUrl(), k.getAvatar(), k.getSortOrder());
+    }
+
+    private static UnitView view(StaffUnit b) {
+        return new UnitView(b.getId(), b.getLanguage(), b.getName(), b.getCampus(), b.getPhone(),
+                b.getSortOrder(), b.isPublished(), b.getMembers().stream()
+                        .map(AdminStaffController::view).toList());
+    }
+
     @GetMapping("/units")
     public List<UnitView> list() {
         return units.findAllByOrderByLanguageAscSortOrderAscIdAsc().stream()
-                .map(b -> new UnitView(b.getId(), b.getLanguage(), b.getName(), b.getCampus(),
-                        b.getPhone(), b.getSortOrder(), b.isPublished(),
-                        b.getMembers().stream()
-                                .map(k -> new MemberView(k.getId(), k.getFullName(), k.getRoleTitle(),
-                                        k.getNote(), k.isLead(), k.getPhotoUrl(), k.getAvatar(),
-                                        k.getSortOrder()))
-                                .toList()))
-                .toList();
+                .map(AdminStaffController::view).toList();
     }
 
     /* ---- birim ------------------------------------------------------ */
@@ -76,7 +80,7 @@ public class AdminStaffController {
         StaffUnit b = request.apply(new StaffUnit());
         // Sıra verilmediyse listenin sonuna eklenir.
         if (b.getSortOrder() == 0) b.setSortOrder(sonrakiSira(b.getLanguage()));
-        return ResponseEntity.ok(units.save(b));
+        return ResponseEntity.ok(view(units.save(b)));
     }
 
     @PutMapping("/units/{id}")
@@ -86,7 +90,7 @@ public class AdminStaffController {
             return ResponseEntity.badRequest().body("Birim adı boş olamaz.");
         }
         return units.findById(id)
-                .map(b -> ResponseEntity.ok((Object) units.save(request.apply(b))))
+                .map(b -> ResponseEntity.ok((Object) view(units.save(request.apply(b)))))
                 .orElse(ResponseEntity.notFound().build());
     }
 
@@ -127,7 +131,7 @@ public class AdminStaffController {
             if (k.getSortOrder() == 0) {
                 k.setSortOrder(b.getMembers().stream().mapToInt(StaffMember::getSortOrder).max().orElse(0) + 1);
             }
-            return ResponseEntity.ok((Object) members.save(k));
+            return ResponseEntity.ok((Object) view(members.save(k)));
         }).orElse(ResponseEntity.notFound().build());
     }
 
@@ -138,7 +142,7 @@ public class AdminStaffController {
             return ResponseEntity.badRequest().body("Ad soyad boş olamaz.");
         }
         return members.findById(id)
-                .map(k -> ResponseEntity.ok((Object) members.save(request.apply(k))))
+                .map(k -> ResponseEntity.ok((Object) view(members.save(request.apply(k)))))
                 .orElse(ResponseEntity.notFound().build());
     }
 

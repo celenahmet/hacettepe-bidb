@@ -565,6 +565,48 @@
     border-bottom: 1px solid var(--cizgi);
   }
 
+
+  /* ---- personel: fotoğraf alanları ----
+     Fotoğraf burada bir önizlemedir; listede satır yüksekliğini bozmaması
+     için sabit ölçüde durur. Fotoğrafı olmayan kayıt boş bırakılmaz —
+     seçili varsayılan ikonun harfi (K/E) ya da nötr için tire gösterilir,
+     böylece "seçim yapılmamış" ile "kadın/erkek seçilmiş" ayırt edilir. */
+  .foto-hucre { width: 44px; }
+
+  .foto-hucre img,
+  .foto-onizleme {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--kose-sm);
+    background: var(--yuzey-3);
+    object-fit: cover;
+  }
+
+  .foto-hucre img { width: 32px; height: 32px; }
+
+  .foto-onizleme { width: 56px; height: 56px; flex: none; }
+
+  .foto-yok {
+    font-size: var(--olcu-sm);
+    color: var(--metin-3);
+  }
+
+  .foto-hucre .foto-yok {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--kose-sm);
+    background: var(--yuzey-3);
+  }
+
+  .foto-satir {
+    display: flex;
+    align-items: center;
+    gap: var(--bosluk-3);
+    flex-wrap: wrap;
+    margin-bottom: var(--bosluk-3);
+  }
+
   input.dar { width: 72px; }
 
   /* ================= dar ekran ================= */
