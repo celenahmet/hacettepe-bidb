@@ -40,6 +40,9 @@ export interface Slide {
   linkUrl: string | null;
   sortOrder: number;
   published: boolean;
+  /** Tarih verilirse slayt yalnızca bu aralıkta gösterilir */
+  startsOn: string | null;
+  endsOn: string | null;
 }
 
 export interface Shortcut {
@@ -49,6 +52,8 @@ export interface Shortcut {
   iconUrl: string | null;
   url: string;
   newTab: boolean;
+  /** shortcut = üstteki ikon ızgarası, service = alttaki karusel */
+  type: string;
   sortOrder: number;
   published: boolean;
 }

@@ -170,6 +170,17 @@ interface ContactInfo extends Record<string, string> {
             <input id="dbaslik" name="title" [ngModel]="newsItem().title"
                    (ngModelChange)="duyuruAlan('title', $event)" required>
 
+            <span class="onaylar">
+              <label class="onay">
+                <input type="checkbox" name="dyayin" [ngModel]="newsItem().published"
+                       (ngModelChange)="duyuruAlan('published', $event)"> Yayında
+              </label>
+              <label class="onay">
+                <input type="checkbox" name="doneCikan" [ngModel]="newsItem().featured"
+                       (ngModelChange)="duyuruAlan('featured', $event)"> Öne çıkan
+              </label>
+            </span>
+
             <label for="dtarih">Yayın tarihi</label>
             <input id="dtarih" name="publishedOn" type="date" [ngModel]="newsItem().publishedOn"
                    (ngModelChange)="duyuruAlan('publishedOn', $event)" required>
@@ -277,6 +288,22 @@ interface ContactInfo extends Record<string, string> {
               <input id="sgorsel" name="sgorsel" [ngModel]="sl.imageUrl" (ngModelChange)="slaytAlan('imageUrl', $event)" required>
               <label for="salt">Görsel açıklaması (erişilebilirlik)</label>
               <input id="salt" name="salt" [ngModel]="sl.imageAlt" (ngModelChange)="slaytAlan('imageAlt', $event)">
+              <label for="sbas">Yayın başlangıcı (isteğe bağlı)</label>
+              <input id="sbas" name="sbas" type="date" [ngModel]="sl.startsOn"
+                     (ngModelChange)="slaytAlan('startsOn', $event)">
+
+              <label for="sbit">Yayın bitişi (isteğe bağlı)</label>
+              <input id="sbit" name="sbit" type="date" [ngModel]="sl.endsOn"
+                     (ngModelChange)="slaytAlan('endsOn', $event)">
+              <p class="aciklama">
+                Tarih verilirse slayt yalnızca bu aralıkta gösterilir.
+              </p>
+
+              <label class="onay">
+                <input type="checkbox" name="slyayin" [ngModel]="sl.published"
+                       (ngModelChange)="slaytAlan('published', $event)"> Yayında
+              </label>
+
               <label for="ssira">Sıra</label>
               <input id="ssira" name="ssira" type="number" [ngModel]="sl.sortOrder" (ngModelChange)="slaytAlan('sortOrder', +$event)">
               <span class="dugmeler">
@@ -499,6 +526,17 @@ interface ContactInfo extends Record<string, string> {
               <label class="onay">
                 <input type="checkbox" name="kyeni" [ngModel]="ks.newTab" (ngModelChange)="kisayolAlan('newTab', $event)"> Yeni sekmede açılsın
               </label>
+
+              <label for="kstur">Nerede görünsün</label>
+              <select id="kstur" name="kstur" [ngModel]="ks.type" (ngModelChange)="kisayolAlan('type', $event)">
+                <option value="shortcut">Kısayol — üstteki ikon ızgarası</option>
+                <option value="service">Servis — alttaki karusel</option>
+              </select>
+
+              <label class="onay">
+                <input type="checkbox" name="ksyayin" [ngModel]="ks.published"
+                       (ngModelChange)="kisayolAlan('published', $event)"> Yayında
+              </label>
               <span class="dugmeler">
                 <button type="submit">Kaydet</button>
                 <button type="button" class="ikincil" (click)="shortcutItem.set(null)">Vazgeç</button>
@@ -664,7 +702,7 @@ export class AdminPanelComponent {
   }
 
   protected slaytDuzenle(s: Slide | null): void {
-    this.slideItem.set(s ? { ...s } : { id: null, language: 'tr', title: '', subtitle: '', imageUrl: '', imageAlt: '', linkUrl: null, sortOrder: 0, published: true });
+    this.slideItem.set(s ? { ...s } : { id: null, language: 'tr', title: '', subtitle: '', imageUrl: '', imageAlt: '', linkUrl: null, startsOn: null, endsOn: null, sortOrder: 0, published: true });
   }
 
   protected slaytAlan(alan: keyof Slide, value: unknown): void {
@@ -690,7 +728,7 @@ export class AdminPanelComponent {
   }
 
   protected kisayolDuzenle(k: Shortcut | null): void {
-    this.shortcutItem.set(k ? { ...k } : { id: null, language: 'tr', name: '', iconUrl: '', url: '', newTab: false, sortOrder: 0, published: true });
+    this.shortcutItem.set(k ? { ...k } : { id: null, language: 'tr', name: '', iconUrl: '', url: '', newTab: false, type: 'shortcut', sortOrder: 0, published: true });
   }
 
   protected kisayolAlan(alan: keyof Shortcut, value: unknown): void {

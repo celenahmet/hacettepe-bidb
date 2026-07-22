@@ -10,7 +10,7 @@
 services:
   db:
     image: postgres:16-alpine
-    container_name: bidb-db
+    container_name: ${BIDB_ONEK:-bidb}-db
     environment:
       POSTGRES_DB: bidb
       POSTGRES_USER: bidb
@@ -32,7 +32,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: bidb-backend
+    container_name: ${BIDB_ONEK:-bidb}-backend
     depends_on:
       db:
         condition: service_healthy
@@ -62,7 +62,7 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    container_name: bidb-frontend
+    container_name: ${BIDB_ONEK:-bidb}-frontend
     depends_on:
       - backend
     environment:
