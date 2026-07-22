@@ -42,6 +42,20 @@
     --ikon-kablosuz: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='square'%3E%3Cpath d='M4 9.5a12 12 0 0116 0M7 13a8 8 0 0110 0M10 16.5a3.5 3.5 0 014 0'/%3E%3Cpath d='M12 20h.01'/%3E%3C/svg%3E");
 
     --ikon-indir: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='square'%3E%3Cpath d='M12 4v11M7.5 10.5L12 15l4.5-4.5'/%3E%3Cpath d='M4.5 19.5h15'/%3E%3C/svg%3E");
+
+    /* Dosya türü ikonları: sayfa adresinden konu çıkarılamadığında
+       uzantıya düşülür. Hepsi aynı belge gövdesini paylaşır, yalnızca
+       içindeki işaret değişir — böylece dizin içinde tek bir aile gibi
+       okunurlar. */
+    --ikon-pdf: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='square'%3E%3Cpath d='M13 3H6v18h12V8z'/%3E%3Cpath d='M13 3v5h5'/%3E%3Cpath d='M8.5 13.5v4M8.5 13.5h1.6a1.2 1.2 0 010 2.4H8.5M12.6 13.5v4h1.2a1.6 1.6 0 001.6-1.6v-.8a1.6 1.6 0 00-1.6-1.6z'/%3E%3C/svg%3E");
+
+    --ikon-yazi: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='square'%3E%3Cpath d='M13 3H6v18h12V8z'/%3E%3Cpath d='M13 3v5h5'/%3E%3Cpath d='M8.5 13h7M8.5 16h7M8.5 19h4'/%3E%3C/svg%3E");
+
+    --ikon-tablo: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='square'%3E%3Cpath d='M13 3H6v18h12V8z'/%3E%3Cpath d='M13 3v5h5'/%3E%3Cpath d='M8.5 12.5h7M8.5 16h7M12 12.5v7'/%3E%3C/svg%3E");
+
+    --ikon-arsiv: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='square'%3E%3Cpath d='M13 3H6v18h12V8z'/%3E%3Cpath d='M13 3v5h5'/%3E%3Cpath d='M10 4v2M11.5 6v2M10 8v2M11.5 10v2M10 12v2.5h1.5V12'/%3E%3C/svg%3E");
+
+    --ikon-sunum: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='square'%3E%3Cpath d='M13 3H6v18h12V8z'/%3E%3Cpath d='M13 3v5h5'/%3E%3Cpath d='M8.5 13h7v4h-7z'/%3E%3C/svg%3E");
   }
 
   /* ---------- yalnızca bağlantı içeren listeler ---------- */
@@ -145,10 +159,28 @@
   .icerik a[href*="policy"],
   .icerik a[href*="rules"] { --ikon: var(--ikon-belge); }
 
-  .icerik a[href$=".pdf"],
-  .icerik a[href$=".doc"],
-  .icerik a[href$=".docx"],
+  /* ---------- dosya uzantısına göre ikon ----------
+
+     Konu eşlemesinden SONRA gelir ve onu geçersiz kılar: uzantı kesin
+     bilgidir, adresteki kelime tahmindir. "proxy-pdf" klasöründeki bir
+     dosya sunucu ikonu değil PDF ikonu almalı. */
+
   .icerik a[href*="/dosyalar/"] { --ikon: var(--ikon-indir); }
+
+  .icerik a[href$=".pdf"], .icerik a[href$=".PDF"] { --ikon: var(--ikon-pdf); }
+
+  .icerik a[href$=".doc"], .icerik a[href$=".docx"],
+  .icerik a[href$=".odt"], .icerik a[href$=".rtf"],
+  .icerik a[href$=".txt"] { --ikon: var(--ikon-yazi); }
+
+  .icerik a[href$=".xls"], .icerik a[href$=".xlsx"],
+  .icerik a[href$=".ods"], .icerik a[href$=".csv"] { --ikon: var(--ikon-tablo); }
+
+  .icerik a[href$=".ppt"], .icerik a[href$=".pptx"],
+  .icerik a[href$=".odp"] { --ikon: var(--ikon-sunum); }
+
+  .icerik a[href$=".zip"], .icerik a[href$=".rar"],
+  .icerik a[href$=".7z"] { --ikon: var(--ikon-arsiv); }
 
   /* ---------- dar ekran ---------- */
 

@@ -13,9 +13,54 @@
  * yerden kaldırılabilir.
  */
 
-/** Bir liste maddesinin içeriği tek bir bağlantıdan mı ibaret? */
+/**
+ * Liste maddelerinde kapanmamış bağlantı etiketlerini kapatır.
+ *
+ * Aktarılan kaynak sayfalarda eksik </a> etiketleri var. Tarayıcı bunu
+ * onaramaz: açık kalan bağlantı, sonraki <li> ögesini KENDİ İÇİNE alır ve
+ * ortaya boş bir hücre ile dışarı düşmüş bir madde çıkar. Proxy
+ * sayfasındaki Android maddesi tam olarak buna yol açıyordu.
+ *
+ * Onarım yalnızca yapısaldır: hiçbir metin eklenmez, silinmez ya da yeri
+ * değiştirilmez; sadece maddenin sonunda eksik kalan kapanış etiketi
+ * tamamlanır. Kaynaktaki bozukluk düzeltilirse bu kural kendiliğinden
+ * etkisiz kalır.
+ */
+export function bagliMaddeleriOnar(html: string): string {
+  return String(html).replace(/<li\b([^>]*)>([\s\S]*?)<\/li>/gi, (_tam, nitelikler, ic) => {
+    const acilan = (ic.match(/<a\b[^>]*>/gi) || []).length;
+    const kapanan = (ic.match(/<\/a\s*>/gi) || []).length;
+    const eksik = acilan - kapanan;
+    return eksik > 0
+      ? `<li${nitelikler}>${ic}${'</a>'.repeat(eksik)}</li>`
+      : `<li${nitelikler}>${ic}</li>`;
+  });
+}
+
+/**
+ * Bir liste maddesinin görünen metninin tamamı bağlantı içinde mi?
+ *
+ * Önce "madde tam olarak tek bir <a>...</a> olmalı" ölçütü kullanılıyordu.
+ * Bu kural aktarılan içerikte kırılıyor: kaynak sayfalarda kapanmamış </a>
+ * etiketleri var (Proxy sayfasındaki Android maddesi gibi). Tek bir bozuk
+ * etiket, listenin TAMAMININ dizin olarak tanınmasını engelliyordu — yedi
+ * belgelik bir liste madde imli düz liste olarak kalıyordu.
+ *
+ * Yeni ölçüt dayanıklı: bağlantılar çıkarıldıktan sonra geriye görünen
+ * metin kalmıyorsa madde yalnızca bağlantıdan ibarettir. Kapanmamış bir
+ * bağlantıda, açılış etiketinden sonrası da ona ait sayılır.
+ */
 function yalnizcaBaglanti(madde: string): boolean {
-  return /^<a\b[^>]*>[\s\S]*?<\/a>$/i.test(madde.trim());
+  const metin = String(madde);
+  if (!/<a\b/i.test(metin)) return false;
+
+  const kalan = metin
+    .replace(/<a\b[^>]*>[\s\S]*?<\/a>/gi, '')   // kapalı bağlantılar
+    .replace(/<a\b[^>]*>[\s\S]*$/i, '')         // kapanmamış bağlantı
+    .replace(/<[^>]+>/g, '')                    // kalan etiketler
+    .replace(/&nbsp;|&#160;/gi, ' ');
+
+  return kalan.trim() === '';
 }
 
 /**
@@ -82,5 +127,8 @@ export function iletisimBaglantilari(html: string): string {
 
 /** Sayfa gövdesine uygulanan tüm sunum düzeltmeleri. */
 export function icerigiHazirla(html: string): string {
-  return baglantiDizinleriniIsaretle(iletisimBaglantilari(html));
+  // Sıra önemli: önce bozuk işaretleme onarılır, sonra dizin tespiti
+  // yapılır. Ters sırada, kapanmamış bir etiket yüzünden liste dizin
+  // sayılmaz ve onarım geç kalırdı.
+  return baglantiDizinleriniIsaretle(iletisimBaglantilari(bagliMaddeleriOnar(html)));
 }

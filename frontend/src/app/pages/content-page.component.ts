@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -43,11 +43,11 @@ import { ContactBlockComponent } from './contact-block.component';
             <bidb-contact-block [dilDegeri]="language()"></bidb-contact-block>
           }
 
-          @if (s.documents.length) {
+          @if (belgeler().length) {
             <section class="belgeler">
               <h2>{{ language() === 'en' ? 'Documents' : 'Belgeler' }}</h2>
               <ul>
-                @for (b of s.documents; track b.url) {
+                @for (b of belgeler(); track b.url) {
                   <li>
                     <a [href]="b.url" target="_blank" rel="noopener">
                       <span class="belge-tur">{{ b.fileType }}</span>{{ b.name }}
@@ -73,6 +73,26 @@ export class ContentPageComponent {
 
   protected language = signal<Language>('tr');
   protected govde = signal<SafeHtml>('');
+
+  /**
+   * Sayfaya bağlı belgelerden, metinde ZATEN bağlantısı verilmiş olanlar
+   * çıkarılır.
+   *
+   * Aktarımda belgeler sayfa metnindeki bağlantılardan türetildi; sonuç,
+   * aynı yedi PDF'in önce metinde sonra "Belgeler" başlığı altında bir kez
+   * daha listelenmesi oldu. Ziyaretçi aynı listeyi iki kez okuyor,
+   * hangisinin farklı olduğunu anlamaya çalışıyordu.
+   *
+   * Bölüm kaldırılmıyor: metinde geçmeyen bir belge varsa (panelden
+   * eklenmiş bir form gibi) orada görünmeyi sürdürüyor. Yalnızca tekrar
+   * ayıklanıyor.
+   */
+  protected belgeler = computed(() => {
+    const sayfa = this.sayfa();
+    if (!sayfa?.documents?.length) return [];
+    const govde = sayfa.contentHtml ?? '';
+    return sayfa.documents.filter((b) => !govde.includes(b.url));
+  });
 
   /** Sayfanın ait olduğu menü bölümü ("Kurumsal", "Servislerimiz"…).
    *  Başlığın üstünde bağlam olarak gösterilir; ziyaretçi sitenin neresinde
