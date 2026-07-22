@@ -12,57 +12,106 @@ interface ContactInfo extends Record<string, string> {
   iletisim_faks: string;
 }
 
-/** Yönetim paneli: giriş, sayfa SEO düzenleme ve newsItem yönetimi. */
+/** Yönetim paneli: giriş, sayfa SEO düzenleme ve duyuru yönetimi. */
 @Component({
   selector: 'bidb-admin-panel',
   imports: [FormsModule, PageEditorComponent],
   template: `
-    <div class="kap yonetim">
+    <div class="yonetim">
       @if (!api.girisYapildi()) {
-        <form class="giris" (ngSubmit)="giris()">
-          <h1>Yönetim Girişi</h1>
+        <div class="giris-duzen">
+          <aside class="giris-marka">
+            <div>
+              <span class="kurum">Hacettepe Üniversitesi</span>
+              <h1>Bilgi İşlem<br>Daire Başkanlığı</h1>
+              <span class="isaret"></span>
+              <p>
+                Site yönetim arayüzü. Sayfa metinleri, duyurular, menüler,
+                kısayollar ve iletişim bilgileri buradan yönetilir.
+              </p>
+            </div>
+            <span class="kurum">Yönetim Arayüzü</span>
+          </aside>
 
-          <label for="kullanici">Kullanıcı nameı</label>
-          <input id="kullanici" name="kullanici" [(ngModel)]="kullanici" autocomplete="username" required>
+          <div class="giris-alan">
+            <form (ngSubmit)="giris()">
+              <span class="bolum-no">Oturum</span>
+              <h2>Giriş</h2>
 
-          <label for="parola">Parola</label>
-          <input id="parola" name="parola" type="password" [(ngModel)]="parola" autocomplete="current-password" required>
+              <label for="kullanici">Kullanıcı adı</label>
+              <input id="kullanici" name="kullanici" [(ngModel)]="kullanici" autocomplete="username" required>
 
-          @if (hata()) { <p class="hata" role="alert">{{ hata() }}</p> }
+              <label for="parola">Parola</label>
+              <input id="parola" name="parola" type="password" [(ngModel)]="parola" autocomplete="current-password" required>
 
-          <button type="submit" [disabled]="calisiyor()">
-            {{ calisiyor() ? 'Denetleniyor…' : 'Giriş Yap' }}
-          </button>
-        </form>
+              @if (hata()) { <p class="hata" role="alert">{{ hata() }}</p> }
+
+              <span class="dugmeler">
+                <button type="submit" [disabled]="calisiyor()">
+                  {{ calisiyor() ? 'Denetleniyor…' : 'Giriş Yap' }}
+                </button>
+              </span>
+            </form>
+          </div>
+        </div>
       } @else {
-        <header class="yonetim-ust">
-          <h1>Yönetim Paneli</h1>
-          <button type="button" class="ikincil" (click)="api.cikis()">Çıkış</button>
-        </header>
+        <div class="yonetim-duzen">
+          <nav class="ray" aria-label="Yönetim bölümleri">
+            <div class="ray-tepe">
+              <strong>HÜ BİDB</strong>
+              <span>Yönetim</span>
+            </div>
 
-        <nav class="sekmeler">
+            <div class="ray-liste">
           <button type="button" [class.etkin]="sekme() === 'pages'" (click)="sekme.set('pages')">
-            Sayfalar ({{ pages().length }})
+            <span class="no">01</span>
+            <span>Sayfalar</span>
+            <span class="sayi">{{ pages().length }}</span>
           </button>
           <button type="button" [class.etkin]="sekme() === 'news'" (click)="sekmeDuyuru()">
-            Duyurular ({{ news().length }})
+            <span class="no">02</span>
+            <span>Duyurular</span>
+            <span class="sayi">{{ news().length }}</span>
           </button>
           <button type="button" [class.etkin]="sekme() === 'slider'" (click)="sekmeSlider()">
-            Slider ({{ slides().length }})
+            <span class="no">03</span>
+            <span>Slider</span>
+            <span class="sayi">{{ slides().length }}</span>
           </button>
           <button type="button" [class.etkin]="sekme() === 'shortcuts'" (click)="sekmeKisayol()">
-            Kısayollar ({{ shortcuts().length }})
+            <span class="no">04</span>
+            <span>Kısayollar</span>
+            <span class="sayi">{{ shortcuts().length }}</span>
           </button>
           <button type="button" [class.etkin]="sekme() === 'menus'" (click)="sekmeMenu()">
-            Menüler ({{ menus().length }})
+            <span class="no">05</span>
+            <span>Menüler</span>
+            <span class="sayi">{{ menus().length }}</span>
           </button>
           <button type="button" [class.etkin]="sekme() === 'sosyal'" (click)="sekmeSosyal()">
-            Sosyal Medya ({{ socialAccounts().length }})
+            <span class="no">06</span>
+            <span>Sosyal Medya</span>
+            <span class="sayi">{{ socialAccounts().length }}</span>
           </button>
           <button type="button" [class.etkin]="sekme() === 'iletisim'" (click)="sekmeIletisim()">
-            İletişim Bilgileri
+            <span class="no">07</span>
+            <span>İletişim Bilgileri</span>
           </button>
-        </nav>
+            </div>
+
+            <div class="ray-alt">
+              <button type="button" (click)="api.cikis()">Çıkış</button>
+            </div>
+          </nav>
+
+          <main class="calisma">
+            <header class="calisma-ust">
+              <span class="bolum-no">{{ bolumNo() }} · Yönetim Paneli</span>
+              <h1>{{ bolumBasligi() }}</h1>
+            </header>
+
+            <div class="calisma-govde">
+
 
         @if (bilgi()) { <p class="bilgi" role="status">{{ bilgi() }}</p> }
 
@@ -78,7 +127,7 @@ interface ContactInfo extends Record<string, string> {
             <form class="duyuru-form" (ngSubmit)="yeniSayfaKaydet()">
               <h2>Yeni sayfa</h2>
 
-              <label for="ysdil">Language</label>
+              <label for="ysdil">Dil</label>
               <select id="ysdil" name="ysdil" [ngModel]="ys.language"
                       (ngModelChange)="yeniSayfaAlan('language', $event)">
                 <option value="tr">Türkçe</option>
@@ -103,65 +152,69 @@ interface ContactInfo extends Record<string, string> {
             </form>
           }
 
-          <table class="yonetim-tablo">
-            <thead>
-              <tr><th>Page</th><th>Language</th><th>İçerik</th><th>Yayında</th><th></th></tr>
-            </thead>
-            <tbody>
-              @for (s of pages(); track s.id) {
-                <tr>
-                  <td>{{ s.title }}<br><small>/{{ s.language }}/{{ s.slug }}</small></td>
-                  <td>{{ s.language }}</td>
-                  <td>{{ s.contentLength }} krkt</td>
-                  <td>{{ s.published ? 'Evet' : 'Hayır' }}</td>
-                  <td>
-                    <button type="button" class="ikincil" (click)="duzenle(s)">SEO</button>
-                    <button type="button" (click)="openPage(s)">Düzenle</button>
-                  </td>
-                </tr>
+          <div class="tablo-kaydir">
 
-                @if (acikSayfa()?.id === s.id) {
-                  <tr class="duzenleme">
-                    <td colspan="5">
-                      <bidb-page-editor [sayfa]="s" (kapat)="acikSayfa.set(null)"
-                                          (degisti)="refreshPages()" />
+            <table class="yonetim-tablo">
+              <thead>
+                <tr><th>Sayfa</th><th>Dil</th><th>İçerik</th><th>Yayında</th><th></th></tr>
+              </thead>
+              <tbody>
+                @for (s of pages(); track s.id) {
+                  <tr>
+                    <td>{{ s.title }}<br><small>/{{ s.language }}/{{ s.slug }}</small></td>
+                    <td>{{ s.language }}</td>
+                    <td>{{ s.contentLength }} krkt</td>
+                    <td>{{ s.published ? 'Evet' : 'Hayır' }}</td>
+                    <td>
+                      <button type="button" class="ikincil" (click)="duzenle(s)">SEO</button>
+                      <button type="button" (click)="openPage(s)">Düzenle</button>
                     </td>
                   </tr>
+
+                  @if (acikSayfa()?.id === s.id) {
+                    <tr class="duzenleme">
+                      <td colspan="5">
+                        <bidb-page-editor [sayfa]="s" (kapat)="acikSayfa.set(null)"
+                                            (degisti)="refreshPages()" />
+                      </td>
+                    </tr>
+                  }
+
+                  @if (secili()?.id === s.id) {
+                    <tr class="duzenleme">
+                      <td colspan="5">
+                        <form (ngSubmit)="saveSeo()">
+                          <label [attr.for]="'t' + s.id">Başlık (title)</label>
+                          <input [attr.id]="'t' + s.id" name="seoTitle" [ngModel]="secili()!.seoTitle"
+                                 (ngModelChange)="alanDegis('seoTitle', $event)">
+
+                          <label [attr.for]="'d' + s.id">Açıklama (description)</label>
+                          <textarea [attr.id]="'d' + s.id" name="seoDescription" rows="2"
+                                    [ngModel]="secili()!.seoDescription"
+                                    (ngModelChange)="alanDegis('seoDescription', $event)"></textarea>
+
+                          <label [attr.for]="'k' + s.id">Anahtar kelimeler</label>
+                          <input [attr.id]="'k' + s.id" name="seoKeywords" [ngModel]="secili()!.seoKeywords"
+                                 (ngModelChange)="alanDegis('seoKeywords', $event)">
+
+                          <label class="onay">
+                            <input type="checkbox" name="published" [ngModel]="secili()!.published"
+                                   (ngModelChange)="alanDegis('published', $event)"> Yayında
+                          </label>
+
+                          <span class="dugmeler">
+                            <button type="submit">Kaydet</button>
+                            <button type="button" class="ikincil" (click)="secili.set(null)">Vazgeç</button>
+                          </span>
+                        </form>
+                      </td>
+                    </tr>
+                  }
                 }
+              </tbody>
+            </table>
 
-                @if (secili()?.id === s.id) {
-                  <tr class="duzenleme">
-                    <td colspan="5">
-                      <form (ngSubmit)="saveSeo()">
-                        <label [attr.for]="'t' + s.id">Başlık (title)</label>
-                        <input [attr.id]="'t' + s.id" name="seoTitle" [ngModel]="secili()!.seoTitle"
-                               (ngModelChange)="alanDegis('seoTitle', $event)">
-
-                        <label [attr.for]="'d' + s.id">Açıklama (description)</label>
-                        <textarea [attr.id]="'d' + s.id" name="seoDescription" rows="2"
-                                  [ngModel]="secili()!.seoDescription"
-                                  (ngModelChange)="alanDegis('seoDescription', $event)"></textarea>
-
-                        <label [attr.for]="'k' + s.id">Anahtar kelimeler</label>
-                        <input [attr.id]="'k' + s.id" name="seoKeywords" [ngModel]="secili()!.seoKeywords"
-                               (ngModelChange)="alanDegis('seoKeywords', $event)">
-
-                        <label class="onay">
-                          <input type="checkbox" name="published" [ngModel]="secili()!.published"
-                                 (ngModelChange)="alanDegis('published', $event)"> Yayında
-                        </label>
-
-                        <span class="dugmeler">
-                          <button type="submit">Kaydet</button>
-                          <button type="button" class="ikincil" (click)="secili.set(null)">Vazgeç</button>
-                        </span>
-                      </form>
-                    </td>
-                  </tr>
-                }
-              }
-            </tbody>
-          </table>
+          </div>
         } @else if (sekme() === 'news') {
           <form class="duyuru-form" (ngSubmit)="duyuruKaydet()">
             <h2>{{ newsItem().id ? 'Duyuruyu düzenle' : 'Yeni newsItem' }}</h2>
@@ -224,7 +277,7 @@ interface ContactInfo extends Record<string, string> {
             <input id="dadres" name="externalUrl" [ngModel]="newsItem().externalUrl"
                    (ngModelChange)="duyuruAlan('externalUrl', $event)">
 
-            <label for="ddil">Language</label>
+            <label for="ddil">Dil</label>
             <select id="ddil" name="language" [ngModel]="newsItem().language" (ngModelChange)="duyuruAlan('language', $event)">
               <option value="tr">Türkçe</option>
               <option value="en">İngilizce</option>
@@ -251,31 +304,35 @@ interface ContactInfo extends Record<string, string> {
             }
           </form>
 
-          <table class="yonetim-tablo">
-            <thead><tr><th>Tarih</th><th>Görsel</th><th>Başlık</th><th>Adres</th><th>Language</th><th></th></tr></thead>
-            <tbody>
-              @for (d of news(); track d.id) {
-                <tr>
-                  <td><small>{{ d.publishedOn }}</small></td>
-                  <td>
-                    @if (d.imageUrl) {
-                      <img [src]="d.imageUrl" alt="" class="kucuk-gorsel">
-                    } @else { <span class="soluk">—</span> }
-                  </td>
-                  <td>{{ d.title }}</td>
-                  <td>
-                    @if (d.slug) { <small><code>/{{ d.language }}/newsItem/{{ d.slug }}</code></small> }
-                    @else { <span class="soluk">bağlantı</span> }
-                  </td>
-                  <td>{{ d.language }}</td>
-                  <td>
-                    <button type="button" class="ikincil" (click)="duyuruDuzenle(d)">Düzenle</button>
-                    <button type="button" class="tehlike" (click)="deleteNews(d)">Sil</button>
-                  </td>
-                </tr>
-              }
-            </tbody>
-          </table>
+          <div class="tablo-kaydir">
+
+            <table class="yonetim-tablo">
+              <thead><tr><th>Tarih</th><th>Görsel</th><th>Başlık</th><th>Adres</th><th>Dil</th><th></th></tr></thead>
+              <tbody>
+                @for (d of news(); track d.id) {
+                  <tr>
+                    <td><small>{{ d.publishedOn }}</small></td>
+                    <td>
+                      @if (d.imageUrl) {
+                        <img [src]="d.imageUrl" alt="" class="kucuk-gorsel">
+                      } @else { <span class="soluk">—</span> }
+                    </td>
+                    <td>{{ d.title }}</td>
+                    <td>
+                      @if (d.slug) { <small><code>/{{ d.language }}/newsItem/{{ d.slug }}</code></small> }
+                      @else { <span class="soluk">bağlantı</span> }
+                    </td>
+                    <td>{{ d.language }}</td>
+                    <td>
+                      <button type="button" class="ikincil" (click)="duyuruDuzenle(d)">Düzenle</button>
+                      <button type="button" class="tehlike" (click)="deleteNews(d)">Sil</button>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+
+          </div>
         } @else if (sekme() === 'slider') {
           <button type="button" (click)="slaytDuzenle(null)">Yeni slideItem</button>
 
@@ -313,23 +370,27 @@ interface ContactInfo extends Record<string, string> {
             </form>
           }
 
-          <table class="yonetim-tablo">
-            <thead><tr><th>Sıra</th><th>Başlık</th><th>Görsel</th><th>Language</th><th></th></tr></thead>
-            <tbody>
-              @for (sl of slides(); track sl.id) {
-                <tr>
-                  <td>{{ sl.sortOrder }}</td>
-                  <td>{{ sl.title }}</td>
-                  <td><small>{{ sl.imageUrl }}</small></td>
-                  <td>{{ sl.language }}</td>
-                  <td>
-                    <button type="button" class="ikincil" (click)="slaytDuzenle(sl)">Düzenle</button>
-                    <button type="button" class="tehlike" (click)="deleteSlide(sl)">Sil</button>
-                  </td>
-                </tr>
-              }
-            </tbody>
-          </table>
+          <div class="tablo-kaydir">
+
+            <table class="yonetim-tablo">
+              <thead><tr><th>Sıra</th><th>Başlık</th><th>Görsel</th><th>Dil</th><th></th></tr></thead>
+              <tbody>
+                @for (sl of slides(); track sl.id) {
+                  <tr>
+                    <td>{{ sl.sortOrder }}</td>
+                    <td>{{ sl.title }}</td>
+                    <td><small>{{ sl.imageUrl }}</small></td>
+                    <td>{{ sl.language }}</td>
+                    <td>
+                      <button type="button" class="ikincil" (click)="slaytDuzenle(sl)">Düzenle</button>
+                      <button type="button" class="tehlike" (click)="deleteSlide(sl)">Sil</button>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+
+          </div>
         } @else if (sekme() === 'menus') {
           @if (menuItem(); as md) {
             <form class="duyuru-form" (ngSubmit)="ogeKaydet()">
@@ -369,7 +430,7 @@ interface ContactInfo extends Record<string, string> {
               <h2>{{ mb.id ? 'Bölümü düzenle' : 'Yeni bölüm' }}</h2>
               <label for="bbaslik">Bölüm başlığı</label>
               <input id="bbaslik" name="bbaslik" [ngModel]="mb.title" (ngModelChange)="bolumAlan('title', $event)" required>
-              <label for="bdil">Language</label>
+              <label for="bdil">Dil</label>
               <select id="bdil" name="bdil" [ngModel]="mb.language" (ngModelChange)="bolumAlan('language', $event)">
                 <option value="tr">Türkçe</option>
                 <option value="en">İngilizce</option>
@@ -391,22 +452,24 @@ interface ContactInfo extends Record<string, string> {
                 <button type="button" class="ikincil" (click)="bolumDuzenle(m)">Bölümü düzenle</button>
                 <button type="button" class="tehlike" (click)="bolumSil(m)">Bölümü sil</button>
               </span>
-              <table class="yonetim-tablo">
-                <thead><tr><th>Sıra</th><th>Etiket</th><th>Hedef</th><th></th></tr></thead>
-                <tbody>
-                  @for (o of m.items; track o.id) {
-                    <tr>
-                      <td>{{ o.sortOrder }}</td>
-                      <td>{{ o.label }}</td>
-                      <td><small>{{ o.pagePath || o.externalUrl }}</small></td>
-                      <td>
-                        <button type="button" class="ikincil" (click)="ogeDuzenle(m.id, o)">Düzenle</button>
-                        <button type="button" class="tehlike" (click)="ogeSil(o)">Sil</button>
-                      </td>
-                    </tr>
-                  }
-                </tbody>
-              </table>
+              <div class="tablo-kaydir">
+                <table class="yonetim-tablo">
+                  <thead><tr><th>Sıra</th><th>Etiket</th><th>Hedef</th><th></th></tr></thead>
+                  <tbody>
+                    @for (o of m.items; track o.id) {
+                      <tr>
+                        <td>{{ o.sortOrder }}</td>
+                        <td>{{ o.label }}</td>
+                        <td><small>{{ o.pagePath || o.externalUrl }}</small></td>
+                        <td>
+                          <button type="button" class="ikincil" (click)="ogeDuzenle(m.id, o)">Düzenle</button>
+                          <button type="button" class="tehlike" (click)="ogeSil(o)">Sil</button>
+                        </td>
+                      </tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
             </section>
           }
         } @else if (sekme() === 'sosyal') {
@@ -428,22 +491,26 @@ interface ContactInfo extends Record<string, string> {
             </form>
           }
 
-          <table class="yonetim-tablo">
-            <thead><tr><th>Sıra</th><th>Ağ</th><th>Adres</th><th></th></tr></thead>
-            <tbody>
-              @for (sh of socialAccounts(); track sh.id) {
-                <tr>
-                  <td>{{ sh.sortOrder }}</td>
-                  <td>{{ sh.network }}</td>
-                  <td><small>{{ sh.url }}</small></td>
-                  <td>
-                    <button type="button" class="ikincil" (click)="sosyalDuzenle(sh)">Düzenle</button>
-                    <button type="button" class="tehlike" (click)="deleteSocialAccount(sh)">Sil</button>
-                  </td>
-                </tr>
-              }
-            </tbody>
-          </table>
+          <div class="tablo-kaydir">
+
+            <table class="yonetim-tablo">
+              <thead><tr><th>Sıra</th><th>Ağ</th><th>Adres</th><th></th></tr></thead>
+              <tbody>
+                @for (sh of socialAccounts(); track sh.id) {
+                  <tr>
+                    <td>{{ sh.sortOrder }}</td>
+                    <td>{{ sh.network }}</td>
+                    <td><small>{{ sh.url }}</small></td>
+                    <td>
+                      <button type="button" class="ikincil" (click)="sosyalDuzenle(sh)">Düzenle</button>
+                      <button type="button" class="tehlike" (click)="deleteSocialAccount(sh)">Sil</button>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+
+          </div>
         } @else if (sekme() === 'iletisim') {
           <p class="aciklama">
             Alt bilgide görünen kurum bilgileri. Her telefon ve e-posta ayrı
@@ -490,24 +557,28 @@ interface ContactInfo extends Record<string, string> {
             </form>
           }
 
-          <table class="yonetim-tablo">
-            <thead><tr><th>Tür</th><th>Sıra</th><th>Değer</th><th>Etiket</th><th>Dil</th><th></th></tr></thead>
-            <tbody>
-              @for (k of kanallar(); track k.id) {
-                <tr>
-                  <td>{{ turAdi(k.type) }}</td>
-                  <td>{{ k.sortOrder }}</td>
-                  <td>{{ k.value }}</td>
-                  <td><small>{{ k.label || '—' }}</small></td>
-                  <td>{{ k.language }}</td>
-                  <td>
-                    <button type="button" class="ikincil" (click)="kanalDuzenle(k)">Düzenle</button>
-                    <button type="button" class="tehlike" (click)="kanalSil(k)">Sil</button>
-                  </td>
-                </tr>
-              }
-            </tbody>
-          </table>
+          <div class="tablo-kaydir">
+
+            <table class="yonetim-tablo">
+              <thead><tr><th>Tür</th><th>Sıra</th><th>Değer</th><th>Etiket</th><th>Dil</th><th></th></tr></thead>
+              <tbody>
+                @for (k of kanallar(); track k.id) {
+                  <tr>
+                    <td>{{ turAdi(k.type) }}</td>
+                    <td>{{ k.sortOrder }}</td>
+                    <td>{{ k.value }}</td>
+                    <td><small>{{ k.label || '—' }}</small></td>
+                    <td>{{ k.language }}</td>
+                    <td>
+                      <button type="button" class="ikincil" (click)="kanalDuzenle(k)">Düzenle</button>
+                      <button type="button" class="tehlike" (click)="kanalSil(k)">Sil</button>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+
+          </div>
 
         } @else {
           <button type="button" (click)="kisayolDuzenle(null)">Yeni kısayol</button>
@@ -544,29 +615,55 @@ interface ContactInfo extends Record<string, string> {
             </form>
           }
 
-          <table class="yonetim-tablo">
-            <thead><tr><th>Sıra</th><th>Ad</th><th>Adres</th><th>Language</th><th></th></tr></thead>
-            <tbody>
-              @for (ks of shortcuts(); track ks.id) {
-                <tr>
-                  <td>{{ ks.sortOrder }}</td>
-                  <td>{{ ks.name }}</td>
-                  <td><small>{{ ks.url }}</small></td>
-                  <td>{{ ks.language }}</td>
-                  <td>
-                    <button type="button" class="ikincil" (click)="kisayolDuzenle(ks)">Düzenle</button>
-                    <button type="button" class="tehlike" (click)="deleteShortcut(ks)">Sil</button>
-                  </td>
-                </tr>
-              }
-            </tbody>
-          </table>
+          <div class="tablo-kaydir">
+
+            <table class="yonetim-tablo">
+              <thead><tr><th>Sıra</th><th>Ad</th><th>Adres</th><th>Dil</th><th></th></tr></thead>
+              <tbody>
+                @for (ks of shortcuts(); track ks.id) {
+                  <tr>
+                    <td>{{ ks.sortOrder }}</td>
+                    <td>{{ ks.name }}</td>
+                    <td><small>{{ ks.url }}</small></td>
+                    <td>{{ ks.language }}</td>
+                    <td>
+                      <button type="button" class="ikincil" (click)="kisayolDuzenle(ks)">Düzenle</button>
+                      <button type="button" class="tehlike" (click)="deleteShortcut(ks)">Sil</button>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+
+          </div>
         }
+            </div>
+          </main>
+        </div>
       }
     </div>
   `
 })
 export class AdminPanelComponent {
+
+  /** Sol raydaki bölümlerin numarası ve adı; başlıkta da kullanılır. */
+  private readonly BOLUMLER: Record<string, { no: string; ad: string }> = {
+    pages: { no: '01', ad: 'Sayfalar' },
+    news: { no: '02', ad: 'Duyurular' },
+    slider: { no: '03', ad: 'Slider' },
+    shortcuts: { no: '04', ad: 'Kısayollar' },
+    menus: { no: '05', ad: 'Menüler' },
+    sosyal: { no: '06', ad: 'Sosyal Medya' },
+    iletisim: { no: '07', ad: 'İletişim Bilgileri' }
+  };
+
+  protected bolumNo(): string {
+    return this.BOLUMLER[this.sekme()]?.no ?? '00';
+  }
+
+  protected bolumBasligi(): string {
+    return this.BOLUMLER[this.sekme()]?.ad ?? 'Yönetim';
+  }
   protected api = inject(AdminApiService);
   private temizleyici = inject(DomSanitizer);
 
@@ -622,7 +719,7 @@ export class AdminPanelComponent {
         this.parola = '';
       },
       error: () => {
-        this.hata.set('Kullanıcı nameı veya parola hatalı.');
+        this.hata.set('Kullanıcı adı veya parola hatalı.');
         this.calisiyor.set(false);
       }
     });

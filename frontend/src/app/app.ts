@@ -9,23 +9,34 @@ import { Language } from './core/models';
   selector: 'app-root',
   imports: [RouterOutlet, HeaderComponent, FooterComponent],
   template: `
-    <bidb-header [language]="language()"></bidb-header>
+    @if (siteKabugu()) { <bidb-header [language]="language()"></bidb-header> }
+
     <router-outlet></router-outlet>
-    <bidb-footer [language]="language()"></bidb-footer>
+
+    @if (siteKabugu()) { <bidb-footer [language]="language()"></bidb-footer> }
   `
 })
 export class App {
   private router = inject(Router);
+
   protected language = signal<Language>('tr');
 
+  /**
+   * Yönetim paneli, ziyaretçi sitesinin üst şeridi ve alt bilgisi olmadan
+   * tam ekran çalışır: kendi gezinme yapısı vardır ve çalışma yüzeyinin
+   * bölünmemesi gerekir.
+   */
+  protected siteKabugu = signal(true);
+
   constructor() {
-    this.dilAyarla(this.router.url);
+    this.rotayaGore(this.router.url);
     this.router.events
       .pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd))
-      .subscribe((e) => this.dilAyarla(e.urlAfterRedirects));
+      .subscribe((e) => this.rotayaGore(e.urlAfterRedirects));
   }
 
-  private dilAyarla(url: string): void {
+  private rotayaGore(url: string): void {
     this.language.set(url.startsWith('/en') ? 'en' : 'tr');
+    this.siteKabugu.set(!url.startsWith('/yonetim'));
   }
 }

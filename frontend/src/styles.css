@@ -14,12 +14,17 @@
  * altında kapsandığı için yeni tasarıma sızamaz.
  */
 
-@layer tokens, base, layout, site, legacy, utility;
+@layer tokens, base, layout, site, legacy, panel, utility;
 
 @import "./styles/tokens.css";
 @import "./styles/legacy-content.css";
+@import "./styles/admin.css";
 
 @layer site {
+  /* Not: yönetim tablolarının dar ekran davranışı panel katmanında,
+     .tablo-kaydir sarmalayıcısıyla çözülür. Buradaki eski yığma kuralları
+     tablo düzenini bozduğu için kaldırıldı. */
+
 
 
 
@@ -313,10 +318,6 @@
   .dugmeler { display: flex; gap: 10px; }
 
   @media (max-width: 620px) {
-    .yonetim-tablo, .yonetim-tablo tbody, .yonetim-tablo tr, .yonetim-tablo td { display: block; width: auto; }
-    .yonetim-tablo thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
-    .yonetim-tablo tr { padding: 10px 0; border-bottom: 1px solid var(--cizgi); }
-    .yonetim-tablo td { border: 0; padding: 3px 0; }
   }
 
   /* ---------- görselli duyuru listesi ---------- */
@@ -401,7 +402,6 @@
   @media (max-width: 700px) {
     .yonetim .sekmeler { gap: 2px; }
     .yonetim .sekmeler button { padding: 8px 10px; font-size: .82rem; }
-    .yonetim-tablo { display: block; overflow-x: auto; }
   }
 
 }

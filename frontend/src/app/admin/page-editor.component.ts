@@ -82,22 +82,26 @@ import { AdminDocument, AdminPage, Revision, AdminApiService } from './admin-api
           @if (yukleniyor()) { <small>Yükleniyor…</small> }
         </div>
 
-        <table class="yonetim-tablo">
-          <thead><tr><th>Sıra</th><th>Ad</th><th>Adres</th><th></th></tr></thead>
-          <tbody>
-            @for (b of documents(); track b.id) {
-              <tr>
-                <td><input type="number" [ngModel]="b.sortOrder" (ngModelChange)="belgeAlan(b, 'sortOrder', +$event)" class="dar"></td>
-                <td><input [ngModel]="b.name" (ngModelChange)="belgeAlan(b, 'name', $event)"></td>
-                <td><input [ngModel]="b.url" (ngModelChange)="belgeAlan(b, 'url', $event)"></td>
-                <td>
-                  <button type="button" class="ikincil" (click)="saveDocument(b)">Kaydet</button>
-                  <button type="button" class="tehlike" (click)="deleteDocument(b)">Sil</button>
-                </td>
-              </tr>
-            }
-          </tbody>
-        </table>
+        <div class="tablo-kaydir">
+
+          <table class="yonetim-tablo">
+            <thead><tr><th>Sıra</th><th>Ad</th><th>Adres</th><th></th></tr></thead>
+            <tbody>
+              @for (b of documents(); track b.id) {
+                <tr>
+                  <td><input type="number" [ngModel]="b.sortOrder" (ngModelChange)="belgeAlan(b, 'sortOrder', +$event)" class="dar"></td>
+                  <td><input [ngModel]="b.name" (ngModelChange)="belgeAlan(b, 'name', $event)"></td>
+                  <td><input [ngModel]="b.url" (ngModelChange)="belgeAlan(b, 'url', $event)"></td>
+                  <td>
+                    <button type="button" class="ikincil" (click)="saveDocument(b)">Kaydet</button>
+                    <button type="button" class="tehlike" (click)="deleteDocument(b)">Sil</button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+
+        </div>
 
         <button type="button" (click)="belgeEkle()">Belge satırı ekle</button>
       } @else {
@@ -106,20 +110,24 @@ import { AdminDocument, AdminPage, Revision, AdminApiService } from './admin-api
           saklanır, yani geri alma işlemi de geri alınabilir.
         </p>
 
-        <table class="yonetim-tablo">
-          <thead><tr><th>Tarih</th><th>Açıklama</th><th>Kaydeden</th><th>Uzunluk</th><th></th></tr></thead>
-          <tbody>
-            @for (s of revisions(); track s.id) {
-              <tr>
-                <td><small>{{ zamanBicimi(s.savedAt) }}</small></td>
-                <td>{{ s.note || '—' }}</td>
-                <td>{{ s.savedBy }}</td>
-                <td>{{ s.length }} krkt</td>
-                <td><button type="button" class="ikincil" (click)="restoreRevision(s)">Bu sürüme dön</button></td>
-              </tr>
-            }
-          </tbody>
-        </table>
+        <div class="tablo-kaydir">
+
+          <table class="yonetim-tablo">
+            <thead><tr><th>Tarih</th><th>Açıklama</th><th>Kaydeden</th><th>Uzunluk</th><th></th></tr></thead>
+            <tbody>
+              @for (s of revisions(); track s.id) {
+                <tr>
+                  <td><small>{{ zamanBicimi(s.savedAt) }}</small></td>
+                  <td>{{ s.note || '—' }}</td>
+                  <td>{{ s.savedBy }}</td>
+                  <td>{{ s.length }} krkt</td>
+                  <td><button type="button" class="ikincil" (click)="restoreRevision(s)">Bu sürüme dön</button></td>
+                </tr>
+              }
+            </tbody>
+          </table>
+
+        </div>
       }
     </div>
   `,

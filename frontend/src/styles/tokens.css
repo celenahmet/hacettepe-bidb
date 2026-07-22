@@ -6,6 +6,24 @@
  * Hacettepe kurumsal renkleri temel alınmıştır; ölçekler 4px tabanlıdır.
  */
 
+@layer base {
+  /* Angular kök öğesi tanımsız bir etikettir ve varsayılan olarak satır içi
+     davranır; bu, sayfanın tepesinde satır yüksekliği kadar boşluk bırakır. */
+  app-root { display: block; }
+
+  /* router-outlet bir yer imidir, kendisi görünmez; satır içi kalırsa
+     satır yüksekliği kadar boşluk üretir. */
+  router-outlet { display: none; }
+
+  /* Bileşen kök öğeleri de tanımsız etiketlerdir; satır içi kalırlarsa
+     içlerindeki blok yapının üstünde satır yüksekliği kadar boşluk oluşur. */
+  :is(
+    bidb-header, bidb-footer, bidb-side-menu,
+    bidb-home-page, bidb-content-page, bidb-news-page,
+    bidb-admin-panel, bidb-page-editor
+  ) { display: block; }
+}
+
 @layer tokens {
   :root {
     /* ---------- renk: marka ---------- */
