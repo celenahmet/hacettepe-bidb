@@ -10,11 +10,12 @@ import { Language, Page } from '../core/models';
 import { SideMenuComponent } from '../layout/side-menu.component';
 import { StaffListComponent } from './staff-list.component';
 import { ContactBlockComponent } from './contact-block.component';
+import { FaqComponent } from './faq.component';
 
 /** /tr/<slug> ve /en/<slug> adreslerindeki içerik sayfası. */
 @Component({
   selector: 'bidb-content-page',
-  imports: [SideMenuComponent, StaffListComponent, ContactBlockComponent],
+  imports: [SideMenuComponent, StaffListComponent, ContactBlockComponent, FaqComponent],
   template: `
     <div class="kap sayfa-duzen">
       <aside class="yan">
@@ -27,7 +28,13 @@ import { ContactBlockComponent } from './contact-block.component';
             @if (bolum(); as b) { <p class="sayfa-bolum">{{ b }}</p> }
             <h1 class="sayfa-baslik">{{ s.title }}</h1>
           </header>
-          <div class="icerik" [innerHTML]="govde()"></div>
+          @if (s.slug === 'faq') {
+            <!-- SSS: kaynak akordeon HTML'i arama+filtreli modern bir
+                 akordeona ayrıştırılır; içerik birebir korunur. -->
+            <bidb-faq [rawHtml]="s.contentHtml ?? ''" [dilDegeri]="language()"></bidb-faq>
+          } @else {
+            <div class="icerik" [innerHTML]="govde()"></div>
+          }
 
           <!-- Personel listesi HTML olarak saklanmaz; birim ve kişi
                kayıtlarından üretilir. Sayfa kaydı başlık, adres, menü bağı
