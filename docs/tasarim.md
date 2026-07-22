@@ -123,8 +123,19 @@ ve alt bilgisi panelde gösterilmez; çalışma yüzeyi bölünmez.
 
 ## İçerik sayfası
 
-**Başlık kurumsal kırmızıdır** ve alt çizgi taşımaz; ayrım renk, punto ve
-boşlukla kurulur.
+**Başlık bloğu.** Sayfa başlığının üstünde, sayfanın ait olduğu menü bölümü
+küçük punto ve geniş harf aralığıyla yazılır ("TEKNİK ALTYAPI"). Ziyaretçi
+sitenin neresinde olduğunu tek bakışta görür. Bu bilgi menü verisinden
+türetilir; uydurulmuş bir etiket değildir.
+
+Blok, altındaki ince çizgiyle içerikten ayrılır. **Başlık kurumsal
+kırmızıdır** ve alt çizgi taşımaz.
+
+**Giriş paragrafı** gövdeden bir kademe büyüktür. Klasik bir yayıncılık
+aracıdır: metne giriş noktası ve ritim verir, süs değildir.
+
+**Okuma sütunu sınırlıdır (820px).** Geniş ekranda içeriğin sonsuz boşlukta
+yüzmesi, sayfanın "bitmemiş" görünmesine yol açıyordu.
 
 **Ölçü kuralı:** okunan metin 72 karakterle sınırlıdır, ancak tablo ve
 görsel gibi taranan öğeler sütunun tamamını kullanır. Tabloyu metin

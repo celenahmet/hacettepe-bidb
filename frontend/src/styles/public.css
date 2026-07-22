@@ -24,24 +24,49 @@
 @layer kamu {
   /* ================= sayfa iskeleti ================= */
 
+  /* Sol menü sabit, içerik sütunu ölçülü. Geniş ekranda içeriğin sonsuz
+     boşlukta yüzmemesi için sütun genişliği sınırlanır; sayfa sola değil,
+     okuma sütununa hizalanır. */
   .sayfa-duzen {
+    grid-template-columns: var(--sol-menu-genislik) minmax(0, 1fr);
     gap: var(--bosluk-7);
     padding-top: var(--bosluk-6);
     padding-bottom: var(--bosluk-8);
     align-items: start;
   }
 
-  .icerik-alani { min-width: 0; }
+  .icerik-alani {
+    min-width: 0;
+    max-width: 820px;
+  }
+
+  /* ---------- sayfa başlığı bloğu ---------- */
+
+  .sayfa-tepe {
+    margin-bottom: var(--bosluk-6);
+    padding-bottom: var(--bosluk-4);
+    border-bottom: 1px solid var(--cizgi);
+  }
+
+  /* Bağlam satırı: sayfanın ait olduğu menü bölümü */
+  .sayfa-bolum {
+    margin: 0 0 var(--bosluk-2);
+    font-size: 11px;
+    font-weight: var(--kalinlik-kalin);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--metin-3);
+  }
 
   /* ================= sayfa başlığı ================= */
 
   /* Sayfa başlığı kurumsal kırmızıdır (mevcut temadan gelen ton korunur).
      Alt çizgi kullanılmaz; ayrım renk, punto ve boşlukla kurulur. */
   .sayfa-baslik {
-    margin: 0 0 var(--bosluk-5);
+    margin: 0;
     padding: 0;
     border-bottom: 0;
-    font-size: var(--olcu-3xl);
+    font-size: var(--olcu-4xl);
     font-weight: var(--kalinlik-kalin);
     line-height: var(--satir-sik);
     letter-spacing: -0.02em;
@@ -70,6 +95,14 @@
 
   .icerik > :first-child { margin-top: 0; }
 
+  /* Giriş paragrafı biraz daha büyük ve koyu: metne ritim ve giriş noktası
+     verir. Klasik bir yayıncılık aracı, süs değil. */
+  .icerik > p:first-of-type {
+    font-size: var(--olcu-lg);
+    line-height: 1.65;
+    color: var(--metin);
+  }
+
   .icerik p { margin: 0 0 var(--bosluk-4); }
 
   /* Kaynak içerikte eski align="justify" niteliği bulunuyor. Türkçede
@@ -92,7 +125,13 @@
     color: var(--hu-lacivert);
   }
 
-  .icerik h2 { font-size: var(--olcu-xl); }
+  .icerik h2 {
+    position: relative;
+    font-size: var(--olcu-xl);
+    padding-top: var(--bosluk-3);
+    border-top: 1px solid var(--cizgi);
+  }
+  .icerik h2:first-child { padding-top: 0; border-top: 0; }
   .icerik h3 { font-size: var(--olcu-lg); }
   .icerik h4 { font-size: var(--olcu-md); }
 
@@ -153,6 +192,10 @@
     vertical-align: top;
   }
 
+  /* İlk sütun satırın konusudur; hafifçe öne çıkar */
+  .icerik tbody td:first-child { font-weight: var(--kalinlik-orta); color: var(--metin); }
+  .icerik tbody tr:hover td { background: var(--yuzey-2); }
+
   .icerik img { border-radius: 2px; }
 
   /* Alıntı ve vurgu blokları */
@@ -174,6 +217,8 @@
 
   .belgeler h2 {
     margin: 0 0 var(--bosluk-4);
+    padding: 0;
+    border: 0;
     font-size: 11px;
     font-weight: var(--kalinlik-kalin);
     letter-spacing: 0.12em;

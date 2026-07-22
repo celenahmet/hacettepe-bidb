@@ -21,7 +21,10 @@ import { SideMenuComponent } from '../layout/side-menu.component';
 
       <main id="ana-icerik" class="icerik-alani">
         @if (sayfa(); as s) {
-          <h1 class="sayfa-baslik">{{ s.title }}</h1>
+          <header class="sayfa-tepe">
+            @if (bolum(); as b) { <p class="sayfa-bolum">{{ b }}</p> }
+            <h1 class="sayfa-baslik">{{ s.title }}</h1>
+          </header>
           <div class="icerik" [innerHTML]="govde()"></div>
 
           @if (s.documents.length) {
@@ -55,12 +58,18 @@ export class ContentPageComponent {
   protected language = signal<Language>('tr');
   protected govde = signal<SafeHtml>('');
 
+  /** Sayfanın ait olduğu menü bölümü ("Kurumsal", "Servislerimiz"…).
+   *  Başlığın üstünde bağlam olarak gösterilir; ziyaretçi sitenin neresinde
+   *  olduğunu tek bakışta anlar. Menü verisinden türetilir, uydurulmaz. */
+  protected bolum = signal<string | null>(null);
+
   protected sayfa = toSignal(
     this.rota.paramMap.pipe(
       switchMap((p) => {
         const language = (p.get('language') as Language) ?? 'tr';
         const slug = p.get('slug') ?? 'home';
         this.language.set(language);
+        this.bolumuCoz(language, "/" + language + "/" + slug);
         return this.api.sayfa(language, slug).pipe(
           tap((s) => {
             this.seo.uygula(s, language, `/${language}/${slug}`);
@@ -74,4 +83,12 @@ export class ContentPageComponent {
     ),
     { initialValue: null }
   );
+
+  /** Adresi menüde arar ve içinde bulunduğu bölümün başlığını alır. */
+  private bolumuCoz(language: Language, yol: string): void {
+    this.api.menu(language).subscribe((menuler) => {
+      const bulunan = menuler.find((m) => m.items.some((o) => o.url === yol));
+      this.bolum.set(bulunan ? bulunan.title : null);
+    });
+  }
 }
