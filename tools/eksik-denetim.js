@@ -31,7 +31,7 @@ async function durum(u) {
   /* ---------- sayfa listesi ---------- */
   const sayfalar = [];
   for (const dil of ["tr", "en"]) {
-    const y = await fetch(SITE + "/api/" + dil + "/sayfalar");
+    const y = await fetch(SITE + "/api/" + dil + "/pages");
     for (const s of await y.json()) sayfalar.push("/" + dil + "/" + s.slug);
   }
   sayfalar.unshift("/tr", "/en");

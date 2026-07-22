@@ -6,5 +6,5 @@ import tr.edu.hacettepe.bidb.model.MenuItem;
 import java.util.List;
 
 public interface MenuItemRepo extends JpaRepository<MenuItem, Long> {
-    List<MenuItem> findByMenuIdOrderBySiraAsc(Long menuId);
+    List<MenuItem> findByMenuIdOrderBySortOrderAsc(Long menuId);
 }

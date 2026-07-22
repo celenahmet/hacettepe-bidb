@@ -5,7 +5,7 @@ import java.time.LocalDate;
 
 /** Ana sayfa slider görseli. */
 @Entity
-@Table(name = "slider")
+@Table(name = "slide")
 public class Slider {
 
     @Id
@@ -13,50 +13,50 @@ public class Slider {
     private Long id;
 
     @Column(nullable = false, length = 2)
-    private String dil;
+    private String language;
 
     @Column(length = 300)
-    private String baslik;
+    private String title;
 
-    @Column(name = "alt_baslik", length = 500)
-    private String altBaslik;
+    @Column(name = "subtitle", length = 500)
+    private String subtitle;
 
-    @Column(name = "gorsel_url", nullable = false, length = 500)
-    private String gorselUrl;
+    @Column(name = "image_url", nullable = false, length = 500)
+    private String imageUrl;
 
-    @Column(name = "gorsel_alt", length = 300)
-    private String gorselAlt;
+    @Column(name = "image_alt", length = 300)
+    private String imageAlt;
 
     @Column(length = 500)
-    private String baglanti;
+    private String linkUrl;
 
     @Column(nullable = false)
-    private int sira = 0;
+    private int sortOrder = 0;
 
     @Column(nullable = false)
-    private boolean yayinda = true;
+    private boolean published = true;
 
-    private LocalDate baslangic;
-    private LocalDate bitis;
+    private LocalDate startsOn;
+    private LocalDate endsOn;
 
     public Long getId() { return id; }
-    public String getDil() { return dil; }
-    public String getBaslik() { return baslik; }
-    public String getAltBaslik() { return altBaslik; }
-    public String getGorselUrl() { return gorselUrl; }
-    public String getGorselAlt() { return gorselAlt; }
-    public String getBaglanti() { return baglanti; }
-    public int getSira() { return sira; }
-    public boolean isYayinda() { return yayinda; }
-    public LocalDate getBaslangic() { return baslangic; }
-    public LocalDate getBitis() { return bitis; }
+    public String getLanguage() { return language; }
+    public String getTitle() { return title; }
+    public String getSubtitle() { return subtitle; }
+    public String getImageUrl() { return imageUrl; }
+    public String getImageAlt() { return imageAlt; }
+    public String getLinkUrl() { return linkUrl; }
+    public int getSortOrder() { return sortOrder; }
+    public boolean isPublished() { return published; }
+    public LocalDate getStartsOn() { return startsOn; }
+    public LocalDate getEndsOn() { return endsOn; }
 
-    public void setDil(String dil) { this.dil = dil; }
-    public void setBaslik(String baslik) { this.baslik = baslik; }
-    public void setAltBaslik(String altBaslik) { this.altBaslik = altBaslik; }
-    public void setGorselUrl(String gorselUrl) { this.gorselUrl = gorselUrl; }
-    public void setGorselAlt(String gorselAlt) { this.gorselAlt = gorselAlt; }
-    public void setBaglanti(String baglanti) { this.baglanti = baglanti; }
-    public void setSira(int sira) { this.sira = sira; }
-    public void setYayinda(boolean yayinda) { this.yayinda = yayinda; }
+    public void setLanguage(String language) { this.language = language; }
+    public void setTitle(String title) { this.title = title; }
+    public void setSubtitle(String subtitle) { this.subtitle = subtitle; }
+    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
+    public void setImageAlt(String imageAlt) { this.imageAlt = imageAlt; }
+    public void setLinkUrl(String linkUrl) { this.linkUrl = linkUrl; }
+    public void setSortOrder(int sortOrder) { this.sortOrder = sortOrder; }
+    public void setPublished(boolean published) { this.published = published; }
 }

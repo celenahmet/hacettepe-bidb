@@ -17,16 +17,16 @@ import { AdminDocument, AdminPage, Revision, AdminApiService } from './admin-api
   template: `
     <div class="duzenleyici">
       <header class="duzenleyici-ust">
-        <h2>{{ sayfa().baslik }}</h2>
-        <code>/{{ sayfa().dil }}/{{ sayfa().slug }}</code>
+        <h2>{{ sayfa().title }}</h2>
+        <code>/{{ sayfa().language }}/{{ sayfa().slug }}</code>
         <button type="button" class="ikincil" (click)="kapat.emit()">Kapat</button>
       </header>
 
       <nav class="sekmeler ic">
         <button type="button" [class.etkin]="bolum() === 'metin'" (click)="bolum.set('metin')">Metin</button>
-        <button type="button" [class.etkin]="bolum() === 'adres'" (click)="bolum.set('adres')">Başlık ve adres</button>
+        <button type="button" [class.etkin]="bolum() === 'url'" (click)="bolum.set('url')">Başlık ve url</button>
         <button type="button" [class.etkin]="bolum() === 'belge'" (click)="belgeBolumu()">Belgeler</button>
-        <button type="button" [class.etkin]="bolum() === 'surum'" (click)="surumBolumu()">Sürüm geçmişi</button>
+        <button type="button" [class.etkin]="bolum() === 'revision'" (click)="surumBolumu()">Sürüm geçmişi</button>
       </nav>
 
       @if (mesaj()) { <p class="bilgi" role="status">{{ mesaj() }}</p> }
@@ -57,24 +57,24 @@ import { AdminDocument, AdminPage, Revision, AdminApiService } from './admin-api
             <div class="icerik" [innerHTML]="o"></div>
           </section>
         }
-      } @else if (bolum() === 'adres') {
+      } @else if (bolum() === 'url') {
         <label for="sbaslik2">Page başlığı</label>
         <input id="sbaslik2" name="sbaslik2" [ngModel]="yeniBaslik()" (ngModelChange)="yeniBaslik.set($event)">
 
         <label for="sslug">Adres</label>
         <input id="sslug" name="sslug" [ngModel]="yeniSlug()" (ngModelChange)="yeniSlug.set($event)">
         <p class="aciklama">
-          Yeni adres: <code>/{{ sayfa().dil }}/{{ yeniSlug() }}</code><br>
-          Adresi değiştirirseniz eski adres yenisine yönlendirilir; dışarıdan
+          Yeni url: <code>/{{ sayfa().language }}/{{ yeniSlug() }}</code><br>
+          Adresi değiştirirseniz eski url yenisine yönlendirilir; dışarıdan
           verilmiş bağlantılar çalışmaya devam eder.
         </p>
 
         <span class="dugmeler">
           <button type="button" (click)="adresKaydet()">Kaydet</button>
-          <button type="button" class="tehlike" (click)="sayfaSil()">Sayfayı sil</button>
+          <button type="button" class="tehlike" (click)="deletePage()">Sayfayı sil</button>
         </span>
       } @else if (bolum() === 'belge') {
-        <p class="aciklama">Sayfanın altında listelenen belgeler.</p>
+        <p class="aciklama">Sayfanın altında listelenen documents.</p>
 
         <div class="yukleme">
           <label for="dosya">Yeni dosya yükle (PDF, Word, Excel, görsel — en fazla 25 MB)</label>
@@ -85,14 +85,14 @@ import { AdminDocument, AdminPage, Revision, AdminApiService } from './admin-api
         <table class="yonetim-tablo">
           <thead><tr><th>Sıra</th><th>Ad</th><th>Adres</th><th></th></tr></thead>
           <tbody>
-            @for (b of belgeler(); track b.id) {
+            @for (b of documents(); track b.id) {
               <tr>
-                <td><input type="number" [ngModel]="b.sira" (ngModelChange)="belgeAlan(b, 'sira', +$event)" class="dar"></td>
-                <td><input [ngModel]="b.ad" (ngModelChange)="belgeAlan(b, 'ad', $event)"></td>
-                <td><input [ngModel]="b.adres" (ngModelChange)="belgeAlan(b, 'adres', $event)"></td>
+                <td><input type="number" [ngModel]="b.sortOrder" (ngModelChange)="belgeAlan(b, 'sortOrder', +$event)" class="dar"></td>
+                <td><input [ngModel]="b.name" (ngModelChange)="belgeAlan(b, 'name', $event)"></td>
+                <td><input [ngModel]="b.url" (ngModelChange)="belgeAlan(b, 'url', $event)"></td>
                 <td>
-                  <button type="button" class="ikincil" (click)="belgeKaydet(b)">Kaydet</button>
-                  <button type="button" class="tehlike" (click)="belgeSil(b)">Sil</button>
+                  <button type="button" class="ikincil" (click)="saveDocument(b)">Kaydet</button>
+                  <button type="button" class="tehlike" (click)="deleteDocument(b)">Sil</button>
                 </td>
               </tr>
             }
@@ -109,13 +109,13 @@ import { AdminDocument, AdminPage, Revision, AdminApiService } from './admin-api
         <table class="yonetim-tablo">
           <thead><tr><th>Tarih</th><th>Açıklama</th><th>Kaydeden</th><th>Uzunluk</th><th></th></tr></thead>
           <tbody>
-            @for (s of surumler(); track s.id) {
+            @for (s of revisions(); track s.id) {
               <tr>
-                <td><small>{{ zamanBicimi(s.zaman) }}</small></td>
-                <td>{{ s.aciklama || '—' }}</td>
-                <td>{{ s.kaydeden }}</td>
-                <td>{{ s.uzunluk }} krkt</td>
-                <td><button type="button" class="ikincil" (click)="geriAl(s)">Bu sürüme dön</button></td>
+                <td><small>{{ zamanBicimi(s.savedAt) }}</small></td>
+                <td>{{ s.note || '—' }}</td>
+                <td>{{ s.savedBy }}</td>
+                <td>{{ s.length }} krkt</td>
+                <td><button type="button" class="ikincil" (click)="restoreRevision(s)">Bu sürüme dön</button></td>
               </tr>
             }
           </tbody>
@@ -146,7 +146,7 @@ export class PageEditorComponent {
   kapat = output<void>();
   degisti = output<void>();
 
-  protected bolum = signal<'metin' | 'adres' | 'belge' | 'surum'>('metin');
+  protected bolum = signal<'metin' | 'url' | 'belge' | 'revision'>('metin');
   protected mesaj = signal('');
 
   protected metin = signal('');
@@ -157,16 +157,16 @@ export class PageEditorComponent {
   protected yeniBaslik = signal('');
   protected yeniSlug = signal('');
 
-  protected belgeler = signal<AdminDocument[]>([]);
-  protected surumler = signal<Revision[]>([]);
+  protected documents = signal<AdminDocument[]>([]);
+  protected revisions = signal<Revision[]>([]);
   protected yukleniyor = signal(false);
 
   ngOnInit(): void {
     const s = this.sayfa();
-    this.yeniBaslik.set(s.baslik);
+    this.yeniBaslik.set(s.title);
     this.yeniSlug.set(s.slug);
     // Liste görünümünde içerik gelmediği için sayfa ayrıca okunur
-    this.api.sayfaTam(s.dil, s.slug).subscribe((tam) => this.metin.set(tam?.icerikHtml ?? ''));
+    this.api.fullPage(s.language, s.slug).subscribe((tam) => this.metin.set(tam?.contentHtml ?? ''));
   }
 
   /** 2026-07-21T20:54:59Z -> 21.07.2026 20:54 */
@@ -191,10 +191,10 @@ export class PageEditorComponent {
   }
 
   protected yayinla(): void {
-    this.api.icerikKaydet(this.sayfa().id, {
-      baslik: this.yeniBaslik(),
-      icerikHtml: this.metin(),
-      aciklama: this.not() || 'Panelden düzenlendi'
+    this.api.saveContent(this.sayfa().id, {
+      title: this.yeniBaslik(),
+      contentHtml: this.metin(),
+      note: this.not() || 'Panelden düzenlendi'
     }).subscribe({
       next: () => {
         this.onizlendi.set(false);
@@ -206,49 +206,49 @@ export class PageEditorComponent {
     });
   }
 
-  /* ---------- adres ---------- */
+  /* ---------- url ---------- */
 
   protected adresKaydet(): void {
-    this.api.adresDegistir(this.sayfa().id, { slug: this.yeniSlug(), baslik: this.yeniBaslik() }).subscribe({
-      next: () => { this.bildir('Kaydedildi. Eski adres yenisine yönlendiriliyor.'); this.degisti.emit(); },
+    this.api.changeAddress(this.sayfa().id, { slug: this.yeniSlug(), title: this.yeniBaslik() }).subscribe({
+      next: () => { this.bildir('Kaydedildi. Eski url yenisine yönlendiriliyor.'); this.degisti.emit(); },
       error: (e) => this.bildir(typeof e?.error === 'string' ? e.error : 'Kaydedilemedi.')
     });
   }
 
-  protected sayfaSil(): void {
-    if (!confirm(`"${this.sayfa().baslik}" sayfası silinecek. Emin misiniz?`)) return;
-    this.api.sayfaSil(this.sayfa().id).subscribe({
+  protected deletePage(): void {
+    if (!confirm(`"${this.sayfa().title}" sayfası silinecek. Emin misiniz?`)) return;
+    this.api.deletePage(this.sayfa().id).subscribe({
       next: () => { this.bildir('Page silindi.'); this.degisti.emit(); this.kapat.emit(); },
       error: () => this.bildir('Silinemedi.')
     });
   }
 
-  /* ---------- belgeler ---------- */
+  /* ---------- documents ---------- */
 
   protected belgeBolumu(): void {
     this.bolum.set('belge');
-    this.api.belgeler(this.sayfa().id).subscribe((l) => this.belgeler.set(l));
+    this.api.documents(this.sayfa().id).subscribe((l) => this.documents.set(l));
   }
 
-  protected belgeAlan(b: AdminDocument, alan: keyof AdminDocument, deger: unknown): void {
-    this.belgeler.update((l) => l.map((x) => (x === b ? { ...x, [alan]: deger } as AdminDocument : x)));
+  protected belgeAlan(b: AdminDocument, alan: keyof AdminDocument, value: unknown): void {
+    this.documents.update((l) => l.map((x) => (x === b ? { ...x, [alan]: value } as AdminDocument : x)));
   }
 
   protected belgeEkle(): void {
-    this.belgeler.update((l) => [...l, { id: null, ad: '', adres: '', sira: l.length }]);
+    this.documents.update((l) => [...l, { id: null, name: '', url: '', sortOrder: l.length }]);
   }
 
-  protected belgeKaydet(b: AdminDocument): void {
-    this.api.belgeKaydet(this.sayfa().id, b).subscribe({
+  protected saveDocument(b: AdminDocument): void {
+    this.api.saveDocument(this.sayfa().id, b).subscribe({
       next: () => { this.bildir('Document kaydedildi.'); this.belgeBolumu(); },
       error: () => this.bildir('Kaydedilemedi.')
     });
   }
 
-  protected belgeSil(b: AdminDocument): void {
-    if (!b.id) { this.belgeler.update((l) => l.filter((x) => x !== b)); return; }
-    this.api.belgeSil(b.id).subscribe({
-      next: () => { this.belgeler.update((l) => l.filter((x) => x !== b)); this.bildir('Document silindi.'); },
+  protected deleteDocument(b: AdminDocument): void {
+    if (!b.id) { this.documents.update((l) => l.filter((x) => x !== b)); return; }
+    this.api.deleteDocument(b.id).subscribe({
+      next: () => { this.documents.update((l) => l.filter((x) => x !== b)); this.bildir('Document silindi.'); },
       error: () => this.bildir('Silinemedi.')
     });
   }
@@ -258,13 +258,13 @@ export class PageEditorComponent {
     const dosya = girdi.files?.[0];
     if (!dosya) return;
     this.yukleniyor.set(true);
-    this.api.dosyaYukle(dosya).subscribe({
+    this.api.uploadFile(dosya).subscribe({
       next: (s) => {
         this.yukleniyor.set(false);
         girdi.value = '';
         // Yüklenen dosya doğrudan belge satırı olarak eklenir
-        this.belgeler.update((l) => [...l, { id: null, ad: dosya.name, adres: s.adres, sira: l.length }]);
-        this.bildir('Yüklendi: ' + s.adres + ' — satırı kaydetmeyi unutmayın.');
+        this.documents.update((l) => [...l, { id: null, name: dosya.name, url: s.url, sortOrder: l.length }]);
+        this.bildir('Yüklendi: ' + s.url + ' — satırı kaydetmeyi unutmayın.');
       },
       error: (e) => {
         this.yukleniyor.set(false);
@@ -276,17 +276,17 @@ export class PageEditorComponent {
   /* ---------- sürümler ---------- */
 
   protected surumBolumu(): void {
-    this.bolum.set('surum');
-    this.api.surumler(this.sayfa().id).subscribe((l) => this.surumler.set(l));
+    this.bolum.set('revision');
+    this.api.revisions(this.sayfa().id).subscribe((l) => this.revisions.set(l));
   }
 
-  protected geriAl(s: Revision): void {
+  protected restoreRevision(s: Revision): void {
     if (!confirm('Page bu sürüme döndürülecek. Mevcut hâli yine de saklanacak. Devam edilsin mi?')) return;
-    this.api.geriAl(this.sayfa().id, s.id).subscribe({
+    this.api.restoreRevision(this.sayfa().id, s.id).subscribe({
       next: () => {
         this.bildir('Page bu sürüme döndürüldü.');
-        this.api.sayfaTam(this.sayfa().dil, this.sayfa().slug)
-          .subscribe((tam) => this.metin.set(tam?.icerikHtml ?? ''));
+        this.api.fullPage(this.sayfa().language, this.sayfa().slug)
+          .subscribe((tam) => this.metin.set(tam?.contentHtml ?? ''));
         this.surumBolumu();
         this.degisti.emit();
       },

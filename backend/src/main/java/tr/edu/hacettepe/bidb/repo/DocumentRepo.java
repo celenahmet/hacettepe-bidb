@@ -6,5 +6,5 @@ import tr.edu.hacettepe.bidb.model.Document;
 import java.util.List;
 
 public interface DocumentRepo extends JpaRepository<Document, Long> {
-    List<Document> findBySayfa_IdOrderBySiraAsc(Long sayfaId);
+    List<Document> findByPage_IdOrderBySortOrderAsc(Long pageId);
 }

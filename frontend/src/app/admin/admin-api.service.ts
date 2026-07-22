@@ -5,105 +5,105 @@ import { Observable } from 'rxjs';
 export interface AdminPage {
   id: number;
   slug: string;
-  dil: string;
-  baslik: string;
+  language: string;
+  title: string;
   seoTitle: string | null;
   seoDescription: string | null;
   seoKeywords: string | null;
-  yayinda: boolean;
-  icerikUzunlugu: number;
+  published: boolean;
+  contentLength: number;
 }
 
 export interface AdminNews {
   id: number | null;
-  dil: string;
-  baslik: string;
-  ozet: string | null;
-  yayinTarihi: string;
-  oneCikan: boolean;
-  yayinda: boolean;
-  disAdres: string | null;
-  /** Doldurulursa haber kendi sayfasında açılır: /tr/duyuru/<slug> */
+  language: string;
+  title: string;
+  summary: string | null;
+  publishedOn: string;
+  featured: boolean;
+  published: boolean;
+  externalUrl: string | null;
+  /** Doldurulursa haber kendi sayfasında açılır: /tr/newsItem/<slug> */
   slug: string | null;
-  gorselUrl: string | null;
-  gorselAlt: string | null;
-  icerikHtml: string | null;
+  imageUrl: string | null;
+  imageAlt: string | null;
+  contentHtml: string | null;
 }
 
 export interface Slide {
   id: number | null;
-  dil: string;
-  baslik: string | null;
-  altBaslik: string | null;
-  gorselUrl: string;
-  gorselAlt: string | null;
-  baglanti: string | null;
-  sira: number;
-  yayinda: boolean;
+  language: string;
+  title: string | null;
+  subtitle: string | null;
+  imageUrl: string;
+  imageAlt: string | null;
+  linkUrl: string | null;
+  sortOrder: number;
+  published: boolean;
 }
 
 export interface Shortcut {
   id: number | null;
-  dil: string;
-  ad: string;
-  ikonUrl: string | null;
-  adres: string;
-  yeniSekme: boolean;
-  sira: number;
-  yayinda: boolean;
+  language: string;
+  name: string;
+  iconUrl: string | null;
+  url: string;
+  newTab: boolean;
+  sortOrder: number;
+  published: boolean;
 }
 
 export interface AdminMenuItem {
   id: number | null;
-  etiket: string;
-  sayfaId: number | null;
-  sayfaYolu: string | null;
-  disAdres: string | null;
-  yeniSekme: boolean;
-  sira: number;
+  label: string;
+  pageId: number | null;
+  pagePath: string | null;
+  externalUrl: string | null;
+  newTab: boolean;
+  sortOrder: number;
 }
 
 export interface AdminMenu {
   id: number;
-  dil: string;
-  konum: string;
-  baslik: string;
-  sira: number;
-  ogeler: AdminMenuItem[];
+  language: string;
+  position: string;
+  title: string;
+  sortOrder: number;
+  items: AdminMenuItem[];
 }
 
 export interface AdminSocialAccount {
   id: number | null;
-  ag: string;
-  adres: string;
-  sira: number;
-  yayinda: boolean;
+  network: string;
+  url: string;
+  sortOrder: number;
+  published: boolean;
 }
 
 export interface Revision {
   id: number;
-  baslik: string;
-  aciklama: string | null;
-  kaydeden: string;
-  zaman: string;
-  uzunluk: number;
+  title: string;
+  note: string | null;
+  savedBy: string;
+  savedAt: string;
+  length: number;
 }
 
 export interface AdminDocument {
   id: number | null;
-  ad: string;
-  adres: string;
-  tur?: string | null;
-  sira: number;
+  name: string;
+  url: string;
+  fileType?: string | null;
+  sortOrder: number;
 }
 
 export interface UploadedFile {
   id: number;
-  dosyaAdi: string;
-  ozgunAd: string;
-  boyut: number;
-  yukleyen: string;
-  yukleme: string;
+  fileName: string;
+  originalName: string;
+  sizeBytes: number;
+  uploadedBy: string;
+  uploadedAt: string;
 }
 
 const SESSION_KEY = 'bidb-yonetim';
@@ -126,10 +126,10 @@ export class AdminApiService {
     }
   }
 
-  /** Kullanıcı adı ve parolayı doğrular; başarılıysa oturumda saklar. */
+  /** Kullanıcı nameı ve parolayı doğrular; başarılıysa oturumda saklar. */
   girisDene(kullanici: string, parola: string): Observable<AdminPage[]> {
     this.kimlik = 'Basic ' + btoa(`${kullanici}:${parola}`);
-    return this.http.get<AdminPage[]>('/api/yonetim/sayfalar', { headers: this.basliklar() });
+    return this.http.get<AdminPage[]>('/api/admin/pages', { headers: this.basliklar() });
   }
 
   girisOnayla(): void {
@@ -143,184 +143,184 @@ export class AdminApiService {
     if (typeof sessionStorage !== 'undefined') sessionStorage.removeItem(SESSION_KEY);
   }
 
-  sayfalar(): Observable<AdminPage[]> {
-    return this.http.get<AdminPage[]>('/api/yonetim/sayfalar', { headers: this.basliklar() });
+  pages(): Observable<AdminPage[]> {
+    return this.http.get<AdminPage[]>('/api/admin/pages', { headers: this.basliklar() });
   }
 
-  seoKaydet(id: number, veri: Partial<AdminPage>): Observable<AdminPage> {
-    return this.http.put<AdminPage>(`/api/yonetim/sayfalar/${id}/seo`, {
+  saveSeo(id: number, veri: Partial<AdminPage>): Observable<AdminPage> {
+    return this.http.put<AdminPage>(`/api/admin/pages/${id}/seo`, {
       seoTitle: veri.seoTitle ?? '',
       seoDescription: veri.seoDescription ?? '',
       seoKeywords: veri.seoKeywords ?? '',
-      yayinda: veri.yayinda ?? true
+      published: veri.published ?? true
     }, { headers: this.basliklar() });
   }
 
-  duyurular(): Observable<AdminNews[]> {
-    return this.http.get<AdminNews[]>('/api/yonetim/duyurular', { headers: this.basliklar() });
+  news(): Observable<AdminNews[]> {
+    return this.http.get<AdminNews[]>('/api/admin/news', { headers: this.basliklar() });
   }
 
-  duyuruEkle(d: AdminNews): Observable<AdminNews> {
-    return this.http.post<AdminNews>('/api/yonetim/duyurular', d, { headers: this.basliklar() });
+  addNews(d: AdminNews): Observable<AdminNews> {
+    return this.http.post<AdminNews>('/api/admin/news', d, { headers: this.basliklar() });
   }
 
-  duyuruGuncelle(id: number, d: AdminNews): Observable<AdminNews> {
-    return this.http.put<AdminNews>(`/api/yonetim/duyurular/${id}`, d, { headers: this.basliklar() });
+  updateNews(id: number, d: AdminNews): Observable<AdminNews> {
+    return this.http.put<AdminNews>(`/api/admin/news/${id}`, d, { headers: this.basliklar() });
   }
 
-  duyuruSil(id: number): Observable<void> {
-    return this.http.delete<void>(`/api/yonetim/duyurular/${id}`, { headers: this.basliklar() });
+  deleteNews(id: number): Observable<void> {
+    return this.http.delete<void>(`/api/admin/news/${id}`, { headers: this.basliklar() });
   }
 
-  slaytlar(): Observable<Slide[]> {
-    return this.http.get<Slide[]>('/api/yonetim/slider/liste', { headers: this.basliklar() });
+  slides(): Observable<Slide[]> {
+    return this.http.get<Slide[]>('/api/admin/slides/list', { headers: this.basliklar() });
   }
 
-  slaytKaydet(s: Slide): Observable<Slide> {
+  saveSlide(s: Slide): Observable<Slide> {
     return s.id
-      ? this.http.put<Slide>(`/api/yonetim/slider/${s.id}`, s, { headers: this.basliklar() })
-      : this.http.post<Slide>('/api/yonetim/slider', s, { headers: this.basliklar() });
+      ? this.http.put<Slide>(`/api/admin/slides/${s.id}`, s, { headers: this.basliklar() })
+      : this.http.post<Slide>('/api/admin/slides', s, { headers: this.basliklar() });
   }
 
-  slaytSil(id: number): Observable<void> {
-    return this.http.delete<void>(`/api/yonetim/slider/${id}`, { headers: this.basliklar() });
+  deleteSlide(id: number): Observable<void> {
+    return this.http.delete<void>(`/api/admin/slides/${id}`, { headers: this.basliklar() });
   }
 
-  kisayollar(): Observable<Shortcut[]> {
-    return this.http.get<Shortcut[]>('/api/yonetim/kisayollar/liste', { headers: this.basliklar() });
+  shortcuts(): Observable<Shortcut[]> {
+    return this.http.get<Shortcut[]>('/api/admin/shortcuts/list', { headers: this.basliklar() });
   }
 
-  kisayolKaydet(k: Shortcut): Observable<Shortcut> {
+  saveShortcut(k: Shortcut): Observable<Shortcut> {
     return k.id
-      ? this.http.put<Shortcut>(`/api/yonetim/kisayollar/${k.id}`, k, { headers: this.basliklar() })
-      : this.http.post<Shortcut>('/api/yonetim/kisayollar', k, { headers: this.basliklar() });
+      ? this.http.put<Shortcut>(`/api/admin/shortcuts/${k.id}`, k, { headers: this.basliklar() })
+      : this.http.post<Shortcut>('/api/admin/shortcuts', k, { headers: this.basliklar() });
   }
 
-  kisayolSil(id: number): Observable<void> {
-    return this.http.delete<void>(`/api/yonetim/kisayollar/${id}`, { headers: this.basliklar() });
+  deleteShortcut(id: number): Observable<void> {
+    return this.http.delete<void>(`/api/admin/shortcuts/${id}`, { headers: this.basliklar() });
   }
 
-  menuler(): Observable<AdminMenu[]> {
-    return this.http.get<AdminMenu[]>('/api/yonetim/menu', { headers: this.basliklar() });
+  menus(): Observable<AdminMenu[]> {
+    return this.http.get<AdminMenu[]>('/api/admin/menus', { headers: this.basliklar() });
   }
 
-  menuOgeKaydet(menuId: number, o: AdminMenuItem): Observable<unknown> {
-    const govde = { menuId, etiket: o.etiket, sayfaId: o.sayfaId, disAdres: o.disAdres, yeniSekme: o.yeniSekme, sira: o.sira };
+  saveMenuItem(menuId: number, o: AdminMenuItem): Observable<unknown> {
+    const govde = { menuId, label: o.label, pageId: o.pageId, externalUrl: o.externalUrl, newTab: o.newTab, sortOrder: o.sortOrder };
     return o.id
-      ? this.http.put(`/api/yonetim/menu/oge/${o.id}`, govde, { headers: this.basliklar() })
-      : this.http.post('/api/yonetim/menu/oge', govde, { headers: this.basliklar() });
+      ? this.http.put(`/api/admin/menus/items/${o.id}`, govde, { headers: this.basliklar() })
+      : this.http.post('/api/admin/menus/items', govde, { headers: this.basliklar() });
   }
 
-  menuOgeSil(id: number): Observable<void> {
-    return this.http.delete<void>(`/api/yonetim/menu/oge/${id}`, { headers: this.basliklar() });
+  deleteMenuItem(id: number): Observable<void> {
+    return this.http.delete<void>(`/api/admin/menus/items/${id}`, { headers: this.basliklar() });
   }
 
-  sosyalHesaplar(): Observable<AdminSocialAccount[]> {
-    return this.http.get<AdminSocialAccount[]>('/api/yonetim/sosyal', { headers: this.basliklar() });
+  socialAccounts(): Observable<AdminSocialAccount[]> {
+    return this.http.get<AdminSocialAccount[]>('/api/admin/social-accounts', { headers: this.basliklar() });
   }
 
-  sosyalKaydet(s: AdminSocialAccount): Observable<unknown> {
+  saveSocialAccount(s: AdminSocialAccount): Observable<unknown> {
     return s.id
-      ? this.http.put(`/api/yonetim/sosyal/${s.id}`, s, { headers: this.basliklar() })
-      : this.http.post('/api/yonetim/sosyal', s, { headers: this.basliklar() });
+      ? this.http.put(`/api/admin/social-accounts/${s.id}`, s, { headers: this.basliklar() })
+      : this.http.post('/api/admin/social-accounts', s, { headers: this.basliklar() });
   }
 
-  sosyalSil(id: number): Observable<void> {
-    return this.http.delete<void>(`/api/yonetim/sosyal/${id}`, { headers: this.basliklar() });
+  deleteSocialAccount(id: number): Observable<void> {
+    return this.http.delete<void>(`/api/admin/social-accounts/${id}`, { headers: this.basliklar() });
   }
 
-  menuBolumKaydet(m: { id: number | null; dil: string; konum: string; baslik: string; sira: number }): Observable<unknown> {
+  saveMenuSection(m: { id: number | null; language: string; position: string; title: string; sortOrder: number }): Observable<unknown> {
     return m.id
-      ? this.http.put(`/api/yonetim/menu/${m.id}`, m, { headers: this.basliklar() })
-      : this.http.post('/api/yonetim/menu', m, { headers: this.basliklar() });
+      ? this.http.put(`/api/admin/menus/${m.id}`, m, { headers: this.basliklar() })
+      : this.http.post('/api/admin/menus', m, { headers: this.basliklar() });
   }
 
-  menuBolumSil(id: number): Observable<void> {
-    return this.http.delete<void>(`/api/yonetim/menu/${id}`, { headers: this.basliklar() });
+  deleteMenuSection(id: number): Observable<void> {
+    return this.http.delete<void>(`/api/admin/menus/${id}`, { headers: this.basliklar() });
   }
 
   /* ---------- sayfa metni ve sürümler ---------- */
 
   /** Sayfanın içeriğiyle birlikte tam hâli (liste görünümünde metin gelmez). */
-  sayfaTam(dil: string, slug: string): Observable<{ icerikHtml: string; baslik: string } | null> {
-    return this.http.get<{ icerikHtml: string; baslik: string }>(`/api/${dil}/sayfa/${slug}`);
+  fullPage(language: string, slug: string): Observable<{ contentHtml: string; title: string } | null> {
+    return this.http.get<{ contentHtml: string; title: string }>(`/api/${language}/pages/${slug}`);
   }
 
-  icerikKaydet(id: number, veri: { baslik: string; icerikHtml: string; aciklama: string }): Observable<unknown> {
-    return this.http.put(`/api/yonetim/sayfa/${id}/icerik`, veri, { headers: this.basliklar() });
+  saveContent(id: number, veri: { title: string; contentHtml: string; note: string }): Observable<unknown> {
+    return this.http.put(`/api/admin/pages/${id}/content`, veri, { headers: this.basliklar() });
   }
 
-  surumler(id: number): Observable<Revision[]> {
-    return this.http.get<Revision[]>(`/api/yonetim/sayfa/${id}/surumler`, { headers: this.basliklar() });
+  revisions(id: number): Observable<Revision[]> {
+    return this.http.get<Revision[]>(`/api/admin/pages/${id}/revisions`, { headers: this.basliklar() });
   }
 
-  surumIcerik(surumId: number): Observable<{ icerikHtml: string; baslik: string }> {
-    return this.http.get<{ icerikHtml: string; baslik: string }>(
-      `/api/yonetim/sayfa/surum/${surumId}`, { headers: this.basliklar() });
+  surumIcerik(revisionId: number): Observable<{ contentHtml: string; title: string }> {
+    return this.http.get<{ contentHtml: string; title: string }>(
+      `/api/admin/pages/revision/${revisionId}`, { headers: this.basliklar() });
   }
 
-  geriAl(id: number, surumId: number): Observable<unknown> {
-    return this.http.post(`/api/yonetim/sayfa/${id}/geri-al/${surumId}`, {}, { headers: this.basliklar() });
+  restoreRevision(id: number, revisionId: number): Observable<unknown> {
+    return this.http.post(`/api/admin/pages/${id}/restore/${revisionId}`, {}, { headers: this.basliklar() });
   }
 
-  /* ---------- sayfa ekleme, silme, adres ---------- */
+  /* ---------- sayfa ekleme, silme, url ---------- */
 
-  sayfaEkle(veri: { dil: string; slug: string; baslik: string; icerikHtml: string }): Observable<unknown> {
-    return this.http.post('/api/yonetim/sayfa', veri, { headers: this.basliklar() });
+  createPage(veri: { language: string; slug: string; title: string; contentHtml: string }): Observable<unknown> {
+    return this.http.post('/api/admin/pages', veri, { headers: this.basliklar() });
   }
 
-  adresDegistir(id: number, veri: { slug: string; baslik: string }): Observable<unknown> {
-    return this.http.put(`/api/yonetim/sayfa/${id}/adres`, veri, { headers: this.basliklar() });
+  changeAddress(id: number, veri: { slug: string; title: string }): Observable<unknown> {
+    return this.http.put(`/api/admin/pages/${id}/url`, veri, { headers: this.basliklar() });
   }
 
-  sayfaSil(id: number): Observable<void> {
-    return this.http.delete<void>(`/api/yonetim/sayfa/${id}`, { headers: this.basliklar() });
+  deletePage(id: number): Observable<void> {
+    return this.http.delete<void>(`/api/admin/pages/${id}`, { headers: this.basliklar() });
   }
 
-  /* ---------- sayfaya bağlı belgeler ---------- */
+  /* ---------- sayfaya bağlı documents ---------- */
 
-  belgeler(sayfaId: number): Observable<AdminDocument[]> {
-    return this.http.get<AdminDocument[]>(`/api/yonetim/sayfa/${sayfaId}/belgeler`, { headers: this.basliklar() });
+  documents(pageId: number): Observable<AdminDocument[]> {
+    return this.http.get<AdminDocument[]>(`/api/admin/pages/${pageId}/documents`, { headers: this.basliklar() });
   }
 
-  belgeKaydet(sayfaId: number, b: AdminDocument): Observable<unknown> {
+  saveDocument(pageId: number, b: AdminDocument): Observable<unknown> {
     return b.id
-      ? this.http.put(`/api/yonetim/sayfa/belge/${b.id}`, b, { headers: this.basliklar() })
-      : this.http.post(`/api/yonetim/sayfa/${sayfaId}/belgeler`, b, { headers: this.basliklar() });
+      ? this.http.put(`/api/admin/pages/documents/${b.id}`, b, { headers: this.basliklar() })
+      : this.http.post(`/api/admin/pages/${pageId}/documents`, b, { headers: this.basliklar() });
   }
 
-  belgeSil(belgeId: number): Observable<void> {
-    return this.http.delete<void>(`/api/yonetim/sayfa/belge/${belgeId}`, { headers: this.basliklar() });
+  deleteDocument(documentId: number): Observable<void> {
+    return this.http.delete<void>(`/api/admin/pages/documents/${documentId}`, { headers: this.basliklar() });
   }
 
   /* ---------- dosya yükleme ---------- */
 
   /** Dosya gönderirken Content-Type tarayıcı tarafından belirlenmelidir;
    *  bu yüzden yalnızca kimlik başlığı gönderilir. */
-  dosyaYukle(dosya: File): Observable<{ adres: string; dosyaAdi: string; boyut: number }> {
+  uploadFile(dosya: File): Observable<{ url: string; fileName: string; sizeBytes: number }> {
     const govde = new FormData();
     govde.append('dosya', dosya);
-    return this.http.post<{ adres: string; dosyaAdi: string; boyut: number }>(
-      '/api/yonetim/dosya', govde, { headers: new HttpHeaders({ Authorization: this.kimlik }) });
+    return this.http.post<{ url: string; fileName: string; sizeBytes: number }>(
+      '/api/admin/files', govde, { headers: new HttpHeaders({ Authorization: this.kimlik }) });
   }
 
-  yuklenenler(): Observable<UploadedFile[]> {
-    return this.http.get<UploadedFile[]>('/api/yonetim/dosya', { headers: this.basliklar() });
+  uploadedFiles(): Observable<UploadedFile[]> {
+    return this.http.get<UploadedFile[]>('/api/admin/files', { headers: this.basliklar() });
   }
 
-  dosyaSil(id: number): Observable<void> {
-    return this.http.delete<void>(`/api/yonetim/dosya/${id}`, { headers: this.basliklar() });
+  deleteFile(id: number): Observable<void> {
+    return this.http.delete<void>(`/api/admin/files/${id}`, { headers: this.basliklar() });
   }
 
   /* ---------- iletişim bilgileri ---------- */
 
-  ayarlar(): Observable<{ anahtar: string; dil: string; deger: string }[]> {
-    return this.http.get<{ anahtar: string; dil: string; deger: string }[]>(
-      '/api/yonetim/ayarlar', { headers: this.basliklar() });
+  settings(): Observable<{ name: string; language: string; value: string }[]> {
+    return this.http.get<{ name: string; language: string; value: string }[]>(
+      '/api/admin/settings', { headers: this.basliklar() });
   }
 
-  ayarKaydet(degerler: Record<string, string>): Observable<unknown> {
-    return this.http.put('/api/yonetim/ayarlar', degerler, { headers: this.basliklar() });
+  saveSettings(degerler: Record<string, string>): Observable<unknown> {
+    return this.http.put('/api/admin/settings', degerler, { headers: this.basliklar() });
   }
 
   private basliklar(): HttpHeaders {

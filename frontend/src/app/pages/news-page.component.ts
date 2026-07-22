@@ -11,50 +11,50 @@ import { Seo } from '../core/seo.service';
 interface Haber {
   id: number;
   slug: string;
-  baslik: string;
-  ozet: string | null;
-  tarih: string;
-  gorselUrl: string | null;
-  gorselAlt: string | null;
-  icerikHtml: string | null;
-  disAdres: string | null;
+  title: string;
+  summary: string | null;
+  date: string;
+  imageUrl: string | null;
+  imageAlt: string | null;
+  contentHtml: string | null;
+  externalUrl: string | null;
 }
 
-/** Görselli haber sayfası: /tr/duyuru/<slug> */
+/** Görselli haber sayfası: /tr/newsItem/<slug> */
 @Component({
   selector: 'bidb-news-page',
   imports: [SideMenuComponent, RouterLink],
   template: `
     <div class="kap sayfa-duzen">
-      <bidb-side-menu [dilDegeri]="dil()" />
+      <bidb-side-menu [dilDegeri]="language()" />
 
       <div class="icerik-alani">
         @if (haber(); as h) {
           <article class="haber">
-            <h1 class="sayfa-baslik">{{ h.baslik }}</h1>
+            <h1 class="sayfa-baslik">{{ h.title }}</h1>
             <p class="haber-tarih">
-              <time [attr.datetime]="h.tarih">{{ tarihBicimi(h.tarih) }}</time>
+              <time [attr.datetime]="h.date">{{ tarihBicimi(h.date) }}</time>
             </p>
 
-            @if (h.gorselUrl) {
-              <img class="haber-gorsel" [src]="h.gorselUrl" [alt]="h.gorselAlt || h.baslik">
+            @if (h.imageUrl) {
+              <img class="haber-gorsel" [src]="h.imageUrl" [alt]="h.imageAlt || h.title">
             }
 
-            @if (h.ozet) { <p class="haber-ozet">{{ h.ozet }}</p> }
+            @if (h.summary) { <p class="haber-ozet">{{ h.summary }}</p> }
 
             @if (govde(); as g) { <div class="icerik" [innerHTML]="g"></div> }
 
-            @if (h.disAdres) {
+            @if (h.externalUrl) {
               <p class="haber-ek">
-                <a [href]="h.disAdres" target="_blank" rel="noopener">
-                  {{ dil() === 'en' ? 'Related document' : 'İlgili belge' }}
+                <a [href]="h.externalUrl" target="_blank" rel="noopener">
+                  {{ language() === 'en' ? 'Related document' : 'İlgili belge' }}
                 </a>
               </p>
             }
           </article>
         } @else {
-          <h1 class="sayfa-baslik">{{ dil() === 'en' ? 'Page not found' : 'Page bulunamadı' }}</h1>
-          <p><a [routerLink]="['/', dil()]">{{ dil() === 'en' ? 'Home page' : 'Ana sayfa' }}</a></p>
+          <h1 class="sayfa-baslik">{{ language() === 'en' ? 'Page not found' : 'Page bulunamadı' }}</h1>
+          <p><a [routerLink]="['/', language()]">{{ language() === 'en' ? 'Home page' : 'Ana sayfa' }}</a></p>
         }
       </div>
     </div>
@@ -73,23 +73,23 @@ export class NewsPageComponent {
   private seo = inject(Seo);
   private temizleyici = inject(DomSanitizer);
 
-  protected dil = signal<Language>('tr');
+  protected language = signal<Language>('tr');
   protected govde = signal<SafeHtml | null>(null);
 
   protected haber = toSignal(
     this.rota.paramMap.pipe(
       switchMap((p) => {
-        const dil = (p.get('dil') as Language) ?? 'tr';
+        const language = (p.get('language') as Language) ?? 'tr';
         const slug = p.get('slug') ?? '';
-        this.dil.set(dil);
-        return this.http.get<Haber>(`/api/${dil}/duyuru/${slug}`).pipe(
+        this.language.set(language);
+        return this.http.get<Haber>(`/api/${language}/newsItem/${slug}`).pipe(
           tap((h) => {
             this.seo.uygula(
-              { baslik: h.baslik, seoTitle: null, seoDescription: h.ozet, seoKeywords: null } as never,
-              dil,
-              `/${dil}/duyuru/${slug}`
+              { title: h.title, seoTitle: null, seoDescription: h.summary, seoKeywords: null } as never,
+              language,
+              `/${language}/newsItem/${slug}`
             );
-            this.govde.set(h.icerikHtml ? this.temizleyici.bypassSecurityTrustHtml(h.icerikHtml) : null);
+            this.govde.set(h.contentHtml ? this.temizleyici.bypassSecurityTrustHtml(h.contentHtml) : null);
           })
         );
       })

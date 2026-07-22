@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 /** Sosyal medya hesabı — yönetimden değiştirilebilir. */
 @Entity
-@Table(name = "sosyal_hesap")
+@Table(name = "social_account")
 public class SocialAccount {
 
     @Id
@@ -12,25 +12,25 @@ public class SocialAccount {
     private Long id;
 
     @Column(nullable = false, length = 40, unique = true)
-    private String ag;
+    private String network;
 
     @Column(nullable = false, length = 500)
-    private String adres;
+    private String url;
 
     @Column(nullable = false)
-    private int sira = 0;
+    private int sortOrder = 0;
 
     @Column(nullable = false)
-    private boolean yayinda = true;
+    private boolean published = true;
 
     public Long getId() { return id; }
-    public String getAg() { return ag; }
-    public String getAdres() { return adres; }
-    public int getSira() { return sira; }
-    public boolean isYayinda() { return yayinda; }
+    public String getNetwork() { return network; }
+    public String getUrl() { return url; }
+    public int getSortOrder() { return sortOrder; }
+    public boolean isPublished() { return published; }
 
-    public void setAg(String ag) { this.ag = ag; }
-    public void setAdres(String adres) { this.adres = adres; }
-    public void setSira(int sira) { this.sira = sira; }
-    public void setYayinda(boolean yayinda) { this.yayinda = yayinda; }
+    public void setNetwork(String network) { this.network = network; }
+    public void setUrl(String url) { this.url = url; }
+    public void setSortOrder(int sortOrder) { this.sortOrder = sortOrder; }
+    public void setPublished(boolean published) { this.published = published; }
 }

@@ -1,72 +1,72 @@
 /** Backend'den gelen veri yapıları. */
 
 export interface Document {
-  ad: string;
-  adres: string;
-  tur: string | null;
+  name: string;
+  url: string;
+  fileType: string | null;
 }
 
 export interface Page {
   slug: string;
-  dil: string;
-  baslik: string;
-  icerikHtml: string | null;
+  language: string;
+  title: string;
+  contentHtml: string | null;
   seoTitle: string | null;
   seoDescription: string | null;
   seoKeywords: string | null;
-  belgeler: Document[];
+  documents: Document[];
   /** Diğer dilde karşılığı var mı (hreflang için) */
-  cevirisiVar?: boolean;
+  hasTranslation?: boolean;
 }
 
 export interface MenuItem {
-  etiket: string;
-  adres: string;
-  yeniSekme: boolean;
+  label: string;
+  url: string;
+  newTab: boolean;
 }
 
 export interface Menu {
-  baslik: string;
-  ogeler: MenuItem[];
+  title: string;
+  items: MenuItem[];
 }
 
 export interface Slide {
-  baslik: string | null;
-  altBaslik: string | null;
-  gorselUrl: string;
-  gorselAlt: string | null;
-  baglanti: string | null;
+  title: string | null;
+  subtitle: string | null;
+  imageUrl: string;
+  imageAlt: string | null;
+  linkUrl: string | null;
 }
 
 export interface SocialAccount {
-  ag: string;
-  adres: string;
+  network: string;
+  url: string;
 }
 
 export interface Shortcut {
-  ad: string;
-  ikonUrl: string | null;
-  adres: string;
-  yeniSekme: boolean;
+  name: string;
+  iconUrl: string | null;
+  url: string;
+  newTab: boolean;
 }
 
 export interface NewsSummary {
-  baslik: string;
-  tarih: string;
-  adres: string | null;
-  ozet: string | null;
-  gorselUrl: string | null;
-  gorselAlt: string | null;
+  title: string;
+  date: string;
+  url: string | null;
+  summary: string | null;
+  imageUrl: string | null;
+  imageAlt: string | null;
   /** Haberin kendi sayfası varsa site içi bağlantı, yoksa dış bağlantıdır */
-  kendiSayfasi: boolean;
+  hasOwnPage: boolean;
 }
 
 /** Ana sayfanın tüm bileşenleri tek istekte gelir. */
 export interface HomeData {
   slider: Slide[];
-  kisayollar: Shortcut[];
-  servisler: Shortcut[];
-  duyurular: NewsSummary[];
+  shortcuts: Shortcut[];
+  services: Shortcut[];
+  news: NewsSummary[];
 }
 
 export type Language = 'tr' | 'en';

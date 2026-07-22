@@ -7,6 +7,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SettingRepo extends JpaRepository<Setting, Setting.Kimlik> {
-    List<Setting> findByDilOrderByAnahtarAsc(String dil);
-    Optional<Setting> findByAnahtarAndDil(String anahtar, String dil);
+    List<Setting> findByLanguageOrderByNameAsc(String language);
+    Optional<Setting> findByNameAndLanguage(String name, String language);
 }

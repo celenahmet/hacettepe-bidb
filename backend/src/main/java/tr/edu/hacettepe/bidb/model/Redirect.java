@@ -8,22 +8,22 @@ import jakarta.persistence.*;
  * sonuçları kırılmaz.
  */
 @Entity
-@Table(name = "yonlendirme")
+@Table(name = "redirect")
 public class Redirect {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "eski_yol", nullable = false, unique = true, length = 300)
-    private String eskiYol;
+    @Column(name = "old_path", nullable = false, unique = true, length = 300)
+    private String oldPath;
 
-    @Column(name = "yeni_yol", nullable = false, length = 300)
-    private String yeniYol;
+    @Column(name = "new_path", nullable = false, length = 300)
+    private String newPath;
 
     public Long getId() { return id; }
-    public String getEskiYol() { return eskiYol; }
-    public void setEskiYol(String eskiYol) { this.eskiYol = eskiYol; }
-    public String getYeniYol() { return yeniYol; }
-    public void setYeniYol(String yeniYol) { this.yeniYol = yeniYol; }
+    public String getOldPath() { return oldPath; }
+    public void setOldPath(String oldPath) { this.oldPath = oldPath; }
+    public String getNewPath() { return newPath; }
+    public void setNewPath(String newPath) { this.newPath = newPath; }
 }

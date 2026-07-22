@@ -22,7 +22,7 @@ import java.util.Locale;
  * çalıştırılabilir veya betik dosyaları kabul edilmez.
  */
 @RestController
-@RequestMapping("/api/yonetim/dosya")
+@RequestMapping("/api/admin/files")
 public class AdminFileController {
 
     /** İzin verilen uzantılar. HTML ve betik dosyaları kasten dışarıda bırakıldı. */
@@ -37,17 +37,17 @@ public class AdminFileController {
     private final Path dizin;
 
     public AdminFileController(UploadedFileRepo kayitlar,
-                                  @Value("${bidb.dosya-dizini:/veri/dosyalar}") String dizin) {
+                                  @Value("${bidb.dosya-dizini:/veri/fileslar}") String dizin) {
         this.kayitlar = kayitlar;
         this.dizin = Paths.get(dizin);
     }
 
     @GetMapping
     public List<UploadedFile> liste() {
-        return kayitlar.findAllByOrderByYuklemeDesc();
+        return kayitlar.findAllByOrderByUploadedAtDesc();
     }
 
-    public record YuklemeSonucu(String adres, String dosyaAdi, long boyut) {}
+    public record YuklemeSonucu(String url, String fileName, long sizeBytes) {}
 
     @PostMapping
     @Transactional
@@ -55,17 +55,17 @@ public class AdminFileController {
         if (dosya == null || dosya.isEmpty()) return ResponseEntity.badRequest().body("Dosya seçilmedi.");
         if (dosya.getSize() > AZAMI_BOYUT) return ResponseEntity.badRequest().body("Dosya 25 MB'den büyük olamaz.");
 
-        String ozgunAd = Paths.get(dosya.getOriginalFilename() == null ? "belge" : dosya.getOriginalFilename())
+        String originalName = Paths.get(dosya.getOriginalFilename() == null ? "belge" : dosya.getOriginalFilename())
                 .getFileName().toString();
-        String uzanti = uzantiAl(ozgunAd);
+        String uzanti = uzantiAl(originalName);
         if (!IZINLI.contains(uzanti)) {
             return ResponseEntity.badRequest().body("Bu dosya türüne izin verilmiyor: " + uzanti);
         }
 
-        String ad = benzersizAd(ozgunAd, uzanti);
+        String name = benzersizAd(originalName, uzanti);
         try {
             Files.createDirectories(dizin);
-            Path hedef = dizin.resolve(ad).normalize();
+            Path hedef = dizin.resolve(name).normalize();
             // Dizin dışına yazmayı engelle
             if (!hedef.startsWith(dizin.normalize())) {
                 return ResponseEntity.badRequest().body("Geçersiz dosya adı.");
@@ -76,13 +76,13 @@ public class AdminFileController {
         }
 
         UploadedFile kayit = new UploadedFile();
-        kayit.setDosyaAdi(ad);
-        kayit.setOzgunAd(ozgunAd);
-        kayit.setBoyut(dosya.getSize());
-        kayit.setYukleyen(kimlik == null ? "bilinmiyor" : kimlik.getName());
+        kayit.setFileName(name);
+        kayit.setOriginalName(originalName);
+        kayit.setSizeBytes(dosya.getSize());
+        kayit.setUploadedBy(kimlik == null ? "bilinmiyor" : kimlik.getName());
         kayitlar.save(kayit);
 
-        return ResponseEntity.ok(new YuklemeSonucu("/dosyalar/" + ad, ad, dosya.getSize()));
+        return ResponseEntity.ok(new YuklemeSonucu("/dosyalar/" + name, name, dosya.getSize()));
     }
 
     @DeleteMapping("/{id}")
@@ -90,7 +90,7 @@ public class AdminFileController {
     public ResponseEntity<?> sil(@PathVariable Long id) {
         return kayitlar.findById(id).map(k -> {
             try {
-                Files.deleteIfExists(dizin.resolve(k.getDosyaAdi()).normalize());
+                Files.deleteIfExists(dizin.resolve(k.getFileName()).normalize());
             } catch (IOException e) {
                 return ResponseEntity.internalServerError().body("Dosya silinemedi: " + e.getMessage());
             }
@@ -99,14 +99,14 @@ public class AdminFileController {
         }).orElse(ResponseEntity.notFound().build());
     }
 
-    private static String uzantiAl(String ad) {
-        int i = ad.lastIndexOf('.');
-        return i > 0 ? ad.substring(i + 1).toLowerCase(Locale.ROOT) : "";
+    private static String uzantiAl(String name) {
+        int i = name.lastIndexOf('.');
+        return i > 0 ? name.substring(i + 1).toLowerCase(Locale.ROOT) : "";
     }
 
     /** Var olan bir dosyanın üzerine yazılmaması için ada sıra numarası eklenir. */
-    private String benzersizAd(String ozgunAd, String uzanti) {
-        String govde = ozgunAd.substring(0, Math.max(0, ozgunAd.length() - uzanti.length() - 1));
+    private String benzersizAd(String originalName, String uzanti) {
+        String govde = originalName.substring(0, Math.max(0, originalName.length() - uzanti.length() - 1));
         govde = govde.toLowerCase(Locale.forLanguageTag("tr"))
                 .replace("ı", "i").replace("ğ", "g").replace("ü", "u")
                 .replace("ş", "s").replace("ö", "o").replace("ç", "c")

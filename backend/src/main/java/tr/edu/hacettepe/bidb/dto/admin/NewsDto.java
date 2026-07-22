@@ -6,36 +6,36 @@ import java.time.LocalDate;
 import java.util.Locale;
 
 public record NewsDto(
-        Long id, String dil, String baslik, String ozet,
-        LocalDate yayinTarihi, boolean oneCikan, boolean yayinda, String disAdres,
-        String slug, String gorselUrl, String gorselAlt, String icerikHtml
+        Long id, String language, String title, String summary,
+        LocalDate publishedOn, boolean featured, boolean published, String externalUrl,
+        String slug, String imageUrl, String imageAlt, String contentHtml
 ) {
     public static NewsDto of(News d) {
-        return new NewsDto(d.getId(), d.getDil(), d.getBaslik(), d.getOzet(),
-                d.getYayinTarihi(), d.isOneCikan(), d.isYayinda(), d.getDisAdres(),
-                d.getSlug(), d.getGorselUrl(), d.getGorselAlt(), d.getIcerikHtml());
+        return new NewsDto(d.getId(), d.getLanguage(), d.getTitle(), d.getSummary(),
+                d.getPublishedOn(), d.isFeatured(), d.isPublished(), d.getExternalUrl(),
+                d.getSlug(), d.getImageUrl(), d.getImageAlt(), d.getContentHtml());
     }
 
     /** Gelen değerleri varlığa aktarır. */
     public News varligaAktar(News d) {
-        d.setDil(dil);
-        d.setBaslik(baslik);
-        d.setOzet(ozet);
-        d.setYayinTarihi(yayinTarihi == null ? LocalDate.now() : yayinTarihi);
-        d.setOneCikan(oneCikan);
-        d.setYayinda(yayinda);
-        d.setDisAdres(disAdres);
+        d.setLanguage(language);
+        d.setTitle(title);
+        d.setSummary(summary);
+        d.setPublishedOn(publishedOn == null ? LocalDate.now() : publishedOn);
+        d.setFeatured(featured);
+        d.setPublished(published);
+        d.setExternalUrl(externalUrl);
         // Adres boş bırakılırsa haber kendi sayfasında değil, verilen
         // bağlantıda açılır. Boş metin yerine null saklanır ki benzersizlik
         // kısıtı birden çok duyuruyu engellemesin.
         d.setSlug(slug == null || slug.isBlank() ? null : sadelestir(slug));
-        d.setGorselUrl(gorselUrl);
-        d.setGorselAlt(gorselAlt);
-        d.setIcerikHtml(icerikHtml);
+        d.setImageUrl(imageUrl);
+        d.setImageAlt(imageAlt);
+        d.setContentHtml(contentHtml);
         return d;
     }
 
-    /** Başlıktan veya girilen metinden adres üretir. */
+    /** Başlıktan veya girilen metinden url üretir. */
     private static String sadelestir(String ham) {
         String t = ham.trim().toLowerCase(Locale.forLanguageTag("tr"));
         t = t.replace("ı", "i").replace("ğ", "g").replace("ü", "u")

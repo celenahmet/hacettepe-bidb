@@ -3,9 +3,9 @@ package tr.edu.hacettepe.bidb.model;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
-/** Haber ve duyurular. */
+/** Haber ve news. */
 @Entity
-@Table(name = "duyuru")
+@Table(name = "news")
 public class News {
 
     @Id
@@ -13,62 +13,62 @@ public class News {
     private Long id;
 
     @Column(nullable = false, length = 2)
-    private String dil;
+    private String language;
 
     @Column(nullable = false, length = 400)
-    private String baslik;
+    private String title;
 
     @Column(length = 1000)
-    private String ozet;
+    private String summary;
 
-    @Column(name = "yayin_tarihi", nullable = false)
-    private LocalDate yayinTarihi;
+    @Column(name = "published_on", nullable = false)
+    private LocalDate publishedOn;
 
-    @Column(name = "one_cikan", nullable = false)
-    private boolean oneCikan = false;
+    @Column(name = "featured", nullable = false)
+    private boolean featured = false;
 
     @Column(nullable = false)
-    private boolean yayinda = true;
+    private boolean published = true;
 
-    @Column(name = "dis_adres", length = 500)
-    private String disAdres;
+    @Column(name = "external_url", length = 500)
+    private String externalUrl;
 
     /** Haber kendi sayfasında yayımlanacaksa adresi: /tr/duyuru/<slug> */
     @Column(length = 200)
     private String slug;
 
-    @Column(name = "gorsel_url", length = 500)
-    private String gorselUrl;
+    @Column(name = "image_url", length = 500)
+    private String imageUrl;
 
-    @Column(name = "gorsel_alt", length = 300)
-    private String gorselAlt;
+    @Column(name = "image_alt", length = 300)
+    private String imageAlt;
 
-    @Column(name = "icerik_html", columnDefinition = "text")
-    private String icerikHtml;
+    @Column(name = "content_html", columnDefinition = "text")
+    private String contentHtml;
 
     public Long getId() { return id; }
-    public String getDil() { return dil; }
-    public String getBaslik() { return baslik; }
-    public String getOzet() { return ozet; }
-    public LocalDate getYayinTarihi() { return yayinTarihi; }
-    public boolean isOneCikan() { return oneCikan; }
-    public boolean isYayinda() { return yayinda; }
-    public String getDisAdres() { return disAdres; }
+    public String getLanguage() { return language; }
+    public String getTitle() { return title; }
+    public String getSummary() { return summary; }
+    public LocalDate getPublishedOn() { return publishedOn; }
+    public boolean isFeatured() { return featured; }
+    public boolean isPublished() { return published; }
+    public String getExternalUrl() { return externalUrl; }
 
-    public void setDil(String dil) { this.dil = dil; }
-    public void setBaslik(String baslik) { this.baslik = baslik; }
-    public void setOzet(String ozet) { this.ozet = ozet; }
-    public void setYayinTarihi(java.time.LocalDate yayinTarihi) { this.yayinTarihi = yayinTarihi; }
-    public void setOneCikan(boolean oneCikan) { this.oneCikan = oneCikan; }
-    public void setYayinda(boolean yayinda) { this.yayinda = yayinda; }
-    public void setDisAdres(String disAdres) { this.disAdres = disAdres; }
+    public void setLanguage(String language) { this.language = language; }
+    public void setTitle(String title) { this.title = title; }
+    public void setSummary(String summary) { this.summary = summary; }
+    public void setPublishedOn(java.time.LocalDate publishedOn) { this.publishedOn = publishedOn; }
+    public void setFeatured(boolean featured) { this.featured = featured; }
+    public void setPublished(boolean published) { this.published = published; }
+    public void setExternalUrl(String externalUrl) { this.externalUrl = externalUrl; }
 
     public String getSlug() { return slug; }
     public void setSlug(String slug) { this.slug = slug; }
-    public String getGorselUrl() { return gorselUrl; }
-    public void setGorselUrl(String gorselUrl) { this.gorselUrl = gorselUrl; }
-    public String getGorselAlt() { return gorselAlt; }
-    public void setGorselAlt(String gorselAlt) { this.gorselAlt = gorselAlt; }
-    public String getIcerikHtml() { return icerikHtml; }
-    public void setIcerikHtml(String icerikHtml) { this.icerikHtml = icerikHtml; }
+    public String getImageUrl() { return imageUrl; }
+    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
+    public String getImageAlt() { return imageAlt; }
+    public void setImageAlt(String imageAlt) { this.imageAlt = imageAlt; }
+    public String getContentHtml() { return contentHtml; }
+    public void setContentHtml(String contentHtml) { this.contentHtml = contentHtml; }
 }

@@ -6,6 +6,6 @@ import { RenderMode, ServerRoute } from '@angular/ssr';
 export const serverRoutes: ServerRoute[] = [
   // Yönetim paneli yalnızca tarayıcıda çalışır; kimlik bilgisi sunucuya gitmez
   { path: 'yonetim', renderMode: RenderMode.Client },
-  { path: ':dil/duyuru/:slug', renderMode: RenderMode.Server },
+  { path: ':language/newsItem/:slug', renderMode: RenderMode.Server },
   { path: '**', renderMode: RenderMode.Server }
 ];

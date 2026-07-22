@@ -15,92 +15,92 @@ import java.util.List;
  * SEO alanları, yayın durumu ve ana sayfa bileşenleri düzenlenir.
  */
 @RestController
-@RequestMapping("/api/yonetim")
+@RequestMapping("/api/admin")
 public class AdminController {
 
-    private final PageRepo sayfalar;
-    private final NewsRepo duyurular;
+    private final PageRepo pages;
+    private final NewsRepo news;
     private final SliderRepo sliderlar;
-    private final ShortcutRepo kisayollar;
+    private final ShortcutRepo shortcuts;
     private final SocialAccountRepo sosyal;
 
-    public AdminController(PageRepo sayfalar, NewsRepo duyurular, SliderRepo sliderlar,
-                             ShortcutRepo kisayollar, SocialAccountRepo sosyal) {
-        this.sayfalar = sayfalar;
-        this.duyurular = duyurular;
+    public AdminController(PageRepo pages, NewsRepo news, SliderRepo sliderlar,
+                             ShortcutRepo shortcuts, SocialAccountRepo sosyal) {
+        this.pages = pages;
+        this.news = news;
         this.sliderlar = sliderlar;
-        this.kisayollar = kisayollar;
+        this.shortcuts = shortcuts;
         this.sosyal = sosyal;
     }
 
-    /* ---------- sayfalar ---------- */
+    /* ---------- pages ---------- */
 
-    @GetMapping("/sayfalar")
+    @GetMapping("/pages")
     public List<AdminPageDto> sayfaListesi() {
-        return sayfalar.findAll().stream().map(AdminPageDto::of).toList();
+        return pages.findAll().stream().map(AdminPageDto::of).toList();
     }
 
     /** Sayfanın SEO alanları ve yayın durumu güncellenir; içerik metnine dokunulmaz. */
-    @PutMapping("/sayfalar/{id}/seo")
+    @PutMapping("/pages/{id}/seo")
     @Transactional
     public ResponseEntity<AdminPageDto> seoGuncelle(@PathVariable Long id, @RequestBody SeoUpdateDto istek) {
-        return sayfalar.findById(id)
+        return pages.findById(id)
                 .map(s -> {
                     s.setSeoTitle(istek.seoTitle());
                     s.setSeoDescription(istek.seoDescription());
                     s.setSeoKeywords(istek.seoKeywords());
-                    s.setYayinda(istek.yayinda());
-                    return ResponseEntity.ok(AdminPageDto.of(sayfalar.save(s)));
+                    s.setPublished(istek.published());
+                    return ResponseEntity.ok(AdminPageDto.of(pages.save(s)));
                 })
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    /* ---------- duyurular ---------- */
+    /* ---------- news ---------- */
 
-    @GetMapping("/duyurular")
+    @GetMapping("/news")
     public List<News> duyuruListesi() {
-        return duyurular.findAll();
+        return news.findAll();
     }
 
-    @PostMapping("/duyurular")
+    @PostMapping("/news")
     @Transactional
     public NewsDto duyuruEkle(@RequestBody NewsDto istek) {
-        return NewsDto.of(duyurular.save(istek.varligaAktar(new News())));
+        return NewsDto.of(news.save(istek.varligaAktar(new News())));
     }
 
-    @PutMapping("/duyurular/{id}")
+    @PutMapping("/news/{id}")
     @Transactional
     public ResponseEntity<NewsDto> duyuruGuncelle(@PathVariable Long id, @RequestBody NewsDto istek) {
-        return duyurular.findById(id)
-                .map(d -> ResponseEntity.ok(NewsDto.of(duyurular.save(istek.varligaAktar(d)))))
+        return news.findById(id)
+                .map(d -> ResponseEntity.ok(NewsDto.of(news.save(istek.varligaAktar(d)))))
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping("/duyurular/{id}")
+    @DeleteMapping("/news/{id}")
     @Transactional
     public ResponseEntity<Void> duyuruSil(@PathVariable Long id) {
-        if (!duyurular.existsById(id)) return ResponseEntity.notFound().build();
-        duyurular.deleteById(id);
+        if (!news.existsById(id)) return ResponseEntity.notFound().build();
+        news.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
     /* ---------- slider ---------- */
 
-    @GetMapping("/slider")
+    @GetMapping("/slides")
     public List<Slider> sliderListesi() {
         return sliderlar.findAll();
     }
 
     /* ---------- kısayollar ---------- */
 
-    @GetMapping("/kisayollar")
+    @GetMapping("/shortcuts")
     public List<Shortcut> kisayolListesi() {
-        return kisayollar.findAll();
+        return shortcuts.findAll();
     }
 
     /* ---------- sosyal medya ---------- */
 
-    @GetMapping("/sosyal")
+    @GetMapping("/social-accounts")
     public List<SocialAccount> sosyalListesi() {
         return sosyal.findAll();
     }

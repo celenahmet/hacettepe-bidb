@@ -15,22 +15,22 @@ import { SideMenuComponent } from '../layout/side-menu.component';
   template: `
     <div class="kap sayfa-duzen">
       <aside class="yan">
-        <bidb-side-menu [dilDegeri]="dil()"></bidb-side-menu>
+        <bidb-side-menu [dilDegeri]="language()"></bidb-side-menu>
       </aside>
 
       <main id="ana-icerik" class="icerik-alani">
         @if (sayfa(); as s) {
-          <h1 class="sayfa-baslik">{{ s.baslik }}</h1>
+          <h1 class="sayfa-baslik">{{ s.title }}</h1>
           <div class="icerik" [innerHTML]="govde()"></div>
 
-          @if (s.belgeler.length) {
+          @if (s.documents.length) {
             <section class="belgeler">
-              <h2>{{ dil() === 'en' ? 'Documents' : 'Belgeler' }}</h2>
+              <h2>{{ language() === 'en' ? 'Documents' : 'Belgeler' }}</h2>
               <ul>
-                @for (b of s.belgeler; track b.adres) {
+                @for (b of s.documents; track b.url) {
                   <li>
-                    <a [href]="b.adres" target="_blank" rel="noopener">
-                      <span class="belge-tur">{{ b.tur }}</span>{{ b.ad }}
+                    <a [href]="b.url" target="_blank" rel="noopener">
+                      <span class="belge-tur">{{ b.fileType }}</span>{{ b.name }}
                     </a>
                   </li>
                 }
@@ -38,8 +38,8 @@ import { SideMenuComponent } from '../layout/side-menu.component';
             </section>
           }
         } @else {
-          <h1 class="sayfa-baslik">{{ dil() === 'en' ? 'Page not found' : 'Page bulunamadı' }}</h1>
-          <p>{{ dil() === 'en' ? 'The address may have changed or the page may have been removed.' : 'Adres değişmiş veya sayfa kaldırılmış olabilir.' }}</p>
+          <h1 class="sayfa-baslik">{{ language() === 'en' ? 'Page not found' : 'Page bulunamadı' }}</h1>
+          <p>{{ language() === 'en' ? 'The address may have changed or the page may have been removed.' : 'Adres değişmiş veya sayfa kaldırılmış olabilir.' }}</p>
         }
       </main>
     </div>
@@ -51,21 +51,21 @@ export class ContentPageComponent {
   private seo = inject(Seo);
   private temizleyici = inject(DomSanitizer);
 
-  protected dil = signal<Language>('tr');
+  protected language = signal<Language>('tr');
   protected govde = signal<SafeHtml>('');
 
   protected sayfa = toSignal(
     this.rota.paramMap.pipe(
       switchMap((p) => {
-        const dil = (p.get('dil') as Language) ?? 'tr';
+        const language = (p.get('language') as Language) ?? 'tr';
         const slug = p.get('slug') ?? 'home';
-        this.dil.set(dil);
-        return this.api.sayfa(dil, slug).pipe(
+        this.language.set(language);
+        return this.api.sayfa(language, slug).pipe(
           tap((s) => {
-            this.seo.uygula(s, dil, `/${dil}/${slug}`);
+            this.seo.uygula(s, language, `/${language}/${slug}`);
             // İçerik kaynaktan birebir alındığı ve kurum tarafından yönetildiği için
             // olduğu gibi basılır.
-            this.govde.set(this.temizleyici.bypassSecurityTrustHtml(s?.icerikHtml ?? ''));
+            this.govde.set(this.temizleyici.bypassSecurityTrustHtml(s?.contentHtml ?? ''));
           }),
           map((s) => s as Page | null)
         );

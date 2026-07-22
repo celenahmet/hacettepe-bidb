@@ -13,7 +13,7 @@ import java.util.Map;
  * Bu bilgiler koda gömülü değil, veritabanında tutulur.
  */
 @RestController
-@RequestMapping("/api/yonetim/ayarlar")
+@RequestMapping("/api/admin/settings")
 public class AdminSettingController {
 
     private final SettingRepo ayarlar;
@@ -27,19 +27,19 @@ public class AdminSettingController {
         return ayarlar.findAll();
     }
 
-    /** Verilen anahtarları topluca kaydeder; olmayan anahtar oluşturulur. */
+    /** Verilen anahtarları topluca kaydeder; olmayan name oluşturulur. */
     @PutMapping
     @Transactional
     public List<Setting> kaydet(@RequestBody Map<String, String> degerler,
-                             @RequestParam(defaultValue = "tr") String dil) {
-        degerler.forEach((anahtar, deger) -> {
-            Setting a = ayarlar.findByAnahtarAndDil(anahtar, dil).orElseGet(() -> {
+                             @RequestParam(defaultValue = "tr") String language) {
+        degerler.forEach((name, value) -> {
+            Setting a = ayarlar.findByNameAndLanguage(name, language).orElseGet(() -> {
                 Setting yeni = new Setting();
-                yeni.setAnahtar(anahtar);
-                yeni.setDil(dil);
+                yeni.setName(name);
+                yeni.setLanguage(language);
                 return yeni;
             });
-            a.setDeger(deger);
+            a.setValue(value);
             ayarlar.save(a);
         });
         return ayarlar.findAll();

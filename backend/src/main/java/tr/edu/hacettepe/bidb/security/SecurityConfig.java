@@ -31,7 +31,7 @@ public class SecurityConfig {
                 // Yayın uçları: yalnızca okuma, herkese açık
                 .requestMatchers(HttpMethod.GET, "/api/tr/**", "/api/en/**").permitAll()
                 // Yönetim uçları
-                .requestMatchers("/api/yonetim/**").authenticated()
+                .requestMatchers("/api/admin/**").authenticated()
                 .anyRequest().denyAll())
             .httpBasic(temel -> {});
         return http.build();

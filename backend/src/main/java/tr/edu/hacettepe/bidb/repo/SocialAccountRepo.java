@@ -6,5 +6,5 @@ import tr.edu.hacettepe.bidb.model.SocialAccount;
 import java.util.List;
 
 public interface SocialAccountRepo extends JpaRepository<SocialAccount, Long> {
-    List<SocialAccount> findByYayindaTrueOrderBySiraAsc();
+    List<SocialAccount> findByPublishedTrueOrderBySortOrderAsc();
 }

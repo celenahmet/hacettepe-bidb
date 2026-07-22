@@ -15,34 +15,34 @@ import java.util.List;
  * görselli bir haberdir. İkincisi /tr/duyuru/<slug> adresinde açılır.
  */
 @RestController
-@RequestMapping("/api/{dil}/duyuru")
+@RequestMapping("/api/{language}/news")
 public class NewsController {
 
-    private final NewsRepo duyurular;
+    private final NewsRepo news;
 
-    public NewsController(NewsRepo duyurular) {
-        this.duyurular = duyurular;
+    public NewsController(NewsRepo news) {
+        this.news = news;
     }
 
-    public record HaberDto(Long id, String slug, String baslik, String ozet, LocalDate tarih,
-                           String gorselUrl, String gorselAlt, String icerikHtml, String disAdres) {
+    public record HaberDto(Long id, String slug, String title, String summary, LocalDate date,
+                           String imageUrl, String imageAlt, String contentHtml, String externalUrl) {
         static HaberDto of(News d) {
-            return new HaberDto(d.getId(), d.getSlug(), d.getBaslik(), d.getOzet(), d.getYayinTarihi(),
-                    d.getGorselUrl(), d.getGorselAlt(), d.getIcerikHtml(), d.getDisAdres());
+            return new HaberDto(d.getId(), d.getSlug(), d.getTitle(), d.getSummary(), d.getPublishedOn(),
+                    d.getImageUrl(), d.getImageAlt(), d.getContentHtml(), d.getExternalUrl());
         }
     }
 
     /** Tüm haberler, en yeni önce. */
     @GetMapping
-    public List<HaberDto> liste(@PathVariable String dil) {
-        return duyurular.findByDilAndYayindaTrueOrderByYayinTarihiDesc(dil).stream()
+    public List<HaberDto> liste(@PathVariable String language) {
+        return news.findByLanguageAndPublishedTrueOrderByPublishedOnDesc(language).stream()
                 .map(HaberDto::of)
                 .toList();
     }
 
     @GetMapping("/{slug}")
-    public ResponseEntity<HaberDto> haber(@PathVariable String dil, @PathVariable String slug) {
-        return duyurular.findBySlugAndDilAndYayindaTrue(slug, dil)
+    public ResponseEntity<HaberDto> haber(@PathVariable String language, @PathVariable String slug) {
+        return news.findBySlugAndLanguageAndPublishedTrue(slug, language)
                 .map(HaberDto::of)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());

@@ -5,5 +5,5 @@ public record SeoUpdateDto(
         String seoTitle,
         String seoDescription,
         String seoKeywords,
-        boolean yayinda
+        boolean published
 ) {}

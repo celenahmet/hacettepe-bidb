@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 /** Sayfaya bağlı indirilebilir belge (form, yönerge, kılavuz). */
 @Entity
-@Table(name = "belge")
+@Table(name = "document")
 public class Document {
 
     @Id
@@ -12,30 +12,30 @@ public class Document {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sayfa_id")
-    private Page sayfa;
+    @JoinColumn(name = "page_id")
+    private Page page;
 
     @Column(nullable = false, length = 400)
-    private String ad;
+    private String name;
 
     @Column(nullable = false, length = 700)
-    private String adres;
+    private String url;
 
     @Column(length = 10)
-    private String tur;
+    private String fileType;
 
     @Column(nullable = false)
-    private int sira = 0;
+    private int sortOrder = 0;
 
     public Long getId() { return id; }
-    public Page getSayfa() { return sayfa; }
-    public void setSayfa(Page sayfa) { this.sayfa = sayfa; }
-    public String getAd() { return ad; }
-    public void setAd(String ad) { this.ad = ad; }
-    public String getAdres() { return adres; }
-    public void setAdres(String adres) { this.adres = adres; }
-    public String getTur() { return tur; }
-    public void setTur(String tur) { this.tur = tur; }
-    public int getSira() { return sira; }
-    public void setSira(int sira) { this.sira = sira; }
+    public Page getPage() { return page; }
+    public void setPage(Page page) { this.page = page; }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+    public String getUrl() { return url; }
+    public void setUrl(String url) { this.url = url; }
+    public String getFileType() { return fileType; }
+    public void setFileType(String fileType) { this.fileType = fileType; }
+    public int getSortOrder() { return sortOrder; }
+    public void setSortOrder(int sortOrder) { this.sortOrder = sortOrder; }
 }

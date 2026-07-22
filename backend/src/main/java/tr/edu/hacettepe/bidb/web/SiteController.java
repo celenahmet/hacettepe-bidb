@@ -19,7 +19,7 @@ import java.util.List;
 
 /** Menü, slider ve sosyal medya gibi site geneli veriler. */
 @RestController
-@RequestMapping("/api/{dil}")
+@RequestMapping("/api/{language}")
 public class SiteController {
 
     private final MenuRepo menuler;
@@ -37,34 +37,34 @@ public class SiteController {
         this.yonlendirmeler = yonlendirmeler;
     }
 
-    @GetMapping("/menu")
-    public List<MenuDto> menu(@PathVariable String dil,
-                              @RequestParam(defaultValue = "sol") String konum) {
-        return menuler.findByLanguageAndPosition(dil, konum).stream().map(MenuDto::of).toList();
+    @GetMapping("/menus")
+    public List<MenuDto> menu(@PathVariable String language,
+                              @RequestParam(defaultValue = "sol") String position) {
+        return menuler.findByLanguageAndPosition(language, position).stream().map(MenuDto::of).toList();
     }
 
-    @GetMapping("/slider")
-    public List<SliderDto> slider(@PathVariable String dil) {
-        return sliderlar.findByDilAndYayindaTrueOrderBySiraAsc(dil).stream().map(SliderDto::of).toList();
+    @GetMapping("/slides")
+    public List<SliderDto> slider(@PathVariable String language) {
+        return sliderlar.findByLanguageAndPublishedTrueOrderBySortOrderAsc(language).stream().map(SliderDto::of).toList();
     }
 
     /** Alt bilgide görünen iletişim bilgileri. Panelden düzenlenir. */
-    @GetMapping("/ayarlar")
-    public Map<String, String> ayarlar(@PathVariable String dil) {
-        return ayarlar.findByDilOrderByAnahtarAsc(dil).stream()
-                .filter(a -> a.getDeger() != null)
-                .collect(Collectors.toMap(Setting::getAnahtar, Setting::getDeger, (a, b) -> a));
+    @GetMapping("/settings")
+    public Map<String, String> ayarlar(@PathVariable String language) {
+        return ayarlar.findByLanguageOrderByNameAsc(language).stream()
+                .filter(a -> a.getValue() != null)
+                .collect(Collectors.toMap(Setting::getName, Setting::getValue, (a, b) -> a));
     }
 
     /** Adres değişikliklerinden doğan yönlendirmeler (ön yüz sunucusu kullanır). */
-    @GetMapping("/yonlendirmeler")
-    public Map<String, String> yonlendirmeler(@PathVariable String dil) {
+    @GetMapping("/redirects")
+    public Map<String, String> yonlendirmeler(@PathVariable String language) {
         return yonlendirmeler.findAll().stream()
-                .collect(Collectors.toMap(Redirect::getEskiYol, Redirect::getYeniYol, (a, b) -> a));
+                .collect(Collectors.toMap(Redirect::getOldPath, Redirect::getNewPath, (a, b) -> a));
     }
 
-    @GetMapping("/sosyal")
-    public List<SocialAccount> sosyalHesaplar(@PathVariable String dil) {
-        return sosyal.findByYayindaTrueOrderBySiraAsc();
+    @GetMapping("/social-accounts")
+    public List<SocialAccount> sosyalHesaplar(@PathVariable String language) {
+        return sosyal.findByPublishedTrueOrderBySortOrderAsc();
     }
 }

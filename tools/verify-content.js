@@ -63,8 +63,8 @@ function farkNoktasi(a, b) {
 (async () => {
   // İçerik satır sonu barındırdığı için satır bazlı değil, JSON olarak okunur
   const kayitlar = JSON.parse(psql(
-    "SELECT coalesce(json_agg(json_build_object('dil', dil, 'slug', slug, 'html', icerik_html) " +
-    "ORDER BY dil, slug)::text, '[]') FROM sayfa WHERE slug <> 'home';"
+    "SELECT coalesce(json_agg(json_build_object('dil', language, 'slug', slug, 'html', content_html) " +
+    "ORDER BY language, slug)::text, '[]') FROM page WHERE slug <> 'home';"
   ).trim());
 
   console.log("SAYFA".padEnd(34) + "KAYNAK".padStart(8) + "VERİTABANI".padStart(12) + "   SONUÇ");

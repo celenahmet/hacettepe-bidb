@@ -15,33 +15,33 @@ export class Api {
   // /api isteklerini backend servisine iletir.
   private taban = typeof window === 'undefined' ? 'http://localhost:4000' : '';
 
-  sayfa(dil: Language, slug: string): Observable<Page | null> {
+  sayfa(language: Language, slug: string): Observable<Page | null> {
     return this.http
-      .get<Page>(`${this.taban}/api/${dil}/sayfa/${slug}`)
+      .get<Page>(`${this.taban}/api/${language}/pages/${slug}`)
       .pipe(catchError(() => of(null)));
   }
 
-  anaSayfa(dil: Language): Observable<HomeData> {
+  anaSayfa(language: Language): Observable<HomeData> {
     return this.http
-      .get<HomeData>(`${this.taban}/api/${dil}/anasayfa`)
-      .pipe(catchError(() => of({ slider: [], kisayollar: [], servisler: [], duyurular: [] })));
+      .get<HomeData>(`${this.taban}/api/${language}/home`)
+      .pipe(catchError(() => of({ slider: [], shortcuts: [], services: [], news: [] })));
   }
 
-  menu(dil: Language, konum = 'sol'): Observable<Menu[]> {
+  menu(language: Language, position = 'sol'): Observable<Menu[]> {
     return this.http
-      .get<Menu[]>(`${this.taban}/api/${dil}/menu`, { params: { konum } })
+      .get<Menu[]>(`${this.taban}/api/${language}/menus`, { params: { position } })
       .pipe(catchError(() => of([])));
   }
 
-  slider(dil: Language): Observable<Slide[]> {
+  slider(language: Language): Observable<Slide[]> {
     return this.http
-      .get<Slide[]>(`${this.taban}/api/${dil}/slider`)
+      .get<Slide[]>(`${this.taban}/api/${language}/slides`)
       .pipe(catchError(() => of([])));
   }
 
-  sosyal(dil: Language): Observable<SocialAccount[]> {
+  sosyal(language: Language): Observable<SocialAccount[]> {
     return this.http
-      .get<SocialAccount[]>(`${this.taban}/api/${dil}/sosyal`)
+      .get<SocialAccount[]>(`${this.taban}/api/${language}/social-accounts`)
       .pipe(catchError(() => of([])));
   }
 }

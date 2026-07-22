@@ -6,5 +6,5 @@ import tr.edu.hacettepe.bidb.model.UploadedFile;
 import java.util.List;
 
 public interface UploadedFileRepo extends JpaRepository<UploadedFile, Long> {
-    List<UploadedFile> findAllByOrderByYuklemeDesc();
+    List<UploadedFile> findAllByOrderByUploadedAtDesc();
 }

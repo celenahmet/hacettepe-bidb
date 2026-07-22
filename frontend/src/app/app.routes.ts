@@ -8,8 +8,8 @@ import { AdminPanelComponent } from './admin/admin-panel.component';
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/tr' },
   { path: 'yonetim', component: AdminPanelComponent },
-  { path: ':dil', pathMatch: 'full', component: HomePageComponent },
-  { path: ':dil/duyuru/:slug', component: NewsPageComponent },
-  { path: ':dil/:slug', component: ContentPageComponent },
+  { path: ':language', pathMatch: 'full', component: HomePageComponent },
+  { path: ':language/newsItem/:slug', component: NewsPageComponent },
+  { path: ':language/:slug', component: ContentPageComponent },
   { path: '**', redirectTo: '/tr' }
 ];

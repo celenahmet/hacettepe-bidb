@@ -56,7 +56,7 @@ const GUVENLIK_POLITIKASI = [
   "frame-src https://www.youtube.com https://youtube.com",
   "connect-src 'self'",
   "object-src 'none'",          // eklenti içeriği yok
-  "base-uri 'self'",            // <base> ile adres kaçırma engellenir
+  "base-uri 'self'",            // <base> ile url kaçırma engellenir
   "form-action 'self'",
   "frame-ancestors 'self'"      // başka sitede çerçevelenemez (tıklama hırsızlığı)
 ].join('; ');
@@ -90,7 +90,7 @@ async function yonlendirmeleriHazirla(): Promise<void> {
 
 async function yonlendirmeleriTazele(): Promise<void> {
   try {
-    const y = await fetch(`${API_TABAN}/api/tr/yonlendirmeler`);
+    const y = await fetch(`${API_TABAN}/api/tr/redirects`);
     if (!y.ok) return;
     const veri = (await y.json()) as Record<string, string>;
     panelYonlendirmeleri.clear();
@@ -170,8 +170,8 @@ app.use('/api', express.raw({ type: '*/*', limit: '5mb' }), async (req, res) => 
 
     const govde = Buffer.from(await yanit.arrayBuffer());
     res.status(yanit.status);
-    const tur = yanit.headers.get('content-type');
-    if (tur) res.type(tur);
+    const fileType = yanit.headers.get('content-type');
+    if (fileType) res.type(fileType);
     // Yetkisiz isteklerde tarayıcının parola penceresi açılmasın
     res.removeHeader('WWW-Authenticate');
     res.send(govde);
@@ -185,9 +185,9 @@ app.use('/api', express.raw({ type: '*/*', limit: '5mb' }), async (req, res) => 
 const API_TABAN = process.env['API_TABAN'] ?? 'http://backend:8080';
 const SITE_ADRESI = process.env['SITE_ADRESI'] ?? 'https://bidb.hacettepe.edu.tr';
 
-let yolOnbellek: { yollar: Set<string>; zaman: number } | null = null;
+let yolOnbellek: { yollar: Set<string>; savedAt: number } | null = null;
 
-/** Kaynakta hata metni dönen sayfalar; site haritasında ilan edilmezler. */
+/** Kaynakta hata metni dönen pages; site haritasında ilan edilmezler. */
 const hataliSayfalar = new Set<string>();
 
 /**
@@ -196,37 +196,37 @@ const hataliSayfalar = new Set<string>();
  * içinde yansır.
  */
 async function yayindakiYollar(): Promise<Set<string>> {
-  if (yolOnbellek && Date.now() - yolOnbellek.zaman < 60_000) return yolOnbellek.yollar;
+  if (yolOnbellek && Date.now() - yolOnbellek.savedAt < 60_000) return yolOnbellek.yollar;
   const yollar = new Set<string>();
-  for (const dil of ['tr', 'en']) {
+  for (const language of ['tr', 'en']) {
     try {
-      const y = await fetch(`${API_TABAN}/api/${dil}/sayfalar`);
+      const y = await fetch(`${API_TABAN}/api/${language}/pages`);
       if (!y.ok) continue;
-      for (const s of (await y.json()) as { slug: string; hataliIcerik?: boolean }[]) {
+      for (const s of (await y.json()) as { slug: string; brokenContent?: boolean }[]) {
         // Kaynakta hata metni dönen sayfalar erişilebilir kalır, ancak
         // site haritasına girmez (bkz. hataliSayfalar)
-        if (s.hataliIcerik) hataliSayfalar.add(`/${dil}/${s.slug}`);
-        yollar.add(`/${dil}/${s.slug}`);
+        if (s.brokenContent) hataliSayfalar.add(`/${language}/${s.slug}`);
+        yollar.add(`/${language}/${s.slug}`);
       }
     } catch {
       // Sayfa listesi alınamazsa doğrulama yapılmaz; site yine de çalışır.
       return yolOnbellek?.yollar ?? new Set<string>();
     }
   }
-  yolOnbellek = { yollar, zaman: Date.now() };
+  yolOnbellek = { yollar, savedAt: Date.now() };
   return yollar;
 }
 
-/** İstenen adres bir içerik sayfası mı, ve böyle bir sayfa var mı? */
+/** İstenen url bir içerik sayfası mı, ve böyle bir sayfa var mı? */
 async function sayfaYok(yol: string): Promise<boolean> {
   const p = yol.replace(/\/+$/, '');
 
   // Haber sayfası: /tr/duyuru/<slug>. Yayından kaldırılmış bir haberin adresi
   // "bulunamadı" ekranını 200 durumuyla döndürüyordu.
-  const haber = p.match(/^\/(tr|en)\/duyuru\/([^/]+)$/);
+  const haber = p.match(/^\/(tr|en)\/newsItem\/([^/]+)$/);
   if (haber) {
     try {
-      const y = await fetch(`${API_TABAN}/api/${haber[1]}/duyuru/${encodeURIComponent(haber[2])}`);
+      const y = await fetch(`${API_TABAN}/api/${haber[1]}/newsItem/${encodeURIComponent(haber[2])}`);
       return y.status === 404;
     } catch {
       return false;
@@ -252,7 +252,7 @@ async function sayfaYok(yol: string): Promise<boolean> {
 app.get('/sitemap.xml', async (_req, res) => {
   const yollar = [...(await yayindakiYollar())]
     .filter((y) => !/^\/(tr|en)\/home$/.test(y))   // ana sayfanın ikinci adresi
-    .filter((y) => !hataliSayfalar.has(y))         // kaynakta içeriği olmayan sayfalar
+    .filter((y) => !hataliSayfalar.has(y))         // kaynakta içeriği olmayan pages
     .sort();
   const girdiler = ['/tr', '/en', ...yollar]
     .map((y) => `  <url><loc>${SITE_ADRESI}${y}</loc></url>`)
@@ -282,18 +282,18 @@ app.get('/robots.txt', (_req, res) => {
  */
 const varlikEsleme = new Map<string, string>();
 try {
-  for (const ad of readdirSync(browserDistFolder)) {
-    if (/\.(js|css)$/i.test(ad)) varlikEsleme.set(ad.toLowerCase(), ad);
+  for (const name of readdirSync(browserDistFolder)) {
+    if (/\.(js|css)$/i.test(name)) varlikEsleme.set(name.toLowerCase(), name);
   }
 } catch {
   // Derleme çıktısı yoksa (geliştirme sunucusu) eşleme boş kalır
 }
 
 app.use((req, res, next) => {
-  const ad = req.path.slice(1);
-  if (!/^[^/]+\.(js|css)$/i.test(ad)) return next();
-  const gercek = varlikEsleme.get(ad.toLowerCase());
-  if (!gercek || gercek === ad) return next();
+  const name = req.path.slice(1);
+  if (!/^[^/]+\.(js|css)$/i.test(name)) return next();
+  const gercek = varlikEsleme.get(name.toLowerCase());
+  if (!gercek || gercek === name) return next();
   res.sendFile(join(browserDistFolder, gercek));
 });
 

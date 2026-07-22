@@ -5,9 +5,9 @@ import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-/** Bir dildeki tek bir içerik sayfası. Slug + dil birlikte benzersizdir. */
+/** Bir dildeki tek bir içerik sayfası. Slug + language birlikte benzersizdir. */
 @Entity
-@Table(name = "sayfa")
+@Table(name = "page")
 public class Page {
 
     @Id
@@ -18,14 +18,14 @@ public class Page {
     private String slug;
 
     @Column(nullable = false, length = 2)
-    private String dil;
+    private String language;
 
     @Column(nullable = false, length = 300)
-    private String baslik;
+    private String title;
 
     /** Kaynak içerik birebir saklanır. */
-    @Column(name = "icerik_html", nullable = false, columnDefinition = "text")
-    private String icerikHtml = "";
+    @Column(name = "content_html", nullable = false, columnDefinition = "text")
+    private String contentHtml = "";
 
     @Column(name = "seo_title", length = 300)
     private String seoTitle;
@@ -37,38 +37,38 @@ public class Page {
     private String seoKeywords;
 
     @Column(nullable = false)
-    private boolean yayinda = true;
+    private boolean published = true;
 
     @Column(nullable = false)
-    private int sira = 0;
+    private int sortOrder = 0;
 
-    @Column(name = "guncelleme")
-    private OffsetDateTime guncelleme;
+    @Column(name = "updated_at")
+    private OffsetDateTime updatedAt;
 
-    @OneToMany(mappedBy = "sayfa", fetch = FetchType.LAZY)
-    @OrderBy("sira ASC")
-    private List<Document> belgeler = new ArrayList<>();
+    @OneToMany(mappedBy = "page", fetch = FetchType.LAZY)
+    @OrderBy("sortOrder ASC")
+    private List<Document> documents = new ArrayList<>();
 
     public Long getId() { return id; }
     public String getSlug() { return slug; }
     public void setSlug(String slug) { this.slug = slug; }
-    public String getDil() { return dil; }
-    public void setDil(String dil) { this.dil = dil; }
-    public String getBaslik() { return baslik; }
-    public void setBaslik(String baslik) { this.baslik = baslik; }
-    public String getIcerikHtml() { return icerikHtml; }
-    public void setIcerikHtml(String icerikHtml) { this.icerikHtml = icerikHtml; }
+    public String getLanguage() { return language; }
+    public void setLanguage(String language) { this.language = language; }
+    public String getTitle() { return title; }
+    public void setTitle(String title) { this.title = title; }
+    public String getContentHtml() { return contentHtml; }
+    public void setContentHtml(String contentHtml) { this.contentHtml = contentHtml; }
     public String getSeoTitle() { return seoTitle; }
     public void setSeoTitle(String seoTitle) { this.seoTitle = seoTitle; }
     public String getSeoDescription() { return seoDescription; }
     public void setSeoDescription(String seoDescription) { this.seoDescription = seoDescription; }
     public String getSeoKeywords() { return seoKeywords; }
     public void setSeoKeywords(String seoKeywords) { this.seoKeywords = seoKeywords; }
-    public boolean isYayinda() { return yayinda; }
-    public void setYayinda(boolean yayinda) { this.yayinda = yayinda; }
-    public int getSira() { return sira; }
-    public void setSira(int sira) { this.sira = sira; }
-    public OffsetDateTime getGuncelleme() { return guncelleme; }
-    public void setGuncelleme(OffsetDateTime guncelleme) { this.guncelleme = guncelleme; }
-    public List<Document> getBelgeler() { return belgeler; }
+    public boolean isPublished() { return published; }
+    public void setPublished(boolean published) { this.published = published; }
+    public int getSortOrder() { return sortOrder; }
+    public void setSortOrder(int sortOrder) { this.sortOrder = sortOrder; }
+    public OffsetDateTime getUpdatedAt() { return updatedAt; }
+    public void setUpdatedAt(OffsetDateTime updatedAt) { this.updatedAt = updatedAt; }
+    public List<Document> getDocuments() { return documents; }
 }

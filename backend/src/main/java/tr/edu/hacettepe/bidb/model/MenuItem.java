@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 /** Menü bağlantısı. Ya bir sayfaya ya da dış adrese işaret eder. */
 @Entity
-@Table(name = "menu_oge")
+@Table(name = "menu_item")
 public class MenuItem {
 
     @Id
@@ -15,34 +15,34 @@ public class MenuItem {
     private Long menuId;
 
     @Column(nullable = false, length = 200)
-    private String etiket;
+    private String label;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sayfa_id")
-    private Page sayfa;
+    @JoinColumn(name = "page_id")
+    private Page page;
 
-    @Column(name = "dis_adres", length = 500)
-    private String disAdres;
+    @Column(name = "external_url", length = 500)
+    private String externalUrl;
 
-    @Column(name = "yeni_sekme", nullable = false)
-    private boolean yeniSekme = false;
+    @Column(name = "new_tab", nullable = false)
+    private boolean newTab = false;
 
     @Column(nullable = false)
-    private int sira = 0;
+    private int sortOrder = 0;
 
     public Long getId() { return id; }
     public Long getMenuId() { return menuId; }
     public void setMenuId(Long menuId) { this.menuId = menuId; }
 
-    public String getEtiket() { return etiket; }
-    public Page getSayfa() { return sayfa; }
-    public String getDisAdres() { return disAdres; }
-    public boolean isYeniSekme() { return yeniSekme; }
-    public int getSira() { return sira; }
+    public String getLabel() { return label; }
+    public Page getPage() { return page; }
+    public String getExternalUrl() { return externalUrl; }
+    public boolean isNewTab() { return newTab; }
+    public int getSortOrder() { return sortOrder; }
 
-    public void setEtiket(String etiket) { this.etiket = etiket; }
-    public void setSayfa(Page sayfa) { this.sayfa = sayfa; }
-    public void setDisAdres(String disAdres) { this.disAdres = disAdres; }
-    public void setYeniSekme(boolean yeniSekme) { this.yeniSekme = yeniSekme; }
-    public void setSira(int sira) { this.sira = sira; }
+    public void setLabel(String label) { this.label = label; }
+    public void setPage(Page page) { this.page = page; }
+    public void setExternalUrl(String externalUrl) { this.externalUrl = externalUrl; }
+    public void setNewTab(boolean newTab) { this.newTab = newTab; }
+    public void setSortOrder(int sortOrder) { this.sortOrder = sortOrder; }
 }

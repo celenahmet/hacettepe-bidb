@@ -12,7 +12,7 @@ interface ContactInfo extends Record<string, string> {
   iletisim_faks: string;
 }
 
-/** Yönetim paneli: giriş, sayfa SEO düzenleme ve duyuru yönetimi. */
+/** Yönetim paneli: giriş, sayfa SEO düzenleme ve newsItem yönetimi. */
 @Component({
   selector: 'bidb-admin-panel',
   imports: [FormsModule, PageEditorComponent],
@@ -22,7 +22,7 @@ interface ContactInfo extends Record<string, string> {
         <form class="giris" (ngSubmit)="giris()">
           <h1>Yönetim Girişi</h1>
 
-          <label for="kullanici">Kullanıcı adı</label>
+          <label for="kullanici">Kullanıcı nameı</label>
           <input id="kullanici" name="kullanici" [(ngModel)]="kullanici" autocomplete="username" required>
 
           <label for="parola">Parola</label>
@@ -41,23 +41,23 @@ interface ContactInfo extends Record<string, string> {
         </header>
 
         <nav class="sekmeler">
-          <button type="button" [class.etkin]="sekme() === 'sayfalar'" (click)="sekme.set('sayfalar')">
-            Sayfalar ({{ sayfalar().length }})
+          <button type="button" [class.etkin]="sekme() === 'pages'" (click)="sekme.set('pages')">
+            Sayfalar ({{ pages().length }})
           </button>
-          <button type="button" [class.etkin]="sekme() === 'duyurular'" (click)="sekmeDuyuru()">
-            Duyurular ({{ duyurular().length }})
+          <button type="button" [class.etkin]="sekme() === 'news'" (click)="sekmeDuyuru()">
+            Duyurular ({{ news().length }})
           </button>
           <button type="button" [class.etkin]="sekme() === 'slider'" (click)="sekmeSlider()">
-            Slider ({{ slaytlar().length }})
+            Slider ({{ slides().length }})
           </button>
-          <button type="button" [class.etkin]="sekme() === 'kisayollar'" (click)="sekmeKisayol()">
-            Kısayollar ({{ kisayollar().length }})
+          <button type="button" [class.etkin]="sekme() === 'shortcuts'" (click)="sekmeKisayol()">
+            Kısayollar ({{ shortcuts().length }})
           </button>
-          <button type="button" [class.etkin]="sekme() === 'menuler'" (click)="sekmeMenu()">
-            Menüler ({{ menuler().length }})
+          <button type="button" [class.etkin]="sekme() === 'menus'" (click)="sekmeMenu()">
+            Menüler ({{ menus().length }})
           </button>
           <button type="button" [class.etkin]="sekme() === 'sosyal'" (click)="sekmeSosyal()">
-            Sosyal Medya ({{ sosyalHesaplar().length }})
+            Sosyal Medya ({{ socialAccounts().length }})
           </button>
           <button type="button" [class.etkin]="sekme() === 'iletisim'" (click)="sekmeIletisim()">
             İletişim Bilgileri
@@ -66,7 +66,7 @@ interface ContactInfo extends Record<string, string> {
 
         @if (bilgi()) { <p class="bilgi" role="status">{{ bilgi() }}</p> }
 
-        @if (sekme() === 'sayfalar') {
+        @if (sekme() === 'pages') {
           <p class="aciklama">
             "Düzenle" ile sayfanın metnini, adresini ve belgelerini yönetebilir,
             sürüm geçmişinden eski bir hâle dönebilirsiniz.
@@ -79,25 +79,25 @@ interface ContactInfo extends Record<string, string> {
               <h2>Yeni sayfa</h2>
 
               <label for="ysdil">Language</label>
-              <select id="ysdil" name="ysdil" [ngModel]="ys.dil"
-                      (ngModelChange)="yeniSayfaAlan('dil', $event)">
+              <select id="ysdil" name="ysdil" [ngModel]="ys.language"
+                      (ngModelChange)="yeniSayfaAlan('language', $event)">
                 <option value="tr">Türkçe</option>
                 <option value="en">İngilizce</option>
               </select>
 
               <label for="ysbaslik">Başlık</label>
-              <input id="ysbaslik" name="ysbaslik" [ngModel]="ys.baslik"
-                     (ngModelChange)="yeniSayfaAlan('baslik', $event)" required>
+              <input id="ysbaslik" name="ysbaslik" [ngModel]="ys.title"
+                     (ngModelChange)="yeniSayfaAlan('title', $event)" required>
 
               <label for="ysslug">Adres (kısa ve İngilizce olmalı)</label>
               <input id="ysslug" name="ysslug" [ngModel]="ys.slug"
                      (ngModelChange)="yeniSayfaAlan('slug', $event)" required>
               <p class="aciklama">
-                Page adresi: <code>{{ SITE }}/{{ ys.dil }}/{{ adresOnizleme(ys.slug) }}</code>
+                Page adresi: <code>{{ SITE }}/{{ ys.language }}/{{ adresOnizleme(ys.slug) }}</code>
               </p>
 
               <span class="dugmeler">
-                <button type="submit">Oluştur</button>
+                <button type="submit">OluşfileType</button>
                 <button type="button" class="ikincil" (click)="yeniSayfa.set(null)">Vazgeç</button>
               </span>
             </form>
@@ -108,15 +108,15 @@ interface ContactInfo extends Record<string, string> {
               <tr><th>Page</th><th>Language</th><th>İçerik</th><th>Yayında</th><th></th></tr>
             </thead>
             <tbody>
-              @for (s of sayfalar(); track s.id) {
+              @for (s of pages(); track s.id) {
                 <tr>
-                  <td>{{ s.baslik }}<br><small>/{{ s.dil }}/{{ s.slug }}</small></td>
-                  <td>{{ s.dil }}</td>
-                  <td>{{ s.icerikUzunlugu }} krkt</td>
-                  <td>{{ s.yayinda ? 'Evet' : 'Hayır' }}</td>
+                  <td>{{ s.title }}<br><small>/{{ s.language }}/{{ s.slug }}</small></td>
+                  <td>{{ s.language }}</td>
+                  <td>{{ s.contentLength }} krkt</td>
+                  <td>{{ s.published ? 'Evet' : 'Hayır' }}</td>
                   <td>
                     <button type="button" class="ikincil" (click)="duzenle(s)">SEO</button>
-                    <button type="button" (click)="sayfaAc(s)">Düzenle</button>
+                    <button type="button" (click)="openPage(s)">Düzenle</button>
                   </td>
                 </tr>
 
@@ -124,7 +124,7 @@ interface ContactInfo extends Record<string, string> {
                   <tr class="duzenleme">
                     <td colspan="5">
                       <bidb-page-editor [sayfa]="s" (kapat)="acikSayfa.set(null)"
-                                          (degisti)="sayfalariTazele()" />
+                                          (degisti)="refreshPages()" />
                     </td>
                   </tr>
                 }
@@ -132,7 +132,7 @@ interface ContactInfo extends Record<string, string> {
                 @if (secili()?.id === s.id) {
                   <tr class="duzenleme">
                     <td colspan="5">
-                      <form (ngSubmit)="seoKaydet()">
+                      <form (ngSubmit)="saveSeo()">
                         <label [attr.for]="'t' + s.id">Başlık (title)</label>
                         <input [attr.id]="'t' + s.id" name="seoTitle" [ngModel]="secili()!.seoTitle"
                                (ngModelChange)="alanDegis('seoTitle', $event)">
@@ -147,8 +147,8 @@ interface ContactInfo extends Record<string, string> {
                                (ngModelChange)="alanDegis('seoKeywords', $event)">
 
                         <label class="onay">
-                          <input type="checkbox" name="yayinda" [ngModel]="secili()!.yayinda"
-                                 (ngModelChange)="alanDegis('yayinda', $event)"> Yayında
+                          <input type="checkbox" name="published" [ngModel]="secili()!.published"
+                                 (ngModelChange)="alanDegis('published', $event)"> Yayında
                         </label>
 
                         <span class="dugmeler">
@@ -162,67 +162,67 @@ interface ContactInfo extends Record<string, string> {
               }
             </tbody>
           </table>
-        } @else if (sekme() === 'duyurular') {
+        } @else if (sekme() === 'news') {
           <form class="duyuru-form" (ngSubmit)="duyuruKaydet()">
-            <h2>{{ duyuru().id ? 'Duyuruyu düzenle' : 'Yeni duyuru' }}</h2>
+            <h2>{{ newsItem().id ? 'Duyuruyu düzenle' : 'Yeni newsItem' }}</h2>
 
             <label for="dbaslik">Başlık</label>
-            <input id="dbaslik" name="baslik" [ngModel]="duyuru().baslik"
-                   (ngModelChange)="duyuruAlan('baslik', $event)" required>
+            <input id="dbaslik" name="title" [ngModel]="newsItem().title"
+                   (ngModelChange)="duyuruAlan('title', $event)" required>
 
             <label for="dtarih">Yayın tarihi</label>
-            <input id="dtarih" name="yayinTarihi" type="date" [ngModel]="duyuru().yayinTarihi"
-                   (ngModelChange)="duyuruAlan('yayinTarihi', $event)" required>
+            <input id="dtarih" name="publishedOn" type="date" [ngModel]="newsItem().publishedOn"
+                   (ngModelChange)="duyuruAlan('publishedOn', $event)" required>
 
             <label for="dozet">Özet (listede başlığın altında görünür)</label>
-            <textarea id="dozet" name="ozet" rows="2" [ngModel]="duyuru().ozet"
-                      (ngModelChange)="duyuruAlan('ozet', $event)"></textarea>
+            <textarea id="dozet" name="summary" rows="2" [ngModel]="newsItem().summary"
+                      (ngModelChange)="duyuruAlan('summary', $event)"></textarea>
 
             <div class="yukleme">
               <label for="dgorsel">Görsel</label>
               <input id="dgorsel" type="file" accept="image/*" (change)="duyuruGorselSec($event)">
               @if (gorselYukleniyor()) { <small>Yükleniyor…</small> }
-              @if (duyuru().gorselUrl) {
+              @if (newsItem().imageUrl) {
                 <div class="gorsel-onizleme">
-                  <img [src]="duyuru().gorselUrl" alt="">
-                  <button type="button" class="ikincil" (click)="duyuruAlan('gorselUrl', null)">Görseli kaldır</button>
+                  <img [src]="newsItem().imageUrl" alt="">
+                  <button type="button" class="ikincil" (click)="duyuruAlan('imageUrl', null)">Görseli kaldır</button>
                 </div>
                 <label for="dgorselalt">Görsel açıklaması (görme engelliler ve arama motorları için)</label>
-                <input id="dgorselalt" name="gorselAlt" [ngModel]="duyuru().gorselAlt"
-                       (ngModelChange)="duyuruAlan('gorselAlt', $event)">
+                <input id="dgorselalt" name="imageAlt" [ngModel]="newsItem().imageAlt"
+                       (ngModelChange)="duyuruAlan('imageAlt', $event)">
               }
             </div>
 
             <label for="dslug">Haber adresi
               <small>— doldurursanız haber kendi sayfasında açılır</small>
             </label>
-            <input id="dslug" name="slug" [ngModel]="duyuru().slug"
+            <input id="dslug" name="slug" [ngModel]="newsItem().slug"
                    (ngModelChange)="duyuruAlan('slug', $event)"
                    placeholder="örn. yeni-eposta-sistemi">
-            @if (duyuru().slug) {
+            @if (newsItem().slug) {
               <p class="aciklama">
-                Haber adresi: <code>{{ SITE }}/{{ duyuru().dil }}/duyuru/{{ adresOnizleme(duyuru().slug) }}</code>
+                Haber adresi: <code>{{ SITE }}/{{ newsItem().language }}/newsItem/{{ adresOnizleme(newsItem().slug) }}</code>
               </p>
             }
 
             <label for="dicerik">Haber metni (HTML)</label>
-            <textarea id="dicerik" name="icerikHtml" rows="10" class="kod" [ngModel]="duyuru().icerikHtml"
-                      (ngModelChange)="duyuruAlan('icerikHtml', $event)"></textarea>
+            <textarea id="dicerik" name="contentHtml" rows="10" class="kod" [ngModel]="newsItem().contentHtml"
+                      (ngModelChange)="duyuruAlan('contentHtml', $event)"></textarea>
 
-            <label for="dadres">Bağlantı (belge veya dış adres — haber sayfası yoksa buraya gidilir)</label>
-            <input id="dadres" name="disAdres" [ngModel]="duyuru().disAdres"
-                   (ngModelChange)="duyuruAlan('disAdres', $event)">
+            <label for="dadres">Bağlantı (belge veya dış url — haber sayfası yoksa buraya gidilir)</label>
+            <input id="dadres" name="externalUrl" [ngModel]="newsItem().externalUrl"
+                   (ngModelChange)="duyuruAlan('externalUrl', $event)">
 
             <label for="ddil">Language</label>
-            <select id="ddil" name="dil" [ngModel]="duyuru().dil" (ngModelChange)="duyuruAlan('dil', $event)">
+            <select id="ddil" name="language" [ngModel]="newsItem().language" (ngModelChange)="duyuruAlan('language', $event)">
               <option value="tr">Türkçe</option>
               <option value="en">İngilizce</option>
             </select>
 
             <span class="dugmeler">
-              <button type="submit">{{ duyuru().id ? 'Güncelle' : 'Ekle' }}</button>
+              <button type="submit">{{ newsItem().id ? 'Güncelle' : 'Ekle' }}</button>
               <button type="button" class="ikincil" (click)="duyuruOnizle()">Önizle</button>
-              @if (duyuru().id) {
+              @if (newsItem().id) {
                 <button type="button" class="ikincil" (click)="duyuruSifirla()">Vazgeç</button>
               }
             </span>
@@ -230,11 +230,11 @@ interface ContactInfo extends Record<string, string> {
             @if (duyuruOnizleme(); as ono) {
               <section class="onizleme">
                 <h3>Önizleme</h3>
-                @if (duyuru().gorselUrl) {
-                  <img class="haber-gorsel" [src]="duyuru().gorselUrl" [alt]="duyuru().gorselAlt || ''">
+                @if (newsItem().imageUrl) {
+                  <img class="haber-gorsel" [src]="newsItem().imageUrl" [alt]="newsItem().imageAlt || ''">
                 }
-                <h4>{{ duyuru().baslik }}</h4>
-                @if (duyuru().ozet) { <p>{{ duyuru().ozet }}</p> }
+                <h4>{{ newsItem().title }}</h4>
+                @if (newsItem().summary) { <p>{{ newsItem().summary }}</p> }
                 <div class="icerik" [innerHTML]="ono"></div>
               </section>
             }
@@ -243,45 +243,45 @@ interface ContactInfo extends Record<string, string> {
           <table class="yonetim-tablo">
             <thead><tr><th>Tarih</th><th>Görsel</th><th>Başlık</th><th>Adres</th><th>Language</th><th></th></tr></thead>
             <tbody>
-              @for (d of duyurular(); track d.id) {
+              @for (d of news(); track d.id) {
                 <tr>
-                  <td><small>{{ d.yayinTarihi }}</small></td>
+                  <td><small>{{ d.publishedOn }}</small></td>
                   <td>
-                    @if (d.gorselUrl) {
-                      <img [src]="d.gorselUrl" alt="" class="kucuk-gorsel">
+                    @if (d.imageUrl) {
+                      <img [src]="d.imageUrl" alt="" class="kucuk-gorsel">
                     } @else { <span class="soluk">—</span> }
                   </td>
-                  <td>{{ d.baslik }}</td>
+                  <td>{{ d.title }}</td>
                   <td>
-                    @if (d.slug) { <small><code>/{{ d.dil }}/duyuru/{{ d.slug }}</code></small> }
+                    @if (d.slug) { <small><code>/{{ d.language }}/newsItem/{{ d.slug }}</code></small> }
                     @else { <span class="soluk">bağlantı</span> }
                   </td>
-                  <td>{{ d.dil }}</td>
+                  <td>{{ d.language }}</td>
                   <td>
                     <button type="button" class="ikincil" (click)="duyuruDuzenle(d)">Düzenle</button>
-                    <button type="button" class="tehlike" (click)="duyuruSil(d)">Sil</button>
+                    <button type="button" class="tehlike" (click)="deleteNews(d)">Sil</button>
                   </td>
                 </tr>
               }
             </tbody>
           </table>
         } @else if (sekme() === 'slider') {
-          <button type="button" (click)="slaytDuzenle(null)">Yeni slayt</button>
+          <button type="button" (click)="slaytDuzenle(null)">Yeni slideItem</button>
 
-          @if (slayt(); as sl) {
-            <form class="duyuru-form" (ngSubmit)="slaytKaydet()">
-              <h2>{{ sl.id ? 'Slideı düzenle' : 'Yeni slayt' }}</h2>
+          @if (slideItem(); as sl) {
+            <form class="duyuru-form" (ngSubmit)="saveSlide()">
+              <h2>{{ sl.id ? 'Slideı düzenle' : 'Yeni slideItem' }}</h2>
               <label for="sbaslik">Başlık</label>
-              <input id="sbaslik" name="sbaslik" [ngModel]="sl.baslik" (ngModelChange)="slaytAlan('baslik', $event)">
+              <input id="sbaslik" name="sbaslik" [ngModel]="sl.title" (ngModelChange)="slaytAlan('title', $event)">
               <label for="sgorsel">Görsel adresi</label>
-              <input id="sgorsel" name="sgorsel" [ngModel]="sl.gorselUrl" (ngModelChange)="slaytAlan('gorselUrl', $event)" required>
+              <input id="sgorsel" name="sgorsel" [ngModel]="sl.imageUrl" (ngModelChange)="slaytAlan('imageUrl', $event)" required>
               <label for="salt">Görsel açıklaması (erişilebilirlik)</label>
-              <input id="salt" name="salt" [ngModel]="sl.gorselAlt" (ngModelChange)="slaytAlan('gorselAlt', $event)">
+              <input id="salt" name="salt" [ngModel]="sl.imageAlt" (ngModelChange)="slaytAlan('imageAlt', $event)">
               <label for="ssira">Sıra</label>
-              <input id="ssira" name="ssira" type="number" [ngModel]="sl.sira" (ngModelChange)="slaytAlan('sira', +$event)">
+              <input id="ssira" name="ssira" type="number" [ngModel]="sl.sortOrder" (ngModelChange)="slaytAlan('sortOrder', +$event)">
               <span class="dugmeler">
                 <button type="submit">Kaydet</button>
-                <button type="button" class="ikincil" (click)="slayt.set(null)">Vazgeç</button>
+                <button type="button" class="ikincil" (click)="slideItem.set(null)">Vazgeç</button>
               </span>
             </form>
           }
@@ -289,48 +289,48 @@ interface ContactInfo extends Record<string, string> {
           <table class="yonetim-tablo">
             <thead><tr><th>Sıra</th><th>Başlık</th><th>Görsel</th><th>Language</th><th></th></tr></thead>
             <tbody>
-              @for (sl of slaytlar(); track sl.id) {
+              @for (sl of slides(); track sl.id) {
                 <tr>
-                  <td>{{ sl.sira }}</td>
-                  <td>{{ sl.baslik }}</td>
-                  <td><small>{{ sl.gorselUrl }}</small></td>
-                  <td>{{ sl.dil }}</td>
+                  <td>{{ sl.sortOrder }}</td>
+                  <td>{{ sl.title }}</td>
+                  <td><small>{{ sl.imageUrl }}</small></td>
+                  <td>{{ sl.language }}</td>
                   <td>
                     <button type="button" class="ikincil" (click)="slaytDuzenle(sl)">Düzenle</button>
-                    <button type="button" class="tehlike" (click)="slaytSil(sl)">Sil</button>
+                    <button type="button" class="tehlike" (click)="deleteSlide(sl)">Sil</button>
                   </td>
                 </tr>
               }
             </tbody>
           </table>
-        } @else if (sekme() === 'menuler') {
-          @if (menuOge(); as md) {
+        } @else if (sekme() === 'menus') {
+          @if (menuItem(); as md) {
             <form class="duyuru-form" (ngSubmit)="ogeKaydet()">
               <h2>{{ md.oge.id ? 'Bağlantıyı düzenle' : 'Yeni bağlantı' }}</h2>
               <label for="metiket">Etiket</label>
-              <input id="metiket" name="metiket" [ngModel]="md.oge.etiket" (ngModelChange)="ogeAlan('etiket', $event)" required>
+              <input id="metiket" name="metiket" [ngModel]="md.oge.label" (ngModelChange)="ogeAlan('label', $event)" required>
 
               <label for="msayfa">Page (iç bağlantı)</label>
-              <select id="msayfa" name="msayfa" [ngModel]="md.oge.sayfaId" (ngModelChange)="ogeAlan('sayfaId', $event ? +$event : null)">
+              <select id="msayfa" name="msayfa" [ngModel]="md.oge.pageId" (ngModelChange)="ogeAlan('pageId', $event ? +$event : null)">
                 <option [value]="null">— dış bağlantı kullan —</option>
-                @for (sf of sayfalar(); track sf.id) {
-                  <option [value]="sf.id">{{ sf.dil }}/{{ sf.slug }} — {{ sf.baslik }}</option>
+                @for (sf of pages(); track sf.id) {
+                  <option [value]="sf.id">{{ sf.language }}/{{ sf.slug }} — {{ sf.title }}</option>
                 }
               </select>
 
-              <label for="mdis">Dış adres (sayfa seçilmediyse)</label>
-              <input id="mdis" name="mdis" [ngModel]="md.oge.disAdres" (ngModelChange)="ogeAlan('disAdres', $event)">
+              <label for="mdis">Dış url (sayfa seçilmediyse)</label>
+              <input id="mdis" name="mdis" [ngModel]="md.oge.externalUrl" (ngModelChange)="ogeAlan('externalUrl', $event)">
 
               <label for="msira">Sıra</label>
-              <input id="msira" name="msira" type="number" [ngModel]="md.oge.sira" (ngModelChange)="ogeAlan('sira', +$event)">
+              <input id="msira" name="msira" type="number" [ngModel]="md.oge.sortOrder" (ngModelChange)="ogeAlan('sortOrder', +$event)">
 
               <label class="onay">
-                <input type="checkbox" name="myeni" [ngModel]="md.oge.yeniSekme" (ngModelChange)="ogeAlan('yeniSekme', $event)"> Yeni sekmede açılsın
+                <input type="checkbox" name="myeni" [ngModel]="md.oge.newTab" (ngModelChange)="ogeAlan('newTab', $event)"> Yeni sekmede açılsın
               </label>
 
               <span class="dugmeler">
                 <button type="submit">Kaydet</button>
-                <button type="button" class="ikincil" (click)="menuOge.set(null)">Vazgeç</button>
+                <button type="button" class="ikincil" (click)="menuItem.set(null)">Vazgeç</button>
               </span>
             </form>
           }
@@ -341,14 +341,14 @@ interface ContactInfo extends Record<string, string> {
             <form class="duyuru-form" (ngSubmit)="bolumKaydet()">
               <h2>{{ mb.id ? 'Bölümü düzenle' : 'Yeni bölüm' }}</h2>
               <label for="bbaslik">Bölüm başlığı</label>
-              <input id="bbaslik" name="bbaslik" [ngModel]="mb.baslik" (ngModelChange)="bolumAlan('baslik', $event)" required>
+              <input id="bbaslik" name="bbaslik" [ngModel]="mb.title" (ngModelChange)="bolumAlan('title', $event)" required>
               <label for="bdil">Language</label>
-              <select id="bdil" name="bdil" [ngModel]="mb.dil" (ngModelChange)="bolumAlan('dil', $event)">
+              <select id="bdil" name="bdil" [ngModel]="mb.language" (ngModelChange)="bolumAlan('language', $event)">
                 <option value="tr">Türkçe</option>
                 <option value="en">İngilizce</option>
               </select>
               <label for="bsira">Sıra</label>
-              <input id="bsira" name="bsira" type="number" [ngModel]="mb.sira" (ngModelChange)="bolumAlan('sira', +$event)">
+              <input id="bsira" name="bsira" type="number" [ngModel]="mb.sortOrder" (ngModelChange)="bolumAlan('sortOrder', +$event)">
               <span class="dugmeler">
                 <button type="submit">Kaydet</button>
                 <button type="button" class="ikincil" (click)="menuBolum.set(null)">Vazgeç</button>
@@ -356,9 +356,9 @@ interface ContactInfo extends Record<string, string> {
             </form>
           }
 
-          @for (m of menuler(); track m.id) {
+          @for (m of menus(); track m.id) {
             <section class="menu-bolum">
-              <h2>{{ m.baslik }} <small>({{ m.dil }})</small></h2>
+              <h2>{{ m.title }} <small>({{ m.language }})</small></h2>
               <span class="dugmeler">
                 <button type="button" class="ikincil" (click)="ogeDuzenle(m.id, null)">Bağlantı ekle</button>
                 <button type="button" class="ikincil" (click)="bolumDuzenle(m)">Bölümü düzenle</button>
@@ -367,11 +367,11 @@ interface ContactInfo extends Record<string, string> {
               <table class="yonetim-tablo">
                 <thead><tr><th>Sıra</th><th>Etiket</th><th>Hedef</th><th></th></tr></thead>
                 <tbody>
-                  @for (o of m.ogeler; track o.id) {
+                  @for (o of m.items; track o.id) {
                     <tr>
-                      <td>{{ o.sira }}</td>
-                      <td>{{ o.etiket }}</td>
-                      <td><small>{{ o.sayfaYolu || o.disAdres }}</small></td>
+                      <td>{{ o.sortOrder }}</td>
+                      <td>{{ o.label }}</td>
+                      <td><small>{{ o.pagePath || o.externalUrl }}</small></td>
                       <td>
                         <button type="button" class="ikincil" (click)="ogeDuzenle(m.id, o)">Düzenle</button>
                         <button type="button" class="tehlike" (click)="ogeSil(o)">Sil</button>
@@ -385,18 +385,18 @@ interface ContactInfo extends Record<string, string> {
         } @else if (sekme() === 'sosyal') {
           <button type="button" (click)="sosyalDuzenle(null)">Yeni hesap</button>
 
-          @if (sosyalHesap(); as sh) {
-            <form class="duyuru-form" (ngSubmit)="sosyalKaydet()">
+          @if (socialAccount(); as sh) {
+            <form class="duyuru-form" (ngSubmit)="saveSocialAccount()">
               <h2>{{ sh.id ? 'Hesabı düzenle' : 'Yeni hesap' }}</h2>
               <label for="sag">Ağ (instagram, facebook, twitter, youtube, linkedin)</label>
-              <input id="sag" name="sag" [ngModel]="sh.ag" (ngModelChange)="sosyalAlan('ag', $event)" required>
+              <input id="sag" name="sag" [ngModel]="sh.network" (ngModelChange)="sosyalAlan('network', $event)" required>
               <label for="sadres">Adres</label>
-              <input id="sadres" name="sadres" [ngModel]="sh.adres" (ngModelChange)="sosyalAlan('adres', $event)" required>
+              <input id="sadres" name="sadres" [ngModel]="sh.url" (ngModelChange)="sosyalAlan('url', $event)" required>
               <label for="ssira2">Sıra</label>
-              <input id="ssira2" name="ssira2" type="number" [ngModel]="sh.sira" (ngModelChange)="sosyalAlan('sira', +$event)">
+              <input id="ssira2" name="ssira2" type="number" [ngModel]="sh.sortOrder" (ngModelChange)="sosyalAlan('sortOrder', +$event)">
               <span class="dugmeler">
                 <button type="submit">Kaydet</button>
-                <button type="button" class="ikincil" (click)="sosyalHesap.set(null)">Vazgeç</button>
+                <button type="button" class="ikincil" (click)="socialAccount.set(null)">Vazgeç</button>
               </span>
             </form>
           }
@@ -404,14 +404,14 @@ interface ContactInfo extends Record<string, string> {
           <table class="yonetim-tablo">
             <thead><tr><th>Sıra</th><th>Ağ</th><th>Adres</th><th></th></tr></thead>
             <tbody>
-              @for (sh of sosyalHesaplar(); track sh.id) {
+              @for (sh of socialAccounts(); track sh.id) {
                 <tr>
-                  <td>{{ sh.sira }}</td>
-                  <td>{{ sh.ag }}</td>
-                  <td><small>{{ sh.adres }}</small></td>
+                  <td>{{ sh.sortOrder }}</td>
+                  <td>{{ sh.network }}</td>
+                  <td><small>{{ sh.url }}</small></td>
                   <td>
                     <button type="button" class="ikincil" (click)="sosyalDuzenle(sh)">Düzenle</button>
-                    <button type="button" class="tehlike" (click)="sosyalSil(sh)">Sil</button>
+                    <button type="button" class="tehlike" (click)="deleteSocialAccount(sh)">Sil</button>
                   </td>
                 </tr>
               }
@@ -446,23 +446,23 @@ interface ContactInfo extends Record<string, string> {
         } @else {
           <button type="button" (click)="kisayolDuzenle(null)">Yeni kısayol</button>
 
-          @if (kisayol(); as ks) {
-            <form class="duyuru-form" (ngSubmit)="kisayolKaydet()">
+          @if (shortcutItem(); as ks) {
+            <form class="duyuru-form" (ngSubmit)="saveShortcut()">
               <h2>{{ ks.id ? 'Kısayolu düzenle' : 'Yeni kısayol' }}</h2>
               <label for="kad">Ad</label>
-              <input id="kad" name="kad" [ngModel]="ks.ad" (ngModelChange)="kisayolAlan('ad', $event)" required>
+              <input id="kad" name="kad" [ngModel]="ks.name" (ngModelChange)="kisayolAlan('name', $event)" required>
               <label for="kadres">Adres</label>
-              <input id="kadres" name="kadres" [ngModel]="ks.adres" (ngModelChange)="kisayolAlan('adres', $event)" required>
+              <input id="kadres" name="kadres" [ngModel]="ks.url" (ngModelChange)="kisayolAlan('url', $event)" required>
               <label for="kikon">İkon adresi</label>
-              <input id="kikon" name="kikon" [ngModel]="ks.ikonUrl" (ngModelChange)="kisayolAlan('ikonUrl', $event)">
+              <input id="kikon" name="kikon" [ngModel]="ks.iconUrl" (ngModelChange)="kisayolAlan('iconUrl', $event)">
               <label for="ksira">Sıra (100 ve üzeri servis karuselinde görünür)</label>
-              <input id="ksira" name="ksira" type="number" [ngModel]="ks.sira" (ngModelChange)="kisayolAlan('sira', +$event)">
+              <input id="ksira" name="ksira" type="number" [ngModel]="ks.sortOrder" (ngModelChange)="kisayolAlan('sortOrder', +$event)">
               <label class="onay">
-                <input type="checkbox" name="kyeni" [ngModel]="ks.yeniSekme" (ngModelChange)="kisayolAlan('yeniSekme', $event)"> Yeni sekmede açılsın
+                <input type="checkbox" name="kyeni" [ngModel]="ks.newTab" (ngModelChange)="kisayolAlan('newTab', $event)"> Yeni sekmede açılsın
               </label>
               <span class="dugmeler">
                 <button type="submit">Kaydet</button>
-                <button type="button" class="ikincil" (click)="kisayol.set(null)">Vazgeç</button>
+                <button type="button" class="ikincil" (click)="shortcutItem.set(null)">Vazgeç</button>
               </span>
             </form>
           }
@@ -470,15 +470,15 @@ interface ContactInfo extends Record<string, string> {
           <table class="yonetim-tablo">
             <thead><tr><th>Sıra</th><th>Ad</th><th>Adres</th><th>Language</th><th></th></tr></thead>
             <tbody>
-              @for (ks of kisayollar(); track ks.id) {
+              @for (ks of shortcuts(); track ks.id) {
                 <tr>
-                  <td>{{ ks.sira }}</td>
-                  <td>{{ ks.ad }}</td>
-                  <td><small>{{ ks.adres }}</small></td>
-                  <td>{{ ks.dil }}</td>
+                  <td>{{ ks.sortOrder }}</td>
+                  <td>{{ ks.name }}</td>
+                  <td><small>{{ ks.url }}</small></td>
+                  <td>{{ ks.language }}</td>
                   <td>
                     <button type="button" class="ikincil" (click)="kisayolDuzenle(ks)">Düzenle</button>
-                    <button type="button" class="tehlike" (click)="kisayolSil(ks)">Sil</button>
+                    <button type="button" class="tehlike" (click)="deleteShortcut(ks)">Sil</button>
                   </td>
                 </tr>
               }
@@ -499,27 +499,27 @@ export class AdminPanelComponent {
   protected bilgi = signal('');
   protected calisiyor = signal(false);
 
-  protected sekme = signal<'sayfalar' | 'duyurular' | 'slider' | 'kisayollar' | 'menuler' | 'sosyal' | 'iletisim'>('sayfalar');
-  protected sayfalar = signal<AdminPage[]>([]);
-  protected duyurular = signal<AdminNews[]>([]);
+  protected sekme = signal<'pages' | 'news' | 'slider' | 'shortcuts' | 'menus' | 'sosyal' | 'iletisim'>('pages');
+  protected pages = signal<AdminPage[]>([]);
+  protected news = signal<AdminNews[]>([]);
   protected secili = signal<AdminPage | null>(null);
-  protected duyuru = signal<AdminNews>(this.bosDuyuru());
-  protected slaytlar = signal<Slide[]>([]);
-  protected kisayollar = signal<Shortcut[]>([]);
-  protected slayt = signal<Slide | null>(null);
-  protected kisayol = signal<Shortcut | null>(null);
-  protected menuler = signal<AdminMenu[]>([]);
-  protected menuOge = signal<{ menuId: number; oge: AdminMenuItem } | null>(null);
-  protected menuBolum = signal<{ id: number | null; dil: string; konum: string; baslik: string; sira: number } | null>(null);
-  protected sosyalHesaplar = signal<AdminSocialAccount[]>([]);
-  protected sosyalHesap = signal<AdminSocialAccount | null>(null);
+  protected newsItem = signal<AdminNews>(this.bosDuyuru());
+  protected slides = signal<Slide[]>([]);
+  protected shortcuts = signal<Shortcut[]>([]);
+  protected slideItem = signal<Slide | null>(null);
+  protected shortcutItem = signal<Shortcut | null>(null);
+  protected menus = signal<AdminMenu[]>([]);
+  protected menuItem = signal<{ menuId: number; oge: AdminMenuItem } | null>(null);
+  protected menuBolum = signal<{ id: number | null; language: string; position: string; title: string; sortOrder: number } | null>(null);
+  protected socialAccounts = signal<AdminSocialAccount[]>([]);
+  protected socialAccount = signal<AdminSocialAccount | null>(null);
   protected acikSayfa = signal<AdminPage | null>(null);
   protected gorselYukleniyor = signal(false);
 
   /** Adres önizlemelerinde gösterilen site adresi. */
   protected readonly SITE = 'bidb.hacettepe.edu.tr';
   protected duyuruOnizleme = signal<SafeHtml | null>(null);
-  protected yeniSayfa = signal<{ dil: string; slug: string; baslik: string } | null>(null);
+  protected yeniSayfa = signal<{ language: string; slug: string; title: string } | null>(null);
   protected iletisim = signal<ContactInfo>({
     iletisim_adres: '', iletisim_telefon: '', iletisim_eposta: '', iletisim_faks: ''
   });
@@ -537,13 +537,13 @@ export class AdminPanelComponent {
     this.api.girisDene(this.kullanici, this.parola).subscribe({
       next: (liste) => {
         this.api.girisOnayla();
-        this.sayfalar.set(liste);
+        this.pages.set(liste);
         this.sayilariYukle();
         this.calisiyor.set(false);
         this.parola = '';
       },
       error: () => {
-        this.hata.set('Kullanıcı adı veya parola hatalı.');
+        this.hata.set('Kullanıcı nameı veya parola hatalı.');
         this.calisiyor.set(false);
       }
     });
@@ -553,36 +553,36 @@ export class AdminPanelComponent {
     this.secili.set(this.secili()?.id === s.id ? null : { ...s });
   }
 
-  protected alanDegis(alan: keyof AdminPage, deger: unknown): void {
+  protected alanDegis(alan: keyof AdminPage, value: unknown): void {
     const s = this.secili();
-    if (s) this.secili.set({ ...s, [alan]: deger } as AdminPage);
+    if (s) this.secili.set({ ...s, [alan]: value } as AdminPage);
   }
 
-  protected duyuruAlan(alan: keyof AdminNews, deger: unknown): void {
-    this.duyuru.set({ ...this.duyuru(), [alan]: deger } as AdminNews);
+  protected duyuruAlan(alan: keyof AdminNews, value: unknown): void {
+    this.newsItem.set({ ...this.newsItem(), [alan]: value } as AdminNews);
   }
 
-  protected seoKaydet(): void {
+  protected saveSeo(): void {
     const s = this.secili();
     if (!s) return;
-    this.api.seoKaydet(s.id, s).subscribe({
+    this.api.saveSeo(s.id, s).subscribe({
       next: (guncel) => {
-        this.sayfalar.update((liste) => liste.map((x) => (x.id === guncel.id ? guncel : x)));
+        this.pages.update((liste) => liste.map((x) => (x.id === guncel.id ? guncel : x)));
         this.secili.set(null);
-        this.mesaj(guncel.baslik + ' güncellendi.');
+        this.mesaj(guncel.title + ' güncellendi.');
       },
       error: () => this.mesaj('Kaydedilemedi.')
     });
   }
 
   protected sekmeDuyuru(): void {
-    this.sekme.set('duyurular');
-    this.api.duyurular().subscribe((d) => this.duyurular.set(d));
+    this.sekme.set('news');
+    this.api.news().subscribe((d) => this.news.set(d));
   }
 
   protected duyuruKaydet(): void {
-    const d = this.duyuru();
-    const istek = d.id ? this.api.duyuruGuncelle(d.id, d) : this.api.duyuruEkle(d);
+    const d = this.newsItem();
+    const istek = d.id ? this.api.updateNews(d.id, d) : this.api.addNews(d);
     istek.subscribe({
       next: () => {
         this.duyuruSifirla();
@@ -593,11 +593,11 @@ export class AdminPanelComponent {
     });
   }
 
-  protected duyuruSil(d: AdminNews): void {
+  protected deleteNews(d: AdminNews): void {
     if (!d.id) return;
-    this.api.duyuruSil(d.id).subscribe({
+    this.api.deleteNews(d.id).subscribe({
       next: () => {
-        this.duyurular.update((liste) => liste.filter((x) => x.id !== d.id));
+        this.news.update((liste) => liste.filter((x) => x.id !== d.id));
         this.mesaj('Duyuru silindi.');
       },
       error: () => this.mesaj('Silinemedi.')
@@ -605,104 +605,104 @@ export class AdminPanelComponent {
   }
 
   protected duyuruDuzenle(d: AdminNews): void {
-    this.duyuru.set({ ...d });
+    this.newsItem.set({ ...d });
   }
 
   protected duyuruSifirla(): void {
-    this.duyuru.set(this.bosDuyuru());
+    this.newsItem.set(this.bosDuyuru());
   }
 
   protected sekmeSlider(): void {
     this.sekme.set('slider');
-    this.api.slaytlar().subscribe((l) => this.slaytlar.set(l));
+    this.api.slides().subscribe((l) => this.slides.set(l));
   }
 
   protected sekmeKisayol(): void {
-    this.sekme.set('kisayollar');
-    this.api.kisayollar().subscribe((l) => this.kisayollar.set(l));
+    this.sekme.set('shortcuts');
+    this.api.shortcuts().subscribe((l) => this.shortcuts.set(l));
   }
 
   protected slaytDuzenle(s: Slide | null): void {
-    this.slayt.set(s ? { ...s } : { id: null, dil: 'tr', baslik: '', altBaslik: '', gorselUrl: '', gorselAlt: '', baglanti: null, sira: 0, yayinda: true });
+    this.slideItem.set(s ? { ...s } : { id: null, language: 'tr', title: '', subtitle: '', imageUrl: '', imageAlt: '', linkUrl: null, sortOrder: 0, published: true });
   }
 
-  protected slaytAlan(alan: keyof Slide, deger: unknown): void {
-    const s = this.slayt();
-    if (s) this.slayt.set({ ...s, [alan]: deger } as Slide);
+  protected slaytAlan(alan: keyof Slide, value: unknown): void {
+    const s = this.slideItem();
+    if (s) this.slideItem.set({ ...s, [alan]: value } as Slide);
   }
 
-  protected slaytKaydet(): void {
-    const s = this.slayt();
+  protected saveSlide(): void {
+    const s = this.slideItem();
     if (!s) return;
-    this.api.slaytKaydet(s).subscribe({
-      next: () => { this.slayt.set(null); this.sekmeSlider(); this.mesaj('Slide kaydedildi.'); },
+    this.api.saveSlide(s).subscribe({
+      next: () => { this.slideItem.set(null); this.sekmeSlider(); this.mesaj('Slide kaydedildi.'); },
       error: () => this.mesaj('Slide kaydedilemedi.')
     });
   }
 
-  protected slaytSil(s: Slide): void {
+  protected deleteSlide(s: Slide): void {
     if (!s.id) return;
-    this.api.slaytSil(s.id).subscribe({
-      next: () => { this.slaytlar.update((l) => l.filter((x) => x.id !== s.id)); this.mesaj('Slide silindi.'); },
+    this.api.deleteSlide(s.id).subscribe({
+      next: () => { this.slides.update((l) => l.filter((x) => x.id !== s.id)); this.mesaj('Slide silindi.'); },
       error: () => this.mesaj('Silinemedi.')
     });
   }
 
   protected kisayolDuzenle(k: Shortcut | null): void {
-    this.kisayol.set(k ? { ...k } : { id: null, dil: 'tr', ad: '', ikonUrl: '', adres: '', yeniSekme: false, sira: 0, yayinda: true });
+    this.shortcutItem.set(k ? { ...k } : { id: null, language: 'tr', name: '', iconUrl: '', url: '', newTab: false, sortOrder: 0, published: true });
   }
 
-  protected kisayolAlan(alan: keyof Shortcut, deger: unknown): void {
-    const k = this.kisayol();
-    if (k) this.kisayol.set({ ...k, [alan]: deger } as Shortcut);
+  protected kisayolAlan(alan: keyof Shortcut, value: unknown): void {
+    const k = this.shortcutItem();
+    if (k) this.shortcutItem.set({ ...k, [alan]: value } as Shortcut);
   }
 
-  protected kisayolKaydet(): void {
-    const k = this.kisayol();
+  protected saveShortcut(): void {
+    const k = this.shortcutItem();
     if (!k) return;
-    this.api.kisayolKaydet(k).subscribe({
-      next: () => { this.kisayol.set(null); this.sekmeKisayol(); this.mesaj('Kısayol kaydedildi.'); },
+    this.api.saveShortcut(k).subscribe({
+      next: () => { this.shortcutItem.set(null); this.sekmeKisayol(); this.mesaj('Kısayol kaydedildi.'); },
       error: () => this.mesaj('Kısayol kaydedilemedi.')
     });
   }
 
-  protected kisayolSil(k: Shortcut): void {
+  protected deleteShortcut(k: Shortcut): void {
     if (!k.id) return;
-    this.api.kisayolSil(k.id).subscribe({
-      next: () => { this.kisayollar.update((l) => l.filter((x) => x.id !== k.id)); this.mesaj('Kısayol silindi.'); },
+    this.api.deleteShortcut(k.id).subscribe({
+      next: () => { this.shortcuts.update((l) => l.filter((x) => x.id !== k.id)); this.mesaj('Kısayol silindi.'); },
       error: () => this.mesaj('Silinemedi.')
     });
   }
 
   protected sekmeMenu(): void {
-    this.sekme.set('menuler');
-    this.api.menuler().subscribe((l) => this.menuler.set(l));
+    this.sekme.set('menus');
+    this.api.menus().subscribe((l) => this.menus.set(l));
   }
 
   protected ogeDuzenle(menuId: number, o: AdminMenuItem | null): void {
-    this.menuOge.set({
+    this.menuItem.set({
       menuId,
-      oge: o ? { ...o } : { id: null, etiket: '', sayfaId: null, sayfaYolu: null, disAdres: '', yeniSekme: false, sira: 0 }
+      oge: o ? { ...o } : { id: null, label: '', pageId: null, pagePath: null, externalUrl: '', newTab: false, sortOrder: 0 }
     });
   }
 
-  protected ogeAlan(alan: keyof AdminMenuItem, deger: unknown): void {
-    const d = this.menuOge();
-    if (d) this.menuOge.set({ menuId: d.menuId, oge: { ...d.oge, [alan]: deger } as AdminMenuItem });
+  protected ogeAlan(alan: keyof AdminMenuItem, value: unknown): void {
+    const d = this.menuItem();
+    if (d) this.menuItem.set({ menuId: d.menuId, oge: { ...d.oge, [alan]: value } as AdminMenuItem });
   }
 
   protected ogeKaydet(): void {
-    const d = this.menuOge();
+    const d = this.menuItem();
     if (!d) return;
-    this.api.menuOgeKaydet(d.menuId, d.oge).subscribe({
-      next: () => { this.menuOge.set(null); this.sekmeMenu(); this.mesaj('Menü bağlantısı kaydedildi.'); },
+    this.api.saveMenuItem(d.menuId, d.oge).subscribe({
+      next: () => { this.menuItem.set(null); this.sekmeMenu(); this.mesaj('Menü bağlantısı kaydedildi.'); },
       error: () => this.mesaj('Kaydedilemedi.')
     });
   }
 
   protected ogeSil(o: AdminMenuItem): void {
     if (!o.id) return;
-    this.api.menuOgeSil(o.id).subscribe({
+    this.api.deleteMenuItem(o.id).subscribe({
       next: () => { this.sekmeMenu(); this.mesaj('Bağlantı silindi.'); },
       error: () => this.mesaj('Silinemedi.')
     });
@@ -710,92 +710,92 @@ export class AdminPanelComponent {
 
   protected sekmeSosyal(): void {
     this.sekme.set('sosyal');
-    this.api.sosyalHesaplar().subscribe((l) => this.sosyalHesaplar.set(l));
+    this.api.socialAccounts().subscribe((l) => this.socialAccounts.set(l));
   }
 
   protected sosyalDuzenle(s: AdminSocialAccount | null): void {
-    this.sosyalHesap.set(s ? { ...s } : { id: null, ag: '', adres: '', sira: 0, yayinda: true });
+    this.socialAccount.set(s ? { ...s } : { id: null, network: '', url: '', sortOrder: 0, published: true });
   }
 
-  protected sosyalAlan(alan: keyof AdminSocialAccount, deger: unknown): void {
-    const s = this.sosyalHesap();
-    if (s) this.sosyalHesap.set({ ...s, [alan]: deger } as AdminSocialAccount);
+  protected sosyalAlan(alan: keyof AdminSocialAccount, value: unknown): void {
+    const s = this.socialAccount();
+    if (s) this.socialAccount.set({ ...s, [alan]: value } as AdminSocialAccount);
   }
 
-  protected sosyalKaydet(): void {
-    const s = this.sosyalHesap();
+  protected saveSocialAccount(): void {
+    const s = this.socialAccount();
     if (!s) return;
-    this.api.sosyalKaydet(s).subscribe({
-      next: () => { this.sosyalHesap.set(null); this.sekmeSosyal(); this.mesaj('Sosyal medya hesabı kaydedildi.'); },
+    this.api.saveSocialAccount(s).subscribe({
+      next: () => { this.socialAccount.set(null); this.sekmeSosyal(); this.mesaj('Sosyal medya hesabı kaydedildi.'); },
       error: () => this.mesaj('Kaydedilemedi.')
     });
   }
 
-  protected sosyalSil(s: AdminSocialAccount): void {
+  protected deleteSocialAccount(s: AdminSocialAccount): void {
     if (!s.id) return;
-    this.api.sosyalSil(s.id).subscribe({
-      next: () => { this.sosyalHesaplar.update((l) => l.filter((x) => x.id !== s.id)); this.mesaj('Hesap silindi.'); },
+    this.api.deleteSocialAccount(s.id).subscribe({
+      next: () => { this.socialAccounts.update((l) => l.filter((x) => x.id !== s.id)); this.mesaj('Hesap silindi.'); },
       error: () => this.mesaj('Silinemedi.')
     });
   }
 
   protected bolumDuzenle(m: AdminMenu | null): void {
     this.menuBolum.set(m
-      ? { id: m.id, dil: m.dil, konum: m.konum, baslik: m.baslik, sira: m.sira }
-      : { id: null, dil: 'tr', konum: 'sol', baslik: '', sira: 0 });
+      ? { id: m.id, language: m.language, position: m.position, title: m.title, sortOrder: m.sortOrder }
+      : { id: null, language: 'tr', position: 'sol', title: '', sortOrder: 0 });
   }
 
-  protected bolumAlan(alan: 'dil' | 'konum' | 'baslik' | 'sira', deger: unknown): void {
+  protected bolumAlan(alan: 'language' | 'position' | 'title' | 'sortOrder', value: unknown): void {
     const m = this.menuBolum();
-    if (m) this.menuBolum.set({ ...m, [alan]: deger });
+    if (m) this.menuBolum.set({ ...m, [alan]: value });
   }
 
   protected bolumKaydet(): void {
     const m = this.menuBolum();
     if (!m) return;
-    this.api.menuBolumKaydet(m).subscribe({
+    this.api.saveMenuSection(m).subscribe({
       next: () => { this.menuBolum.set(null); this.sekmeMenu(); this.mesaj('Menü bölümü kaydedildi.'); },
       error: () => this.mesaj('Kaydedilemedi.')
     });
   }
 
   protected bolumSil(m: AdminMenu): void {
-    this.api.menuBolumSil(m.id).subscribe({
+    this.api.deleteMenuSection(m.id).subscribe({
       next: () => { this.sekmeMenu(); this.mesaj('Menü bölümü silindi.'); },
       error: () => this.mesaj('Silinemedi.')
     });
   }
 
   /** Sayfanın tüm düzenlenebilir yönlerini açar. */
-  protected sayfaAc(s: AdminPage): void {
+  protected openPage(s: AdminPage): void {
     this.secili.set(null);
     this.acikSayfa.set(this.acikSayfa()?.id === s.id ? null : s);
   }
 
-  protected sayfalariTazele(): void {
-    this.api.sayfalar().subscribe((l) => this.sayfalar.set(l));
+  protected refreshPages(): void {
+    this.api.pages().subscribe((l) => this.pages.set(l));
   }
 
   protected yeniSayfaAc(): void {
-    this.yeniSayfa.set({ dil: 'tr', slug: '', baslik: '' });
+    this.yeniSayfa.set({ language: 'tr', slug: '', title: '' });
   }
 
-  protected yeniSayfaAlan(alan: 'dil' | 'slug' | 'baslik', deger: unknown): void {
+  protected yeniSayfaAlan(alan: 'language' | 'slug' | 'title', value: unknown): void {
     const y = this.yeniSayfa();
-    if (y) this.yeniSayfa.set({ ...y, [alan]: deger as string });
+    if (y) this.yeniSayfa.set({ ...y, [alan]: value as string });
   }
 
   protected yeniSayfaKaydet(): void {
     const y = this.yeniSayfa();
     if (!y) return;
-    this.api.sayfaEkle({ ...y, icerikHtml: '<div class="icerik"><p></p></div>' }).subscribe({
+    this.api.createPage({ ...y, contentHtml: '<div class="icerik"><p></p></div>' }).subscribe({
       next: (olusan) => {
         this.yeniSayfa.set(null);
         // Yeni sayfa oluşturulur oluşturulmaz metin ve SEO alanları açılır;
         // kullanıcı 70 satırlık listede sayfayı aramak zorunda kalmaz.
         const id = (olusan as { id?: number })?.id;
-        this.api.sayfalar().subscribe((l) => {
-          this.sayfalar.set(l);
+        this.api.pages().subscribe((l) => {
+          this.pages.set(l);
           const yeni = l.find((x) => x.id === id);
           if (yeni) {
             this.acikSayfa.set(yeni);
@@ -814,12 +814,12 @@ export class AdminPanelComponent {
     const dosya = girdi.files?.[0];
     if (!dosya) return;
     this.gorselYukleniyor.set(true);
-    this.api.dosyaYukle(dosya).subscribe({
+    this.api.uploadFile(dosya).subscribe({
       next: (s) => {
         this.gorselYukleniyor.set(false);
         girdi.value = '';
-        this.duyuruAlan('gorselUrl', s.adres);
-        if (!this.duyuru().gorselAlt) this.duyuruAlan('gorselAlt', this.duyuru().baslik);
+        this.duyuruAlan('imageUrl', s.url);
+        if (!this.newsItem().imageAlt) this.duyuruAlan('imageAlt', this.newsItem().title);
       },
       error: (e) => {
         this.gorselYukleniyor.set(false);
@@ -841,24 +841,24 @@ export class AdminPanelComponent {
   }
 
   protected duyuruOnizle(): void {
-    this.duyuruOnizleme.set(this.temizleyici.bypassSecurityTrustHtml(this.duyuru().icerikHtml ?? ''));
+    this.duyuruOnizleme.set(this.temizleyici.bypassSecurityTrustHtml(this.newsItem().contentHtml ?? ''));
   }
 
   protected sekmeIletisim(): void {
     this.sekme.set('iletisim');
-    this.api.ayarlar().subscribe((l) => {
+    this.api.settings().subscribe((l) => {
       const m = { ...this.iletisim() } as ContactInfo;
-      l.filter((a) => a.dil === 'tr').forEach((a) => (m[a.anahtar as keyof ContactInfo] = a.deger));
+      l.filter((a) => a.language === 'tr').forEach((a) => (m[a.name as keyof ContactInfo] = a.value));
       this.iletisim.set(m);
     });
   }
 
-  protected iletisimAlan(anahtar: keyof ContactInfo, deger: unknown): void {
-    this.iletisim.set({ ...this.iletisim(), [anahtar]: deger as string });
+  protected iletisimAlan(name: keyof ContactInfo, value: unknown): void {
+    this.iletisim.set({ ...this.iletisim(), [name]: value as string });
   }
 
   protected iletisimKaydet(): void {
-    this.api.ayarKaydet(this.iletisim()).subscribe({
+    this.api.saveSettings(this.iletisim()).subscribe({
       next: () => this.mesaj('İletişim bilgileri kaydedildi.'),
       error: () => this.mesaj('Kaydedilemedi.')
     });
@@ -869,16 +869,16 @@ export class AdminPanelComponent {
    * girişten sonra bir kez yüklenir. Önceden hepsi (0) görünüyordu.
    */
   private sayilariYukle(): void {
-    this.api.duyurular().subscribe((l) => this.duyurular.set(l));
-    this.api.slaytlar().subscribe((l) => this.slaytlar.set(l));
-    this.api.kisayollar().subscribe((l) => this.kisayollar.set(l));
-    this.api.menuler().subscribe((l) => this.menuler.set(l));
-    this.api.sosyalHesaplar().subscribe((l) => this.sosyalHesaplar.set(l));
+    this.api.news().subscribe((l) => this.news.set(l));
+    this.api.slides().subscribe((l) => this.slides.set(l));
+    this.api.shortcuts().subscribe((l) => this.shortcuts.set(l));
+    this.api.menus().subscribe((l) => this.menus.set(l));
+    this.api.socialAccounts().subscribe((l) => this.socialAccounts.set(l));
   }
 
   private sayfalariYukle(): void {
-    this.api.sayfalar().subscribe({
-      next: (l) => this.sayfalar.set(l),
+    this.api.pages().subscribe({
+      next: (l) => this.pages.set(l),
       error: () => this.api.cikis()
     });
   }
@@ -886,17 +886,17 @@ export class AdminPanelComponent {
   private bosDuyuru(): AdminNews {
     return {
       id: null,
-      dil: 'tr',
-      baslik: '',
-      ozet: null,
-      yayinTarihi: new Date().toISOString().slice(0, 10),
-      oneCikan: false,
-      yayinda: true,
-      disAdres: null,
+      language: 'tr',
+      title: '',
+      summary: null,
+      publishedOn: new Date().toISOString().slice(0, 10),
+      featured: false,
+      published: true,
+      externalUrl: null,
       slug: null,
-      gorselUrl: null,
-      gorselAlt: null,
-      icerikHtml: null
+      imageUrl: null,
+      imageAlt: null,
+      contentHtml: null
     };
   }
 

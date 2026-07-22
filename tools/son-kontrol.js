@@ -60,7 +60,7 @@ function govdeMetni(html) {
   }
 
   /* --- API --- */
-  for (const u of ["/api/tr/menu", "/api/tr/anasayfa", "/api/tr/sayfa/about", "/api/en/sayfa/about", "/api/tr/sosyal"]) {
+  for (const u of ["/api/tr/menu", "/api/tr/home", "/api/tr/pages/about", "/api/en/pages/about", "/api/tr/social-accounts"]) {
     const y = await fetch(API + u);
     kontrol("API " + u, y.status === 200, String(y.status));
   }

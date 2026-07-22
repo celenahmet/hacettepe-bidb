@@ -9,13 +9,13 @@ import java.util.List;
 
 public interface MenuRepo extends JpaRepository<Menu, Long> {
 
-    /** Menü öğeleri ve bağlı sayfalar tek sorguda getirilir. */
+    /** Menü öğeleri ve bağlı pages tek sorguda getirilir. */
     @Query("""
            SELECT DISTINCT m FROM Menu m
-           LEFT JOIN FETCH m.ogeler o
-           LEFT JOIN FETCH o.sayfa
-           WHERE m.dil = :dil AND m.konum = :konum
-           ORDER BY m.sira
+           LEFT JOIN FETCH m.items o
+           LEFT JOIN FETCH o.page
+           WHERE m.language = :language AND m.position = :position
+           ORDER BY m.sortOrder
            """)
-    List<Menu> findByLanguageAndPosition(@Param("dil") String dil, @Param("konum") String konum);
+    List<Menu> findByLanguageAndPosition(@Param("language") String language, @Param("position") String position);
 }

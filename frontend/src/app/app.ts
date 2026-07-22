@@ -9,14 +9,14 @@ import { Language } from './core/models';
   selector: 'app-root',
   imports: [RouterOutlet, HeaderComponent, FooterComponent],
   template: `
-    <bidb-header [dil]="dil()"></bidb-header>
+    <bidb-header [language]="language()"></bidb-header>
     <router-outlet></router-outlet>
-    <bidb-footer [dil]="dil()"></bidb-footer>
+    <bidb-footer [language]="language()"></bidb-footer>
   `
 })
 export class App {
   private router = inject(Router);
-  protected dil = signal<Language>('tr');
+  protected language = signal<Language>('tr');
 
   constructor() {
     this.dilAyarla(this.router.url);
@@ -26,6 +26,6 @@ export class App {
   }
 
   private dilAyarla(url: string): void {
-    this.dil.set(url.startsWith('/en') ? 'en' : 'tr');
+    this.language.set(url.startsWith('/en') ? 'en' : 'tr');
   }
 }

@@ -7,30 +7,30 @@ import tr.edu.hacettepe.bidb.repo.PageRepo;
 
 import java.util.List;
 
-/** Page içerikleri. Adres yapısı: /api/{dil}/sayfa/{slug} */
+/** Page içerikleri. Adres yapısı: /api/{language}/sayfa/{slug} */
 @RestController
-@RequestMapping("/api/{dil}")
+@RequestMapping("/api/{language}")
 public class PageController {
 
-    private final PageRepo sayfalar;
+    private final PageRepo pages;
 
-    public PageController(PageRepo sayfalar) {
-        this.sayfalar = sayfalar;
+    public PageController(PageRepo pages) {
+        this.pages = pages;
     }
 
-    @GetMapping("/sayfa/{slug}")
-    public ResponseEntity<PageDto> sayfa(@PathVariable String dil, @PathVariable String slug) {
+    @GetMapping("/pages/{slug}")
+    public ResponseEntity<PageDto> sayfa(@PathVariable String language, @PathVariable String slug) {
         // Diğer dildeki karşılığı varsa hreflang bağlantısı verilebilir
-        boolean cevirisiVar = sayfalar.findBySlugAndLanguage(slug, dil.equals("en") ? "tr" : "en").isPresent();
-        return sayfalar.findBySlugAndLanguage(slug, dil)
-                .map(s -> PageDto.of(s, cevirisiVar))
+        boolean hasTranslation = pages.findBySlugAndLanguage(slug, language.equals("en") ? "tr" : "en").isPresent();
+        return pages.findBySlugAndLanguage(slug, language)
+                .map(s -> PageDto.of(s, hasTranslation))
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     /** Site haritası ve gezinme için sayfa listesi. */
-    @GetMapping("/sayfalar")
-    public List<PageDto> liste(@PathVariable String dil) {
-        return sayfalar.findByDilAndYayindaTrueOrderBySiraAsc(dil).stream().map(PageDto::ozet).toList();
+    @GetMapping("/pages")
+    public List<PageDto> liste(@PathVariable String language) {
+        return pages.findByLanguageAndPublishedTrueOrderBySortOrderAsc(language).stream().map(PageDto::summary).toList();
     }
 }

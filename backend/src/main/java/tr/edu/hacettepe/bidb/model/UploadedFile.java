@@ -6,36 +6,36 @@ import java.time.OffsetDateTime;
 
 /** Panelden yüklenen belgenin kaydı. Dosyanın kendisi paylaşılan dizinde durur. */
 @Entity
-@Table(name = "yuklenen_dosya")
+@Table(name = "uploaded_file")
 public class UploadedFile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "dosya_adi", nullable = false, unique = true)
-    private String dosyaAdi;
+    @Column(name = "file_name", nullable = false, unique = true)
+    private String fileName;
 
-    @Column(name = "ozgun_ad")
-    private String ozgunAd;
+    @Column(name = "original_name")
+    private String originalName;
 
     @Column(nullable = false)
-    private long boyut;
+    private long sizeBytes;
 
     @Column(length = 100)
-    private String yukleyen;
+    private String uploadedBy;
 
     @Column(insertable = false, updatable = false)
-    private OffsetDateTime yukleme;
+    private OffsetDateTime uploadedAt;
 
     public Long getId() { return id; }
-    public String getDosyaAdi() { return dosyaAdi; }
-    public void setDosyaAdi(String dosyaAdi) { this.dosyaAdi = dosyaAdi; }
-    public String getOzgunAd() { return ozgunAd; }
-    public void setOzgunAd(String ozgunAd) { this.ozgunAd = ozgunAd; }
-    public long getBoyut() { return boyut; }
-    public void setBoyut(long boyut) { this.boyut = boyut; }
-    public String getYukleyen() { return yukleyen; }
-    public void setYukleyen(String yukleyen) { this.yukleyen = yukleyen; }
-    public OffsetDateTime getYukleme() { return yukleme; }
+    public String getFileName() { return fileName; }
+    public void setFileName(String fileName) { this.fileName = fileName; }
+    public String getOriginalName() { return originalName; }
+    public void setOriginalName(String originalName) { this.originalName = originalName; }
+    public long getSizeBytes() { return sizeBytes; }
+    public void setSizeBytes(long sizeBytes) { this.sizeBytes = sizeBytes; }
+    public String getUploadedBy() { return uploadedBy; }
+    public void setUploadedBy(String uploadedBy) { this.uploadedBy = uploadedBy; }
+    public OffsetDateTime getUploadedAt() { return uploadedAt; }
 }

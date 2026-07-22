@@ -25,19 +25,19 @@ import java.util.Locale;
  * düzenleme geri alınabilir.
  */
 @RestController
-@RequestMapping("/api/yonetim/sayfa")
+@RequestMapping("/api/admin/pages")
 public class AdminPageController {
 
-    private final PageRepo sayfalar;
-    private final PageRevisionRepo surumler;
-    private final DocumentRepo belgeler;
+    private final PageRepo pages;
+    private final PageRevisionRepo revisions;
+    private final DocumentRepo documents;
     private final RedirectRepo yonlendirmeler;
 
-    public AdminPageController(PageRepo sayfalar, PageRevisionRepo surumler,
-                                  DocumentRepo belgeler, RedirectRepo yonlendirmeler) {
-        this.sayfalar = sayfalar;
-        this.surumler = surumler;
-        this.belgeler = belgeler;
+    public AdminPageController(PageRepo pages, PageRevisionRepo revisions,
+                                  DocumentRepo documents, RedirectRepo yonlendirmeler) {
+        this.pages = pages;
+        this.revisions = revisions;
+        this.documents = documents;
         this.yonlendirmeler = yonlendirmeler;
     }
 
@@ -46,137 +46,137 @@ public class AdminPageController {
     }
 
     /** Kaydetmeden önceki hâli sürüm olarak saklar. */
-    private void surumAl(Page s, String aciklama, Authentication kimlik) {
+    private void saveRevision(Page s, String note, Authentication kimlik) {
         PageRevision sur = new PageRevision();
-        sur.setSayfaId(s.getId());
-        sur.setBaslik(s.getBaslik());
-        sur.setIcerikHtml(s.getIcerikHtml() == null ? "" : s.getIcerikHtml());
-        sur.setAciklama(aciklama);
-        sur.setKaydeden(kullanici(kimlik));
-        surumler.save(sur);
+        sur.setPageId(s.getId());
+        sur.setTitle(s.getTitle());
+        sur.setContentHtml(s.getContentHtml() == null ? "" : s.getContentHtml());
+        sur.setNote(note);
+        sur.setSavedBy(kullanici(kimlik));
+        revisions.save(sur);
     }
 
     /* ---------- sayfa metni ---------- */
 
-    public record IcerikIstek(String baslik, String icerikHtml, String aciklama) {}
+    public record IcerikIstek(String title, String contentHtml, String note) {}
 
-    @PutMapping("/{id}/icerik")
+    @PutMapping("/{id}/content")
     @Transactional
     public ResponseEntity<?> icerikKaydet(@PathVariable Long id,
                                           @RequestBody IcerikIstek istek,
                                           Authentication kimlik) {
-        return sayfalar.findById(id).map(s -> {
-            surumAl(s, istek.aciklama(), kimlik);
-            if (istek.baslik() != null && !istek.baslik().isBlank()) s.setBaslik(istek.baslik().trim());
-            s.setIcerikHtml(istek.icerikHtml() == null ? "" : istek.icerikHtml());
-            s.setGuncelleme(OffsetDateTime.now());
-            sayfalar.save(s);
+        return pages.findById(id).map(s -> {
+            saveRevision(s, istek.note(), kimlik);
+            if (istek.title() != null && !istek.title().isBlank()) s.setTitle(istek.title().trim());
+            s.setContentHtml(istek.contentHtml() == null ? "" : istek.contentHtml());
+            s.setUpdatedAt(OffsetDateTime.now());
+            pages.save(s);
             return ResponseEntity.ok().build();
         }).orElse(ResponseEntity.notFound().build());
     }
 
     /* ---------- sürüm geçmişi ---------- */
 
-    public record SurumGorunum(Long id, String baslik, String aciklama, String kaydeden,
-                               String zaman, int uzunluk) {}
+    public record SurumGorunum(Long id, String title, String note, String savedBy,
+                               String savedAt, int length) {}
 
-    @GetMapping("/{id}/surumler")
-    public List<SurumGorunum> surumListesi(@PathVariable Long id) {
-        return surumler.findBySayfaIdOrderByKayitZamaniDesc(id).stream()
-                .map(v -> new SurumGorunum(v.getId(), v.getBaslik(), v.getAciklama(), v.getKaydeden(),
-                        v.getKayitZamani() == null ? "" : v.getKayitZamani().toString(),
-                        v.getIcerikHtml().length()))
+    @GetMapping("/{id}/revisions")
+    public List<SurumGorunum> revisionList(@PathVariable Long id) {
+        return revisions.findByPageIdOrderBySavedAtDesc(id).stream()
+                .map(v -> new SurumGorunum(v.getId(), v.getTitle(), v.getNote(), v.getSavedBy(),
+                        v.getSavedAt() == null ? "" : v.getSavedAt().toString(),
+                        v.getContentHtml().length()))
                 .toList();
     }
 
     /** Bir sürümün içeriğini önizleme için döndürür. */
-    @GetMapping("/surum/{surumId}")
-    public ResponseEntity<PageRevision> surum(@PathVariable Long surumId) {
-        return surumler.findById(surumId).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    @GetMapping("/revisions/{revisionId}")
+    public ResponseEntity<PageRevision> revision(@PathVariable Long revisionId) {
+        return revisions.findById(revisionId).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     /** Sayfayı seçilen sürüme döndürür. Geri almadan önce mevcut hâl de saklanır. */
-    @PostMapping("/{id}/geri-al/{surumId}")
+    @PostMapping("/{id}/restore/{revisionId}")
     @Transactional
-    public ResponseEntity<?> geriAl(@PathVariable Long id, @PathVariable Long surumId,
+    public ResponseEntity<?> geriAl(@PathVariable Long id, @PathVariable Long revisionId,
                                     Authentication kimlik) {
-        var sayfa = sayfalar.findById(id);
-        var surum = surumler.findById(surumId);
-        if (sayfa.isEmpty() || surum.isEmpty()) return ResponseEntity.notFound().build();
-        if (!surum.get().getSayfaId().equals(id)) {
+        var sayfa = pages.findById(id);
+        var revision = revisions.findById(revisionId);
+        if (sayfa.isEmpty() || revision.isEmpty()) return ResponseEntity.notFound().build();
+        if (!revision.get().getPageId().equals(id)) {
             return ResponseEntity.badRequest().body("Sürüm bu sayfaya ait değil.");
         }
 
         Page s = sayfa.get();
-        surumAl(s, "Geri alma öncesi", kimlik);
-        s.setBaslik(surum.get().getBaslik());
-        s.setIcerikHtml(surum.get().getIcerikHtml());
-        s.setGuncelleme(OffsetDateTime.now());
-        sayfalar.save(s);
+        saveRevision(s, "Geri alma öncesi", kimlik);
+        s.setTitle(revision.get().getTitle());
+        s.setContentHtml(revision.get().getContentHtml());
+        s.setUpdatedAt(OffsetDateTime.now());
+        pages.save(s);
         return ResponseEntity.ok().build();
     }
 
-    /* ---------- sayfa ekleme, silme, adres ---------- */
+    /* ---------- sayfa ekleme, silme, url ---------- */
 
-    public record YeniSayfaIstek(String dil, String slug, String baslik, String icerikHtml) {}
+    public record YeniSayfaIstek(String language, String slug, String title, String contentHtml) {}
 
     @PostMapping
     @Transactional
     public ResponseEntity<?> sayfaEkle(@RequestBody YeniSayfaIstek istek) {
-        String dil = istek.dil() == null ? "tr" : istek.dil().trim().toLowerCase(Locale.ROOT);
+        String language = istek.language() == null ? "tr" : istek.language().trim().toLowerCase(Locale.ROOT);
         String slug = temizSlug(istek.slug());
         if (slug.isBlank()) return ResponseEntity.badRequest().body("Adres boş olamaz.");
-        if (sayfalar.findBySlugAndLanguage(slug, dil).isPresent()) {
-            return ResponseEntity.badRequest().body("Bu adres zaten kullanılıyor: /" + dil + "/" + slug);
+        if (pages.findBySlugAndLanguage(slug, language).isPresent()) {
+            return ResponseEntity.badRequest().body("Bu adres zaten kullanılıyor: /" + language + "/" + slug);
         }
 
         Page s = new Page();
-        s.setDil(dil);
+        s.setLanguage(language);
         s.setSlug(slug);
-        s.setBaslik(istek.baslik() == null ? slug : istek.baslik().trim());
-        s.setIcerikHtml(istek.icerikHtml() == null ? "" : istek.icerikHtml());
-        s.setYayinda(true);
-        s.setSira(9000);
-        s.setGuncelleme(OffsetDateTime.now());
-        return ResponseEntity.ok(sayfalar.save(s));
+        s.setTitle(istek.title() == null ? slug : istek.title().trim());
+        s.setContentHtml(istek.contentHtml() == null ? "" : istek.contentHtml());
+        s.setPublished(true);
+        s.setSortOrder(9000);
+        s.setUpdatedAt(OffsetDateTime.now());
+        return ResponseEntity.ok(pages.save(s));
     }
 
-    public record AdresIstek(String slug, String baslik) {}
+    public record AdresIstek(String slug, String title) {}
 
     /**
      * Sayfanın adresini değiştirir ve eski adresi yeni adrese yönlendirir.
      * Yönlendirme olmadan, dışarıdan verilmiş her bağlantı kırılırdı.
      */
-    @PutMapping("/{id}/adres")
+    @PutMapping("/{id}/address")
     @Transactional
     public ResponseEntity<?> adresDegistir(@PathVariable Long id, @RequestBody AdresIstek istek) {
-        return sayfalar.findById(id).map(s -> {
+        return pages.findById(id).map(s -> {
             String yeni = temizSlug(istek.slug());
             if (yeni.isBlank()) return ResponseEntity.badRequest().body("Adres boş olamaz.");
 
             if (!yeni.equals(s.getSlug())) {
-                if (sayfalar.findBySlugAndLanguage(yeni, s.getDil()).isPresent()) {
-                    return ResponseEntity.badRequest().body("Bu adres zaten kullanılıyor: /" + s.getDil() + "/" + yeni);
+                if (pages.findBySlugAndLanguage(yeni, s.getLanguage()).isPresent()) {
+                    return ResponseEntity.badRequest().body("Bu adres zaten kullanılıyor: /" + s.getLanguage() + "/" + yeni);
                 }
-                String eskiYol = "/" + s.getDil() + "/" + s.getSlug();
-                String yeniYol = "/" + s.getDil() + "/" + yeni;
+                String oldPath = "/" + s.getLanguage() + "/" + s.getSlug();
+                String newPath = "/" + s.getLanguage() + "/" + yeni;
 
                 // Eski adres yenisine taşınır. Daha önce bu sayfaya yönlendirilen
                 // adresler de zincir oluşmaması için doğrudan yeni adrese bağlanır.
                 yonlendirmeler.findAll().stream()
-                        .filter(y -> y.getYeniYol().equals(eskiYol))
-                        .forEach(y -> { y.setYeniYol(yeniYol); yonlendirmeler.save(y); });
+                        .filter(y -> y.getNewPath().equals(oldPath))
+                        .forEach(y -> { y.setNewPath(newPath); yonlendirmeler.save(y); });
 
-                Redirect y = yonlendirmeler.findByEskiYol(eskiYol).orElseGet(Redirect::new);
-                y.setEskiYol(eskiYol);
-                y.setYeniYol(yeniYol);
+                Redirect y = yonlendirmeler.findByOldPath(oldPath).orElseGet(Redirect::new);
+                y.setOldPath(oldPath);
+                y.setNewPath(newPath);
                 yonlendirmeler.save(y);
 
                 s.setSlug(yeni);
             }
-            if (istek.baslik() != null && !istek.baslik().isBlank()) s.setBaslik(istek.baslik().trim());
-            s.setGuncelleme(OffsetDateTime.now());
-            sayfalar.save(s);
+            if (istek.title() != null && !istek.title().isBlank()) s.setTitle(istek.title().trim());
+            s.setUpdatedAt(OffsetDateTime.now());
+            pages.save(s);
             return ResponseEntity.ok().build();
         }).orElse(ResponseEntity.notFound().build());
     }
@@ -184,8 +184,8 @@ public class AdminPageController {
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<Void> sayfaSil(@PathVariable Long id) {
-        if (!sayfalar.existsById(id)) return ResponseEntity.notFound().build();
-        sayfalar.deleteById(id);
+        if (!pages.existsById(id)) return ResponseEntity.notFound().build();
+        pages.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
@@ -199,52 +199,52 @@ public class AdminPageController {
         return s;
     }
 
-    /* ---------- sayfaya bağlı belgeler ---------- */
+    /* ---------- sayfaya bağlı documents ---------- */
 
-    public record BelgeIstek(String ad, String adres, int sira) {}
+    public record BelgeIstek(String name, String url, int sortOrder) {}
 
-    @GetMapping("/{id}/belgeler")
+    @GetMapping("/{id}/documents")
     public List<Document> belgeListesi(@PathVariable Long id) {
-        return belgeler.findBySayfa_IdOrderBySiraAsc(id);
+        return documents.findByPage_IdOrderBySortOrderAsc(id);
     }
 
-    @PostMapping("/{id}/belgeler")
+    @PostMapping("/{id}/documents")
     @Transactional
     public ResponseEntity<?> belgeEkle(@PathVariable Long id, @RequestBody BelgeIstek istek) {
-        return sayfalar.findById(id).map(s -> {
+        return pages.findById(id).map(s -> {
             Document b = new Document();
-            b.setSayfa(s);
+            b.setPage(s);
             aktar(istek, b);
-            return ResponseEntity.ok(belgeler.save(b));
+            return ResponseEntity.ok(documents.save(b));
         }).orElse(ResponseEntity.notFound().build());
     }
 
-    @PutMapping("/belge/{belgeId}")
+    @PutMapping("/documents/{documentId}")
     @Transactional
-    public ResponseEntity<?> belgeGuncelle(@PathVariable Long belgeId, @RequestBody BelgeIstek istek) {
-        return belgeler.findById(belgeId).map(b -> {
+    public ResponseEntity<?> belgeGuncelle(@PathVariable Long documentId, @RequestBody BelgeIstek istek) {
+        return documents.findById(documentId).map(b -> {
             aktar(istek, b);
-            return ResponseEntity.ok(belgeler.save(b));
+            return ResponseEntity.ok(documents.save(b));
         }).orElse(ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping("/belge/{belgeId}")
+    @DeleteMapping("/documents/{documentId}")
     @Transactional
-    public ResponseEntity<Void> belgeSil(@PathVariable Long belgeId) {
-        if (!belgeler.existsById(belgeId)) return ResponseEntity.notFound().build();
-        belgeler.deleteById(belgeId);
+    public ResponseEntity<Void> belgeSil(@PathVariable Long documentId) {
+        if (!documents.existsById(documentId)) return ResponseEntity.notFound().build();
+        documents.deleteById(documentId);
         return ResponseEntity.noContent().build();
     }
 
     private void aktar(BelgeIstek istek, Document b) {
-        b.setAd(istek.ad());
-        b.setAdres(istek.adres());
-        b.setSira(istek.sira());
+        b.setName(istek.name());
+        b.setUrl(istek.url());
+        b.setSortOrder(istek.sortOrder());
         // Tür, dosya uzantısından belirlenir (listede rozet olarak gösterilir)
-        String adres = istek.adres() == null ? "" : istek.adres();
-        int nokta = adres.lastIndexOf('.');
-        b.setTur(nokta > 0 && nokta < adres.length() - 1
-                ? adres.substring(nokta + 1).replaceAll("[?#].*$", "").toUpperCase(Locale.ROOT)
+        String url = istek.url() == null ? "" : istek.url();
+        int nokta = url.lastIndexOf('.');
+        b.setFileType(nokta > 0 && nokta < url.length() - 1
+                ? url.substring(nokta + 1).replaceAll("[?#].*$", "").toUpperCase(Locale.ROOT)
                 : null);
     }
 }

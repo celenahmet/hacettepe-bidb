@@ -17,54 +17,54 @@ import java.util.List;
  * Kimlik doğrulaması gerektirir (bkz. SecurityConfig).
  */
 @RestController
-@RequestMapping("/api/yonetim/menu")
+@RequestMapping("/api/admin/menus")
 public class AdminMenuController {
 
     private final MenuRepo menuler;
-    private final MenuItemRepo ogeler;
-    private final PageRepo sayfalar;
+    private final MenuItemRepo items;
+    private final PageRepo pages;
 
-    public AdminMenuController(MenuRepo menuler, MenuItemRepo ogeler, PageRepo sayfalar) {
+    public AdminMenuController(MenuRepo menuler, MenuItemRepo items, PageRepo pages) {
         this.menuler = menuler;
-        this.ogeler = ogeler;
-        this.sayfalar = sayfalar;
+        this.items = items;
+        this.pages = pages;
     }
 
     /* ---------- görüntüleme ---------- */
 
-    public record OgeGorunum(Long id, String etiket, Long sayfaId, String sayfaYolu,
-                             String disAdres, boolean yeniSekme, int sira) {}
+    public record OgeGorunum(Long id, String label, Long pageId, String pagePath,
+                             String externalUrl, boolean newTab, int sortOrder) {}
 
-    public record MenuGorunum(Long id, String dil, String konum, String baslik, int sira,
-                              List<OgeGorunum> ogeler) {}
+    public record MenuGorunum(Long id, String language, String position, String title, int sortOrder,
+                              List<OgeGorunum> items) {}
 
     /** Menü öğelerindeki sayfa bilgisi tembel yüklendiği için işlem içinde çalışır. */
     @GetMapping
     @Transactional
     public List<MenuGorunum> liste() {
         return menuler.findAll().stream()
-                .sorted(Comparator.comparing(Menu::getDil).thenComparingInt(Menu::getSira))
+                .sorted(Comparator.comparing(Menu::getLanguage).thenComparingInt(Menu::getSortOrder))
                 .map(m -> new MenuGorunum(
-                        m.getId(), m.getDil(), m.getKonum(), m.getBaslik(), m.getSira(),
-                        ogeler.findByMenuIdOrderBySiraAsc(m.getId()).stream()
+                        m.getId(), m.getLanguage(), m.getPosition(), m.getTitle(), m.getSortOrder(),
+                        items.findByMenuIdOrderBySortOrderAsc(m.getId()).stream()
                                 .map(o -> new OgeGorunum(
-                                        o.getId(), o.getEtiket(),
-                                        o.getSayfa() == null ? null : o.getSayfa().getId(),
-                                        o.getSayfa() == null ? null
-                                                : "/" + o.getSayfa().getDil() + "/" + o.getSayfa().getSlug(),
-                                        o.getDisAdres(), o.isYeniSekme(), o.getSira()))
+                                        o.getId(), o.getLabel(),
+                                        o.getPage() == null ? null : o.getPage().getId(),
+                                        o.getPage() == null ? null
+                                                : "/" + o.getPage().getLanguage() + "/" + o.getPage().getSlug(),
+                                        o.getExternalUrl(), o.isNewTab(), o.getSortOrder()))
                                 .toList()))
                 .toList();
     }
 
     /* ---------- menü bölümü ---------- */
 
-    public record MenuIstek(String dil, String konum, String baslik, int sira) {
+    public record MenuIstek(String language, String position, String title, int sortOrder) {
         Menu aktar(Menu m) {
-            m.setDil(dil);
-            m.setKonum(konum == null || konum.isBlank() ? "sol" : konum);
-            m.setBaslik(baslik);
-            m.setSira(sira);
+            m.setLanguage(language);
+            m.setPosition(position == null || position.isBlank() ? "sol" : position);
+            m.setTitle(title);
+            m.setSortOrder(sortOrder);
             return m;
         }
     }
@@ -93,39 +93,39 @@ public class AdminMenuController {
 
     /* ---------- menü öğesi ---------- */
 
-    public record OgeIstek(Long menuId, String etiket, Long sayfaId, String disAdres,
-                           boolean yeniSekme, int sira) {}
+    public record OgeIstek(Long menuId, String label, Long pageId, String externalUrl,
+                           boolean newTab, int sortOrder) {}
 
     private MenuItem aktar(OgeIstek istek, MenuItem o) {
         o.setMenuId(istek.menuId());
-        o.setEtiket(istek.etiket());
-        o.setSayfa(istek.sayfaId() == null ? null : sayfalar.findById(istek.sayfaId()).orElse(null));
+        o.setLabel(istek.label());
+        o.setPage(istek.pageId() == null ? null : pages.findById(istek.pageId()).orElse(null));
         // Sayfa seçildiyse dış adres tutulmaz; ikisi birden anlamlı değildir
-        o.setDisAdres(istek.sayfaId() == null ? istek.disAdres() : null);
-        o.setYeniSekme(istek.yeniSekme());
-        o.setSira(istek.sira());
+        o.setExternalUrl(istek.pageId() == null ? istek.externalUrl() : null);
+        o.setNewTab(istek.newTab());
+        o.setSortOrder(istek.sortOrder());
         return o;
     }
 
-    @PostMapping("/oge")
+    @PostMapping("/items")
     @Transactional
     public MenuItem ogeEkle(@RequestBody OgeIstek istek) {
-        return ogeler.save(aktar(istek, new MenuItem()));
+        return items.save(aktar(istek, new MenuItem()));
     }
 
-    @PutMapping("/oge/{id}")
+    @PutMapping("/items/{id}")
     @Transactional
     public ResponseEntity<MenuItem> ogeGuncelle(@PathVariable Long id, @RequestBody OgeIstek istek) {
-        return ogeler.findById(id)
-                .map(o -> ResponseEntity.ok(ogeler.save(aktar(istek, o))))
+        return items.findById(id)
+                .map(o -> ResponseEntity.ok(items.save(aktar(istek, o))))
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping("/oge/{id}")
+    @DeleteMapping("/items/{id}")
     @Transactional
     public ResponseEntity<Void> ogeSil(@PathVariable Long id) {
-        if (!ogeler.existsById(id)) return ResponseEntity.notFound().build();
-        ogeler.deleteById(id);
+        if (!items.existsById(id)) return ResponseEntity.notFound().build();
+        items.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 }

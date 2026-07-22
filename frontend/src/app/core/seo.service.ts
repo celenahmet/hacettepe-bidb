@@ -25,8 +25,8 @@ export class Seo {
   private meta = inject(Meta);
   private belge = inject(DOCUMENT);
 
-  uygula(sayfa: Page | null, dil: Language, yol: string): void {
-    const siteAdi = SITE_NAME[dil];
+  uygula(sayfa: Page | null, language: Language, yol: string): void {
+    const siteAdi = SITE_NAME[language];
     // Kaynak sitede tüm sayfalar aynı <title> değerini taşıyor. Sayfaya özgü
     // başlık, arama sonuçlarında ayırt edilebilirlik için tercih edilir.
     //
@@ -37,50 +37,50 @@ export class Seo {
       !kaynakBaslik ||
       kaynakBaslik === siteAdi ||
       GENERIC_SOURCE_TITLES.some((b) => b.toLowerCase() === kaynakBaslik.toLowerCase());
-    const baslik = sayfa
-      ? (genelMi ? `${sayfa.baslik} — ${siteAdi}` : kaynakBaslik)
+    const title = sayfa
+      ? (genelMi ? `${sayfa.title} — ${siteAdi}` : kaynakBaslik)
       : siteAdi;
 
-    this.title.setTitle(baslik);
+    this.title.setTitle(title);
     this.ayarla('description', sayfa?.seoDescription || '');
     this.ayarla('keywords', sayfa?.seoKeywords || '');
 
-    this.meta.updateTag({ property: 'og:title', content: baslik });
+    this.meta.updateTag({ property: 'og:title', content: title });
     this.meta.updateTag({ property: 'og:type', content: 'website' });
     this.meta.updateTag({ property: 'og:site_name', content: siteAdi });
     if (sayfa?.seoDescription) {
       this.meta.updateTag({ property: 'og:description', content: sayfa.seoDescription });
     }
 
-    this.belge.documentElement.lang = dil;
+    this.belge.documentElement.lang = language;
     this.baglantiAyarla('canonical', yol);
     // hreflang yalnızca karşılığı gerçekten var olan sayfa için verilir.
     // Var olmayan bir çeviriyi bildirmek arama motorlarında hata üretir.
-    const digerDil = dil === 'en' ? 'tr' : 'en';
-    this.baglantiAyarla('alternate', yol, dil);
-    if (sayfa?.cevirisiVar) {
+    const digerDil = language === 'en' ? 'tr' : 'en';
+    this.baglantiAyarla('alternate', yol, language);
+    if (sayfa?.hasTranslation) {
       this.baglantiAyarla('alternate', yol.replace(/^\/(tr|en)/, '/' + digerDil), digerDil);
     } else {
       this.baglantiKaldir('alternate', digerDil);
     }
   }
 
-  private ayarla(ad: string, icerik: string): void {
-    if (icerik) this.meta.updateTag({ name: ad, content: icerik });
-    else this.meta.removeTag(`name='${ad}'`);
+  private ayarla(name: string, icerik: string): void {
+    if (icerik) this.meta.updateTag({ name: name, content: icerik });
+    else this.meta.removeTag(`name='${name}'`);
   }
 
-  private baglantiKaldir(iliski: string, dil: string): void {
-    this.belge.head.querySelector(`link[rel="${iliski}"][hreflang="${dil}"]`)?.remove();
+  private baglantiKaldir(iliski: string, language: string): void {
+    this.belge.head.querySelector(`link[rel="${iliski}"][hreflang="${language}"]`)?.remove();
   }
 
-  private baglantiAyarla(iliski: string, yol: string, dil?: string): void {
-    const secici = dil ? `link[rel="${iliski}"][hreflang="${dil}"]` : `link[rel="${iliski}"]`;
+  private baglantiAyarla(iliski: string, yol: string, language?: string): void {
+    const secici = language ? `link[rel="${iliski}"][hreflang="${language}"]` : `link[rel="${iliski}"]`;
     let el = this.belge.head.querySelector(secici) as HTMLLinkElement | null;
     if (!el) {
       el = this.belge.createElement('link') as HTMLLinkElement;
       el.setAttribute('rel', iliski);
-      if (dil) el.setAttribute('hreflang', dil);
+      if (language) el.setAttribute('hreflang', language);
       this.belge.head.appendChild(el);
     }
     el.setAttribute('href', yol);

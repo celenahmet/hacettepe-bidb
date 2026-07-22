@@ -13,10 +13,10 @@ public interface PageRepo extends JpaRepository<Page, Long> {
     /** Belgeler tek sorguda getirilir; yanıt üretilirken oturum kapalı olur. */
     @Query("""
            SELECT s FROM Page s
-           LEFT JOIN FETCH s.belgeler
-           WHERE s.slug = :slug AND s.dil = :dil AND s.yayinda = true
+           LEFT JOIN FETCH s.documents
+           WHERE s.slug = :slug AND s.language = :language AND s.published = true
            """)
-    Optional<Page> findBySlugAndLanguage(@Param("slug") String slug, @Param("dil") String dil);
+    Optional<Page> findBySlugAndLanguage(@Param("slug") String slug, @Param("language") String language);
 
-    List<Page> findByDilAndYayindaTrueOrderBySiraAsc(String dil);
+    List<Page> findByLanguageAndPublishedTrueOrderBySortOrderAsc(String language);
 }

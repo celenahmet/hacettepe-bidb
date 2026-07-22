@@ -9,21 +9,21 @@ import { Language } from '../core/models';
   selector: 'bidb-side-menu',
   imports: [RouterLink, RouterLinkActive, AsyncPipe],
   template: `
-    <nav class="sol-menu" [attr.aria-label]="dil === 'en' ? 'Section menu' : 'Bölüm menüsü'">
-      <a class="sol-menu-ana" [routerLink]="['/', dil]">
-        {{ dil === 'en' ? 'Home Page' : 'Ana Page' }}
+    <nav class="sol-menu" [attr.aria-label]="language === 'en' ? 'Section menu' : 'Bölüm menüsü'">
+      <a class="sol-menu-ana" [routerLink]="['/', language]">
+        {{ language === 'en' ? 'Home Page' : 'Ana Page' }}
       </a>
 
-      @for (m of menuler$ | async; track m.baslik) {
+      @for (m of menus$ | async; track m.title) {
         <details class="sol-bolum" open>
-          <summary>{{ m.baslik }}</summary>
+          <summary>{{ m.title }}</summary>
           <ul>
-            @for (o of m.ogeler; track o.adres) {
+            @for (o of m.items; track o.url) {
               <li>
-                @if (o.yeniSekme) {
-                  <a [href]="o.adres" target="_blank" rel="noopener">{{ o.etiket }}</a>
+                @if (o.newTab) {
+                  <a [href]="o.url" target="_blank" rel="noopener">{{ o.label }}</a>
                 } @else {
-                  <a [routerLink]="o.adres" routerLinkActive="etkin">{{ o.etiket }}</a>
+                  <a [routerLink]="o.url" routerLinkActive="etkin">{{ o.label }}</a>
                 }
               </li>
             }
@@ -35,10 +35,10 @@ import { Language } from '../core/models';
 })
 export class SideMenuComponent {
   @Input({ required: true }) set dilDegeri(d: Language) {
-    this.dil = d;
-    this.menuler$ = this.api.menu(d);
+    this.language = d;
+    this.menus$ = this.api.menu(d);
   }
-  protected dil: Language = 'tr';
+  protected language: Language = 'tr';
   private api = inject(Api);
-  protected menuler$ = this.api.menu('tr');
+  protected menus$ = this.api.menu('tr');
 }

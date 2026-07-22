@@ -9,24 +9,24 @@ import java.util.List;
 /** Ana sayfanın tüm bileşenleri tek istekte döner. */
 public record HomeDto(
         List<SliderDto> slider,
-        List<KisayolDto> kisayollar,
-        List<KisayolDto> servisler,
-        List<NewsDto> duyurular
+        List<KisayolDto> shortcuts,
+        List<KisayolDto> services,
+        List<NewsDto> news
 ) {
-    public record KisayolDto(String ad, String ikonUrl, String adres, boolean yeniSekme) {
+    public record KisayolDto(String name, String iconUrl, String url, boolean newTab) {
         public static KisayolDto of(Shortcut h) {
-            return new KisayolDto(h.getAd(), h.getIkonUrl(), h.getAdres(), h.isYeniSekme());
+            return new KisayolDto(h.getName(), h.getIconUrl(), h.getUrl(), h.isNewTab());
         }
     }
 
-    public record NewsDto(String baslik, LocalDate tarih, String adres,
-                            String ozet, String gorselUrl, String gorselAlt, boolean kendiSayfasi) {
+    public record NewsDto(String title, LocalDate date, String url,
+                            String summary, String imageUrl, String imageAlt, boolean hasOwnPage) {
         public static NewsDto of(News d) {
             // Haberin kendi sayfası varsa oraya, yoksa verilen bağlantıya gidilir
             boolean kendi = d.getSlug() != null && !d.getSlug().isBlank();
-            String adres = kendi ? "/" + d.getDil() + "/duyuru/" + d.getSlug() : d.getDisAdres();
-            return new NewsDto(d.getBaslik(), d.getYayinTarihi(), adres,
-                    d.getOzet(), d.getGorselUrl(), d.getGorselAlt(), kendi);
+            String url = kendi ? "/" + d.getLanguage() + "/duyuru/" + d.getSlug() : d.getExternalUrl();
+            return new NewsDto(d.getTitle(), d.getPublishedOn(), url,
+                    d.getSummary(), d.getImageUrl(), d.getImageAlt(), kendi);
         }
     }
 }

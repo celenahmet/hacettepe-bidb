@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface NewsRepo extends JpaRepository<News, Long> {
-    List<News> findByDilAndYayindaTrueOrderByYayinTarihiDesc(String dil, Limit limit);
+    List<News> findByLanguageAndPublishedTrueOrderByPublishedOnDesc(String language, Limit limit);
 
-    List<News> findByDilAndYayindaTrueOrderByYayinTarihiDesc(String dil);
+    List<News> findByLanguageAndPublishedTrueOrderByPublishedOnDesc(String language);
 
-    Optional<News> findBySlugAndDilAndYayindaTrue(String slug, String dil);
+    Optional<News> findBySlugAndLanguageAndPublishedTrue(String slug, String language);
 }

@@ -9,33 +9,33 @@ import java.util.List;
  *  <title> ve meta etiketlerine yazılır. */
 public record PageDto(
         String slug,
-        String dil,
-        String baslik,
-        String icerikHtml,
+        String language,
+        String title,
+        String contentHtml,
         String seoTitle,
         String seoDescription,
         String seoKeywords,
-        List<BelgeDto> belgeler,
+        List<BelgeDto> documents,
         /** Bu sayfanın diğer dilde karşılığı var mı (hreflang için). */
-        boolean cevirisiVar,
+        boolean hasTranslation,
         /** Page kaynakta hata metni döndürüyor mu (site haritasına alınmaz). */
-        boolean hataliIcerik
+        boolean brokenContent
 ) {
     public static PageDto of(Page s) {
         return of(s, false);
     }
 
-    public static PageDto of(Page s, boolean cevirisiVar) {
+    public static PageDto of(Page s, boolean hasTranslation) {
         return new PageDto(
-                s.getSlug(), s.getDil(), s.getBaslik(), s.getIcerikHtml(),
+                s.getSlug(), s.getLanguage(), s.getTitle(), s.getContentHtml(),
                 s.getSeoTitle(), s.getSeoDescription(), s.getSeoKeywords(),
-                s.getBelgeler().stream().map(BelgeDto::of).toList(), cevirisiVar, hataliMi(s)
+                s.getDocuments().stream().map(BelgeDto::of).toList(), hasTranslation, hataliMi(s)
         );
     }
 
     /** Liste görünümleri için içerik olmadan. */
-    public static PageDto ozet(Page s) {
-        return new PageDto(s.getSlug(), s.getDil(), s.getBaslik(), null,
+    public static PageDto summary(Page s) {
+        return new PageDto(s.getSlug(), s.getLanguage(), s.getTitle(), null,
                 s.getSeoTitle(), s.getSeoDescription(), s.getSeoKeywords(), List.of(), false, hataliMi(s));
     }
 
@@ -43,13 +43,13 @@ public record PageDto(
      *  sadık kalsın diye içerik değiştirilmez; yalnızca site haritasında
      *  ilan edilmezler. */
     private static boolean hataliMi(Page s) {
-        String h = s.getIcerikHtml();
+        String h = s.getContentHtml();
         return h != null && h.contains("Böyle bir sayfa bulunmamaktadır");
     }
 
-    public record BelgeDto(String ad, String adres, String tur) {
+    public record BelgeDto(String name, String url, String fileType) {
         public static BelgeDto of(Document b) {
-            return new BelgeDto(b.getAd(), b.getAdres(), b.getTur());
+            return new BelgeDto(b.getName(), b.getUrl(), b.getFileType());
         }
     }
 }
