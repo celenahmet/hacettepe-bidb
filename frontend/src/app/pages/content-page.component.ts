@@ -9,11 +9,12 @@ import { icerigiHazirla } from '../core/icerik-bicim';
 import { Language, Page } from '../core/models';
 import { SideMenuComponent } from '../layout/side-menu.component';
 import { StaffListComponent } from './staff-list.component';
+import { ContactBlockComponent } from './contact-block.component';
 
 /** /tr/<slug> ve /en/<slug> adreslerindeki içerik sayfası. */
 @Component({
   selector: 'bidb-content-page',
-  imports: [SideMenuComponent, StaffListComponent],
+  imports: [SideMenuComponent, StaffListComponent, ContactBlockComponent],
   template: `
     <div class="kap sayfa-duzen">
       <aside class="yan">
@@ -33,6 +34,13 @@ import { StaffListComponent } from './staff-list.component';
                ve arama motoru bilgileri için durmayı sürdürür. -->
           @if (s.slug === 'staff') {
             <bidb-staff-list [dilDegeri]="language()"></bidb-staff-list>
+          }
+
+          <!-- İletişim bilgileri sayfa metnine yazılmaz; alt bilgiyle aynı
+               kayıtlardan gelir. Metne gömülselerdi panelden bir numara
+               değiştiğinde alt bilgi doğruyu, bu sayfa yanlışı gösterirdi. -->
+          @if (s.slug === 'about' || s.slug === 'contact') {
+            <bidb-contact-block [dilDegeri]="language()"></bidb-contact-block>
           }
 
           @if (s.documents.length) {

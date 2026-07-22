@@ -602,3 +602,51 @@
     .alt-serit-ic { flex-direction: column; align-items: flex-start; }
   }
 }
+
+@layer kamu {
+
+  /* Sayfa sonundaki iletişim bilgileri. Alt bilgideki listeyle aynı
+     verilerden gelir; burada daha geniş ve okunur bir düzende durur.
+     Etiket–değer ilişkisi <dl> ile kurulduğu için ekran okuyucuda da
+     "Telefon: …" biçiminde okunur. */
+  .iletisim-blok {
+    margin-top: var(--bosluk-7);
+    padding-top: var(--bosluk-5);
+    border-top: 1px solid var(--cizgi);
+  }
+
+  .iletisim-blok h2 {
+    margin: 0 0 var(--bosluk-4);
+    padding: 0;
+    border: 0;
+    font-size: var(--olcu-xl);
+    font-weight: var(--kalinlik-kalin);
+    color: var(--hu-lacivert);
+  }
+
+  .iletisim-blok dl {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: var(--bosluk-5);
+    margin: 0;
+  }
+
+  .iletisim-blok dt {
+    margin-bottom: var(--bosluk-2);
+    font-size: var(--olcu-xs);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--hu-kirmizi);
+  }
+
+  .iletisim-blok dd {
+    margin: 0 0 var(--bosluk-1);
+    font-size: var(--olcu-sm);
+    line-height: var(--satir-normal);
+    color: var(--metin-2);
+  }
+
+  .iletisim-blok dd a { color: inherit; }
+  .iletisim-blok dd a:hover { color: var(--hu-kirmizi); }
+}
