@@ -31,6 +31,13 @@ for (const dil of ["tr", "en"]) {
   }
 }
 
+/* Kurum kararıyla kaynaktan bilerek ayrılan sayfalar.
+   Bu sayfalar karşılaştırılmaz; gerekçe kayıt altında kalır ki ileride
+   "acaba yanlışlıkla mı bozuldu?" sorusu doğmasın. */
+const BILINCLI_SAPMA = {
+  "tr/org-chart": "Yönetim sayfasıyla birleştirildi (kurum kararı)"
+};
+
 const ORIGIN = "https://bidb.hacettepe.edu.tr";
 const KAP = "bidb-db";
 
@@ -70,11 +77,18 @@ function farkNoktasi(a, b) {
   console.log("SAYFA".padEnd(34) + "KAYNAK".padStart(8) + "VERİTABANI".padStart(12) + "   SONUÇ");
   console.log("-".repeat(74));
 
-  let ayni = 0, farkli = 0;
+  let ayni = 0, farkli = 0, bilincli = 0;
   const farklar = [];
 
   for (const kayit of kayitlar) {
     const { dil, slug, html } = kayit;
+
+    if (BILINCLI_SAPMA[dil + "/" + slug]) {
+      bilincli++;
+      console.log((dil + "/" + slug).padEnd(34) + "        ● bilinçli sapma: " + BILINCLI_SAPMA[dil + "/" + slug]);
+      continue;
+    }
+
     let canli;
     try {
       const kaynakSlug = KAYNAK_SLUG[dil + "/" + slug] || slug;

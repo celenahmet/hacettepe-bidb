@@ -41,6 +41,9 @@ import { Language, Menu } from '../core/models';
           <a [routerLink]="['/', language]" (click)="kapat()">
             {{ language === 'en' ? 'Home Page' : 'Ana Sayfa' }}
           </a>
+          <a [routerLink]="['/', language, 'about']" (click)="kapat()">
+            {{ language === 'en' ? 'About Us' : 'Hakkımızda' }}
+          </a>
 
           @for (b of acilirBolumler(); track b.title) {
             <span class="acilir" [class.acik]="acikBolum() === b.title">
@@ -62,9 +65,6 @@ import { Language, Menu } from '../core/models';
             </span>
           }
 
-          <a [routerLink]="['/', language, 'about']" (click)="kapat()">
-            {{ language === 'en' ? 'About Us' : 'Hakkımızda' }}
-          </a>
           <a [routerLink]="['/', language, 'contact']" (click)="kapat()">
             {{ language === 'en' ? 'Contact' : 'İletişim' }}
           </a>

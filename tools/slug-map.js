@@ -13,7 +13,7 @@
 const TR = {
   anasayfa: "home",
   geneltanitim: "about",
-  yonetim: "management",
+  yonetim: "org-chart",          // Organizasyon Şeması ile birleştirildi
   misyonvizyon: "mission-vision",
   bilgikorumaanapolitikamiz: "security-policy",
   personel: "staff",

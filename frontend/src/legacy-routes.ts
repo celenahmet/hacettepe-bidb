@@ -2,15 +2,14 @@
 
    Mevcut site arama motorlarında ve dış bağlantılarda eski adreslerle
    kayıtlı olduğu için, eski adresler kalıcı yönlendirme (301) ile yeni
-   adreslere taşınır. Böylece hiçbir bağlantı kırılmaz ve arama
-   sonuçlarındaki değer yeni adrese aktarılır.
+   adreslere taşınır.
 
    Bu dosya tools/slug-map.js kaynağından üretilmiştir; elle düzenlemeyin. */
 
 export const LEGACY_ROUTES: Record<string, string> = {
   '/tr/anasayfa': '/tr/home',
   '/tr/geneltanitim': '/tr/about',
-  '/tr/yonetim': '/tr/management',
+  '/tr/yonetim': '/tr/org-chart',
   '/tr/misyonvizyon': '/tr/mission-vision',
   '/tr/bilgikorumaanapolitikamiz': '/tr/security-policy',
   '/tr/personel': '/tr/staff',
