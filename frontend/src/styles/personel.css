@@ -69,18 +69,18 @@
      değil — bir birime kişi eklendiğinde düzen bozulmaz. */
   .personel-liste {
     list-style: none;
-    margin: var(--bosluk-4) 0 0;
+    margin: var(--bosluk-5) 0 0;
     padding: 0;
     max-width: none;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
-    gap: var(--bosluk-1) var(--bosluk-5);
+    grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+    gap: var(--bosluk-4) var(--bosluk-6);
   }
 
   .personel-kisi {
     display: flex;
     align-items: center;
-    gap: var(--bosluk-3);
+    gap: var(--bosluk-4);
     padding: var(--bosluk-2) 0;
     min-width: 0;
   }
@@ -88,16 +88,24 @@
   /* ---- Fotoğraf ve varsayılan ikon ---------------------------------- */
 
   /* Hafifçe yuvarlatılmış kare: sayfanın geri kalanı dik açılı bir ızgara
-     üzerine kurulu, daire bu düzene yabancı kalıyordu. Boyut küçük
-     tutuldu — fotoğraf burada bir portre galerisi değil, tanımayı
-     kolaylaştıran bir işaret. */
+     üzerine kurulu, daire bu düzene yabancı kalıyordu.
+
+     Portre oranında (3:4) ve belirgin bir boyutta duruyor. Küçük ve kare
+     olduğunda fotoğraf bir simge gibi kalıyordu; insan yüzü o ölçüde
+     tanınmıyor ve rehber kimliksizleşiyordu. Portre oranı yüzü doğal
+     çerçevesinde gösterir — vesikalık ve kurumsal fotoğraf da bu orandadır.
+
+     İnce iç çerçeve (inset kutu gölgesi) açık zeminli fotoğrafların
+     kenarını tutar; olmadığında beyaz arka planlı portreler sayfada
+     yüzüyormuş gibi görünüyordu. */
   .personel-gorsel {
     flex: none;
-    width: 2.75rem;
-    height: 2.75rem;
+    width: 3.75rem;
+    aspect-ratio: 3 / 4;
     border-radius: var(--kose-sm);
     overflow: hidden;
     background: var(--yuzey-3);
+    box-shadow: inset 0 0 0 1px rgb(16 24 40 / 8%);
     display: block;
   }
 
@@ -110,12 +118,14 @@
 
   /* Fotoğrafı olmayan kişi için nötr bir siluet. Listede boşluk bırakmak
      ya da baş harf yazmak yerine sessiz bir yer tutucu: hizayı korur,
-     dikkati kendine çekmez. */
+     dikkati kendine çekmez. Fotoğraflı kayıtlarla aynı çerçevede durur ki
+     ızgara bozulmasın. */
   .personel-gorsel svg {
     width: 100%;
     height: 100%;
     display: block;
     fill: var(--cizgi-koyu);
+    opacity: 0.85;
   }
 
   /* ---- Ad ve unvan --------------------------------------------------- */
@@ -124,11 +134,11 @@
     min-width: 0;
     display: flex;
     flex-direction: column;
-    gap: 1px;
+    gap: 3px;
   }
 
   .personel-ad {
-    font-size: var(--olcu-sm);
+    font-size: var(--olcu-md);
     line-height: var(--satir-sik);
     color: var(--metin);
   }
@@ -146,6 +156,7 @@
   .personel-not {
     font-size: var(--olcu-xs);
     line-height: var(--satir-sik);
+    letter-spacing: 0.04em;
     color: var(--metin-3);
   }
 
@@ -154,7 +165,7 @@
   /* ---- Dar ekran ----------------------------------------------------- */
 
   @media (max-width: 40rem) {
-    .personel-gorsel { width: 2.25rem; height: 2.25rem; }
-    .personel-liste { gap: 0; }
+    .personel-gorsel { width: 3rem; }
+    .personel-liste { gap: var(--bosluk-3) 0; }
   }
 }

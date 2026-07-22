@@ -67,13 +67,6 @@ import { Language, Slide } from '../core/models';
                  geçiş fark edilmezdi. -->
             @for (s of gecerliListe(); track etkin()) {
               <div class="hero-panel">
-                <!-- Sayaç, slogan yerine geçen tek üst satır: kaçıncı
-                     slaytta olunduğunu söyler, yani bilgi taşır. -->
-                <p class="hero-sayac">
-                  <span>{{ sirali(etkin() + 1) }}</span>
-                  <i aria-hidden="true"></i>
-                  {{ sirali(slaytlar.length) }}
-                </p>
                 <h2 class="hero-baslik"><span>{{ s.title }}</span></h2>
                 @if (s.subtitle) { <p class="hero-ozet">{{ s.subtitle }}</p> }
                 @if (s.linkUrl) {
@@ -86,25 +79,25 @@ import { Language, Slide } from '../core/models';
           </div>
         </div>
 
-        <!-- Denetim yalnızca göstergelerden ibaret: her çizgi tıklanabilir,
-             yani ileri-geri gitmek için ayrı ok düğmesine gerek yok. Ok
-             düğmeleri fotoğrafın üstünde iki kutu olarak duruyor ve alanın
-             sadeliğini bozuyordu. Klavyeyle ok tuşları çalışmayı sürdürüyor. -->
+        <!-- Denetim iki düğmeden ibaret. Slayt başına bir gösterge çizgisi
+             koymak altı slaytta sağ alt köşeyi kaplıyordu; ileri-geri iki
+             düğme aynı işi iki ögeyle yapıyor. Klavyede ok tuşları ve
+             dokunmatikte kaydırma çalışmayı sürdürüyor. -->
         <div class="kap hero-denetim">
-          <ol class="hero-izler">
-            @for (s of slaytlar; track s.imageUrl; let i = $index) {
-              <li>
-                <button type="button"
-                        [class.etkin]="i === etkin()"
-                        [class.gecmis]="i < etkin()"
-                        [attr.aria-current]="i === etkin() ? 'true' : null"
-                        (click)="gec(i)">
-                  <span class="hero-iz-dolgu" [style.animation-duration.ms]="SURE"></span>
-                  <span class="sr-only">{{ s.title }}</span>
-                </button>
-              </li>
-            }
-          </ol>
+          <button type="button" class="hero-ok" (click)="oncekiSlayt()"
+                  [attr.aria-label]="dilDegeri === 'en' ? 'Previous slide' : 'Önceki görsel'">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"
+                 fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M15 5l-7 7 7 7"/>
+            </svg>
+          </button>
+          <button type="button" class="hero-ok" (click)="sonrakiSlayt()"
+                  [attr.aria-label]="dilDegeri === 'en' ? 'Next slide' : 'Sonraki görsel'">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"
+                 fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M9 5l7 7-7 7"/>
+            </svg>
+          </button>
         </div>
 
         <p class="sr-only" aria-live="polite">{{ gecerli()?.title }}</p>
@@ -139,12 +132,6 @@ export class HeroSliderComponent implements OnDestroy {
   protected gecerliListe(): Slide[] {
     const s = this.gecerli();
     return s ? [s] : [];
-  }
-
-  /** İki haneli sıra numarası: 1 yerine 01. Tek haneli sayılar sayaçta
-      hizayı bozar ve geçici bir değer gibi görünür. */
-  protected sirali(n: number): string {
-    return n < 10 ? '0' + n : String(n);
   }
 
   /** 1920'lik adresten 960'lık sürümü türetir; ayrı bir alan tutmaya gerek yok. */

@@ -37,17 +37,17 @@ import { Language, StaffUnit } from '../core/models';
                 <li class="personel-kisi" [class.sorumlu]="k.lead">
                   <span class="personel-gorsel">
                     @if (k.photoUrl) {
-                      <img [src]="k.photoUrl" [alt]="k.fullName" width="44" height="44" loading="lazy">
+                      <img [src]="k.photoUrl" [alt]="k.fullName" width="60" height="80" loading="lazy">
                     } @else {
-                      <svg viewBox="0 0 44 44" aria-hidden="true" focusable="false">
-                        <circle cx="22" cy="16" r="7"></circle>
+                      <svg viewBox="0 0 48 64" aria-hidden="true" focusable="false">
+                        <circle cx="24" cy="24" r="9"></circle>
                         @switch (k.avatar) {
                           @case ('kadin') {
-                            <path d="M9 40c0-7 5.8-12 13-12s13 5 13 12H9z"></path>
-                            <path d="M13 22c1-6 4-9 9-9s8 3 9 9c-2-3-5-4-9-4s-7 1-9 4z"></path>
+                            <path d="M6 62c0-9.5 8-16.5 18-16.5S42 52.5 42 62H6z"></path>
+                            <path d="M13 32c.8-8 5-12.5 11-12.5S34.2 24 35 32c-2.4-4-6.4-5.6-11-5.6S15.4 28 13 32z"></path>
                           }
                           @default {
-                            <path d="M9 40c0-7 5.8-12 13-12s13 5 13 12H9z"></path>
+                            <path d="M6 62c0-9.5 8-16.5 18-16.5S42 52.5 42 62H6z"></path>
                           }
                         }
                       </svg>

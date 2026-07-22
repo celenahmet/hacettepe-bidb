@@ -29,8 +29,8 @@
 
    ── TİPOGRAFİ ─────────────────────────────────────────────────────────
 
-   Dört kademe: sayaç (küçük, boşluklu), başlık (büyük, sıkı), açıklama
-   (orta, 46 karakter ölçüsünde), düğme. Aralarındaki fark yalnızca punto
+   Üç kademe: başlık (büyük, sıkı), açıklama (orta, 46 karakter
+   ölçüsünde), düğme. Aralarındaki fark yalnızca punto
    ile değil punto + ağırlık + renk yoğunluğu ile kuruluyor; tek boyutta
    kurulan hiyerarşi zayıf kalır.
 
@@ -86,7 +86,7 @@
 
   /* Lokal karartma: soldan sağa açılır. Sol kenarda metni taşıyacak kadar
      koyu, sağ kenarda fotoğraf neredeyse açık. Alttaki ikinci katman,
-     göstergelerin oturduğu şeridi tutar. */
+     denetim düğmelerinin oturduğu şeridi tutar. */
   .hero-gorseller::after {
     content: "";
     position: absolute;
@@ -150,30 +150,6 @@
      koyu bir kutuya düşmek, tam da kaçınılan görüntüyü üretirdi. */
   @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
     .hero-panel::after { display: none; }
-  }
-
-  /* Sayaç: 01 — 06. Slogan yerine geçen tek üst satır; bilgi taşıdığı
-     için duruyor. */
-  .hero-sayac {
-    display: flex;
-    align-items: center;
-    gap: var(--bosluk-3);
-    margin: 0 0 var(--bosluk-4);
-    font-size: var(--olcu-xs);
-    font-weight: var(--kalinlik-orta);
-    letter-spacing: 0.18em;
-    font-variant-numeric: tabular-nums;
-    color: rgb(255 255 255 / 62%);
-  }
-
-  .hero-sayac span { color: #fff; }
-
-  /* İki sayı arasındaki kısa çizgi: alandaki tek renk aksanı. */
-  .hero-sayac i {
-    display: block;
-    width: 1.75rem;
-    height: 2px;
-    background: var(--hu-kirmizi);
   }
 
   /* Başlık maskenin ardından yükselerek açılır: dış öge bir pencere, iç
@@ -256,9 +232,14 @@
 
   /* ---- Göstergeler ---------------------------------------------------- */
 
-  /* Nokta değil dolan çizgi: kaç slayt olduğunu ve sıradakine ne kadar
-     kaldığını birlikte söyler. Fotoğrafın içinde, sağ altta durur;
-     altına ayrı bir şerit koymak alanı uzatıp içeriği aşağı itiyordu. */
+  /* İki düğme. Slayt başına bir gösterge çizgisi koymak altı slaytta sağ
+     alt köşeyi kaplıyordu; ileri-geri iki düğme aynı işi iki ögeyle yapar.
+     Fotoğrafın içinde, sağ altta dururlar; altına ayrı bir şerit koymak
+     alanı uzatıp içeriği aşağı itiyordu.
+
+     Çerçevesiz ve dolgusuz: yalnızca ince bir sembol. Kutulu düğmeler
+     fotoğrafın önünde iki leke gibi duruyordu. İmleçle hafif bir zemin
+     beliriyor — tıklanabilir oldukları o an belli oluyor. */
   .hero-denetim {
     position: absolute;
     left: 0;
@@ -268,65 +249,31 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    gap: var(--bosluk-2);
   }
 
-  .hero-izler {
-    display: flex;
+  .hero-ok {
+    display: inline-flex;
     align-items: center;
-    gap: 10px;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .hero-izler button {
-    display: block;
-    position: relative;
-    width: 2.75rem;
-    height: 2px;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
     padding: 0;
     border: 0;
-    background: rgb(255 255 255 / 30%);
+    background: transparent;
+    color: rgb(255 255 255 / 72%);
     cursor: pointer;
-    overflow: hidden;
-    transition: background var(--gecis), height var(--gecis);
+    transition: background var(--gecis), color var(--gecis);
   }
 
-  .hero-izler button:hover { background: rgb(255 255 255 / 60%); height: 4px; }
-
-  /* Görülen çizgi ince ama dokunma alanı parmak için yeterli olmalı. */
-  .hero-izler button::before {
-    content: "";
-    position: absolute;
-    inset: -12px -3px;
+  .hero-ok:hover {
+    background: rgb(255 255 255 / 14%);
+    color: #fff;
   }
 
-  .hero-izler button:focus-visible {
+  .hero-ok:focus-visible {
     outline: 2px solid #fff;
-    outline-offset: 5px;
-  }
-
-  .hero-izler button.gecmis { background: rgb(255 255 255 / 62%); }
-
-  .hero-izler button.etkin { height: 4px; }
-
-  .hero-iz-dolgu {
-    position: absolute;
-    inset: 0;
-    transform-origin: left;
-    transform: scaleX(0);
-    background: #fff;
-  }
-
-  .hero-izler button.etkin .hero-iz-dolgu {
-    animation-name: hero-dolum;
-    animation-timing-function: linear;
-    animation-fill-mode: forwards;
-  }
-
-  @keyframes hero-dolum {
-    from { transform: scaleX(0); }
-    to   { transform: scaleX(1); }
+    outline-offset: 2px;
   }
 
   /* ---- Dar ekran -------------------------------------------------------- */
@@ -359,8 +306,6 @@
 
     .hero-panel::after { display: none; }
 
-    .hero-sayac { color: var(--metin-3); }
-    .hero-sayac span { color: var(--metin); }
     .hero-baslik { font-size: var(--olcu-2xl); color: var(--hu-lacivert); }
     .hero-ozet { font-size: var(--olcu-md); color: var(--metin-2); }
 
@@ -381,10 +326,9 @@
       padding-bottom: var(--bosluk-5);
     }
 
-    .hero-izler button { background: var(--cizgi-koyu); }
-    .hero-izler button:hover { background: var(--metin-3); }
-    .hero-izler button.gecmis { background: var(--metin-3); }
-    .hero-iz-dolgu { background: var(--hu-kirmizi); }
+    .hero-ok { color: var(--metin-2); }
+    .hero-ok:hover { background: var(--yuzey-3); color: var(--hu-kirmizi); }
+    .hero-ok:focus-visible { outline-color: var(--hu-kirmizi); }
   }
 
   /* ---- Hareket azaltma ---------------------------------------------------- */
@@ -395,7 +339,6 @@
     .hero-baslik > span,
     .hero-ozet,
     .hero-dugme { animation: none; }
-    .hero-izler button.etkin .hero-iz-dolgu { animation: none; transform: scaleX(1); }
     .hero-dugme::after { transition: none; }
   }
 }
