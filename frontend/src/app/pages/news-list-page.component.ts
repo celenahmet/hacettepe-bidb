@@ -1,10 +1,10 @@
 import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { DatePipe } from '@angular/common';
 import { Api } from '../core/api.service';
 import { Seo } from '../core/seo.service';
 import { Language, NewsSummary } from '../core/models';
 import { SideMenuComponent } from '../layout/side-menu.component';
+import { NewsCardComponent } from './news-card.component';
 
 /**
  * Haber ve duyuruların tamamı: /tr/news, /en/news
@@ -18,7 +18,7 @@ import { SideMenuComponent } from '../layout/side-menu.component';
  */
 @Component({
   selector: 'bidb-news-list-page',
-  imports: [SideMenuComponent, RouterLink, DatePipe],
+  imports: [SideMenuComponent, RouterLink, NewsCardComponent],
   template: `
     <div class="kap sayfa-duzen">
       <aside class="yan">
@@ -33,31 +33,12 @@ import { SideMenuComponent } from '../layout/side-menu.component';
         </header>
 
         @if (duyurular().length) {
-          <section class="duyurular">
-            <ul>
-              @for (d of duyurular(); track d.title) {
-                <li [class.gorselli]="d.imageUrl">
-                  @if (d.imageUrl) {
-                    <a [routerLink]="d.url" class="duyuru-gorsel">
-                      <img [src]="d.imageUrl" [alt]="d.imageAlt || d.title" loading="lazy" width="120" height="80">
-                    </a>
-                  }
-                  <span class="duyuru-yazi">
-                    @if (d.hasOwnPage) {
-                      <a [routerLink]="d.url">{{ d.title }}</a>
-                    } @else {
-                      <a [href]="d.url" target="_blank" rel="noopener">{{ d.title }}</a>
-                    }
-                    @if (d.summary) { <small class="duyuru-ozet">{{ d.summary }}</small> }
-                  </span>
-                  <time [attr.datetime]="d.date">{{ d.date | date: 'dd.MM.yyyy' }}</time>
-                </li>
-              }
-            </ul>
-          </section>
+          <div class="haber-izgara">
+            @for (d of duyurular(); track d.title; let i = $index) {
+              <bidb-news-card [haber]="d" [dilDegeri]="language()" [oneCikan]="i === 0"></bidb-news-card>
+            }
+          </div>
 
-          <!-- Eski duyurular kaynak sitede ayrı bir sayfada tutuluyor;
-               listenin sonunda ona bağlanmak doğal yer. -->
           @if (language() === 'tr') {
             <p class="duyuru-arsiv">
               <a routerLink="/tr/archive">Daha eski duyurular için Arşiv sayfasına bakabilirsiniz.</a>

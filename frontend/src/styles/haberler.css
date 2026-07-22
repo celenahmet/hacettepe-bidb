@@ -1,0 +1,228 @@
+/* Haber ve duyuru kartları.
+
+   Duyurular önce başlık + tarihten ibaret düz bir listeydi. Kart düzeni
+   her duyuruya bir kapak, bir konu etiketi ve okunur bir tarih veriyor;
+   liste tek renk bir yığın olmaktan çıkıp taranabilir bir panoya dönüyor.
+
+   ── KAPAK ─────────────────────────────────────────────────────────────
+
+   Fotoğrafı olan duyuru fotoğrafını gösterir. Çoğunda fotoğraf yok; onlar
+   için KONUYA göre kurumsal renkte bir kapak üretiliyor (bileşende konu
+   başlıktan çıkarılıyor). Kapak tamamen CSS + inline SVG — dış görsele
+   bağlı değil, kırılmıyor, eskimiyor. Alakasız bir stok görsel yerine
+   duyurunun ne hakkında olduğunu söyleyen sade bir işaret.
+
+   Renkler Hacettepe paletinden: lacivert taban, konuya göre tek bir vurgu.
+   Rengârenk değil ama tek düze de değil — dört konu dört farklı ton. */
+
+@layer kamu {
+
+  /* ---- Kart ---------------------------------------------------------- */
+
+  .haber-kart {
+    display: flex;
+    flex-direction: column;
+    background: var(--yuzey);
+    border: 1px solid var(--cizgi);
+    border-radius: var(--kose-lg);
+    overflow: hidden;
+    transition: border-color var(--gecis), box-shadow var(--gecis), transform var(--gecis);
+  }
+
+  .haber-kart:hover {
+    border-color: var(--cizgi-koyu);
+    box-shadow: var(--golge-2);
+    transform: translateY(-2px);
+  }
+
+  /* ---- Kapak --------------------------------------------------------- */
+
+  .haber-kapak {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    color: #fff;
+    /* varsayılan (duyuru) */
+    background: linear-gradient(135deg, var(--hu-lacivert) 0%, #14294a 100%);
+  }
+
+  .haber-kapak img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Konuya göre zemin. Her biri lacivertten türeyen ama ayırt edilebilir
+     bir aile; kırmızı yalnızca personel alımında öne çıkıyor çünkü en çok
+     aranan duyuru türü o. */
+  .haber-kapak[data-konu="personel"] {
+    background: linear-gradient(135deg, #7d1420 0%, var(--hu-kirmizi-koyu) 100%);
+  }
+  .haber-kapak[data-konu="yazilim"] {
+    background: linear-gradient(135deg, #14375f 0%, var(--hu-mavi) 130%);
+  }
+  .haber-kapak[data-konu="eposta"] {
+    background: linear-gradient(135deg, #1a3a63 0%, #2a5f8f 100%);
+  }
+
+  /* İnce bir nokta dokusu: düz gradient fazla boş kalıyordu, doku yüzeye
+     hafif bir kurumsal karakter veriyor. Çok belirsiz olsun diye opaklık
+     düşük. */
+  .haber-kapak::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgb(255 255 255 / 8%) 1px, transparent 1.5px);
+    background-size: 14px 14px;
+    pointer-events: none;
+  }
+
+  .haber-kapak img ~ .haber-kapak::after { display: none; }
+
+  .haber-kapak-ikon {
+    position: relative;
+    z-index: 1;
+    opacity: 0.9;
+  }
+
+  /* Konu etiketi kapağın köşesinde: kartı açmadan türü söyler. */
+  .haber-etiket {
+    position: absolute;
+    left: var(--bosluk-3);
+    top: var(--bosluk-3);
+    z-index: 2;
+    padding: 3px var(--bosluk-3);
+    border-radius: var(--kose-tam);
+    background: rgb(255 255 255 / 92%);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--hu-lacivert);
+  }
+
+  /* Fotoğraflı kartta etiket okunur kalsın diye küçük bir gölge. */
+  .haber-kapak img + .haber-etiket { box-shadow: var(--golge-1); }
+
+  /* ---- Gövde --------------------------------------------------------- */
+
+  .haber-govde {
+    display: flex;
+    flex-direction: column;
+    gap: var(--bosluk-2);
+    padding: var(--bosluk-4) var(--bosluk-4) var(--bosluk-5);
+    flex: 1;
+  }
+
+  .haber-tarih {
+    font-size: var(--olcu-xs);
+    font-weight: var(--kalinlik-orta);
+    letter-spacing: 0.02em;
+    color: var(--metin-3);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .haber-baslik {
+    margin: 0;
+    font-size: var(--olcu-md);
+    font-weight: var(--kalinlik-kalin);
+    line-height: 1.35;
+    color: var(--metin);
+  }
+
+  .haber-baslik a { color: inherit; }
+  .haber-baslik a:hover { color: var(--hu-kirmizi); }
+
+  /* Kartın her yeri tıklanabilir olsun: başlık bağlantısı kartı kaplar,
+     ama gövdedeki diğer bağlantılar (varsa) üstte kalır. */
+  .haber-baslik a::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+
+  .haber-kart { position: relative; }
+
+  .haber-ozet {
+    margin: 0;
+    font-size: var(--olcu-sm);
+    line-height: var(--satir-normal);
+    color: var(--metin-2);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* ---- Öne çıkan (ana sayfada en yeni duyuru) ------------------------ */
+
+  /* İlk duyuru geniş: kapak solda, metin sağda, iki sütun. Bir haber
+     panosunun "manşet"i gibi. Dar ekranda tek sütuna iner. */
+  @media (min-width: 40rem) {
+    .haber-kart.one-cikan {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+    }
+
+    .haber-kart.one-cikan .haber-kapak {
+      aspect-ratio: auto;
+      height: 100%;
+      min-height: 15rem;
+    }
+
+    .haber-kart.one-cikan .haber-govde {
+      justify-content: center;
+      padding: var(--bosluk-6);
+    }
+
+    .haber-kart.one-cikan .haber-baslik { font-size: var(--olcu-xl); line-height: 1.25; }
+    .haber-kart.one-cikan .haber-kapak-ikon { transform: scale(1.5); }
+  }
+
+  /* ---- Izgara -------------------------------------------------------- */
+
+  .haber-izgara {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+    gap: var(--bosluk-5);
+    margin-top: var(--bosluk-5);
+  }
+
+  /* Öne çıkan kart ızgarada tam satırı kaplar. */
+  .haber-izgara .one-cikan { grid-column: 1 / -1; }
+}
+
+@layer kamu {
+  /* Bölüm başlığı ile "Tümü" bağlantısı aynı satırda. */
+  .duyurular .bolum-baslik {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--bosluk-4);
+    flex-wrap: wrap;
+  }
+
+  .duyurular .bolum-baslik h2 { margin: 0; }
+
+  .bolum-tumu {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--bosluk-2);
+    font-size: var(--olcu-sm);
+    font-weight: var(--kalinlik-orta);
+    color: var(--hu-kirmizi);
+    white-space: nowrap;
+  }
+
+  .bolum-tumu svg { transition: transform var(--gecis); }
+  .bolum-tumu:hover svg { transform: translateX(3px); }
+
+  .duyuru-arsiv {
+    margin-top: var(--bosluk-6);
+    font-size: var(--olcu-sm);
+  }
+}

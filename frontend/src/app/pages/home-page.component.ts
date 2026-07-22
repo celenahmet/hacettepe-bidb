@@ -8,11 +8,12 @@ import { Language } from '../core/models';
 import { RouterLink } from '@angular/router';
 import { SideMenuComponent } from '../layout/side-menu.component';
 import { HeroSliderComponent } from '../layout/hero-slider.component';
+import { NewsCardComponent } from './news-card.component';
 
 /** Ana sayfa: slider, kısayollar, news ve services. */
 @Component({
   selector: 'bidb-home-page',
-  imports: [SideMenuComponent, HeroSliderComponent, AsyncPipe, DatePipe, RouterLink],
+  imports: [SideMenuComponent, HeroSliderComponent, NewsCardComponent, AsyncPipe, RouterLink],
   template: `
     @if (veri$ | async; as v) {
       <bidb-hero-slider [dilDegeri]="language()" [slaytlar]="v.slider"></bidb-hero-slider>
@@ -44,27 +45,19 @@ import { HeroSliderComponent } from '../layout/hero-slider.component';
 
           @if (v.news.length) {
             <section class="duyurular">
-              <h2>{{ metin('Haber ve Duyurular', 'News and Announcements') }}</h2>
-              <ul>
-                @for (d of v.news; track d.title) {
-                  <li [class.gorselli]="d.imageUrl">
-                    @if (d.imageUrl) {
-                      <a [routerLink]="d.url" class="duyuru-gorsel">
-                        <img [src]="d.imageUrl" [alt]="d.imageAlt || d.title" loading="lazy" width="120" height="80">
-                      </a>
-                    }
-                    <span class="duyuru-yazi">
-                      @if (d.hasOwnPage) {
-                        <a [routerLink]="d.url">{{ d.title }}</a>
-                      } @else {
-                        <a [href]="d.url" target="_blank" rel="noopener">{{ d.title }}</a>
-                      }
-                      @if (d.summary) { <small class="duyuru-ozet">{{ d.summary }}</small> }
-                    </span>
-                    <time [attr.datetime]="d.date">{{ d.date | date: 'dd.MM.yyyy' }}</time>
-                  </li>
+              <div class="bolum-baslik">
+                <h2>{{ metin('Haber ve Duyurular', 'News and Announcements') }}</h2>
+                <a class="bolum-tumu" [routerLink]="['/', language(), 'news']">
+                  {{ metin('Tümü', 'All') }}
+                  <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"
+                       fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </a>
+              </div>
+              <div class="haber-izgara">
+                @for (d of v.news.slice(0, 7); track d.title; let i = $index) {
+                  <bidb-news-card [haber]="d" [dilDegeri]="language()" [oneCikan]="i === 0"></bidb-news-card>
                 }
-              </ul>
+              </div>
             </section>
           }
 
