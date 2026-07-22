@@ -3,31 +3,32 @@ import { RouterLink } from '@angular/router';
 import { Language, Slide } from '../core/models';
 
 /**
- * Ana sayfa görsel alanı.
+ * Ana sayfa açılış alanı.
  *
- * TASARIM KARARLARI
+ * KOMPOZİSYON
  *
- * Okunurluk üç katmanla kuruluyor: fotoğrafın yalnızca metin tarafına inen
- * yumuşak bir karartma, metin bloğunun ardında kenarları eriyen bir
- * bulanıklık, ve dar bir metin gölgesi. Üçü birlikte fotoğrafı kapatmadan
- * metni öne çıkarıyor — ayrıntısı ve gerekçesi styles/hero.css içinde.
+ * Klasik "fotoğrafın üstüne ortalanmış yazı" düzeninden çıkıldı. Alan iki
+ * yüzeye bölündü: solda kurumsal lacivert bir panel, sağda tam kanama
+ * fotoğraf. Panelin metni sayfa kabıyla aynı hizadan başlar; yani üstteki
+ * logoyla aynı dikey çizgiye oturur. Bu, alanı sayfanın geri kalanına
+ * bağlar — hazır bir slider bileşeni gibi durmasını engelleyen şey de
+ * budur.
  *
- * Geçiş yalnızca sönümlemeyle yapılır, kaydırmayla değil. Kayan slaytlar
- * gözü izlemeye zorlar; kurumsal bir sayfada gereksiz bir hareket.
+ * Bölünmüş yapının üç kazancı var: fotoğraf hiç karartılmadığı için
+ * olduğu gibi görünür; metin her zaman aynı kontrastta okunur, fotoğrafın
+ * o bölgesinin açık ya da koyu olması fark etmez; ve geniş ekranda ortaya
+ * çıkan boş koyu alan ortadan kalkar, çünkü o alan artık panelin kendisi.
  *
- * Denetim yalnızca göstergelerden ibaret: dolan ince çizgiler hem kaç slayt
- * olduğunu hem sıradakine ne kadar kaldığını gösterir, hem de tıklanabilir.
- * Ayrı ok düğmelerine gerek kalmaz; onlar fotoğrafın üstünde iki kutu
- * olarak durup alanın sadeliğini bozuyordu.
+ * DENETİM
  *
- * Hiçbir öge fotoğrafın dışına taşmaz: metin de denetim de çerçevenin
- * içinde durur.
+ * İleri-geri düğmeleri ve ilerleme çizgisi panelin içinde, metinle aynı
+ * hizada durur. Fotoğrafın üstünde yüzen denetimler tasarımdan kopuk
+ * görünüyordu; panele alındıklarında yüzeyin parçası oluyorlar.
  *
  * ERİŞİLEBİLİRLİK
- * - İmleç veya klavye odağı alan üzerindeyken dönme durur.
- * - Sol/sağ ok tuşlarıyla gezinilir.
- * - Hareket azaltma tercihi açıksa dönme hiç başlamaz (CSS'te geçiş de
- *   kapanır); ziyaretçi slaytlar arasında kendisi geçer.
+ * - İmleç veya klavye odağı alandayken dönme durur.
+ * - Sol/sağ ok tuşlarıyla gezinilir, dokunmatikte kaydırılır.
+ * - Hareket azaltma tercihinde dönme hiç başlamaz.
  * - Etkin slaytın başlığı ekran okuyucuya bildirilir.
  */
 @Component({
@@ -43,16 +44,66 @@ import { Language, Slide } from '../core/models';
                (touchstart)="dokunusBasladi($event)" (touchend)="dokunusBitti($event)"
                tabindex="-1">
 
-        <div class="hero-govde">
-          <!-- görseller: hepsi basılır, yalnızca etkin olan görünür.
-               Böylece geçişte yeniden indirme olmaz. -->
+        <div class="hero-duzen">
+
+          <!-- Kurumsal panel: metin ve denetim aynı yüzeyde -->
+          <div class="hero-panel">
+            <div class="hero-panel-ic">
+              <!-- Slayt değişince bu blok yeniden kurulur: düğüm
+                   yenilenmeden giriş hareketi baştan çalışmaz. -->
+              @for (s of gecerliListe(); track etkin()) {
+                <div class="hero-metin">
+                  <span class="hero-isaret" aria-hidden="true"></span>
+                  <h2 class="hero-baslik"><span>{{ s.title }}</span></h2>
+                  @if (s.subtitle) { <p class="hero-ozet">{{ s.subtitle }}</p> }
+                  @if (s.linkUrl) {
+                    <a class="hero-dugme" [routerLink]="s.linkUrl">
+                      <span>{{ dilDegeri === 'en' ? 'Read more' : 'Ayrıntılar' }}</span>
+                      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"
+                           fill="none" stroke="currentColor" stroke-width="1.8">
+                        <path d="M4 12h15M13 6l6 6-6 6"/>
+                      </svg>
+                    </a>
+                  }
+                </div>
+              }
+
+              <div class="hero-denetim">
+                <button type="button" class="hero-ok" (click)="oncekiSlayt()"
+                        [attr.aria-label]="dilDegeri === 'en' ? 'Previous slide' : 'Önceki görsel'">
+                  <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"
+                       fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M15 5l-7 7 7 7"/>
+                  </svg>
+                </button>
+                <button type="button" class="hero-ok" (click)="sonrakiSlayt()"
+                        [attr.aria-label]="dilDegeri === 'en' ? 'Next slide' : 'Sonraki görsel'">
+                  <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"
+                       fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M9 5l7 7-7 7"/>
+                  </svg>
+                </button>
+
+                <!-- İlerleme çizgisi: kaç slayt olduğunu değil, sıradakine
+                     ne kadar kaldığını gösterir. Panelin genişliğince
+                     uzandığı için yüzeyin parçası olarak okunur. -->
+                <span class="hero-ilerleme">
+                  @for (x of gecerliListe(); track etkin()) {
+                    <i [style.animation-duration.ms]="SURE"></i>
+                  }
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Fotoğraf: hiç karartılmıyor, tam kanama sağ kenara kadar -->
           <div class="hero-gorseller">
             @for (s of slaytlar; track s.imageUrl; let i = $index) {
-              <img [class.etkin]="i === etkin()"
-                   class="hero-gorsel"
+              <img class="hero-gorsel"
+                   [class.etkin]="i === etkin()"
                    [src]="s.imageUrl"
                    [srcset]="darSurum(s.imageUrl) + ' 960w, ' + s.imageUrl + ' 1920w'"
-                   sizes="100vw"
+                   sizes="(max-width: 64rem) 100vw, 60vw"
                    [alt]="i === etkin() ? (s.imageAlt ?? '') : ''"
                    [attr.aria-hidden]="i === etkin() ? null : 'true'"
                    [attr.loading]="i === 0 ? 'eager' : 'lazy'"
@@ -60,44 +111,6 @@ import { Language, Slide } from '../core/models';
                    width="1920" height="825">
             }
           </div>
-
-          <div class="kap hero-kap">
-            <!-- Slayt değişince bu blok yeniden kurulur: düğüm yenilenmeden
-                 CSS animasyonu baştan çalışmaz, metin sessizce değişir ve
-                 geçiş fark edilmezdi. -->
-            @for (s of gecerliListe(); track etkin()) {
-              <div class="hero-panel">
-                <h2 class="hero-baslik"><span>{{ s.title }}</span></h2>
-                @if (s.subtitle) { <p class="hero-ozet">{{ s.subtitle }}</p> }
-                @if (s.linkUrl) {
-                  <a class="hero-dugme" [routerLink]="s.linkUrl">
-                    <span>{{ dilDegeri === 'en' ? 'Read more' : 'Ayrıntılar' }}</span>
-                  </a>
-                }
-              </div>
-            }
-          </div>
-        </div>
-
-        <!-- Denetim iki düğmeden ibaret. Slayt başına bir gösterge çizgisi
-             koymak altı slaytta sağ alt köşeyi kaplıyordu; ileri-geri iki
-             düğme aynı işi iki ögeyle yapıyor. Klavyede ok tuşları ve
-             dokunmatikte kaydırma çalışmayı sürdürüyor. -->
-        <div class="kap hero-denetim">
-          <button type="button" class="hero-ok" (click)="oncekiSlayt()"
-                  [attr.aria-label]="dilDegeri === 'en' ? 'Previous slide' : 'Önceki görsel'">
-            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"
-                 fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M15 5l-7 7 7 7"/>
-            </svg>
-          </button>
-          <button type="button" class="hero-ok" (click)="sonrakiSlayt()"
-                  [attr.aria-label]="dilDegeri === 'en' ? 'Next slide' : 'Sonraki görsel'">
-            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"
-                 fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M9 5l7 7-7 7"/>
-            </svg>
-          </button>
         </div>
 
         <p class="sr-only" aria-live="polite">{{ gecerli()?.title }}</p>
@@ -128,7 +141,7 @@ export class HeroSliderComponent implements OnDestroy {
   }
 
   /** Şablonun tek elemanlı döngüyle çizebilmesi için; @for düğümü
-      yenilediği için giriş animasyonu her slaytta baştan çalışır. */
+      yenilediği için giriş hareketi her slaytta baştan çalışır. */
   protected gecerliListe(): Slide[] {
     const s = this.gecerli();
     return s ? [s] : [];
@@ -173,10 +186,8 @@ export class HeroSliderComponent implements OnDestroy {
 
   /* ---- parmakla kaydırma ----
 
-     Dar ekranda gösterge çizgileri küçük kalıyor; kaydırmak, dokunmatik
-     ekranda slayt gezinmenin beklenen yolu. Eşik 45px: bu değerin altındaki
-     hareketler kaydırma değil, sayfayı aşağı kaydırırken oluşan yanlışlıkla
-     yatay sapmalardır. */
+     Eşik 45px: bu değerin altındaki hareketler kaydırma değil, sayfayı
+     aşağı kaydırırken oluşan yanlışlıkla yatay sapmalardır. */
   private dokunusX = 0;
   private dokunusY = 0;
 

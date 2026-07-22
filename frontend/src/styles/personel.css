@@ -1,60 +1,104 @@
-/* Personel listesi.
+/* Personel rehberi.
 
-   Bu sayfa organizasyon şemasıyla aynı dili konuşur (styles/sema.css):
-   kutu, gölge ve renkli zemin yok; ayrımlar ince çizgiyle, başlıklar
-   kurumsal lacivertle yapılır. Şema kurumun nasıl örgütlendiğini, bu sayfa
-   o örgütte kimin çalıştığını gösterir — ikisi arka arkaya okunduğunda
-   kopukluk olmamalı.
+   Sayfa organizasyon şemasıyla aynı dili konuşur (styles/sema.css):
+   kurumsal lacivert başlıklar, kırmızı aksan, ince çizgiler, gölgesiz
+   yüzeyler. Şema kurumun nasıl örgütlendiğini, bu sayfa o örgütte kimin
+   çalıştığını gösterir — arka arkaya okunduklarında kopukluk olmamalı.
 
-   Sayfa bir rehberdir: burada aranan şey "bu birimde kim var" ya da
-   "bu kişi nerede çalışıyor" sorusudur. Bu yüzden tarama kolaylığı,
-   görsel gösterişin önünde tutuldu. Fotoğraflar küçük ve hizalı durur;
-   listeyi süslemek yerine kişiyi tanımaya yarar. */
+   ── KURUMSAL AĞIRLIK NEREDEN GELİYOR ─────────────────────────────────
+
+   Gösterişten değil, üç şeyden: boşluk, hiza ve tutarlı ritim.
+
+   * BOŞLUK. Birimler arası açıklık, satır arası açıklıktan belirgin
+     biçimde büyük. Kalabalık bir liste sıkıştırıldığında ucuzlar; nefes
+     aldırıldığında kendiliğinden ağırlık kazanır.
+
+   * HİZA. Fotoğraf, ad ve unvan tek bir taban çizgisi düzeninde durur.
+     53 kişilik bir listede en çok göze çarpan kusur, hizadaki kaymadır.
+
+   * RİTİM. Her kişi kaydı aynı yüksekliktedir; unvanı olan da olmayan da.
+     Değişken yükseklik, ızgarayı testere dişi gibi gösterir.
+
+   Kart, gölge ve renkli zemin kullanılmadı. Kurumsal ağırlık, öge
+   eklemekle değil ögeleri hizalamakla kurulur.
+
+   ── FOTOĞRAF VE SİLUET ────────────────────────────────────────────────
+
+   Fotoğraf portre oranında (3:4) ve belirgin boyutta. Küçük ve kare
+   olduğunda insan yüzü tanınmıyor, rehber kimliksizleşiyordu.
+
+   Fotoğrafı olmayanlar için üç siluet var: kadın, erkek, nötr. Ayrım saç
+   ve omuz hattıyla kuruluyor; renk ya da simge farkı yok, çünkü rehberde
+   asıl bilgi ad ve görevdir. Cinsiyeti tereddütsüz belirlenemeyen adlarda
+   nötr siluet kalır — yanlış bir işaret, kişinin kendisini sayfada yanlış
+   görmesi demektir. */
 
 @layer kamu {
 
   .personel {
-    margin-top: var(--bosluk-6);
+    margin-top: var(--bosluk-7);
   }
 
   /* ---- Birim ------------------------------------------------------- */
 
-  /* Birimler, şemadaki dallarla aynı ölçüde ayrılır. Ayrımı boşluk
-     yapar; çizgi yalnızca boşluğun yetmediği yerde devreye girer. */
+  /* Birimler arası açıklık, satır arası açıklığın birkaç katı: gözün
+     "yeni birim başladı" demesi için çizgiye değil boşluğa güveniliyor.
+     Çizgi yalnızca boşluğun tek başına yetmediği yerde devreye giriyor. */
   .personel-birim + .personel-birim {
-    margin-top: var(--bosluk-6);
-    padding-top: var(--bosluk-6);
+    margin-top: var(--bosluk-8);
+    padding-top: var(--bosluk-7);
     border-top: 1px solid var(--cizgi);
   }
 
   .icerik + .personel .personel-birim:first-child { margin-top: 0; }
 
+  /* Başlık, şemadaki düğümlerle aynı dili konuşur: kurumsal lacivert,
+     solunda kırmızı bir işaret. Sağdaki sayı birimin kaç kişilik olduğunu
+     söyler — rehberde sık sorulan ikinci soru. */
   .personel-birim-ad {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     flex-wrap: wrap;
     gap: var(--bosluk-3);
     margin: 0;
-    padding: 0;
+    padding: 0 0 0 var(--bosluk-4);
     border: 0;
-    font-size: var(--olcu-lg);
+    border-left: 3px solid var(--hu-kirmizi);
+    font-size: var(--olcu-xl);
     font-weight: var(--kalinlik-kalin);
     line-height: var(--satir-sik);
+    letter-spacing: -0.01em;
     color: var(--hu-lacivert);
   }
+
+  .personel-birim-metin { margin-right: auto; }
 
   /* Yerleşke bir alt bilgidir, adın parçası değil: aynı birimin iki
      ekibini ayırır ama başlığın ağırlığını taşımaz. */
   .personel-yerleske {
     font-size: var(--olcu-xs);
     font-weight: var(--kalinlik-orta);
-    letter-spacing: 0.06em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--metin-3);
   }
 
+  .personel-sayi {
+    flex: none;
+    min-width: 1.9rem;
+    padding: 3px var(--bosluk-2);
+    border: 1px solid var(--cizgi);
+    border-radius: var(--kose-sm);
+    font-size: var(--olcu-xs);
+    font-weight: var(--kalinlik-orta);
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+    color: var(--metin-3);
+  }
+
   .personel-telefon {
-    margin: var(--bosluk-2) 0 0;
+    margin: var(--bosluk-3) 0 0 var(--bosluk-4);
+    padding-left: 3px;
     font-size: var(--olcu-sm);
     color: var(--metin-2);
   }
@@ -64,40 +108,43 @@
 
   /* ---- Kişiler ------------------------------------------------------ */
 
-  /* Çok sütunlu bir ızgara: 53 kişilik bir listeyi tek sütunda okutmak
-     gereksiz kaydırma yaratır. Sütun sayısını ekran belirler, kişi sayısı
-     değil — bir birime kişi eklendiğinde düzen bozulmaz. */
+  /* Sütun sayısını ekran belirler, kişi sayısı değil: bir birime kişi
+     eklendiğinde düzen bozulmaz. */
   .personel-liste {
     list-style: none;
-    margin: var(--bosluk-5) 0 0;
+    margin: var(--bosluk-5) 0 0 var(--bosluk-4);
     padding: 0;
     max-width: none;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
-    gap: var(--bosluk-4) var(--bosluk-6);
+    grid-template-columns: repeat(auto-fill, minmax(19rem, 1fr));
+    gap: var(--bosluk-2) var(--bosluk-6);
   }
 
+  /* Her kayıt aynı yükseklikte: unvanı olan da olmayan da. Değişken
+     yükseklik ızgarayı testere dişi gibi gösteriyordu. */
   .personel-kisi {
     display: flex;
     align-items: center;
     gap: var(--bosluk-4);
-    padding: var(--bosluk-2) 0;
+    min-height: 5.75rem;
+    padding: var(--bosluk-3);
+    margin-left: calc(-1 * var(--bosluk-3));
     min-width: 0;
+    border-bottom: 1px solid var(--cizgi);
+    transition: background var(--gecis-hizli);
   }
 
-  /* ---- Fotoğraf ve varsayılan ikon ---------------------------------- */
+  /* Satır tıklanabilir değil ama imleçle hafifçe beliriyor: uzun bir
+     listede gözün hangi satırda olduğunu kaybetmemesi için. */
+  .personel-kisi:hover { background: var(--yuzey-2); }
 
-  /* Hafifçe yuvarlatılmış kare: sayfanın geri kalanı dik açılı bir ızgara
-     üzerine kurulu, daire bu düzene yabancı kalıyordu.
+  /* ---- Fotoğraf ve siluet -------------------------------------------- */
 
-     Portre oranında (3:4) ve belirgin bir boyutta duruyor. Küçük ve kare
-     olduğunda fotoğraf bir simge gibi kalıyordu; insan yüzü o ölçüde
-     tanınmıyor ve rehber kimliksizleşiyordu. Portre oranı yüzü doğal
-     çerçevesinde gösterir — vesikalık ve kurumsal fotoğraf da bu orandadır.
+  /* Hafifçe yuvarlatılmış portre. Daire, sayfanın dik açılı ızgarasına
+     yabancı kalıyordu; vesikalık ve kurumsal fotoğraf da 3:4 orandadır.
 
-     İnce iç çerçeve (inset kutu gölgesi) açık zeminli fotoğrafların
-     kenarını tutar; olmadığında beyaz arka planlı portreler sayfada
-     yüzüyormuş gibi görünüyordu. */
+     İnce iç çerçeve açık zeminli fotoğrafların kenarını tutar; onsuz
+     beyaz arka planlı portreler sayfada yüzüyormuş gibi görünüyordu. */
   .personel-gorsel {
     flex: none;
     width: 3.75rem;
@@ -116,16 +163,19 @@
     display: block;
   }
 
-  /* Fotoğrafı olmayan kişi için nötr bir siluet. Listede boşluk bırakmak
-     ya da baş harf yazmak yerine sessiz bir yer tutucu: hizayı korur,
-     dikkati kendine çekmez. Fotoğraflı kayıtlarla aynı çerçevede durur ki
-     ızgara bozulmasın. */
   .personel-gorsel svg {
     width: 100%;
     height: 100%;
     display: block;
-    fill: var(--cizgi-koyu);
-    opacity: 0.85;
+    fill: var(--metin-3);
+    opacity: 0.5;
+  }
+
+  /* Birim sorumlusunun silueti bir tık koyu: satırdaki ad da
+     koyulaştığı için ikisi birlikte okunur. */
+  .personel-kisi.sorumlu .personel-gorsel svg {
+    fill: var(--hu-lacivert);
+    opacity: 0.38;
   }
 
   /* ---- Ad ve unvan --------------------------------------------------- */
@@ -134,7 +184,7 @@
     min-width: 0;
     display: flex;
     flex-direction: column;
-    gap: 3px;
+    gap: 4px;
   }
 
   .personel-ad {
@@ -156,16 +206,22 @@
   .personel-not {
     font-size: var(--olcu-xs);
     line-height: var(--satir-sik);
-    letter-spacing: 0.04em;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
     color: var(--metin-3);
   }
 
   .personel-kisi.sorumlu .personel-unvan { color: var(--hu-kirmizi); }
 
+  /* Açıklama bir unvan değil, parantez içi not: büyük harfe çevrilmez. */
+  .personel-not { text-transform: none; letter-spacing: 0.02em; }
+
   /* ---- Dar ekran ----------------------------------------------------- */
 
   @media (max-width: 40rem) {
-    .personel-gorsel { width: 3rem; }
-    .personel-liste { gap: var(--bosluk-3) 0; }
+    .personel-birim-ad { font-size: var(--olcu-lg); }
+    .personel-liste { margin-left: 0; gap: 0; }
+    .personel-kisi { min-height: 5rem; }
+    .personel-gorsel { width: 3.25rem; }
   }
 }

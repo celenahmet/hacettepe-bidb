@@ -1,6 +1,7 @@
 import { Component, Input, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Language } from '../core/models';
+import { yenidenDene } from '../core/yeniden-dene';
 
 /** Panelden yönetilen tek bir iletişim kaydı. */
 interface ContactChannel {
@@ -68,7 +69,7 @@ export class ContactBlockComponent {
 
   ngOnInit(): void {
     this.http.get<ContactChannel[]>(`/api/${this.dilDegeri}/contact-channels`)
-      .subscribe((l) => this.kanallar.set(l));
+      .pipe(yenidenDene()).subscribe((l) => this.kanallar.set(l));
   }
 
   protected tur(t: string): ContactChannel[] {

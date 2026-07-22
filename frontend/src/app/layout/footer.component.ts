@@ -2,6 +2,7 @@ import { Component, Input, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { RouterLink } from '@angular/router';
 import { Language, Menu } from '../core/models';
+import { yenidenDene } from '../core/yeniden-dene';
 
 /** Alt bilgideki tek bir iletişim kaydı. */
 interface ContactChannel {
@@ -183,11 +184,11 @@ export class FooterComponent {
 
   ngOnInit(): void {
     this.http.get<ContactChannel[]>(`/api/${this.language}/contact-channels`)
-      .subscribe((l) => this.kanallar.set(l));
+      .pipe(yenidenDene()).subscribe((l) => this.kanallar.set(l));
     this.http.get<SocialAccount[]>(`/api/${this.language}/social-accounts`)
-      .subscribe((l) => this.sosyal.set(l));
+      .pipe(yenidenDene()).subscribe((l) => this.sosyal.set(l));
     this.http.get<Menu[]>(`/api/${this.language}/menus`)
-      .subscribe((l) => this.kurumsal.set(l.length ? l[0] : null));
+      .pipe(yenidenDene()).subscribe((l) => this.kurumsal.set(l.length ? l[0] : null));
   }
 
   protected tur(t: string): ContactChannel[] {

@@ -22,8 +22,9 @@ import { Language, StaffUnit } from '../core/models';
         @for (b of birimler(); track b.name + (b.campus ?? '')) {
           <section class="personel-birim">
             <h2 class="personel-birim-ad">
-              {{ b.name }}
+              <span class="personel-birim-metin">{{ b.name }}</span>
               @if (b.campus) { <span class="personel-yerleske">{{ b.campus }}</span> }
+              <span class="personel-sayi">{{ b.members.length }}</span>
             </h2>
 
             @if (b.phone) {
@@ -39,15 +40,25 @@ import { Language, StaffUnit } from '../core/models';
                     @if (k.photoUrl) {
                       <img [src]="k.photoUrl" [alt]="k.fullName" width="60" height="80" loading="lazy">
                     } @else {
+                      <!-- Uc ayri siluet: kadin, erkek, notr. Ayrim sac ve
+                           omuz hattiyla kuruluyor; renk ya da simge farki
+                           kullanilmiyor, cunku rehberde asil bilgi ad ve
+                           gorevdir. -->
                       <svg viewBox="0 0 48 64" aria-hidden="true" focusable="false">
-                        <circle cx="24" cy="24" r="9"></circle>
                         @switch (k.avatar) {
                           @case ('kadin') {
-                            <path d="M6 62c0-9.5 8-16.5 18-16.5S42 52.5 42 62H6z"></path>
-                            <path d="M13 32c.8-8 5-12.5 11-12.5S34.2 24 35 32c-2.4-4-6.4-5.6-11-5.6S15.4 28 13 32z"></path>
+                            <!-- Sac cene hizasinda disari acilir: kulak gibi
+                                 iki cikinti yerine yuze inen bir kutle. -->
+                            <path d="M24 11.5c6.9 0 11.4 5.1 11.4 12.9 0 3.9-1.1 7.3-2.9 9.7 2.4 1.3 4 3.3 4.7 6l.7 2.7H10.1l.7-2.7c.7-2.7 2.3-4.7 4.7-6-1.8-2.4-2.9-5.8-2.9-9.7 0-7.8 4.5-12.9 11.4-12.9z"></path>
+                            <path d="M24 45.5c8.9 0 16.1 6.9 16.1 16.5H7.9c0-9.6 7.2-16.5 16.1-16.5z"></path>
+                          }
+                          @case ('erkek') {
+                            <path d="M24 12.5c6.5 0 10.8 4.7 10.8 12.5S30 38.8 24 38.8 13.2 32.8 13.2 25 17.5 12.5 24 12.5z"></path>
+                            <path d="M24 45.5c10.7 0 19.4 6.6 19.4 16.5H4.6c0-9.9 8.7-16.5 19.4-16.5z"></path>
                           }
                           @default {
-                            <path d="M6 62c0-9.5 8-16.5 18-16.5S42 52.5 42 62H6z"></path>
+                            <circle cx="24" cy="25" r="9"></circle>
+                            <path d="M6.5 62c0-9.3 7.8-15.8 17.5-15.8S41.5 52.7 41.5 62h-35z"></path>
                           }
                         }
                       </svg>
