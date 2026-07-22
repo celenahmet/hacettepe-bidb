@@ -177,6 +177,25 @@ ziyaretçilerin alışık olduğu gezinme görünümü korunur.
 
 ---
 
+## İletişim bağlantıları
+
+Aktarılan içerikte e-postalar eski bir spam korumasıyla yazılmıştı
+(`gokhan{at}hacettepe.edu.tr`). Bu yazım günümüzde koruma sağlamıyor,
+buna karşılık adresi kopyalamayı ve tıklamayı zorlaştırıyor.
+
+Çizim sırasında düzeltilir: `{at}` işaretine dönüşür, düz yazılmış
+e-postalar ve telefon numaraları tıklanabilir hâle gelir. Yalnızca metin
+düğümleri işlenir; öznitelikler ve zaten bağlantı içindeki metinler
+atlanır, böylece iç içe bağlantı oluşmaz.
+
+Telefon deseni +90 veya 0 ile başlayan numaralarla sınırlıdır; metindeki
+yıl, sayı ve IP dizilerinin yanlışlıkla numaraya dönüşmesi engellenir.
+
+**Saklanan içerik değişmez.** Kaynak kopyası bozulmadığı için doğrulama
+70/70 geçmeye devam eder; istenirse dönüşüm tek yerden kaldırılabilir.
+
+---
+
 ## Bağlantı dizini kartları
 
 Bazı sayfalar (Bilgi ve Dokümanlar, Formlar, Kişisel Sayfalar) yalnızca

@@ -28,6 +28,13 @@
      kırmızıyla belirtilir — alt çizgi kullanılmaz. */
   .ust { border-bottom: 1px solid var(--cizgi); background: var(--yuzey); }
 
+  /* Kurum adı büyük harf; okunabilirlik için harf aralığı hafifçe açılır */
+  .logo-yazi strong {
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    font-size: 1.18rem;
+  }
+
   .ust-ic { min-height: 88px; gap: var(--bosluk-5); }
 
   .ust-menu {
@@ -403,8 +410,10 @@
   .alt-marka img { flex: none; }
   .alt-marka strong {
     display: block;
-    font-size: var(--olcu-md);
+    font-size: var(--olcu-sm);
     font-weight: var(--kalinlik-kalin);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
     color: var(--metin);
     line-height: var(--satir-sik);
   }
