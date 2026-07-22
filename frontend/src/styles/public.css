@@ -441,12 +441,15 @@
   }
 
   /* Bölüm etiketleri: küçük punto, geniş harf aralığı, kırmızı vurgu */
+  /* Sütun başlıkları. Boşluklu büyük harf, küçük punto ile birleşince
+     inceliyordu; punto ve kalınlık artırıldı, boşluk azaltıldı. Başlığın
+     altındaki bağlantılardan bakışta ayrılması gerekiyor. */
   .alt-etiket {
     display: block;
     margin-bottom: var(--bosluk-3);
-    font-size: 10px;
-    font-weight: var(--kalinlik-kalin);
-    letter-spacing: 0.16em;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--hu-kirmizi);
   }

@@ -7,18 +7,20 @@ import { Language, Slide } from '../core/models';
  *
  * TASARIM KARARLARI
  *
- * Metin, görselin üstünde koyu bir geçiş katmanında yüzmüyor; kendi düz
- * zeminli panelinde duruyor ve görselin üstüne biniyor. Geçiş katmanı
- * (gradient scrim) yaygın bir çözüm ama fotoğrafı karartarak bozar ve
- * metnin okunurluğu her görselde farklı çıkar. Düz panel her görselde aynı
- * kontrastı verir ve mimari bir düzen kurar.
+ * Metnin ardında kutu yok; doğrudan fotoğrafın üstünde duruyor. Okunurluk,
+ * metnin altına zemin koyarak değil fotoğrafın tamamı eşit biçimde
+ * koyulaştırılarak sağlanıyor — ayrıntısı styles/hero.css içinde.
  *
  * Geçiş yalnızca sönümlemeyle yapılır, kaydırmayla değil. Kayan slaytlar
  * gözü izlemeye zorlar; kurumsal bir sayfada gereksiz bir hareket.
  *
- * Göstergeler süslü noktalar değil, dolan çizgiler: kaç slayt olduğunu ve
- * sıradakine ne kadar kaldığını gösterirler. Bilgi taşıdıkları için
- * duruyorlar.
+ * Denetim yalnızca göstergelerden ibaret: dolan ince çizgiler hem kaç slayt
+ * olduğunu hem sıradakine ne kadar kaldığını gösterir, hem de tıklanabilir.
+ * Ayrı ok düğmelerine gerek kalmaz; onlar fotoğrafın üstünde iki kutu
+ * olarak durup alanın sadeliğini bozuyordu.
+ *
+ * Hiçbir öge fotoğrafın dışına taşmaz: metin de denetim de çerçevenin
+ * içinde durur.
  *
  * ERİŞİLEBİLİRLİK
  * - İmleç veya klavye odağı alan üzerindeyken dönme durur.
@@ -72,13 +74,11 @@ import { Language, Slide } from '../core/models';
           </div>
         </div>
 
-        <!-- denetimler -->
+        <!-- Denetim yalnızca göstergelerden ibaret: her çizgi tıklanabilir,
+             yani ileri-geri gitmek için ayrı ok düğmesine gerek yok. Ok
+             düğmeleri fotoğrafın üstünde iki kutu olarak duruyor ve alanın
+             sadeliğini bozuyordu. Klavyeyle ok tuşları çalışmayı sürdürüyor. -->
         <div class="kap hero-denetim">
-          <button type="button" class="hero-ok" (click)="oncekiSlayt()"
-                  [attr.aria-label]="dilDegeri === 'en' ? 'Previous' : 'Önceki'">
-            <span aria-hidden="true">&#8592;</span>
-          </button>
-
           <ol class="hero-izler">
             @for (s of slaytlar; track s.imageUrl; let i = $index) {
               <li>
@@ -93,11 +93,6 @@ import { Language, Slide } from '../core/models';
               </li>
             }
           </ol>
-
-          <button type="button" class="hero-ok" (click)="sonrakiSlayt()"
-                  [attr.aria-label]="dilDegeri === 'en' ? 'Next' : 'Sonraki'">
-            <span aria-hidden="true">&#8594;</span>
-          </button>
         </div>
 
         <p class="sr-only" aria-live="polite">{{ gecerli()?.title }}</p>
