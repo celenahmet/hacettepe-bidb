@@ -15,6 +15,7 @@ import { EImzaNavComponent } from './e-imza-nav.component';
 import { UnitsComponent } from './units.component';
 import { EmailOperationsComponent } from './email-operations.component';
 import { WebmailServicesComponent } from './webmail-services.component';
+import { Office365GuidesComponent } from './office365-guides.component';
 
 /** /tr/<slug> ve /en/<slug> adreslerindeki içerik sayfası. */
 @Component({
@@ -27,7 +28,8 @@ import { WebmailServicesComponent } from './webmail-services.component';
     EImzaNavComponent,
     UnitsComponent,
     EmailOperationsComponent,
-    WebmailServicesComponent
+    WebmailServicesComponent,
+    Office365GuidesComponent
   ],
   template: `
     <div class="kap sayfa-duzen">
@@ -65,7 +67,13 @@ import { WebmailServicesComponent } from './webmail-services.component';
                 : 'Bilgi İşlem Daire Başkanlığımızın organizasyon yapısı aşağıda gösterilmiştir.' }}
             </p>
           }
-          @if (s.slug === 'webmail') {
+          @if (s.slug === 'office365') {
+            <!-- Office 365: kaynak PDF bağlantıları, mevcut Microsoft
+                 ikonları ve kısa kullanım açıklamalarıyla ayrıştırılır. -->
+            <bidb-office365-guides
+              [rawHtml]="s.contentHtml ?? ''"
+              [dilDegeri]="language()"></bidb-office365-guides>
+          } @else if (s.slug === 'webmail') {
             <!-- E-posta giriş servisleri: kaynak görseller ve bağlantılar
                  korunur; yalnızca bu sayfaya özel kullanım yönlendirmesi
                  ve güvenli erişim açıklamasıyla sunulur. -->
