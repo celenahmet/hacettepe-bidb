@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 import tr.edu.hacettepe.bidb.model.AnalyticsPageView;
 
+import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public interface AnalyticsPageViewRepo extends JpaRepository<AnalyticsPageView, 
         Long getViews();
         Long getCurrentMonthViews();
         Long getPreviousMonthViews();
-        OffsetDateTime getLastViewedAt();
+        Instant getLastViewedAt();
     }
 
     interface DimensionAggregate {

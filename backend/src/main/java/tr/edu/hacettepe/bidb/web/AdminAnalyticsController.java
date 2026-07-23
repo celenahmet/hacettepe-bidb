@@ -52,7 +52,7 @@ public class AdminAnalyticsController {
                 .map(item -> new PageReport(item.getPath(), item.getViews(),
                         item.getCurrentMonthViews(), item.getPreviousMonthViews(),
                         change(item.getCurrentMonthViews(), item.getPreviousMonthViews()),
-                        item.getLastViewedAt()))
+                        item.getLastViewedAt().atZone(REPORT_ZONE).toOffsetDateTime()))
                 .toList();
 
         long total = pages.stream().mapToLong(PageReport::views).sum();
