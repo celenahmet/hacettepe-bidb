@@ -30,6 +30,9 @@ public class SecurityConfig {
                 .requestMatchers("/actuator/health", "/error").permitAll()
                 // Yayın uçları: yalnızca okuma, herkese açık
                 .requestMatchers(HttpMethod.GET, "/api/tr/**", "/api/en/**").permitAll()
+                // Dış bağlantılı duyurularda görüntülenme sayacı
+                .requestMatchers(HttpMethod.POST,
+                        "/api/tr/news/*/view", "/api/en/news/*/view").permitAll()
                 // Yönetim uçları
                 .requestMatchers("/api/admin/**").authenticated()
                 .anyRequest().denyAll())

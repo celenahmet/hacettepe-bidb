@@ -19,14 +19,15 @@ public record HomeDto(
         }
     }
 
-    public record NewsDto(String title, LocalDate date, String url,
-                            String summary, String imageUrl, String imageAlt, boolean hasOwnPage) {
+    public record NewsDto(Long id, String title, LocalDate date, String url,
+                            String summary, String imageUrl, String imageAlt,
+                            boolean hasOwnPage, long viewCount) {
         public static NewsDto of(News d) {
             // Haberin kendi sayfası varsa oraya, yoksa verilen bağlantıya gidilir
             boolean kendi = d.getSlug() != null && !d.getSlug().isBlank();
-            String url = kendi ? "/" + d.getLanguage() + "/duyuru/" + d.getSlug() : d.getExternalUrl();
-            return new NewsDto(d.getTitle(), d.getPublishedOn(), url,
-                    d.getSummary(), d.getImageUrl(), d.getImageAlt(), kendi);
+            String url = kendi ? "/" + d.getLanguage() + "/newsItem/" + d.getSlug() : d.getExternalUrl();
+            return new NewsDto(d.getId(), d.getTitle(), d.getPublishedOn(), url,
+                    d.getSummary(), d.getImageUrl(), d.getImageAlt(), kendi, d.getViewCount());
         }
     }
 }

@@ -1,6 +1,6 @@
-import { Component, Input, computed, signal } from '@angular/core';
+import { Component, Input, computed } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { DatePipe, DecimalPipe } from '@angular/common';
 import { Language, NewsSummary } from '../core/models';
 
 /** Bir haberin konusu — başlıktan çıkarılır, görsel dili buna göre değişir. */
@@ -28,12 +28,16 @@ type Konu = 'personel' | 'yazilim' | 'eposta' | 'duyuru';
  */
 @Component({
   selector: 'bidb-news-card',
-  imports: [RouterLink, DatePipe],
+  imports: [RouterLink, DatePipe, DecimalPipe],
+  host: {
+    '[class.one-cikan-kapsayici]': 'oneCikan'
+  },
   template: `
     <article class="haber-kart" [class.one-cikan]="oneCikan">
       <div class="haber-kapak" [attr.data-konu]="konu()">
         @if (haber.imageUrl) {
-          <img [src]="haber.imageUrl" [alt]="haber.imageAlt || haber.title" loading="lazy">
+          <img [src]="haber.imageUrl" [alt]="haber.imageAlt || haber.title"
+               loading="lazy" decoding="async">
         } @else {
           <svg class="haber-kapak-ikon" viewBox="0 0 24 24" width="46" height="46"
                aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.4"
@@ -64,15 +68,27 @@ type Konu = 'personel' | 'yazilim' | 'eposta' | 'duyuru';
       </div>
 
       <div class="haber-govde">
-        <time class="haber-tarih" [attr.datetime]="haber.date">
-          {{ haber.date | date: 'd MMMM yyyy' : '' : dil }}
-        </time>
+        <div class="haber-meta">
+          <time class="haber-tarih" [attr.datetime]="haber.date">
+            {{ haber.date | date: 'd MMMM yyyy' : '' : dil }}
+          </time>
+          <span class="haber-goruntulenme"
+                [attr.aria-label]="goruntulenmeEtiketi()">
+            <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"
+                 fill="none" stroke="currentColor" stroke-width="1.6">
+              <path d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6-9.5-6-9.5-6z"/>
+              <circle cx="12" cy="12" r="2.6"/>
+            </svg>
+            <span>{{ haber.viewCount | number: '1.0-0' : dil }}</span>
+          </span>
+        </div>
 
         <h3 class="haber-baslik">
           @if (haber.hasOwnPage) {
             <a [routerLink]="haber.url">{{ haber.title }}</a>
           } @else {
-            <a [href]="haber.url" target="_blank" rel="noopener">{{ haber.title }}</a>
+            <a [href]="haber.url" target="_blank" rel="noopener"
+               (click)="disBaglantiGoruntulenmesi()">{{ haber.title }}</a>
           }
         </h3>
 
@@ -91,6 +107,24 @@ export class NewsCardComponent {
 
   protected get dil(): string {
     return this.dilDegeri === 'en' ? 'en-US' : 'tr-TR';
+  }
+
+  protected goruntulenmeEtiketi(): string {
+    const sayi = this.haber?.viewCount ?? 0;
+    return this.dilDegeri === 'en' ? `${sayi} views` : `${sayi} görüntülenme`;
+  }
+
+  /**
+   * Dış bağlantılı duyuruların kendi detay sayfası olmadığı için tıklamayı
+   * sayaca tarayıcı kapanmadan güvenilir biçimde iletir.
+   */
+  protected disBaglantiGoruntulenmesi(): void {
+    if (typeof navigator === 'undefined' || this.haber.hasOwnPage || !this.haber.id) return;
+    const adres = `/api/${this.dilDegeri}/news/${this.haber.id}/view`;
+    const veri = new Blob([], { type: 'text/plain;charset=UTF-8' });
+    if (!navigator.sendBeacon(adres, veri)) {
+      void fetch(adres, { method: 'POST', keepalive: true });
+    }
   }
 
   /** Başlıktan konu çıkarımı; en dar eşleşmeden genele doğru sıralı. */

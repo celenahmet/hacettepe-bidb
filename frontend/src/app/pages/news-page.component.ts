@@ -19,6 +19,7 @@ interface Haber {
   imageAlt: string | null;
   contentHtml: string | null;
   externalUrl: string | null;
+  viewCount: number;
 }
 
 /** Görselli haber sayfası: /tr/newsItem/<slug> */
@@ -35,6 +36,15 @@ interface Haber {
             <h1 class="sayfa-baslik">{{ h.title }}</h1>
             <p class="haber-tarih">
               <time [attr.datetime]="h.date">{{ tarihBicimi(h.date) }}</time>
+              <span aria-hidden="true">·</span>
+              <span class="haber-goruntulenme">
+                <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"
+                     fill="none" stroke="currentColor" stroke-width="1.6">
+                  <path d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6-9.5-6-9.5-6z"/>
+                  <circle cx="12" cy="12" r="2.6"/>
+                </svg>
+                {{ h.viewCount }} {{ language() === 'en' ? 'views' : 'görüntülenme' }}
+              </span>
             </p>
 
             @if (h.imageUrl) {
@@ -61,7 +71,15 @@ interface Haber {
     </div>
   `,
   styles: [`
-    .haber-tarih { color: var(--metin-acik); font-size: .9rem; margin: -8px 0 16px; }
+    .haber-tarih {
+      display: flex;
+      align-items: center;
+      gap: .55rem;
+      color: var(--metin-acik);
+      font-size: .9rem;
+      margin: -8px 0 16px;
+    }
+    .haber-goruntulenme { display: inline-flex; align-items: center; gap: .35rem; }
     /* Görsel doğal boyutundan büyütülmez; küçük bir dosya gerilip bozulmaz. */
     .haber-gorsel { display: block; max-width: min(100%, 760px); height: auto; margin: 0 0 20px; border-radius: 4px; }
     .haber-ozet { font-size: 1.05rem; color: #3c4652; margin-bottom: 18px; }

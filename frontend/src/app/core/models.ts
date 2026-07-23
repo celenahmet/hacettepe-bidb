@@ -51,6 +51,7 @@ export interface Shortcut {
 }
 
 export interface NewsSummary {
+  id: number;
   title: string;
   date: string;
   url: string | null;
@@ -59,6 +60,7 @@ export interface NewsSummary {
   imageAlt: string | null;
   /** Haberin kendi sayfası varsa site içi bağlantı, yoksa dış bağlantıdır */
   hasOwnPage: boolean;
+  viewCount: number;
 }
 
 /** Ana sayfanın tüm bileşenleri tek istekte gelir. */

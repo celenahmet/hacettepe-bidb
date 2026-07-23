@@ -1,32 +1,30 @@
-/* Haber ve duyuru kartları.
-
-   Duyurular önce başlık + tarihten ibaret düz bir listeydi. Kart düzeni
-   her duyuruya bir kapak, bir konu etiketi ve okunur bir tarih veriyor;
-   liste tek renk bir yığın olmaktan çıkıp taranabilir bir panoya dönüyor.
-
-   ── KAPAK ─────────────────────────────────────────────────────────────
-
-   Fotoğrafı olan duyuru fotoğrafını gösterir. Çoğunda fotoğraf yok; onlar
-   için KONUYA göre kurumsal renkte bir kapak üretiliyor (bileşende konu
-   başlıktan çıkarılıyor). Kapak tamamen CSS + inline SVG — dış görsele
-   bağlı değil, kırılmıyor, eskimiyor. Alakasız bir stok görsel yerine
-   duyurunun ne hakkında olduğunu söyleyen sade bir işaret.
-
-   Renkler Hacettepe paletinden: lacivert taban, konuya göre tek bir vurgu.
-   Rengârenk değil ama tek düze de değil — dört konu dört farklı ton. */
+/*
+ * Haber ve duyurular
+ *
+ * Fotoğraf, başlık ve okunma sayısı kartın ana bilgi katmanıdır. Kategori
+ * yalnızca taramayı kolaylaştırır; fotoğrafı olmayan eski duyurular ise
+ * konuya göre üretilen sade kurumsal kapakla çalışmaya devam eder.
+ */
 
 @layer kamu {
-
-  /* ---- Kart ---------------------------------------------------------- */
+  bidb-news-card {
+    display: block;
+    min-width: 0;
+  }
 
   .haber-kart {
+    position: relative;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    background: var(--yuzey);
-    border: 1px solid var(--cizgi);
-    border-radius: var(--kose-lg);
     overflow: hidden;
-    transition: border-color var(--gecis), box-shadow var(--gecis), transform var(--gecis);
+    border: 1px solid var(--cizgi);
+    border-radius: 3px;
+    background: var(--yuzey);
+    transition:
+      border-color var(--gecis),
+      box-shadow var(--gecis),
+      transform var(--gecis);
   }
 
   .haber-kart:hover {
@@ -35,18 +33,22 @@
     transform: translateY(-2px);
   }
 
-  /* ---- Kapak --------------------------------------------------------- */
+  /* ================= kapak ================= */
 
   .haber-kapak {
     position: relative;
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 16 / 10;
     display: grid;
     place-items: center;
     overflow: hidden;
+    border-bottom: 3px solid var(--hu-kirmizi);
     color: #fff;
-    /* varsayılan (duyuru) */
-    background: linear-gradient(135deg, var(--hu-lacivert) 0%, #14294a 100%);
+    background: var(--hu-lacivert);
   }
+
+  .haber-kapak[data-konu="personel"] { background: #831522; }
+  .haber-kapak[data-konu="yazilim"] { background: #173d68; }
+  .haber-kapak[data-konu="eposta"] { background: #24557f; }
 
   .haber-kapak img {
     position: absolute;
@@ -54,150 +56,191 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 500ms ease;
   }
 
-  /* Konuya göre zemin. Her biri lacivertten türeyen ama ayırt edilebilir
-     bir aile; kırmızı yalnızca personel alımında öne çıkıyor çünkü en çok
-     aranan duyuru türü o. */
-  .haber-kapak[data-konu="personel"] {
-    background: linear-gradient(135deg, #7d1420 0%, var(--hu-kirmizi-koyu) 100%);
-  }
-  .haber-kapak[data-konu="yazilim"] {
-    background: linear-gradient(135deg, #14375f 0%, var(--hu-mavi) 130%);
-  }
-  .haber-kapak[data-konu="eposta"] {
-    background: linear-gradient(135deg, #1a3a63 0%, #2a5f8f 100%);
-  }
-
-  /* İnce bir nokta dokusu: düz gradient fazla boş kalıyordu, doku yüzeye
-     hafif bir kurumsal karakter veriyor. Çok belirsiz olsun diye opaklık
-     düşük. */
-  .haber-kapak::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image: radial-gradient(rgb(255 255 255 / 8%) 1px, transparent 1.5px);
-    background-size: 14px 14px;
-    pointer-events: none;
-  }
-
-  .haber-kapak img ~ .haber-kapak::after { display: none; }
+  .haber-kart:hover .haber-kapak img { transform: scale(1.025); }
 
   .haber-kapak-ikon {
     position: relative;
     z-index: 1;
-    opacity: 0.9;
+    width: 3.25rem;
+    height: 3.25rem;
+    opacity: 0.88;
   }
 
-  /* Konu etiketi kapağın köşesinde: kartı açmadan türü söyler. */
   .haber-etiket {
     position: absolute;
-    left: var(--bosluk-3);
     top: var(--bosluk-3);
+    left: var(--bosluk-3);
     z-index: 2;
-    padding: 3px var(--bosluk-3);
-    border-radius: var(--kose-tam);
-    background: rgb(255 255 255 / 92%);
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    max-width: calc(100% - 2 * var(--bosluk-3));
+    padding: 0.3rem 0.65rem;
+    overflow: hidden;
+    border-left: 3px solid var(--hu-kirmizi);
+    background: #fff;
     color: var(--hu-lacivert);
+    font-size: 0.625rem;
+    font-weight: var(--kalinlik-kalin);
+    letter-spacing: 0.09em;
+    line-height: 1.25;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    white-space: nowrap;
   }
 
-  /* Fotoğraflı kartta etiket okunur kalsın diye küçük bir gölge. */
-  .haber-kapak img + .haber-etiket { box-shadow: var(--golge-1); }
-
-  /* ---- Gövde --------------------------------------------------------- */
+  /* ================= bilgi hiyerarşisi ================= */
 
   .haber-govde {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    gap: var(--bosluk-2);
+    gap: var(--bosluk-3);
+    min-width: 0;
     padding: var(--bosluk-4) var(--bosluk-4) var(--bosluk-5);
-    flex: 1;
   }
 
-  .haber-tarih {
+  .haber-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--bosluk-3);
+    min-width: 0;
+    color: var(--metin-3);
     font-size: var(--olcu-xs);
     font-weight: var(--kalinlik-orta);
-    letter-spacing: 0.02em;
-    color: var(--metin-3);
     font-variant-numeric: tabular-nums;
   }
 
+  .haber-tarih {
+    min-width: 0;
+    overflow: hidden;
+    letter-spacing: 0.01em;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .haber-goruntulenme {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--metin-2);
+  }
+
+  .haber-goruntulenme svg { color: var(--hu-kirmizi); }
+
   .haber-baslik {
     margin: 0;
-    font-size: var(--olcu-md);
+    color: var(--metin);
+    font-size: clamp(1.05rem, 1.35vw, 1.2rem);
     font-weight: var(--kalinlik-kalin);
     line-height: 1.35;
-    color: var(--metin);
+    text-wrap: pretty;
   }
 
   .haber-baslik a { color: inherit; }
   .haber-baslik a:hover { color: var(--hu-kirmizi); }
 
-  /* Kartın her yeri tıklanabilir olsun: başlık bağlantısı kartı kaplar,
-     ama gövdedeki diğer bağlantılar (varsa) üstte kalır. */
   .haber-baslik a::after {
     content: "";
     position: absolute;
     inset: 0;
   }
 
-  .haber-kart { position: relative; }
-
   .haber-ozet {
+    display: -webkit-box;
     margin: 0;
+    overflow: hidden;
+    color: var(--metin-2);
     font-size: var(--olcu-sm);
     line-height: var(--satir-normal);
-    color: var(--metin-2);
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
-    overflow: hidden;
+    -webkit-line-clamp: 3;
   }
 
-  /* ---- Öne çıkan (ana sayfada en yeni duyuru) ------------------------ */
+  /* ================= manşet ================= */
 
-  /* İlk duyuru geniş: kapak solda, metin sağda, iki sütun. Bir haber
-     panosunun "manşet"i gibi. Dar ekranda tek sütuna iner. */
-  @media (min-width: 40rem) {
+  .haber-izgara > bidb-news-card.one-cikan-kapsayici {
+    grid-column: 1 / -1;
+  }
+
+  @media (min-width: 48rem) {
     .haber-kart.one-cikan {
+      min-height: 22rem;
       display: grid;
-      grid-template-columns: 1.15fr 1fr;
+      grid-template-columns: minmax(0, 1.45fr) minmax(18rem, 1fr);
     }
 
     .haber-kart.one-cikan .haber-kapak {
-      aspect-ratio: auto;
       height: 100%;
-      min-height: 15rem;
+      min-height: 22rem;
+      aspect-ratio: auto;
+      border-right: 3px solid var(--hu-kirmizi);
+      border-bottom: 0;
+    }
+
+    .haber-kart.one-cikan .haber-kapak-ikon {
+      width: 5rem;
+      height: 5rem;
     }
 
     .haber-kart.one-cikan .haber-govde {
       justify-content: center;
-      padding: var(--bosluk-6);
+      padding: clamp(2rem, 4vw, 3.25rem);
     }
 
-    .haber-kart.one-cikan .haber-baslik { font-size: var(--olcu-xl); line-height: 1.25; }
-    .haber-kart.one-cikan .haber-kapak-ikon { transform: scale(1.5); }
+    .haber-kart.one-cikan .haber-baslik {
+      font-size: clamp(1.65rem, 2.5vw, 2.25rem);
+      line-height: 1.18;
+    }
+
+    .haber-kart.one-cikan .haber-ozet {
+      font-size: var(--olcu-md);
+      -webkit-line-clamp: 4;
+    }
   }
 
-  /* ---- Izgara -------------------------------------------------------- */
+  /* ================= ızgara ================= */
 
   .haber-izgara {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: var(--bosluk-5);
     margin-top: var(--bosluk-5);
   }
 
-  /* Öne çıkan kart ızgarada tam satırı kaplar. */
-  .haber-izgara .one-cikan { grid-column: 1 / -1; }
-}
+  @media (max-width: 67.5rem) {
+    .haber-izgara { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
 
-@layer kamu {
-  /* Bölüm başlığı ile "Tümü" bağlantısı aynı satırda. */
+  @media (max-width: 47.99rem) {
+    .haber-izgara { grid-template-columns: 1fr; }
+
+    .haber-kart.one-cikan .haber-kapak { aspect-ratio: 16 / 10; }
+    .haber-kart.one-cikan .haber-baslik {
+      font-size: clamp(1.3rem, 6vw, 1.65rem);
+      line-height: 1.25;
+    }
+  }
+
+  @media (max-width: 25rem) {
+    .haber-meta {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: var(--bosluk-2);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .haber-kart,
+    .haber-kapak img { transition: none; }
+    .haber-kart:hover { transform: none; }
+    .haber-kart:hover .haber-kapak img { transform: none; }
+  }
+
+  /* ================= bölüm başlığı ================= */
+
   .duyurular .bolum-baslik {
     display: flex;
     align-items: baseline;
@@ -212,9 +255,9 @@
     display: inline-flex;
     align-items: center;
     gap: var(--bosluk-2);
+    color: var(--hu-kirmizi);
     font-size: var(--olcu-sm);
     font-weight: var(--kalinlik-orta);
-    color: var(--hu-kirmizi);
     white-space: nowrap;
   }
 

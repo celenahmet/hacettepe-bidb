@@ -46,6 +46,9 @@ public class News {
     @Column(name = "content_html", columnDefinition = "text")
     private String contentHtml;
 
+    @Column(name = "view_count", nullable = false)
+    private long viewCount = 0;
+
     public Long getId() { return id; }
     public String getLanguage() { return language; }
     public String getTitle() { return title; }
@@ -71,4 +74,5 @@ public class News {
     public void setImageAlt(String imageAlt) { this.imageAlt = imageAlt; }
     public String getContentHtml() { return contentHtml; }
     public void setContentHtml(String contentHtml) { this.contentHtml = contentHtml; }
+    public long getViewCount() { return viewCount; }
 }
