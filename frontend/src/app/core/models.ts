@@ -73,11 +73,14 @@ export interface HomeData {
 
 export interface StaffMember {
   fullName: string;
+  /** Yönetim panelinden düzenlenen görev veya kurumsal unvan. */
   roleTitle: string | null;
   note: string | null;
   /** Birim sorumlusu; kaynak sayfada adın sonundaki yıldızla gösteriliyordu */
   lead: boolean;
   photoUrl: string | null;
+  /** Yönetim panelinden girilen kurumsal e-posta; yayın sayfasında istek üzerine gösterilir. */
+  email: string | null;
   /** Fotoğraf yoksa gösterilecek varsayılan ikon: 'kadin' | 'erkek' | null */
   avatar: string | null;
 }

@@ -28,7 +28,7 @@ public class StaffMember {
     @Column(name = "full_name", nullable = false, length = 200)
     private String fullName;
 
-    /** Yalnızca yönetim kadrosunda dolu: "Daire Başkanı" gibi. */
+    /** Yönetim panelinden düzenlenen görev veya kurumsal unvan. */
     @Column(name = "role_title", length = 200)
     private String roleTitle;
 
@@ -41,6 +41,10 @@ public class StaffMember {
 
     @Column(name = "photo_url", length = 300)
     private String photoUrl;
+
+    /** Yayın sayfasında kullanıcı isteğiyle gösterilen kurumsal e-posta. */
+    @Column(length = 254)
+    private String email;
 
     /**
      * Fotoğraf yoksa hangi varsayılan ikonun gösterileceği: "kadin",
@@ -66,6 +70,8 @@ public class StaffMember {
     public void setLead(boolean lead) { this.lead = lead; }
     public String getPhotoUrl() { return photoUrl; }
     public void setPhotoUrl(String photoUrl) { this.photoUrl = photoUrl; }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
     public String getAvatar() { return avatar; }
     public void setAvatar(String avatar) { this.avatar = avatar; }
     public int getSortOrder() { return sortOrder; }

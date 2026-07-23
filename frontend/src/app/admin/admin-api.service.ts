@@ -124,14 +124,16 @@ export interface ContactChannel {
 
 export interface StaffMember {
   id: number | null;
+  unitId: number | null;
   fullName: string;
-  /** Yalnızca yönetim kadrosunda dolu: "Daire Başkanı" gibi */
+  /** Yönetim panelinden düzenlenen görev veya kurumsal unvan */
   roleTitle: string | null;
   /** Adın yanındaki açıklama: "(e-imza)" */
   note: string | null;
   /** Birim sorumlusu */
   lead: boolean;
   photoUrl: string | null;
+  email: string | null;
   /** Fotoğraf yoksa gösterilecek varsayılan ikon: 'kadin' | 'erkek' | null */
   avatar: string | null;
   sortOrder: number;
@@ -388,9 +390,10 @@ export class AdminApiService {
   }
 
   saveStaffMember(unitId: number, k: StaffMember): Observable<unknown> {
+    const hedefBirimId = k.unitId ?? unitId;
     return k.id
       ? this.http.put(`/api/admin/staff/members/${k.id}`, k, { headers: this.basliklar() })
-      : this.http.post(`/api/admin/staff/units/${unitId}/members`, k, { headers: this.basliklar() });
+      : this.http.post(`/api/admin/staff/units/${hedefBirimId}/members`, k, { headers: this.basliklar() });
   }
 
   deleteStaffMember(id: number): Observable<void> {

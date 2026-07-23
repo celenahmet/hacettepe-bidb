@@ -32,15 +32,15 @@ public class AdminStaffController {
 
     /* ---- okuma ---------------------------------------------------- */
 
-    public record MemberView(Long id, String fullName, String roleTitle, String note,
-                             boolean lead, String photoUrl, String avatar, int sortOrder) {}
+    public record MemberView(Long id, Long unitId, String fullName, String roleTitle, String note,
+                             boolean lead, String photoUrl, String email, String avatar, int sortOrder) {}
 
     public record UnitView(Long id, String language, String name, String campus, String phone,
                            int sortOrder, boolean published, List<MemberView> members) {}
 
     private static MemberView view(StaffMember k) {
-        return new MemberView(k.getId(), k.getFullName(), k.getRoleTitle(), k.getNote(),
-                k.isLead(), k.getPhotoUrl(), k.getAvatar(), k.getSortOrder());
+        return new MemberView(k.getId(), k.getUnit().getId(), k.getFullName(), k.getRoleTitle(), k.getNote(),
+                k.isLead(), k.getPhotoUrl(), k.getEmail(), k.getAvatar(), k.getSortOrder());
     }
 
     private static UnitView view(StaffUnit b) {
@@ -104,8 +104,8 @@ public class AdminStaffController {
 
     /* ---- kişi -------------------------------------------------------- */
 
-    public record MemberRequest(String fullName, String roleTitle, String note,
-                                boolean lead, String photoUrl, String avatar, int sortOrder) {
+    public record MemberRequest(Long unitId, String fullName, String roleTitle, String note,
+                                boolean lead, String photoUrl, String email, String avatar, int sortOrder) {
 
         StaffMember apply(StaffMember k) {
             k.setFullName(fullName);
@@ -113,6 +113,7 @@ public class AdminStaffController {
             k.setNote(bosIseNull(note));
             k.setLead(lead);
             k.setPhotoUrl(bosIseNull(photoUrl));
+            k.setEmail(bosIseNull(email));
             k.setAvatar(bosIseNull(avatar));
             k.setSortOrder(sortOrder);
             return k;
@@ -124,6 +125,9 @@ public class AdminStaffController {
     public ResponseEntity<?> createMember(@PathVariable Long unitId, @RequestBody MemberRequest request) {
         if (request.fullName() == null || request.fullName().isBlank()) {
             return ResponseEntity.badRequest().body("Ad soyad boş olamaz.");
+        }
+        if (!epostaGecerli(request.email())) {
+            return ResponseEntity.badRequest().body("E-posta adresi geçerli değil.");
         }
         return units.findById(unitId).map(b -> {
             StaffMember k = request.apply(new StaffMember());
@@ -141,9 +145,29 @@ public class AdminStaffController {
         if (request.fullName() == null || request.fullName().isBlank()) {
             return ResponseEntity.badRequest().body("Ad soyad boş olamaz.");
         }
-        return members.findById(id)
-                .map(k -> ResponseEntity.ok((Object) view(members.save(request.apply(k)))))
-                .orElse(ResponseEntity.notFound().build());
+        if (!epostaGecerli(request.email())) {
+            return ResponseEntity.badRequest().body("E-posta adresi geçerli değil.");
+        }
+        StaffMember kisi = members.findById(id).orElse(null);
+        if (kisi == null) return ResponseEntity.notFound().build();
+
+        StaffUnit hedefBirim = kisi.getUnit();
+        boolean birimDegisti = request.unitId() != null
+                && !request.unitId().equals(kisi.getUnit().getId());
+        if (birimDegisti) {
+            hedefBirim = units.findById(request.unitId()).orElse(null);
+            if (hedefBirim == null) {
+                return ResponseEntity.badRequest().body("Seçilen birim bulunamadı.");
+            }
+        }
+
+        request.apply(kisi);
+        if (birimDegisti) {
+            kisi.setUnit(hedefBirim);
+            kisi.setSortOrder(hedefBirim.getMembers().stream()
+                    .mapToInt(StaffMember::getSortOrder).max().orElse(0) + 1);
+        }
+        return ResponseEntity.ok(view(members.save(kisi)));
     }
 
     @DeleteMapping("/members/{id}")
@@ -215,5 +239,11 @@ public class AdminStaffController {
 
     private static String bosIseNull(String s) {
         return (s == null || s.isBlank()) ? null : s.trim();
+    }
+
+    private static boolean epostaGecerli(String eposta) {
+        if (eposta == null || eposta.isBlank()) return true;
+        return eposta.length() <= 254
+                && eposta.matches("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$");
     }
 }

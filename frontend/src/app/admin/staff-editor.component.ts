@@ -69,10 +69,25 @@ import { AdminApiService, StaffMember, StaffUnit } from './admin-api.service';
 
         <label for="kunvan">Unvan</label>
         <input id="kunvan" name="kunvan" [(ngModel)]="k.roleTitle" placeholder="Daire Başkanı">
-        <small>Yalnızca yönetim kadrosu için; boş bırakılabilir.</small>
+        <small>Görev veya kurumsal unvan; boş bırakılabilir.</small>
+
+        <label for="kbirim">Bağlı birim</label>
+        <select id="kbirim" name="kbirim" [(ngModel)]="k.unitId" required>
+          @for (birim of birimler(); track birim.id) {
+            <option [ngValue]="birim.id">
+              {{ birim.name }}{{ birim.campus ? ' (' + birim.campus + ')' : '' }}
+            </option>
+          }
+        </select>
+        <small>Mevcut bir kişi başka bir birime taşındığında yeni birimin sonuna eklenir.</small>
 
         <label for="knot">Açıklama</label>
         <input id="knot" name="knot" [(ngModel)]="k.note" placeholder="e-imza">
+
+        <label for="keposta">Kurumsal e-posta</label>
+        <input id="keposta" name="keposta" type="email" [(ngModel)]="k.email"
+               placeholder="ad.soyad@hacettepe.edu.tr">
+        <small>Boş bırakılırsa profil kartında e-posta bilgisinin girilmediği belirtilir.</small>
 
         <label>
           <input type="checkbox" name="ksorumlu" [(ngModel)]="k.lead"> Birim sorumlusu
@@ -125,7 +140,7 @@ import { AdminApiService, StaffMember, StaffUnit } from './admin-api.service';
 
         <div class="tablo-kaydir">
           <table class="yonetim-tablo">
-            <thead><tr><th></th><th>Ad soyad</th><th>Unvan / açıklama</th><th></th></tr></thead>
+            <thead><tr><th></th><th>Ad soyad</th><th>Unvan / e-posta</th><th></th></tr></thead>
             <tbody>
               @for (k of b.members; track k.id) {
                 <tr>
@@ -140,7 +155,10 @@ import { AdminApiService, StaffMember, StaffUnit } from './admin-api.service';
                     {{ k.fullName }}
                     @if (k.lead) { <small>· birim sorumlusu</small> }
                   </td>
-                  <td><small>{{ k.roleTitle || k.note || '' }}</small></td>
+                  <td>
+                    <small>{{ k.roleTitle || k.note || '—' }}</small>
+                    @if (k.email) { <small> · {{ k.email }}</small> }
+                  </td>
                   <td>
                     <button type="button" class="ikincil" (click)="tasi('members', k.id!, 'up')" title="Yukarı taşı">↑</button>
                     <button type="button" class="ikincil" (click)="tasi('members', k.id!, 'down')" title="Aşağı taşı">↓</button>
@@ -222,12 +240,23 @@ export class StaffEditorComponent {
     this.hedefBirim = b;
     this.kisiFormu.set(k
       ? { ...k }
-      : { id: null, fullName: '', roleTitle: null, note: null, lead: false, photoUrl: null, avatar: null, sortOrder: 0 });
+      : {
+          id: null,
+          unitId: b.id,
+          fullName: '',
+          roleTitle: null,
+          note: null,
+          lead: false,
+          photoUrl: null,
+          email: null,
+          avatar: null,
+          sortOrder: 0
+        });
   }
 
   protected kisiKaydet(): void {
     const k = this.kisiFormu();
-    if (!k || !k.fullName.trim() || !this.hedefBirim) return;
+    if (!k || !k.fullName.trim() || !this.hedefBirim || !k.unitId) return;
     this.calisiyor.set(true);
     this.api.saveStaffMember(this.hedefBirim.id!, k).subscribe({
       next: () => { this.calisiyor.set(false); this.kisiFormu.set(null); this.bildir('Kişi kaydedildi.'); this.yukle(); },

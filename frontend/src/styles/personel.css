@@ -132,9 +132,7 @@
     position: relative;
     min-width: 0;
     min-height: 8rem;
-    display: grid;
-    grid-template-columns: 7.25rem minmax(0, 1fr);
-    align-items: stretch;
+    display: block;
     overflow: hidden;
     border: 1px solid var(--cizgi);
     border-radius: 4px;
@@ -150,10 +148,31 @@
 
   .personel-kisi::after { content: none; }
 
-  .personel-kisi:hover {
+  .personel-kisi:hover,
+  .personel-kisi:focus-within {
     border-color: #bdc9d6;
     box-shadow: 0 7px 20px rgb(13 31 53 / 9%);
     transform: translateY(-1px);
+  }
+
+  .personel-kart-ac {
+    width: 100%;
+    min-height: inherit;
+    display: grid;
+    grid-template-columns: 7.25rem minmax(0, 1fr);
+    align-items: stretch;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .personel-kart-ac:focus-visible {
+    outline: 3px solid rgb(179 24 33 / 26%);
+    outline-offset: -3px;
   }
 
   /* ================= portre omurgası ================= */
@@ -285,7 +304,7 @@
     text-transform: none;
   }
 
-  .personel-eposta {
+  .personel-kart-detay {
     position: absolute;
     top: 50%;
     right: var(--bosluk-4);
@@ -299,9 +318,13 @@
     background: var(--yuzey-2);
     color: var(--metin-3);
     transform: translateY(-50%);
+    transition:
+      border-color var(--gecis-hizli),
+      background var(--gecis-hizli),
+      color var(--gecis-hizli);
   }
 
-  .personel-eposta svg {
+  .personel-kart-detay svg {
     width: 0.9rem;
     height: 0.9rem;
     fill: none;
@@ -311,9 +334,413 @@
     stroke-linejoin: round;
   }
 
-  .personel-eposta:disabled {
-    cursor: default;
-    opacity: 0.78;
+  .personel-kisi:hover .personel-kart-detay,
+  .personel-kisi:focus-within .personel-kart-detay {
+    border-color: var(--hu-kirmizi);
+    background: var(--hu-kirmizi);
+    color: #fff;
+  }
+
+  /* ================= açılır kurumsal profil ================= */
+
+  .personel-profil-katman {
+    position: fixed;
+    z-index: 1200;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    overflow-y: auto;
+    padding: clamp(1rem, 4vw, 3rem);
+    background: rgb(5 18 36 / 72%);
+    backdrop-filter: blur(10px);
+    overscroll-behavior: contain;
+    animation: personel-katman-giris 180ms ease-out both;
+  }
+
+  .personel-profil-panel {
+    position: relative;
+    width: min(58rem, 100%);
+    max-height: min(46rem, calc(100vh - 2rem));
+    display: grid;
+    grid-template-columns: minmax(17rem, 34%) minmax(0, 1fr);
+    overflow: hidden auto;
+    border: 1px solid rgb(255 255 255 / 22%);
+    border-radius: 6px;
+    background: var(--yuzey);
+    box-shadow: 0 28px 80px rgb(1 12 28 / 34%);
+    animation: personel-panel-giris 220ms ease-out both;
+  }
+
+  .personel-profil-panel:focus {
+    outline: none;
+  }
+
+  .personel-profil-kapat {
+    position: absolute;
+    z-index: 3;
+    top: 1rem;
+    right: 1rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    border: 1px solid var(--cizgi);
+    border-radius: 50%;
+    background: rgb(255 255 255 / 92%);
+    color: var(--hu-lacivert);
+    cursor: pointer;
+    transition:
+      border-color var(--gecis-hizli),
+      background var(--gecis-hizli),
+      color var(--gecis-hizli),
+      transform var(--gecis-hizli);
+  }
+
+  .personel-profil-kapat:hover {
+    border-color: var(--hu-kirmizi);
+    background: var(--hu-kirmizi);
+    color: #fff;
+    transform: rotate(4deg);
+  }
+
+  .personel-profil-kapat:focus-visible,
+  .personel-eposta-goster:focus-visible,
+  .personel-eposta-acik a:focus-visible,
+  .personel-eposta-acik button:focus-visible {
+    outline: 3px solid rgb(179 24 33 / 24%);
+    outline-offset: 3px;
+  }
+
+  .personel-profil-kapat svg {
+    width: 1.05rem;
+    height: 1.05rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+  }
+
+  .personel-profil-gorsel {
+    position: relative;
+    min-height: 36rem;
+    overflow: hidden;
+    background: var(--yuzey-3);
+  }
+
+  .personel-profil-gorsel > img,
+  .personel-profil-gorsel > .personel-demo-portre {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .personel-profil-gorsel > img {
+    display: block;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  .personel-profil-gorsel > .personel-demo-portre {
+    background-size: auto 200%;
+  }
+
+  .personel-profil-gorsel-ton {
+    position: absolute;
+    inset: auto 0 0;
+    height: 38%;
+    background: linear-gradient(to top, rgb(7 31 64 / 44%), transparent);
+    pointer-events: none;
+  }
+
+  .personel-profil-gorsel .personel-demo-etiket {
+    right: 1rem;
+    bottom: 1rem;
+    padding: .3rem .45rem;
+    font-size: .56rem;
+  }
+
+  .personel-profil-icerik {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    padding: clamp(2.25rem, 5vw, 3.5rem);
+  }
+
+  .personel-profil-kod {
+    margin: 0 0 var(--bosluk-3);
+    color: var(--hu-kirmizi);
+    font-size: .65rem;
+    font-weight: 700;
+    letter-spacing: .13em;
+    line-height: 1.4;
+  }
+
+  .personel-profil-icerik h2 {
+    max-width: 15ch;
+    margin: 0;
+    color: var(--hu-lacivert);
+    font-size: clamp(1.8rem, 4vw, 2.65rem);
+    letter-spacing: -.035em;
+    line-height: 1.08;
+    text-wrap: balance;
+  }
+
+  .personel-profil-icerik h2::after {
+    content: "";
+    width: 2rem;
+    height: 2px;
+    display: block;
+    margin-top: var(--bosluk-4);
+    background: var(--hu-kirmizi);
+  }
+
+  .personel-profil-gorev {
+    display: grid;
+    gap: var(--bosluk-2);
+    margin-top: var(--bosluk-4);
+  }
+
+  .personel-profil-gorev span {
+    color: var(--hu-kirmizi);
+    font-size: .76rem;
+    font-weight: 650;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+
+  .personel-profil-gorev strong {
+    color: var(--metin-2);
+    font-size: .92rem;
+    font-weight: 550;
+  }
+
+  .personel-profil-not {
+    width: fit-content;
+    margin: var(--bosluk-3) 0 0;
+    padding: .35rem .55rem;
+    border: 1px solid var(--cizgi);
+    border-radius: 3px;
+    background: var(--yuzey-2);
+    color: var(--metin-2);
+    font-size: .74rem;
+  }
+
+  .personel-profil-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--bosluk-3);
+    margin-top: var(--bosluk-5);
+    padding-top: var(--bosluk-4);
+    border-top: 1px solid var(--cizgi);
+  }
+
+  .personel-profil-meta span,
+  .personel-profil-meta a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--bosluk-2);
+    color: var(--metin-2);
+    font-size: .78rem;
+  }
+
+  .personel-profil-meta a:hover {
+    color: var(--hu-kirmizi);
+  }
+
+  .personel-profil-meta svg {
+    width: 1rem;
+    height: 1rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .personel-profil-eposta {
+    margin-top: auto;
+    padding-top: var(--bosluk-6);
+  }
+
+  .personel-profil-eposta-baslik {
+    display: grid;
+    grid-template-columns: 2.75rem minmax(0, 1fr);
+    align-items: center;
+    gap: var(--bosluk-3);
+  }
+
+  .personel-profil-eposta-ikon {
+    width: 2.75rem;
+    height: 2.75rem;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgb(179 24 33 / 20%);
+    border-radius: 50%;
+    background: #fff5f6;
+    color: var(--hu-kirmizi);
+  }
+
+  .personel-profil-eposta-ikon svg,
+  .personel-eposta-goster svg,
+  .personel-eposta-acik svg,
+  .personel-eposta-yok svg {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .personel-profil-eposta-ikon svg {
+    width: 1.15rem;
+    height: 1.15rem;
+  }
+
+  .personel-profil-eposta-baslik p {
+    margin: 0 0 .15rem;
+    color: var(--hu-lacivert);
+    font-size: .84rem;
+    font-weight: 650;
+  }
+
+  .personel-profil-eposta-baslik div > span {
+    display: block;
+    color: var(--metin-3);
+    font-size: .7rem;
+    line-height: 1.45;
+  }
+
+  .personel-eposta-goster {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--bosluk-3);
+    margin-top: var(--bosluk-3);
+    padding: .78rem .9rem;
+    border: 1px solid var(--cizgi);
+    border-radius: 3px;
+    background: var(--yuzey-2);
+    color: var(--hu-lacivert);
+    font: inherit;
+    font-size: .78rem;
+    font-weight: 650;
+    cursor: pointer;
+  }
+
+  .personel-eposta-goster:hover {
+    border-color: var(--hu-lacivert);
+    background: #f4f7fb;
+  }
+
+  .personel-eposta-goster svg {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .personel-eposta-acik {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: stretch;
+    gap: var(--bosluk-2);
+    margin-top: var(--bosluk-3);
+  }
+
+  .personel-eposta-acik > a {
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    padding: .72rem .85rem;
+    overflow-wrap: anywhere;
+    border: 1px solid rgb(13 53 108 / 20%);
+    border-radius: 3px;
+    background: #f5f8fc;
+    color: var(--hu-lacivert);
+    font-size: .78rem;
+    font-weight: 600;
+  }
+
+  .personel-eposta-acik > a:hover {
+    border-color: var(--hu-kirmizi);
+    color: var(--hu-kirmizi);
+  }
+
+  .personel-eposta-acik > button {
+    min-width: 6.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .4rem;
+    padding: .65rem .75rem;
+    border: 1px solid var(--hu-lacivert);
+    border-radius: 3px;
+    background: var(--hu-lacivert);
+    color: #fff;
+    font: inherit;
+    font-size: .72rem;
+    font-weight: 650;
+    cursor: pointer;
+  }
+
+  .personel-eposta-acik > button.kopyalandi {
+    border-color: #26724f;
+    background: #26724f;
+  }
+
+  .personel-eposta-acik svg {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .personel-eposta-yok {
+    display: grid;
+    grid-template-columns: 1.25rem minmax(0, 1fr);
+    gap: var(--bosluk-3);
+    margin-top: var(--bosluk-3);
+    padding: .8rem .9rem;
+    border: 1px solid #e1d9c5;
+    border-left: 3px solid #b4831f;
+    border-radius: 3px;
+    background: #fcfaf4;
+    color: #66562f;
+    font-size: .75rem;
+    line-height: 1.55;
+  }
+
+  .personel-eposta-yok svg {
+    width: 1.15rem;
+    height: 1.15rem;
+    margin-top: .05rem;
+    color: #9a6f17;
+  }
+
+  .personel-profil-alt {
+    display: flex;
+    align-items: center;
+    gap: var(--bosluk-2);
+    margin-top: var(--bosluk-5);
+    padding-top: var(--bosluk-4);
+    border-top: 1px solid var(--cizgi);
+    color: var(--metin-3);
+    font-size: .65rem;
+    line-height: 1.4;
+  }
+
+  .personel-profil-alt img {
+    width: auto;
+    height: 1.25rem;
+  }
+
+  @keyframes personel-katman-giris {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes personel-panel-giris {
+    from { opacity: 0; transform: translateY(14px) scale(.99); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
   }
 
   /* ================= tablet ve mobil ================= */
@@ -323,6 +750,9 @@
 
     .personel-kisi {
       min-height: 7.75rem;
+    }
+
+    .personel-kart-ac {
       grid-template-columns: 6.75rem minmax(0, 1fr);
     }
 
@@ -359,25 +789,68 @@
 
     .personel-kisi {
       min-height: 8.5rem;
+    }
+
+    .personel-kart-ac {
       grid-template-columns: clamp(6.5rem, 32%, 7.5rem) minmax(0, 1fr);
+    }
+
+    .personel-profil-katman {
+      align-items: start;
+      padding: 1rem;
+    }
+
+    .personel-profil-panel {
+      max-height: none;
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .personel-profil-gorsel {
+      min-height: 20rem;
+      max-height: 48vh;
+    }
+
+    .personel-profil-icerik {
+      padding: var(--bosluk-6) var(--bosluk-5);
+    }
+
+    .personel-profil-icerik h2 {
+      max-width: 17ch;
+    }
+
+    .personel-profil-eposta {
+      margin-top: var(--bosluk-5);
     }
   }
 
   @media (max-width: 22rem) {
     .personel-kisi {
       min-height: 9rem;
+    }
+
+    .personel-kart-ac {
       grid-template-columns: 5.75rem minmax(0, 1fr);
     }
 
     .personel-bilgi { padding: var(--bosluk-4) 3rem var(--bosluk-4) var(--bosluk-3); }
     .personel-ad { font-size: var(--olcu-sm); }
-    .personel-eposta { right: var(--bosluk-3); }
+    .personel-kart-detay { right: var(--bosluk-3); }
+
+    .personel-eposta-acik {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .personel-eposta-acik > button {
+      min-height: 2.75rem;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
     .personel-kisi,
     .personel-gorsel img,
-    .personel-demo-portre { transition: none; }
+    .personel-demo-portre,
+    .personel-profil-katman,
+    .personel-profil-panel { transition: none; animation: none; }
     .personel-kisi:hover { transform: none; }
     .personel-kisi:hover .personel-gorsel img,
     .personel-kisi:hover .personel-demo-portre { transform: none; }

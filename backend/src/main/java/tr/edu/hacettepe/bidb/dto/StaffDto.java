@@ -17,11 +17,11 @@ public final class StaffDto {
     private StaffDto() {}
 
     public record Member(String fullName, String roleTitle, String note,
-                         boolean lead, String photoUrl, String avatar) {
+                         boolean lead, String photoUrl, String email, String avatar) {
 
         static Member of(StaffMember k) {
             return new Member(k.getFullName(), k.getRoleTitle(), k.getNote(),
-                    k.isLead(), k.getPhotoUrl(), k.getAvatar());
+                    k.isLead(), k.getPhotoUrl(), k.getEmail(), k.getAvatar());
         }
     }
 
