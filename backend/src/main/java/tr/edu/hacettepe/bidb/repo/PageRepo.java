@@ -18,5 +18,10 @@ public interface PageRepo extends JpaRepository<Page, Long> {
            """)
     Optional<Page> findBySlugAndLanguage(@Param("slug") String slug, @Param("language") String language);
 
+    /** SEO ve liste yanıtlarında içerik/belge ilişkisini yüklemeden sayfayı bulur. */
+    Optional<Page> findFirstBySlugAndLanguageAndPublishedTrue(String slug, String language);
+
+    boolean existsBySlugAndLanguageAndPublishedTrue(String slug, String language);
+
     List<Page> findByLanguageAndPublishedTrueOrderBySortOrderAsc(String language);
 }

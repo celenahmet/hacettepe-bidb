@@ -4,6 +4,7 @@ import tr.edu.hacettepe.bidb.model.Document;
 import tr.edu.hacettepe.bidb.model.Page;
 
 import java.util.List;
+import java.time.OffsetDateTime;
 
 /** Ön yüze gönderilen sayfa verisi. SEO alanları Angular tarafında
  *  <title> ve meta etiketlerine yazılır. */
@@ -15,6 +16,10 @@ public record PageDto(
         String seoTitle,
         String seoDescription,
         String seoKeywords,
+        String seoImage,
+        String seoRobots,
+        String seoSchemaType,
+        OffsetDateTime updatedAt,
         List<BelgeDto> documents,
         /** Bu sayfanın diğer dilde karşılığı var mı (hreflang için). */
         boolean hasTranslation,
@@ -29,14 +34,21 @@ public record PageDto(
         return new PageDto(
                 s.getSlug(), s.getLanguage(), s.getTitle(), s.getContentHtml(),
                 s.getSeoTitle(), s.getSeoDescription(), s.getSeoKeywords(),
+                s.getSeoImage(), s.getSeoRobots(), s.getSeoSchemaType(), s.getUpdatedAt(),
                 s.getDocuments().stream().map(BelgeDto::of).toList(), hasTranslation, hataliMi(s)
         );
     }
 
     /** Liste görünümleri için içerik olmadan. */
     public static PageDto summary(Page s) {
+        return summary(s, false);
+    }
+
+    public static PageDto summary(Page s, boolean hasTranslation) {
         return new PageDto(s.getSlug(), s.getLanguage(), s.getTitle(), null,
-                s.getSeoTitle(), s.getSeoDescription(), s.getSeoKeywords(), List.of(), false, hataliMi(s));
+                s.getSeoTitle(), s.getSeoDescription(), s.getSeoKeywords(),
+                s.getSeoImage(), s.getSeoRobots(), s.getSeoSchemaType(), s.getUpdatedAt(),
+                List.of(), hasTranslation, hataliMi(s));
     }
 
     /** Kaynak sitede içeriği olmayan, hata metni dönen sayfalar. Kopya

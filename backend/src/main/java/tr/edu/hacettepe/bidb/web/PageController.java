@@ -21,7 +21,8 @@ public class PageController {
     @GetMapping("/pages/{slug}")
     public ResponseEntity<PageDto> sayfa(@PathVariable String language, @PathVariable String slug) {
         // Diğer dildeki karşılığı varsa hreflang bağlantısı verilebilir
-        boolean hasTranslation = pages.findBySlugAndLanguage(slug, language.equals("en") ? "tr" : "en").isPresent();
+        boolean hasTranslation = pages.existsBySlugAndLanguageAndPublishedTrue(
+                slug, language.equals("en") ? "tr" : "en");
         return pages.findBySlugAndLanguage(slug, language)
                 .map(s -> PageDto.of(s, hasTranslation))
                 .map(ResponseEntity::ok)
@@ -31,6 +32,11 @@ public class PageController {
     /** Site haritası ve gezinme için sayfa listesi. */
     @GetMapping("/pages")
     public List<PageDto> liste(@PathVariable String language) {
-        return pages.findByLanguageAndPublishedTrueOrderBySortOrderAsc(language).stream().map(PageDto::summary).toList();
+        String otherLanguage = language.equals("en") ? "tr" : "en";
+        var translatedSlugs = pages.findByLanguageAndPublishedTrueOrderBySortOrderAsc(otherLanguage)
+                .stream().map(s -> s.getSlug()).collect(java.util.stream.Collectors.toSet());
+        return pages.findByLanguageAndPublishedTrueOrderBySortOrderAsc(language).stream()
+                .map(s -> PageDto.summary(s, translatedSlugs.contains(s.getSlug())))
+                .toList();
     }
 }

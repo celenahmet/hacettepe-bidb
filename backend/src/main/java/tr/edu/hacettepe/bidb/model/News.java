@@ -2,6 +2,7 @@ package tr.edu.hacettepe.bidb.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 
 /** Haber ve news. */
 @Entity
@@ -61,6 +62,21 @@ public class News {
     @Column(name = "cover_text", length = 120)
     private String coverText;
 
+    @Column(name = "seo_title", length = 300)
+    private String seoTitle;
+
+    @Column(name = "seo_description", length = 500)
+    private String seoDescription;
+
+    @Column(name = "seo_keywords", length = 500)
+    private String seoKeywords;
+
+    @Column(name = "seo_robots", nullable = false, length = 80)
+    private String seoRobots = "index, follow";
+
+    @Column(name = "updated_at", nullable = false)
+    private OffsetDateTime updatedAt = OffsetDateTime.now();
+
     public Long getId() { return id; }
     public String getLanguage() { return language; }
     public String getTitle() { return title; }
@@ -95,4 +111,14 @@ public class News {
     public void setCoverTemplate(String coverTemplate) { this.coverTemplate = coverTemplate; }
     public String getCoverText() { return coverText; }
     public void setCoverText(String coverText) { this.coverText = coverText; }
+    public String getSeoTitle() { return seoTitle; }
+    public void setSeoTitle(String seoTitle) { this.seoTitle = seoTitle; }
+    public String getSeoDescription() { return seoDescription; }
+    public void setSeoDescription(String seoDescription) { this.seoDescription = seoDescription; }
+    public String getSeoKeywords() { return seoKeywords; }
+    public void setSeoKeywords(String seoKeywords) { this.seoKeywords = seoKeywords; }
+    public String getSeoRobots() { return seoRobots; }
+    public void setSeoRobots(String seoRobots) { this.seoRobots = seoRobots; }
+    public OffsetDateTime getUpdatedAt() { return updatedAt; }
+    public void setUpdatedAt(OffsetDateTime updatedAt) { this.updatedAt = updatedAt; }
 }

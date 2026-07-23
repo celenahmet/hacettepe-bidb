@@ -94,9 +94,15 @@ export class HomePageComponent {
     tap((p) => {
       const language = (p.get('language') as Language) ?? 'tr';
       this.language.set(language);
-      this.seo.uygula(null, language, `/${language}`);
     }),
-    switchMap((p) => this.api.anaSayfa((p.get('language') as Language) ?? 'tr'))
+    switchMap((p) => this.api.anaSayfa((p.get('language') as Language) ?? 'tr')),
+    tap((veri) => {
+      const language = this.language();
+      this.seo.uygula(veri.seo, language, `/${language}`, {
+        image: veri.slider[0]?.imageUrl,
+        imageAlt: veri.slider[0]?.imageAlt
+      });
+    })
   );
 
   protected metin(tr: string, en: string): string {

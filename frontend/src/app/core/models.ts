@@ -14,6 +14,10 @@ export interface Page {
   seoTitle: string | null;
   seoDescription: string | null;
   seoKeywords: string | null;
+  seoImage?: string | null;
+  seoRobots?: string | null;
+  seoSchemaType?: string | null;
+  updatedAt?: string | null;
   documents: Document[];
   /** Diğer dilde karşılığı var mı (hreflang için) */
   hasTranslation?: boolean;
@@ -82,6 +86,8 @@ export type NewsCoverTemplate =
 
 /** Ana sayfanın tüm bileşenleri tek istekte gelir. */
 export interface HomeData {
+  /** Ana sayfanın panelden yönetilen SEO kaydı. */
+  seo: Page | null;
   slider: Slide[];
   shortcuts: Shortcut[];
   services: Shortcut[];

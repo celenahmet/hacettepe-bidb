@@ -10,13 +10,15 @@ public record NewsDto(
         Long id, String language, String title, String summary,
         LocalDate publishedOn, boolean featured, boolean published, String externalUrl,
         String slug, String imageUrl, String imageAlt, String contentHtml,
-        String category, String audience, String coverTemplate, String coverText
+        String category, String audience, String coverTemplate, String coverText,
+        String seoTitle, String seoDescription, String seoKeywords, String seoRobots
 ) {
     public static NewsDto of(News d) {
         return new NewsDto(d.getId(), d.getLanguage(), d.getTitle(), d.getSummary(),
                 d.getPublishedOn(), d.isFeatured(), d.isPublished(), d.getExternalUrl(),
                 d.getSlug(), d.getImageUrl(), d.getImageAlt(), d.getContentHtml(),
-                d.getCategory(), d.getAudience(), d.getCoverTemplate(), d.getCoverText());
+                d.getCategory(), d.getAudience(), d.getCoverTemplate(), d.getCoverText(),
+                d.getSeoTitle(), d.getSeoDescription(), d.getSeoKeywords(), d.getSeoRobots());
     }
 
     /** Gelen değerleri varlığa aktarır. */
@@ -39,6 +41,11 @@ public record NewsDto(
         d.setAudience(NewsCatalog.audience(audience));
         d.setCoverTemplate(NewsCatalog.template(coverTemplate));
         d.setCoverText(kisaMetin(coverText, 120));
+        d.setSeoTitle(kisaMetin(seoTitle, 300));
+        d.setSeoDescription(kisaMetin(seoDescription, 500));
+        d.setSeoKeywords(kisaMetin(seoKeywords, 500));
+        d.setSeoRobots(seoRobots == null || seoRobots.isBlank() ? "index, follow" : seoRobots.trim());
+        d.setUpdatedAt(java.time.OffsetDateTime.now());
         return d;
     }
 

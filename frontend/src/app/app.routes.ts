@@ -1,9 +1,4 @@
 import { CanMatchFn, Routes } from '@angular/router';
-import { HomePageComponent } from './pages/home-page.component';
-import { ContentPageComponent } from './pages/content-page.component';
-import { NewsPageComponent } from './pages/news-page.component';
-import { NewsListPageComponent } from './pages/news-list-page.component';
-import { AdminPanelComponent } from './admin/admin-panel.component';
 
 /** Adres yapısı: /tr, /tr/<slug>, /en, /en/<slug> */
 const desteklenenDil: CanMatchFn = (_route, segments) =>
@@ -11,7 +6,13 @@ const desteklenenDil: CanMatchFn = (_route, segments) =>
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/tr' },
-  { path: 'yonetim', component: AdminPanelComponent },
+  // Yönetim kodu ziyaretçilerin hiçbir zaman kullanmadığı büyük editör ve form
+  // bağımlılıkları taşır; ana sayfa paketine katılmaz, yalnızca istenince yüklenir.
+  {
+    path: 'yonetim',
+    loadComponent: () =>
+      import('./admin/admin-panel.component').then((module) => module.AdminPanelComponent)
+  },
   // Bütün HTTP hata durumları aynı bileşende, yalnızca kod parametresi
   // değiştirilerek sunulur. Her kod için ayrı sayfa ya da klasör tutulmaz.
   {
@@ -19,17 +20,38 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/errors/error-page.component').then((module) => module.ErrorPageComponent)
   },
-  { path: ':language', pathMatch: 'full', component: HomePageComponent, canMatch: [desteklenenDil] },
-  { path: ':language/newsItem/:slug', component: NewsPageComponent, canMatch: [desteklenenDil] },
+  {
+    path: ':language',
+    pathMatch: 'full',
+    loadComponent: () =>
+      import('./pages/home-page.component').then((module) => module.HomePageComponent),
+    canMatch: [desteklenenDil]
+  },
+  {
+    path: ':language/newsItem/:slug',
+    loadComponent: () =>
+      import('./pages/news-page.component').then((module) => module.NewsPageComponent),
+    canMatch: [desteklenenDil]
+  },
   // Duyuru listesi, :slug kuralından ÖNCE gelmeli; sonra gelseydi
   // 'news' bir sayfa adı sanılıp aranır ve bulunamazdı.
-  { path: ':language/news', component: NewsListPageComponent, canMatch: [desteklenenDil] },
+  {
+    path: ':language/news',
+    loadComponent: () =>
+      import('./pages/news-list-page.component').then((module) => module.NewsListPageComponent),
+    canMatch: [desteklenenDil]
+  },
   {
     path: ':language/cookies',
     loadComponent: () =>
       import('./pages/cookies/cookie-policy.component').then((module) => module.CookiePolicyComponent),
     canMatch: [desteklenenDil]
   },
-  { path: ':language/:slug', component: ContentPageComponent, canMatch: [desteklenenDil] },
+  {
+    path: ':language/:slug',
+    loadComponent: () =>
+      import('./pages/content-page.component').then((module) => module.ContentPageComponent),
+    canMatch: [desteklenenDil]
+  },
   { path: '**', redirectTo: '/error/404' }
 ];

@@ -238,3 +238,18 @@ kendi sunucusundan verir; kaynak sunucuya bağımlılık yoktur.
 
 **Yayın durumu** `published` alanı ile denetlenir; ziyaretçi uçları yalnızca
 yayındaki kayıtları döndürür.
+## SEO ve indeksleme
+
+`GET /api/{language}/pages/{slug}` yanıtı içerikle birlikte `seoTitle`,
+`seoDescription`, `seoKeywords`, `seoImage`, `seoRobots`, `seoSchemaType` ve
+`updatedAt` alanlarını döndürür. Angular SSR bu alanları ilk HTML yanıtında
+title, canonical, Open Graph, Twitter Card ve JSON-LD olarak yayınlar.
+
+Ana sayfanın SEO kaydı `GET /api/{language}/home` yanıtındaki `seo` alanıdır.
+Bu değer veritabanındaki `home` sayfasından gelir; slider ve duyurular gibi
+panelden değiştirilebilir. Haber detayları kendi SEO alanlarını ve
+`NewsArticle` yapılandırılmış verisini kullanır.
+
+`/sitemap.xml` yayınlanan sayfaları ve kendi adresi bulunan haberleri
+backend'den dinamik toplar. `/robots.txt`, yönetim, API ve hata rotalarını
+indeks dışında bırakır.

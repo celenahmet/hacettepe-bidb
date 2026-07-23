@@ -8,6 +8,7 @@ import java.util.List;
 
 /** Ana sayfanın tüm bileşenleri tek istekte döner. */
 public record HomeDto(
+        PageDto seo,
         List<SliderDto> slider,
         List<KisayolDto> shortcuts,
         List<KisayolDto> services,

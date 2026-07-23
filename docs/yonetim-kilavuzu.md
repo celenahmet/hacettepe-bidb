@@ -182,3 +182,13 @@ Kaydettiğiniz anda. Sayfayı yenilemek yeterlidir; önbellek temizliği gerekme
 - Oturum, tarayıcı sekmesi kapatıldığında sona erer.
 - Yayın (ziyaretçi) tarafı herkese açıktır; tüm düzenleme uçları kimlik doğrulaması ister.
 - Panel yalnızca HTTPS üzerinden kullanılmalıdır.
+## Sayfa ve duyuru SEO yönetimi
+
+Sayfalar sekmesindeki **SEO** düğmesi başlık, açıklama ve anahtar kelimelere
+ek olarak sosyal paylaşım görseli, robots yönergesi ve Schema.org sayfa türünü
+yönetir. Ana sayfa için listede bulunan `home` kaydı düzenlenir; değişiklik
+SSR çıktısına ve sosyal paylaşım etiketlerine doğrudan yansır.
+
+Kendi detay sayfası bulunan duyurularda SEO başlığı ve açıklaması boş
+bırakılırsa duyuru başlığı ile özeti güvenli varsayılan olarak kullanılır.
+Fotoğraf varsa Open Graph ve `NewsArticle` görseli olarak da yayınlanır.

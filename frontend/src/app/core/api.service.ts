@@ -44,7 +44,9 @@ export class Api {
   anaSayfa(language: Language): Observable<HomeData> {
     return this.http
       .get<HomeData>(`${this.taban}/api/${language}/home`)
-      .pipe(yenidenDene(), catchError(() => of({ slider: [], shortcuts: [], services: [], news: [] })));
+      .pipe(yenidenDene(), catchError(() => of({
+        seo: null, slider: [], shortcuts: [], services: [], news: []
+      })));
   }
 
   menu(language: Language, position = 'sol'): Observable<Menu[]> {

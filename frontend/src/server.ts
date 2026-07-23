@@ -72,6 +72,14 @@ app.use((_req, res, next) => {
   next();
 });
 
+// Arama motorları yönetim, API ve hata yüzeylerini sonuç sayfasına almamalıdır.
+app.use((req, res, next) => {
+  if (req.path === '/yonetim' || req.path.startsWith('/api/') || req.path.startsWith('/error/')) {
+    res.setHeader('X-Robots-Tag', 'noindex, nofollow, noarchive');
+  }
+  next();
+});
+
 /**
  * Panelden yapılan adres değişikliklerinden doğan yönlendirmeler.
  *
@@ -173,6 +181,13 @@ app.use('/api', express.raw({ type: '*/*', limit: '5mb' }), async (req, res) => 
     res.status(yanit.status);
     const fileType = yanit.headers.get('content-type');
     if (fileType) res.type(fileType);
+    if (req.method === 'GET' && /^\/(tr|en)\//.test(req.path)) {
+      // SSR sırasında aynı içerik için tekrarlanan API çağrılarını azaltır;
+      // panel değişiklikleri en geç bir dakika içinde görünür.
+      res.setHeader('Cache-Control', 'public, max-age=30, stale-while-revalidate=60');
+    } else {
+      res.setHeader('Cache-Control', 'no-store');
+    }
     // Yetkisiz isteklerde tarayıcının parola penceresi açılmasın
     res.removeHeader('WWW-Authenticate');
     res.send(govde);
@@ -264,23 +279,81 @@ function acikHataKodu(yol: string): number | null {
 /* ---------- site haritası ve robots ---------- */
 
 app.get('/sitemap.xml', async (_req, res) => {
-  const yollar = [...(await yayindakiYollar())]
-    .filter((y) => !/^\/(tr|en)\/home$/.test(y))   // ana sayfanın ikinci adresi
-    .filter((y) => !hataliSayfalar.has(y))         // kaynakta içeriği olmayan pages
-    .sort();
-  // Uygulamanın kendi ürettiği, page tablosunda karşılığı olmayan listeler.
-  const uretilen = ['/tr/news', '/en/news', '/tr/cookies', '/en/cookies'];
-  const girdiler = ['/tr', '/en', ...uretilen, ...yollar]
-    .map((y) => `  <url><loc>${SITE_ADRESI}${y}</loc></url>`)
-    .join('\n');
+  type SitemapPage = {
+    slug: string;
+    language?: string;
+    updatedAt?: string | null;
+    hasTranslation?: boolean;
+    brokenContent?: boolean;
+  };
+  const sayfalar: SitemapPage[] = [];
+  const haberler: { language: string; slug: string; date?: string }[] = [];
+
+  await Promise.all(['tr', 'en'].flatMap((language) => [
+    fetch(`${API_TABAN}/api/${language}/pages`)
+      .then((response) => response.ok ? response.json() : [])
+      .then((items: SitemapPage[]) => sayfalar.push(...items.map((item) => ({ ...item, language }))))
+      .catch(() => undefined),
+    fetch(`${API_TABAN}/api/${language}/news`)
+      .then((response) => response.ok ? response.json() : [])
+      .then((items: { slug?: string; date?: string }[]) => haberler.push(
+        ...items.filter((item) => item.slug).map((item) => ({
+          language, slug: item.slug!, date: item.date
+        }))
+      ))
+      .catch(() => undefined)
+  ]));
+
+  const xmlEscape = (value: string) =>
+    value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&apos;');
+  const urlTag = (path: string, lastmod?: string | null, alternate?: string) => {
+    const links = alternate
+      ? `\n    <xhtml:link rel="alternate" hreflang="${alternate}" href="${xmlEscape(SITE_ADRESI + path.replace(/^\/(tr|en)/, '/' + alternate))}"/>`
+      : '';
+    return `  <url>\n    <loc>${xmlEscape(SITE_ADRESI + path)}</loc>${lastmod ? `\n    <lastmod>${xmlEscape(lastmod.slice(0, 10))}</lastmod>` : ''}${links}\n  </url>`;
+  };
+
+  const sayfaEtiketleri = sayfalar
+    .filter((page) => page.slug !== 'home' && !page.brokenContent)
+    .map((page) => {
+      const path = `/${page.language}/${page.slug}`;
+      const alternate = page.hasTranslation ? (page.language === 'tr' ? 'en' : 'tr') : undefined;
+      return urlTag(path, page.updatedAt, alternate);
+    });
+  const haberEtiketleri = haberler.map((news) =>
+    urlTag(`/${news.language}/newsItem/${encodeURIComponent(news.slug)}`, news.date)
+  );
+  const sabitEtiketler = [
+    urlTag('/tr', undefined, 'en'),
+    urlTag('/en', undefined, 'tr'),
+    urlTag('/tr/news'),
+    urlTag('/en/news'),
+    urlTag('/tr/cookies'),
+    urlTag('/en/cookies')
+  ];
+
+  res.setHeader('Cache-Control', 'public, max-age=300, stale-while-revalidate=600');
   res.type('application/xml').send(
-    `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${girdiler}\n</urlset>\n`,
+    `<?xml version="1.0" encoding="UTF-8"?>\n` +
+    `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n` +
+    `${[...sabitEtiketler, ...sayfaEtiketleri, ...haberEtiketleri].join('\n')}\n</urlset>\n`,
   );
 });
 
 app.get('/robots.txt', (_req, res) => {
+  res.setHeader('Cache-Control', 'public, max-age=3600');
   res.type('text/plain').send(
-    ['User-agent: *', 'Disallow: /yonetim', 'Disallow: /api/', '', `Sitemap: ${SITE_ADRESI}/sitemap.xml`, ''].join('\n'),
+    [
+      'User-agent: *',
+      'Allow: /',
+      'Disallow: /yonetim',
+      'Disallow: /api/',
+      'Disallow: /error/',
+      '',
+      `Sitemap: ${SITE_ADRESI}/sitemap.xml`,
+      ''
+    ].join('\n'),
   );
 });
 
@@ -370,6 +443,10 @@ app.use(async (req, res, next) => {
     const basliklar = new Headers(yanit.headers);
     basliklar.delete('content-length');
     if (hataKodu) basliklar.set('cache-control', 'no-store');
+    else if (/^\/(tr|en)(\/|$)/.test(req.path)) {
+      // İçerik dinamiktir; CDN kısa süre saklar ve arka planda tazeler.
+      basliklar.set('cache-control', 'public, max-age=0, s-maxage=60, stale-while-revalidate=300');
+    }
 
     return writeResponseToNodeResponse(
       new Response(yanit.body, { status: hataKodu ?? yanit.status, headers: basliklar }),

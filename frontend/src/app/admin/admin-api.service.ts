@@ -11,6 +11,9 @@ export interface AdminPage {
   seoTitle: string | null;
   seoDescription: string | null;
   seoKeywords: string | null;
+  seoImage: string | null;
+  seoRobots: string | null;
+  seoSchemaType: string | null;
   published: boolean;
   contentLength: number;
 }
@@ -34,6 +37,10 @@ export interface AdminNews {
   coverTemplate: NewsCoverTemplate;
   /** Fotoğraf kullanılmadığında şablonun üzerinde gösterilen kısa metin */
   coverText: string | null;
+  seoTitle: string | null;
+  seoDescription: string | null;
+  seoKeywords: string | null;
+  seoRobots: string | null;
 }
 
 export interface NewsOption {
@@ -216,6 +223,9 @@ export class AdminApiService {
       seoTitle: veri.seoTitle ?? '',
       seoDescription: veri.seoDescription ?? '',
       seoKeywords: veri.seoKeywords ?? '',
+      seoImage: veri.seoImage ?? '',
+      seoRobots: veri.seoRobots ?? 'index, follow',
+      seoSchemaType: veri.seoSchemaType ?? 'WebPage',
       published: veri.published ?? true
     }, { headers: this.basliklar() });
   }

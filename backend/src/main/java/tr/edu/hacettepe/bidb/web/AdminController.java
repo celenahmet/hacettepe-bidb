@@ -49,6 +49,11 @@ public class AdminController {
                     s.setSeoTitle(istek.seoTitle());
                     s.setSeoDescription(istek.seoDescription());
                     s.setSeoKeywords(istek.seoKeywords());
+                    s.setSeoImage(istek.seoImage());
+                    s.setSeoRobots(istek.seoRobots() == null || istek.seoRobots().isBlank()
+                            ? "index, follow" : istek.seoRobots());
+                    s.setSeoSchemaType(istek.seoSchemaType() == null || istek.seoSchemaType().isBlank()
+                            ? "WebPage" : istek.seoSchemaType());
                     s.setPublished(istek.published());
                     return ResponseEntity.ok(AdminPageDto.of(pages.save(s)));
                 })

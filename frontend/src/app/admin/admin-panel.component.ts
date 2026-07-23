@@ -203,6 +203,30 @@ interface ContactInfo extends Record<string, string> {
                           <input [attr.id]="'k' + s.id" name="seoKeywords" [ngModel]="secili()!.seoKeywords"
                                  (ngModelChange)="alanDegis('seoKeywords', $event)">
 
+                          <label [attr.for]="'i' + s.id">Sosyal paylaşım görseli</label>
+                          <input [attr.id]="'i' + s.id" name="seoImage" [ngModel]="secili()!.seoImage"
+                                 (ngModelChange)="alanDegis('seoImage', $event)"
+                                 placeholder="/images/... veya https://...">
+
+                          <label [attr.for]="'r' + s.id">Arama motoru yönergesi</label>
+                          <select [attr.id]="'r' + s.id" name="seoRobots" [ngModel]="secili()!.seoRobots"
+                                  (ngModelChange)="alanDegis('seoRobots', $event)">
+                            <option value="index, follow">Dizine ekle, bağlantıları izle</option>
+                            <option value="noindex, follow">Dizine ekleme, bağlantıları izle</option>
+                            <option value="noindex, nofollow">Dizine ekleme, bağlantıları izleme</option>
+                          </select>
+
+                          <label [attr.for]="'schema' + s.id">Yapılandırılmış veri türü</label>
+                          <select [attr.id]="'schema' + s.id" name="seoSchemaType"
+                                  [ngModel]="secili()!.seoSchemaType"
+                                  (ngModelChange)="alanDegis('seoSchemaType', $event)">
+                            <option value="WebPage">Standart sayfa</option>
+                            <option value="AboutPage">Kurumsal tanıtım</option>
+                            <option value="ContactPage">İletişim sayfası</option>
+                            <option value="FAQPage">Sık sorulan sorular</option>
+                            <option value="WebSite">Ana sayfa / web sitesi</option>
+                          </select>
+
                           <label class="onay">
                             <input type="checkbox" name="published" [ngModel]="secili()!.published"
                                    (ngModelChange)="alanDegis('published', $event)"> Yayında
@@ -280,6 +304,28 @@ interface ContactInfo extends Record<string, string> {
             <label for="dozet">Özet (listede başlığın altında görünür)</label>
             <textarea id="dozet" name="summary" rows="2" [ngModel]="newsItem().summary"
                       (ngModelChange)="duyuruAlan('summary', $event)"></textarea>
+
+            <fieldset class="duyuru-siniflandirma">
+              <legend>Arama motoru ve sosyal paylaşım</legend>
+              <label for="dseotitle">SEO başlığı
+                <small>— boş bırakılırsa duyuru başlığı kullanılır</small>
+              </label>
+              <input id="dseotitle" name="seoTitle" maxlength="300"
+                     [ngModel]="newsItem().seoTitle"
+                     (ngModelChange)="duyuruAlan('seoTitle', $event)">
+
+              <label for="dseodescription">SEO açıklaması
+                <small>— boş bırakılırsa duyuru özeti kullanılır</small>
+              </label>
+              <textarea id="dseodescription" name="seoDescription" rows="2" maxlength="500"
+                        [ngModel]="newsItem().seoDescription"
+                        (ngModelChange)="duyuruAlan('seoDescription', $event)"></textarea>
+
+              <label for="dseokeywords">Anahtar kelimeler</label>
+              <input id="dseokeywords" name="seoKeywords" maxlength="500"
+                     [ngModel]="newsItem().seoKeywords"
+                     (ngModelChange)="duyuruAlan('seoKeywords', $event)">
+            </fieldset>
 
             <section class="duyuru-kapak-secimi">
               <div class="duyuru-kapak-baslik">
@@ -1217,7 +1263,11 @@ export class AdminPanelComponent {
       category: 'general',
       audience: 'all-users',
       coverTemplate: 'institutional',
-      coverText: null
+      coverText: null,
+      seoTitle: null,
+      seoDescription: null,
+      seoKeywords: null,
+      seoRobots: 'index, follow'
     };
   }
 

@@ -36,6 +36,15 @@ public class Page {
     @Column(name = "seo_keywords", length = 500)
     private String seoKeywords;
 
+    @Column(name = "seo_image", length = 500)
+    private String seoImage;
+
+    @Column(name = "seo_robots", nullable = false, length = 80)
+    private String seoRobots = "index, follow";
+
+    @Column(name = "seo_schema_type", nullable = false, length = 60)
+    private String seoSchemaType = "WebPage";
+
     @Column(nullable = false)
     private boolean published = true;
 
@@ -64,6 +73,12 @@ public class Page {
     public void setSeoDescription(String seoDescription) { this.seoDescription = seoDescription; }
     public String getSeoKeywords() { return seoKeywords; }
     public void setSeoKeywords(String seoKeywords) { this.seoKeywords = seoKeywords; }
+    public String getSeoImage() { return seoImage; }
+    public void setSeoImage(String seoImage) { this.seoImage = seoImage; }
+    public String getSeoRobots() { return seoRobots; }
+    public void setSeoRobots(String seoRobots) { this.seoRobots = seoRobots; }
+    public String getSeoSchemaType() { return seoSchemaType; }
+    public void setSeoSchemaType(String seoSchemaType) { this.seoSchemaType = seoSchemaType; }
     public boolean isPublished() { return published; }
     public void setPublished(boolean published) { this.published = published; }
     public int getSortOrder() { return sortOrder; }

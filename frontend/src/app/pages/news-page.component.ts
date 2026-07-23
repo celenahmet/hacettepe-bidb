@@ -25,6 +25,11 @@ interface Haber {
   audience: NewsAudience;
   coverTemplate: NewsCoverTemplate;
   coverText: string | null;
+  seoTitle: string | null;
+  seoDescription: string | null;
+  seoKeywords: string | null;
+  seoRobots: string | null;
+  updatedAt: string | null;
 }
 
 /** Görselli haber sayfası: /tr/newsItem/<slug> */
@@ -121,9 +126,29 @@ export class NewsPageComponent {
         return this.http.get<Haber>(`/api/${language}/newsItem/${slug}`).pipe(
           tap((h) => {
             this.seo.uygula(
-              { title: h.title, seoTitle: null, seoDescription: h.summary, seoKeywords: null } as never,
+              {
+                slug,
+                language,
+                title: h.title,
+                contentHtml: null,
+                seoTitle: h.seoTitle,
+                seoDescription: h.seoDescription || h.summary,
+                seoKeywords: h.seoKeywords,
+                seoImage: h.imageUrl,
+                seoRobots: h.seoRobots,
+                seoSchemaType: 'NewsArticle',
+                updatedAt: h.updatedAt,
+                documents: []
+              },
               language,
-              `/${language}/newsItem/${slug}`
+              `/${language}/newsItem/${slug}`,
+              {
+                type: 'article',
+                image: h.imageUrl,
+                imageAlt: h.imageAlt || h.title,
+                publishedAt: h.date,
+                modifiedAt: h.updatedAt
+              }
             );
             this.govde.set(h.contentHtml ? this.temizleyici.bypassSecurityTrustHtml(icerigiHazirla(h.contentHtml)) : null);
           }),

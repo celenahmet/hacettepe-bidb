@@ -5,5 +5,8 @@ public record SeoUpdateDto(
         String seoTitle,
         String seoDescription,
         String seoKeywords,
+        String seoImage,
+        String seoRobots,
+        String seoSchemaType,
         boolean published
 ) {}

@@ -6,6 +6,7 @@ import tr.edu.hacettepe.bidb.model.News;
 import tr.edu.hacettepe.bidb.repo.NewsRepo;
 
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 /**
@@ -27,19 +28,25 @@ public class NewsController {
     public record HaberDto(Long id, String slug, String title, String summary, LocalDate date,
                            String imageUrl, String imageAlt, String contentHtml,
                            String externalUrl, long viewCount, String category,
-                           String audience, String coverTemplate, String coverText) {
+                           String audience, String coverTemplate, String coverText,
+                           String seoTitle, String seoDescription, String seoKeywords,
+                           String seoRobots, OffsetDateTime updatedAt) {
         static HaberDto of(News d) {
             return new HaberDto(d.getId(), d.getSlug(), d.getTitle(), d.getSummary(), d.getPublishedOn(),
                     d.getImageUrl(), d.getImageAlt(), d.getContentHtml(),
                     d.getExternalUrl(), d.getViewCount(), d.getCategory(),
-                    d.getAudience(), d.getCoverTemplate(), d.getCoverText());
+                    d.getAudience(), d.getCoverTemplate(), d.getCoverText(),
+                    d.getSeoTitle(), d.getSeoDescription(), d.getSeoKeywords(),
+                    d.getSeoRobots(), d.getUpdatedAt());
         }
 
         static HaberDto of(News d, long viewCount) {
             return new HaberDto(d.getId(), d.getSlug(), d.getTitle(), d.getSummary(), d.getPublishedOn(),
                     d.getImageUrl(), d.getImageAlt(), d.getContentHtml(),
                     d.getExternalUrl(), viewCount, d.getCategory(),
-                    d.getAudience(), d.getCoverTemplate(), d.getCoverText());
+                    d.getAudience(), d.getCoverTemplate(), d.getCoverText(),
+                    d.getSeoTitle(), d.getSeoDescription(), d.getSeoKeywords(),
+                    d.getSeoRobots(), d.getUpdatedAt());
         }
     }
 
