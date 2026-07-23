@@ -35,6 +35,7 @@ import { Language, Slide } from '../core/models';
           @for (s of slaytlar; track s.imageUrl; let i = $index) {
             <img class="hero-gorsel"
                  [class.etkin]="i === etkin()"
+                 [class.hero-gorsel--tabela]="tabelaGorseli(s.imageUrl)"
                  [src]="s.imageUrl"
                  [srcset]="darSurum(s.imageUrl) + ' 960w, ' + s.imageUrl + ' 1920w'"
                  sizes="100vw"
@@ -125,6 +126,11 @@ export class HeroSliderComponent implements OnInit, OnDestroy {
 
   protected darSurum(adres: string): string {
     return adres.replace('-1920.webp', '-960.webp');
+  }
+
+  /** Beytepe giriş tabelasının yazısını metin alanından uzaklaştıran özel kadraj. */
+  protected tabelaGorseli(adres: string): boolean {
+    return /\/slide5-(?:960|1920)\.webp(?:[?#].*)?$/i.test(adres);
   }
 
   protected basla(): void {

@@ -53,9 +53,28 @@
     animation: hero-nefes 10s linear forwards;
   }
 
+  /*
+   * Beytepe tabelası diğer fotoğraflardan farklı olarak yatay bir yazı odağına
+   * sahip. Soldan yapılan hafif yakınlaşma, tabelayı sağa taşırken görüntünün
+   * solunda boşluk oluşmasını engeller.
+   */
+  .hero-gorsel--tabela {
+    transform-origin: left center;
+    transform: scale(1.2);
+  }
+
+  .hero-gorsel--tabela.etkin {
+    animation-name: hero-nefes-tabela;
+  }
+
   @keyframes hero-nefes {
     from { transform: scale(1.025); }
     to { transform: scale(1); }
+  }
+
+  @keyframes hero-nefes-tabela {
+    from { transform: scale(1.2); }
+    to { transform: scale(1.16); }
   }
 
   /* ================= fotoğraf üstü içerik ================= */
@@ -265,6 +284,19 @@
     .hero-panel { max-width: var(--kap-dar); }
     .hero-baslik { font-size: clamp(2.4rem, 7vw, 3.5rem); }
     .hero-ozet { max-width: 52ch; }
+
+    /*
+     * Dar ekranda cover kırpması yatayda gerçekleşir. Biraz daha soldaki
+     * bölgeyi göstermek, tabela yazısını içerik bloğunun sağında tutar.
+     */
+    .hero-gorsel--tabela {
+      object-position: 43% center;
+      transform-origin: center;
+    }
+
+    .hero-gorsel--tabela.etkin {
+      animation-name: hero-nefes;
+    }
   }
 
   /* ================= mobil ================= */
@@ -314,6 +346,10 @@
   @media (prefers-reduced-motion: reduce) {
     .hero-gorsel { transition: none; }
     .hero-gorsel.etkin { animation: none; transform: none; }
+    .hero-gorsel--tabela.etkin {
+      transform: scale(1.16);
+      transform-origin: left center;
+    }
     .hero-etiket,
     .hero-baslik > span,
     .hero-ozet,
@@ -323,5 +359,12 @@
       transform: scaleX(1);
     }
     .hero-dugme svg { transition: none; }
+  }
+
+  @media (max-width: 56.25rem) and (prefers-reduced-motion: reduce) {
+    .hero-gorsel--tabela.etkin {
+      transform: none;
+      transform-origin: center;
+    }
   }
 }
