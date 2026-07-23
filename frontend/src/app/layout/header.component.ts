@@ -30,12 +30,23 @@ import { Language, Menu } from '../core/models';
           </span>
         </a>
 
-        <button type="button" class="menu-dugmesi" (click)="menuAcKapa()"
-                [attr.aria-expanded]="menuAcik()"
-                [attr.aria-label]="language === 'en' ? 'Menu' : 'Menü'">
-          <span class="cizgiler" aria-hidden="true"></span>
-          {{ language === 'en' ? 'Menu' : 'Menü' }}
-        </button>
+        <!-- Dar ekranda dil seçimi menüden bağımsızdır; kullanıcı gezinme
+             panelini açmadan dil değiştirebilir. Masaüstündeki dil seçimi
+             aşağıdaki ana menüde kalır. -->
+        <span class="ust-eylemler">
+          <span class="dil-secim dil-secim-mobil">
+            <a routerLink="/tr" [class.etkin]="language === 'tr'" (click)="kapat()">TR</a>
+            <a routerLink="/en" [class.etkin]="language === 'en'" (click)="kapat()">EN</a>
+          </span>
+
+          <button type="button" class="menu-dugmesi" (click)="menuAcKapa()"
+                  [attr.aria-expanded]="menuAcik()"
+                  [attr.aria-label]="menuAcik()
+                    ? (language === 'en' ? 'Close main menu' : 'Ana menüyü kapat')
+                    : (language === 'en' ? 'Open main menu' : 'Ana menüyü aç')">
+            <span class="cizgiler" aria-hidden="true"></span>
+          </button>
+        </span>
 
         <nav class="ust-menu" [class.acik]="menuAcik()"
              [attr.aria-label]="language === 'en' ? 'Main menu' : 'Ana menü'">
@@ -70,7 +81,7 @@ import { Language, Menu } from '../core/models';
             {{ language === 'en' ? 'Contact' : 'İletişim' }}
           </a>
 
-          <span class="dil-secim">
+          <span class="dil-secim dil-secim-masaustu">
             <a routerLink="/tr" [class.etkin]="language === 'tr'" (click)="kapat()">TR</a>
             <a routerLink="/en" [class.etkin]="language === 'en'" (click)="kapat()">EN</a>
           </span>

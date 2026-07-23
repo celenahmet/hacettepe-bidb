@@ -158,6 +158,9 @@
     cursor: pointer;
   }
 
+  /* Mobil eylemler masaüstünde görünmez; dil seçimi ana menünün içindedir. */
+  .ust-eylemler { display: none; }
+
   /* Üç çizgi: ikon yazı tipi yerine kenarlıklarla çizilir */
   .menu-dugmesi .cizgiler {
     width: 16px;
@@ -555,12 +558,42 @@
       padding-top: var(--bosluk-3);
       padding-bottom: var(--bosluk-3);
     }
-    /* Logo daralabilmeli, düğme daralmamalı: aksi hâlde düğme satırdan taşar */
+    /* Logo daralabilmeli, sağdaki dil + menü grubu daralmamalı. */
     .logo { flex: 1 1 auto; min-width: 0; }
     .logo-yazi { min-width: 0; }
     .logo-yazi strong { font-size: var(--olcu-md); }
     .logo-yazi small { font-size: var(--olcu-xs); }
-    .menu-dugmesi { display: inline-flex; flex: none; margin-left: var(--bosluk-3); }
+
+    .ust-eylemler {
+      flex: none;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--bosluk-3);
+      margin-left: auto;
+    }
+
+    .menu-dugmesi {
+      width: 42px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      padding: 0;
+    }
+
+    .dil-secim-mobil {
+      padding: 0 var(--bosluk-3) 0 0;
+      border-left: 0;
+      border-right: 1px solid var(--cizgi);
+    }
+
+    .dil-secim-mobil a {
+      display: grid;
+      min-width: 24px;
+      min-height: 36px;
+      place-items: center;
+    }
+
+    .dil-secim-masaustu { display: none; }
 
     .ust-menu {
       display: none;
@@ -579,14 +612,32 @@
     .acilir { display: block; }
     .acilir > button { width: 100%; justify-content: space-between; }
     .acilir-liste {
+      display: none;
       position: static;
       min-width: 0;
+      padding: var(--bosluk-1) 0;
       border: 0;
       border-bottom: 1px solid var(--cizgi);
       background: var(--yuzey-2);
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+      transition: none;
     }
 
-    .dil-secim { padding: var(--bosluk-3) 0 0; border-left: 0; }
+    /* Kapalı alt menüler yükseklik ayırmaz; yalnız seçilen başlık kendi
+       bağlantılarını hemen altında açar. */
+    .acilir.acik .acilir-liste { display: block; }
+
+    .acilir-liste a {
+      padding: var(--bosluk-3) var(--bosluk-4);
+      border-left: 2px solid transparent;
+    }
+
+    .acilir-liste a:hover {
+      border-left-color: var(--hu-kirmizi);
+      background: var(--yuzey-3);
+    }
 
     .sayfa-baslik { font-size: var(--olcu-2xl); }
 
@@ -600,6 +651,18 @@
   @media (max-width: 620px) {
     .alt-izgara { grid-template-columns: minmax(0, 1fr); }
     .alt-serit-ic { flex-direction: column; align-items: flex-start; }
+  }
+
+  @media (max-width: 420px) {
+    .ust-ic { gap: var(--bosluk-2); }
+    .logo { gap: var(--bosluk-2); }
+    .logo img { width: 36px; height: 41px; }
+    .logo-yazi strong { font-size: 0.8rem; letter-spacing: 0.01em; }
+    .logo-yazi small { font-size: 0.68rem; }
+    .ust-eylemler { gap: var(--bosluk-2); }
+    .dil-secim-mobil { padding-right: var(--bosluk-2); gap: 2px; }
+    .dil-secim-mobil a { min-width: 22px; }
+    .menu-dugmesi { width: 40px; }
   }
 }
 
