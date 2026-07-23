@@ -46,7 +46,7 @@ interface IslemSunumu {
         <header class="eposta-merkezi-ust">
           <div>
             <p class="eposta-merkezi-kod">
-              {{ dilDegeri === 'en' ? 'ACCOUNT & ACCESS CENTER' : 'HESAP VE ERİŞİM MERKEZİ' }}
+              {{ dilDegeri === 'en' ? 'Account and access center' : 'Hesap ve erişim merkezi' }}
             </p>
             <p class="eposta-merkezi-aciklama">
               {{ dilDegeri === 'en'
@@ -56,7 +56,7 @@ interface IslemSunumu {
           </div>
           <p class="eposta-merkezi-sayac" aria-hidden="true">
             <strong>{{ ikiHane(islemler().length) }}</strong>
-            <span>{{ dilDegeri === 'en' ? 'OPERATIONS' : 'İŞLEM' }}</span>
+            <span>{{ dilDegeri === 'en' ? 'operations' : 'işlem' }}</span>
           </p>
         </header>
 
@@ -143,8 +143,8 @@ interface IslemSunumu {
 
                 <span class="eposta-kart-alt" aria-hidden="true">
                   <span>{{ islem.hedef === '_blank'
-                    ? (dilDegeri === 'en' ? 'OPEN IN NEW TAB' : 'YENİ SEKMEDE AÇ')
-                    : (dilDegeri === 'en' ? 'VIEW DETAILS' : 'AYRINTILARI GÖR') }}</span>
+                    ? (dilDegeri === 'en' ? 'Open in new tab' : 'Yeni sekmede aç')
+                    : (dilDegeri === 'en' ? 'View details' : 'Ayrıntıları gör') }}</span>
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
                        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M5 12h13M14 7l5 5-5 5"/>
@@ -168,15 +168,15 @@ export class EmailOperationsComponent {
   protected readonly islemler = this._islemler.asReadonly();
 
   private readonly sunumlar: IslemSunumu[] = [
-    { kategori: 'POSTA KUTUSU', ikon: 'posta', ton: 'mavi' },
-    { kategori: 'HESAP OLUŞTURMA', ikon: 'posta-ekle', ton: 'mavi' },
-    { kategori: 'HESAP KURTARMA', ikon: 'kullanici', ton: 'kehribar' },
-    { kategori: 'HESAP KURTARMA', ikon: 'anahtar-soru', ton: 'kehribar' },
-    { kategori: 'HESAP GÜVENLİĞİ', ikon: 'anahtar-yenile', ton: 'kirmizi' },
-    { kategori: 'PROFİL YÖNETİMİ', ikon: 'kimlik', ton: 'turkuaz' },
-    { kategori: 'İLETİŞİM BİLGİSİ', ikon: 'telefon', ton: 'turkuaz' },
-    { kategori: 'GÜVENLİK KONTROLÜ', ikon: 'guvenlik', ton: 'kirmizi' },
-    { kategori: 'İSTEMCİ AYARLARI', ikon: 'exchange', ton: 'mor' }
+    { kategori: 'Posta kutusu', ikon: 'posta', ton: 'mavi' },
+    { kategori: 'Hesap oluşturma', ikon: 'posta-ekle', ton: 'mavi' },
+    { kategori: 'Hesap kurtarma', ikon: 'kullanici', ton: 'kehribar' },
+    { kategori: 'Hesap kurtarma', ikon: 'anahtar-soru', ton: 'kehribar' },
+    { kategori: 'Hesap güvenliği', ikon: 'anahtar-yenile', ton: 'kirmizi' },
+    { kategori: 'Profil yönetimi', ikon: 'kimlik', ton: 'turkuaz' },
+    { kategori: 'İletişim bilgisi', ikon: 'telefon', ton: 'turkuaz' },
+    { kategori: 'Güvenlik kontrolü', ikon: 'guvenlik', ton: 'kirmizi' },
+    { kategori: 'İstemci ayarları', ikon: 'exchange', ton: 'mor' }
   ];
 
   protected ikiHane(sayi: number): string {

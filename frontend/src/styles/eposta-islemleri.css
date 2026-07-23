@@ -24,10 +24,10 @@
   .eposta-merkezi-kod {
     margin: 0 0 var(--bosluk-2);
     color: var(--hu-kirmizi);
-    font-family: var(--yazi-kod);
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.16em;
+    font-family: var(--yazi-govde);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.035em;
     line-height: 1.35;
   }
 
@@ -48,7 +48,7 @@
     gap: var(--bosluk-2);
     margin: 0;
     color: var(--metin-3);
-    font-family: var(--yazi-kod);
+    font-family: var(--yazi-govde);
   }
 
   .eposta-merkezi-sayac strong {
@@ -59,8 +59,9 @@
   }
 
   .eposta-merkezi-sayac span {
-    font-size: 0.62rem;
-    letter-spacing: 0.12em;
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.015em;
   }
 
   .eposta-islem-izgarasi {
@@ -139,19 +140,20 @@
 
   .eposta-islem-sira {
     color: var(--metin-3);
-    font-family: var(--yazi-kod);
-    font-size: 0.65rem;
+    font-family: var(--yazi-govde);
+    font-size: 0.67rem;
     font-weight: 600;
-    letter-spacing: 0.1em;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.035em;
   }
 
   .eposta-islem-kategori {
     overflow: hidden;
     color: var(--islem-renk);
-    font-family: var(--yazi-kod);
-    font-size: 0.6rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
+    font-family: var(--yazi-govde);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
     line-height: 1.35;
     text-align: right;
     text-overflow: ellipsis;
@@ -203,10 +205,10 @@
     margin-top: auto;
     padding-top: var(--bosluk-4);
     color: var(--metin-3);
-    font-family: var(--yazi-kod);
-    font-size: 0.57rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
+    font-family: var(--yazi-govde);
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.005em;
   }
 
   .eposta-kart-alt svg {
