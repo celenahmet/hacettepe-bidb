@@ -29,9 +29,10 @@
     background:
       url("/images/slider/slide2-960.webp")
       50% 43% / cover no-repeat;
-    filter: blur(3px) saturate(1.08) contrast(1.02) brightness(0.92);
-    transform: scale(1.22) translate3d(-3.2%, -1.4%, 0);
-    animation: hata-teknokent-akis 20s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
+    transform: translate3d(-2.4%, -1%, 0) scale(1.24);
+    transform-origin: center;
+    backface-visibility: hidden;
+    animation: hata-teknokent-akis 26s linear infinite alternate;
     will-change: transform;
   }
 
@@ -41,21 +42,14 @@
     z-index: -1;
     inset: 0;
     background:
-      linear-gradient(112deg, rgb(239 246 251 / 48%) 0%, rgb(225 238 248 / 35%) 54%, rgb(205 224 240 / 27%) 100%),
-      linear-gradient(180deg, rgb(6 27 49 / 5%), rgb(6 27 49 / 15%));
+      linear-gradient(118deg, rgb(231 243 251 / 32%) 0%, rgb(24 112 171 / 15%) 54%, rgb(4 53 96 / 21%) 100%),
+      linear-gradient(180deg, rgb(4 29 53 / 3%), rgb(4 29 53 / 14%));
     pointer-events: none;
   }
 
   @keyframes hata-teknokent-akis {
-    0% {
-      transform: scale(1.22) translate3d(-3.2%, -1.4%, 0);
-    }
-    46% {
-      transform: scale(1.34) translate3d(1.6%, -0.2%, 0);
-    }
-    100% {
-      transform: scale(1.26) translate3d(3.5%, 1.5%, 0);
-    }
+    from { transform: translate3d(-2.4%, -1%, 0) scale(1.24); }
+    to { transform: translate3d(2.8%, 1.2%, 0) scale(1.32); }
   }
 
   .hata-kap {
@@ -173,6 +167,7 @@
   .hata-metin h1 {
     max-width: 13ch;
     margin: 0 0 var(--bosluk-4);
+    overflow-wrap: anywhere;
     color: var(--hu-lacivert);
     font-size: clamp(2rem, 4vw, 3.25rem);
     font-weight: var(--kalinlik-kalin);
@@ -183,6 +178,7 @@
   .hata-aciklama {
     max-width: 44rem;
     margin: 0;
+    overflow-wrap: anywhere;
     color: var(--metin-2);
     font-size: var(--olcu-lg);
     line-height: var(--satir-normal);
@@ -274,6 +270,7 @@
   .hata-bilgi p {
     max-width: 44rem;
     margin: 0;
+    overflow-wrap: anywhere;
     color: var(--metin-2);
     font-size: var(--olcu-sm);
   }
@@ -293,6 +290,7 @@
 
   .hata-alt p {
     margin: 0;
+    overflow-wrap: anywhere;
   }
 
   .hata-alt a {
@@ -334,8 +332,28 @@
       margin-bottom: var(--bosluk-4);
     }
 
+    .hata-kod {
+      padding: var(--bosluk-4);
+    }
+
+    .hata-kod strong {
+      font-size: clamp(3.75rem, 20vw, 5rem);
+    }
+
     .hata-metin {
-      padding: var(--bosluk-5);
+      padding: clamp(1.35rem, 6vw, var(--bosluk-5));
+    }
+
+    .hata-metin h1 {
+      font-size: clamp(1.85rem, 9.5vw, 2.5rem);
+    }
+
+    .hata-aciklama {
+      font-size: var(--olcu-md);
+    }
+
+    .hata-bilgi {
+      grid-template-columns: 1.65rem minmax(0, 1fr);
     }
 
     .hata-eylemler {
@@ -364,7 +382,7 @@
   @media (prefers-reduced-motion: reduce) {
     .hata-sayfasi::before {
       animation: none;
-      transform: scale(1.27);
+      transform: translate3d(0, 0, 0) scale(1.28);
       will-change: auto;
     }
 
