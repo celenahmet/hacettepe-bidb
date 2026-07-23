@@ -1,8 +1,8 @@
 import { Component, Input, inject } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
 import { Api } from '../core/api.service';
-import { Language } from '../core/models';
+import { Language, MenuItem } from '../core/models';
 
 /** Sol menü. Bölümler API'den gelir; açılır-kapanır çalışır. */
 @Component({
@@ -19,7 +19,7 @@ import { Language } from '../core/models';
       </a>
 
       @for (m of menus$ | async; track m.title) {
-        <details class="sol-bolum" open>
+        <details class="sol-bolum" [open]="bolumEtkin(m.items)">
           <summary>{{ m.title }}</summary>
           <ul>
             @for (o of m.items; track o.url) {
@@ -44,5 +44,16 @@ export class SideMenuComponent {
   }
   protected language: Language = 'tr';
   private api = inject(Api);
+  private router = inject(Router);
   protected menus$ = this.api.menu('tr');
+
+  /** Yalnızca bulunulan sayfayı içeren bölüm başlangıçta açık gelir.
+   *  Diğer bölümler yükseklik ayırmaz; kullanıcı isterse summary üzerinden
+   *  bağımsız olarak açabilir. */
+  protected bolumEtkin(items: MenuItem[]): boolean {
+    const etkinYol = this.router.url.split(/[?#]/, 1)[0].replace(/\/+$/, '');
+    return items.some((item) =>
+      !item.newTab && item.url.replace(/\/+$/, '') === etkinYol
+    );
+  }
 }

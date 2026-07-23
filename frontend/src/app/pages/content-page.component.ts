@@ -31,7 +31,8 @@ import { UnitsComponent } from './units.component';
       </aside>
 
       <main id="ana-icerik" class="icerik-alani"
-            [class.web-servis-sayfasi]="sayfa()?.slug === 'web-services'">
+            [class.web-servis-sayfasi]="sayfa()?.slug === 'web-services'"
+            [class.kurul-sayfasi]="sayfa()?.slug === 'committees'">
         @if (sayfa(); as s) {
           <header class="sayfa-tepe">
             @if (bolum(); as b) { <p class="sayfa-bolum">{{ b }}</p> }
