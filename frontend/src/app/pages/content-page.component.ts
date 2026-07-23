@@ -32,6 +32,7 @@ import { UnitsComponent } from './units.component';
 
       <main id="ana-icerik" class="icerik-alani"
             [class.web-servis-sayfasi]="sayfa()?.slug === 'web-services'"
+            [class.dokumanlar-sayfasi]="sayfa()?.slug === 'documents'"
             [class.kurul-sayfasi]="sayfa()?.slug === 'committees'"
             [class.cms-sayfasi]="sayfa()?.slug === 'cms'"
             [class.personel-sayfasi]="sayfa()?.slug === 'staff'"
