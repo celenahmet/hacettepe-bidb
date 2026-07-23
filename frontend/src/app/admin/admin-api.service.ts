@@ -204,6 +204,41 @@ export interface QualitySummary {
   vitals: QualityVitalScore[];
 }
 
+export interface AnalyticsPeriodPoint {
+  key: string;
+  views: number;
+}
+
+export interface AnalyticsBreakdown {
+  name: string;
+  views: number;
+  percentage: number;
+}
+
+export interface AnalyticsPageReport {
+  path: string;
+  views: number;
+  currentMonthViews: number;
+  previousMonthViews: number;
+  changePercent: number | null;
+  lastViewedAt: string;
+}
+
+export interface AnalyticsReport {
+  totalViews: number;
+  currentMonthViews: number;
+  previousMonthViews: number;
+  monthlyChangePercent: number | null;
+  activePages: number;
+  months: number;
+  generatedAt: string;
+  monthly: AnalyticsPeriodPoint[];
+  daily: AnalyticsPeriodPoint[];
+  pages: AnalyticsPageReport[];
+  devices: AnalyticsBreakdown[];
+  referrers: AnalyticsBreakdown[];
+}
+
 const SESSION_KEY = 'bidb-yonetim';
 
 /** Yönetim uçlarına erişim. Kimlik bilgisi yalnızca tarayıcı oturumunda tutulur. */
@@ -479,6 +514,13 @@ export class AdminApiService {
     return this.http.get<QualitySummary>('/api/admin/quality', {
       headers: this.basliklar(),
       params: { days }
+    });
+  }
+
+  analyticsReport(months = 12): Observable<AnalyticsReport> {
+    return this.http.get<AnalyticsReport>('/api/admin/analytics', {
+      headers: this.basliklar(),
+      params: { months }
     });
   }
 

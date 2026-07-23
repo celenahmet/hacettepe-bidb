@@ -94,8 +94,8 @@ import { CookiePreferencesService } from '../../core/cookie-preferences.service'
                     <h3>{{ language() === 'en' ? 'Analytics and performance' : 'Analiz ve performans' }}</h3>
                     <p>
                       {{ language() === 'en'
-                        ? 'Core Web Vitals are measured without cookies or visitor identifiers. Only the visited route and numerical LCP, INP, CLS, FCP and TTFB values are retained for up to 90 days.'
-                        : 'Core Web Vitals değerleri çerez veya ziyaretçi tanımlayıcısı olmadan ölçülür. Yalnızca ziyaret edilen rota ile sayısal LCP, INP, CLS, FCP ve TTFB değerleri en fazla 90 gün saklanır.' }}
+                        ? 'Core Web Vitals are measured without cookies or visitor identifiers and retained for up to 90 days. For monthly content reports, only the route, broad device class and traffic-source category are retained for up to 24 months. No IP address, full referrer URL, cookie or user identifier is stored.'
+                        : 'Core Web Vitals değerleri çerez veya ziyaretçi tanımlayıcısı olmadan ölçülür ve en fazla 90 gün saklanır. Aylık içerik raporları için yalnızca rota, genel cihaz sınıfı ve trafik kaynağı kategorisi en fazla 24 ay tutulur; IP adresi, tam yönlendiren adres, çerez veya kullanıcı tanımlayıcısı saklanmaz.' }}
                   </article>
                   <article>
                     <span class="cerez-durum kapali">{{ language() === 'en' ? 'Not in use' : 'Kullanılmıyor' }}</span>

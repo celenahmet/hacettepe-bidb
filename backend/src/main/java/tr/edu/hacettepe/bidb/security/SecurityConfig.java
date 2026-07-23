@@ -34,7 +34,8 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST,
                         "/api/tr/news/*/view", "/api/en/news/*/view").permitAll()
                 // Kimliksiz, çerezsiz Core Web Vitals örnekleri
-                .requestMatchers(HttpMethod.POST, "/api/metrics/vitals").permitAll()
+                .requestMatchers(HttpMethod.POST,
+                        "/api/metrics/vitals", "/api/metrics/page-view").permitAll()
                 // Yönetim uçları
                 .requestMatchers("/api/admin/**").authenticated()
                 .anyRequest().denyAll())

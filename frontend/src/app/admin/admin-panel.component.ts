@@ -4,7 +4,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { PageEditorComponent } from './page-editor.component';
 import { StaffEditorComponent } from './staff-editor.component';
 import { NewsCoverComponent } from '../pages/news-cover.component';
-import { AdminNews, NewsOptions, Shortcut, AdminMenuItem, AdminMenu, AdminPage, Slide, AdminSocialAccount, AdminApiService, ContactChannel, QualitySummary } from './admin-api.service';
+import { AdminNews, NewsOptions, Shortcut, AdminMenuItem, AdminMenu, AdminPage, Slide, AdminSocialAccount, AdminApiService, ContactChannel, QualitySummary, AnalyticsReport } from './admin-api.service';
 
 /** Alt bilgide görünen kurum bilgileri. */
 interface ContactInfo extends Record<string, string> {
@@ -12,6 +12,15 @@ interface ContactInfo extends Record<string, string> {
   iletisim_telefon: string;
   iletisim_eposta: string;
   iletisim_faks: string;
+}
+
+type AdminTab = 'analytics' | 'quality' | 'pages' | 'news' | 'slider' |
+  'shortcuts' | 'menus' | 'sosyal' | 'iletisim' | 'personel';
+type MobileGroup = 'content' | 'site' | 'manage';
+interface MobileMenuItem {
+  tab: AdminTab;
+  label: string;
+  note: string;
 }
 
 /** Yönetim paneli: giriş, sayfa SEO düzenleme ve duyuru yönetimi. */
@@ -65,47 +74,52 @@ interface ContactInfo extends Record<string, string> {
             </div>
 
             <div class="ray-liste">
-          <button type="button" [class.etkin]="sekme() === 'quality'" (click)="sekmeKalite()">
+          <button type="button" [class.etkin]="sekme() === 'analytics'" (click)="sekmeAnalitik()">
             <span class="no">01</span>
+            <span>Analitik</span>
+            @if (analytics(); as a) { <span class="sayi">{{ a.currentMonthViews }}</span> }
+          </button>
+          <button type="button" [class.etkin]="sekme() === 'quality'" (click)="sekmeKalite()">
+            <span class="no">02</span>
             <span>SEO ve Performans</span>
             @if (quality(); as q) { <span class="sayi">{{ q.seoScore }}</span> }
           </button>
           <button type="button" [class.etkin]="sekme() === 'pages'" (click)="sekme.set('pages')">
-            <span class="no">02</span>
+            <span class="no">03</span>
             <span>Sayfalar</span>
             <span class="sayi">{{ pages().length }}</span>
           </button>
           <button type="button" [class.etkin]="sekme() === 'news'" (click)="sekmeDuyuru()">
-            <span class="no">03</span>
+            <span class="no">04</span>
             <span>Duyurular</span>
             <span class="sayi">{{ news().length }}</span>
           </button>
           <button type="button" [class.etkin]="sekme() === 'slider'" (click)="sekmeSlider()">
-            <span class="no">04</span>
+            <span class="no">05</span>
             <span>Slider</span>
             <span class="sayi">{{ slides().length }}</span>
           </button>
           <button type="button" [class.etkin]="sekme() === 'shortcuts'" (click)="sekmeKisayol()">
-            <span class="no">05</span>
+            <span class="no">06</span>
             <span>Kısayollar</span>
             <span class="sayi">{{ shortcuts().length }}</span>
           </button>
           <button type="button" [class.etkin]="sekme() === 'menus'" (click)="sekmeMenu()">
-            <span class="no">06</span>
+            <span class="no">07</span>
             <span>Menüler</span>
             <span class="sayi">{{ menus().length }}</span>
           </button>
           <button type="button" [class.etkin]="sekme() === 'sosyal'" (click)="sekmeSosyal()">
-            <span class="no">07</span>
+            <span class="no">08</span>
             <span>Sosyal Medya</span>
             <span class="sayi">{{ socialAccounts().length }}</span>
           </button>
           <button type="button" [class.etkin]="sekme() === 'iletisim'" (click)="sekmeIletisim()">
-            <span class="no">08</span>
+            <span class="no">09</span>
             <span>İletişim Bilgileri</span>
           </button>
           <button type="button" [class.etkin]="sekme() === 'personel'" (click)="sekme.set('personel')">
-            <span class="no">09</span>
+            <span class="no">10</span>
             <span>Personel</span>
           </button>
             </div>
@@ -126,7 +140,124 @@ interface ContactInfo extends Record<string, string> {
 
         @if (bilgi()) { <p class="bilgi" role="status">{{ bilgi() }}</p> }
 
-        @if (sekme() === 'quality') {
+        @if (sekme() === 'analytics') {
+          @if (analyticsLoading()) {
+            <p class="aciklama" role="status">Aylık kullanım raporu hazırlanıyor…</p>
+          } @else if (analytics(); as a) {
+            <section class="analitik-ozet" aria-label="Kullanım özeti">
+              <article>
+                <span>Bu ay</span>
+                <strong>{{ sayiBicimle(a.currentMonthViews) }}</strong>
+                <small>sayfa görüntüleme</small>
+              </article>
+              <article>
+                <span>Geçen ay</span>
+                <strong>{{ sayiBicimle(a.previousMonthViews) }}</strong>
+                <small [class.artis]="(a.monthlyChangePercent ?? 0) > 0"
+                       [class.azalis]="(a.monthlyChangePercent ?? 0) < 0">
+                  {{ degisimEtiketi(a.monthlyChangePercent) }}
+                </small>
+              </article>
+              <article>
+                <span>{{ a.months }} aylık toplam</span>
+                <strong>{{ sayiBicimle(a.totalViews) }}</strong>
+                <small>anonim görüntüleme</small>
+              </article>
+              <article>
+                <span>Aktif içerik</span>
+                <strong>{{ a.activePages }}</strong>
+                <small>görüntülenen sayfa</small>
+              </article>
+            </section>
+
+            <div class="analitik-ana-izgara">
+              <section class="analitik-panel analitik-grafik">
+                <header>
+                  <div><span class="bolum-no">12 Aylık Eğilim</span><h2>Aylık trafik</h2></div>
+                  <button type="button" class="ikincil" (click)="analitikYukle()">Yenile</button>
+                </header>
+                @if (a.monthly.length) {
+                  <div class="aylik-grafik" role="img" aria-label="Aylık sayfa görüntüleme grafiği">
+                    @for (item of a.monthly; track item.key) {
+                      <div class="aylik-sutun">
+                        <span class="sutun-deger">{{ sayiBicimle(item.views) }}</span>
+                        <i [style.height.%]="grafikYuksekligi(item.views, a.monthly)"></i>
+                        <small>{{ ayEtiketi(item.key) }}</small>
+                      </div>
+                    }
+                  </div>
+                } @else {
+                  <div class="kalite-bos">
+                    <strong>Rapor oluşmaya başladı</strong>
+                    <p>Yayınlanan sürüm ziyaret aldıkça aylık eğilim burada gerçek verilerle görünecek.</p>
+                  </div>
+                }
+                <div class="gunluk-baslik">
+                  <strong>Son 30 gün</strong>
+                  <span>Günlük yoğunluk</span>
+                </div>
+                <div class="gunluk-spark" role="img" aria-label="Son 30 günlük görüntüleme yoğunluğu">
+                  @for (item of a.daily; track item.key) {
+                    <i [style.height.%]="grafikYuksekligi(item.views, a.daily)"
+                       [attr.title]="item.key + ': ' + item.views"></i>
+                  }
+                </div>
+              </section>
+
+              <aside class="analitik-kirilimlar">
+                <section class="analitik-panel">
+                  <span class="bolum-no">Cihazlar</span>
+                  <h2>Erişim biçimi</h2>
+                  @for (item of a.devices; track item.name) {
+                    <div class="kirilim-satir">
+                      <span>{{ cihazEtiketi(item.name) }}</span><strong>%{{ item.percentage }}</strong>
+                      <i><b [style.width.%]="item.percentage"></b></i>
+                    </div>
+                  }
+                </section>
+                <section class="analitik-panel">
+                  <span class="bolum-no">Kaynaklar</span>
+                  <h2>Trafik kaynağı</h2>
+                  @for (item of a.referrers; track item.name) {
+                    <div class="kirilim-satir">
+                      <span>{{ kaynakEtiketi(item.name) }}</span><strong>%{{ item.percentage }}</strong>
+                      <i><b [style.width.%]="item.percentage"></b></i>
+                    </div>
+                  }
+                </section>
+              </aside>
+            </div>
+
+            <section class="kalite-bolum">
+              <header>
+                <div><span class="bolum-no">İçerik Performansı</span><h2>Sayfa bazlı rapor</h2></div>
+                <p>Toplam görüntüleme, aylık karşılaştırma ve son ziyaret tek raporda.</p>
+              </header>
+              <div class="tablo-kaydir">
+                <table class="yonetim-tablo analitik-tablo">
+                  <thead><tr><th>Sayfa</th><th>Toplam</th><th>Bu ay</th><th>Geçen ay</th><th>Değişim</th><th>Son ziyaret</th></tr></thead>
+                  <tbody>
+                    @for (page of a.pages; track page.path) {
+                      <tr>
+                        <td><strong>{{ page.path }}</strong></td>
+                        <td>{{ sayiBicimle(page.views) }}</td>
+                        <td>{{ sayiBicimle(page.currentMonthViews) }}</td>
+                        <td>{{ sayiBicimle(page.previousMonthViews) }}</td>
+                        <td><span class="trend" [class.artis]="(page.changePercent ?? 0) > 0"
+                                  [class.azalis]="(page.changePercent ?? 0) < 0">{{ degisimEtiketi(page.changePercent) }}</span></td>
+                        <td><small>{{ tarihSaat(page.lastViewedAt) }}</small></td>
+                      </tr>
+                    } @empty {
+                      <tr><td colspan="6">Henüz sayfa görüntüleme verisi bulunmuyor.</td></tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          } @else {
+            <p class="hata" role="alert">Analitik raporu alınamadı. Backend bağlantısını kontrol edin.</p>
+          }
+        } @else if (sekme() === 'quality') {
           @if (qualityLoading()) {
             <p class="aciklama" role="status">Kalite verileri hesaplanıyor…</p>
           } @else if (quality(); as q) {
@@ -906,6 +1037,43 @@ interface ContactInfo extends Record<string, string> {
         }
             </div>
           </main>
+
+          @if (mobilGrup()) {
+            <button class="mobil-menu-perde" type="button" aria-label="Menüyü kapat"
+                    (click)="mobilGrup.set(null)"></button>
+            <section class="mobil-alt-menu" aria-label="Yönetim alt menüsü">
+              <header><strong>{{ mobilGrupBasligi() }}</strong><button type="button" class="ikincil" (click)="mobilGrup.set(null)">Kapat</button></header>
+              <div>
+                @for (item of mobilGrupOgeleri(); track item.tab) {
+                  <button type="button" [class.etkin]="sekme() === item.tab" (click)="mobilSekmeAc(item.tab)">
+                    <span>{{ item.label }}</span><small>{{ item.note }}</small>
+                  </button>
+                }
+              </div>
+              @if (mobilGrup() === 'manage') {
+                <button type="button" class="mobil-cikis" (click)="api.cikis(); mobilGrup.set(null)">Güvenli çıkış</button>
+              }
+            </section>
+          }
+
+          <nav class="mobil-alt-nav" aria-label="Mobil yönetim menüsü">
+            <button type="button" [class.etkin]="sekme() === 'analytics'" (click)="mobilSekmeAc('analytics')">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V9m6 10V5m6 14v-7m4 7H2"/></svg>
+              <span>Analitik</span>
+            </button>
+            <button type="button" [class.etkin]="mobilAnaEtkin('content')" [attr.aria-expanded]="mobilGrup() === 'content'" (click)="mobilGrupAc('content')">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v14H4zM8 9h8m-8 4h8"/></svg>
+              <span>İçerik</span>
+            </button>
+            <button type="button" [class.etkin]="mobilAnaEtkin('site')" [attr.aria-expanded]="mobilGrup() === 'site'" (click)="mobilGrupAc('site')">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h18v13H3zM8 21h8m-4-4v4"/></svg>
+              <span>Site</span>
+            </button>
+            <button type="button" [class.etkin]="mobilAnaEtkin('manage')" [attr.aria-expanded]="mobilGrup() === 'manage'" (click)="mobilGrupAc('manage')">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM19 13.5l2-1.5-2-1.5-.5-1.3.4-2.5-2.5-.4-1.1-.9L14.5 3h-3l-.8 2.4-1.1.9-2.5.4.4 2.5-.5 1.3L5 12l2 1.5.5 1.3-.4 2.5 2.5.4 1.1.9.8 2.4h3l.8-2.4 1.1-.9 2.5-.4-.4-2.5z"/></svg>
+              <span>Yönetim</span>
+            </button>
+          </nav>
         </div>
       }
     </div>
@@ -915,15 +1083,16 @@ export class AdminPanelComponent {
 
   /** Sol raydaki bölümlerin numarası ve adı; başlıkta da kullanılır. */
   private readonly BOLUMLER: Record<string, { no: string; ad: string }> = {
-    quality: { no: '01', ad: 'SEO ve Performans' },
-    pages: { no: '02', ad: 'Sayfalar' },
-    news: { no: '03', ad: 'Duyurular' },
-    slider: { no: '04', ad: 'Slider' },
-    shortcuts: { no: '05', ad: 'Kısayollar' },
-    menus: { no: '06', ad: 'Menüler' },
-    sosyal: { no: '07', ad: 'Sosyal Medya' },
-    iletisim: { no: '08', ad: 'İletişim Bilgileri' },
-    personel: { no: '09', ad: 'Personel' }
+    analytics: { no: '01', ad: 'Analitik' },
+    quality: { no: '02', ad: 'SEO ve Performans' },
+    pages: { no: '03', ad: 'Sayfalar' },
+    news: { no: '04', ad: 'Duyurular' },
+    slider: { no: '05', ad: 'Slider' },
+    shortcuts: { no: '06', ad: 'Kısayollar' },
+    menus: { no: '07', ad: 'Menüler' },
+    sosyal: { no: '08', ad: 'Sosyal Medya' },
+    iletisim: { no: '09', ad: 'İletişim Bilgileri' },
+    personel: { no: '10', ad: 'Personel' }
   };
 
   protected bolumNo(): string {
@@ -942,7 +1111,10 @@ export class AdminPanelComponent {
   protected bilgi = signal('');
   protected calisiyor = signal(false);
 
-  protected sekme = signal<'quality' | 'pages' | 'news' | 'slider' | 'shortcuts' | 'menus' | 'sosyal' | 'iletisim' | 'personel'>('quality');
+  protected sekme = signal<AdminTab>('analytics');
+  protected mobilGrup = signal<MobileGroup | null>(null);
+  protected analytics = signal<AnalyticsReport | null>(null);
+  protected analyticsLoading = signal(false);
   protected quality = signal<QualitySummary | null>(null);
   protected qualityLoading = signal(false);
   protected pages = signal<AdminPage[]>([]);
@@ -976,6 +1148,7 @@ export class AdminPanelComponent {
     if (this.api.girisYapildi()) {
       this.sayfalariYukle();
       this.sayilariYukle();
+      this.analitikYukle();
       this.kaliteYukle();
     }
   }
@@ -988,6 +1161,7 @@ export class AdminPanelComponent {
         this.api.girisOnayla();
         this.pages.set(liste);
         this.sayilariYukle();
+        this.analitikYukle();
         this.kaliteYukle();
         this.calisiyor.set(false);
         this.parola = '';
@@ -1006,6 +1180,106 @@ export class AdminPanelComponent {
   protected sekmeKalite(): void {
     this.sekme.set('quality');
     this.kaliteYukle();
+  }
+
+  protected sekmeAnalitik(): void {
+    this.sekme.set('analytics');
+    this.analitikYukle();
+  }
+
+  protected analitikYukle(): void {
+    this.analyticsLoading.set(true);
+    this.api.analyticsReport(12).subscribe({
+      next: (report) => {
+        this.analytics.set(report);
+        this.analyticsLoading.set(false);
+      },
+      error: () => {
+        this.analytics.set(null);
+        this.analyticsLoading.set(false);
+      }
+    });
+  }
+
+  protected sayiBicimle(value: number): string {
+    return new Intl.NumberFormat('tr-TR').format(value);
+  }
+
+  protected degisimEtiketi(value: number | null): string {
+    if (value === null) return 'Yeni';
+    if (value === 0) return 'Değişmedi';
+    return `${value > 0 ? '+' : ''}%${new Intl.NumberFormat('tr-TR', { maximumFractionDigits: 1 }).format(value)}`;
+  }
+
+  protected grafikYuksekligi(value: number, points: { views: number }[]): number {
+    const max = Math.max(1, ...points.map((point) => point.views));
+    return Math.max(8, Math.round(value * 100 / max));
+  }
+
+  protected ayEtiketi(value: string): string {
+    const [year, month] = value.split('-').map(Number);
+    return new Intl.DateTimeFormat('tr-TR', { month: 'short', year: '2-digit' })
+      .format(new Date(year, month - 1, 1));
+  }
+
+  protected cihazEtiketi(value: string): string {
+    return ({ mobile: 'Telefon', tablet: 'Tablet', desktop: 'Masaüstü' } as Record<string, string>)[value] ?? value;
+  }
+
+  protected kaynakEtiketi(value: string): string {
+    return ({
+      direct: 'Doğrudan', internal: 'Site içi', search: 'Arama motoru',
+      social: 'Sosyal medya', external: 'Diğer siteler'
+    } as Record<string, string>)[value] ?? value;
+  }
+
+  protected mobilGrupAc(group: MobileGroup): void {
+    this.mobilGrup.update((current) => current === group ? null : group);
+  }
+
+  protected mobilSekmeAc(tab: AdminTab): void {
+    this.mobilGrup.set(null);
+    switch (tab) {
+      case 'analytics': this.sekmeAnalitik(); break;
+      case 'quality': this.sekmeKalite(); break;
+      case 'news': this.sekmeDuyuru(); break;
+      case 'slider': this.sekmeSlider(); break;
+      case 'shortcuts': this.sekmeKisayol(); break;
+      case 'menus': this.sekmeMenu(); break;
+      case 'sosyal': this.sekmeSosyal(); break;
+      case 'iletisim': this.sekmeIletisim(); break;
+      default: this.sekme.set(tab);
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  protected mobilAnaEtkin(group: MobileGroup): boolean {
+    return this.mobilGrupOgeleri(group).some((item) => item.tab === this.sekme());
+  }
+
+  protected mobilGrupBasligi(): string {
+    return ({ content: 'İçerik yönetimi', site: 'Site düzeni', manage: 'Yönetim araçları' } as const)[this.mobilGrup() ?? 'manage'];
+  }
+
+  protected mobilGrupOgeleri(group = this.mobilGrup() ?? 'manage'): MobileMenuItem[] {
+    const groups: Record<MobileGroup, MobileMenuItem[]> = {
+      content: [
+        { tab: 'pages', label: 'Sayfalar', note: 'Metin, URL ve SEO' },
+        { tab: 'news', label: 'Duyurular', note: 'Haber ve duyuru yayınları' }
+      ],
+      site: [
+        { tab: 'slider', label: 'Slider', note: 'Ana sayfa vitrini' },
+        { tab: 'shortcuts', label: 'Kısayollar', note: 'Servis bağlantıları' },
+        { tab: 'menus', label: 'Menüler', note: 'Site navigasyonu' }
+      ],
+      manage: [
+        { tab: 'quality', label: 'SEO ve Performans', note: 'Kalite ölçümleri' },
+        { tab: 'personel', label: 'Personel', note: 'Birim ve personel kayıtları' },
+        { tab: 'iletisim', label: 'İletişim', note: 'Kurumsal iletişim bilgileri' },
+        { tab: 'sosyal', label: 'Sosyal medya', note: 'Kurumsal hesaplar' }
+      ]
+    };
+    return groups[group];
   }
 
   protected kaliteYukle(): void {

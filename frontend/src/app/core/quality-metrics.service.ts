@@ -1,4 +1,6 @@
-import { Injectable, afterNextRender } from '@angular/core';
+import { Injectable, afterNextRender, inject } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs';
 
 type MetricName = 'LCP' | 'INP' | 'CLS' | 'FCP' | 'TTFB';
 
@@ -11,6 +13,7 @@ type MetricName = 'LCP' | 'INP' | 'CLS' | 'FCP' | 'TTFB';
  */
 @Injectable({ providedIn: 'root' })
 export class QualityMetricsService {
+  private router = inject(Router);
   private values = new Map<MetricName, number>();
   private observers: PerformanceObserver[] = [];
   private sent = false;
@@ -21,7 +24,57 @@ export class QualityMetricsService {
   private clsMax = 0;
 
   constructor() {
-    afterNextRender(() => this.start());
+    afterNextRender(() => {
+      this.start();
+      this.startPageViews();
+    });
+  }
+
+  private startPageViews(): void {
+    if (navigator.doNotTrack === '1') return;
+    let lastPath = '';
+    const record = (path: string, navigation: boolean) => {
+      const cleanPath = path.split(/[?#]/)[0];
+      if (cleanPath === lastPath || !/^\/(tr|en)(\/|$)/.test(cleanPath)) return;
+      if (cleanPath.startsWith('/error/') || cleanPath.includes('/yonetim')) return;
+      lastPath = cleanPath;
+      this.sendPageView(cleanPath, navigation ? 'internal' : this.referrerType());
+    };
+
+    record(window.location.pathname, false);
+    this.router.events.pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
+      .subscribe((event) => record(event.urlAfterRedirects, true));
+  }
+
+  private sendPageView(path: string, referrerType: string): void {
+    const width = window.innerWidth;
+    const body = JSON.stringify({
+      path,
+      deviceClass: width <= 767 ? 'mobile' : width <= 1100 ? 'tablet' : 'desktop',
+      referrerType
+    });
+    const blob = new Blob([body], { type: 'application/json' });
+    if (!navigator.sendBeacon('/api/metrics/page-view', blob)) {
+      void fetch('/api/metrics/page-view', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body,
+        keepalive: true
+      }).catch(() => undefined);
+    }
+  }
+
+  private referrerType(): string {
+    if (!document.referrer) return 'direct';
+    try {
+      const referrer = new URL(document.referrer);
+      if (referrer.host === window.location.host) return 'internal';
+      if (/(google|bing|yandex|duckduckgo|yahoo)\./i.test(referrer.host)) return 'search';
+      if (/(facebook|instagram|linkedin|twitter|youtube|t\.co|x\.com)\./i.test(referrer.host)) return 'social';
+      return 'external';
+    } catch {
+      return 'external';
+    }
   }
 
   private start(): void {
@@ -109,4 +162,3 @@ export class QualityMetricsService {
     }
   }
 }
-

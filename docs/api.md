@@ -269,3 +269,16 @@ silinir.
 - sayfa başına eksik SEO maddeleri;
 - rota/metrik bazında 75. yüzdelik gerçek kullanıcı değerleri;
 - Google Web Vitals eşiklerinden üretilen performans puanı.
+
+## Anonim kullanım analitiği
+
+`POST /api/metrics/page-view` ziyaret edilen kamusal rotayı, genel cihaz
+sınıfını (`mobile`, `tablet`, `desktop`) ve trafik kaynağı kategorisini kabul
+eder. Tam referrer adresi, IP, user-agent, çerez, oturum veya ziyaretçi
+tanımlayıcısı veri modelinde bulunmaz. Olaylar aylık karşılaştırma için en fazla
+24 ay saklanır.
+
+`GET /api/admin/analytics?months=12` kimlik doğrulanmış yöneticiye aylık ve son
+30 günlük trafik serisini, cihaz ve kaynak dağılımını, toplamları ve her rota
+için bu ay/geçen ay karşılaştırmasını döndürür. `months` değeri 1–24 aralığına
+sınırlandırılır.

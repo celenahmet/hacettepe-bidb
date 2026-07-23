@@ -195,7 +195,12 @@ Fotoğraf varsa Open Graph ve `NewsArticle` görseli olarak da yayınlanır.
 
 ## SEO ve Performans kalite merkezi
 
-Yönetim paneli açıldığında ilk sekme kalite merkezidir. SEO bütünlüğü
+Yönetim paneli açıldığında ilk sekme **Analitik** raporudur. Bu ekranda bu ay ve
+geçen ay görüntülemeleri, 12 aylık eğilim, cihaz/kaynak dağılımları ve sayfa
+bazlı karşılaştırma gerçek anonim ziyaret verilerinden üretilir. Raporlar aylık
+olarak birikir; kişi, oturum veya çerez takibi yapılmaz.
+
+**SEO ve Performans** sekmesinde SEO bütünlüğü
 veritabanındaki bütün yayınlanmış sayfa ve duyurular üzerinden anlık
 hesaplanır. Geliştirme kuyruğu en düşük puanlı kaydı önce gösterir; eksik
 açıklama, uygun olmayan başlık uzunluğu, paylaşım görseli ve indeksleme kararı
@@ -206,3 +211,12 @@ yüzdeliğini gösterir. LCP, INP, CLS, FCP ve TTFB kartlarındaki “İyi /
 İyileştirilmeli / Zayıf” değerlendirmesi backend tarafından standart
 eşiklerden hesaplanır. Yeni kurulumda bu alanın dolması için gerçek sayfa
 ziyaretlerinin oluşması gerekir.
+
+## Telefon ve tablet kullanımı
+
+1100 piksel ve altındaki ekranlarda masaüstü yönetim rayı yerine sabit dört
+bölümlü alt menü kullanılır: **Analitik**, **İçerik**, **Site** ve **Yönetim**.
+İçerik, Site ve Yönetim düğmeleri kendi işlem gruplarını uygulama tipi bir alt
+panelde açar. Sayfalar, duyurular, slider, kısayollar, menüler, personel,
+iletişim, sosyal medya, kalite merkezi ve güvenli çıkış telefondan da
+erişilebilir durumdadır.
