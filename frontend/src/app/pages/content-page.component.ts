@@ -12,15 +12,22 @@ import { StaffListComponent } from './staff-list.component';
 import { ContactBlockComponent } from './contact-block.component';
 import { FaqComponent } from './faq.component';
 import { EImzaNavComponent } from './e-imza-nav.component';
+import { UnitsComponent } from './units.component';
 
 /** /tr/<slug> ve /en/<slug> adreslerindeki içerik sayfası. */
 @Component({
   selector: 'bidb-content-page',
-  imports: [SideMenuComponent, StaffListComponent, ContactBlockComponent, FaqComponent, EImzaNavComponent],
+  imports: [SideMenuComponent, StaffListComponent, ContactBlockComponent, FaqComponent, EImzaNavComponent, UnitsComponent],
   template: `
     <div class="kap sayfa-duzen">
       <aside class="yan">
-        <bidb-side-menu [dilDegeri]="language()"></bidb-side-menu>
+        <!-- E-imza rehberi kendi menüsüyle gelir (kaynakta da öyleydi);
+             site geneline üst şeritten erişilir. -->
+        @if (sayfa()?.slug?.startsWith('e-signature')) {
+          <bidb-eimza-nav [dilDegeri]="language()" [etkinYol]="etkinYol()"></bidb-eimza-nav>
+        } @else {
+          <bidb-side-menu [dilDegeri]="language()"></bidb-side-menu>
+        }
       </aside>
 
       <main id="ana-icerik" class="icerik-alani">
@@ -29,11 +36,11 @@ import { EImzaNavComponent } from './e-imza-nav.component';
             @if (bolum(); as b) { <p class="sayfa-bolum">{{ b }}</p> }
             <h1 class="sayfa-baslik">{{ s.title }}</h1>
           </header>
-          @if (s.slug.startsWith('e-signature')) {
-            <bidb-eimza-nav [dilDegeri]="language()"></bidb-eimza-nav>
-          }
-
-          @if (s.slug === 'faq') {
+          @if (s.slug === 'overview') {
+            <!-- Genel Tanıtım: birim görev tanımları kart ızgarasına
+                 ayrıştırılır; içerik birebir korunur. -->
+            <bidb-units [rawHtml]="s.contentHtml ?? ''" [dilDegeri]="language()"></bidb-units>
+          } @else if (s.slug === 'faq') {
             <!-- SSS: kaynak akordeon HTML'i arama+filtreli modern bir
                  akordeona ayrıştırılır; içerik birebir korunur. -->
             <bidb-faq [rawHtml]="s.contentHtml ?? ''" [dilDegeri]="language()"></bidb-faq>
@@ -111,12 +118,16 @@ export class ContentPageComponent {
    *  olduğunu tek bakışta anlar. Menü verisinden türetilir, uydurulmaz. */
   protected bolum = signal<string | null>(null);
 
+  /** Bulunulan sayfanın adresi; e-imza menüsünde grubu açmak için. */
+  protected etkinYol = signal('');
+
   protected sayfa = toSignal(
     this.rota.paramMap.pipe(
       switchMap((p) => {
         const language = (p.get('language') as Language) ?? 'tr';
         const slug = p.get('slug') ?? 'home';
         this.language.set(language);
+        this.etkinYol.set("/" + language + "/" + slug);
         this.bolumuCoz(language, "/" + language + "/" + slug);
         return this.api.sayfa(language, slug).pipe(
           tap((s) => {

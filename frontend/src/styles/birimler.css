@@ -1,0 +1,107 @@
+/* Genel Tanıtım — birim görev tanımları.
+
+   Kaynak sayfa on iki birimi arka arkaya paragraf olarak sıralıyordu; tek
+   blok hâlinde okunması güç bir metin duvarıydı. Her birim artık kendi
+   kartında: solda görev alanını anlatan bir ikon, sağda ad + yerleşke
+   rozeti + açıklama.
+
+   Kartlar organizasyon şeması ve personel sayfasıyla aynı dili konuşur:
+   kutu yerine ince çizgi, kurumsal lacivert başlık, kırmızı tek aksan.
+   İkonun rengi görev alanına göre değişir — rengârenk değil ama tek düze
+   de değil; ağ mavi, güvenlik kırmızı, insan kaynakları yeşil gibi. */
+
+@layer kamu {
+
+  .birimler {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(24rem, 1fr));
+    gap: var(--bosluk-5);
+    margin-top: var(--bosluk-6);
+    /* Her kart kendi içeriği kadar yüksek olsun. Varsayılan "stretch"te
+       satırdaki kartlar en uzuna göre uzuyor ve kısa birimin altında
+       kocaman bir boşluk kalıyordu — açıklama uzunlukları çok farklı. */
+    align-items: start;
+  }
+
+  .birim-kart {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--bosluk-4);
+    padding: var(--bosluk-5);
+    border: 1px solid var(--cizgi);
+    border-radius: var(--kose-lg);
+    background: var(--yuzey);
+    transition: border-color var(--gecis), box-shadow var(--gecis);
+  }
+
+  .birim-kart:hover {
+    border-color: var(--cizgi-koyu);
+    box-shadow: var(--golge-1);
+  }
+
+  /* İkon: yumuşak zeminli kare. Renk görev alanına göre. */
+  .birim-ikon {
+    flex: none;
+    width: 2.75rem;
+    height: 2.75rem;
+    display: grid;
+    place-items: center;
+    border-radius: var(--kose-md);
+    background: var(--yuzey-3);
+    color: var(--hu-lacivert);
+  }
+
+  .birim-ikon[data-alan="ag"]          { background: #e8f1fb; color: #1d5fa8; }
+  .birim-ikon[data-alan="guvenlik"]    { background: #fdeaec; color: var(--hu-kirmizi); }
+  .birim-ikon[data-alan="sunucu"]      { background: #eaeef6; color: #3a4f76; }
+  .birim-ikon[data-alan="yazilim"]     { background: #eaf2ff; color: #2456a6; }
+  .birim-ikon[data-alan="imza"]        { background: #f3ecfb; color: #6b3fa0; }
+  .birim-ikon[data-alan="mali"]        { background: #eaf6ee; color: #1f7a3d; }
+  .birim-ikon[data-alan="insan"]       { background: #fff2e3; color: #a35b12; }
+  .birim-ikon[data-alan="destek"]      { background: #e9f5f6; color: #1a6b73; }
+  .birim-ikon[data-alan="web"]         { background: #eef1f5; color: #2f4a6d; }
+  .birim-ikon[data-alan="laboratuvar"] { background: #f1eff8; color: #4b4b8f; }
+
+  .birim-govde { min-width: 0; }
+
+  .birim-ad {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: var(--bosluk-3);
+    margin: 0 0 var(--bosluk-3);
+    padding: 0;
+    border: 0;
+    font-size: var(--olcu-md);
+    font-weight: var(--kalinlik-kalin);
+    line-height: var(--satir-sik);
+    color: var(--hu-lacivert);
+  }
+
+  /* Yerleşke adın parçası değil, bir alt bilgi: aynı işi iki yerleşkede
+     yapan birimleri ayırır ama başlığın ağırlığını taşımaz. */
+  .birim-yerleske {
+    padding: 2px var(--bosluk-2);
+    border: 1px solid var(--cizgi);
+    border-radius: var(--kose-tam);
+    font-size: var(--olcu-xs);
+    font-weight: var(--kalinlik-orta);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--metin-3);
+  }
+
+  .birim-aciklama {
+    margin: 0;
+    font-size: var(--olcu-sm);
+    line-height: var(--satir-genis);
+    color: var(--metin-2);
+    text-align: left;
+  }
+
+  @media (max-width: 40rem) {
+    .birimler { grid-template-columns: minmax(0, 1fr); gap: var(--bosluk-4); }
+    .birim-kart { padding: var(--bosluk-4); gap: var(--bosluk-3); }
+    .birim-ikon { width: 2.25rem; height: 2.25rem; }
+  }
+}

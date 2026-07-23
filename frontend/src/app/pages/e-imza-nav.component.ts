@@ -2,53 +2,73 @@ import { Component, Input } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Language } from '../core/models';
 
+interface Oge { ad: string; url: string; dis?: boolean; }
+interface Bolum { baslik: string; ogeler: Oge[]; }
+
 /**
- * E-İmza rehberi alt-gezinmesi.
+ * E-İmza rehberi sol menüsü.
  *
- * Kaynak alt sistemin her sayfasında bir sol menü vardı. O menü stored
- * içeriğe alınmadı (kaynağın şablonuna aitti); yerine bu bileşen, e-imza
- * sayfalarının hepsinde aynı gezinmeyi gösteriyor. Bağlantılar ve gruplama
- * kaynağın görünür menüsüyle birebir; kaynakta yorum satırına alınmış
- * (gizli) öğeler burada da yok.
+ * Kaynak alt sistemin her sayfasında kendi sol menüsü vardı: tek başına
+ * duran maddeler ve açılır gruplar (Başvuru İşlemleri, Sertifika
+ * İşlemleri). Bu bileşen o menüyü sitenin KENDİ menü altyapısıyla
+ * yeniden kuruyor — aynı .sol-menu işaretlemesi ve aynı details/summary
+ * davranışı, böylece e-imza sayfaları sitenin geri kalanıyla aynı
+ * gezinme dilini konuşuyor.
+ *
+ * Bağlantılar ve gruplama kaynağın görünür menüsüyle birebir; kaynakta
+ * yorum satırına alınmış (gizli) öğeler burada da yok. İçinde bulunulan
+ * sayfanın grubu kendiliğinden açık gelir.
  */
 @Component({
   selector: 'bidb-eimza-nav',
   imports: [RouterLink, RouterLinkActive],
   template: `
-    <nav class="eimza-nav" [attr.aria-label]="dilDegeri === 'en' ? 'E-signature guide' : 'E-İmza rehberi'">
-      <a class="eimza-nav-ust" routerLink="/tr/e-signature" routerLinkActive="etkin"
+    <nav class="sol-menu"
+         [attr.aria-label]="dilDegeri === 'en' ? 'E-signature guide' : 'E-İmza rehberi'">
+
+      <a class="sol-menu-ana" routerLink="/tr/e-signature" routerLinkActive="etkin"
          [routerLinkActiveOptions]="{ exact: true }">
-        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none"
-             stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M4 20h16M6 16l9.5-9.5a2 2 0 013 3L9 19l-4 1z"/>
-        </svg>
-        Elektronik İmza Kullanma Rehberi
+        {{ dilDegeri === 'en' ? 'E-Signature Guide' : 'E-İmza Kullanma Rehberi' }}
       </a>
 
-      @for (b of bolumler; track b.baslik) {
-        <div class="eimza-nav-grup">
-          @if (b.baslik) { <span class="eimza-nav-grup-ad">{{ b.baslik }}</span> }
-          <ul>
-            @for (o of b.ogeler; track o.url) {
-              <li>
-                @if (o.dis) {
-                  <a [href]="o.url" target="_blank" rel="noopener">{{ o.ad }}</a>
-                } @else {
-                  <a [routerLink]="o.url" routerLinkActive="etkin">{{ o.ad }}</a>
-                }
-              </li>
+      @for (b of bolumler; track b.baslik + b.ogeler[0].url) {
+        @if (b.baslik) {
+          <!-- Açılır grup: içinde bulunulan sayfa buradaysa açık başlar. -->
+          <details class="sol-bolum" [open]="acikMi(b)">
+            <summary>{{ b.baslik }}</summary>
+            <ul>
+              @for (o of b.ogeler; track o.url) {
+                <li>
+                  @if (o.dis) {
+                    <a [href]="o.url" target="_blank" rel="noopener">{{ o.ad }}</a>
+                  } @else {
+                    <a [routerLink]="o.url" routerLinkActive="etkin">{{ o.ad }}</a>
+                  }
+                </li>
+              }
+            </ul>
+          </details>
+        } @else {
+          <!-- Grupsuz maddeler: menünün üst düzeyinde tek satır. -->
+          @for (o of b.ogeler; track o.url) {
+            @if (o.dis) {
+              <a class="sol-menu-ana" [href]="o.url" target="_blank" rel="noopener">{{ o.ad }}</a>
+            } @else {
+              <a class="sol-menu-ana" [routerLink]="o.url" routerLinkActive="etkin">{{ o.ad }}</a>
             }
-          </ul>
-        </div>
+          }
+        }
       }
     </nav>
   `
 })
 export class EImzaNavComponent {
   @Input() dilDegeri: Language = 'tr';
+  /** İçinde bulunulan sayfanın adresi; grubu açık başlatmak için. */
+  @Input() etkinYol = '';
 
   /** Kaynağın görünür sol menüsüyle birebir; gizli (yorumlu) öğeler yok. */
-  protected bolumler = [
+  protected bolumler: Bolum[] = [
     {
       baslik: '',
       ogeler: [
@@ -61,7 +81,7 @@ export class EImzaNavComponent {
       ogeler: [
         { ad: 'Başvuru', url: '/tr/e-signature-application' },
         { ad: 'Başvuru Formu Doldurma', url: 'https://bidb.hacettepe.edu.tr/eimza/indir/yrd_bidb_basvuru_form_doldurma.pdf', dis: true },
-        { ad: 'Sertifikamı Aldım, Ne Yapmalıyım?', url: '/tr/e-signature-certificate-received' }
+        { ad: 'Sertifikamı Aldım Ne Yapmalıyım?', url: '/tr/e-signature-certificate-received' }
       ]
     },
     {
@@ -82,5 +102,10 @@ export class EImzaNavComponent {
         { ad: 'Sık Sorulan Sorular', url: '/tr/e-signature-faq' }
       ]
     }
-  ] as { baslik: string; ogeler: { ad: string; url: string; dis?: boolean }[] }[];
+  ];
+
+  /** Bulunulan sayfa bu grubun içindeyse grup açık gelir. */
+  protected acikMi(b: Bolum): boolean {
+    return b.ogeler.some((o) => !o.dis && o.url === this.etkinYol);
+  }
 }
