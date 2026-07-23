@@ -1,0 +1,281 @@
+# Devir Notu
+
+Bu belge, projeyi devralan herkesin (insan ya da yapay zekâ ajanı) işe
+başlamadan önce okuması gereken tek belgedir. Kararların *gerekçelerini*
+anlatır; "ne yapıldı" bilgisi git geçmişinde, "nasıl çalışır" bilgisi
+diğer `docs/` dosyalarındadır.
+
+---
+
+## 1. Proje nedir
+
+Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı web sitesinin
+(bidb.hacettepe.edu.tr) yeniden yapımı.
+
+**Yığın başkanlıkça belirlendi, değiştirilemez:** Spring Boot (Java 21) +
+PostgreSQL + Angular 20 (SSR). Docker Compose ile üç servis: `db`,
+`backend` (8081), `frontend` (4000).
+
+Mimari kararlar bizim elimizde; teknoloji seçimi değil.
+
+---
+
+## 2. İHLAL EDİLEMEZ KURALLAR
+
+Bunlar tercih değil, kısıttır. Bir değişiklik bunlardan birini bozuyorsa
+değişiklik yanlıştır.
+
+### 2.1 İçerik değişmez
+
+Kaynak sitedeki metinler **birebir** korunur. Yazım hataları, çift
+boşluklar, tuhaf büyük harfler dâhil. Düzeltmek serbest değildir.
+
+Sunum düzeltmeleri **çizim sırasında** yapılır, saklanan içerik
+değiştirilmez — bkz. `frontend/src/app/core/icerik-bicim.ts`. Orada
+yapılanlar: kapanmamış `</a>` onarımı, `{at}` → `@`, e-posta/telefon
+bağlantılandırma, bağlantı listelerini kart ızgarasına işaretleme.
+
+Bu kural `tools/verify-content.js` ile **her değişiklikten sonra** ölçülür.
+
+### 2.2 Doğrulama boşluğu bırakılmaz
+
+`verify-content.js` içinde bir sayfayı `BILINCLI_SAPMA`'ya eklemek, o
+sayfayı **doğrulamadan tamamen çıkarır**. Bunu yapan kişi, yerine geçecek
+bir denetim yazmak zorundadır.
+
+Örnekler: personel yapısal veriye taşındı → `personel-denetim.js`;
+e-imza ayrı kaynaktan geldi → `eimza-denetim.js`.
+
+Sapma kaydı bırakıp denetim yazmamak, birebirlik güvencesini sessizce yok
+eder. **Bu projedeki en tehlikeli hata türü budur.**
+
+### 2.3 Tasarım ilkeleri
+
+- Hacettepe kırmızısı sabittir: `--hu-kirmizi: #b31821`. Değiştirilmez.
+- **Emoji yok.** İkon serbest.
+- Altı çizili metin kullanılmaz (bağlantı vurgusu dışında).
+- Kaçınılacaklar: hazır tema hissi, gereksiz gradient/glow/glassmorphism,
+  her yerde aynı yuvarlak kartlar, büyük anlamsız sloganlar, aşırı
+  animasyon, rastgele dekoratif şekiller, içeriğin önüne geçen gösteriş.
+- Ölçüt: **10 yıl sonra da sırıtmayacak.** Bir tercih "şu an moda olduğu
+  için" iyi görünüyorsa kullanma; yapının kendisinden doğuyorsa kullan.
+- Masaüstü, tablet ve mobil birlikte düşünülür. Her tasarım kararının
+  gerekçesi kısaca açıklanır (kod yorumlarında da).
+
+### 2.4 Commit imzası
+
+Commit'lerde yalnızca Ahmet Çelen görünür. Başka bir imza, ortak yazar
+satırı ya da araç tanıtımı eklenmez.
+
+---
+
+## 3. Mimari
+
+### 3.1 Katmanlar
+
+```
+backend/   Spring Boot · JPA (ddl-auto: validate) · Flyway (V1…V20)
+frontend/  Angular 20 · SSR · standalone bileşenler · signals
+tools/     Node betikleri: aktarım + doğrulama
+```
+
+Veritabanı şeması **yalnızca Flyway ile** değişir. Hibernate `validate`
+modundadır; şema ile varlık sınıfı uyuşmazsa uygulama açılmaz — bu
+kasıtlıdır.
+
+Migration'lar ileri yönlüdür. Uygulanmış bir migration düzenlenmez; yeni
+bir migration yazılır (örn. V18'in hatası V20 ile düzeltildi).
+
+### 3.2 CSS katman sırası
+
+`frontend/src/styles.css`:
+
+```
+@layer tokens, base, layout, legacy, site, kamu, panel, utility;
+```
+
+Öncelik **adla değil katmanla** belirlenir; seçici özgüllüğü yarışına
+girilmez. `legacy` katmanı aktarılan içeriğin eski sınıflarını taşır ve
+tamamı `.icerik` altında kapsandığı için yeni tasarıma sızamaz.
+
+Yeni tasarım kuralları `kamu` katmanına yazılır.
+
+### 3.3 İçerik → sunum köprüsü
+
+Bazı sayfalar saklanan HTML'i doğrudan basmaz; **ayrıştırılıp** bileşenle
+çizilir. İçerik yine birebir korunur, yalnızca sunum yenilenir:
+
+| Sayfa | Bileşen | Ne yapar |
+|---|---|---|
+| `faq` | `faq.component.ts` | Bootstrap akordeonunu arama + kategori filtreli akordeona çevirir |
+| `overview` | `units.component.ts` | 12 birim paragrafını ikonlu kart ızgarasına çevirir |
+| `staff` | `staff-list.component.ts` | Veriden gelir (HTML değil) |
+| `e-signature*` | `e-imza-nav.component.ts` | Kaynağın sol menüsünü site menü altyapısıyla kurar |
+
+Ayrıştırma **düzenli ifadelerle** yapılır, DOMParser ile değil — sunucu
+tarafı çizimde (SSR) DOMParser yoktur ve liste arama motoruna yapılı
+girmelidir.
+
+---
+
+## 4. DOĞRULAMA ARAÇLARI
+
+Yapısal her değişiklikten sonra çalıştırılır:
+
+```bash
+node tools/verify-content.js    # ana site metinleri kaynakla birebir mi
+node tools/eksik-denetim.js     # sayfa/bağlantı/belge/görsel/kaynak bağımlılığı
+node tools/eimza-denetim.js     # 16 e-imza sayfası kendi kaynağıyla birebir mi
+node tools/personel-denetim.js  # birim ve kişiler iki yönde eşleşiyor mu
+node tools/menu-denetim.js      # menü kaynakla birebir
+node tools/son-kontrol.js       # 30 maddelik yayına hazırlık
+```
+
+`eksik-denetim.js` yalnızca durum koduna değil **içerik türüne** de bakar:
+200 dönen bir yanıtın doğru dosya olduğunu varsayma.
+
+**Denetimler her şeyi yakalamaz.** "200 OK ama görsel bozuk" hatası bu
+projede iki kez çıktı. Yapısal değişiklikten sonra **ekran görüntüsüyle de
+bak.**
+
+---
+
+## 5. PAHALIYA MAL OLAN HATALAR (tekrarlama)
+
+Her biri gerçekten yaşandı. Yeni bir ajan aynı tuzağa düşmesin:
+
+1. **Sessiz boş sayfa.** İstekler hatada boş değere düşüp bir daha
+   denemiyordu; backend bir an cevap veremediğinde sayfa kalıcı boş
+   kalıyordu. Çözüm: `core/yeniden-dene.ts` (2 deneme, artan gecikme,
+   4xx'te denemez).
+
+2. **Dengesiz `</div>`.** Legacy HTML'den içerik çıkarırken kaba ait
+   olmayan kapanış etiketleri alındı; üst kapsayıcılar erken kapanıp düzen
+   bozuldu. Sayfa 200 dönüyordu, denetimler temiz görünüyordu.
+   Çözüm: div derinliği sayan çıkarma (`kabiDengele`).
+
+3. **Kapanmamış `<a>`.** Kaynakta eksik `</a>`, sonraki `<li>`'yi içine
+   alıyordu → boş hücre + dışarı düşen madde. Çözüm: `bagliMaddeleriOnar`.
+
+4. **DatePipe yereli.** `date: '…' : '' : 'tr-TR'` yerel veri kaydı
+   olmadan hata atıyor ve **kartın tüm gövdesi çizilmiyordu**.
+   Çözüm: `registerLocaleData(localeTr)` (app.config.ts).
+
+5. **Hydration karışması.** İki ayrı istekten yazılan üst menü, sunucu ve
+   tarayıcıda farklı sırayla oluşup düğümleri karıştırıyordu (Hizmetlerimiz
+   altında Personel görünüyordu). Çözüm: `forkJoin` ile tek adımda yazmak.
+
+6. **CSS özgüllük tuzakları.**
+   - `:has()` bir `:not()` içinde kullanılamaz — seçicinin tamamı geçersiz olur.
+   - `.icerik .sema ul` (0,2,1), `.icerik .sema-dal`dan (0,2,0) daha özgüldür;
+     sıfırlama kuralı dalın boşluğunu eziyordu.
+   - Eşit özgüllükte **kaynak sırası kazanır**: marka ikonları, dosya türü
+     kurallarından *sonra* yazılmalı (yoksa `edgeproxy.pdf` PDF ikonu alır).
+
+7. **Site geneline sızan yönlendirme.** Küçük harfe yönlendirme tüm yollara
+   uygulanınca `styles-CYIGEJUB.css` de yönlendi ve site CSS'siz kaldı.
+   Kural artık yalnızca `/tr|/en` yollarına uygulanır.
+
+8. **Ölçüm aracı yalan söyleyebilir.** `--window-size=390` Windows'ta 485px
+   veriyordu. Gerçek görünüm için CDP `Emulation.setDeviceMetricsOverride`
+   kullan. Tarayıcı profili de her seferinde silinmeli (önbellek yanıltır).
+
+---
+
+## 6. MEVCUT DURUM
+
+### Tamamlanan
+
+- 79 TR sayfa aktarıldı, içerik birebir (67 ana site + 16 e-imza + türetilenler)
+- Türkçe adresler İngilizce adreslere taşındı, 65 kalıcı yönlendirme
+- Personel yapısal veriye taşındı (16 birim / 53 kişi), panelden yönetilir
+- E-imza alt sistemi (16 sayfa) birebir içeri alındı, kendi sol menüsüyle
+- Yönetim paneli: sayfa, SEO, duyuru, menü, iletişim, personel, dosya
+- Tasarım: hero (cam panel), haber kartları, SSS (arama+filtre), personel,
+  organizasyon şeması, birim kartları, tablolar, renkli marka ikonları
+
+### Bekleyen
+
+1. **İngilizce çeviri** (aşağıda ayrı bölüm)
+2. Slider ve kısayol düzenleme uçları (panelde şu an salt okunur)
+3. `e-signature-workflow` sayfası kaynakta da boş — yayından kaldırılabilir
+
+---
+
+## 7. İNGİLİZCE ÇEVİRİ — PLAN
+
+**Karar:** Türkçe içerik İngilizceye çevrilecek. Tercih **akademik İngiliz
+İngilizcesi (UK)**. Kurum akredite olduğu için hata payı yok.
+
+**Kapsam:** 79 sayfa, ~47.300 kelime (~190 standart çeviri sayfası).
+
+Kaynak sitenin İngilizce tarafında yalnızca 5 sayfa vardır
+(`overview`, `mv`, `yonetim`, `iletisim`, `grup`) ve beşi de aktarılmıştır.
+Yani bu çeviri, kaynağın **ötesine geçen yeni bir iştir**.
+
+### Önerilen sıra (toplu çeviri YAPILMAMALI)
+
+**Adım 0 — Terim sözlüğü (önce bu onaylanmalı).**
+Kurum adları, birim adları, sistem adları, kanun ve standart başlıkları
+kilitlenir. 79 sayfada tutarlılığı sağlayan tek şey budur. Kilitlenmesi
+gerekenler taranarak çıkarıldı: HUNET, BİDB, EBYS, NES, KAMU SM, TÜBİTAK,
+VPN, MYO, KPSS, ISO 27001, 5651 ve 5070 sayılı kanunlar, birim adları.
+
+Kanun ve standartların **resmî İngilizce başlıkları** kullanılmalıdır;
+serbest çeviri yapılmaz.
+
+**Adım 1 — Yapı koruyan çeviri hattı.**
+HTML etiketleri, `href`, dosya adları ve bağlantı hedefleri
+**değiştirilmeden** yalnızca metin düğümleri çevrilir. Çıkışta yapı
+denetlenir: aynı etiket sayısı, aynı bağlantılar, geride Türkçe kalmamış.
+
+**Adım 2 — Risk kademesi.**
+
+| Kademe | İçerik | Yaklaşım |
+|---|---|---|
+| A | Servis tanıtımları, birim görevleri, rehberler, SSS | Çevrilir |
+| B | Politikalar, kullanım ilkeleri, sorumluluk sınırı, mevzuat | Çevrilir ama **yayından önce ilgili birim onayı** |
+| C | Süresi geçmiş sınav/alım duyuruları (~5.000 kelime) | Çevrilmesi gereksiz — teyit alınmalı |
+
+**Adım 3 — Pilot.** Önce 2–3 sayfa çevrilir, kalite onaylanır, sonra
+ölçeklenir. 47 bin kelimeyi onaysız çevirmek risklidir.
+
+### Açık sorular (karar bekliyor)
+
+1. Süresi geçmiş duyurular çevrilecek mi? (~5.000 kelime tasarruf)
+2. B kademesi metinler için birim onayı süreci nasıl işleyecek?
+3. Pilot sayfalar hangileri olsun?
+
+---
+
+## 8. ÇALIŞTIRMA
+
+```bash
+docker compose up -d --build          # üç servis
+# frontend :4000 · backend :8081 · db :5432
+# panel: /yonetim  (kullanıcı/parola docker-compose.yml ortam değişkenlerinde)
+```
+
+Ekran görüntüsü ve gerçek görünüm ölçümü için `scratchpad/cek.js` deseni
+kullanılır (CDP + `Emulation.setDeviceMetricsOverride`).
+
+**Windows notu:** Git Bash'in `/tmp` yolu ile Node'un gördüğü `/tmp` aynı
+yer değildir; geçici dosyalar scratchpad dizinine yazılmalı. Kabuk
+alıntılama Türkçe karakterleri bozabildiği için üretilen kod dosyaya
+yazılıp çalıştırılmalı, `node -e` içine gömülmemeli.
+
+---
+
+## 9. TASARIM DİLİ (yeni sayfa eklerken)
+
+- Başlıklar kurumsal lacivert (`--hu-lacivert`), sol kenarda kırmızı işaret
+- Kutu ve gölge yerine **ince çizgi ve boşluk**; ağırlık hizadan gelir
+- Kart ızgaraları `auto-fill` ile: sütun sayısını ekran belirler, içerik değil
+- İkonlar çizgi biçiminde, tek renk; marka logoları yalnızca gerçek
+  markalar için tam renkli
+- Hareket: kısa, amaçlı, `prefers-reduced-motion` ile kapanabilir
+- Her yeni stil dosyası başına **neden böyle yapıldığını** yazan bir yorum
+  bloğu konur — bu projede yorumlar kararların tek kaydıdır
+
+Örnek alınacak dosyalar: `styles/sema.css`, `styles/personel.css`,
+`styles/haberler.css`, `styles/hero.css`.

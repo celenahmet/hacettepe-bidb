@@ -3,6 +3,9 @@
 Mevcut `bidb.hacettepe.edu.tr` sitesinin yenilenmesi projesi.
 İçerikler kaynak siteden **birebir** aktarılmıştır; hiçbir metin değiştirilmemiştir.
 
+> **Projeyi devralıyorsanız önce [docs/devir-notu.md](docs/devir-notu.md) okuyun.**
+> Kararların gerekçeleri, ihlal edilemez kurallar ve pahalıya mal olan hatalar orada.
+
 ## Mimari
 
 | Katman | Teknoloji |
