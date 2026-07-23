@@ -24,6 +24,12 @@ export const routes: Routes = [
   // Duyuru listesi, :slug kuralından ÖNCE gelmeli; sonra gelseydi
   // 'news' bir sayfa adı sanılıp aranır ve bulunamazdı.
   { path: ':language/news', component: NewsListPageComponent, canMatch: [desteklenenDil] },
+  {
+    path: ':language/cookies',
+    loadComponent: () =>
+      import('./pages/cookies/cookie-policy.component').then((module) => module.CookiePolicyComponent),
+    canMatch: [desteklenenDil]
+  },
   { path: ':language/:slug', component: ContentPageComponent, canMatch: [desteklenenDil] },
   { path: '**', redirectTo: '/error/404' }
 ];

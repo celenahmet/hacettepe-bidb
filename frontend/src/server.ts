@@ -235,7 +235,7 @@ async function sayfaYok(yol: string): Promise<boolean> {
 
   // Veritabanında sayfa kaydı olmayan, uygulamanın kendi ürettiği listeler.
   // Bunlar page tablosunda aranırsa bulunamaz ve 404 dönerdi.
-  if (/^\/(tr|en)\/(news)$/.test(p)) return false;
+  if (/^\/(tr|en)\/(news|cookies)$/.test(p)) return false;
 
   if (!/^\/(tr|en)\/[^/]+$/.test(p)) return false;   // ana sayfa, panel, dosyalar
 
@@ -268,7 +268,7 @@ app.get('/sitemap.xml', async (_req, res) => {
     .filter((y) => !hataliSayfalar.has(y))         // kaynakta içeriği olmayan pages
     .sort();
   // Uygulamanın kendi ürettiği, page tablosunda karşılığı olmayan listeler.
-  const uretilen = ['/tr/news', '/en/news'];
+  const uretilen = ['/tr/news', '/en/news', '/tr/cookies', '/en/cookies'];
   const girdiler = ['/tr', '/en', ...uretilen, ...yollar]
     .map((y) => `  <url><loc>${SITE_ADRESI}${y}</loc></url>`)
     .join('\n');

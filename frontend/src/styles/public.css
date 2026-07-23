@@ -477,22 +477,6 @@
     color: var(--hu-kirmizi);
   }
 
-  .alt-sosyal { margin-top: var(--bosluk-5); }
-  .alt-sosyal p { display: flex; flex-wrap: wrap; gap: var(--bosluk-3); margin: 0; }
-
-  /* Sosyal hesaplar yuvarlak ikon kutusu değil, sade metin bağlantısıdır */
-  /* Sosyal hesaplar yalnızca burada ve yalnızca ikonla gösterilir.
-     Kutu veya daire içine alınmaz; ikonun kendisi yeterlidir. */
-  .alt-sosyal a {
-    display: inline-flex;
-    padding: var(--bosluk-2);
-    margin: calc(-1 * var(--bosluk-2));    /* tıklama alanı büyür, hizalama bozulmaz */
-    color: var(--metin-2);
-    transition: color var(--gecis-hizli);
-  }
-  .alt-sosyal a:hover { color: var(--hu-kirmizi); }
-  .alt-sosyal svg { display: block; }
-
   .alt-sutun ul { margin: 0; padding: 0; list-style: none; }
   .alt-sutun li + li { margin-top: var(--bosluk-3); }
 
@@ -526,11 +510,47 @@
     padding-bottom: var(--bosluk-4);
   }
   .alt-serit small { color: var(--metin-3); font-size: var(--olcu-xs); }
-  .alt-baglantilar { display: flex; gap: var(--bosluk-5); margin: 0; }
-  .alt-baglantilar a { font-size: var(--olcu-xs); color: var(--metin-2); }
-  .alt-baglantilar a:hover { color: var(--hu-kirmizi); }
+  .alt-yardimci {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--bosluk-3) var(--bosluk-5);
+  }
+  .alt-sosyal-alt {
+    display: flex;
+    align-items: center;
+    gap: var(--bosluk-1);
+    padding-right: var(--bosluk-4);
+    border-right: 1px solid var(--cizgi-koyu);
+  }
+  .alt-sosyal-alt a {
+    display: grid;
+    width: 34px;
+    height: 34px;
+    place-items: center;
+    color: var(--metin-2);
+    border-radius: 50%;
+    transition: color var(--gecis-hizli), background var(--gecis-hizli);
+  }
+  .alt-sosyal-alt a:hover { color: var(--hu-kirmizi); background: var(--yuzey-3); }
+  .alt-sosyal-alt svg { display: block; }
+  .alt-baglantilar { display: flex; flex-wrap: wrap; align-items: center; gap: var(--bosluk-2) var(--bosluk-5); margin: 0; }
+  .alt-baglantilar a,
+  .alt-baglantilar button {
+    padding: 0;
+    border: 0;
+    color: var(--metin-2);
+    background: none;
+    font: inherit;
+    font-size: var(--olcu-xs);
+    cursor: pointer;
+  }
+  .alt-baglantilar a:hover,
+  .alt-baglantilar button:hover { color: var(--hu-kirmizi); }
 
-  .alt a:focus-visible { outline: 2px solid var(--hu-kirmizi); outline-offset: 2px; }
+  .alt a:focus-visible,
+  .alt button:focus-visible { outline: 2px solid var(--hu-kirmizi); outline-offset: 2px; }
 
   /* ================= dar ekran ================= */
 
@@ -651,6 +671,9 @@
   @media (max-width: 620px) {
     .alt-izgara { grid-template-columns: minmax(0, 1fr); }
     .alt-serit-ic { flex-direction: column; align-items: flex-start; }
+    .alt-yardimci { justify-content: flex-start; width: 100%; }
+    .alt-sosyal-alt { padding-right: 0; border-right: 0; }
+    .alt-baglantilar { flex-basis: 100%; gap: var(--bosluk-3) var(--bosluk-4); }
   }
 
   @media (max-width: 420px) {

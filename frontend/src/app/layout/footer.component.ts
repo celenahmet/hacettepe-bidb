@@ -1,8 +1,9 @@
-import { Component, Input, inject, signal } from '@angular/core';
+import { Component, Input, computed, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { RouterLink } from '@angular/router';
 import { Language, Menu } from '../core/models';
 import { yenidenDene } from '../core/yeniden-dene';
+import { CookiePreferencesService } from '../core/cookie-preferences.service';
 
 /** Alt bilgideki tek bir iletişim kaydı. */
 interface ContactChannel {
@@ -52,47 +53,6 @@ interface SocialAccount {
             <p class="alt-adres">{{ a.value }}</p>
           }
 
-          @if (sosyal().length) {
-            <div class="alt-sosyal">
-              <span class="alt-etiket">{{ language === 'en' ? 'Follow us' : 'Bizi takip edin' }}</span>
-              <p>
-                @for (s of sosyal(); track s.id) {
-                  <a [href]="s.url" target="_blank" rel="noopener"
-                     [attr.aria-label]="agAdi(s.network)" [attr.title]="agAdi(s.network)">
-                    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"
-                         fill="none" stroke="currentColor" stroke-width="1.6">
-                      @switch (s.network) {
-                        @case ("instagram") {
-                          <rect x="3.5" y="3.5" width="17" height="17" rx="4.5"/>
-                          <circle cx="12" cy="12" r="4"/>
-                          <circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/>
-                        }
-                        @case ("facebook") {
-                          <path d="M14.5 8.5h2.2V5.4h-2.4c-2.3 0-3.6 1.4-3.6 3.6v1.8H8.5v3.1h2.2V21h3.3v-7.1h2.4l.4-3.1h-2.8V9.4c0-.6.2-.9.9-.9z"
-                                stroke="none" fill="currentColor"/>
-                        }
-                        @case ("twitter") {
-                          <path d="M4.5 4.5l15 15M19.5 4.5l-15 15"/>
-                        }
-                        @case ("linkedin") {
-                          <rect x="3.5" y="3.5" width="17" height="17" rx="2"/>
-                          <path d="M7.5 10.5V17M7.5 7.6v.01M11.5 17v-4a2.5 2.5 0 015 0v4"/>
-                        }
-                        @case ("youtube") {
-                          <rect x="3" y="6" width="18" height="12" rx="3"/>
-                          <path d="M10.5 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"/>
-                        }
-                        @default {
-                          <circle cx="12" cy="12" r="8.5"/>
-                          <path d="M3.5 12h17M12 3.5c2.2 2.4 3.3 5.3 3.3 8.5s-1.1 6.1-3.3 8.5"/>
-                        }
-                      }
-                    </svg>
-                  </a>
-                }
-              </p>
-            </div>
-          }
         </div>
 
         <!-- kurumsal -->
@@ -125,26 +85,15 @@ interface SocialAccount {
         <div class="alt-sutun alt-iletisim">
           <span class="alt-etiket">{{ language === 'en' ? 'Contact' : 'İletişim' }}</span>
 
-          @if (tur('phone').length) {
-            <dl>
-              <dt>{{ language === 'en' ? 'Telephone' : 'Telefon' }}</dt>
-              @for (t of tur('phone'); track t.id) {
-                <dd><a [href]="'tel:' + telBaglanti(t.value)">{{ t.value }}</a></dd>
-              }
-            </dl>
-          }
+          <dl>
+            <dt>{{ language === 'en' ? 'Telephone' : 'Telefon' }}</dt>
+            <dd><a [href]="'tel:' + telBaglanti(anaTelefon())">{{ anaTelefon() }}</a></dd>
+          </dl>
 
-          @if (tur('fax').length) {
-            <dl>
-              <dt>{{ language === 'en' ? 'Fax' : 'Faks' }}</dt>
-              @for (f of tur('fax'); track f.id) { <dd>{{ f.value }}</dd> }
-            </dl>
-          }
-
-          @if (tur('email').length) {
+          @if (epostalar().length) {
             <dl>
               <dt>{{ language === 'en' ? 'E-mail' : 'E-Posta' }}</dt>
-              @for (e of tur('email'); track e.id) {
+              @for (e of epostalar(); track e.id) {
                 <dd><a [href]="'mailto:' + e.value">{{ e.value }}</a></dd>
               }
             </dl>
@@ -158,10 +107,54 @@ interface SocialAccount {
           <small>
             © {{ yenilenmeYili }} Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı
           </small>
-          <p class="alt-baglantilar">
-            <a [routerLink]="['/', language, 'disclaimer']">{{ language === 'en' ? 'Disclaimer' : 'Sorumluluk Sınırı' }}</a>
-            <a [routerLink]="['/', language, 'accessibility']">{{ language === 'en' ? 'Accessibility' : 'Erişilebilirlik Bildirimi' }}</a>
-          </p>
+          <div class="alt-yardimci">
+            @if (sosyal().length) {
+              <nav class="alt-sosyal-alt" [attr.aria-label]="language === 'en' ? 'Social media' : 'Sosyal medya'">
+                @for (s of sosyal(); track s.id) {
+                  <a [href]="s.url" target="_blank" rel="noopener"
+                     [attr.aria-label]="agAdi(s.network)" [attr.title]="agAdi(s.network)">
+                    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"
+                         fill="none" stroke="currentColor" stroke-width="1.6">
+                      @switch (s.network) {
+                        @case ("instagram") {
+                          <rect x="3.5" y="3.5" width="17" height="17" rx="4.5"/>
+                          <circle cx="12" cy="12" r="4"/>
+                          <circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/>
+                        }
+                        @case ("facebook") {
+                          <path d="M14.5 8.5h2.2V5.4h-2.4c-2.3 0-3.6 1.4-3.6 3.6v1.8H8.5v3.1h2.2V21h3.3v-7.1h2.4l.4-3.1h-2.8V9.4c0-.6.2-.9.9-.9z"
+                                stroke="none" fill="currentColor"/>
+                        }
+                        @case ("twitter") {
+                          <path d="M4.5 4.5l15 15M19.5 4.5l-15 15"/>
+                        }
+                        @case ("linkedin") {
+                          <rect x="3.5" y="3.5" width="17" height="17" rx="2"/>
+                          <path d="M7.5 10.5V17M7.5 7.6v.01M11.5 17v-4a2.5 2.5 0 015 0v4"/>
+                        }
+                        @case ("youtube") {
+                          <rect x="3" y="6" width="18" height="12" rx="3"/>
+                          <path d="M10.5 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none"/>
+                        }
+                        @default {
+                          <circle cx="12" cy="12" r="8.5"/>
+                          <path d="M3.5 12h17M12 3.5c2.2 2.4 3.3 5.3 3.3 8.5s-1.1 6.1-3.3 8.5"/>
+                        }
+                      }
+                    </svg>
+                  </a>
+                }
+              </nav>
+            }
+            <nav class="alt-baglantilar" [attr.aria-label]="language === 'en' ? 'Legal and accessibility' : 'Yasal ve erişilebilirlik'">
+              <a [routerLink]="['/', language, 'disclaimer']">{{ language === 'en' ? 'Disclaimer' : 'Sorumluluk Sınırı' }}</a>
+              <a [routerLink]="['/', language, 'accessibility']">{{ language === 'en' ? 'Accessibility Statement' : 'Erişilebilirlik Bildirimi' }}</a>
+              <a [routerLink]="['/', language, 'cookies']">{{ language === 'en' ? 'Cookie Policy' : 'Çerez Politikası' }}</a>
+              <button type="button" (click)="cerezTercihleri.openPanel()">
+                {{ language === 'en' ? 'Cookie Preferences' : 'Çerez Tercihleri' }}
+              </button>
+            </nav>
+          </div>
         </div>
       </div>
     </footer>
@@ -171,11 +164,21 @@ export class FooterComponent {
   @Input({ required: true }) language!: Language;
 
   private http = inject(HttpClient);
+  protected cerezTercihleri = inject(CookiePreferencesService);
 
   /** Telif yılı değil, sitenin kurumsal olarak yenilendiği yıl gösterilir.
    *  Bu nedenle takvim yılı ilerlediğinde otomatik olarak değişmemelidir. */
   protected readonly yenilenmeYili = 2026;
   protected kanallar = signal<ContactChannel[]>([]);
+  protected anaTelefon = computed(() => {
+    const ana = this.kanallar().find(
+      (kanal) => kanal.type === 'phone' && this.telBaglanti(kanal.value) === '+903122976200'
+    );
+    return ana?.value ?? '+90 312 297 62 00';
+  });
+  protected epostalar = computed(() =>
+    this.kanallar().filter((kanal) => kanal.type === 'email').slice(0, 2)
+  );
 
   /* Kurumsal sütunu menü verisinden okunur. Önce elle yazılmış bir liste
      vardı; İngilizce sürümde karşılığı olmayan sayfalara bağlanıyordu ve

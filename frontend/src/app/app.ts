@@ -3,17 +3,21 @@ import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { HeaderComponent } from './layout/header.component';
 import { FooterComponent } from './layout/footer.component';
+import { CookieConsentComponent } from './layout/cookie-consent.component';
 import { Language } from './core/models';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent, FooterComponent],
+  imports: [RouterOutlet, HeaderComponent, FooterComponent, CookieConsentComponent],
   template: `
     @if (siteKabugu()) { <bidb-header [language]="language()"></bidb-header> }
 
     <router-outlet></router-outlet>
 
-    @if (siteKabugu()) { <bidb-footer [language]="language()"></bidb-footer> }
+    @if (siteKabugu()) {
+      <bidb-footer [language]="language()"></bidb-footer>
+      <bidb-cookie-consent [language]="language()"></bidb-cookie-consent>
+    }
   `
 })
 export class App {
