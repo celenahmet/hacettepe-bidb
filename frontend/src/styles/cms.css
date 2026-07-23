@@ -1,0 +1,135 @@
+/*
+ * HÜ-İYS tanıtım sayfası
+ *
+ * Kaynak içerik altı satırlı bir tablo olarak korunur. Tablo burada veri
+ * ızgarası gibi değil, ikon ve açıklamadan oluşan bilgi kartları olarak
+ * sunulur. Böylece 128 piksel genişliğindeki eski ikon sütunu metni sağa
+ * itmez; uzun listeler de geniş yüzeyi iki dengeli sütunda kullanır.
+ */
+
+@layer kamu {
+  .cms-sayfasi .icerik > table {
+    display: block;
+    width: 100%;
+    margin: var(--bosluk-7) 0 0;
+    border: 0;
+    border-collapse: separate;
+    font-size: var(--olcu-sm);
+  }
+
+  .cms-sayfasi .icerik > table > tbody {
+    display: grid;
+    gap: var(--bosluk-4);
+  }
+
+  .cms-sayfasi .icerik > table > tbody > tr {
+    display: grid;
+    grid-template-columns: 5rem minmax(0, 1fr);
+    align-items: start;
+    gap: var(--bosluk-5);
+    min-width: 0;
+    padding: var(--bosluk-5);
+    border: 1px solid var(--cizgi);
+    border-radius: var(--kose-sm);
+    background: var(--yuzey);
+  }
+
+  .cms-sayfasi .icerik > table > tbody > tr:hover > td {
+    background: transparent;
+  }
+
+  .cms-sayfasi .icerik > table > tbody > tr > td {
+    display: block;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--metin);
+    line-height: var(--satir-normal);
+    text-align: left;
+    white-space: normal;
+  }
+
+  .cms-sayfasi .icerik > table > tbody > tr:last-child > td {
+    border-bottom: 0;
+  }
+
+  .cms-sayfasi .icerik > table > tbody > tr > td:first-child {
+    width: 5rem;
+    display: grid;
+    place-items: start center;
+    padding-top: var(--bosluk-1);
+  }
+
+  .cms-sayfasi .icerik > table img {
+    width: 4rem;
+    height: 4rem;
+    display: block;
+    border-radius: 50%;
+  }
+
+  .cms-sayfasi .icerik > table td:nth-child(2) > strong:first-child,
+  .cms-sayfasi .icerik > table td:nth-child(2) > p:first-child > strong:first-child {
+    display: inline-block;
+    margin-bottom: var(--bosluk-1);
+    color: var(--hu-lacivert);
+    font-size: var(--olcu-md);
+    line-height: var(--satir-sik);
+  }
+
+  .cms-sayfasi .icerik > table p:last-child,
+  .cms-sayfasi .icerik > table ol:last-child {
+    margin-bottom: 0;
+  }
+
+  .cms-sayfasi .icerik > table ol {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--bosluk-2) var(--bosluk-6);
+    margin: var(--bosluk-4) 0;
+    padding-left: var(--bosluk-5);
+  }
+
+  .cms-sayfasi .icerik > table li {
+    min-width: 0;
+    margin: 0;
+    padding-left: var(--bosluk-1);
+  }
+
+  @media (max-width: 40rem) {
+    .cms-sayfasi .icerik > table {
+      margin-top: var(--bosluk-6);
+    }
+
+    .cms-sayfasi .icerik > table > tbody > tr {
+      grid-template-columns: 3.5rem minmax(0, 1fr);
+      gap: var(--bosluk-4);
+      padding: var(--bosluk-4);
+    }
+
+    .cms-sayfasi .icerik > table > tbody > tr > td:first-child {
+      width: 3.5rem;
+    }
+
+    .cms-sayfasi .icerik > table img {
+      width: 3rem;
+      height: 3rem;
+    }
+
+    .cms-sayfasi .icerik > table ol {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--bosluk-2);
+    }
+  }
+
+  @media (max-width: 22rem) {
+    .cms-sayfasi .icerik > table > tbody > tr {
+      grid-template-columns: 1fr;
+    }
+
+    .cms-sayfasi .icerik > table > tbody > tr > td:first-child {
+      width: auto;
+      place-items: start;
+    }
+  }
+}
