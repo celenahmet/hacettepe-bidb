@@ -1,33 +1,21 @@
-import { Component, Input, OnDestroy, signal } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Language, Slide } from '../core/models';
 
 /**
  * Ana sayfa açılış alanı.
  *
- * KOMPOZİSYON
+ * Metin doğrudan tam alan fotoğrafın üzerinde yer alır. Okunurluk, cam veya
+ * bulanıklık efekti yerine fotoğrafın tamamına uygulanan tek renkli koyu bir
+ * kontrast katmanıyla sağlanır. İçerik sayfa omurgasıyla hizalanır.
  *
- * Klasik "fotoğrafın üstüne kutu koyma" düzeni yerine alan iki kalıcı
- * yüzeye bölünür: solda kurumsal lacivert bilgi alanı, sağda fotoğraf.
- * Metin sayfa kabıyla aynı dikey çizgiden başlar. Fotoğraf ile metnin
- * birbirinden bağımsız olması her görselde aynı okunurluğu sağlar ve
- * geçici cam/blur eğilimlerine bağlı kalmadan kurumsal bir açılış üretir.
+ * Teknik sıra sayacı ve ok düğmeleri gösterilmez. Alttaki sade göstergeler,
+ * klavye okları ve dokunmatik kaydırma gezinmek için yeterlidir.
  *
- * Bölünmüş yapının üç kazancı var: fotoğraf hiç karartılmadığı için
- * olduğu gibi görünür; metin her zaman aynı kontrastta okunur, fotoğrafın
- * o bölgesinin açık ya da koyu olması fark etmez; ve geniş ekranda ortaya
- * çıkan boş koyu alan ortadan kalkar, çünkü o alan artık panelin kendisi.
- *
- * DENETİM
- *
- * İleri-geri düğmeleri ve sıra bilgisi metin alanının altındadır.
- * Slayt göstergeleri ise fotoğrafın altında bir görüntü dizisi gibi durur;
- * iki denetim türü farklı görevlerini açıkça belli eder.
- *
- * ERİŞİLEBİLİRLİK
- * - İmleç veya klavye odağı alandayken dönme durur.
+ * Erişilebilirlik:
+ * - İmleç veya klavye odağı alandayken otomatik dönüş durur.
  * - Sol/sağ ok tuşlarıyla gezinilir, dokunmatikte kaydırılır.
- * - Hareket azaltma tercihinde dönme hiç başlamaz.
+ * - Hareket azaltma tercihinde otomatik dönüş başlamaz.
  * - Etkin slaytın başlığı ekran okuyucuya bildirilir.
  */
 @Component({
@@ -43,8 +31,6 @@ import { Language, Slide } from '../core/models';
                (touchstart)="dokunusBasladi($event)" (touchend)="dokunusBitti($event)"
                tabindex="-1">
 
-        <!-- Fotoğraf kendi yüzeyinde kalır; metin okunurluğu için görsel
-             karartılmaz veya bulanıklaştırılmaz. -->
         <div class="hero-gorseller">
           @for (s of slaytlar; track s.imageUrl; let i = $index) {
             <img class="hero-gorsel"
@@ -58,35 +44,26 @@ import { Language, Slide } from '../core/models';
                  [attr.fetchpriority]="i === 0 ? 'high' : null"
                  width="1920" height="825">
           }
-
-          <div class="hero-noktalar" role="tablist"
-               [attr.aria-label]="dilDegeri === 'en' ? 'Slides' : 'Görseller'">
-            @for (s of slaytlar; track s.imageUrl; let i = $index) {
-              <button type="button" role="tab"
-                      [class.etkin]="i === etkin()"
-                      [attr.aria-selected]="i === etkin()"
-                      [attr.aria-label]="s.title"
-                      (click)="gec(i)">
-                <span class="hero-nokta-dolgu" [style.animation-duration.ms]="SURE"></span>
-              </button>
-            }
-          </div>
         </div>
 
-        <!-- Bilgi yüzeyi. Slayt değişince blok yeniden kurulur; düğüm
-             yenilenmeden ölçülü giriş hareketi baştan çalışmaz. -->
         <div class="hero-kap">
           @for (s of gecerliListe(); track etkin()) {
             <div class="hero-panel">
               <p class="hero-etiket">
                 <span class="hero-etiket-cizgi" aria-hidden="true"></span>
-                {{ dilDegeri === 'en' ? 'Department of Information Technology' : 'Bilgi İşlem Daire Başkanlığı' }}
+                {{ dilDegeri === 'en'
+                  ? 'Department of Information Technology'
+                  : 'Bilgi İşlem Daire Başkanlığı' }}
               </p>
-              <h2 class="hero-baslik"><span>{{ s.title }}</span></h2>
-              @if (s.subtitle) { <p class="hero-ozet">{{ s.subtitle }}</p> }
 
-              <div class="hero-alt">
-                @if (s.linkUrl) {
+              <h2 class="hero-baslik"><span>{{ s.title }}</span></h2>
+
+              @if (s.subtitle) {
+                <p class="hero-ozet">{{ s.subtitle }}</p>
+              }
+
+              @if (s.linkUrl) {
+                <div class="hero-alt">
                   <a class="hero-dugme" [routerLink]="s.linkUrl">
                     <span>{{ dilDegeri === 'en' ? 'Read more' : 'Ayrıntılar' }}</span>
                     <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"
@@ -94,33 +71,22 @@ import { Language, Slide } from '../core/models';
                       <path d="M4 12h15M13 6l6 6-6 6"/>
                     </svg>
                   </a>
-                }
-
-                <div class="hero-gezinme">
-                  <p class="hero-sayac" aria-hidden="true">
-                    <strong>{{ sira(etkin() + 1) }}</strong>
-                    <span></span>
-                    {{ sira(slaytlar.length) }}
-                  </p>
-                  <div class="hero-oklar">
-                    <button type="button" (click)="elleOnceki()"
-                            [attr.aria-label]="dilDegeri === 'en' ? 'Previous slide' : 'Önceki görsel'">
-                      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"
-                           fill="none" stroke="currentColor" stroke-width="1.7">
-                        <path d="M20 12H5M11 6l-6 6 6 6"/>
-                      </svg>
-                    </button>
-                    <button type="button" (click)="elleSonraki()"
-                            [attr.aria-label]="dilDegeri === 'en' ? 'Next slide' : 'Sonraki görsel'">
-                      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"
-                           fill="none" stroke="currentColor" stroke-width="1.7">
-                        <path d="M4 12h15M13 6l6 6-6 6"/>
-                      </svg>
-                    </button>
-                  </div>
                 </div>
-              </div>
+              }
             </div>
+          }
+        </div>
+
+        <div class="hero-noktalar" role="tablist"
+             [attr.aria-label]="dilDegeri === 'en' ? 'Slides' : 'Görseller'">
+          @for (s of slaytlar; track s.imageUrl; let i = $index) {
+            <button type="button" role="tab"
+                    [class.etkin]="i === etkin()"
+                    [attr.aria-selected]="i === etkin()"
+                    [attr.aria-label]="s.title"
+                    (click)="gec(i)">
+              <span class="hero-nokta-dolgu" [style.animation-duration.ms]="SURE"></span>
+            </button>
           }
         </div>
 
@@ -129,15 +95,16 @@ import { Language, Slide } from '../core/models';
     }
   `
 })
-export class HeroSliderComponent implements OnDestroy {
+export class HeroSliderComponent implements OnInit, OnDestroy {
   @Input({ required: true }) dilDegeri!: Language;
   @Input() slaytlar: Slide[] = [];
 
-  /** Slayt başına bekleme süresi. */
   protected readonly SURE = 10000;
-
   protected etkin = signal(0);
+
   private sayac: ReturnType<typeof setInterval> | null = null;
+  private dokunusX = 0;
+  private dokunusY = 0;
 
   ngOnInit(): void {
     this.basla();
@@ -151,25 +118,18 @@ export class HeroSliderComponent implements OnDestroy {
     return this.slaytlar[this.etkin()] ?? null;
   }
 
-  /** Şablonun tek elemanlı döngüyle çizebilmesi için; @for düğümü
-      yenilediği için giriş hareketi her slaytta baştan çalışır. */
   protected gecerliListe(): Slide[] {
-    const s = this.gecerli();
-    return s ? [s] : [];
+    const slayt = this.gecerli();
+    return slayt ? [slayt] : [];
   }
 
-  /** 1920'lik adresten 960'lık sürümü türetir; ayrı bir alan tutmaya gerek yok. */
   protected darSurum(adres: string): string {
     return adres.replace('-1920.webp', '-960.webp');
   }
 
   protected basla(): void {
     this.durdur();
-    if (this.slaytlar.length < 2) return;
-    // Sunucuda çalışırken zamanlayıcı kurulmaz; sunucu tarafı işleme
-    // zamanlayıcıyı bekleyip yanıtı geciktirir.
-    if (typeof window === 'undefined') return;
-    // Hareket azaltma tercihinde kendiliğinden dönmez.
+    if (this.slaytlar.length < 2 || typeof window === 'undefined') return;
     if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
     this.sayac = setInterval(() => this.sonrakiSlayt(), this.SURE);
   }
@@ -189,12 +149,6 @@ export class HeroSliderComponent implements OnDestroy {
     this.etkin.update((i) => (i - 1 + this.slaytlar.length) % this.slaytlar.length);
   }
 
-  /** Görsel sıra bilgisini teknik bir sayaç gibi iki haneli gösterir. */
-  protected sira(deger: number): string {
-    return String(deger).padStart(2, '0');
-  }
-
-  /** Elle kullanılan denetimlerde yeni slayda tam okuma süresi tanınır. */
   protected elleOnceki(): void {
     this.oncekiSlayt();
     this.basla();
@@ -205,18 +159,10 @@ export class HeroSliderComponent implements OnDestroy {
     this.basla();
   }
 
-  /** Elle geçildiğinde sayaç sıfırlanır: yeni slayt hemen kaçmasın. */
   protected gec(i: number): void {
     this.etkin.set(i);
     this.basla();
   }
-
-  /* ---- parmakla kaydırma ----
-
-     Eşik 45px: bu değerin altındaki hareketler kaydırma değil, sayfayı
-     aşağı kaydırırken oluşan yanlışlıkla yatay sapmalardır. */
-  private dokunusX = 0;
-  private dokunusY = 0;
 
   protected dokunusBasladi(olay: TouchEvent): void {
     this.dokunusX = olay.changedTouches[0].clientX;
@@ -227,7 +173,6 @@ export class HeroSliderComponent implements OnDestroy {
   protected dokunusBitti(olay: TouchEvent): void {
     const dx = olay.changedTouches[0].clientX - this.dokunusX;
     const dy = olay.changedTouches[0].clientY - this.dokunusY;
-    // Dikey hareket baskınsa sayfa kaydırılıyordur, slayt değişmemeli.
     if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) {
       dx < 0 ? this.sonrakiSlayt() : this.oncekiSlayt();
     }
