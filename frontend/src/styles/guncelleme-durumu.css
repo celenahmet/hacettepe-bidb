@@ -1,0 +1,175 @@
+/*
+ * İçeriği hazırlanan sayfalar
+ *
+ * Eski sayfadaki tek satırlık bakım mesajı, kullanıcıya mevcut durumu
+ * açıklayan ve sitede ilerleyebileceği iki yol sunan kurumsal bir bileşendir.
+ * Dekorasyon yerine hiyerarşi, boşluk ve tek bir anlamlı ikon kullanılır.
+ */
+
+@layer kamu {
+  .guncelleme-durumu {
+    position: relative;
+    max-width: 760px;
+    display: grid;
+    grid-template-columns: 6rem minmax(0, 1fr);
+    gap: clamp(1.5rem, 4vw, 3rem);
+    margin-top: var(--bosluk-7);
+    padding: clamp(2rem, 5vw, 3.5rem);
+    overflow: hidden;
+    border: 1px solid var(--cizgi);
+    border-top: 3px solid var(--hu-kirmizi);
+    border-radius: var(--kose-sm);
+    background: var(--yuzey);
+    box-shadow: 0 10px 30px rgb(13 31 53 / 7%);
+  }
+
+  .guncelleme-durumu::after {
+    content: "";
+    position: absolute;
+    right: -3rem;
+    bottom: -5rem;
+    width: 12rem;
+    height: 12rem;
+    border: 1px solid rgb(13 53 108 / 8%);
+    border-radius: 50%;
+    box-shadow:
+      0 0 0 2.75rem rgb(13 53 108 / 3%),
+      0 0 0 5.5rem rgb(13 53 108 / 2%);
+    pointer-events: none;
+  }
+
+  .guncelleme-durumu-ikon {
+    position: relative;
+    z-index: 1;
+    width: 6rem;
+    height: 6rem;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgb(179 24 33 / 22%);
+    border-radius: 50%;
+    background: #fff7f7;
+    color: var(--hu-kirmizi);
+  }
+
+  .guncelleme-durumu-ikon svg {
+    width: 3.25rem;
+    height: 3.25rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .guncelleme-durumu-icerik {
+    position: relative;
+    z-index: 1;
+    min-width: 0;
+  }
+
+  .icerik .guncelleme-durumu-ust {
+    margin: 0 0 var(--bosluk-2);
+    color: var(--hu-kirmizi);
+    font-family: var(--yazi-kod);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    line-height: 1.4;
+  }
+
+  .icerik .guncelleme-durumu h2 {
+    margin: 0 0 var(--bosluk-4);
+    padding: 0;
+    border: 0;
+    color: var(--hu-lacivert);
+    font-size: clamp(1.35rem, 3vw, 1.85rem);
+    letter-spacing: -0.025em;
+  }
+
+  .icerik .guncelleme-durumu-icerik > p:not(.guncelleme-durumu-ust) {
+    max-width: 55ch;
+    margin: 0;
+    color: var(--metin-2);
+    line-height: 1.7;
+  }
+
+  .guncelleme-durumu-eylemler {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--bosluk-3);
+    margin-top: var(--bosluk-5);
+  }
+
+  .icerik .guncelleme-durumu-eylemler a {
+    min-height: 2.75rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 var(--bosluk-4);
+    border: 1px solid var(--cizgi-koyu);
+    border-radius: 2px;
+    background: var(--yuzey);
+    color: var(--hu-lacivert);
+    font-size: var(--olcu-sm);
+    font-weight: 700;
+    box-shadow: none;
+    transition:
+      border-color var(--gecis-hizli),
+      background var(--gecis-hizli),
+      color var(--gecis-hizli);
+  }
+
+  .icerik .guncelleme-durumu-eylemler a:hover {
+    border-color: var(--hu-lacivert);
+    background: var(--yuzey-2);
+    color: var(--hu-lacivert);
+    box-shadow: none;
+  }
+
+  .icerik .guncelleme-durumu-eylemler .guncelleme-durumu-birincil {
+    border-color: var(--hu-lacivert);
+    background: var(--hu-lacivert);
+    color: #fff;
+  }
+
+  .icerik .guncelleme-durumu-eylemler .guncelleme-durumu-birincil:hover {
+    border-color: var(--hu-kirmizi);
+    background: var(--hu-kirmizi);
+    color: #fff;
+  }
+
+  @media (max-width: 40rem) {
+    .guncelleme-durumu {
+      grid-template-columns: 4rem minmax(0, 1fr);
+      gap: var(--bosluk-4);
+      margin-top: var(--bosluk-6);
+      padding: var(--bosluk-5);
+    }
+
+    .guncelleme-durumu-ikon {
+      width: 4rem;
+      height: 4rem;
+    }
+
+    .guncelleme-durumu-ikon svg {
+      width: 2.35rem;
+      height: 2.35rem;
+    }
+  }
+
+  @media (max-width: 28rem) {
+    .guncelleme-durumu {
+      grid-template-columns: 1fr;
+    }
+
+    .guncelleme-durumu-eylemler {
+      align-items: stretch;
+      flex-direction: column;
+    }
+
+    .icerik .guncelleme-durumu-eylemler a {
+      width: 100%;
+    }
+  }
+}

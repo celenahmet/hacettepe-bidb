@@ -154,14 +154,51 @@ export function iletisimBaglantilari(html: string): string {
 }
 
 /** Sayfa gövdesine uygulanan tüm sunum düzeltmeleri. */
+/**
+ * Tek satırlık "Güncelleme Aşamasındadır" paragrafını erişilebilir ve yararlı
+ * bir durum bileşenine dönüştürür.
+ *
+ * Veritabanındaki kaynak cümle korunur. Eklenen açıklama ve bağlantılar
+ * yalnızca sunum katmanındadır; aynı cümle ileride başka bir sayfada
+ * kullanılırsa o sayfa da otomatik olarak aynı görünümü kazanır.
+ */
+export function guncellemeMesajlariniBicimlendir(html: string): string {
+  const mesaj = /<p\b[^>]*>\s*G(?:ü|&uuml;)ncelleme\s+A(?:ş|&#351;)amas(?:ı|&#305;)ndad(?:ı|&#305;)r\.?\s*<\/p>/gi;
+
+  return String(html).replace(mesaj, `
+    <section class="guncelleme-durumu" aria-labelledby="guncelleme-durumu-baslik">
+      <div class="guncelleme-durumu-ikon" aria-hidden="true">
+        <svg viewBox="0 0 48 48" focusable="false">
+          <path d="M35.7 17.2A14 14 0 0 0 11 20"></path>
+          <path d="m34 10.5 2.1 7.2-7.2 2.1"></path>
+          <path d="M12.3 30.8A14 14 0 0 0 37 28"></path>
+          <path d="m14 37.5-2.1-7.2 7.2-2.1"></path>
+          <path d="M24 17v8l5 3"></path>
+        </svg>
+      </div>
+      <div class="guncelleme-durumu-icerik">
+        <p class="guncelleme-durumu-ust">İÇERİK GÜNCELLEMESİ</p>
+        <h2 id="guncelleme-durumu-baslik">Bu içerik güncelleme aşamasındadır.</h2>
+        <p>Bilgileri güncel ve eksiksiz sunabilmek için bu sayfa üzerinde çalışıyoruz. Bu sırada diğer hizmet ve destek içeriklerini inceleyebilirsiniz.</p>
+        <div class="guncelleme-durumu-eylemler">
+          <a class="guncelleme-durumu-birincil" href="/tr/services">Hizmetleri incele</a>
+          <a href="/tr/contact">Bize ulaşın</a>
+        </div>
+      </div>
+    </section>
+  `);
+}
+
 export function icerigiHazirla(html: string): string {
   // Sıra önemli: önce bozuk işaretleme onarılır, sonra paragraf-bağlantı
   // dizinleri listeye çevrilir, sonra <ul> dizinleri işaretlenir, en son
   // iletişim bağlantıları kurulur. Ters sırada, kapanmamış bir etiket
   // yüzünden liste dizin sayılmaz ve onarım geç kalırdı.
-  return baglantiDizinleriniIsaretle(
-    paragrafBaglantilariniDizinYap(
-      iletisimBaglantilari(bagliMaddeleriOnar(html))
+  return guncellemeMesajlariniBicimlendir(
+    baglantiDizinleriniIsaretle(
+      paragrafBaglantilariniDizinYap(
+        iletisimBaglantilari(bagliMaddeleriOnar(html))
+      )
     )
   );
 }
