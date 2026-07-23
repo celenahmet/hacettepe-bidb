@@ -286,6 +286,28 @@
 
   .hero-noktalar button:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
 
+  /*
+   * Geniş masaüstlerinde hero'yu kontrollü bir çerçevede tutuyoruz.
+   * Metin ana sayfa omurgasıyla hizalanırken fotoğraf daha fazla alan kazanır.
+   */
+  @media (min-width: 100rem) {
+    .hero {
+      --hero-bolme: 42%;
+      width: 100%;
+      max-width: 105rem;
+      min-height: 38rem;
+      margin-inline: auto;
+    }
+
+    .hero-kap {
+      padding-left: max(
+        4rem,
+        calc((min(100vw, 105rem) - var(--kap-genislik)) / 2)
+      );
+      padding-right: 3.5rem;
+    }
+  }
+
   /* ================= dizüstü ================= */
 
   @media (max-width: 68rem) {
