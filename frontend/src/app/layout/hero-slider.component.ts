@@ -7,12 +7,11 @@ import { Language, Slide } from '../core/models';
  *
  * KOMPOZİSYON
  *
- * Klasik "fotoğrafın üstüne ortalanmış yazı" düzeninden çıkıldı. Alan iki
- * yüzeye bölündü: solda kurumsal lacivert bir panel, sağda tam kanama
- * fotoğraf. Panelin metni sayfa kabıyla aynı hizadan başlar; yani üstteki
- * logoyla aynı dikey çizgiye oturur. Bu, alanı sayfanın geri kalanına
- * bağlar — hazır bir slider bileşeni gibi durmasını engelleyen şey de
- * budur.
+ * Klasik "fotoğrafın üstüne kutu koyma" düzeni yerine alan iki kalıcı
+ * yüzeye bölünür: solda kurumsal lacivert bilgi alanı, sağda fotoğraf.
+ * Metin sayfa kabıyla aynı dikey çizgiden başlar. Fotoğraf ile metnin
+ * birbirinden bağımsız olması her görselde aynı okunurluğu sağlar ve
+ * geçici cam/blur eğilimlerine bağlı kalmadan kurumsal bir açılış üretir.
  *
  * Bölünmüş yapının üç kazancı var: fotoğraf hiç karartılmadığı için
  * olduğu gibi görünür; metin her zaman aynı kontrastta okunur, fotoğrafın
@@ -21,9 +20,9 @@ import { Language, Slide } from '../core/models';
  *
  * DENETİM
  *
- * İleri-geri düğmeleri ve ilerleme çizgisi panelin içinde, metinle aynı
- * hizada durur. Fotoğrafın üstünde yüzen denetimler tasarımdan kopuk
- * görünüyordu; panele alındıklarında yüzeyin parçası oluyorlar.
+ * İleri-geri düğmeleri ve sıra bilgisi metin alanının altındadır.
+ * Slayt göstergeleri ise fotoğrafın altında bir görüntü dizisi gibi durur;
+ * iki denetim türü farklı görevlerini açıkça belli eder.
  *
  * ERİŞİLEBİLİRLİK
  * - İmleç veya klavye odağı alandayken dönme durur.
@@ -40,11 +39,12 @@ import { Language, Slide } from '../core/models';
                [attr.aria-label]="dilDegeri === 'en' ? 'Featured' : 'Öne çıkanlar'"
                (mouseenter)="durdur()" (mouseleave)="basla()"
                (focusin)="durdur()" (focusout)="basla()"
-               (keydown.arrowleft)="oncekiSlayt()" (keydown.arrowright)="sonrakiSlayt()"
+               (keydown.arrowleft)="elleOnceki()" (keydown.arrowright)="elleSonraki()"
                (touchstart)="dokunusBasladi($event)" (touchend)="dokunusBitti($event)"
                tabindex="-1">
 
-        <!-- Fotoğraf katmanı: tam kanama, yavaş yakınlaşma -->
+        <!-- Fotoğraf kendi yüzeyinde kalır; metin okunurluğu için görsel
+             karartılmaz veya bulanıklaştırılmaz. -->
         <div class="hero-gorseller">
           @for (s of slaytlar; track s.imageUrl; let i = $index) {
             <img class="hero-gorsel"
@@ -58,34 +58,7 @@ import { Language, Slide } from '../core/models';
                  [attr.fetchpriority]="i === 0 ? 'high' : null"
                  width="1920" height="825">
           }
-        </div>
 
-        <!-- Metin, fotoğrafın üstünde bir cam panelde. Slayt değişince blok
-             yeniden kurulur; düğüm yenilenmeden giriş hareketi baştan
-             çalışmaz. -->
-        <div class="kap hero-kap">
-          @for (s of gecerliListe(); track etkin()) {
-            <div class="hero-panel">
-              <p class="hero-etiket">
-                <span class="hero-etiket-cizgi" aria-hidden="true"></span>
-                {{ dilDegeri === 'en' ? 'Department of Information Technology' : 'Bilgi İşlem Daire Başkanlığı' }}
-              </p>
-              <h2 class="hero-baslik"><span>{{ s.title }}</span></h2>
-              @if (s.subtitle) { <p class="hero-ozet">{{ s.subtitle }}</p> }
-              @if (s.linkUrl) {
-                <a class="hero-dugme" [routerLink]="s.linkUrl">
-                  <span>{{ dilDegeri === 'en' ? 'Read more' : 'Ayrıntılar' }}</span>
-                  <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"
-                       fill="none" stroke="currentColor" stroke-width="1.9">
-                    <path d="M4 12h15M13 6l6 6-6 6"/>
-                  </svg>
-                </a>
-              }
-            </div>
-          }
-
-          <!-- Göstergeler: alt-sağda, tıklanabilir. Etkin olan uzar ve
-               süre boyunca dolar. -->
           <div class="hero-noktalar" role="tablist"
                [attr.aria-label]="dilDegeri === 'en' ? 'Slides' : 'Görseller'">
             @for (s of slaytlar; track s.imageUrl; let i = $index) {
@@ -98,6 +71,57 @@ import { Language, Slide } from '../core/models';
               </button>
             }
           </div>
+        </div>
+
+        <!-- Bilgi yüzeyi. Slayt değişince blok yeniden kurulur; düğüm
+             yenilenmeden ölçülü giriş hareketi baştan çalışmaz. -->
+        <div class="hero-kap">
+          @for (s of gecerliListe(); track etkin()) {
+            <div class="hero-panel">
+              <p class="hero-etiket">
+                <span class="hero-etiket-cizgi" aria-hidden="true"></span>
+                {{ dilDegeri === 'en' ? 'Department of Information Technology' : 'Bilgi İşlem Daire Başkanlığı' }}
+              </p>
+              <h2 class="hero-baslik"><span>{{ s.title }}</span></h2>
+              @if (s.subtitle) { <p class="hero-ozet">{{ s.subtitle }}</p> }
+
+              <div class="hero-alt">
+                @if (s.linkUrl) {
+                  <a class="hero-dugme" [routerLink]="s.linkUrl">
+                    <span>{{ dilDegeri === 'en' ? 'Read more' : 'Ayrıntılar' }}</span>
+                    <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"
+                         fill="none" stroke="currentColor" stroke-width="1.8">
+                      <path d="M4 12h15M13 6l6 6-6 6"/>
+                    </svg>
+                  </a>
+                }
+
+                <div class="hero-gezinme">
+                  <p class="hero-sayac" aria-hidden="true">
+                    <strong>{{ sira(etkin() + 1) }}</strong>
+                    <span></span>
+                    {{ sira(slaytlar.length) }}
+                  </p>
+                  <div class="hero-oklar">
+                    <button type="button" (click)="elleOnceki()"
+                            [attr.aria-label]="dilDegeri === 'en' ? 'Previous slide' : 'Önceki görsel'">
+                      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"
+                           fill="none" stroke="currentColor" stroke-width="1.7">
+                        <path d="M20 12H5M11 6l-6 6 6 6"/>
+                      </svg>
+                    </button>
+                    <button type="button" (click)="elleSonraki()"
+                            [attr.aria-label]="dilDegeri === 'en' ? 'Next slide' : 'Sonraki görsel'">
+                      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"
+                           fill="none" stroke="currentColor" stroke-width="1.7">
+                        <path d="M4 12h15M13 6l6 6-6 6"/>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          }
         </div>
 
         <p class="sr-only" aria-live="polite">{{ gecerli()?.title }}</p>
@@ -163,6 +187,22 @@ export class HeroSliderComponent implements OnDestroy {
 
   protected oncekiSlayt(): void {
     this.etkin.update((i) => (i - 1 + this.slaytlar.length) % this.slaytlar.length);
+  }
+
+  /** Görsel sıra bilgisini teknik bir sayaç gibi iki haneli gösterir. */
+  protected sira(deger: number): string {
+    return String(deger).padStart(2, '0');
+  }
+
+  /** Elle kullanılan denetimlerde yeni slayda tam okuma süresi tanınır. */
+  protected elleOnceki(): void {
+    this.oncekiSlayt();
+    this.basla();
+  }
+
+  protected elleSonraki(): void {
+    this.sonrakiSlayt();
+    this.basla();
   }
 
   /** Elle geçildiğinde sayaç sıfırlanır: yeni slayt hemen kaçmasın. */

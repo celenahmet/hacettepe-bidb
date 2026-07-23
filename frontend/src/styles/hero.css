@@ -1,46 +1,49 @@
-/* Ana sayfa açılış alanı — tam kanama görsel, üstünde cam panelde metin.
-
-   ── KOMPOZİSYON ───────────────────────────────────────────────────────
-
-   Fotoğraf tüm alanı kaplar; metin solda, fotoğrafın üstünde bir cam
-   panelde durur. Panel yarı saydam ve arkası bulanık (backdrop-filter):
-   fotoğraf panelin ardından silik görünmeyi sürdürür, metin ise net bir
-   yüzeyde okunur. Bu "havalı" görünümün kaynağı gösteriş değil, iki
-   katmanın (net metin / bulanık fotoğraf) birbirinden ayrılması.
-
-   Okunurluğu üç şey birlikte taşır: panelin bulanık koyu yüzeyi, fotoğrafın
-   tamamına inen çok hafif bir karartma, ve panelin sol kenarındaki kırmızı
-   çizgi. Böylece açık ya da koyu, her fotoğrafta metin aynı netlikte durur.
-
-   ── HAREKET ───────────────────────────────────────────────────────────
-
-   Fotoğraf durduğu on saniye boyunca çok yavaş yakınlaşır (Ken Burns).
-   Slayt değişince panelin içindekiler sırayla, aşağıdan yukarı süzülerek
-   girer: etiket, başlık (maskeden yükselir), açıklama, düğme. Hareket
-   fotoğrafı taklit etmez; metnin değiştiğini gözün fark etmesini sağlar.
-
-   Dar ekranda panel tam genişliğe yakınlaşır ve alta oturur; cam etkisi
-   korunur çünkü metin yine fotoğrafın üstündedir. */
+/* Ana sayfa açılış alanı — kurumsal bilgi yüzeyi + bağımsız fotoğraf.
+ *
+ * TASARIM KARARI
+ *
+ * Metin fotoğrafın üstünde bir cam kutuya yerleştirilmez. Geniş ekranda
+ * alan ikiye ayrılır: solda opak kurumsal lacivert bilgi yüzeyi, sağda
+ * karartılmamış fotoğraf. Böylece okunurluk fotoğrafın rengine bağlı olmaz,
+ * fotoğraf da içeriğin arka plan malzemesine dönüşmeden kendi değerini korur.
+ *
+ * Bilgi alanı üst şeritteki logoyla aynı dikey çizgiden başlar. Keskin
+ * sınır, küçük kırmızı işaret ve teknik sıra sayacı bir bilgi işlem
+ * kurumuna özgü editoryal kimlik kurar; gölge, blur ve yuvarlak kart yoktur.
+ *
+ * Tablet ve mobilde yüzeyler üst üste gelir: fotoğraf önce, bilgi sonra.
+ * Metin hiçbir ekran genişliğinde görselin üstüne binmez. Bu düzen uzun
+ * başlıkların büyüyebilmesini sağlar ve yatay taşma riskini ortadan kaldırır.
+ */
 
 @layer kamu {
-
   .hero {
+    --hero-bolme: 44%;
     position: relative;
-    min-height: clamp(24rem, 46vw, 40rem);
+    min-height: clamp(34rem, 44vw, 41rem);
     display: flex;
-    align-items: flex-end;
     overflow: hidden;
     background: var(--yuzey-ters);
     outline: 0;
     isolation: isolate;
   }
 
-  /* ---- Fotoğraf katmanı ---------------------------------------------- */
+  /* ================= fotoğraf yüzeyi ================= */
 
   .hero-gorseller {
     position: absolute;
-    inset: 0;
-    z-index: -2;
+    inset: 0 0 0 var(--hero-bolme);
+    overflow: hidden;
+    background: #101722;
+  }
+
+  .hero-gorseller::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    z-index: 2;
+    width: 3px;
+    background: var(--hu-kirmizi);
   }
 
   .hero-gorsel {
@@ -49,215 +52,317 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
     opacity: 0;
-    transform: scale(1.06);
-    transition: opacity 500ms cubic-bezier(0.4, 0, 1, 1);
+    transform: scale(1.025);
+    transition: opacity 560ms ease;
   }
 
   .hero-gorsel.etkin {
     opacity: 1;
-    transition: opacity 1100ms cubic-bezier(0.22, 0.61, 0.36, 1);
-    animation: hero-yaklas 10s linear forwards;
+    animation: hero-nefes 10s linear forwards;
   }
 
-  @keyframes hero-yaklas {
-    from { transform: scale(1.06); }
-    to   { transform: scale(1); }
+  @keyframes hero-nefes {
+    from { transform: scale(1.025); }
+    to { transform: scale(1); }
   }
 
-  /* Fotoğrafın tamamına çok hafif, sola doğru artan bir karartma: cam
-     panelin dışında da metin/gösterge okunur kalsın. */
-  .hero::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    background:
-      linear-gradient(90deg, rgb(9 14 24 / 55%) 0%, rgb(9 14 24 / 18%) 45%, rgb(9 14 24 / 4%) 100%),
-      linear-gradient(to top, rgb(9 14 24 / 45%) 0%, rgb(9 14 24 / 0%) 40%);
-  }
-
-  /* ---- Metin panonu -------------------------------------------------- */
+  /* ================= bilgi yüzeyi ================= */
 
   .hero-kap {
     position: relative;
-    width: 100%;
-    padding-top: var(--bosluk-8);
-    padding-bottom: var(--bosluk-8);
+    z-index: 3;
+    width: var(--hero-bolme);
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    padding:
+      clamp(2.5rem, 5vw, 5rem)
+      clamp(2rem, 4vw, 4.5rem)
+      clamp(2.5rem, 5vw, 5rem)
+      max(20px, calc((100vw - var(--kap-genislik)) / 2));
   }
 
-  /* CAM PANEL. Yarı saydam koyu yüzey + arkada bulanıklık. Desteklenmezse
-     (@supports) düz yarı saydam koyuya düşer; metin yine okunur. */
   .hero-panel {
-    max-width: 40rem;
-    padding: var(--bosluk-6) var(--bosluk-6) var(--bosluk-6) var(--bosluk-6);
-    border-left: 3px solid var(--hu-kirmizi);
-    border-radius: 0 var(--kose-lg) var(--kose-lg) 0;
-    background: rgb(12 18 30 / 42%);
-    box-shadow: 0 8px 40px rgb(0 0 0 / 25%);
+    width: 100%;
+    max-width: 32rem;
+    min-width: 0;
   }
 
-  @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-    .hero-panel {
-      background: rgb(12 18 30 / 28%);
-      backdrop-filter: blur(14px) saturate(120%);
-      -webkit-backdrop-filter: blur(14px) saturate(120%);
-    }
-  }
-
-  /* Etiket: kurum adı, önünde kısa kırmızı çizgi. */
   .hero-etiket {
     display: flex;
     align-items: center;
     gap: var(--bosluk-3);
-    margin: 0 0 var(--bosluk-4);
-    font-size: var(--olcu-xs);
-    font-weight: var(--kalinlik-orta);
-    letter-spacing: 0.14em;
+    margin: 0 0 var(--bosluk-5);
+    font-size: 11px;
+    font-weight: var(--kalinlik-kalin);
+    line-height: 1.4;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: rgb(255 255 255 / 82%);
-    animation: hero-yuksel 620ms 40ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    color: rgb(255 255 255 / 68%);
+    animation: hero-yuksel 520ms 30ms ease-out both;
   }
+
   .hero-etiket-cizgi {
-    display: block;
-    width: 1.75rem;
+    flex: none;
+    width: 2rem;
     height: 2px;
     background: var(--hu-kirmizi);
   }
 
-  /* Başlık maskeden yükselir. */
   .hero-baslik {
     margin: 0;
-    overflow: hidden;
-    font-size: clamp(1.9rem, 3.8vw, 3.25rem);
+    overflow-wrap: anywhere;
+    font-size: clamp(2.15rem, 3.35vw, 3.65rem);
     font-weight: var(--kalinlik-kalin);
-    line-height: 1.1;
-    letter-spacing: -0.02em;
+    line-height: 1.06;
+    letter-spacing: -0.035em;
     color: #fff;
   }
+
   .hero-baslik > span {
     display: block;
-    animation: hero-perde 720ms 90ms cubic-bezier(0.16, 0.84, 0.24, 1) both;
-  }
-  @keyframes hero-perde {
-    from { transform: translateY(105%); }
-    to   { transform: none; }
+    animation: hero-yuksel 620ms 90ms cubic-bezier(0.2, 0.75, 0.25, 1) both;
   }
 
   .hero-ozet {
-    margin: var(--bosluk-4) 0 0;
-    max-width: 44ch;
-    font-size: var(--olcu-lg);
-    line-height: 1.55;
-    color: rgb(255 255 255 / 88%);
-    animation: hero-yuksel 700ms 240ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    max-width: 43ch;
+    margin: var(--bosluk-5) 0 0;
+    font-size: var(--olcu-md);
+    line-height: 1.7;
+    color: rgb(255 255 255 / 76%);
+    animation: hero-yuksel 620ms 170ms ease-out both;
   }
 
   @keyframes hero-yuksel {
-    from { opacity: 0; transform: translateY(16px); }
-    to   { opacity: 1; transform: none; }
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: none; }
   }
 
-  /* ---- Eylem düğmesi (cam) ------------------------------------------- */
+  /* Eylem ve sıra bilgisi aynı taban çizgisinde bir alt araç satırı kurar. */
+  .hero-alt {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--bosluk-5);
+    margin-top: var(--bosluk-7);
+    padding-top: var(--bosluk-5);
+    border-top: 1px solid rgb(255 255 255 / 16%);
+    animation: hero-yuksel 620ms 250ms ease-out both;
+  }
 
   .hero-dugme {
     display: inline-flex;
     align-items: center;
     gap: var(--bosluk-3);
-    margin-top: var(--bosluk-5);
-    padding: 0.75rem 1.6rem;
-    border: 1px solid rgb(255 255 255 / 40%);
-    border-radius: var(--kose-tam);
-    background: rgb(255 255 255 / 10%);
+    min-height: 44px;
+    padding: 0.7rem 0;
+    border: 0;
+    border-bottom: 2px solid var(--hu-kirmizi);
+    border-radius: 0;
+    background: none;
     font-size: var(--olcu-sm);
-    font-weight: var(--kalinlik-orta);
+    font-weight: var(--kalinlik-kalin);
     letter-spacing: 0.02em;
     color: #fff;
-    transition: background var(--gecis), border-color var(--gecis), transform var(--gecis);
-    animation: hero-yuksel 700ms 360ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    transition: color var(--gecis), border-color var(--gecis);
   }
-  @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-    .hero-dugme { backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
-  }
+
   .hero-dugme svg { transition: transform var(--gecis); }
-  .hero-dugme:hover {
-    background: var(--hu-kirmizi);
-    border-color: var(--hu-kirmizi);
-  }
+  .hero-dugme:hover { color: #fff; border-color: #fff; }
   .hero-dugme:hover svg { transform: translateX(4px); }
-  .hero-dugme:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+  .hero-dugme:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
 
-  /* ---- Göstergeler (alt-sağ) ----------------------------------------- */
+  .hero-gezinme {
+    flex: none;
+    display: flex;
+    align-items: center;
+    gap: var(--bosluk-4);
+  }
 
-  .hero-noktalar {
-    position: absolute;
-    right: max(20px, calc(50vw - 570px));
-    bottom: var(--bosluk-6);
+  .hero-sayac {
     display: flex;
     align-items: center;
     gap: var(--bosluk-2);
+    margin: 0;
+    font-family: var(--yazi-kod);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: rgb(255 255 255 / 45%);
+  }
+
+  .hero-sayac strong {
+    font-weight: var(--kalinlik-kalin);
+    color: #fff;
+  }
+
+  .hero-sayac span {
+    width: 1.5rem;
+    height: 1px;
+    background: rgb(255 255 255 / 24%);
+  }
+
+  .hero-oklar {
+    display: flex;
+    border: 1px solid rgb(255 255 255 / 22%);
+  }
+
+  .hero-oklar button {
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: rgb(255 255 255 / 78%);
+    cursor: pointer;
+    transition: background var(--gecis), color var(--gecis);
+  }
+
+  .hero-oklar button + button { border-left: 1px solid rgb(255 255 255 / 22%); }
+  .hero-oklar button:hover { background: rgb(255 255 255 / 9%); color: #fff; }
+  .hero-oklar button:focus-visible { outline: 2px solid #fff; outline-offset: -4px; }
+
+  /* ================= görsel göstergeleri ================= */
+
+  .hero-noktalar {
+    position: absolute;
+    z-index: 4;
+    right: max(20px, calc((100vw - var(--kap-genislik)) / 2));
+    bottom: var(--bosluk-5);
+    display: flex;
+    align-items: center;
+    gap: var(--bosluk-2);
+    padding: var(--bosluk-2);
+    background: rgb(10 15 24 / 72%);
   }
 
   .hero-noktalar button {
     position: relative;
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
     padding: 0;
-    border: 0;
-    border-radius: var(--kose-tam);
-    background: rgb(255 255 255 / 38%);
-    cursor: pointer;
     overflow: hidden;
+    border: 0;
+    border-radius: 0;
+    background: rgb(255 255 255 / 44%);
+    cursor: pointer;
     transition: width var(--gecis), background var(--gecis);
   }
+
   .hero-noktalar button::before {
     content: "";
     position: absolute;
-    inset: -10px;               /* dokunma alanı */
+    inset: -10px;
   }
-  .hero-noktalar button:hover { background: rgb(255 255 255 / 65%); }
 
-  /* Etkin gösterge uzar ve süre boyunca kırmızıyla dolar. */
+  .hero-noktalar button:hover { background: rgb(255 255 255 / 75%); }
   .hero-noktalar button.etkin {
-    width: 2.5rem;
-    background: rgb(255 255 255 / 30%);
+    width: 2.75rem;
+    background: rgb(255 255 255 / 32%);
   }
+
   .hero-nokta-dolgu {
     position: absolute;
     inset: 0;
-    transform-origin: left;
     transform: scaleX(0);
-    border-radius: inherit;
+    transform-origin: left;
     background: var(--hu-kirmizi);
   }
+
   .hero-noktalar button.etkin .hero-nokta-dolgu {
     animation-name: hero-dolum;
     animation-timing-function: linear;
     animation-fill-mode: forwards;
   }
+
   @keyframes hero-dolum {
     from { transform: scaleX(0); }
-    to   { transform: scaleX(1); }
+    to { transform: scaleX(1); }
   }
+
   .hero-noktalar button:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
 
-  /* ---- Dar ekran ------------------------------------------------------- */
+  /* ================= dizüstü ================= */
 
-  @media (max-width: 48rem) {
-    .hero { min-height: clamp(22rem, 90vw, 30rem); }
-    .hero-kap { padding-top: var(--bosluk-7); padding-bottom: var(--bosluk-8); }
-    .hero-panel {
-      max-width: none;
-      padding: var(--bosluk-5);
-      border-radius: var(--kose-lg);
+  @media (max-width: 68rem) {
+    .hero { --hero-bolme: 48%; }
+    .hero-kap {
+      padding-left: var(--bosluk-5);
+      padding-right: var(--bosluk-6);
     }
-    .hero-baslik { font-size: clamp(1.6rem, 7vw, 2.2rem); }
-    .hero-ozet { font-size: var(--olcu-md); }
-    .hero-noktalar { right: 20px; bottom: var(--bosluk-4); }
+    .hero-baslik { font-size: clamp(2rem, 3.8vw, 3rem); }
+    .hero-alt { gap: var(--bosluk-4); }
   }
 
-  /* ---- Hareket azaltma ---------------------------------------------------- */
+  /* ================= tablet ve mobil ================= */
+
+  @media (max-width: 56.25rem) {
+    .hero {
+      min-height: 0;
+      display: grid;
+      grid-template-rows: clamp(17rem, 52vw, 27rem) auto;
+    }
+
+    .hero-gorseller {
+      position: relative;
+      inset: auto;
+      grid-row: 1;
+    }
+
+    .hero-gorseller::before {
+      inset: auto 0 0;
+      width: auto;
+      height: 3px;
+    }
+
+    .hero-kap {
+      grid-row: 2;
+      width: 100%;
+      min-height: 28rem;
+      padding: var(--bosluk-7) max(20px, calc((100vw - var(--kap-dar)) / 2));
+    }
+
+    .hero-panel { max-width: var(--kap-dar); }
+    .hero-baslik { max-width: 18ch; font-size: clamp(2rem, 6vw, 3rem); }
+    .hero-ozet { max-width: 56ch; }
+    .hero-alt { margin-top: var(--bosluk-6); }
+    .hero-noktalar { right: var(--bosluk-4); bottom: var(--bosluk-4); }
+  }
+
+  @media (max-width: 37.5rem) {
+    .hero { grid-template-rows: clamp(14rem, 64vw, 19rem) auto; }
+    .hero-kap {
+      min-height: 24rem;
+      padding-top: var(--bosluk-6);
+      padding-bottom: var(--bosluk-6);
+    }
+    .hero-etiket { align-items: flex-start; margin-bottom: var(--bosluk-4); }
+    .hero-etiket-cizgi { margin-top: 0.45rem; width: 1.5rem; }
+    .hero-baslik {
+      max-width: none;
+      font-size: clamp(1.8rem, 9vw, 2.35rem);
+      line-height: 1.1;
+    }
+    .hero-ozet {
+      margin-top: var(--bosluk-4);
+      font-size: var(--olcu-sm);
+      line-height: 1.65;
+    }
+    .hero-alt {
+      align-items: center;
+      margin-top: var(--bosluk-5);
+      padding-top: var(--bosluk-4);
+    }
+    .hero-sayac { display: none; }
+    .hero-oklar button { width: 40px; height: 40px; }
+    .hero-noktalar { right: var(--bosluk-3); bottom: var(--bosluk-3); }
+  }
+
+  /* ================= hareket azaltma ================= */
 
   @media (prefers-reduced-motion: reduce) {
     .hero-gorsel { transition: none; }
@@ -265,8 +370,11 @@
     .hero-etiket,
     .hero-baslik > span,
     .hero-ozet,
-    .hero-dugme { animation: none; }
-    .hero-noktalar button.etkin .hero-nokta-dolgu { animation: none; transform: scaleX(1); }
+    .hero-alt { animation: none; }
+    .hero-noktalar button.etkin .hero-nokta-dolgu {
+      animation: none;
+      transform: scaleX(1);
+    }
     .hero-dugme svg { transition: none; }
   }
 }

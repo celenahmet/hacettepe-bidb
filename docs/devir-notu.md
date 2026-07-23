@@ -191,7 +191,7 @@ Her biri gerçekten yaşandı. Yeni bir ajan aynı tuzağa düşmesin:
 - Personel yapısal veriye taşındı (16 birim / 53 kişi), panelden yönetilir
 - E-imza alt sistemi (16 sayfa) birebir içeri alındı, kendi sol menüsüyle
 - Yönetim paneli: sayfa, SEO, duyuru, menü, iletişim, personel, dosya
-- Tasarım: hero (cam panel), haber kartları, SSS (arama+filtre), personel,
+- Tasarım: hero (iki yüzeyli kurumsal slider), haber kartları, SSS (arama+filtre), personel,
   organizasyon şeması, birim kartları, tablolar, renkli marka ikonları
 
 ### Bekleyen
