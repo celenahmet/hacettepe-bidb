@@ -36,21 +36,24 @@
   .web-servis-sayfasi > .icerik > .icerik > p:first-child {
     position: relative;
     max-width: none;
-    min-height: 5rem;
+    min-height: 9.5rem;
     margin: 0 0 var(--bosluk-6);
-    padding: var(--bosluk-5) 0 var(--bosluk-5) 5.25rem;
-    border-top: 1px solid var(--cizgi);
-    border-bottom: 1px solid var(--cizgi);
+    padding: var(--bosluk-6) var(--bosluk-6) var(--bosluk-6) 6.5rem;
+    overflow: hidden;
+    border: 1px solid var(--cizgi);
+    border-left: 3px solid var(--hu-kirmizi);
+    border-radius: var(--kose-md);
+    background: var(--yuzey-2);
     color: var(--metin-2);
   }
 
   .web-servis-sayfasi > .icerik > .icerik > p:first-child::before {
     content: "";
     position: absolute;
-    left: var(--bosluk-3);
-    top: var(--bosluk-5);
-    width: 3rem;
-    height: 3rem;
+    left: var(--bosluk-6);
+    top: var(--bosluk-6);
+    width: 3.25rem;
+    height: 3.25rem;
     background: var(--hu-lacivert);
     -webkit-mask: var(--web-ikon-yonetim) center / contain no-repeat;
     mask: var(--web-ikon-yonetim) center / contain no-repeat;
@@ -58,8 +61,8 @@
 
   .web-servis-sayfasi > .icerik > .icerik > p:first-child strong {
     display: block;
-    margin-bottom: var(--bosluk-2);
-    font-size: var(--olcu-lg);
+    margin-bottom: var(--bosluk-3);
+    font-size: var(--olcu-xl);
     font-weight: var(--kalinlik-kalin);
     line-height: var(--satir-sik);
     letter-spacing: -0.01em;
@@ -70,41 +73,84 @@
 
   .web-servis-sayfasi .icerik ul.baglanti-dizini {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--bosluk-4);
     margin: 0 0 var(--bosluk-6);
+    border: 0;
+  }
+
+  .web-servis-sayfasi .icerik ul.baglanti-dizini > li {
+    overflow: hidden;
+    border: 1px solid var(--cizgi);
+    border-radius: var(--kose-md);
+    background: var(--yuzey);
+    box-shadow: var(--golge-1);
+    transition:
+      border-color var(--gecis),
+      box-shadow var(--gecis),
+      transform var(--gecis);
+  }
+
+  .web-servis-sayfasi .icerik ul.baglanti-dizini > li:hover {
+    border-color: var(--cizgi-koyu);
+    box-shadow: var(--golge-2);
+    transform: translateY(-2px);
   }
 
   .web-servis-sayfasi .icerik ul.baglanti-dizini > li > a {
     position: relative;
-    grid-template-columns: 3.5rem minmax(0, 1fr) 1.25rem;
-    gap: var(--bosluk-4);
-    min-height: 9rem;
-    padding: var(--bosluk-5);
-    font-size: var(--olcu-md);
+    grid-template-columns: 3.75rem minmax(0, 1fr) 2.25rem;
+    gap: var(--bosluk-5);
+    min-height: 10rem;
+    padding: var(--bosluk-6);
+    background: var(--yuzey);
+    box-shadow: inset 0 3px 0 transparent;
+    font-size: var(--olcu-lg);
     font-weight: var(--kalinlik-kalin);
-    line-height: 1.45;
+    line-height: 1.4;
     color: var(--hu-lacivert);
+    transition:
+      color var(--gecis-hizli),
+      background var(--gecis),
+      box-shadow var(--gecis);
+  }
+
+  .web-servis-sayfasi .icerik ul.baglanti-dizini > li > a:hover {
+    background: var(--yuzey-2);
+    box-shadow: inset 0 3px 0 var(--hu-kirmizi);
+    color: var(--hu-kirmizi);
   }
 
   .web-servis-sayfasi .icerik ul.baglanti-dizini > li > a::before {
-    width: 3.5rem;
-    height: 3.5rem;
+    width: 3.75rem;
+    height: 3.75rem;
     background-color: var(--hu-kirmizi);
   }
 
   .web-servis-sayfasi .icerik ul.baglanti-dizini > li > a::after {
-    content: "";
-    width: 1.25rem;
-    height: 1.25rem;
-    background: currentColor;
-    -webkit-mask: var(--ikon-varsayilan) center / contain no-repeat;
-    mask: var(--ikon-varsayilan) center / contain no-repeat;
-    opacity: 0.55;
-    transition: transform var(--gecis-hizli), opacity var(--gecis-hizli);
+    content: "→";
+    display: grid;
+    width: 2.25rem;
+    height: 2.25rem;
+    place-items: center;
+    border: 1px solid var(--cizgi-koyu);
+    border-radius: var(--kose-tam);
+    background: transparent;
+    color: var(--metin-3);
+    -webkit-mask: none;
+    mask: none;
+    opacity: 1;
+    transition:
+      border-color var(--gecis-hizli),
+      background var(--gecis-hizli),
+      color var(--gecis-hizli),
+      transform var(--gecis-hizli);
   }
 
   .web-servis-sayfasi .icerik ul.baglanti-dizini > li > a:hover::after {
     transform: translateX(3px);
-    opacity: 1;
+    border-color: var(--hu-kirmizi);
+    background: var(--hu-kirmizi);
+    color: #fff;
   }
 
   .web-servis-sayfasi .icerik a[href="/tr/services"] {
@@ -120,10 +166,12 @@
   .web-servis-sayfasi > .icerik > .icerik > p:last-child {
     position: relative;
     max-width: none;
-    min-height: 3rem;
+    min-height: 5.25rem;
     margin: 0;
-    padding: var(--bosluk-4) var(--bosluk-4) var(--bosluk-4) 4.5rem;
-    border-left: 2px solid var(--hu-kirmizi);
+    padding: var(--bosluk-5) var(--bosluk-5) var(--bosluk-5) 5rem;
+    border: 1px solid var(--cizgi);
+    border-left: 3px solid var(--hu-kirmizi);
+    border-radius: var(--kose-md);
     background: var(--yuzey-2);
     font-size: var(--olcu-sm);
     line-height: var(--satir-genis);
@@ -133,11 +181,12 @@
   .web-servis-sayfasi > .icerik > .icerik > p:last-child::before {
     content: "";
     position: absolute;
-    left: var(--bosluk-4);
-    top: var(--bosluk-4);
-    width: 2rem;
-    height: 2rem;
+    left: var(--bosluk-5);
+    top: 50%;
+    width: 2.25rem;
+    height: 2.25rem;
     background: var(--hu-lacivert);
+    transform: translateY(-50%);
     -webkit-mask: var(--web-ikon-mevzuat) center / contain no-repeat;
     mask: var(--web-ikon-mevzuat) center / contain no-repeat;
   }
@@ -146,15 +195,19 @@
 
   @media (max-width: 42rem) {
     .web-servis-sayfasi > .icerik > .icerik > p:first-child {
-      padding: var(--bosluk-4) 0 var(--bosluk-5);
+      min-height: 0;
+      padding: var(--bosluk-5) var(--bosluk-5) var(--bosluk-5) 5.25rem;
     }
 
     .web-servis-sayfasi > .icerik > .icerik > p:first-child::before {
-      position: static;
-      display: block;
-      width: 2.75rem;
-      height: 2.75rem;
-      margin-bottom: var(--bosluk-3);
+      left: var(--bosluk-5);
+      top: var(--bosluk-5);
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+
+    .web-servis-sayfasi > .icerik > .icerik > p:first-child strong {
+      font-size: var(--olcu-lg);
     }
 
     .web-servis-sayfasi .icerik ul.baglanti-dizini {
@@ -162,10 +215,11 @@
     }
 
     .web-servis-sayfasi .icerik ul.baglanti-dizini > li > a {
-      grid-template-columns: 3rem minmax(0, 1fr) 1.25rem;
-      min-height: 7.5rem;
-      padding: var(--bosluk-4);
-      font-size: var(--olcu-sm);
+      grid-template-columns: 3rem minmax(0, 1fr) 2rem;
+      gap: var(--bosluk-4);
+      min-height: 8rem;
+      padding: var(--bosluk-5);
+      font-size: var(--olcu-md);
     }
 
     .web-servis-sayfasi .icerik ul.baglanti-dizini > li > a::before {
@@ -173,27 +227,64 @@
       height: 3rem;
     }
 
+    .web-servis-sayfasi .icerik ul.baglanti-dizini > li > a::after {
+      width: 2rem;
+      height: 2rem;
+    }
+
     .web-servis-sayfasi > .icerik > .icerik > p:last-child {
-      padding-left: 3.75rem;
+      padding-left: 4.5rem;
     }
 
     .web-servis-sayfasi > .icerik > .icerik > p:last-child::before {
-      left: var(--bosluk-3);
+      left: var(--bosluk-4);
       width: 1.75rem;
       height: 1.75rem;
     }
   }
 
-  @media (max-width: 23rem) {
+  @media (max-width: 30rem) {
+    .web-servis-sayfasi > .icerik > .icerik > p:first-child {
+      padding: var(--bosluk-5);
+    }
+
+    .web-servis-sayfasi > .icerik > .icerik > p:first-child::before {
+      position: static;
+      display: block;
+      width: 2.75rem;
+      height: 2.75rem;
+      margin-bottom: var(--bosluk-4);
+    }
+
     .web-servis-sayfasi .icerik ul.baglanti-dizini > li > a {
-      grid-template-columns: 2.5rem minmax(0, 1fr) 1rem;
+      grid-template-columns: 2.75rem minmax(0, 1fr) 1.75rem;
       gap: var(--bosluk-3);
-      padding: var(--bosluk-3);
+      min-height: 7rem;
+      padding: var(--bosluk-4);
+      font-size: var(--olcu-sm);
     }
 
     .web-servis-sayfasi .icerik ul.baglanti-dizini > li > a::before {
-      width: 2.5rem;
-      height: 2.5rem;
+      width: 2.75rem;
+      height: 2.75rem;
+    }
+
+    .web-servis-sayfasi .icerik ul.baglanti-dizini > li > a::after {
+      width: 1.75rem;
+      height: 1.75rem;
+    }
+
+    .web-servis-sayfasi > .icerik > .icerik > p:last-child {
+      padding: var(--bosluk-5);
+    }
+
+    .web-servis-sayfasi > .icerik > .icerik > p:last-child::before {
+      position: static;
+      display: block;
+      width: 2rem;
+      height: 2rem;
+      margin-bottom: var(--bosluk-3);
+      transform: none;
     }
   }
 }
