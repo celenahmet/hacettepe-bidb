@@ -22,8 +22,8 @@ interface Birim {
  * dikkatle ayırt ediliyordu.
  *
  * İÇERİK DEĞİŞMİYOR. Birim adları ve açıklamalar saklanan HTML'den birebir
- * ayrıştırılıyor. Yalnızca sunum: her birim kendi kartında, görev alanını
- * anlatan bir ikonla ve yerleşkesi ayrı bir rozette.
+ * ayrıştırılıyor. Yalnızca sunum: her birim tam genişlikte bir görev bölümü,
+ * görev alanını anlatan ikon ve ayrı yerleşke bilgisiyle gösteriliyor.
  *
  * Ayrıştırma hem tarayıcıda hem sunucuda çalışan düzenli ifadelerle
  * yapılıyor; liste arama motoruna da yapılı giriyor.
