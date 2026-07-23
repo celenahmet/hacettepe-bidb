@@ -1,37 +1,27 @@
-/* Personel rehberi.
-
-   Sayfa organizasyon şemasıyla aynı dili konuşur (styles/sema.css):
-   kurumsal lacivert başlıklar, kırmızı aksan, ince çizgiler.
-
-   ── DÜZEN ─────────────────────────────────────────────────────────────
-
-   Fotoğraf solda, ad ve unvan sağda — bir rehberin doğal okuma düzeni.
-   Ama satırlar artık nefes alıyor: fotoğraf belirgin biçimde büyüdü, her
-   kişi kendi yatay şeridinde duruyor ve şeritler ince çizgiyle ayrılıyor.
-
-   Yığılmış küçük fotoğraflı liste "veri tablosu" gibi görünüyordu; şeritli
-   düzen bir kadro sayfasının ölçüsünü veriyor. Fotoğraf konduğunda o
-   fotoğraf gerçekten görünecek kadar büyük.
-
-   Kutu ve gölge yok. Kurumsal ağırlık öge eklemekle değil boşluk, hiza ve
-   ölçüyle kuruluyor; gölgeli kartlar birkaç yılda tarihlenir, çizgiyle
-   kurulan düzen durur. İmleçle şerit hafifçe beliriyor ve solda kırmızı
-   bir işaret çıkıyor — gözün satırı kaybetmemesi için.
-
-   ── FOTOĞRAF VE SİLUET ────────────────────────────────────────────────
-
-   Fotoğraf portre oranında (4:5). Fotoğrafı olmayanlar için üç siluet:
-   kadın, erkek, nötr. Ayrım saç ve omuz hattıyla; renk ya da simge farkı
-   yok, çünkü rehberde asıl bilgi ad ve görevdir. Cinsiyeti tereddütsüz
-   belirlenemeyen adlarda nötr siluet kalır. */
+/* Personel rehberi — fotoğraf odaklı kurumsal kadro dizini.
+ *
+ * TASARIM KARARI
+ *
+ * Kişiler birbirinden kopuk, yuvarlak kartlar olarak değil ortak çizgileri
+ * paylaşan bir dizin ızgarasında gösterilir. Bu yaklaşım kurum rehberi
+ * ciddiyetini korurken fotoğrafı küçük bir avatar olmaktan çıkarır.
+ *
+ * Portre alanı 4:5 oranındadır. Bu oran hem mevcut vesikalık fotoğraflara
+ * yakındır hem de omuz çizgisini gösterecek kadar uzundur. object-fit:
+ * cover farklı kaynak ölçülerini bozmadan kırpar. Fotoğrafı olmayan kaydın
+ * silueti aynı alanı korur; fotoğraf sonradan eklendiğinde satır yüksekliği
+ * ve sayfa akışı değişmez.
+ *
+ * Geniş ekranda iki sütun, telefonda tek sütun kullanılır. Eşik yalnız
+ * ekran adına göre değil hücrenin okunabilir asgari genişliğine göre
+ * belirlenir; böylece tablet yatay/dikey ve dizüstü ara ölçülerde taşma
+ * oluşmaz.
+ */
 
 @layer kamu {
+  .personel { margin-top: var(--bosluk-7); }
 
-  .personel {
-    margin-top: var(--bosluk-7);
-  }
-
-  /* ---- Birim başlığı ------------------------------------------------- */
+  /* ================= birim ================= */
 
   .personel-birim + .personel-birim {
     margin-top: var(--bosluk-8);
@@ -41,150 +31,159 @@
 
   .icerik + .personel .personel-birim:first-child { margin-top: 0; }
 
-  .personel-birim-ad {
+  .personel-birim-ust {
     display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: var(--bosluk-3);
-    margin: 0;
-    padding: 0 0 0 var(--bosluk-4);
-    border: 0;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--bosluk-5);
+    margin-bottom: var(--bosluk-5);
+    padding-left: var(--bosluk-4);
     border-left: 3px solid var(--hu-kirmizi);
+  }
+
+  .personel-birim-ad {
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
     font-size: var(--olcu-xl);
     font-weight: var(--kalinlik-kalin);
     line-height: var(--satir-sik);
-    letter-spacing: -0.01em;
+    letter-spacing: -0.015em;
     color: var(--hu-lacivert);
   }
 
-  .personel-birim-metin { margin-right: auto; }
-
-  .personel-yerleske {
-    font-size: var(--olcu-xs);
-    font-weight: var(--kalinlik-orta);
-    letter-spacing: 0.1em;
+  .personel-birim-meta {
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: var(--bosluk-2) var(--bosluk-3);
+    padding-top: 0.25rem;
+    font-family: var(--yazi-kod);
+    font-size: 11px;
+    line-height: 1.4;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
     color: var(--metin-3);
   }
 
-  .personel-sayi {
-    flex: none;
-    min-width: 1.9rem;
-    padding: 3px var(--bosluk-2);
-    border: 1px solid var(--cizgi);
-    border-radius: var(--kose-sm);
-    font-size: var(--olcu-xs);
-    font-weight: var(--kalinlik-orta);
-    font-variant-numeric: tabular-nums;
-    text-align: center;
-    color: var(--metin-3);
+  .personel-birim-meta > * + * {
+    padding-left: var(--bosluk-3);
+    border-left: 1px solid var(--cizgi-koyu);
   }
+
+  .personel-yerleske { color: var(--metin-2); }
 
   .personel-telefon {
-    margin: var(--bosluk-3) 0 0 var(--bosluk-4);
-    padding-left: 3px;
-    font-size: var(--olcu-sm);
     color: var(--metin-2);
+    transition: color var(--gecis-hizli);
   }
 
-  .personel-telefon a { color: inherit; }
-  .personel-telefon a:hover { color: var(--hu-kirmizi); }
+  .personel-telefon:hover { color: var(--hu-kirmizi); }
+  .personel-telefon:focus-visible { outline: 2px solid var(--hu-kirmizi); outline-offset: 3px; }
 
-  /* ---- Kişi şeritleri ------------------------------------------------ */
+  .personel-sayi { font-variant-numeric: tabular-nums; }
 
-  /* İki sütun: geniş listeyi tek sütunda okutmak gereksiz kaydırma yaratır.
-     Sütun sayısını ekran belirler, kişi sayısı değil. */
+  /* ================= kadro ızgarası ================= */
+
   .personel-liste {
-    list-style: none;
-    margin: var(--bosluk-5) 0 0;
-    padding: 0;
     max-width: none;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(21rem, 1fr));
-    gap: var(--bosluk-2) var(--bosluk-6);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--cizgi);
+    border-left: 1px solid var(--cizgi);
+    list-style: none;
   }
 
-  /* Şerit: fotoğraf solda büyük, bilgi sağda dikeyde ortalı. Sabit
-     yükseklik değil ama en az bir portre boyu — kısa içerikli satırlar
-     bile fotoğrafın hakkını veriyor. */
   .personel-kisi {
     position: relative;
+    min-width: 0;
+    min-height: 11rem;
     display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    align-items: center;
-    gap: var(--bosluk-4);
-    padding: var(--bosluk-3) var(--bosluk-3) var(--bosluk-3) var(--bosluk-4);
+    grid-template-columns: clamp(6.5rem, 10vw, 8rem) minmax(0, 1fr);
+    align-items: stretch;
+    border-right: 1px solid var(--cizgi);
     border-bottom: 1px solid var(--cizgi);
+    background: var(--yuzey);
     transition: background var(--gecis-hizli);
   }
 
-  /* İmleçle beliren sol kırmızı işaret; iç gölgeyle çizildiği için düzeni
-     kaydırmıyor. */
-  .personel-kisi::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 3px;
-    background: var(--hu-kirmizi);
-    transform: scaleY(0);
-    transition: transform var(--gecis-hizli);
+  /* Birim sorumlusunun hücresi renk bloğuyla değil, yapıyı bozmayan ince
+     kurumsal işaretle ayrılır. */
+  .personel-kisi.sorumlu {
+    box-shadow: inset 3px 0 0 var(--hu-kirmizi);
   }
 
   .personel-kisi:hover { background: var(--yuzey-2); }
-  .personel-kisi:hover::before { transform: scaleY(1); }
 
-  /* ---- Fotoğraf ------------------------------------------------------ */
+  /* ================= fotoğraf ================= */
 
-  /* Belirgin portre: eski 44px kare simge gibiydi, bu ölçüde yüz tanınıyor
-     ve fotoğraf konduğunda gerçekten görünüyor. */
   .personel-gorsel {
     position: relative;
-    flex: none;
-    width: 4.75rem;
-    aspect-ratio: 4 / 5;
+    align-self: stretch;
+    min-height: 100%;
     overflow: hidden;
-    background: var(--yuzey-3);
-    border: 1px solid var(--cizgi);
-    border-radius: var(--kose-md);
     display: block;
+    border-right: 1px solid var(--cizgi);
+    background: var(--yuzey-3);
   }
+
+  .personel-gorsel::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0;
+    height: 2px;
+    background: var(--cizgi-koyu);
+  }
+
+  .personel-kisi.sorumlu .personel-gorsel::after { background: var(--hu-kirmizi); }
 
   .personel-gorsel img {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
     display: block;
+    object-fit: cover;
+    object-position: center top;
   }
 
-  /* Siluet portre alanının alt yarısına oturur; gerçek bir vesikalıkta da
-     yüz üstte, omuz altta durur. Alanı doldurmuyor: nötr bir yer tutucu
-     olduğu belli olmalı, fotoğraf taklidi etmemeli. */
+  /* Siluet gerçek fotoğrafı taklit etmez: portre alanında bol boşluk
+     bırakarak bir yer tutucu olduğunu açıkça gösterir. */
   .personel-gorsel svg {
     position: absolute;
     left: 50%;
     bottom: 0;
-    width: 74%;
+    width: 62%;
     height: auto;
     transform: translateX(-50%);
     fill: var(--cizgi-koyu);
-    opacity: 0.7;
+    opacity: 0.62;
   }
 
-  .personel-kisi.sorumlu .personel-gorsel { border-color: var(--cizgi-koyu); }
-  .personel-kisi.sorumlu .personel-gorsel svg { fill: var(--hu-lacivert); opacity: 0.5; }
+  .personel-kisi.sorumlu .personel-gorsel svg {
+    fill: var(--hu-lacivert);
+    opacity: 0.48;
+  }
 
-  /* ---- Ad ve unvan --------------------------------------------------- */
+  /* ================= kişi bilgisi ================= */
 
   .personel-bilgi {
     min-width: 0;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    justify-content: center;
+    align-items: flex-start;
+    gap: var(--bosluk-2);
+    padding: var(--bosluk-5) var(--bosluk-4);
   }
 
   .personel-ad {
+    overflow-wrap: anywhere;
     font-size: var(--olcu-md);
     font-weight: var(--kalinlik-orta);
     line-height: var(--satir-sik);
@@ -198,24 +197,56 @@
 
   .personel-unvan,
   .personel-not {
-    font-size: var(--olcu-xs);
-    line-height: var(--satir-sik);
-    letter-spacing: 0.06em;
+    font-size: 11px;
+    line-height: 1.45;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--metin-3);
   }
 
   .personel-kisi.sorumlu .personel-unvan { color: var(--hu-kirmizi); }
 
-  /* Açıklama bir unvan değil, parantez içi not: büyük harfe çevrilmez. */
-  .personel-not { text-transform: none; letter-spacing: 0.02em; }
+  .personel-not {
+    letter-spacing: 0.02em;
+    text-transform: none;
+  }
 
-  /* ---- Dar ekran ----------------------------------------------------- */
+  /* ================= dar ekran ================= */
 
   @media (max-width: 40rem) {
+    .personel { margin-top: var(--bosluk-6); }
+
+    .personel-birim + .personel-birim {
+      margin-top: var(--bosluk-7);
+      padding-top: var(--bosluk-6);
+    }
+
+    .personel-birim-ust {
+      display: block;
+      margin-bottom: var(--bosluk-4);
+    }
+
     .personel-birim-ad { font-size: var(--olcu-lg); }
-    .personel-liste { grid-template-columns: minmax(0, 1fr); gap: 0; }
-    .personel-gorsel { width: 4rem; }
+
+    .personel-birim-meta {
+      justify-content: flex-start;
+      margin-top: var(--bosluk-2);
+      padding-top: 0;
+    }
+
+    .personel-liste { grid-template-columns: minmax(0, 1fr); }
+
+    .personel-kisi {
+      min-height: 8.5rem;
+      grid-template-columns: 5.75rem minmax(0, 1fr);
+    }
+
+    .personel-bilgi { padding: var(--bosluk-4); }
     .personel-ad { font-size: var(--olcu-sm); }
+  }
+
+  @media (max-width: 22rem) {
+    .personel-kisi { grid-template-columns: 5rem minmax(0, 1fr); }
+    .personel-bilgi { padding: var(--bosluk-3); }
   }
 }

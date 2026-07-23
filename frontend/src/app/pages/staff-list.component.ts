@@ -10,9 +10,10 @@ import { Language, StaffUnit } from '../core/models';
  * düzenlenmeden burada görünür.
  *
  * Tasarım, organizasyon şemasıyla aynı dili konuşur — kutu ve gölge yok,
- * birim adları kurumsal lacivert, ayrımlar ince çizgiyle. Şema kurumun
- * nasıl örgütlendiğini, bu sayfa o örgütte kimin çalıştığını gösterir;
- * ikisi arka arkaya okunduğunda kopukluk olmamalı.
+ * birim adları kurumsal lacivert, ayrımlar ince çizgiyle. Kişiler bitişik
+ * dizin hücrelerinde gösterilir; fotoğraf kimlik bilgisinin parçasıdır,
+ * küçük bir simge değildir. Fotoğraf olmayan kayıtlarda aynı alan nötr bir
+ * siluetle korunur, böylece fotoğraflar eklendikçe düzen değişmez.
  */
 @Component({
   selector: 'bidb-staff-list',
@@ -21,24 +22,31 @@ import { Language, StaffUnit } from '../core/models';
       <div class="personel">
         @for (b of birimler(); track b.name + (b.campus ?? '')) {
           <section class="personel-birim">
-            <h2 class="personel-birim-ad">
-              <span class="personel-birim-metin">{{ b.name }}</span>
-              @if (b.campus) { <span class="personel-yerleske">{{ b.campus }}</span> }
-              <span class="personel-sayi">{{ b.members.length }}</span>
-            </h2>
-
-            @if (b.phone) {
-              <p class="personel-telefon">
-                <a [href]="telefonBaglantisi(b.phone)">{{ b.phone }}</a>
-              </p>
-            }
+            <header class="personel-birim-ust">
+              <h2 class="personel-birim-ad">{{ b.name }}</h2>
+              <div class="personel-birim-meta">
+                @if (b.campus) {
+                  <span class="personel-yerleske">{{ b.campus }}</span>
+                }
+                @if (b.phone) {
+                  <a class="personel-telefon" [href]="telefonBaglantisi(b.phone)">
+                    {{ b.phone }}
+                  </a>
+                }
+                <span class="personel-sayi">
+                  {{ b.members.length }}
+                  {{ dilDegeri === 'en' ? (b.members.length === 1 ? 'person' : 'people') : 'kişi' }}
+                </span>
+              </div>
+            </header>
 
             <ul class="personel-liste">
               @for (k of b.members; track k.fullName) {
                 <li class="personel-kisi" [class.sorumlu]="k.lead">
                   <span class="personel-gorsel">
                     @if (k.photoUrl) {
-                      <img [src]="k.photoUrl" [alt]="k.fullName" width="60" height="80" loading="lazy">
+                      <img [src]="k.photoUrl" [alt]="k.fullName"
+                           width="256" height="320" loading="lazy">
                     } @else {
                       <!-- Uc ayri siluet: kadin, erkek, notr. Ayrim sac ve
                            omuz hattiyla kuruluyor; renk ya da simge farki
