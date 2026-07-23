@@ -164,8 +164,8 @@ import { CookiePreferencesService } from '../../core/cookie-preferences.service'
                 <p class="cerez-ucuncu-taraf">
                   <strong>{{ language() === 'en' ? 'Third-party cookies:' : 'Üçüncü taraf çerezleri:' }}</strong>
                   {{ language() === 'en'
-                    ? ' None are currently set by this website. External websites opened through links apply their own privacy and cookie policies.'
-                    : ' Bu web sitesi tarafından şu anda üçüncü taraf çerezi yerleştirilmez. Bağlantılarla açılan harici siteler kendi gizlilik ve çerez politikalarını uygular.' }}
+                    ? ' None are currently set automatically by this website. The Google Maps frame on the contact page is connected only after the visitor selects “Load interactive map”; Google’s own privacy and cookie rules then apply. External websites opened through links apply their own policies.'
+                    : ' Bu web sitesi tarafından otomatik olarak üçüncü taraf çerezi yerleştirilmez. İletişim sayfasındaki Google Maps çerçevesi yalnızca ziyaretçi “Etkileşimli haritayı aç” seçeneğine bastıktan sonra bağlanır; bu aşamadan sonra Google’ın kendi gizlilik ve çerez kuralları geçerlidir. Bağlantılarla açılan harici siteler de kendi politikalarını uygular.' }}
                 </p>
               </div>
             </section>

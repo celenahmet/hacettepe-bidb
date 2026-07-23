@@ -110,7 +110,10 @@ import { Office365GuidesComponent } from './office365-guides.component';
                kayıtlardan gelir. Metne gömülselerdi panelden bir numara
                değiştiğinde alt bilgi doğruyu, bu sayfa yanlışı gösterirdi. -->
           @if (s.slug === 'about' || s.slug === 'contact') {
-            <bidb-contact-block [dilDegeri]="language()"></bidb-contact-block>
+            <bidb-contact-block
+              [dilDegeri]="language()"
+              [haritaGoster]="s.slug === 'contact'">
+            </bidb-contact-block>
           }
 
           @if (belgeler().length) {
