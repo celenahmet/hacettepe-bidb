@@ -5,9 +5,10 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { catchError, of, switchMap, tap } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { SideMenuComponent } from '../layout/side-menu.component';
-import { Language } from '../core/models';
+import { Language, NewsAudience, NewsCategory, NewsCoverTemplate } from '../core/models';
 import { Seo } from '../core/seo.service';
 import { icerigiHazirla } from '../core/icerik-bicim';
+import { NewsCoverComponent } from './news-cover.component';
 
 interface Haber {
   id: number;
@@ -20,12 +21,16 @@ interface Haber {
   contentHtml: string | null;
   externalUrl: string | null;
   viewCount: number;
+  category: NewsCategory;
+  audience: NewsAudience;
+  coverTemplate: NewsCoverTemplate;
+  coverText: string | null;
 }
 
 /** Görselli haber sayfası: /tr/newsItem/<slug> */
 @Component({
   selector: 'bidb-news-page',
-  imports: [SideMenuComponent, RouterLink],
+  imports: [SideMenuComponent, RouterLink, NewsCoverComponent],
   template: `
     <div class="kap sayfa-duzen">
       <bidb-side-menu [dilDegeri]="language()" />
@@ -49,6 +54,16 @@ interface Haber {
 
             @if (h.imageUrl) {
               <img class="haber-gorsel" [src]="h.imageUrl" [alt]="h.imageAlt || h.title">
+            } @else {
+              <div class="haber-detay-kapak">
+                <bidb-news-cover
+                  [title]="h.title"
+                  [category]="h.category"
+                  [audience]="h.audience"
+                  [template]="h.coverTemplate"
+                  [coverText]="h.coverText"
+                  [language]="language()" />
+              </div>
             }
 
             @if (h.summary) { <p class="haber-ozet">{{ h.summary }}</p> }
@@ -82,6 +97,7 @@ interface Haber {
     .haber-goruntulenme { display: inline-flex; align-items: center; gap: .35rem; }
     /* Görsel doğal boyutundan büyütülmez; küçük bir dosya gerilip bozulmaz. */
     .haber-gorsel { display: block; max-width: min(100%, 760px); height: auto; margin: 0 0 20px; border-radius: 4px; }
+    .haber-detay-kapak { max-width: 760px; margin: 0 0 24px; }
     .haber-ozet { font-size: 1.05rem; color: #3c4652; margin-bottom: 18px; }
     .haber-ek { margin-top: 24px; padding-top: 14px; border-top: 1px solid var(--cizgi); }
   `]

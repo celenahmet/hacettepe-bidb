@@ -3,7 +3,8 @@ import { FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { PageEditorComponent } from './page-editor.component';
 import { StaffEditorComponent } from './staff-editor.component';
-import { AdminNews, Shortcut, AdminMenuItem, AdminMenu, AdminPage, Slide, AdminSocialAccount, AdminApiService, ContactChannel } from './admin-api.service';
+import { NewsCoverComponent } from '../pages/news-cover.component';
+import { AdminNews, NewsOptions, Shortcut, AdminMenuItem, AdminMenu, AdminPage, Slide, AdminSocialAccount, AdminApiService, ContactChannel } from './admin-api.service';
 
 /** Alt bilgide görünen kurum bilgileri. */
 interface ContactInfo extends Record<string, string> {
@@ -16,7 +17,7 @@ interface ContactInfo extends Record<string, string> {
 /** Yönetim paneli: giriş, sayfa SEO düzenleme ve duyuru yönetimi. */
 @Component({
   selector: 'bidb-admin-panel',
-  imports: [FormsModule, PageEditorComponent, StaffEditorComponent],
+  imports: [FormsModule, PageEditorComponent, StaffEditorComponent, NewsCoverComponent],
   template: `
     <div class="yonetim">
       @if (!api.girisYapildi()) {
@@ -221,12 +222,45 @@ interface ContactInfo extends Record<string, string> {
 
           </div>
         } @else if (sekme() === 'news') {
-          <form class="duyuru-form" (ngSubmit)="duyuruKaydet()">
-            <h2>{{ newsItem().id ? 'Duyuruyu düzenle' : 'Yeni newsItem' }}</h2>
+          <form class="duyuru-form duyuru-form--haber" (ngSubmit)="duyuruKaydet()">
+            <div class="duyuru-form-baslik">
+              <div>
+                <span class="bolum-no">Haber ve Duyuru</span>
+                <h2>{{ newsItem().id ? 'Duyuruyu düzenle' : 'Yeni duyuru oluştur' }}</h2>
+              </div>
+              <p>Kategori, hedef kitle ve kapak dili birlikte yönetilir.</p>
+            </div>
 
             <label for="dbaslik">Başlık</label>
             <input id="dbaslik" name="title" [ngModel]="newsItem().title"
                    (ngModelChange)="duyuruAlan('title', $event)" required>
+
+            <fieldset class="duyuru-siniflandirma">
+              <legend>Yayın sınıflandırması</legend>
+              <div class="duyuru-alan-izgara">
+                <label>
+                  <span>Kategori</span>
+                  <select name="category" [ngModel]="newsItem().category"
+                          (ngModelChange)="duyuruAlan('category', $event)">
+                    @for (secenek of duyuruSecenekleri().categories; track secenek.key) {
+                      <option [value]="secenek.key">{{ secenek.trLabel }}</option>
+                    }
+                  </select>
+                  <small>{{ secenekAciklamasi('categories', newsItem().category) }}</small>
+                </label>
+
+                <label>
+                  <span>Hedef kitle</span>
+                  <select name="audience" [ngModel]="newsItem().audience"
+                          (ngModelChange)="duyuruAlan('audience', $event)">
+                    @for (secenek of duyuruSecenekleri().audiences; track secenek.key) {
+                      <option [value]="secenek.key">{{ secenek.trLabel }}</option>
+                    }
+                  </select>
+                  <small>{{ secenekAciklamasi('audiences', newsItem().audience) }}</small>
+                </label>
+              </div>
+            </fieldset>
 
             <span class="onaylar">
               <label class="onay">
@@ -247,20 +281,69 @@ interface ContactInfo extends Record<string, string> {
             <textarea id="dozet" name="summary" rows="2" [ngModel]="newsItem().summary"
                       (ngModelChange)="duyuruAlan('summary', $event)"></textarea>
 
-            <div class="yukleme">
-              <label for="dgorsel">Görsel</label>
-              <input id="dgorsel" type="file" accept="image/*" (change)="duyuruGorselSec($event)">
-              @if (gorselYukleniyor()) { <small>Yükleniyor…</small> }
-              @if (newsItem().imageUrl) {
-                <div class="gorsel-onizleme">
-                  <img [src]="newsItem().imageUrl" alt="">
-                  <button type="button" class="ikincil" (click)="duyuruAlan('imageUrl', null)">Görseli kaldır</button>
+            <section class="duyuru-kapak-secimi">
+              <div class="duyuru-kapak-baslik">
+                <div>
+                  <span class="bolum-no">Kapak Tasarımı</span>
+                  <h3>Fotoğraf veya kurumsal şablon</h3>
                 </div>
-                <label for="dgorselalt">Görsel açıklaması (görme engelliler ve arama motorları için)</label>
-                <input id="dgorselalt" name="imageAlt" [ngModel]="newsItem().imageAlt"
-                       (ngModelChange)="duyuruAlan('imageAlt', $event)">
-              }
-            </div>
+                <p>Fotoğraf yüklenmezse seçtiğiniz şablon otomatik kullanılır.</p>
+              </div>
+
+              <div class="yukleme">
+                <label for="dgorsel">Özel fotoğraf yükle</label>
+                <input id="dgorsel" type="file" accept="image/*" (change)="duyuruGorselSec($event)">
+                @if (gorselYukleniyor()) { <small>Yükleniyor…</small> }
+                @if (newsItem().imageUrl) {
+                  <div class="gorsel-onizleme">
+                    <img [src]="newsItem().imageUrl" alt="">
+                    <div>
+                      <strong>Özel fotoğraf etkin</strong>
+                      <small>Şablon, fotoğraf kaldırılırsa yeniden devreye girer.</small>
+                      <button type="button" class="ikincil" (click)="duyuruGorselKaldir()">Fotoğrafı kaldır</button>
+                    </div>
+                  </div>
+                  <label for="dgorselalt">Görsel açıklaması (erişilebilirlik ve arama motorları için)</label>
+                  <input id="dgorselalt" name="imageAlt" [ngModel]="newsItem().imageAlt"
+                         (ngModelChange)="duyuruAlan('imageAlt', $event)">
+                }
+              </div>
+
+              <label for="dkapakmetni">Şablon üstü kısa metin
+                <small>— boş bırakırsanız kategori adı kullanılır</small>
+              </label>
+              <div class="karakterli-alan">
+                <input id="dkapakmetni" name="coverText" maxlength="120"
+                       [ngModel]="newsItem().coverText"
+                       (ngModelChange)="duyuruAlan('coverText', $event)"
+                       placeholder="Örn. Planlı sistem çalışması">
+                <small>{{ (newsItem().coverText?.length || 0) }}/120</small>
+              </div>
+
+              <fieldset class="sablon-alani" [disabled]="!!newsItem().imageUrl">
+                <legend>Şablon seçin</legend>
+                <div class="sablon-izgara">
+                  @for (secenek of duyuruSecenekleri().templates; track secenek.key) {
+                    <label class="sablon-secim" [class.etkin]="newsItem().coverTemplate === secenek.key">
+                      <input type="radio" name="coverTemplate" [value]="secenek.key"
+                             [ngModel]="newsItem().coverTemplate"
+                             (ngModelChange)="duyuruAlan('coverTemplate', $event)">
+                      <bidb-news-cover
+                        [title]="newsItem().title || 'Duyuru başlığı'"
+                        [category]="newsItem().category"
+                        [audience]="newsItem().audience"
+                        [template]="$any(secenek.key)"
+                        [coverText]="newsItem().coverText"
+                        [language]="newsItem().language === 'en' ? 'en' : 'tr'" />
+                      <span class="sablon-bilgi">
+                        <strong>{{ secenek.trLabel }}</strong>
+                        <small>{{ secenek.description }}</small>
+                      </span>
+                    </label>
+                  }
+                </div>
+              </fieldset>
+            </section>
 
             <label for="dslug">Haber adresi
               <small>— doldurursanız haber kendi sayfasında açılır</small>
@@ -301,6 +384,16 @@ interface ContactInfo extends Record<string, string> {
                 <h3>Önizleme</h3>
                 @if (newsItem().imageUrl) {
                   <img class="haber-gorsel" [src]="newsItem().imageUrl" [alt]="newsItem().imageAlt || ''">
+                } @else {
+                  <div class="admin-haber-kapak-onizleme">
+                    <bidb-news-cover
+                      [title]="newsItem().title"
+                      [category]="newsItem().category"
+                      [audience]="newsItem().audience"
+                      [template]="newsItem().coverTemplate"
+                      [coverText]="newsItem().coverText"
+                      [language]="newsItem().language === 'en' ? 'en' : 'tr'" />
+                  </div>
                 }
                 <h4>{{ newsItem().title }}</h4>
                 @if (newsItem().summary) { <p>{{ newsItem().summary }}</p> }
@@ -312,7 +405,7 @@ interface ContactInfo extends Record<string, string> {
           <div class="tablo-kaydir">
 
             <table class="yonetim-tablo">
-              <thead><tr><th>Tarih</th><th>Görsel</th><th>Başlık</th><th>Adres</th><th>Dil</th><th></th></tr></thead>
+              <thead><tr><th>Tarih</th><th>Kapak</th><th>Kategori / hedef</th><th>Başlık</th><th>Adres</th><th>Dil</th><th></th></tr></thead>
               <tbody>
                 @for (d of news(); track d.id) {
                   <tr>
@@ -320,7 +413,15 @@ interface ContactInfo extends Record<string, string> {
                     <td>
                       @if (d.imageUrl) {
                         <img [src]="d.imageUrl" alt="" class="kucuk-gorsel">
-                      } @else { <span class="soluk">—</span> }
+                      } @else {
+                        <span class="kucuk-sablon" [attr.data-sablon]="d.coverTemplate" aria-label="Şablon kapak">
+                          {{ secenekEtiketi('templates', d.coverTemplate).slice(0, 2) }}
+                        </span>
+                      }
+                    </td>
+                    <td>
+                      <strong class="tablo-kategori">{{ secenekEtiketi('categories', d.category) }}</strong>
+                      <small>{{ secenekEtiketi('audiences', d.audience) }}</small>
                     </td>
                     <td>{{ d.title }}</td>
                     <td>
@@ -688,6 +789,7 @@ export class AdminPanelComponent {
   protected sekme = signal<'pages' | 'news' | 'slider' | 'shortcuts' | 'menus' | 'sosyal' | 'iletisim' | 'personel'>('pages');
   protected pages = signal<AdminPage[]>([]);
   protected news = signal<AdminNews[]>([]);
+  protected duyuruSecenekleri = signal<NewsOptions>({ categories: [], audiences: [], templates: [] });
   protected secili = signal<AdminPage | null>(null);
   protected newsItem = signal<AdminNews>(this.bosDuyuru());
   protected slides = signal<Slide[]>([]);
@@ -766,6 +868,7 @@ export class AdminPanelComponent {
   protected sekmeDuyuru(): void {
     this.sekme.set('news');
     this.api.news().subscribe((d) => this.news.set(d));
+    this.api.newsOptions().subscribe((s) => this.duyuruSecenekleri.set(s));
   }
 
   protected duyuruKaydet(): void {
@@ -794,6 +897,14 @@ export class AdminPanelComponent {
 
   protected duyuruDuzenle(d: AdminNews): void {
     this.newsItem.set({ ...d });
+  }
+
+  protected secenekEtiketi(tur: keyof NewsOptions, anahtar: string): string {
+    return this.duyuruSecenekleri()[tur].find((s) => s.key === anahtar)?.trLabel ?? anahtar;
+  }
+
+  protected secenekAciklamasi(tur: keyof NewsOptions, anahtar: string): string {
+    return this.duyuruSecenekleri()[tur].find((s) => s.key === anahtar)?.description ?? '';
   }
 
   protected duyuruSifirla(): void {
@@ -1016,6 +1127,10 @@ export class AdminPanelComponent {
     });
   }
 
+  protected duyuruGorselKaldir(): void {
+    this.newsItem.set({ ...this.newsItem(), imageUrl: null, imageAlt: null });
+  }
+
   /**
    * Adresin sunucuda alacağı hâli gösterir: Türkçe karakterler dönüştürülür,
    * boşluklar tireye çevrilir. Sunucudaki sadeleştirmenin aynısıdır.
@@ -1071,6 +1186,7 @@ export class AdminPanelComponent {
 
   private sayilariYukle(): void {
     this.api.news().subscribe((l) => this.news.set(l));
+    this.api.newsOptions().subscribe((s) => this.duyuruSecenekleri.set(s));
     this.api.slides().subscribe((l) => this.slides.set(l));
     this.api.shortcuts().subscribe((l) => this.shortcuts.set(l));
     this.api.menus().subscribe((l) => this.menus.set(l));
@@ -1097,7 +1213,11 @@ export class AdminPanelComponent {
       slug: null,
       imageUrl: null,
       imageAlt: null,
-      contentHtml: null
+      contentHtml: null,
+      category: 'general',
+      audience: 'all-users',
+      coverTemplate: 'institutional',
+      coverText: null
     };
   }
 

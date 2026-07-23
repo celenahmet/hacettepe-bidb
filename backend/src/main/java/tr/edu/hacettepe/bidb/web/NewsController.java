@@ -26,17 +26,20 @@ public class NewsController {
 
     public record HaberDto(Long id, String slug, String title, String summary, LocalDate date,
                            String imageUrl, String imageAlt, String contentHtml,
-                           String externalUrl, long viewCount) {
+                           String externalUrl, long viewCount, String category,
+                           String audience, String coverTemplate, String coverText) {
         static HaberDto of(News d) {
             return new HaberDto(d.getId(), d.getSlug(), d.getTitle(), d.getSummary(), d.getPublishedOn(),
                     d.getImageUrl(), d.getImageAlt(), d.getContentHtml(),
-                    d.getExternalUrl(), d.getViewCount());
+                    d.getExternalUrl(), d.getViewCount(), d.getCategory(),
+                    d.getAudience(), d.getCoverTemplate(), d.getCoverText());
         }
 
         static HaberDto of(News d, long viewCount) {
             return new HaberDto(d.getId(), d.getSlug(), d.getTitle(), d.getSummary(), d.getPublishedOn(),
                     d.getImageUrl(), d.getImageAlt(), d.getContentHtml(),
-                    d.getExternalUrl(), viewCount);
+                    d.getExternalUrl(), viewCount, d.getCategory(),
+                    d.getAudience(), d.getCoverTemplate(), d.getCoverText());
         }
     }
 

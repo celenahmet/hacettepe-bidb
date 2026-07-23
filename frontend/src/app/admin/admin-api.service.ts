@@ -1,6 +1,7 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { NewsAudience, NewsCategory, NewsCoverTemplate } from '../core/models';
 
 export interface AdminPage {
   id: number;
@@ -28,6 +29,24 @@ export interface AdminNews {
   imageUrl: string | null;
   imageAlt: string | null;
   contentHtml: string | null;
+  category: NewsCategory;
+  audience: NewsAudience;
+  coverTemplate: NewsCoverTemplate;
+  /** Fotoğraf kullanılmadığında şablonun üzerinde gösterilen kısa metin */
+  coverText: string | null;
+}
+
+export interface NewsOption {
+  key: string;
+  trLabel: string;
+  enLabel: string;
+  description: string;
+}
+
+export interface NewsOptions {
+  categories: NewsOption[];
+  audiences: NewsOption[];
+  templates: NewsOption[];
 }
 
 export interface Slide {
@@ -203,6 +222,10 @@ export class AdminApiService {
 
   news(): Observable<AdminNews[]> {
     return this.http.get<AdminNews[]>('/api/admin/news', { headers: this.basliklar() });
+  }
+
+  newsOptions(): Observable<NewsOptions> {
+    return this.http.get<NewsOptions>('/api/admin/news/options', { headers: this.basliklar() });
   }
 
   addNews(d: AdminNews): Observable<AdminNews> {

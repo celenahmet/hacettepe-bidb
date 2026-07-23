@@ -58,8 +58,19 @@ public class AdminController {
     /* ---------- news ---------- */
 
     @GetMapping("/news")
-    public List<News> duyuruListesi() {
-        return news.findAll();
+    public List<NewsDto> duyuruListesi() {
+        return news.findAll().stream().map(NewsDto::of).toList();
+    }
+
+    public record NewsOptions(
+            List<NewsCatalog.Option> categories,
+            List<NewsCatalog.Option> audiences,
+            List<NewsCatalog.Option> templates
+    ) {}
+
+    @GetMapping("/news/options")
+    public NewsOptions duyuruSecenekleri() {
+        return new NewsOptions(NewsCatalog.CATEGORIES, NewsCatalog.AUDIENCES, NewsCatalog.TEMPLATES);
     }
 
     @PostMapping("/news")

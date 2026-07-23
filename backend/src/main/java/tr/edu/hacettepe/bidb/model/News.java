@@ -49,6 +49,18 @@ public class News {
     @Column(name = "view_count", nullable = false)
     private long viewCount = 0;
 
+    @Column(nullable = false, length = 40)
+    private String category = "general";
+
+    @Column(nullable = false, length = 40)
+    private String audience = "all-users";
+
+    @Column(name = "cover_template", nullable = false, length = 40)
+    private String coverTemplate = "institutional";
+
+    @Column(name = "cover_text", length = 120)
+    private String coverText;
+
     public Long getId() { return id; }
     public String getLanguage() { return language; }
     public String getTitle() { return title; }
@@ -75,4 +87,12 @@ public class News {
     public String getContentHtml() { return contentHtml; }
     public void setContentHtml(String contentHtml) { this.contentHtml = contentHtml; }
     public long getViewCount() { return viewCount; }
+    public String getCategory() { return category; }
+    public void setCategory(String category) { this.category = category; }
+    public String getAudience() { return audience; }
+    public void setAudience(String audience) { this.audience = audience; }
+    public String getCoverTemplate() { return coverTemplate; }
+    public void setCoverTemplate(String coverTemplate) { this.coverTemplate = coverTemplate; }
+    public String getCoverText() { return coverText; }
+    public void setCoverText(String coverText) { this.coverText = coverText; }
 }

@@ -12,6 +12,11 @@
     min-width: 0;
   }
 
+  .haber-kapak-kapsayici {
+    display: block;
+    min-width: 0;
+  }
+
   .haber-kart {
     position: relative;
     height: 100%;
@@ -37,6 +42,8 @@
 
   .haber-kapak {
     position: relative;
+    width: 100%;
+    margin: 0;
     aspect-ratio: 16 / 10;
     display: grid;
     place-items: center;
@@ -46,9 +53,116 @@
     background: var(--hu-lacivert);
   }
 
-  .haber-kapak[data-konu="personel"] { background: #831522; }
-  .haber-kapak[data-konu="yazilim"] { background: #173d68; }
-  .haber-kapak[data-konu="eposta"] { background: #24557f; }
+  /* ================= görselsiz kurumsal şablon kataloğu ================= */
+
+  .haber-kapak.sablon-kapak {
+    isolation: isolate;
+    justify-items: start;
+    align-content: center;
+    padding: clamp(3.5rem, 10vw, 5.5rem) clamp(1.25rem, 4vw, 2.25rem) 3rem;
+    background: #10213a;
+  }
+
+  .haber-kapak.sablon-kapak::before,
+  .haber-kapak.sablon-kapak::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .haber-kapak.sablon-kapak::before {
+    width: 72%;
+    aspect-ratio: 1;
+    top: -48%;
+    right: -22%;
+    border: 1px solid rgb(255 255 255 / 14%);
+    border-radius: 50%;
+    box-shadow:
+      0 0 0 24px rgb(255 255 255 / 3%),
+      0 0 0 52px rgb(255 255 255 / 2%);
+  }
+
+  .haber-kapak.sablon-kapak::after {
+    inset: 0;
+    opacity: 0.2;
+    background-image: radial-gradient(circle, currentColor 1px, transparent 1px);
+    background-size: 18px 18px;
+    mask-image: linear-gradient(115deg, transparent 15%, #000 100%);
+  }
+
+  .haber-kapak[data-sablon="institutional"] {
+    background: linear-gradient(135deg, #091a31 0%, #123d6d 72%, #a71930 140%);
+  }
+
+  .haber-kapak[data-sablon="signal"] {
+    background: linear-gradient(145deg, #6f0e20, #bd1f35 68%, #e29a35);
+  }
+
+  .haber-kapak[data-sablon="technology"] {
+    background: linear-gradient(145deg, #0b315b, #145f95 62%, #2697a7);
+  }
+
+  .haber-kapak[data-sablon="security"] {
+    background: linear-gradient(145deg, #25121a, #781425 58%, #bc2036);
+  }
+
+  .haber-kapak[data-sablon="maintenance"] {
+    background: linear-gradient(145deg, #18222d, #34495a 65%, #997b35);
+  }
+
+  .haber-kapak[data-sablon="communication"] {
+    background: linear-gradient(145deg, #103a4d, #126578 62%, #3c8e94);
+  }
+
+  .haber-kapak[data-sablon="academic"] {
+    background: linear-gradient(145deg, #17264b, #3d3e82 62%, #7d5a9f);
+  }
+
+  .haber-kapak[data-sablon="people"] {
+    background: linear-gradient(145deg, #321728, #6e203f 60%, #a52c49);
+  }
+
+  .haber-kapak[data-sablon="career"] {
+    background: linear-gradient(145deg, #123b36, #17675a 62%, #3c8b6d);
+  }
+
+  .haber-kapak[data-sablon="minimal"] {
+    border-color: #c9d4df;
+    color: var(--hu-lacivert);
+    background: linear-gradient(145deg, #f8fafc, #e8eff5);
+  }
+
+  .haber-kapak[data-sablon="minimal"]::before {
+    border-color: rgb(14 56 101 / 14%);
+    box-shadow: 0 0 0 24px rgb(14 56 101 / 3%), 0 0 0 52px rgb(14 56 101 / 2%);
+  }
+
+  .haber-kapak[data-sablon="minimal"] .haber-etiket {
+    border-color: var(--hu-kirmizi);
+    box-shadow: 0 2px 10px rgb(9 31 56 / 8%);
+  }
+
+  .haber-sablon-cizgi {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 38%;
+    height: 4px;
+    background: var(--hu-kirmizi);
+  }
+
+  .haber-sablon-nokta {
+    position: absolute;
+    right: clamp(1rem, 3vw, 1.75rem);
+    bottom: clamp(1rem, 3vw, 1.5rem);
+    width: 7px;
+    height: 7px;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+    box-shadow: -13px 0 0 -1px currentColor, -26px 0 0 -1px currentColor;
+    opacity: 0.55;
+  }
 
   .haber-kapak img {
     position: absolute;
@@ -64,9 +178,23 @@
   .haber-kapak-ikon {
     position: relative;
     z-index: 1;
-    width: 3.25rem;
-    height: 3.25rem;
-    opacity: 0.88;
+    width: clamp(2.7rem, 5vw, 3.6rem);
+    height: clamp(2.7rem, 5vw, 3.6rem);
+    margin-bottom: var(--bosluk-3);
+    opacity: 0.92;
+  }
+
+  .haber-kapak-metin {
+    position: relative;
+    z-index: 1;
+    max-width: 18ch;
+    margin: 0;
+    color: inherit;
+    font-size: clamp(1.05rem, 2.1vw, 1.45rem);
+    font-weight: var(--kalinlik-kalin);
+    letter-spacing: -0.025em;
+    line-height: 1.12;
+    text-wrap: balance;
   }
 
   .haber-etiket {
@@ -87,6 +215,39 @@
     text-overflow: ellipsis;
     text-transform: uppercase;
     white-space: nowrap;
+  }
+
+  .haber-hedef {
+    position: absolute;
+    right: var(--bosluk-3);
+    bottom: var(--bosluk-3);
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    max-width: calc(100% - 2 * var(--bosluk-3));
+    padding: 0.28rem 0.55rem;
+    overflow: hidden;
+    border: 1px solid rgb(255 255 255 / 28%);
+    background: rgb(5 19 35 / 64%);
+    color: #fff;
+    font-size: 0.58rem;
+    font-weight: var(--kalinlik-orta);
+    letter-spacing: 0.055em;
+    line-height: 1.2;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .haber-kapak:not(.sablon-kapak) .haber-hedef {
+    backdrop-filter: blur(5px);
+  }
+
+  .haber-kapak[data-sablon="minimal"] .haber-hedef {
+    border-color: rgb(14 56 101 / 18%);
+    background: rgb(255 255 255 / 76%);
+    color: var(--hu-lacivert);
   }
 
   /* ================= bilgi hiyerarşisi ================= */
@@ -185,6 +346,11 @@
       height: 5rem;
     }
 
+    .haber-kart.one-cikan .haber-kapak-metin {
+      max-width: 16ch;
+      font-size: clamp(1.8rem, 3vw, 2.75rem);
+    }
+
     .haber-kart.one-cikan .haber-govde {
       justify-content: center;
       padding: clamp(2rem, 4vw, 3.25rem);
@@ -221,6 +387,10 @@
     .haber-kart.one-cikan .haber-baslik {
       font-size: clamp(1.3rem, 6vw, 1.65rem);
       line-height: 1.25;
+    }
+
+    .haber-kapak.sablon-kapak {
+      min-height: 14rem;
     }
   }
 

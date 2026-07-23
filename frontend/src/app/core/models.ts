@@ -61,7 +61,24 @@ export interface NewsSummary {
   /** Haberin kendi sayfası varsa site içi bağlantı, yoksa dış bağlantıdır */
   hasOwnPage: boolean;
   viewCount: number;
+  category: NewsCategory;
+  audience: NewsAudience;
+  coverTemplate: NewsCoverTemplate;
+  coverText: string | null;
 }
+
+export type NewsCategory =
+  | 'general' | 'service-outage' | 'maintenance' | 'cyber-security'
+  | 'network-internet' | 'email' | 'software-license' | 'ebys-esignature'
+  | 'web-services' | 'training-event' | 'recruitment' | 'iskur' | 'procurement';
+
+export type NewsAudience =
+  | 'all-users' | 'students' | 'academic-staff' | 'administrative-staff'
+  | 'all-staff' | 'alumni' | 'unit-managers';
+
+export type NewsCoverTemplate =
+  | 'institutional' | 'signal' | 'technology' | 'security' | 'maintenance'
+  | 'communication' | 'academic' | 'people' | 'career' | 'minimal';
 
 /** Ana sayfanın tüm bileşenleri tek istekte gelir. */
 export interface HomeData {
