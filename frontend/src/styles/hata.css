@@ -8,13 +8,59 @@
 
 @layer kamu {
   .hata-sayfasi {
+    position: relative;
+    isolation: isolate;
     min-height: clamp(31rem, 62vh, 46rem);
+    overflow: hidden;
+    border-top: 4px solid var(--hu-kirmizi);
+    background: #e8eef3;
+  }
+
+  /*
+   * Yazılım Hizmetleri slaytındaki Teknokent fotoğrafı hata sayfasına teknik
+   * bir bağlam verir. Fotoğraf içerikle yarışmaz: büyük ölçekte bulanık,
+   * doygunluğu azaltılmış ve açık lacivert bir yüzeyin arkasındadır.
+   */
+  .hata-sayfasi::before {
+    content: "";
+    position: absolute;
+    z-index: -2;
+    inset: -8%;
     background:
-      linear-gradient(90deg, var(--hu-kirmizi) 0 4px, transparent 4px) top left / 100% 4px no-repeat,
-      var(--yuzey-2);
+      url("/images/slider/slide2-960.webp")
+      center center / cover no-repeat;
+    filter: blur(13px) saturate(0.68) contrast(0.9);
+    transform: scale(1.12) translate3d(-1.2%, -0.8%, 0);
+    animation: hata-teknokent-akis 42s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+
+  .hata-sayfasi::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    background:
+      linear-gradient(112deg, rgb(247 249 251 / 82%) 0%, rgb(239 245 249 / 72%) 54%, rgb(226 237 245 / 65%) 100%),
+      linear-gradient(180deg, rgb(8 29 51 / 4%), transparent 32%);
+    pointer-events: none;
+  }
+
+  @keyframes hata-teknokent-akis {
+    0% {
+      transform: scale(1.12) translate3d(-1.2%, -0.8%, 0);
+    }
+    48% {
+      transform: scale(1.17) translate3d(1.1%, 0.4%, 0);
+    }
+    100% {
+      transform: scale(1.14) translate3d(-0.25%, 1%, 0);
+    }
   }
 
   .hata-kap {
+    position: relative;
+    z-index: 1;
     padding-top: clamp(2rem, 5vw, 4.5rem);
     padding-bottom: clamp(3rem, 7vw, 6rem);
   }
@@ -309,7 +355,19 @@
     }
   }
 
+  @media (min-width: 64rem) {
+    .hata-sayfasi::before {
+      background-image: url("/images/slider/slide2-1920.webp");
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
+    .hata-sayfasi::before {
+      animation: none;
+      transform: scale(1.13);
+      will-change: auto;
+    }
+
     .hata-eylemler a,
     .hata-eylemler button {
       transition: none;
