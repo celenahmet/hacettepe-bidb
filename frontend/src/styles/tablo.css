@@ -398,3 +398,121 @@
     }
   }
 }
+
+@layer kamu {
+  /* Kurul sayfası ikinci düzenleme:
+     Kaynak tablo ve bütün metinler korunur. Görsel katmanda yinelenen altı
+     bağımsız kart, tek bir kurul listesine dönüştürülür; "Üye" ve "Başkan"
+     gibi bağlamdan zaten anlaşılan tekrarlar yalnızca görsel olarak ayıklanır. */
+  .kurul-sayfasi .icerik table:not(:has(thead)):not(:has(a)) tbody {
+    gap: 0;
+  }
+
+  .kurul-sayfasi .icerik table:not(:has(thead)):not(:has(a)) tr:not(:first-child) {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-rows: auto auto;
+    align-content: center;
+    min-height: 104px;
+    padding: var(--bosluk-4) var(--bosluk-5);
+    border: 0;
+    border-bottom: 1px solid var(--cizgi);
+    border-radius: 0;
+    box-shadow: none;
+    transition: background var(--gecis);
+  }
+
+  .kurul-sayfasi .icerik table:not(:has(thead)):not(:has(a))
+    tr:nth-child(even):not(:first-child) {
+    border-right: 1px solid var(--cizgi);
+  }
+
+  .kurul-sayfasi .icerik table:not(:has(thead)):not(:has(a)) tr:not(:first-child)::after {
+    display: none;
+  }
+
+  .kurul-sayfasi .icerik table:not(:has(thead)):not(:has(a)) tr:not(:first-child):hover {
+    border-color: var(--cizgi);
+    background: var(--yuzey-2);
+    box-shadow: none;
+    transform: none;
+  }
+
+  .kurul-sayfasi .icerik table:not(:has(thead)):not(:has(a)) tr:not(:first-child) td:first-child {
+    grid-column: 1;
+    grid-row: 1;
+    font-size: var(--olcu-md);
+  }
+
+  .kurul-sayfasi .icerik table:not(:has(thead)):not(:has(a)) tr:not(:first-child) td:nth-child(2) {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .kurul-sayfasi .icerik table:not(:has(thead)):not(:has(a))
+    tr:not(:first-child) td:last-child:not(:first-child):not(:nth-child(2)) {
+    grid-column: 2;
+    grid-row: 1 / 3;
+    align-self: center;
+    justify-self: end;
+    width: auto;
+    margin: 0 0 0 var(--bosluk-4);
+    padding: var(--bosluk-1) var(--bosluk-2);
+    border: 0;
+    border-radius: var(--kose-sm);
+    background: var(--yuzey-2);
+    font-size: 0.66rem;
+    font-weight: var(--kalinlik-kalin);
+    letter-spacing: 0.06em;
+    text-align: right;
+    color: var(--metin-3);
+  }
+
+  /* Dört standart üyede aynı rol tekrarlanmaz. Öğrenci kalite elçisi gibi
+     ayırt edici sorumluluklar görünmeye devam eder. */
+  .kurul-sayfasi .icerik table:not(:has(thead)):not(:has(a))
+    tr:nth-child(n + 2):nth-child(-n + 5)
+    td:last-child:not(:first-child):not(:nth-child(2)) {
+    display: none;
+  }
+
+  .kurul-sayfasi .icerik table:not(:has(thead)):not(:has(a)) tr:first-child {
+    min-height: 122px;
+    margin-bottom: var(--bosluk-4);
+    padding: var(--bosluk-5) var(--bosluk-6);
+    border-radius: var(--kose-md);
+  }
+
+  .kurul-sayfasi .icerik table:not(:has(thead)):not(:has(a)) tr:first-child::before {
+    content: "KOMİSYON BAŞKANI";
+  }
+
+  /* "Komisyon Başkanı" tanımı yeterli; ikinci Başkan rozeti aynı bilgiyi
+     tekrar ettiği için sunum katmanında kaldırılır. */
+  .kurul-sayfasi .icerik table:not(:has(thead)):not(:has(a)) tr:first-child
+    td:last-child:not(:first-child):not(:nth-child(2)) {
+    display: none;
+  }
+
+  @media (max-width: 48rem) {
+    .kurul-sayfasi .icerik table:not(:has(thead)):not(:has(a))
+      tr:nth-child(even):not(:first-child) {
+      border-right: 0;
+    }
+  }
+
+  @media (max-width: 30rem) {
+    .kurul-sayfasi .icerik table:not(:has(thead)):not(:has(a)) tr:not(:first-child) {
+      grid-template-columns: minmax(0, 1fr);
+      min-height: 0;
+    }
+
+    .kurul-sayfasi .icerik table:not(:has(thead)):not(:has(a))
+      tr:not(:first-child) td:last-child:not(:first-child):not(:nth-child(2)) {
+      grid-column: 1;
+      grid-row: 3;
+      justify-self: start;
+      margin: var(--bosluk-3) 0 0;
+      text-align: left;
+    }
+  }
+}
