@@ -1,6 +1,6 @@
 import { Component, Input, inject, signal } from '@angular/core';
 import { Api } from '../core/api.service';
-import { Language, StaffUnit } from '../core/models';
+import { Language, StaffMember, StaffUnit } from '../core/models';
 
 /**
  * Personel listesi.
@@ -48,28 +48,13 @@ import { Language, StaffUnit } from '../core/models';
                       <img [src]="k.photoUrl" [alt]="k.fullName"
                            width="256" height="320" loading="lazy">
                     } @else {
-                      <!-- Uc ayri siluet: kadin, erkek, notr. Ayrim sac ve
-                           omuz hattiyla kuruluyor; renk ya da simge farki
-                           kullanilmiyor, cunku rehberde asil bilgi ad ve
-                           gorevdir. -->
-                      <svg viewBox="0 0 48 64" aria-hidden="true" focusable="false">
-                        @switch (k.avatar) {
-                          @case ('kadin') {
-                            <!-- Sac cene hizasinda disari acilir: kulak gibi
-                                 iki cikinti yerine yuze inen bir kutle. -->
-                            <path d="M24 11.5c6.9 0 11.4 5.1 11.4 12.9 0 3.9-1.1 7.3-2.9 9.7 2.4 1.3 4 3.3 4.7 6l.7 2.7H10.1l.7-2.7c.7-2.7 2.3-4.7 4.7-6-1.8-2.4-2.9-5.8-2.9-9.7 0-7.8 4.5-12.9 11.4-12.9z"></path>
-                            <path d="M24 45.5c8.9 0 16.1 6.9 16.1 16.5H7.9c0-9.6 7.2-16.5 16.1-16.5z"></path>
-                          }
-                          @case ('erkek') {
-                            <path d="M24 12.5c6.5 0 10.8 4.7 10.8 12.5S30 38.8 24 38.8 13.2 32.8 13.2 25 17.5 12.5 24 12.5z"></path>
-                            <path d="M24 45.5c10.7 0 19.4 6.6 19.4 16.5H4.6c0-9.9 8.7-16.5 19.4-16.5z"></path>
-                          }
-                          @default {
-                            <circle cx="24" cy="25" r="9"></circle>
-                            <path d="M6.5 62c0-9.3 7.8-15.8 17.5-15.8S41.5 52.7 41.5 62h-35z"></path>
-                          }
-                        }
-                      </svg>
+                      <!-- Gerçek fotoğraf yüklenene kadar kullanılan yapay
+                           portre, gerçek kişiyle karıştırılmaması için açıkça
+                           demo olarak işaretlenir. -->
+                      <span class="personel-demo-portre {{ demoPortreSinifi(k) }}"
+                            role="img"
+                            [attr.aria-label]="dilDegeri === 'en' ? 'Demo portrait' : 'Demo portre'"></span>
+                      <span class="personel-demo-etiket" aria-hidden="true">DEMO</span>
                     }
                   </span>
 
@@ -81,6 +66,18 @@ import { Language, StaffUnit } from '../core/models';
                       <span class="personel-unvan">{{ dilDegeri === 'en' ? 'Unit supervisor' : 'Birim sorumlusu' }}</span>
                     }
                     @if (k.note) { <span class="personel-not">{{ k.note }}</span> }
+                    <button class="personel-eposta" type="button" disabled
+                            [attr.aria-label]="dilDegeri === 'en'
+                              ? 'Email address is not available'
+                              : 'E-posta adresi bulunmuyor'"
+                            [title]="dilDegeri === 'en'
+                              ? 'Email address is not available'
+                              : 'E-posta adresi bulunmuyor'">
+                      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <rect x="3.5" y="5.5" width="17" height="13" rx="1.5"></rect>
+                        <path d="m5 7 7 5.5L19 7"></path>
+                      </svg>
+                    </button>
                   </span>
                 </li>
               }
@@ -106,5 +103,15 @@ export class StaffListComponent {
   protected telefonBaglantisi(numara: string): string {
     const rakam = numara.replace(/\D/g, '');
     return 'tel:' + (rakam.length <= 8 ? '+90312' + rakam : '+90' + rakam.replace(/^0/, ''));
+  }
+
+  /** Demo portreler gerçek kişilerle eşleştirilmez. Ad yalnızca aynı kaydın
+      her yüklemede aynı örnek görseli almasını sağlayan kararlı anahtardır. */
+  protected demoPortreSinifi(kisi: StaffMember): string {
+    const toplam = [...kisi.fullName].reduce((deger, harf) => deger + (harf.codePointAt(0) ?? 0), 0);
+    const erkek = [0, 3, 4, 7];
+    const kadin = [1, 2, 5, 6];
+    const secenekler = kisi.avatar === 'erkek' ? erkek : kisi.avatar === 'kadin' ? kadin : [0, 1, 2, 3, 4, 5, 6, 7];
+    return `demo-portre-${secenekler[toplam % secenekler.length]}`;
   }
 }

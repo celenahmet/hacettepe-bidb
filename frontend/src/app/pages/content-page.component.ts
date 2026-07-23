@@ -33,11 +33,17 @@ import { UnitsComponent } from './units.component';
       <main id="ana-icerik" class="icerik-alani"
             [class.web-servis-sayfasi]="sayfa()?.slug === 'web-services'"
             [class.kurul-sayfasi]="sayfa()?.slug === 'committees'"
+            [class.personel-sayfasi]="sayfa()?.slug === 'staff'"
             [class.organizasyon-sayfasi]="sayfa()?.slug === 'org-chart'">
         @if (sayfa(); as s) {
           <header class="sayfa-tepe">
             @if (bolum(); as b) { <p class="sayfa-bolum">{{ b }}</p> }
             <h1 class="sayfa-baslik">{{ s.title }}</h1>
+            @if (s.slug === 'staff') {
+              <div class="personel-baslik-ayrac" aria-hidden="true">
+                <span><img src="/hu-logo.svg" alt="" width="16" height="26"></span>
+              </div>
+            }
           </header>
           @if (s.slug === 'org-chart') {
             <p class="organizasyon-giris">
