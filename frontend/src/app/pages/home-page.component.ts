@@ -17,7 +17,11 @@ import { NewsCardComponent } from './news-card.component';
   template: `
     @if (veri$ | async; as v) {
       @defer (hydrate on interaction; hydrate on timer(5s)) {
-        <bidb-hero-slider [dilDegeri]="language()" [slaytlar]="v.slider"></bidb-hero-slider>
+        <bidb-hero-slider
+          [dilDegeri]="language()"
+          [slaytlar]="v.slider"
+          [kisayollar]="v.shortcuts">
+        </bidb-hero-slider>
       }
 
       @defer (on viewport; on timer(100ms)) {
