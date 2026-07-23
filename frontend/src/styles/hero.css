@@ -1,254 +1,46 @@
-/* Ana sayfa açılış alanı.
+/* Ana sayfa açılış alanı — tam kanama görsel, üstünde cam panelde metin.
 
    ── KOMPOZİSYON ───────────────────────────────────────────────────────
 
-   Klasik "fotoğrafın üstüne ortalanmış yazı" düzeninden çıkıldı. Alan iki
-   yüzeye bölünüyor: solda kurumsal lacivert bir panel, sağda tam kanama
-   fotoğraf. Aralarında Hacettepe kırmızısı ince bir dikiş.
+   Fotoğraf tüm alanı kaplar; metin solda, fotoğrafın üstünde bir cam
+   panelde durur. Panel yarı saydam ve arkası bulanık (backdrop-filter):
+   fotoğraf panelin ardından silik görünmeyi sürdürür, metin ise net bir
+   yüzeyde okunur. Bu "havalı" görünümün kaynağı gösteriş değil, iki
+   katmanın (net metin / bulanık fotoğraf) birbirinden ayrılması.
 
-   Panelin metni SAYFA KABIYLA AYNI HİZADAN başlıyor; yani üstteki logoyla
-   aynı dikey çizgiye oturuyor. Açılış alanını sayfanın geri kalanına
-   bağlayan şey bu hiza. Hazır slider bileşenleri bunu yapmaz — kendi
-   içinde ortalanır ve sayfadan kopuk durur.
-
-   Bölünmüş yapının üç kazancı:
-
-   1. Fotoğraf hiç karartılmıyor. Karartma, güçlü bir fotoğrafı zayıflatan
-      ilk müdahaledir; burada gerek kalmadı.
-   2. Metin her zaman aynı kontrastta okunuyor. Fotoğrafın o bölgesinin
-      açık ya da koyu olması sonucu değiştirmiyor.
-   3. Geniş ekranda ortaya çıkan boş koyu alan ortadan kalkıyor — o alan
-      artık panelin kendisi, yani tasarımın anlamlı bir parçası.
-
-   ── ÖLÇÜ ──────────────────────────────────────────────────────────────
-
-   Yükseklik sabit oran yerine clamp ile veriliyor. Sabit en-boy oranı
-   geniş ekranda alanı gereksiz büyütüyor, dizüstü ekranlarda ise
-   sayfanın gerçek içeriğini katlamanın altına itiyordu. clamp, 24 inç bir
-   monitörde de 14 inç bir dizüstünde de üst menü + açılış alanının ekrana
-   sığmasını garanti ediyor.
-
-   Panel genişliği de sabit yüzde değil: sayfa kabının sol boşluğu artı
-   sabit bir metin sütunu. Böylece metin sütunu her ekranda aynı
-   genişlikte kalıyor, yalnızca fotoğraf büyüyor.
+   Okunurluğu üç şey birlikte taşır: panelin bulanık koyu yüzeyi, fotoğrafın
+   tamamına inen çok hafif bir karartma, ve panelin sol kenarındaki kırmızı
+   çizgi. Böylece açık ya da koyu, her fotoğrafta metin aynı netlikte durur.
 
    ── HAREKET ───────────────────────────────────────────────────────────
 
-   Fotoğraf, durduğu on saniye boyunca çok yavaş yakınlaşıyor. Geçişte
-   çıkan fotoğraf hızlı çekiliyor, giren yavaş yerleşiyor; eşit süreli
-   sönümlemede iki fotoğraf ortada yarı yarıya görünüp bulanık bir ara
-   kare oluşturuyordu. */
+   Fotoğraf durduğu on saniye boyunca çok yavaş yakınlaşır (Ken Burns).
+   Slayt değişince panelin içindekiler sırayla, aşağıdan yukarı süzülerek
+   girer: etiket, başlık (maskeden yükselir), açıklama, düğme. Hareket
+   fotoğrafı taklit etmez; metnin değiştiğini gözün fark etmesini sağlar.
+
+   Dar ekranda panel tam genişliğe yakınlaşır ve alta oturur; cam etkisi
+   korunur çünkü metin yine fotoğrafın üstündedir. */
 
 @layer kamu {
 
   .hero {
     position: relative;
-    background: var(--hu-lacivert);
+    min-height: clamp(24rem, 46vw, 40rem);
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+    background: var(--yuzey-ters);
     outline: 0;
+    isolation: isolate;
   }
 
-  /* Panel = kabın sol boşluğu + sabit metin sütunu.
-     50vw - 570px, sayfa kabının (1180px) sol iç kenarını verir; dar
-     ekranda 20px'lik sayfa boşluğuna iner. */
-  .hero-duzen {
-    --hero-kenar: max(20px, calc(50vw - 570px));
-    display: grid;
-    grid-template-columns: calc(var(--hero-kenar) + 29rem) minmax(0, 1fr);
-    min-height: clamp(21rem, 30vw, 27rem);
-  }
+  /* ---- Fotoğraf katmanı ---------------------------------------------- */
 
-  /* ---- Kurumsal panel -------------------------------------------------- */
-
-  .hero-panel {
-    display: flex;
-    align-items: center;
-    background: var(--hu-lacivert);
-  }
-
-  .hero-panel-ic {
-    width: 100%;
-    padding: var(--bosluk-7) var(--bosluk-6) var(--bosluk-6) var(--hero-kenar);
-  }
-
-  /* Kırmızı işaret: metnin nerede başladığını söyleyen tek aksan. Yazıyla
-     değil çizgiyle yapılıyor — üst satıra slogan koymak gerekmiyor. */
-  .hero-isaret {
-    display: block;
-    width: 2.25rem;
-    height: 3px;
-    margin-bottom: var(--bosluk-5);
-    background: var(--hu-kirmizi);
-    animation: hero-isaret 520ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
-  }
-
-  @keyframes hero-isaret {
-    from { transform: scaleX(0); }
-    to   { transform: none; }
-  }
-
-  .hero-isaret { transform-origin: left; }
-
-  /* Başlık maskenin ardından yükselerek açılır: dış öge bir pencere, iç
-     öge onun içinde aşağıdan yukarı kayar. Harfler yerinde belirmez,
-     satır bir bütün olarak ortaya çıkar. Bir efekt kitaplığına değil
-     taşmanın gizlenmesine dayandığı için eskimez. */
-  .hero-baslik {
-    margin: 0;
-    overflow: hidden;
-    font-size: clamp(1.7rem, 2.5vw, 2.4rem);
-    font-weight: var(--kalinlik-kalin);
-    line-height: 1.16;
-    letter-spacing: -0.02em;
-    color: #fff;
-  }
-
-  .hero-baslik > span {
-    display: block;
-    animation: hero-perde 700ms 60ms cubic-bezier(0.16, 0.84, 0.24, 1) both;
-  }
-
-  @keyframes hero-perde {
-    from { transform: translateY(105%); }
-    to   { transform: none; }
-  }
-
-  .hero-ozet {
-    margin: var(--bosluk-4) 0 0;
-    max-width: 42ch;
-    font-size: var(--olcu-md);
-    line-height: 1.6;
-    color: rgb(255 255 255 / 78%);
-    animation: hero-giris 640ms 220ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
-  }
-
-  @keyframes hero-giris {
-    from { opacity: 0; transform: translateY(14px); }
-    to   { opacity: 1; transform: none; }
-  }
-
-  /* ---- Eylem düğmesi ---------------------------------------------------- */
-
-  /* Dolu kırmızı: lacivert panelde tek güçlü aksan ve alanın tek eylemi.
-     İçi boş bir çerçeve, koyu yüzeyde sönük kalıyor ve tıklanabilir
-     olduğunu yeterince söylemiyordu. */
-  .hero-dugme {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--bosluk-3);
-    margin-top: var(--bosluk-6);
-    padding: 0.8rem 1.6rem;
-    background: var(--hu-kirmizi);
-    border: 1px solid var(--hu-kirmizi);
-    font-size: var(--olcu-sm);
-    font-weight: var(--kalinlik-orta);
-    letter-spacing: 0.02em;
-    color: #fff;
-    transition: background var(--gecis), border-color var(--gecis);
-    animation: hero-giris 640ms 340ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
-  }
-
-  .hero-dugme svg { transition: transform var(--gecis); }
-
-  .hero-dugme:hover {
-    background: var(--hu-kirmizi-koyu);
-    border-color: var(--hu-kirmizi-koyu);
-  }
-
-  .hero-dugme:hover svg { transform: translateX(4px); }
-
-  .hero-dugme:focus-visible {
-    outline: 2px solid #fff;
-    outline-offset: 3px;
-  }
-
-  /* ---- Denetim ---------------------------------------------------------- */
-
-  /* Düğmeler ve ilerleme çizgisi panelin içinde, metinle aynı hizada.
-     Fotoğrafın üstünde yüzen denetimler tasarımdan kopuk görünüyordu. */
-  .hero-denetim {
-    display: flex;
-    align-items: center;
-    margin-top: var(--bosluk-7);
-  }
-
-  .hero-ok {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 2.75rem;
-    height: 2.75rem;
-    padding: 0;
-    border: 1px solid rgb(255 255 255 / 26%);
-    background: transparent;
-    color: rgb(255 255 255 / 80%);
-    cursor: pointer;
-    transition: background var(--gecis), color var(--gecis), border-color var(--gecis);
-  }
-
-  /* İki düğme tek bir öge gibi görünsün: aradaki çizgi tekrarlanmaz. */
-  .hero-ok + .hero-ok { border-left: 0; }
-
-  .hero-ok:hover {
-    background: rgb(255 255 255 / 10%);
-    border-color: rgb(255 255 255 / 45%);
-    color: #fff;
-  }
-
-  .hero-ok:focus-visible {
-    outline: 2px solid #fff;
-    outline-offset: 2px;
-    position: relative;
-  }
-
-  /* İlerleme çizgisi: kaç slayt olduğunu değil, sıradakine ne kadar
-     kaldığını gösterir. Panel genişliğince uzandığı için yüzeyin parçası
-     olarak okunur, sonradan eklenmiş bir gösterge gibi durmaz. */
-  .hero-ilerleme {
-    position: relative;
-    flex: 1;
-    height: 1px;
-    margin-left: var(--bosluk-5);
-    background: rgb(255 255 255 / 20%);
-    overflow: hidden;
-  }
-
-  .hero-ilerleme i {
+  .hero-gorseller {
     position: absolute;
     inset: 0;
-    transform-origin: left;
-    transform: scaleX(0);
-    background: var(--hu-kirmizi);
-    animation-name: hero-dolum;
-    animation-timing-function: linear;
-    animation-fill-mode: forwards;
-  }
-
-  @keyframes hero-dolum {
-    from { transform: scaleX(0); }
-    to   { transform: scaleX(1); }
-  }
-
-  /* ---- Fotoğraf --------------------------------------------------------- */
-
-  /* Sabit en-boy oranı YOK. Yükseklik ızgaradan geliyor, genişlik sütundan;
-     fotoğraf kalan alanı kırparak dolduruyor. Oran verildiğinde geniş
-     ekranda kutu ile fotoğraf arasında boş bir şerit kalıyordu. */
-  .hero-gorseller {
-    position: relative;
-    overflow: hidden;
-    background: var(--yuzey-3);
-  }
-
-  /* Kırmızı dikiş: iki yüzeyin birleştiği yeri gösteren kurumsal aksan. */
-  .hero-gorseller::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 4px;
-    z-index: 2;
-    background: var(--hu-kirmizi);
+    z-index: -2;
   }
 
   .hero-gorsel {
@@ -258,53 +50,211 @@
     height: 100%;
     object-fit: cover;
     opacity: 0;
-    transform: scale(1.05);
-    /* Çıkan hızlı çekilir, giren yavaş yerleşir. */
+    transform: scale(1.06);
     transition: opacity 500ms cubic-bezier(0.4, 0, 1, 1);
   }
 
   .hero-gorsel.etkin {
     opacity: 1;
-    transition: opacity 1000ms cubic-bezier(0.22, 0.61, 0.36, 1);
+    transition: opacity 1100ms cubic-bezier(0.22, 0.61, 0.36, 1);
     animation: hero-yaklas 10s linear forwards;
   }
 
   @keyframes hero-yaklas {
-    from { transform: scale(1.05); }
+    from { transform: scale(1.06); }
     to   { transform: scale(1); }
   }
 
-  /* ---- Dar ekran --------------------------------------------------------- */
+  /* Fotoğrafın tamamına çok hafif, sola doğru artan bir karartma: cam
+     panelin dışında da metin/gösterge okunur kalsın. */
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      linear-gradient(90deg, rgb(9 14 24 / 55%) 0%, rgb(9 14 24 / 18%) 45%, rgb(9 14 24 / 4%) 100%),
+      linear-gradient(to top, rgb(9 14 24 / 45%) 0%, rgb(9 14 24 / 0%) 40%);
+  }
 
-  /* 64rem altında iki sütun anlamını yitirir: fotoğraf üste, panel altına
-     iner. Panel lacivert kalır — kurumsal yüzey her ekranda aynı. */
-  @media (max-width: 64rem) {
-    .hero-duzen {
-      grid-template-columns: minmax(0, 1fr);
-      min-height: 0;
+  /* ---- Metin panonu -------------------------------------------------- */
+
+  .hero-kap {
+    position: relative;
+    width: 100%;
+    padding-top: var(--bosluk-8);
+    padding-bottom: var(--bosluk-8);
+  }
+
+  /* CAM PANEL. Yarı saydam koyu yüzey + arkada bulanıklık. Desteklenmezse
+     (@supports) düz yarı saydam koyuya düşer; metin yine okunur. */
+  .hero-panel {
+    max-width: 40rem;
+    padding: var(--bosluk-6) var(--bosluk-6) var(--bosluk-6) var(--bosluk-6);
+    border-left: 3px solid var(--hu-kirmizi);
+    border-radius: 0 var(--kose-lg) var(--kose-lg) 0;
+    background: rgb(12 18 30 / 42%);
+    box-shadow: 0 8px 40px rgb(0 0 0 / 25%);
+  }
+
+  @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .hero-panel {
+      background: rgb(12 18 30 / 28%);
+      backdrop-filter: blur(14px) saturate(120%);
+      -webkit-backdrop-filter: blur(14px) saturate(120%);
     }
+  }
 
-    .hero-gorseller {
-      order: -1;
-      aspect-ratio: 16 / 9;
+  /* Etiket: kurum adı, önünde kısa kırmızı çizgi. */
+  .hero-etiket {
+    display: flex;
+    align-items: center;
+    gap: var(--bosluk-3);
+    margin: 0 0 var(--bosluk-4);
+    font-size: var(--olcu-xs);
+    font-weight: var(--kalinlik-orta);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgb(255 255 255 / 82%);
+    animation: hero-yuksel 620ms 40ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+  .hero-etiket-cizgi {
+    display: block;
+    width: 1.75rem;
+    height: 2px;
+    background: var(--hu-kirmizi);
+  }
+
+  /* Başlık maskeden yükselir. */
+  .hero-baslik {
+    margin: 0;
+    overflow: hidden;
+    font-size: clamp(1.9rem, 3.8vw, 3.25rem);
+    font-weight: var(--kalinlik-kalin);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: #fff;
+  }
+  .hero-baslik > span {
+    display: block;
+    animation: hero-perde 720ms 90ms cubic-bezier(0.16, 0.84, 0.24, 1) both;
+  }
+  @keyframes hero-perde {
+    from { transform: translateY(105%); }
+    to   { transform: none; }
+  }
+
+  .hero-ozet {
+    margin: var(--bosluk-4) 0 0;
+    max-width: 44ch;
+    font-size: var(--olcu-lg);
+    line-height: 1.55;
+    color: rgb(255 255 255 / 88%);
+    animation: hero-yuksel 700ms 240ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+
+  @keyframes hero-yuksel {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  /* ---- Eylem düğmesi (cam) ------------------------------------------- */
+
+  .hero-dugme {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--bosluk-3);
+    margin-top: var(--bosluk-5);
+    padding: 0.75rem 1.6rem;
+    border: 1px solid rgb(255 255 255 / 40%);
+    border-radius: var(--kose-tam);
+    background: rgb(255 255 255 / 10%);
+    font-size: var(--olcu-sm);
+    font-weight: var(--kalinlik-orta);
+    letter-spacing: 0.02em;
+    color: #fff;
+    transition: background var(--gecis), border-color var(--gecis), transform var(--gecis);
+    animation: hero-yuksel 700ms 360ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+  @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .hero-dugme { backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+  }
+  .hero-dugme svg { transition: transform var(--gecis); }
+  .hero-dugme:hover {
+    background: var(--hu-kirmizi);
+    border-color: var(--hu-kirmizi);
+  }
+  .hero-dugme:hover svg { transform: translateX(4px); }
+  .hero-dugme:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+  /* ---- Göstergeler (alt-sağ) ----------------------------------------- */
+
+  .hero-noktalar {
+    position: absolute;
+    right: max(20px, calc(50vw - 570px));
+    bottom: var(--bosluk-6);
+    display: flex;
+    align-items: center;
+    gap: var(--bosluk-2);
+  }
+
+  .hero-noktalar button {
+    position: relative;
+    width: 10px;
+    height: 10px;
+    padding: 0;
+    border: 0;
+    border-radius: var(--kose-tam);
+    background: rgb(255 255 255 / 38%);
+    cursor: pointer;
+    overflow: hidden;
+    transition: width var(--gecis), background var(--gecis);
+  }
+  .hero-noktalar button::before {
+    content: "";
+    position: absolute;
+    inset: -10px;               /* dokunma alanı */
+  }
+  .hero-noktalar button:hover { background: rgb(255 255 255 / 65%); }
+
+  /* Etkin gösterge uzar ve süre boyunca kırmızıyla dolar. */
+  .hero-noktalar button.etkin {
+    width: 2.5rem;
+    background: rgb(255 255 255 / 30%);
+  }
+  .hero-nokta-dolgu {
+    position: absolute;
+    inset: 0;
+    transform-origin: left;
+    transform: scaleX(0);
+    border-radius: inherit;
+    background: var(--hu-kirmizi);
+  }
+  .hero-noktalar button.etkin .hero-nokta-dolgu {
+    animation-name: hero-dolum;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+  }
+  @keyframes hero-dolum {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+  }
+  .hero-noktalar button:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+  /* ---- Dar ekran ------------------------------------------------------- */
+
+  @media (max-width: 48rem) {
+    .hero { min-height: clamp(22rem, 90vw, 30rem); }
+    .hero-kap { padding-top: var(--bosluk-7); padding-bottom: var(--bosluk-8); }
+    .hero-panel {
+      max-width: none;
+      padding: var(--bosluk-5);
+      border-radius: var(--kose-lg);
     }
-
-    .hero-gorseller::before {
-      left: 0;
-      right: 0;
-      top: auto;
-      bottom: 0;
-      width: auto;
-      height: 4px;
-    }
-
-    .hero-panel-ic {
-      padding: var(--bosluk-6) var(--hero-kenar);
-    }
-
-    .hero-baslik { font-size: clamp(1.5rem, 5vw, 1.9rem); }
-    .hero-ozet { font-size: var(--olcu-sm); max-width: none; }
-    .hero-denetim { margin-top: var(--bosluk-6); }
+    .hero-baslik { font-size: clamp(1.6rem, 7vw, 2.2rem); }
+    .hero-ozet { font-size: var(--olcu-md); }
+    .hero-noktalar { right: 20px; bottom: var(--bosluk-4); }
   }
 
   /* ---- Hareket azaltma ---------------------------------------------------- */
@@ -312,11 +262,11 @@
   @media (prefers-reduced-motion: reduce) {
     .hero-gorsel { transition: none; }
     .hero-gorsel.etkin { animation: none; transform: none; }
-    .hero-isaret,
+    .hero-etiket,
     .hero-baslik > span,
     .hero-ozet,
     .hero-dugme { animation: none; }
-    .hero-ilerleme i { animation: none; transform: scaleX(1); }
+    .hero-noktalar button.etkin .hero-nokta-dolgu { animation: none; transform: scaleX(1); }
     .hero-dugme svg { transition: none; }
   }
 }

@@ -44,71 +44,58 @@ import { Language, Slide } from '../core/models';
                (touchstart)="dokunusBasladi($event)" (touchend)="dokunusBitti($event)"
                tabindex="-1">
 
-        <div class="hero-duzen">
+        <!-- Fotoğraf katmanı: tam kanama, yavaş yakınlaşma -->
+        <div class="hero-gorseller">
+          @for (s of slaytlar; track s.imageUrl; let i = $index) {
+            <img class="hero-gorsel"
+                 [class.etkin]="i === etkin()"
+                 [src]="s.imageUrl"
+                 [srcset]="darSurum(s.imageUrl) + ' 960w, ' + s.imageUrl + ' 1920w'"
+                 sizes="100vw"
+                 [alt]="i === etkin() ? (s.imageAlt ?? '') : ''"
+                 [attr.aria-hidden]="i === etkin() ? null : 'true'"
+                 [attr.loading]="i === 0 ? 'eager' : 'lazy'"
+                 [attr.fetchpriority]="i === 0 ? 'high' : null"
+                 width="1920" height="825">
+          }
+        </div>
 
-          <!-- Kurumsal panel: metin ve denetim aynı yüzeyde -->
-          <div class="hero-panel">
-            <div class="hero-panel-ic">
-              <!-- Slayt değişince bu blok yeniden kurulur: düğüm
-                   yenilenmeden giriş hareketi baştan çalışmaz. -->
-              @for (s of gecerliListe(); track etkin()) {
-                <div class="hero-metin">
-                  <span class="hero-isaret" aria-hidden="true"></span>
-                  <h2 class="hero-baslik"><span>{{ s.title }}</span></h2>
-                  @if (s.subtitle) { <p class="hero-ozet">{{ s.subtitle }}</p> }
-                  @if (s.linkUrl) {
-                    <a class="hero-dugme" [routerLink]="s.linkUrl">
-                      <span>{{ dilDegeri === 'en' ? 'Read more' : 'Ayrıntılar' }}</span>
-                      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"
-                           fill="none" stroke="currentColor" stroke-width="1.8">
-                        <path d="M4 12h15M13 6l6 6-6 6"/>
-                      </svg>
-                    </a>
-                  }
-                </div>
+        <!-- Metin, fotoğrafın üstünde bir cam panelde. Slayt değişince blok
+             yeniden kurulur; düğüm yenilenmeden giriş hareketi baştan
+             çalışmaz. -->
+        <div class="kap hero-kap">
+          @for (s of gecerliListe(); track etkin()) {
+            <div class="hero-panel">
+              <p class="hero-etiket">
+                <span class="hero-etiket-cizgi" aria-hidden="true"></span>
+                {{ dilDegeri === 'en' ? 'Department of Information Technology' : 'Bilgi İşlem Daire Başkanlığı' }}
+              </p>
+              <h2 class="hero-baslik"><span>{{ s.title }}</span></h2>
+              @if (s.subtitle) { <p class="hero-ozet">{{ s.subtitle }}</p> }
+              @if (s.linkUrl) {
+                <a class="hero-dugme" [routerLink]="s.linkUrl">
+                  <span>{{ dilDegeri === 'en' ? 'Read more' : 'Ayrıntılar' }}</span>
+                  <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"
+                       fill="none" stroke="currentColor" stroke-width="1.9">
+                    <path d="M4 12h15M13 6l6 6-6 6"/>
+                  </svg>
+                </a>
               }
-
-              <div class="hero-denetim">
-                <button type="button" class="hero-ok" (click)="oncekiSlayt()"
-                        [attr.aria-label]="dilDegeri === 'en' ? 'Previous slide' : 'Önceki görsel'">
-                  <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"
-                       fill="none" stroke="currentColor" stroke-width="1.5">
-                    <path d="M15 5l-7 7 7 7"/>
-                  </svg>
-                </button>
-                <button type="button" class="hero-ok" (click)="sonrakiSlayt()"
-                        [attr.aria-label]="dilDegeri === 'en' ? 'Next slide' : 'Sonraki görsel'">
-                  <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"
-                       fill="none" stroke="currentColor" stroke-width="1.5">
-                    <path d="M9 5l7 7-7 7"/>
-                  </svg>
-                </button>
-
-                <!-- İlerleme çizgisi: kaç slayt olduğunu değil, sıradakine
-                     ne kadar kaldığını gösterir. Panelin genişliğince
-                     uzandığı için yüzeyin parçası olarak okunur. -->
-                <span class="hero-ilerleme">
-                  @for (x of gecerliListe(); track etkin()) {
-                    <i [style.animation-duration.ms]="SURE"></i>
-                  }
-                </span>
-              </div>
             </div>
-          </div>
+          }
 
-          <!-- Fotoğraf: hiç karartılmıyor, tam kanama sağ kenara kadar -->
-          <div class="hero-gorseller">
+          <!-- Göstergeler: alt-sağda, tıklanabilir. Etkin olan uzar ve
+               süre boyunca dolar. -->
+          <div class="hero-noktalar" role="tablist"
+               [attr.aria-label]="dilDegeri === 'en' ? 'Slides' : 'Görseller'">
             @for (s of slaytlar; track s.imageUrl; let i = $index) {
-              <img class="hero-gorsel"
-                   [class.etkin]="i === etkin()"
-                   [src]="s.imageUrl"
-                   [srcset]="darSurum(s.imageUrl) + ' 960w, ' + s.imageUrl + ' 1920w'"
-                   sizes="(max-width: 64rem) 100vw, 60vw"
-                   [alt]="i === etkin() ? (s.imageAlt ?? '') : ''"
-                   [attr.aria-hidden]="i === etkin() ? null : 'true'"
-                   [attr.loading]="i === 0 ? 'eager' : 'lazy'"
-                   [attr.fetchpriority]="i === 0 ? 'high' : null"
-                   width="1920" height="825">
+              <button type="button" role="tab"
+                      [class.etkin]="i === etkin()"
+                      [attr.aria-selected]="i === etkin()"
+                      [attr.aria-label]="s.title"
+                      (click)="gec(i)">
+                <span class="hero-nokta-dolgu" [style.animation-duration.ms]="SURE"></span>
+              </button>
             }
           </div>
         </div>
