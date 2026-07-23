@@ -156,7 +156,7 @@ interface SocialAccount {
       <div class="alt-serit">
         <div class="kap alt-serit-ic">
           <small>
-            © {{ yil }} Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı
+            © {{ yenilenmeYili }} Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı
           </small>
           <p class="alt-baglantilar">
             <a [routerLink]="['/', language, 'disclaimer']">{{ language === 'en' ? 'Disclaimer' : 'Sorumluluk Sınırı' }}</a>
@@ -172,7 +172,9 @@ export class FooterComponent {
 
   private http = inject(HttpClient);
 
-  protected readonly yil = new Date().getFullYear();
+  /** Telif yılı değil, sitenin kurumsal olarak yenilendiği yıl gösterilir.
+   *  Bu nedenle takvim yılı ilerlediğinde otomatik olarak değişmemelidir. */
+  protected readonly yenilenmeYili = 2026;
   protected kanallar = signal<ContactChannel[]>([]);
 
   /* Kurumsal sütunu menü verisinden okunur. Önce elle yazılmış bir liste
