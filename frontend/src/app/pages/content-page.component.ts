@@ -14,6 +14,7 @@ import { FaqComponent } from './faq.component';
 import { EImzaNavComponent } from './e-imza-nav.component';
 import { UnitsComponent } from './units.component';
 import { EmailOperationsComponent } from './email-operations.component';
+import { WebmailServicesComponent } from './webmail-services.component';
 
 /** /tr/<slug> ve /en/<slug> adreslerindeki içerik sayfası. */
 @Component({
@@ -25,7 +26,8 @@ import { EmailOperationsComponent } from './email-operations.component';
     FaqComponent,
     EImzaNavComponent,
     UnitsComponent,
-    EmailOperationsComponent
+    EmailOperationsComponent,
+    WebmailServicesComponent
   ],
   template: `
     <div class="kap sayfa-duzen">
@@ -63,7 +65,14 @@ import { EmailOperationsComponent } from './email-operations.component';
                 : 'Bilgi İşlem Daire Başkanlığımızın organizasyon yapısı aşağıda gösterilmiştir.' }}
             </p>
           }
-          @if (s.slug === 'email') {
+          @if (s.slug === 'webmail') {
+            <!-- E-posta giriş servisleri: kaynak görseller ve bağlantılar
+                 korunur; yalnızca bu sayfaya özel kullanım yönlendirmesi
+                 ve güvenli erişim açıklamasıyla sunulur. -->
+            <bidb-webmail-services
+              [rawHtml]="s.contentHtml ?? ''"
+              [dilDegeri]="language()"></bidb-webmail-services>
+          } @else if (s.slug === 'email') {
             <!-- E-Posta İşlemleri: kaynak bağlantıları, amaçlarına göre
                  ayrışan erişilebilir işlem kartlarına dönüştürülür. -->
             <bidb-email-operations

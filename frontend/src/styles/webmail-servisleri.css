@@ -1,0 +1,492 @@
+/*
+ * E-posta servis girişleri
+ *
+ * Mevcut üç servis görseli değiştirilmeden kullanılır. Yerleşim, ana hizmeti
+ * önceliklendirir; mezun erişimi ve hesap portalını ikincil ama eşit derecede
+ * bulunabilir tutar.
+ */
+
+@layer kamu {
+  .webmail-servisleri {
+    container-type: inline-size;
+    margin-top: clamp(1.5rem, 3vw, 2.25rem);
+  }
+
+  .webmail-giris {
+    position: relative;
+    display: grid;
+    grid-template-columns: 4.5rem minmax(0, 1fr) auto;
+    align-items: center;
+    gap: clamp(1.25rem, 3vw, 2rem);
+    overflow: hidden;
+    padding: clamp(1.5rem, 4vw, 2.25rem);
+    border: 1px solid var(--cizgi);
+    border-left: 3px solid var(--hu-kirmizi);
+    border-radius: var(--kose-sm);
+    background: var(--yuzey);
+    box-shadow: 0 8px 26px rgb(13 31 53 / 6%);
+  }
+
+  .webmail-giris::after {
+    content: "";
+    position: absolute;
+    right: -4rem;
+    bottom: -5rem;
+    width: 13rem;
+    height: 13rem;
+    border: 1px solid rgb(13 53 108 / 6%);
+    border-radius: 50%;
+    box-shadow:
+      0 0 0 2.5rem rgb(13 53 108 / 2.5%),
+      0 0 0 5rem rgb(13 53 108 / 1.5%);
+    pointer-events: none;
+  }
+
+  .webmail-giris-isaret {
+    position: relative;
+    z-index: 1;
+    width: 4.5rem;
+    height: 4.5rem;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgb(179 24 33 / 22%);
+    border-radius: 50%;
+    background: #fff6f7;
+    color: var(--hu-kirmizi);
+  }
+
+  .webmail-giris-isaret svg {
+    width: 2.55rem;
+    height: 2.55rem;
+  }
+
+  .webmail-giris-metin {
+    position: relative;
+    z-index: 1;
+    min-width: 0;
+  }
+
+  .webmail-giris-kod,
+  .webmail-secim-baslik > div > p,
+  .webmail-guvenlik-kod {
+    margin: 0 0 var(--bosluk-2);
+    color: var(--hu-kirmizi);
+    font-family: var(--yazi-kod);
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    line-height: 1.35;
+  }
+
+  .webmail-giris-metin h2 {
+    margin: 0 0 var(--bosluk-2);
+    color: var(--hu-lacivert);
+    font-size: clamp(1.25rem, 2.5vw, 1.65rem);
+    letter-spacing: -0.025em;
+    line-height: 1.25;
+  }
+
+  .webmail-giris-metin > p:last-child {
+    max-width: 66ch;
+    margin: 0;
+    color: var(--metin-2);
+    font-size: var(--olcu-sm);
+    line-height: 1.7;
+  }
+
+  .webmail-giris-durum {
+    position: relative;
+    z-index: 1;
+    min-width: 8.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--bosluk-2);
+    color: var(--metin-3);
+    font-family: var(--yazi-kod);
+    font-size: 0.57rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-align: right;
+  }
+
+  .webmail-durum-nokta {
+    width: 0.5rem;
+    height: 0.5rem;
+    flex: none;
+    border-radius: 50%;
+    background: #32845d;
+    box-shadow: 0 0 0 0.25rem rgb(50 132 93 / 12%);
+  }
+
+  .webmail-secim-baslik {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--bosluk-5);
+    margin: clamp(2.25rem, 5vw, 3.5rem) 0 var(--bosluk-4);
+    padding-bottom: var(--bosluk-4);
+    border-bottom: 1px solid var(--cizgi);
+  }
+
+  .webmail-secim-baslik h2 {
+    margin: 0;
+    color: var(--hu-lacivert);
+    font-size: clamp(1.25rem, 2.5vw, 1.6rem);
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+  }
+
+  .webmail-secim-baslik > span {
+    color: var(--metin-3);
+    font-family: var(--yazi-kod);
+    font-size: 0.61rem;
+    letter-spacing: 0.09em;
+    text-align: right;
+  }
+
+  .webmail-servis-izgarasi {
+    display: grid;
+    grid-template-columns: minmax(0, 1.18fr) minmax(17rem, 0.82fr);
+    grid-template-rows: repeat(2, minmax(13.5rem, auto));
+    gap: var(--bosluk-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .webmail-servis-kart {
+    min-width: 0;
+    border: 1px solid var(--cizgi);
+    border-radius: var(--kose-sm);
+    background: var(--yuzey);
+    box-shadow: 0 5px 18px rgb(13 31 53 / 5%);
+    transition:
+      border-color var(--gecis-normal),
+      box-shadow var(--gecis-normal),
+      transform var(--gecis-normal);
+  }
+
+  .webmail-servis-kart:hover,
+  .webmail-servis-kart:focus-within {
+    border-color: rgb(13 53 108 / 34%);
+    box-shadow: 0 15px 36px rgb(13 31 53 / 11%);
+    transform: translateY(-3px);
+  }
+
+  .webmail-servis-ana {
+    grid-row: 1 / 3;
+    border-color: var(--hu-lacivert);
+    background: var(--hu-lacivert);
+    box-shadow: 0 12px 30px rgb(13 31 53 / 17%);
+  }
+
+  .webmail-servis-kart > a {
+    position: relative;
+    isolation: isolate;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: clamp(1.35rem, 3vw, 2rem);
+    color: var(--hu-lacivert);
+  }
+
+  .webmail-servis-kart > a::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: -5rem;
+    right: -5rem;
+    width: 12rem;
+    height: 12rem;
+    border: 1px solid rgb(13 53 108 / 7%);
+    border-radius: 50%;
+    box-shadow:
+      0 0 0 2rem rgb(13 53 108 / 2.5%),
+      0 0 0 4rem rgb(13 53 108 / 1.5%);
+    pointer-events: none;
+  }
+
+  .webmail-servis-ana > a::after {
+    border-color: rgb(255 255 255 / 10%);
+    box-shadow:
+      0 0 0 2.5rem rgb(255 255 255 / 3%),
+      0 0 0 5rem rgb(255 255 255 / 2%);
+  }
+
+  .webmail-servis-kart > a:focus-visible {
+    outline: 3px solid rgb(179 24 33 / 32%);
+    outline-offset: 3px;
+  }
+
+  .webmail-kart-ust {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--bosluk-3);
+  }
+
+  .webmail-servis-sira,
+  .webmail-servis-tur {
+    font-family: var(--yazi-kod);
+    font-size: 0.61rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    line-height: 1.35;
+  }
+
+  .webmail-servis-sira {
+    color: var(--metin-3);
+  }
+
+  .webmail-servis-tur {
+    color: var(--hu-kirmizi);
+    text-align: right;
+  }
+
+  .webmail-servis-ana .webmail-servis-sira {
+    color: rgb(255 255 255 / 55%);
+  }
+
+  .webmail-servis-ana .webmail-servis-tur {
+    color: #ffb4b8;
+  }
+
+  .webmail-servis-gorsel {
+    width: 4.75rem;
+    height: 4.75rem;
+    display: grid;
+    place-items: center;
+    margin: var(--bosluk-4) 0;
+    border: 1px solid var(--cizgi);
+    border-radius: 50%;
+    background: var(--yuzey);
+  }
+
+  .webmail-servis-gorsel img {
+    width: 48px;
+    height: 48px;
+    display: block;
+    object-fit: contain;
+  }
+
+  .webmail-servis-ana .webmail-servis-gorsel {
+    width: 6.25rem;
+    height: 6.25rem;
+    margin-top: clamp(2rem, 6vw, 4.5rem);
+    border-color: rgb(255 255 255 / 24%);
+  }
+
+  .webmail-servis-icerik {
+    display: grid;
+    gap: var(--bosluk-3);
+  }
+
+  .webmail-servis-ad {
+    max-width: 22ch;
+    color: var(--hu-lacivert);
+    font-size: clamp(1.2rem, 2vw, 1.55rem);
+    font-weight: 680;
+    letter-spacing: -0.025em;
+    line-height: 1.25;
+  }
+
+  .webmail-servis-aciklama {
+    max-width: 49ch;
+    color: var(--metin-2);
+    font-size: var(--olcu-sm);
+    line-height: 1.65;
+  }
+
+  .webmail-servis-ana .webmail-servis-ad {
+    max-width: 18ch;
+    color: #fff;
+    font-size: clamp(1.6rem, 3.5vw, 2.3rem);
+  }
+
+  .webmail-servis-ana .webmail-servis-aciklama {
+    color: rgb(255 255 255 / 75%);
+    font-size: 0.94rem;
+  }
+
+  .webmail-servis-alt {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--bosluk-3);
+    margin-top: auto;
+    padding-top: var(--bosluk-5);
+  }
+
+  .webmail-servis-alan {
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--bosluk-2);
+    overflow-wrap: anywhere;
+    color: var(--metin-3);
+    font-family: var(--yazi-kod);
+    font-size: 0.58rem;
+    letter-spacing: 0.05em;
+  }
+
+  .webmail-servis-alan svg {
+    width: 1rem;
+    height: 1rem;
+    flex: none;
+  }
+
+  .webmail-servis-eylem {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--bosluk-2);
+    flex: none;
+    color: var(--hu-kirmizi);
+    font-family: var(--yazi-kod);
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+
+  .webmail-servis-eylem svg {
+    width: 1.15rem;
+    height: 1.15rem;
+    transition: transform var(--gecis-hizli);
+  }
+
+  .webmail-servis-kart:hover .webmail-servis-eylem svg,
+  .webmail-servis-kart:focus-within .webmail-servis-eylem svg {
+    transform: translateX(3px);
+  }
+
+  .webmail-servis-ana .webmail-servis-alan {
+    color: rgb(255 255 255 / 55%);
+  }
+
+  .webmail-servis-ana .webmail-servis-eylem {
+    color: #fff;
+  }
+
+  .webmail-guvenlik {
+    display: grid;
+    grid-template-columns: 3.75rem minmax(0, 1fr);
+    gap: var(--bosluk-4);
+    margin-top: var(--bosluk-5);
+    padding: clamp(1.25rem, 3vw, 1.75rem);
+    border: 1px solid #d6e4dc;
+    border-left: 3px solid #32845d;
+    border-radius: var(--kose-sm);
+    background: #f5faf7;
+  }
+
+  .webmail-guvenlik-ikon {
+    width: 3.75rem;
+    height: 3.75rem;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgb(50 132 93 / 22%);
+    border-radius: 50%;
+    background: #fff;
+    color: #26724f;
+  }
+
+  .webmail-guvenlik-ikon svg {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .webmail-guvenlik h2 {
+    margin: 0 0 var(--bosluk-2);
+    color: var(--hu-lacivert);
+    font-size: 1.12rem;
+    letter-spacing: -0.015em;
+  }
+
+  .webmail-guvenlik > div > p:last-child {
+    max-width: 72ch;
+    margin: 0;
+    color: var(--metin-2);
+    font-size: var(--olcu-sm);
+    line-height: 1.65;
+  }
+
+  @container (max-width: 42rem) {
+    .webmail-giris {
+      grid-template-columns: 4rem minmax(0, 1fr);
+    }
+
+    .webmail-giris-isaret {
+      width: 4rem;
+      height: 4rem;
+    }
+
+    .webmail-giris-durum {
+      grid-column: 2;
+      justify-content: flex-start;
+      text-align: left;
+    }
+
+    .webmail-servis-izgarasi {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto;
+    }
+
+    .webmail-servis-ana {
+      grid-row: auto;
+    }
+
+    .webmail-servis-ana .webmail-servis-gorsel {
+      width: 4.75rem;
+      height: 4.75rem;
+      margin-top: var(--bosluk-4);
+    }
+
+    .webmail-servis-ana .webmail-servis-ad {
+      font-size: clamp(1.4rem, 5vw, 1.85rem);
+    }
+  }
+
+  @container (max-width: 29rem) {
+    .webmail-giris {
+      grid-template-columns: 1fr;
+    }
+
+    .webmail-giris-durum {
+      grid-column: 1;
+    }
+
+    .webmail-secim-baslik {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: var(--bosluk-3);
+    }
+
+    .webmail-secim-baslik > span {
+      text-align: left;
+    }
+
+    .webmail-servis-alt {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .webmail-guvenlik {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .webmail-servis-kart,
+    .webmail-servis-eylem svg {
+      transition: none;
+    }
+
+    .webmail-servis-kart:hover,
+    .webmail-servis-kart:focus-within {
+      transform: none;
+    }
+  }
+}
