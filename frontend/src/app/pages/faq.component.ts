@@ -38,35 +38,47 @@ interface Kategori {
   template: `
     <div class="sss">
       <div class="sss-arac">
-        <div class="sss-arama">
-          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"
-               fill="none" stroke="currentColor" stroke-width="1.7">
-            <circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>
-          </svg>
-          <input type="search" [(ngModel)]="sorgu"
-                 [attr.aria-label]="dilDegeri === 'en' ? 'Search questions' : 'Sorularda ara'"
-                 [placeholder]="dilDegeri === 'en' ? 'Search in questions…' : 'Sorularda ara…'">
-          @if (sorgu()) {
-            <button type="button" class="sss-temizle" (click)="sorgu.set('')"
-                    [attr.aria-label]="dilDegeri === 'en' ? 'Clear' : 'Temizle'">×</button>
-          }
+        <div class="sss-arac-ust">
+          <div class="sss-arama">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"
+                 fill="none" stroke="currentColor" stroke-width="1.7"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>
+            </svg>
+            <input type="search" [(ngModel)]="sorgu"
+                   [attr.aria-label]="dilDegeri === 'en' ? 'Search questions' : 'Sorularda ara'"
+                   [placeholder]="dilDegeri === 'en' ? 'Search questions…' : 'Sorularda ara…'">
+            @if (sorgu()) {
+              <button type="button" class="sss-temizle" (click)="sorgu.set('')"
+                      [attr.aria-label]="dilDegeri === 'en' ? 'Clear search' : 'Aramayı temizle'">×</button>
+            }
+          </div>
+          <p class="sss-sonuc-sayisi" aria-live="polite" aria-atomic="true">
+            <strong>{{ gorunenSoruSayisi() }}</strong>
+            <span>{{ dilDegeri === 'en' ? 'results' : 'sonuç' }}</span>
+          </p>
         </div>
 
         @if (kategoriler().length > 1) {
-          <div class="sss-suzgec" role="group"
-               [attr.aria-label]="dilDegeri === 'en' ? 'Categories' : 'Kategoriler'">
-            <button type="button" [class.etkin]="etkinKategori() === null"
-                    (click)="etkinKategori.set(null)">
-              {{ dilDegeri === 'en' ? 'All' : 'Tümü' }}
-              <span class="sss-say">{{ toplamSoru() }}</span>
-            </button>
-            @for (k of kategoriler(); track k.ad) {
-              <button type="button" [class.etkin]="etkinKategori() === k.ad"
-                      (click)="etkinKategori.set(k.ad)">
-                {{ k.ad }}
-                <span class="sss-say">{{ k.sorular.length }}</span>
+          <div class="sss-filtre-satiri">
+            <span class="sss-filtre-etiket">{{ dilDegeri === 'en' ? 'Topics' : 'Konular' }}</span>
+            <div class="sss-suzgec" role="group"
+                 [attr.aria-label]="dilDegeri === 'en' ? 'Categories' : 'Kategoriler'">
+              <button type="button" [class.etkin]="etkinKategori() === null"
+                      [attr.aria-pressed]="etkinKategori() === null"
+                      (click)="etkinKategori.set(null)">
+                {{ dilDegeri === 'en' ? 'All' : 'Tümü' }}
+                <span class="sss-say">{{ toplamSoru() }}</span>
               </button>
-            }
+              @for (k of kategoriler(); track k.ad) {
+                <button type="button" [class.etkin]="etkinKategori() === k.ad"
+                        [attr.aria-pressed]="etkinKategori() === k.ad"
+                        (click)="etkinKategori.set(k.ad)">
+                  {{ kategoriEtiketi(k.ad) }}
+                  <span class="sss-say">{{ k.sorular.length }}</span>
+                </button>
+              }
+            </div>
           </div>
         }
       </div>
@@ -74,10 +86,14 @@ interface Kategori {
       @if (sonuc().length) {
         @for (k of sonuc(); track k.ad) {
           <section class="sss-bolum">
-            @if (k.ad) { <h2 class="sss-baslik">{{ k.ad }}</h2> }
-            @for (s of k.sorular; track s.soru) {
-              <details class="sss-oge" [open]="sorgu().length > 0">
+            <div class="sss-bolum-ust">
+              @if (k.ad) { <h2 class="sss-baslik">{{ kategoriEtiketi(k.ad) }}</h2> }
+              <span>{{ k.sorular.length }} {{ dilDegeri === 'en' ? 'questions' : 'soru' }}</span>
+            </div>
+            @for (s of k.sorular; track s.soru; let soruSirasi = $index) {
+              <details class="sss-oge">
                 <summary>
+                  <span class="sss-soru-sira" aria-hidden="true">{{ ikiHane(soruSirasi + 1) }}</span>
                   <span>{{ s.soru }}</span>
                   <span class="sss-isaret" aria-hidden="true"></span>
                 </summary>
@@ -87,11 +103,22 @@ interface Kategori {
           </section>
         }
       } @else {
-        <p class="sss-bos">
-          {{ dilDegeri === 'en'
-             ? 'No questions match your search.'
-             : 'Aramanızla eşleşen soru bulunamadı.' }}
-        </p>
+        <div class="sss-bos">
+          <svg viewBox="0 0 24 24" width="42" height="42" aria-hidden="true"
+               fill="none" stroke="currentColor" stroke-width="1.4"
+               stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M8.5 11h5"/>
+          </svg>
+          <strong>{{ dilDegeri === 'en' ? 'No matching question found' : 'Eşleşen soru bulunamadı' }}</strong>
+          <span>
+            {{ dilDegeri === 'en'
+               ? 'Try a different keyword or clear the selected filters.'
+               : 'Farklı bir anahtar kelime deneyin veya seçili filtreleri temizleyin.' }}
+          </span>
+          <button type="button" (click)="filtreleriTemizle()">
+            {{ dilDegeri === 'en' ? 'Clear filters' : 'Filtreleri temizle' }}
+          </button>
+        </div>
       }
     </div>
   `
@@ -126,6 +153,35 @@ export class FaqComponent {
       }))
       .filter((k) => k.sorular.length > 0);
   });
+
+  protected gorunenSoruSayisi = computed(() =>
+    this.sonuc().reduce((toplam, kategori) => toplam + kategori.sorular.length, 0)
+  );
+
+  protected ikiHane(sayi: number): string {
+    return sayi.toString().padStart(2, '0');
+  }
+
+  protected filtreleriTemizle(): void {
+    this.sorgu.set('');
+    this.etkinKategori.set(null);
+  }
+
+  protected kategoriEtiketi(ad: string): string {
+    const etiketler: Record<string, string> = {
+      'E-POSTA HİZMETİ': 'E-posta hizmeti',
+      'EBYS': 'EBYS',
+      'PROXY': 'Proxy',
+      'İNTERNET': 'İnternet',
+      'WEB SERVİSİ': 'Web servisi',
+      'E-İMZA': 'E-İmza',
+      'HUYS': 'HUYS',
+      'UYGULAMA VE PROGRAMLAR': 'Uygulama ve programlar',
+      'DİĞER': 'Diğer'
+    };
+
+    return etiketler[ad] ?? ad;
+  }
 
   protected guvenli(html: string): SafeHtml {
     return this.temizleyici.bypassSecurityTrustHtml(html);
