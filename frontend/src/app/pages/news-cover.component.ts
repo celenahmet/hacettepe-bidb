@@ -36,7 +36,10 @@ const HEDEF_ETIKETLERI: Record<NewsAudience, [string, string]> = {
             [attr.data-kategori]="category"
             [attr.data-sablon]="template">
       @if (imageUrl) {
-        <img [src]="imageUrl" [alt]="imageAlt || title" loading="lazy" decoding="async">
+        <img [src]="imageUrl"
+             [srcset]="yerelKucukGorsel(imageUrl) ? yerelKucukGorsel(imageUrl) + ' 480w, ' + yerelOrtaGorsel(imageUrl) + ' 720w, ' + imageUrl + ' 1000w' : null"
+             sizes="(max-width: 48rem) calc(100vw - 2.5rem), 24rem"
+             [alt]="imageAlt || title" loading="lazy" decoding="async">
       } @else {
         <span class="haber-sablon-cizgi" aria-hidden="true"></span>
         <span class="haber-sablon-nokta" aria-hidden="true"></span>
@@ -109,6 +112,16 @@ const HEDEF_ETIKETLERI: Record<NewsAudience, [string, string]> = {
 export class NewsCoverComponent {
   @Input() imageUrl: string | null = null;
   @Input() imageAlt: string | null = null;
+
+  protected yerelKucukGorsel(adres: string | null): string | null {
+    if (!adres || !/^\/images\/news\/[^?#]+\.webp(?:[?#].*)?$/i.test(adres)) return null;
+    return adres.replace(/\.webp(?=([?#]|$))/i, '-480.webp');
+  }
+
+  protected yerelOrtaGorsel(adres: string | null): string | null {
+    if (!adres || !/^\/images\/news\/[^?#]+\.webp(?:[?#].*)?$/i.test(adres)) return null;
+    return adres.replace(/\.webp(?=([?#]|$))/i, '-720.webp');
+  }
   @Input() title = '';
   @Input() category: NewsCategory = 'general';
   @Input() audience: NewsAudience = 'all-users';

@@ -16,7 +16,11 @@ import { QualityMetricsService } from './core/quality-metrics.service';
     <router-outlet></router-outlet>
 
     @if (siteKabugu()) {
-      <bidb-footer [language]="language()"></bidb-footer>
+      @defer (on viewport; on timer(100ms)) {
+        <bidb-footer [language]="language()"></bidb-footer>
+      } @placeholder {
+        <div class="alt-tetikleyici" aria-hidden="true"></div>
+      }
       <bidb-cookie-consent [language]="language()"></bidb-cookie-consent>
     }
   `

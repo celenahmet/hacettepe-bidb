@@ -11,6 +11,7 @@ import { readdirSync } from 'node:fs';
 import { LEGACY_ROUTES } from './legacy-routes';
 
 const browserDistFolder = join(import.meta.dirname, '../browser');
+let tamamlayiciStilDosyasi = '';
 
 const app = express();
 /**
@@ -276,6 +277,50 @@ function acikHataKodu(yol: string): number | null {
   return code >= 400 && code <= 599 ? code : null;
 }
 
+/**
+ * Ziyaretçi sayfaları sunucuda eksiksiz HTML olarak çizilir; başlık, içerik,
+ * bağlantılar ve görseller JavaScript beklemeden kullanılabilir. Angular'ın
+ * etkileşim katmanını aynı anda çalıştırmak düşük güçlü telefonlarda ilk boyama
+ * ile yarışıyordu. Modül betikleri ilk gerçek etkileşimde anında, etkileşim
+ * olmazsa sayfa yerleştikten sonra yüklenir.
+ *
+ * Angular'ın SSR event-dispatch sözleşmesi erken tıklamaları kaydedip hydration
+ * tamamlandığında yeniden oynattığı için ilk dokunma kaybolmaz. Yönetim paneli
+ * istemci taraflıdır ve bu dönüşümün özellikle dışında tutulur.
+ */
+function asamaliTarayiciBaslangici(html: string): string {
+  const moduller: string[] = [];
+  const govde = html
+    .replace(/\s*<link\s+rel="modulepreload"[^>]*>/gi, '')
+    .replace(/\s*<script\s+src="([^"]+)"\s+type="module"><\/script>/gi, (_etiket, src: string) => {
+      moduller.push(src);
+      return '';
+    });
+
+  if (moduller.length === 0) return html;
+  const kaynaklar = JSON.stringify(moduller).replace(/</g, '\\u003c');
+  const stil = JSON.stringify(tamamlayiciStilDosyasi ? `/${tamamlayiciStilDosyasi}` : '');
+  const baslat = `<script id="bidb-asamali-baslangic">
+(()=>{const q=${kaynaklar},c=${stil};let b=false;
+const m=()=>{let i=0;const s=()=>{if(i>=q.length)return;
+const e=document.createElement('script');e.type='module';e.src=q[i++];e.onload=s;document.body.appendChild(e)};s()};
+const y=()=>{if(b)return;b=true;if(!c)return m();const l=document.createElement('link');
+l.rel='stylesheet';l.href=c;l.onload=m;document.head.appendChild(l)};
+for(const o of ['pointerdown','keydown','touchstart','scroll','wheel'])addEventListener(o,y,{once:true,capture:true,passive:true});
+setTimeout(()=>{'requestIdleCallback'in window?requestIdleCallback(y,{timeout:1000}):y()},30000)})();
+</script>`;
+  return govde.replace('</body>', `${baslat}</body>`);
+}
+
+/** İçerik sayfaları ilk yanıtta kendi tamamlayıcı stil paketini alır. */
+function tamamlayiciStilEkle(html: string): string {
+  if (!tamamlayiciStilDosyasi || html.includes(tamamlayiciStilDosyasi)) return html;
+  return html.replace(
+    '</head>',
+    `<link rel="stylesheet" href="/${tamamlayiciStilDosyasi}"></head>`,
+  );
+}
+
 /* ---------- site haritası ve robots ---------- */
 
 app.get('/sitemap.xml', async (_req, res) => {
@@ -373,6 +418,7 @@ const varlikEsleme = new Map<string, string>();
 try {
   for (const name of readdirSync(browserDistFolder)) {
     if (/\.(js|css)$/i.test(name)) varlikEsleme.set(name.toLowerCase(), name);
+    if (/^tamamlayici(?:-[A-Z0-9]+)?\.css$/i.test(name)) tamamlayiciStilDosyasi = name;
   }
 } catch {
   // Derleme çıktısı yoksa (geliştirme sunucusu) eşleme boş kalır
@@ -448,8 +494,31 @@ app.use(async (req, res, next) => {
       basliklar.set('cache-control', 'public, max-age=0, s-maxage=60, stale-while-revalidate=300');
     }
 
+    const ziyaretciSayfasi = /^\/(tr|en)(\/|$)/.test(req.path) || hataKodu !== null;
+    if (ziyaretciSayfasi) {
+      const anaSayfa = /^\/(tr|en)\/?$/.test(req.path);
+      const govde = await yanit.text();
+      const html = asamaliTarayiciBaslangici(
+        anaSayfa ? govde : tamamlayiciStilEkle(govde),
+      );
+      return writeResponseToNodeResponse(
+        new Response(html, { status: hataKodu ?? yanit.status, headers: basliklar }),
+        res,
+      );
+    }
+
+    if (req.path === '/yonetim' || req.path.startsWith('/yonetim/')) {
+      return writeResponseToNodeResponse(
+        new Response(tamamlayiciStilEkle(await yanit.text()), {
+          status: yanit.status,
+          headers: basliklar,
+        }),
+        res,
+      );
+    }
+
     return writeResponseToNodeResponse(
-      new Response(yanit.body, { status: hataKodu ?? yanit.status, headers: basliklar }),
+      new Response(yanit.body, { status: yanit.status, headers: basliklar }),
       res,
     );
   } catch (e) {

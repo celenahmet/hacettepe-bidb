@@ -1,0 +1,29 @@
+/*
+ * İlk ekran dışında kullanılan sayfa ve yönetim paneli stilleri.
+ *
+ * Ana sayfada bu paket ilk etkileşim/kaydırmada, alt içerik çizilmeden önce
+ * yüklenir. İçerik ve hata sayfalarında sunucu paketi doğrudan <head> içine
+ * ekler. Böylece ana sayfa kullanılmayan binlerce kuralı ayrıştırmaz.
+ */
+@layer tokens, base, layout, legacy, site, kamu, panel, utility;
+
+@import "./styles/legacy-content.css";
+@import "./styles/kartlar.css";
+@import "./styles/dokumanlar.css";
+@import "./styles/web-servisleri.css";
+@import "./styles/cms.css";
+@import "./styles/guncelleme-durumu.css";
+@import "./styles/eposta-islemleri.css";
+@import "./styles/webmail-servisleri.css";
+@import "./styles/office365-rehberleri.css";
+@import "./styles/proxy-kartlari.css";
+@import "./styles/kutuk.css";
+@import "./styles/sema.css";
+@import "./styles/personel.css";
+@import "./styles/haberler.css";
+@import "./styles/sss.css";
+@import "./styles/birimler.css";
+@import "./styles/tablo.css";
+@import "./styles/hata.css";
+@import "./styles/cerez.css";
+@import "./styles/admin.css";

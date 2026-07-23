@@ -32,17 +32,16 @@ import { Language, Slide } from '../core/models';
                tabindex="-1">
 
         <div class="hero-gorseller">
-          @for (s of slaytlar; track s.imageUrl; let i = $index) {
-            <img class="hero-gorsel"
-                 [class.etkin]="i === etkin()"
+          @for (s of gecerliListe(); track s.imageUrl) {
+            <img class="hero-gorsel etkin"
                  [class.hero-gorsel--tabela]="tabelaGorseli(s.imageUrl)"
                  [src]="s.imageUrl"
-                 [srcset]="darSurum(s.imageUrl) + ' 960w, ' + s.imageUrl + ' 1920w'"
+                 [srcset]="mobilSurum(s.imageUrl) + ' 640w, ' + tabletSurum(s.imageUrl) + ' 800w, ' + darSurum(s.imageUrl) + ' 960w, ' + masaustuSurum(s.imageUrl) + ' 1440w, ' + s.imageUrl + ' 1920w'"
                  sizes="100vw"
-                 [alt]="i === etkin() ? (s.imageAlt ?? '') : ''"
-                 [attr.aria-hidden]="i === etkin() ? null : 'true'"
-                 [attr.loading]="i === 0 ? 'eager' : 'lazy'"
-                 [attr.fetchpriority]="i === 0 ? 'high' : null"
+                 [alt]="s.imageAlt ?? ''"
+                 loading="eager"
+                 decoding="async"
+                 [attr.fetchpriority]="etkin() === 0 ? 'high' : 'auto'"
                  width="1920" height="825">
           }
         </div>
@@ -126,6 +125,18 @@ export class HeroSliderComponent implements OnInit, OnDestroy {
 
   protected darSurum(adres: string): string {
     return adres.replace('-1920.webp', '-960.webp');
+  }
+
+  protected mobilSurum(adres: string): string {
+    return adres.replace('-1920.webp', '-640.webp');
+  }
+
+  protected tabletSurum(adres: string): string {
+    return adres.replace('-1920.webp', '-800.webp');
+  }
+
+  protected masaustuSurum(adres: string): string {
+    return adres.replace('-1920.webp', '-1440.webp');
   }
 
   /** Beytepe giriş tabelasının yazısını metin alanından uzaklaştıran özel kadraj. */

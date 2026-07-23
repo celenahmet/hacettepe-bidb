@@ -42,7 +42,8 @@
 
     --metin: #1c2530;
     --metin-2: #4a5765;
-    --metin-3: #6f7d8c;
+    /* WCAG AA: beyaz ve açık gri yüzeylerde küçük metin için en az 4.5:1. */
+    --metin-3: #667382;
     --metin-ters: #f2f5f8;
 
     --cizgi: #e1e6ec;

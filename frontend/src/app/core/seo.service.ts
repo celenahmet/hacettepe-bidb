@@ -93,6 +93,10 @@ export class Seo {
 
     this.belge.documentElement.lang = language;
     this.baglantiAyarla('canonical', canonical);
+    // Ana görsel tarayıcı tarafından HTML çözümlemesinin en başında keşfedilir.
+    // Özellikle mobil ağ profillerinde LCP görselinin CSS/JS sonrasına kalmasını
+    // önler. İstemci içi geçişte eski preload etiketi tekil olarak güncellenir.
+    this.gorselOnYukle(extras.image || sayfa?.seoImage || DEFAULT_IMAGE);
     const digerDil = language === 'en' ? 'tr' : 'en';
     this.baglantiAyarla('alternate', canonical, language);
     if (sayfa?.hasTranslation) {
@@ -203,5 +207,27 @@ export class Seo {
       this.belge.head.appendChild(el);
     }
     el.href = yol;
+  }
+
+  private gorselOnYukle(yol: string): void {
+    let el = this.belge.head.querySelector('link[data-bidb-lcp]') as HTMLLinkElement | null;
+    if (!el) {
+      el = this.belge.createElement('link');
+      el.rel = 'preload';
+      el.as = 'image';
+      el.setAttribute('data-bidb-lcp', '');
+      this.belge.head.appendChild(el);
+    }
+    const dar = yol.replace('-1920.webp', '-960.webp');
+    const mobil = yol.replace('-1920.webp', '-640.webp');
+    const tablet = yol.replace('-1920.webp', '-800.webp');
+    const masaustu = yol.replace('-1920.webp', '-1440.webp');
+    el.href = mobil;
+    el.setAttribute(
+      'imagesrcset',
+      `${mobil} 640w, ${tablet} 800w, ${dar} 960w, ${masaustu} 1440w, ${yol} 1920w`,
+    );
+    el.setAttribute('imagesizes', '100vw');
+    el.setAttribute('fetchpriority', 'high');
   }
 }

@@ -17,9 +17,14 @@ export interface PageResult {
 export class Api {
   private http = inject(HttpClient);
 
-  // Hem tarayıcıda hem sunucuda göreli adres kullanılır; SSR sunucusu
-  // /api isteklerini backend servisine iletir.
-  private taban = typeof window === 'undefined' ? 'http://localhost:4000' : '';
+  /**
+   * SSR doğrudan backend ağına gider; tarayıcı kendi origin'ini kullanır.
+   * Sunucu yapılandırmasındaki origin eşlemesi sayesinde SSR yanıtı hydration
+   * aktarım önbelleğine yazılır ve tarayıcı aynı veriyi ikinci kez istemez.
+   */
+  private taban = typeof window === 'undefined'
+    ? (process.env['BIDB_API'] ?? 'http://localhost:8081')
+    : window.location.origin;
 
   /**
    * İçerik sayfasının yalnızca boş olup olmadığını değil, neden

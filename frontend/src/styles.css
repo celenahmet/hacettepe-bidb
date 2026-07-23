@@ -17,28 +17,8 @@
 @layer tokens, base, layout, legacy, site, kamu, panel, utility;
 
 @import "./styles/tokens.css";
-@import "./styles/legacy-content.css";
 @import "./styles/public.css";
-@import "./styles/kartlar.css";
-@import "./styles/dokumanlar.css";
-@import "./styles/web-servisleri.css";
-@import "./styles/cms.css";
-@import "./styles/guncelleme-durumu.css";
-@import "./styles/eposta-islemleri.css";
-@import "./styles/webmail-servisleri.css";
-@import "./styles/office365-rehberleri.css";
-@import "./styles/proxy-kartlari.css";
-@import "./styles/kutuk.css";
-@import "./styles/sema.css";
-@import "./styles/personel.css";
-@import "./styles/haberler.css";
-@import "./styles/sss.css";
-@import "./styles/birimler.css";
 @import "./styles/hero.css";
-@import "./styles/tablo.css";
-@import "./styles/hata.css";
-@import "./styles/cerez.css";
-@import "./styles/admin.css";
 
 @layer site {
   /* Not: yönetim tablolarının dar ekran davranışı panel katmanında,

@@ -510,6 +510,32 @@
     padding-bottom: var(--bosluk-4);
   }
   .alt-serit small { color: var(--metin-3); font-size: var(--olcu-xs); }
+
+  /* İlk ekran dışındaki yoğun bölümler başlangıç yerleşimini bloke etmez. */
+  .duyurular,
+  .servisler,
+  bidb-footer {
+    content-visibility: auto;
+  }
+  .duyurular { contain-intrinsic-size: auto 1800px; }
+  .servisler { contain-intrinsic-size: auto 520px; }
+  bidb-footer { contain-intrinsic-size: auto 680px; }
+
+  /*
+   * Ana sayfanın hero sonrasındaki tüm omurgası ilk ekranın dışındadır.
+   * İçerik DOM ve erişilebilirlik ağacında kalır; stil ve yerleşim hesabı
+   * kullanıcı bu bölüme yaklaşana kadar ertelenir.
+   */
+  bidb-home-page > .sayfa-duzen {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 2600px;
+  }
+
+  .ana-devam-tetikleyici,
+  .alt-tetikleyici {
+    width: 100%;
+    height: 1px;
+  }
   .alt-yardimci {
     display: flex;
     flex-wrap: wrap;
