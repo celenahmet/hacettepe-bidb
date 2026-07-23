@@ -19,7 +19,7 @@
      içlerindeki blok yapının üstünde satır yüksekliği kadar boşluk oluşur. */
   :is(
     bidb-header, bidb-footer, bidb-side-menu,
-    bidb-home-page, bidb-content-page, bidb-news-page,
+    bidb-home-page, bidb-content-page, bidb-news-page, bidb-error-page,
     bidb-admin-panel, bidb-page-editor
   ) { display: block; }
 }

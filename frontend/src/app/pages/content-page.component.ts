@@ -1,5 +1,5 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { switchMap, map, tap } from 'rxjs/operators';
@@ -137,6 +137,7 @@ import { Office365GuidesComponent } from './office365-guides.component';
 })
 export class ContentPageComponent {
   private rota = inject(ActivatedRoute);
+  private router = inject(Router);
   private api = inject(Api);
   private seo = inject(Seo);
   private temizleyici = inject(DomSanitizer);
@@ -180,14 +181,18 @@ export class ContentPageComponent {
         this.language.set(language);
         this.etkinYol.set("/" + language + "/" + slug);
         this.bolumuCoz(language, "/" + language + "/" + slug);
-        return this.api.sayfa(language, slug).pipe(
-          tap((s) => {
+        return this.api.sayfaSonucu(language, slug).pipe(
+          tap(({ page: s, status }) => {
+            if (!s) {
+              void this.router.navigate(['/error', status], { replaceUrl: true });
+              return;
+            }
             this.seo.uygula(s, language, `/${language}/${slug}`);
             // İçerik kaynaktan birebir alındığı ve kurum tarafından yönetildiği için
             // olduğu gibi basılır.
             this.govde.set(this.temizleyici.bypassSecurityTrustHtml(icerigiHazirla(s?.contentHtml ?? '')));
           }),
-          map((s) => s as Page | null)
+          map(({ page }) => page as Page | null)
         );
       })
     ),

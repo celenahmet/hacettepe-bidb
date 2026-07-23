@@ -251,6 +251,15 @@ async function sayfaYok(yol: string): Promise<boolean> {
   return tazelenmis.size > 0 && !tazelenmis.has(p.toLowerCase());
 }
 
+/** /error/<kod> adresindeki geçerli HTTP hata kodunu döndürür. Bileşen
+ *  bütün kodları aynı rotada çizse de ağ yanıtı da gerçeği söylemelidir. */
+function acikHataKodu(yol: string): number | null {
+  const eslesme = yol.replace(/\/+$/, '').match(/^\/error\/(\d{3})$/);
+  if (!eslesme) return null;
+  const code = Number(eslesme[1]);
+  return code >= 400 && code <= 599 ? code : null;
+}
+
 /* ---------- site haritası ve robots ---------- */
 
 app.get('/sitemap.xml', async (_req, res) => {
@@ -333,13 +342,22 @@ app.use(
 /**
  * Handle all other requests by rendering the Angular application.
  *
- * Var olmayan bir sayfa istendiğinde Angular "Sayfa bulunamadı" ekranını
- * basar; bu ekranın HTTP durumu da 404 olmalıdır. Aksi hâlde arama motorları
- * hata sayfasını geçerli bir sayfa sanıp dizine ekler ("yumuşak 404").
+ * Var olmayan bir sayfa önce /error/404 ortak rotasına taşınır. Hata
+ * rotalarının HTML gövdesi Angular tarafından çizilir, HTTP durumu ise
+ * buradaki kod parametresinden alınır. Böylece arama motorlarına 200 dönen
+ * bir "yumuşak 404" oluşmaz.
  */
 app.use(async (req, res, next) => {
   try {
     const bulunamadi = await sayfaYok(req.path);
+    // Veritabanında bulunmayan içerik adresleri ortak 404 rotasına taşınır;
+    // böylece hem görünen URL hem de paylaşılan hata kodu tutarlı olur.
+    if (bulunamadi) {
+      const sorgu = req.originalUrl.slice(req.path.length);
+      return res.redirect(302, '/error/404' + sorgu);
+    }
+
+    const hataKodu = acikHataKodu(req.path);
     const yanit = await angularApp.handle(req);
     if (!yanit) return next();
 
@@ -350,9 +368,10 @@ app.use(async (req, res, next) => {
     // yanlış kalır ve tarayıcı sayfayı yarıda keser.
     const basliklar = new Headers(yanit.headers);
     basliklar.delete('content-length');
+    if (hataKodu) basliklar.set('cache-control', 'no-store');
 
     return writeResponseToNodeResponse(
-      new Response(yanit.body, { status: bulunamadi ? 404 : yanit.status, headers: basliklar }),
+      new Response(yanit.body, { status: hataKodu ?? yanit.status, headers: basliklar }),
       res,
     );
   } catch (e) {

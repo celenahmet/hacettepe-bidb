@@ -1,0 +1,318 @@
+/*
+ * Ortak hata yüzeyi tek bir dinamik bileşene aittir. Büyük hata kodu dekor
+ * değil, destek görüşmesinde paylaşılacak asıl bilgidir; içerik bu yüzden
+ * kod, açıklama ve çözüm sırasıyla okunur. İnce çizgiler ve kontrollü
+ * boşluklar kurum sitesinin mevcut dilini sürdürür, gösterişli efektlere
+ * başvurmaz.
+ */
+
+@layer kamu {
+  .hata-sayfasi {
+    min-height: clamp(31rem, 62vh, 46rem);
+    background:
+      linear-gradient(90deg, var(--hu-kirmizi) 0 4px, transparent 4px) top left / 100% 4px no-repeat,
+      var(--yuzey-2);
+  }
+
+  .hata-kap {
+    padding-top: clamp(2rem, 5vw, 4.5rem);
+    padding-bottom: clamp(3rem, 7vw, 6rem);
+  }
+
+  .hata-iz {
+    display: flex;
+    align-items: center;
+    gap: var(--bosluk-2);
+    margin-bottom: var(--bosluk-5);
+    color: var(--metin-3);
+    font-size: var(--olcu-sm);
+  }
+
+  .hata-iz a {
+    color: var(--hu-lacivert);
+  }
+
+  .hata-panel {
+    --hata-vurgu: var(--hu-kirmizi);
+    display: grid;
+    grid-template-columns: minmax(13rem, 0.72fr) minmax(0, 1.55fr);
+    overflow: hidden;
+    border: 1px solid var(--cizgi-koyu);
+    border-top: 3px solid var(--hata-vurgu);
+    background: var(--yuzey);
+    box-shadow: var(--golge-2);
+  }
+
+  .hata-panel[data-family="access"] { --hata-vurgu: #9a6b00; }
+  .hata-panel[data-family="limit"] { --hata-vurgu: #8c5a18; }
+  .hata-panel[data-family="server"],
+  .hata-panel[data-family="service"] { --hata-vurgu: var(--hu-lacivert); }
+
+  .hata-kod {
+    position: relative;
+    display: flex;
+    min-height: 28rem;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: clamp(2rem, 4vw, 3.5rem);
+    overflow: hidden;
+    color: var(--metin-ters);
+    background: var(--yuzey-ters);
+  }
+
+  .hata-kod::before,
+  .hata-kod::after {
+    content: "";
+    position: absolute;
+    right: -6rem;
+    border: 1px solid rgb(255 255 255 / 9%);
+    border-radius: 50%;
+  }
+
+  .hata-kod::before {
+    top: -8rem;
+    width: 19rem;
+    height: 19rem;
+  }
+
+  .hata-kod::after {
+    top: -4rem;
+    width: 12rem;
+    height: 12rem;
+  }
+
+  .hata-kod span {
+    position: relative;
+    z-index: 1;
+    color: #c7d2df;
+    font-size: var(--olcu-xs);
+    font-weight: var(--kalinlik-orta);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .hata-kod strong {
+    position: relative;
+    z-index: 1;
+    font-family: var(--yazi-baslik);
+    font-size: clamp(5rem, 10vw, 8.5rem);
+    font-weight: var(--kalinlik-kalin);
+    letter-spacing: -0.07em;
+    line-height: 0.86;
+  }
+
+  .hata-kod i {
+    width: 3.5rem;
+    height: 3px;
+    background: var(--hata-vurgu);
+  }
+
+  .hata-metin {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(2.25rem, 5vw, 5rem);
+  }
+
+  .hata-ust-baslik {
+    margin: 0 0 var(--bosluk-3);
+    color: var(--hata-vurgu);
+    font-size: var(--olcu-xs);
+    font-weight: var(--kalinlik-kalin);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .hata-metin h1 {
+    max-width: 13ch;
+    margin: 0 0 var(--bosluk-4);
+    color: var(--hu-lacivert);
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    font-weight: var(--kalinlik-kalin);
+    letter-spacing: -0.025em;
+    line-height: 1.12;
+  }
+
+  .hata-aciklama {
+    max-width: 44rem;
+    margin: 0;
+    color: var(--metin-2);
+    font-size: var(--olcu-lg);
+    line-height: var(--satir-normal);
+  }
+
+  .hata-eylemler {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--bosluk-3);
+    margin-top: var(--bosluk-6);
+  }
+
+  .hata-eylemler a,
+  .hata-eylemler button {
+    display: inline-flex;
+    min-height: 3rem;
+    align-items: center;
+    justify-content: center;
+    gap: var(--bosluk-2);
+    padding: 0.7rem 1.15rem;
+    border: 1px solid var(--cizgi-koyu);
+    border-radius: var(--kose-sm);
+    font: inherit;
+    font-weight: var(--kalinlik-orta);
+    cursor: pointer;
+    transition:
+      border-color var(--gecis-hizli),
+      background-color var(--gecis-hizli),
+      color var(--gecis-hizli);
+  }
+
+  .hata-eylemler .hata-ana-eylem {
+    border-color: var(--hu-lacivert);
+    color: var(--metin-ters);
+    background: var(--hu-lacivert);
+  }
+
+  .hata-eylemler button {
+    color: var(--hu-lacivert);
+    background: var(--yuzey);
+  }
+
+  .hata-eylemler a:hover {
+    border-color: var(--hu-kirmizi);
+    background: var(--hu-kirmizi);
+  }
+
+  .hata-eylemler button:hover {
+    border-color: var(--hu-lacivert);
+    background: var(--yuzey-2);
+  }
+
+  .hata-eylemler svg {
+    width: 1.15rem;
+    height: 1.15rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .hata-bilgi {
+    display: grid;
+    grid-template-columns: 2rem minmax(0, 1fr);
+    gap: var(--bosluk-3);
+    margin-top: var(--bosluk-6);
+    padding-top: var(--bosluk-5);
+    border-top: 1px solid var(--cizgi);
+  }
+
+  .hata-bilgi > svg {
+    width: 1.55rem;
+    height: 1.55rem;
+    margin-top: 0.1rem;
+    fill: none;
+    stroke: var(--hata-vurgu);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+  }
+
+  .hata-bilgi h2 {
+    margin: 0 0 var(--bosluk-1);
+    color: var(--metin);
+    font-size: var(--olcu-md);
+    font-weight: var(--kalinlik-kalin);
+  }
+
+  .hata-bilgi p {
+    max-width: 44rem;
+    margin: 0;
+    color: var(--metin-2);
+    font-size: var(--olcu-sm);
+  }
+
+  .hata-alt {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--bosluk-4);
+    padding: var(--bosluk-4) var(--bosluk-5);
+    border: 1px solid var(--cizgi);
+    border-top: 0;
+    background: var(--yuzey);
+    color: var(--metin-2);
+    font-size: var(--olcu-sm);
+  }
+
+  .hata-alt p {
+    margin: 0;
+  }
+
+  .hata-alt a {
+    flex: 0 0 auto;
+    color: var(--hu-lacivert);
+    font-weight: var(--kalinlik-orta);
+  }
+
+  @media (max-width: 52rem) {
+    .hata-panel {
+      grid-template-columns: 1fr;
+    }
+
+    .hata-kod {
+      min-height: auto;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      gap: var(--bosluk-4);
+      padding: var(--bosluk-5);
+    }
+
+    .hata-kod strong {
+      grid-row: span 2;
+      font-size: clamp(4rem, 18vw, 6.5rem);
+    }
+
+    .hata-kod i {
+      align-self: end;
+    }
+  }
+
+  @media (max-width: 36rem) {
+    .hata-kap {
+      padding-inline: var(--bosluk-4);
+    }
+
+    .hata-iz {
+      margin-bottom: var(--bosluk-4);
+    }
+
+    .hata-metin {
+      padding: var(--bosluk-5);
+    }
+
+    .hata-eylemler {
+      align-items: stretch;
+      flex-direction: column;
+    }
+
+    .hata-eylemler a,
+    .hata-eylemler button {
+      width: 100%;
+    }
+
+    .hata-alt {
+      align-items: flex-start;
+      flex-direction: column;
+      padding: var(--bosluk-4);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hata-eylemler a,
+    .hata-eylemler button {
+      transition: none;
+    }
+  }
+}

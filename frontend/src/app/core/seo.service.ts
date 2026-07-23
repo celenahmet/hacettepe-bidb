@@ -42,6 +42,9 @@ export class Seo {
       : siteAdi;
 
     this.title.setTitle(title);
+    // Bir hata ekranından normal sayfaya istemci tarafında geçildiğinde
+    // noindex kararı yeni sayfaya taşınmamalıdır.
+    this.meta.removeTag("name='robots'");
     this.ayarla('description', sayfa?.seoDescription || '');
     this.ayarla('keywords', sayfa?.seoKeywords || '');
 
@@ -63,6 +66,25 @@ export class Seo {
     } else {
       this.baglantiKaldir('alternate', digerDil);
     }
+  }
+
+  /** Hata sayfaları arama sonuçlarına alınmaz; başlık ve açıklama yine de
+   *  tarayıcı geçmişi ve erişilebilirlik araçları için anlamlı tutulur. */
+  hata(code: number, baslik: string, aciklama: string, yol: string): void {
+    const siteAdi = SITE_NAME.tr;
+    const title = `${code} · ${baslik} — ${siteAdi}`;
+    this.title.setTitle(title);
+    this.ayarla('description', aciklama);
+    this.ayarla('keywords', '');
+    this.meta.updateTag({ name: 'robots', content: 'noindex, nofollow' });
+    this.meta.updateTag({ property: 'og:title', content: title });
+    this.meta.updateTag({ property: 'og:description', content: aciklama });
+    this.meta.updateTag({ property: 'og:type', content: 'website' });
+    this.meta.updateTag({ property: 'og:site_name', content: siteAdi });
+    this.belge.documentElement.lang = 'tr';
+    this.baglantiAyarla('canonical', yol);
+    this.baglantiKaldir('alternate', 'tr');
+    this.baglantiKaldir('alternate', 'en');
   }
 
   private ayarla(name: string, icerik: string): void {

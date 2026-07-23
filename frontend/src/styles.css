@@ -36,6 +36,7 @@
 @import "./styles/birimler.css";
 @import "./styles/hero.css";
 @import "./styles/tablo.css";
+@import "./styles/hata.css";
 @import "./styles/admin.css";
 
 @layer site {

@@ -115,15 +115,26 @@ async function durum(u) {
   const ekstra = [
     ["sitemap.xml", "/sitemap.xml", 200],
     ["robots.txt", "/robots.txt", 200],
-    ["olmayan sayfa 404", "/tr/olmayan-sayfa-xyz", 404],
+    // Bulunamayan adres önce ortak hata rotasına taşınır; ardından hata
+    // rotasının kendisi gerçek 404 durumunu verir. İki aşama ayrı ayrı
+    // denetlenir ki yalnızca görsel bir "404" ekranı 200 dönemesin.
+    ["olmayan sayfa hata rotası", "/tr/olmayan-sayfa-xyz", 302, "/error/404"],
+    ["ortak 404 HTTP durumu", "/error/404", 404],
     ["eski adres yönlendirmesi", "/tr/geneltanitim", 301]
   ];
   let ekstraHata = 0;
-  for (const [ad, yol, beklenen] of ekstra) {
-    const k = await durum(SITE + yol);
-    const ok = k === beklenen;
+  for (const [ad, yol, beklenen, beklenenKonum] of ekstra) {
+    const y = await fetch(SITE + yol, { redirect: "manual" });
+    const k = y.status;
+    const konum = y.headers.get("location") || "";
+    const konumDogru = !beklenenKonum || new URL(konum, SITE).pathname === beklenenKonum;
+    const ok = k === beklenen && konumDogru;
     if (!ok) ekstraHata++;
-    console.log("      " + ad.padEnd(30) + (ok ? "✓ " : "✗ ") + k + (ok ? "" : " (beklenen " + beklenen + ")"));
+    const ayrinti = ok
+      ? ""
+      : " (beklenen " + beklenen + (beklenenKonum ? " → " + beklenenKonum : "") + ")";
+    console.log("      " + ad.padEnd(30) + (ok ? "✓ " : "✗ ") + k +
+      (beklenenKonum ? " → " + konum : "") + ayrinti);
   }
 
   const toplamHata = rapor.reduce((t, r) => t + r[2], 0) + ekstraHata;

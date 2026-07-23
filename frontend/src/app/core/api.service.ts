@@ -1,9 +1,14 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { yenidenDene } from './yeniden-dene';
 import { HomeData, Language, Menu, Page, Slide, SocialAccount, StaffUnit } from './models';
+
+export interface PageResult {
+  page: Page | null;
+  status: number;
+}
 
 /** Backend REST servisine erişim.
  *  Adres, ortam değişkeninden (API_URL) veya varsayılan olarak
@@ -16,10 +21,24 @@ export class Api {
   // /api isteklerini backend servisine iletir.
   private taban = typeof window === 'undefined' ? 'http://localhost:4000' : '';
 
-  sayfa(language: Language, slug: string): Observable<Page | null> {
+  /**
+   * İçerik sayfasının yalnızca boş olup olmadığını değil, neden
+   * alınamadığını da taşır. Böylece 404 ile geçici servis kesintisi aynı
+   * ekrana düşmez; ziyaretçi gerçek hata koduna yönlendirilir.
+   */
+  sayfaSonucu(language: Language, slug: string): Observable<PageResult> {
     return this.http
       .get<Page>(`${this.taban}/api/${language}/pages/${slug}`)
-      .pipe(yenidenDene(), catchError(() => of(null)));
+      .pipe(
+        yenidenDene(),
+        map((page) => ({ page, status: 200 })),
+        catchError((error: HttpErrorResponse) =>
+          of({
+            page: null,
+            status: error.status >= 400 && error.status <= 599 ? error.status : 503
+          })
+        )
+      );
   }
 
   anaSayfa(language: Language): Observable<HomeData> {

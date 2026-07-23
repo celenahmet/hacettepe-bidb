@@ -1,8 +1,8 @@
 import { Component, inject, signal } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { switchMap, tap } from 'rxjs';
+import { catchError, of, switchMap, tap } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { SideMenuComponent } from '../layout/side-menu.component';
 import { Language } from '../core/models';
@@ -88,6 +88,7 @@ interface Haber {
 })
 export class NewsPageComponent {
   private rota = inject(ActivatedRoute);
+  private router = inject(Router);
   private http = inject(HttpClient);
   private seo = inject(Seo);
   private temizleyici = inject(DomSanitizer);
@@ -109,6 +110,11 @@ export class NewsPageComponent {
               `/${language}/newsItem/${slug}`
             );
             this.govde.set(h.contentHtml ? this.temizleyici.bypassSecurityTrustHtml(icerigiHazirla(h.contentHtml)) : null);
+          }),
+          catchError((error: HttpErrorResponse) => {
+            const status = error.status >= 400 && error.status <= 599 ? error.status : 503;
+            void this.router.navigate(['/error', status], { replaceUrl: true });
+            return of(null);
           })
         );
       })
