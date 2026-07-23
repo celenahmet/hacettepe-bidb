@@ -90,12 +90,12 @@ import { CookiePreferencesService } from '../../core/cookie-preferences.service'
                         : 'Yalnızca bu bildirimin hatırlanması ve doğrulanmış yönetim oturumunun sürdürülmesi için kullanılır.' }}
                   </article>
                   <article>
-                    <span class="cerez-durum kapali">{{ language() === 'en' ? 'Not in use' : 'Kullanılmıyor' }}</span>
+                    <span class="cerez-durum etkin">{{ language() === 'en' ? 'Anonymous' : 'Anonim' }}</span>
                     <h3>{{ language() === 'en' ? 'Analytics and performance' : 'Analiz ve performans' }}</h3>
                     <p>
                       {{ language() === 'en'
-                        ? 'No analytics provider or visitor measurement identifier is active.'
-                        : 'Analiz sağlayıcısı veya ziyaretçi ölçüm tanımlayıcısı etkin değildir.' }}
+                        ? 'Core Web Vitals are measured without cookies or visitor identifiers. Only the visited route and numerical LCP, INP, CLS, FCP and TTFB values are retained for up to 90 days.'
+                        : 'Core Web Vitals değerleri çerez veya ziyaretçi tanımlayıcısı olmadan ölçülür. Yalnızca ziyaret edilen rota ile sayısal LCP, INP, CLS, FCP ve TTFB değerleri en fazla 90 gün saklanır.' }}
                   </article>
                   <article>
                     <span class="cerez-durum kapali">{{ language() === 'en' ? 'Not in use' : 'Kullanılmıyor' }}</span>

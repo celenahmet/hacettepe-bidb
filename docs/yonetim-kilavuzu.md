@@ -192,3 +192,17 @@ SSR çıktısına ve sosyal paylaşım etiketlerine doğrudan yansır.
 Kendi detay sayfası bulunan duyurularda SEO başlığı ve açıklaması boş
 bırakılırsa duyuru başlığı ile özeti güvenli varsayılan olarak kullanılır.
 Fotoğraf varsa Open Graph ve `NewsArticle` görseli olarak da yayınlanır.
+
+## SEO ve Performans kalite merkezi
+
+Yönetim paneli açıldığında ilk sekme kalite merkezidir. SEO bütünlüğü
+veritabanındaki bütün yayınlanmış sayfa ve duyurular üzerinden anlık
+hesaplanır. Geliştirme kuyruğu en düşük puanlı kaydı önce gösterir; eksik
+açıklama, uygun olmayan başlık uzunluğu, paylaşım görseli ve indeksleme kararı
+ayrı ayrı görülebilir.
+
+Performans bölümü son 28 gündeki anonim gerçek kullanıcı verilerinin 75.
+yüzdeliğini gösterir. LCP, INP, CLS, FCP ve TTFB kartlarındaki “İyi /
+İyileştirilmeli / Zayıf” değerlendirmesi backend tarafından standart
+eşiklerden hesaplanır. Yeni kurulumda bu alanın dolması için gerçek sayfa
+ziyaretlerinin oluşması gerekir.

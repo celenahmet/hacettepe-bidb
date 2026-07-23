@@ -869,6 +869,135 @@
 
   input.dar { width: 72px; }
 
+  /* ================= SEO ve performans kalite merkezi =================
+   * Puanlar yalnızca renk taşımaz: sayı, etiket ve açıklama birlikte verilir.
+   * Kartlar gösterge tablosu yoğunluğunu korurken mobilde tek kolona iner. */
+
+  .kalite-ozet {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--bosluk-4);
+    margin-bottom: var(--bosluk-7);
+  }
+
+  .kalite-puan {
+    min-height: 178px;
+    padding: var(--bosluk-5);
+    border: 1px solid var(--cizgi);
+    border-top: 3px solid var(--kalite-renk, var(--hu-lacivert));
+    background: var(--yuzey-1);
+  }
+
+  .kalite-puan[data-level="good"] { --kalite-renk: #177245; }
+  .kalite-puan[data-level="needs-improvement"] { --kalite-renk: #aa6b00; }
+  .kalite-puan[data-level="poor"] { --kalite-renk: var(--hu-kirmizi); }
+  .kalite-puan[data-level="unknown"] { --kalite-renk: #7a8795; }
+
+  .kalite-puan > span {
+    display: block;
+    color: var(--metin-acik);
+    font-size: var(--olcu-xs);
+    font-weight: var(--kalinlik-kalin);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+
+  .kalite-puan > strong {
+    display: block;
+    margin: var(--bosluk-3) 0 var(--bosluk-2);
+    color: var(--murekkep);
+    font-size: clamp(42px, 5vw, 68px);
+    font-weight: var(--kalinlik-normal);
+    line-height: 1;
+  }
+
+  .kalite-puan > small { color: var(--metin-acik); }
+  .kalite-puan--bilgi > .kalite-zaman {
+    font-size: var(--olcu-xl);
+    line-height: 1.3;
+  }
+  .kalite-puan--bilgi button { margin-top: var(--bosluk-4); }
+
+  .kalite-bolum {
+    margin-top: var(--bosluk-7);
+    padding-top: var(--bosluk-5);
+    border-top: 1px solid var(--cizgi);
+  }
+
+  .kalite-bolum > header {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: var(--bosluk-5);
+    margin-bottom: var(--bosluk-5);
+  }
+
+  .kalite-bolum > header h2 { margin: var(--bosluk-1) 0 0; }
+  .kalite-bolum > header p {
+    max-width: 460px;
+    margin: 0;
+    color: var(--metin-acik);
+    font-size: var(--olcu-sm);
+  }
+
+  .kalite-vital-izgara {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: var(--bosluk-3);
+  }
+
+  .kalite-vital {
+    padding: var(--bosluk-4);
+    border: 1px solid var(--cizgi);
+    border-left: 3px solid var(--kalite-renk);
+    background: var(--yuzey-1);
+  }
+  .kalite-vital[data-rating="good"] { --kalite-renk: #177245; }
+  .kalite-vital[data-rating="needs-improvement"] { --kalite-renk: #aa6b00; }
+  .kalite-vital[data-rating="poor"] { --kalite-renk: var(--hu-kirmizi); }
+
+  .kalite-vital > div {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--bosluk-3);
+  }
+  .kalite-vital > div span {
+    color: var(--kalite-renk);
+    font-size: var(--olcu-xs);
+    font-weight: var(--kalinlik-kalin);
+    letter-spacing: .1em;
+  }
+  .kalite-vital > div strong { color: var(--murekkep); font-size: var(--olcu-xl); }
+  .kalite-vital p {
+    overflow-wrap: anywhere;
+    margin: var(--bosluk-3) 0 var(--bosluk-2);
+    font-size: var(--olcu-sm);
+  }
+  .kalite-vital small { color: var(--metin-acik); }
+
+  .kalite-bos {
+    padding: var(--bosluk-5);
+    border-left: 3px solid var(--hu-lacivert);
+    background: var(--yuzey-2);
+  }
+  .kalite-bos p { max-width: 680px; margin-bottom: 0; color: var(--metin-acik); }
+
+  .kalite-rozet {
+    display: inline-grid;
+    place-items: center;
+    min-width: 42px;
+    min-height: 32px;
+    border: 1px solid var(--kalite-renk);
+    color: var(--kalite-renk);
+    font-weight: var(--kalinlik-kalin);
+  }
+  .kalite-rozet[data-level="good"] { --kalite-renk: #177245; }
+  .kalite-rozet[data-level="needs-improvement"] { --kalite-renk: #aa6b00; }
+  .kalite-rozet[data-level="poor"] { --kalite-renk: var(--hu-kirmizi); }
+  .kalite-tablo ul { margin: 0; padding-left: 18px; color: var(--metin-acik); }
+  .kalite-tamam { color: #177245; font-weight: var(--kalinlik-kalin); }
+
   /* ================= dar ekran ================= */
 
   @media (max-width: 900px) {
@@ -909,6 +1038,8 @@
     .tablo-kaydir .yonetim-tablo { min-width: 640px; }
 
     .sablon-izgara { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .kalite-ozet { grid-template-columns: minmax(0, 1fr); }
+    .kalite-bolum > header { align-items: flex-start; flex-direction: column; }
   }
 
   @media (max-width: 600px) {

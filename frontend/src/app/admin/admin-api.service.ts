@@ -177,6 +177,33 @@ export interface StaffUnit {
   members: StaffMember[];
 }
 
+export interface QualityPageScore {
+  path: string;
+  title: string;
+  contentType: 'page' | 'news';
+  score: number;
+  issues: string[];
+}
+
+export interface QualityVitalScore {
+  path: string;
+  metric: 'LCP' | 'INP' | 'CLS' | 'FCP' | 'TTFB';
+  p75: number;
+  samples: number;
+  rating: 'good' | 'needs-improvement' | 'poor';
+  score: number;
+  lastMeasuredAt: string;
+}
+
+export interface QualitySummary {
+  seoScore: number;
+  performanceScore: number | null;
+  performanceSamples: number;
+  generatedAt: string;
+  pages: QualityPageScore[];
+  vitals: QualityVitalScore[];
+}
+
 const SESSION_KEY = 'bidb-yonetim';
 
 /** Yönetim uçlarına erişim. Kimlik bilgisi yalnızca tarayıcı oturumunda tutulur. */
@@ -446,6 +473,13 @@ export class AdminApiService {
 
   saveSettings(degerler: Record<string, string>): Observable<unknown> {
     return this.http.put('/api/admin/settings', degerler, { headers: this.basliklar() });
+  }
+
+  qualitySummary(days = 28): Observable<QualitySummary> {
+    return this.http.get<QualitySummary>('/api/admin/quality', {
+      headers: this.basliklar(),
+      params: { days }
+    });
   }
 
   private basliklar(): HttpHeaders {

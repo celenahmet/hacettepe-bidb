@@ -33,6 +33,8 @@ public class SecurityConfig {
                 // Dış bağlantılı duyurularda görüntülenme sayacı
                 .requestMatchers(HttpMethod.POST,
                         "/api/tr/news/*/view", "/api/en/news/*/view").permitAll()
+                // Kimliksiz, çerezsiz Core Web Vitals örnekleri
+                .requestMatchers(HttpMethod.POST, "/api/metrics/vitals").permitAll()
                 // Yönetim uçları
                 .requestMatchers("/api/admin/**").authenticated()
                 .anyRequest().denyAll())

@@ -253,3 +253,19 @@ panelden değiştirilebilir. Haber detayları kendi SEO alanlarını ve
 `/sitemap.xml` yayınlanan sayfaları ve kendi adresi bulunan haberleri
 backend'den dinamik toplar. `/robots.txt`, yönetim, API ve hata rotalarını
 indeks dışında bırakır.
+
+## Kalite ölçümü
+
+`POST /api/metrics/vitals` kamusal sayfanın anonim Core Web Vitals örneklerini
+kabul eder. İstek yalnızca `path` ile en fazla beş `name/value` metriği taşır:
+LCP, INP, CLS, FCP ve TTFB. Backend eşikleri ve değerlendirmeyi kendisi
+hesaplar; istemciden gelen bir puana güvenmez. IP, user-agent, referrer, çerez
+ve oturum kimliği veri modelinde bulunmaz. Örnekler 90 gün sonra otomatik
+silinir.
+
+`GET /api/admin/quality?days=28` yetkili yöneticiye şunları döndürür:
+
+- tüm yayınların alan ve uzunluk kurallarına göre SEO puanı;
+- sayfa başına eksik SEO maddeleri;
+- rota/metrik bazında 75. yüzdelik gerçek kullanıcı değerleri;
+- Google Web Vitals eşiklerinden üretilen performans puanı.

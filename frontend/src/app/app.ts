@@ -5,6 +5,7 @@ import { HeaderComponent } from './layout/header.component';
 import { FooterComponent } from './layout/footer.component';
 import { CookieConsentComponent } from './layout/cookie-consent.component';
 import { Language } from './core/models';
+import { QualityMetricsService } from './core/quality-metrics.service';
 
 @Component({
   selector: 'app-root',
@@ -22,6 +23,9 @@ import { Language } from './core/models';
 })
 export class App {
   private router = inject(Router);
+  // Servisin oluşturulması, tarayıcı hydration sonrasında anonim Web Vitals
+  // gözlemcilerini başlatır; SSR sırasında hiçbir ölçüm yapılmaz.
+  private qualityMetrics = inject(QualityMetricsService);
 
   protected language = signal<Language>('tr');
 

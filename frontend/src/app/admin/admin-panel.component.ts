@@ -4,7 +4,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { PageEditorComponent } from './page-editor.component';
 import { StaffEditorComponent } from './staff-editor.component';
 import { NewsCoverComponent } from '../pages/news-cover.component';
-import { AdminNews, NewsOptions, Shortcut, AdminMenuItem, AdminMenu, AdminPage, Slide, AdminSocialAccount, AdminApiService, ContactChannel } from './admin-api.service';
+import { AdminNews, NewsOptions, Shortcut, AdminMenuItem, AdminMenu, AdminPage, Slide, AdminSocialAccount, AdminApiService, ContactChannel, QualitySummary } from './admin-api.service';
 
 /** Alt bilgide görünen kurum bilgileri. */
 interface ContactInfo extends Record<string, string> {
@@ -65,42 +65,47 @@ interface ContactInfo extends Record<string, string> {
             </div>
 
             <div class="ray-liste">
-          <button type="button" [class.etkin]="sekme() === 'pages'" (click)="sekme.set('pages')">
+          <button type="button" [class.etkin]="sekme() === 'quality'" (click)="sekmeKalite()">
             <span class="no">01</span>
+            <span>SEO ve Performans</span>
+            @if (quality(); as q) { <span class="sayi">{{ q.seoScore }}</span> }
+          </button>
+          <button type="button" [class.etkin]="sekme() === 'pages'" (click)="sekme.set('pages')">
+            <span class="no">02</span>
             <span>Sayfalar</span>
             <span class="sayi">{{ pages().length }}</span>
           </button>
           <button type="button" [class.etkin]="sekme() === 'news'" (click)="sekmeDuyuru()">
-            <span class="no">02</span>
+            <span class="no">03</span>
             <span>Duyurular</span>
             <span class="sayi">{{ news().length }}</span>
           </button>
           <button type="button" [class.etkin]="sekme() === 'slider'" (click)="sekmeSlider()">
-            <span class="no">03</span>
+            <span class="no">04</span>
             <span>Slider</span>
             <span class="sayi">{{ slides().length }}</span>
           </button>
           <button type="button" [class.etkin]="sekme() === 'shortcuts'" (click)="sekmeKisayol()">
-            <span class="no">04</span>
+            <span class="no">05</span>
             <span>Kısayollar</span>
             <span class="sayi">{{ shortcuts().length }}</span>
           </button>
           <button type="button" [class.etkin]="sekme() === 'menus'" (click)="sekmeMenu()">
-            <span class="no">05</span>
+            <span class="no">06</span>
             <span>Menüler</span>
             <span class="sayi">{{ menus().length }}</span>
           </button>
           <button type="button" [class.etkin]="sekme() === 'sosyal'" (click)="sekmeSosyal()">
-            <span class="no">06</span>
+            <span class="no">07</span>
             <span>Sosyal Medya</span>
             <span class="sayi">{{ socialAccounts().length }}</span>
           </button>
           <button type="button" [class.etkin]="sekme() === 'iletisim'" (click)="sekmeIletisim()">
-            <span class="no">07</span>
+            <span class="no">08</span>
             <span>İletişim Bilgileri</span>
           </button>
           <button type="button" [class.etkin]="sekme() === 'personel'" (click)="sekme.set('personel')">
-            <span class="no">08</span>
+            <span class="no">09</span>
             <span>Personel</span>
           </button>
             </div>
@@ -121,7 +126,111 @@ interface ContactInfo extends Record<string, string> {
 
         @if (bilgi()) { <p class="bilgi" role="status">{{ bilgi() }}</p> }
 
-        @if (sekme() === 'pages') {
+        @if (sekme() === 'quality') {
+          @if (qualityLoading()) {
+            <p class="aciklama" role="status">Kalite verileri hesaplanıyor…</p>
+          } @else if (quality(); as q) {
+            <section class="kalite-ozet" aria-label="Kalite puanları">
+              <article class="kalite-puan" [attr.data-level]="puanSeviyesi(q.seoScore)">
+                <span>SEO bütünlüğü</span>
+                <strong>{{ q.seoScore }}</strong>
+                <small>100 üzerinden · {{ q.pages.length }} yayın</small>
+              </article>
+              <article class="kalite-puan"
+                       [attr.data-level]="puanSeviyesi(q.performanceScore)"
+                       [class.bekliyor]="q.performanceScore === null">
+                <span>Gerçek kullanıcı performansı</span>
+                <strong>{{ q.performanceScore ?? '—' }}</strong>
+                <small>
+                  @if (q.performanceScore === null) {
+                    Henüz ziyaretçi ölçümü yok
+                  } @else {
+                    28 gün · {{ q.performanceSamples }} örnek
+                  }
+                </small>
+              </article>
+              <article class="kalite-puan kalite-puan--bilgi">
+                <span>Son hesaplama</span>
+                <strong class="kalite-zaman">{{ tarihSaat(q.generatedAt) }}</strong>
+                <button type="button" class="ikincil" (click)="kaliteYukle()">Yenile</button>
+              </article>
+            </section>
+
+            <section class="kalite-bolum">
+              <header>
+                <div>
+                  <span class="bolum-no">Core Web Vitals</span>
+                  <h2>Gerçek kullanıcı ölçümleri</h2>
+                </div>
+                <p>75. yüzdelik değerler; ortalama değer kullanıcı deneyimini gizlemez.</p>
+              </header>
+
+              @if (q.vitals.length) {
+                <div class="kalite-vital-izgara">
+                  @for (v of q.vitals; track v.path + v.metric) {
+                    <article class="kalite-vital" [attr.data-rating]="v.rating">
+                      <div>
+                        <span>{{ v.metric }}</span>
+                        <strong>{{ metrikDegeri(v.metric, v.p75) }}</strong>
+                      </div>
+                      <p>{{ v.path }}</p>
+                      <small>{{ v.samples }} örnek · {{ dereceEtiketi(v.rating) }}</small>
+                    </article>
+                  }
+                </div>
+              } @else {
+                <div class="kalite-bos">
+                  <strong>Ölçüm birikmesi bekleniyor</strong>
+                  <p>
+                    Yeni sürüm yayınlandıktan sonra ziyaretçilerin anonim LCP, INP,
+                    CLS, FCP ve TTFB değerleri burada görünecek.
+                  </p>
+                </div>
+              }
+            </section>
+
+            <section class="kalite-bolum">
+              <header>
+                <div>
+                  <span class="bolum-no">Sayfa Denetimi</span>
+                  <h2>SEO geliştirme kuyruğu</h2>
+                </div>
+                <p>En düşük puanlı kayıtlar önce gösterilir.</p>
+              </header>
+              <div class="tablo-kaydir">
+                <table class="yonetim-tablo kalite-tablo">
+                  <thead>
+                    <tr><th>Sayfa</th><th>Tür</th><th>Puan</th><th>Geliştirme alanları</th></tr>
+                  </thead>
+                  <tbody>
+                    @for (p of q.pages; track p.path) {
+                      <tr>
+                        <td><strong>{{ p.title }}</strong><br><small>{{ p.path }}</small></td>
+                        <td>{{ p.contentType === 'news' ? 'Duyuru' : 'Sayfa' }}</td>
+                        <td>
+                          <span class="kalite-rozet" [attr.data-level]="puanSeviyesi(p.score)">
+                            {{ p.score }}
+                          </span>
+                        </td>
+                        <td>
+                          @if (p.issues.length) {
+                            <ul>
+                              @for (issue of p.issues; track issue) { <li>{{ issue }}</li> }
+                            </ul>
+                          } @else {
+                            <span class="kalite-tamam">Eksik bulunmadı</span>
+                          }
+                        </td>
+                      </tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          } @else {
+            <p class="hata" role="alert">Kalite özeti alınamadı. Backend bağlantısını kontrol edin.</p>
+          }
+        } @else if (sekme() === 'pages') {
           <p class="aciklama">
             "Düzenle" ile sayfanın metnini, adresini ve belgelerini yönetebilir,
             sürüm geçmişinden eski bir hâle dönebilirsiniz.
@@ -806,14 +915,15 @@ export class AdminPanelComponent {
 
   /** Sol raydaki bölümlerin numarası ve adı; başlıkta da kullanılır. */
   private readonly BOLUMLER: Record<string, { no: string; ad: string }> = {
-    pages: { no: '01', ad: 'Sayfalar' },
-    news: { no: '02', ad: 'Duyurular' },
-    slider: { no: '03', ad: 'Slider' },
-    shortcuts: { no: '04', ad: 'Kısayollar' },
-    menus: { no: '05', ad: 'Menüler' },
-    sosyal: { no: '06', ad: 'Sosyal Medya' },
-    iletisim: { no: '07', ad: 'İletişim Bilgileri' },
-    personel: { no: '08', ad: 'Personel' }
+    quality: { no: '01', ad: 'SEO ve Performans' },
+    pages: { no: '02', ad: 'Sayfalar' },
+    news: { no: '03', ad: 'Duyurular' },
+    slider: { no: '04', ad: 'Slider' },
+    shortcuts: { no: '05', ad: 'Kısayollar' },
+    menus: { no: '06', ad: 'Menüler' },
+    sosyal: { no: '07', ad: 'Sosyal Medya' },
+    iletisim: { no: '08', ad: 'İletişim Bilgileri' },
+    personel: { no: '09', ad: 'Personel' }
   };
 
   protected bolumNo(): string {
@@ -832,7 +942,9 @@ export class AdminPanelComponent {
   protected bilgi = signal('');
   protected calisiyor = signal(false);
 
-  protected sekme = signal<'pages' | 'news' | 'slider' | 'shortcuts' | 'menus' | 'sosyal' | 'iletisim' | 'personel'>('pages');
+  protected sekme = signal<'quality' | 'pages' | 'news' | 'slider' | 'shortcuts' | 'menus' | 'sosyal' | 'iletisim' | 'personel'>('quality');
+  protected quality = signal<QualitySummary | null>(null);
+  protected qualityLoading = signal(false);
   protected pages = signal<AdminPage[]>([]);
   protected news = signal<AdminNews[]>([]);
   protected duyuruSecenekleri = signal<NewsOptions>({ categories: [], audiences: [], templates: [] });
@@ -864,6 +976,7 @@ export class AdminPanelComponent {
     if (this.api.girisYapildi()) {
       this.sayfalariYukle();
       this.sayilariYukle();
+      this.kaliteYukle();
     }
   }
 
@@ -875,6 +988,7 @@ export class AdminPanelComponent {
         this.api.girisOnayla();
         this.pages.set(liste);
         this.sayilariYukle();
+        this.kaliteYukle();
         this.calisiyor.set(false);
         this.parola = '';
       },
@@ -887,6 +1001,46 @@ export class AdminPanelComponent {
 
   protected duzenle(s: AdminPage): void {
     this.secili.set(this.secili()?.id === s.id ? null : { ...s });
+  }
+
+  protected sekmeKalite(): void {
+    this.sekme.set('quality');
+    this.kaliteYukle();
+  }
+
+  protected kaliteYukle(): void {
+    this.qualityLoading.set(true);
+    this.api.qualitySummary().subscribe({
+      next: (summary) => {
+        this.quality.set(summary);
+        this.qualityLoading.set(false);
+      },
+      error: () => {
+        this.quality.set(null);
+        this.qualityLoading.set(false);
+      }
+    });
+  }
+
+  protected puanSeviyesi(score: number | null): string {
+    if (score === null) return 'unknown';
+    if (score >= 90) return 'good';
+    if (score >= 60) return 'needs-improvement';
+    return 'poor';
+  }
+
+  protected dereceEtiketi(rating: string): string {
+    return rating === 'good' ? 'İyi' : rating === 'needs-improvement' ? 'İyileştirilmeli' : 'Zayıf';
+  }
+
+  protected metrikDegeri(metric: string, value: number): string {
+    return metric === 'CLS' ? value.toFixed(3) : `${Math.round(value)} ms`;
+  }
+
+  protected tarihSaat(value: string): string {
+    return new Intl.DateTimeFormat('tr-TR', {
+      dateStyle: 'short', timeStyle: 'short'
+    }).format(new Date(value));
   }
 
   protected alanDegis(alan: keyof AdminPage, value: unknown): void {
