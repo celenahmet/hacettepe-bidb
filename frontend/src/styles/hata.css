@@ -29,7 +29,7 @@
     background:
       url("/images/slider/slide2-960.webp")
       50% 43% / cover no-repeat;
-    transform: translate3d(-2.4%, -1%, 0) scale(1.24);
+    transform: translate3d(-1.2%, -0.8%, 0) scale(1.52);
     transform-origin: center;
     backface-visibility: hidden;
     animation: hata-teknokent-akis 26s linear infinite alternate;
@@ -48,8 +48,8 @@
   }
 
   @keyframes hata-teknokent-akis {
-    from { transform: translate3d(-2.4%, -1%, 0) scale(1.24); }
-    to { transform: translate3d(2.8%, 1.2%, 0) scale(1.32); }
+    from { transform: translate3d(-1.2%, -0.8%, 0) scale(1.52); }
+    to { transform: translate3d(1.4%, 0.8%, 0) scale(1.62); }
   }
 
   .hata-kap {
@@ -382,7 +382,7 @@
   @media (prefers-reduced-motion: reduce) {
     .hata-sayfasi::before {
       animation: none;
-      transform: translate3d(0, 0, 0) scale(1.28);
+      transform: translate3d(0, 0, 0) scale(1.57);
       will-change: auto;
     }
 
