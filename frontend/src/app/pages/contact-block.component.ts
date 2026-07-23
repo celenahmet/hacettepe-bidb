@@ -77,10 +77,11 @@ interface ContactChannel {
             <div class="konum-harita">
               @if (haritaYuklendi()) {
                 <iframe
-                  src="https://maps.google.com/maps?q=Hacettepe+%C3%9Cniversitesi+Bilgi+%C4%B0%C5%9Flem+Daire+Ba%C5%9Fkanl%C4%B1%C4%9F%C4%B1,+Beytepe,+Ankara&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                  src="https://www.google.com/maps?q=39.871060,32.736176&z=17&output=embed"
                   [title]="dilDegeri === 'en'
                     ? 'Map showing Hacettepe University Department of Information Technology'
                     : 'Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı konum haritası'"
+                  loading="lazy"
                   referrerpolicy="no-referrer-when-downgrade"
                   allowfullscreen>
                 </iframe>
@@ -135,7 +136,7 @@ interface ContactChannel {
                 </p>
               </div>
               <nav class="konum-uygulamalar" [attr.aria-label]="dilDegeri === 'en' ? 'Map applications' : 'Harita uygulamaları'">
-                <a href="https://www.google.com/maps/dir/?api=1&destination=Hacettepe+%C3%9Cniversitesi+Bilgi+%C4%B0%C5%9Flem+Daire+Ba%C5%9Fkanl%C4%B1%C4%9F%C4%B1,+Beytepe,+Ankara"
+                <a href="https://www.google.com/maps/dir/?api=1&destination=39.871060%2C32.736176"
                    target="_blank" rel="noopener">
                   <svg class="google-maps-ikon" viewBox="0 0 24 24" aria-hidden="true">
                     <path fill="#34a853" d="M12 2a7.5 7.5 0 0 0-7.5 7.5c0 5.5 7.5 12.5 7.5 12.5s7.5-7 7.5-12.5A7.5 7.5 0 0 0 12 2Z"/>
@@ -153,7 +154,7 @@ interface ContactChannel {
                   </svg>
                 </a>
 
-                <a href="https://maps.apple.com/?daddr=Hacettepe+%C3%9Cniversitesi+Bilgi+%C4%B0%C5%9Flem+Daire+Ba%C5%9Fkanl%C4%B1%C4%9F%C4%B1,+Beytepe,+Ankara&dirflg=d"
+                <a href="https://maps.apple.com/?daddr=39.871060%2C32.736176&q=Hacettepe+%C3%9Cniversitesi+Bilgi+%C4%B0%C5%9Flem+Daire+Ba%C5%9Fkanl%C4%B1%C4%9F%C4%B1&dirflg=d"
                    target="_blank" rel="noopener">
                   <span class="apple-maps-ikon" aria-hidden="true">
                     <svg viewBox="0 0 24 24">

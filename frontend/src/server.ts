@@ -45,7 +45,8 @@ app.disable('x-powered-by');
  * bu ikisine izin verilir. Satır içi olay işleyicisi (onclick vb.) ve
  * <script> etiketi içerikte hiç yok — denetlendi.
  *
- * Gömülü videolar yalnızca YouTube'dan gelir.
+ * Gömülü videolar yalnızca YouTube'dan, iletişim sayfasındaki isteğe bağlı
+ * konum haritası ise yalnızca Google Maps'ten gelir.
  */
 const GUVENLIK_POLITIKASI = [
   "default-src 'self'",
@@ -53,7 +54,7 @@ const GUVENLIK_POLITIKASI = [
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data:",
   "font-src 'self' data:",
-  "frame-src https://www.youtube.com https://youtube.com",
+  "frame-src https://www.youtube.com https://youtube.com https://www.google.com https://maps.google.com",
   "connect-src 'self'",
   "object-src 'none'",          // eklenti içeriği yok
   "base-uri 'self'",            // <base> ile url kaçırma engellenir
