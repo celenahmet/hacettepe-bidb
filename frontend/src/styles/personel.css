@@ -1,9 +1,9 @@
 /*
  * Personel rehberi
  *
- * Her kişi ortak tablo hücresi yerine bağımsız bir "kurumsal kimlik föyü"
- * olarak sunulur. Keskin çerçeve, portre omurgası ve küçük köşe işareti
- * kartlara karakter verir; aynı lacivert/kırmızı sistemi bütünlüğü korur.
+ * Her kişi ortak tablo hücresi yerine bağımsız, yatay bir profil kartı
+ * olarak sunulur. Portre, ad ve görev tek bakışta okunur; ince çerçeve ve
+ * kısa kırmızı imza çizgisi kurumsal karakteri gereksiz süs olmadan kurar.
  */
 
 @layer kamu {
@@ -14,7 +14,7 @@
   .personel-birim + .personel-birim {
     margin-top: var(--bosluk-8);
     padding-top: var(--bosluk-7);
-    border-top: 1px solid var(--cizgi);
+    border-top: 1px dashed var(--cizgi-koyu);
   }
 
   .icerik + .personel .personel-birim:first-child { margin-top: 0; }
@@ -93,16 +93,15 @@
     --personel-vurgu: var(--hu-lacivert);
     position: relative;
     min-width: 0;
-    min-height: 11rem;
+    min-height: 8.75rem;
     display: grid;
-    grid-template-columns: clamp(7.5rem, 34%, 8.75rem) minmax(0, 1fr);
+    grid-template-columns: 8rem minmax(0, 1fr);
     align-items: stretch;
     overflow: hidden;
     border: 1px solid var(--cizgi);
-    border-top: 3px solid var(--personel-vurgu);
-    border-radius: 2px;
+    border-radius: var(--kose-md);
     background: var(--yuzey);
-    box-shadow: 0 8px 22px rgb(13 31 53 / 6%);
+    box-shadow: 0 3px 12px rgb(13 31 53 / 5%);
     transition:
       border-color var(--gecis-hizli),
       box-shadow var(--gecis),
@@ -111,27 +110,12 @@
 
   .personel-kisi.sorumlu { --personel-vurgu: var(--hu-kirmizi); }
 
-  /*
-   * Sağ üstteki açık köşe, kartı standart profil kutusundan ayıran küçük
-   * bir arşiv/föy işaretidir; metin veya fotoğrafla yarışmaz.
-   */
-  .personel-kisi::after {
-    content: "";
-    position: absolute;
-    top: 0.55rem;
-    right: 0.55rem;
-    width: 1rem;
-    height: 1rem;
-    border-top: 1px solid var(--personel-vurgu);
-    border-right: 1px solid var(--personel-vurgu);
-    opacity: 0.55;
-    pointer-events: none;
-  }
+  .personel-kisi::after { content: none; }
 
   .personel-kisi:hover {
     border-color: var(--cizgi-koyu);
-    box-shadow: 0 14px 30px rgb(13 31 53 / 11%);
-    transform: translateY(-3px);
+    box-shadow: 0 8px 22px rgb(13 31 53 / 9%);
+    transform: translateY(-2px);
   }
 
   /* ================= portre omurgası ================= */
@@ -146,26 +130,8 @@
     background: var(--yuzey-3);
   }
 
-  .personel-gorsel::before {
-    content: "";
-    position: absolute;
-    inset: 0 auto 0 0;
-    z-index: 2;
-    width: 3px;
-    background: var(--personel-vurgu);
-  }
-
-  .personel-gorsel::after {
-    content: "";
-    position: absolute;
-    right: var(--bosluk-3);
-    bottom: var(--bosluk-3);
-    left: var(--bosluk-3);
-    z-index: 2;
-    height: 1px;
-    background: var(--personel-vurgu);
-    opacity: 0.7;
-  }
+  .personel-gorsel::before,
+  .personel-gorsel::after { content: none; }
 
   .personel-gorsel img {
     position: absolute;
@@ -184,7 +150,7 @@
     position: absolute;
     left: 50%;
     bottom: 0;
-    width: 68%;
+    width: 62%;
     height: auto;
     transform: translateX(-50%);
     fill: var(--cizgi-koyu);
@@ -193,7 +159,7 @@
 
   .personel-kisi.sorumlu .personel-gorsel svg {
     fill: var(--hu-lacivert);
-    opacity: 0.55;
+    opacity: 0.52;
   }
 
   /* ================= kimlik bilgisi ================= */
@@ -204,15 +170,18 @@
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    gap: var(--bosluk-2);
-    padding: var(--bosluk-6) var(--bosluk-5);
+    gap: var(--bosluk-3);
+    padding: var(--bosluk-5);
   }
 
   .personel-ad {
+    position: relative;
+    display: block;
     max-width: calc(100% - 0.75rem);
+    padding-bottom: var(--bosluk-3);
     overflow-wrap: anywhere;
     color: var(--metin);
-    font-size: clamp(1rem, 1.4vw, 1.15rem);
+    font-size: clamp(0.95rem, 1.25vw, 1.08rem);
     font-weight: var(--kalinlik-kalin);
     letter-spacing: -0.01em;
     line-height: 1.28;
@@ -221,9 +190,19 @@
 
   .personel-kisi.sorumlu .personel-ad { color: var(--hu-lacivert); }
 
+  .personel-ad::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 1.25rem;
+    height: 2px;
+    background: var(--hu-kirmizi);
+  }
+
   .personel-unvan,
   .personel-not {
-    font-size: 10px;
+    font-size: 0.66rem;
     line-height: 1.5;
     letter-spacing: 0.1em;
     text-transform: uppercase;
@@ -250,7 +229,8 @@
     .personel-liste { gap: var(--bosluk-4); }
 
     .personel-kisi {
-      grid-template-columns: clamp(7rem, 35%, 8rem) minmax(0, 1fr);
+      min-height: 8.25rem;
+      grid-template-columns: 7rem minmax(0, 1fr);
     }
 
     .personel-bilgi { padding: var(--bosluk-5) var(--bosluk-4); }
@@ -283,8 +263,8 @@
     }
 
     .personel-kisi {
-      min-height: 9.75rem;
-      grid-template-columns: clamp(6.5rem, 32%, 8rem) minmax(0, 1fr);
+      min-height: 8.5rem;
+      grid-template-columns: clamp(6.5rem, 32%, 7.5rem) minmax(0, 1fr);
     }
   }
 
