@@ -32,12 +32,20 @@ import { UnitsComponent } from './units.component';
 
       <main id="ana-icerik" class="icerik-alani"
             [class.web-servis-sayfasi]="sayfa()?.slug === 'web-services'"
-            [class.kurul-sayfasi]="sayfa()?.slug === 'committees'">
+            [class.kurul-sayfasi]="sayfa()?.slug === 'committees'"
+            [class.organizasyon-sayfasi]="sayfa()?.slug === 'org-chart'">
         @if (sayfa(); as s) {
           <header class="sayfa-tepe">
             @if (bolum(); as b) { <p class="sayfa-bolum">{{ b }}</p> }
             <h1 class="sayfa-baslik">{{ s.title }}</h1>
           </header>
+          @if (s.slug === 'org-chart') {
+            <p class="organizasyon-giris">
+              {{ language() === 'en'
+                ? 'The organizational structure of the Information Technology Department is shown below.'
+                : 'Bilgi İşlem Daire Başkanlığımızın organizasyon yapısı aşağıda gösterilmiştir.' }}
+            </p>
+          }
           @if (s.slug === 'overview') {
             <!-- Genel Tanıtım: birim görev tanımları kart ızgarasına
                  ayrıştırılır; içerik birebir korunur. -->
