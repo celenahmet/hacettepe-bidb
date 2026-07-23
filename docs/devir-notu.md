@@ -202,32 +202,49 @@ Her biri gerçekten yaşandı. Yeni bir ajan aynı tuzağa düşmesin:
 
 ---
 
-## 7. İNGİLİZCE ÇEVİRİ — PLAN
+## 7. İNGİLİZCE ÇEVİRİ — ERTELENDİ (kapsam kararlaştırıldı)
 
-**Karar:** Türkçe içerik İngilizceye çevrilecek. Tercih **akademik İngiliz
-İngilizcesi (UK)**. Kurum akredite olduğu için hata payı yok.
+**DURUM: Tasarım işleri bitene kadar başlanmayacak.**
 
-**Kapsam:** 79 sayfa, ~47.300 kelime (~190 standart çeviri sayfası).
+Gerekçe (kurum kararı): sayfalar tasarım aşamasında değişmeye devam
+ediyor. Değişen bir metni çevirmek, sonra yeniden çevirmek demek. Çeviri,
+içerik ve düzen oturduktan sonra tek seferde yapılacak.
 
-Kaynak sitenin İngilizce tarafında yalnızca 5 sayfa vardır
-(`overview`, `mv`, `yonetim`, `iletisim`, `grup`) ve beşi de aktarılmıştır.
-Yani bu çeviri, kaynağın **ötesine geçen yeni bir iştir**.
+Bu bölüm, o zaman geldiğinde plan sıfırdan kurulmasın diye kararları
+saklar.
 
-### Önerilen sıra (toplu çeviri YAPILMAMALI)
+### Kararlaştırılan kapsam
 
-**Adım 0 — Terim sözlüğü (önce bu onaylanmalı).**
-Kurum adları, birim adları, sistem adları, kanun ve standart başlıkları
-kilitlenir. 79 sayfada tutarlılığı sağlayan tek şey budur. Kilitlenmesi
-gerekenler taranarak çıkarıldı: HUNET, BİDB, EBYS, NES, KAMU SM, TÜBİTAK,
-VPN, MYO, KPSS, ISO 27001, 5651 ve 5070 sayılı kanunlar, birim adları.
+**Dil:** akademik İngiliz İngilizcesi (UK). Kurum akredite; hata payı yok.
 
-Kanun ve standartların **resmî İngilizce başlıkları** kullanılmalıdır;
-serbest çeviri yapılmaz.
+**Çevrilecek:** 65 sayfa, ~39.800 kelime.
 
-**Adım 1 — Yapı koruyan çeviri hattı.**
-HTML etiketleri, `href`, dosya adları ve bağlantı hedefleri
-**değiştirilmeden** yalnızca metin düğümleri çevrilir. Çıkışta yapı
-denetlenir: aynı etiket sayısı, aynı bağlantılar, geride Türkçe kalmamış.
+**Çevrilmeyecek (kurum kararı):** süresi geçmiş sınav/alım ve yazılım
+duyuruları — 14 sayfa, ~7.500 kelime:
+`notice-*`, `notices`, `archive`, `stylecc50-removal`,
+`ansys-011018`, `matlab-061118`, `sas-191018`, `spss-081118`.
+
+**Duyuru kayıtları:** `news` tablosunda 24 kayıt var; yalnızca **son 10
+duyuru** çevrilecek.
+
+**Pilot sayfalar:** en çok ziyaret edilen genel sayfalar — ana sayfa, sol
+menü ve üst menüdeki başlıca sayfalar. Önce bunlar çevrilip kalite
+onaylanacak, sonra ölçeklenecek.
+
+### Uygulama sırası (o zaman gelince)
+
+**Adım 0 — Terim sözlüğü.** 65 sayfada tutarlılığı sağlayan tek şey budur;
+çeviriye başlamadan onaylanmalı. Kilitlenmesi gerekenler içerikten
+tarandı: HUNET, BİDB, EBYS, NES, KAMU SM, TÜBİTAK, VPN, MYO, KPSS,
+ISO 27001, 5651 ve 5070 sayılı kanunlar, tüm birim adları.
+
+Kanun ve standartların **resmî İngilizce başlıkları** kullanılır; serbest
+çeviri yapılmaz.
+
+**Adım 1 — Yapı koruyan hat.** HTML etiketleri, `href`, dosya adları ve
+bağlantı hedefleri değiştirilmeden yalnızca metin düğümleri çevrilir.
+Çıkışta yapı denetlenir: aynı etiket sayısı, aynı bağlantılar, geride
+Türkçe kalmamış.
 
 **Adım 2 — Risk kademesi.**
 
@@ -235,18 +252,20 @@ denetlenir: aynı etiket sayısı, aynı bağlantılar, geride Türkçe kalmamı
 |---|---|---|
 | A | Servis tanıtımları, birim görevleri, rehberler, SSS | Çevrilir |
 | B | Politikalar, kullanım ilkeleri, sorumluluk sınırı, mevzuat | Çevrilir ama **yayından önce ilgili birim onayı** |
-| C | Süresi geçmiş sınav/alım duyuruları (~5.000 kelime) | Çevrilmesi gereksiz — teyit alınmalı |
 
-**Adım 3 — Pilot.** Önce 2–3 sayfa çevrilir, kalite onaylanır, sonra
-ölçeklenir. 47 bin kelimeyi onaysız çevirmek risklidir.
+**Adım 3 — Pilot.** Yukarıdaki pilot sayfalar çevrilir, kalite onaylanır,
+sonra kalanına geçilir.
 
-### Açık sorular (karar bekliyor)
+### Bilinen açık
 
-1. Süresi geçmiş duyurular çevrilecek mi? (~5.000 kelime tasarruf)
-2. B kademesi metinler için birim onayı süreci nasıl işleyecek?
-3. Pilot sayfalar hangileri olsun?
+Kaynak sitenin İngilizce tarafında yalnızca 5 sayfa vardır
+(`overview`, `mv`, `yonetim`, `iletisim`, `grup`) ve beşi de
+aktarılmıştır. Bu çeviri kaynağın ötesine geçen yeni bir iştir.
 
----
+`/en/accessibility` ve `/en/disclaimer` şu an kaynaktan gelen Türkçe
+"Böyle bir sayfa bulunmamaktadır!" metnini gösteriyor — kaynakta bu
+ikisinin İngilizcesi yok. Çeviri turunda düzeltilecek; o zamana kadar
+EN alt bilgideki bağlantıları kaldırmak da bir seçenek.
 
 ## 8. ÇALIŞTIRMA
 
