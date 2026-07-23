@@ -13,11 +13,20 @@ import { ContactBlockComponent } from './contact-block.component';
 import { FaqComponent } from './faq.component';
 import { EImzaNavComponent } from './e-imza-nav.component';
 import { UnitsComponent } from './units.component';
+import { EmailOperationsComponent } from './email-operations.component';
 
 /** /tr/<slug> ve /en/<slug> adreslerindeki içerik sayfası. */
 @Component({
   selector: 'bidb-content-page',
-  imports: [SideMenuComponent, StaffListComponent, ContactBlockComponent, FaqComponent, EImzaNavComponent, UnitsComponent],
+  imports: [
+    SideMenuComponent,
+    StaffListComponent,
+    ContactBlockComponent,
+    FaqComponent,
+    EImzaNavComponent,
+    UnitsComponent,
+    EmailOperationsComponent
+  ],
   template: `
     <div class="kap sayfa-duzen">
       <aside class="yan">
@@ -54,7 +63,13 @@ import { UnitsComponent } from './units.component';
                 : 'Bilgi İşlem Daire Başkanlığımızın organizasyon yapısı aşağıda gösterilmiştir.' }}
             </p>
           }
-          @if (s.slug === 'overview') {
+          @if (s.slug === 'email') {
+            <!-- E-Posta İşlemleri: kaynak bağlantıları, amaçlarına göre
+                 ayrışan erişilebilir işlem kartlarına dönüştürülür. -->
+            <bidb-email-operations
+              [rawHtml]="s.contentHtml ?? ''"
+              [dilDegeri]="language()"></bidb-email-operations>
+          } @else if (s.slug === 'overview') {
             <!-- Genel Tanıtım: birim görev tanımları kart ızgarasına
                  ayrıştırılır; içerik birebir korunur. -->
             <bidb-units [rawHtml]="s.contentHtml ?? ''" [dilDegeri]="language()"></bidb-units>

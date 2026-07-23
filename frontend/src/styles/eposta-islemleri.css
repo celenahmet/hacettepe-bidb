@@ -1,0 +1,289 @@
+/*
+ * E-Posta İşlemleri — hesap ve erişim merkezi
+ *
+ * Dokuz farklı kullanıcı yolunu tek tip liste görünümünden çıkarır. Renkler
+ * dekorasyon için değil işlem ailelerini (erişim, kurtarma, güvenlik, profil,
+ * istemci) birbirinden ayırmak için kullanılır.
+ */
+
+@layer kamu {
+  .eposta-merkezi {
+    margin-top: clamp(1.5rem, 3vw, 2.25rem);
+  }
+
+  .eposta-merkezi-ust {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--bosluk-5);
+    margin-bottom: var(--bosluk-5);
+    padding-bottom: var(--bosluk-4);
+    border-bottom: 1px solid var(--cizgi);
+  }
+
+  .eposta-merkezi-kod {
+    margin: 0 0 var(--bosluk-2);
+    color: var(--hu-kirmizi);
+    font-family: var(--yazi-kod);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    line-height: 1.35;
+  }
+
+  .eposta-merkezi-aciklama {
+    max-width: 56ch;
+    margin: 0;
+    color: var(--metin-2);
+    font-size: var(--olcu-sm);
+    line-height: 1.65;
+  }
+
+  .eposta-merkezi-sayac {
+    min-width: 5rem;
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: baseline;
+    justify-content: end;
+    gap: var(--bosluk-2);
+    margin: 0;
+    color: var(--metin-3);
+    font-family: var(--yazi-kod);
+  }
+
+  .eposta-merkezi-sayac strong {
+    color: var(--hu-lacivert);
+    font-size: 1.35rem;
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  .eposta-merkezi-sayac span {
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+  }
+
+  .eposta-islem-izgarasi {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--bosluk-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .eposta-islem-kart {
+    --islem-renk: var(--hu-lacivert);
+    --islem-soluk: #eef4fb;
+    min-width: 0;
+    min-height: 13.5rem;
+    border: 1px solid var(--cizgi);
+    border-top: 2px solid var(--islem-renk);
+    border-radius: var(--kose-sm);
+    background: var(--yuzey);
+    box-shadow: 0 5px 18px rgb(13 31 53 / 5%);
+    transition:
+      border-color var(--gecis-normal),
+      box-shadow var(--gecis-normal),
+      transform var(--gecis-normal);
+  }
+
+  .eposta-islem-kart:hover,
+  .eposta-islem-kart:focus-within {
+    border-color: color-mix(in srgb, var(--islem-renk) 42%, var(--cizgi));
+    box-shadow: 0 14px 34px rgb(13 31 53 / 11%);
+    transform: translateY(-3px);
+  }
+
+  .eposta-islem-kart > a {
+    position: relative;
+    isolation: isolate;
+    width: 100%;
+    height: 100%;
+    min-height: inherit;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: var(--bosluk-4);
+    color: var(--hu-lacivert);
+  }
+
+  .eposta-islem-kart > a::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: -3.6rem;
+    right: -3.6rem;
+    width: 8rem;
+    height: 8rem;
+    border: 1px solid color-mix(in srgb, var(--islem-renk) 13%, transparent);
+    border-radius: 50%;
+    box-shadow:
+      0 0 0 1.25rem color-mix(in srgb, var(--islem-renk) 3%, transparent),
+      0 0 0 2.5rem color-mix(in srgb, var(--islem-renk) 2%, transparent);
+    pointer-events: none;
+  }
+
+  .eposta-islem-kart > a:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--islem-renk) 35%, transparent);
+    outline-offset: 3px;
+  }
+
+  .eposta-kart-ust {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--bosluk-3);
+    min-height: 1.4rem;
+  }
+
+  .eposta-islem-sira {
+    color: var(--metin-3);
+    font-family: var(--yazi-kod);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+  }
+
+  .eposta-islem-kategori {
+    overflow: hidden;
+    color: var(--islem-renk);
+    font-family: var(--yazi-kod);
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    line-height: 1.35;
+    text-align: right;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .eposta-islem-ikon {
+    width: 3.75rem;
+    height: 3.75rem;
+    display: grid;
+    place-items: center;
+    margin: var(--bosluk-4) 0 var(--bosluk-3);
+    border: 1px solid color-mix(in srgb, var(--islem-renk) 20%, transparent);
+    border-radius: 50%;
+    background: var(--islem-soluk);
+    color: var(--islem-renk);
+    transition:
+      background var(--gecis-normal),
+      color var(--gecis-normal),
+      transform var(--gecis-normal);
+  }
+
+  .eposta-islem-ikon svg {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .eposta-islem-kart:hover .eposta-islem-ikon,
+  .eposta-islem-kart:focus-within .eposta-islem-ikon {
+    background: var(--islem-renk);
+    color: #fff;
+    transform: scale(1.04);
+  }
+
+  .eposta-islem-ad {
+    max-width: 19ch;
+    color: var(--hu-lacivert);
+    font-size: clamp(1rem, 1.3vw, 1.08rem);
+    font-weight: 650;
+    letter-spacing: -0.015em;
+    line-height: 1.38;
+  }
+
+  .eposta-kart-alt {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--bosluk-3);
+    margin-top: auto;
+    padding-top: var(--bosluk-4);
+    color: var(--metin-3);
+    font-family: var(--yazi-kod);
+    font-size: 0.57rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+  }
+
+  .eposta-kart-alt svg {
+    width: 1.15rem;
+    height: 1.15rem;
+    flex: none;
+    color: var(--islem-renk);
+    transition: transform var(--gecis-hizli);
+  }
+
+  .eposta-islem-kart:hover .eposta-kart-alt svg,
+  .eposta-islem-kart:focus-within .eposta-kart-alt svg {
+    transform: translateX(3px);
+  }
+
+  .eposta-ton-mavi {
+    --islem-renk: #1c5d91;
+    --islem-soluk: #edf5fb;
+  }
+
+  .eposta-ton-kehribar {
+    --islem-renk: #9a650c;
+    --islem-soluk: #fff7e8;
+  }
+
+  .eposta-ton-kirmizi {
+    --islem-renk: var(--hu-kirmizi);
+    --islem-soluk: #fff1f2;
+  }
+
+  .eposta-ton-turkuaz {
+    --islem-renk: #16766d;
+    --islem-soluk: #edf8f6;
+  }
+
+  .eposta-ton-mor {
+    --islem-renk: #69528f;
+    --islem-soluk: #f5f1fa;
+  }
+
+  @media (max-width: 72rem) {
+    .eposta-islem-izgarasi {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 40rem) {
+    .eposta-merkezi-ust {
+      align-items: flex-start;
+    }
+
+    .eposta-merkezi-sayac {
+      grid-template-columns: 1fr;
+      gap: 0.25rem;
+      text-align: right;
+    }
+
+    .eposta-islem-izgarasi {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--bosluk-3);
+    }
+
+    .eposta-islem-kart {
+      min-height: 12.5rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .eposta-islem-kart,
+    .eposta-islem-ikon,
+    .eposta-kart-alt svg {
+      transition: none;
+    }
+
+    .eposta-islem-kart:hover,
+    .eposta-islem-kart:focus-within {
+      transform: none;
+    }
+  }
+}
