@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject } from '@angular/core';
+import { Component, computed, effect, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -172,6 +172,17 @@ const GENERIC_SERVER: ErrorContent = {
   imports: [RouterLink],
   template: `
     <main id="ana-icerik" class="hata-sayfasi">
+      @if (arkaPlanGorunur()) {
+        <picture class="hata-arka-plan" aria-hidden="true">
+          <source media="(min-width: 64rem)" srcset="/images/slider/slide2-1920.webp">
+          <img
+            src="/images/slider/slide2-960.webp"
+            alt=""
+            (error)="arkaPlanGorunur.set(false)">
+        </picture>
+        <span class="hata-arka-plan-ton" aria-hidden="true"></span>
+      }
+
       <div class="kap hata-kap">
         <nav class="hata-iz" aria-label="Sayfa yolu">
           <a routerLink="/tr">Ana Sayfa</a>
@@ -229,6 +240,7 @@ export class ErrorPageComponent {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private seo = inject(Seo);
+  protected arkaPlanGorunur = signal(true);
 
   protected code = toSignal(
     this.route.paramMap.pipe(

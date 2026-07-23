@@ -13,7 +13,7 @@
     min-height: clamp(31rem, 62vh, 46rem);
     overflow: hidden;
     border-top: 4px solid var(--hu-kirmizi);
-    background: #e8eef3;
+    background: var(--yuzey);
   }
 
   /*
@@ -21,14 +21,11 @@
    * bir bağlam verir. Kadraj binanın mavi cam kütlesine yaklaşır; hafif odak
    * yumuşatması ile belirgin bir sinematik hareket birlikte kullanılır.
    */
-  .hata-sayfasi::before {
-    content: "";
+  .hata-arka-plan {
     position: absolute;
     z-index: -2;
     inset: -6%;
-    background:
-      url("/images/slider/slide2-960.webp")
-      50% 43% / cover no-repeat;
+    display: block;
     transform: translate3d(-1.2%, -0.8%, 0) scale(1.52);
     transform-origin: center;
     backface-visibility: hidden;
@@ -36,8 +33,15 @@
     will-change: transform;
   }
 
-  .hata-sayfasi::after {
-    content: "";
+  .hata-arka-plan img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 43%;
+  }
+
+  .hata-arka-plan-ton {
     position: absolute;
     z-index: -1;
     inset: 0;
@@ -60,17 +64,25 @@
   }
 
   .hata-iz {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: var(--bosluk-2);
+    width: fit-content;
     margin-bottom: var(--bosluk-5);
-    color: var(--metin-3);
+    padding: 0.55rem 0.75rem;
+    border-left: 2px solid var(--hu-kirmizi);
+    color: #d9e4ef;
+    background: rgb(10 31 53 / 88%);
+    box-shadow: 0 8px 24px rgb(8 29 51 / 16%);
     font-size: var(--olcu-sm);
   }
 
   .hata-iz a {
-    color: var(--hu-lacivert);
+    color: #fff;
+    font-weight: var(--kalinlik-orta);
   }
+
+  .hata-iz a:hover { color: #fff; }
 
   .hata-panel {
     --hata-vurgu: var(--hu-kirmizi);
@@ -373,14 +385,8 @@
     }
   }
 
-  @media (min-width: 64rem) {
-    .hata-sayfasi::before {
-      background-image: url("/images/slider/slide2-1920.webp");
-    }
-  }
-
   @media (prefers-reduced-motion: reduce) {
-    .hata-sayfasi::before {
+    .hata-arka-plan {
       animation: none;
       transform: translate3d(0, 0, 0) scale(1.57);
       will-change: auto;
