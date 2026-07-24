@@ -33,6 +33,86 @@
                 "input": "src/styles-deferred.css",
                 "bundleName": "tamamlayici",
                 "inject": false
+              },
+              {
+                "input": "src/styles/admin.css",
+                "bundleName": "tamamlayici-admin",
+                "inject": false
+              },
+              {
+                "input": "src/styles/hata.css",
+                "bundleName": "tamamlayici-hata",
+                "inject": false
+              },
+              {
+                "input": "src/styles/haberler.css",
+                "bundleName": "tamamlayici-haberler",
+                "inject": false
+              },
+              {
+                "input": "src/styles/sss.css",
+                "bundleName": "tamamlayici-sss",
+                "inject": false
+              },
+              {
+                "input": "src/styles/personel.css",
+                "bundleName": "tamamlayici-personel",
+                "inject": false
+              },
+              {
+                "input": "src/styles/birimler.css",
+                "bundleName": "tamamlayici-birimler",
+                "inject": false
+              },
+              {
+                "input": "src/styles/sema.css",
+                "bundleName": "tamamlayici-sema",
+                "inject": false
+              },
+              {
+                "input": "src/styles/kurul.css",
+                "bundleName": "tamamlayici-kurul",
+                "inject": false
+              },
+              {
+                "input": "src/styles/cms.css",
+                "bundleName": "tamamlayici-cms",
+                "inject": false
+              },
+              {
+                "input": "src/styles/dokumanlar.css",
+                "bundleName": "tamamlayici-dokumanlar",
+                "inject": false
+              },
+              {
+                "input": "src/styles/web-servisleri.css",
+                "bundleName": "tamamlayici-web-servisleri",
+                "inject": false
+              },
+              {
+                "input": "src/styles/proxy-kartlari.css",
+                "bundleName": "tamamlayici-proxy",
+                "inject": false
+              },
+              {
+                "input": "src/styles/eposta-islemleri.css",
+                "bundleName": "tamamlayici-eposta",
+                "inject": false
+              },
+              {
+                "input": "src/styles/webmail-servisleri.css",
+                "bundleName": "tamamlayici-webmail",
+                "inject": false
+              },
+              {
+                "input": "src/styles/office365-rehberleri.css",
+                "bundleName": "tamamlayici-office365",
+                "inject": false
+              },
+              {
+                "input": "src/styles/contact-ticket.css",
+                "bundleName": "tamamlayici-iletisim",
+                "inject": false
               }
             ],
             "server": "src/main.server.ts",

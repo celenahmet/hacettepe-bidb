@@ -11,7 +11,30 @@ import { readdirSync } from 'node:fs';
 import { LEGACY_ROUTES } from './legacy-routes';
 
 const browserDistFolder = join(import.meta.dirname, '../browser');
-let tamamlayiciStilDosyasi = '';
+
+/**
+ * Tamamlayıcı stil paketleri: bundleName -> gerçek dosya adı.
+ * "tamamlayici" ortak pakettir (bkz. styles-deferred.css), diğerleri tek bir
+ * sayfa tipine özgüdür ve yalnızca o sayfa istendiğinde eklenir.
+ */
+const tamamlayiciDosyalari = new Map<string, string>();
+
+/** İçerik sayfası slug'ından, o sayfaya özgü ek stil paketinin anahtarına eşleme. */
+const SAYFA_TIPI_STIL: Record<string, string> = {
+  faq: 'tamamlayici-sss',
+  staff: 'tamamlayici-personel',
+  overview: 'tamamlayici-birimler',
+  'org-chart': 'tamamlayici-sema',
+  committees: 'tamamlayici-kurul',
+  cms: 'tamamlayici-cms',
+  documents: 'tamamlayici-dokumanlar',
+  'web-services': 'tamamlayici-web-servisleri',
+  proxy: 'tamamlayici-proxy',
+  email: 'tamamlayici-eposta',
+  webmail: 'tamamlayici-webmail',
+  office365: 'tamamlayici-office365',
+  contact: 'tamamlayici-iletisim',
+};
 
 const app = express();
 /**
@@ -305,7 +328,8 @@ function asamaliTarayiciBaslangici(html: string): string {
 
   if (moduller.length === 0) return html;
   const kaynaklar = JSON.stringify(moduller).replace(/</g, '\\u003c');
-  const stil = JSON.stringify(tamamlayiciStilDosyasi ? `/${tamamlayiciStilDosyasi}` : '');
+  const ortakStil = tamamlayiciDosyalari.get('tamamlayici');
+  const stil = JSON.stringify(ortakStil ? `/${ortakStil}` : '');
   const baslat = `<script id="bidb-asamali-baslangic">
 (()=>{const q=${kaynaklar},c=${stil};let b=false;
 const m=()=>{let i=0;const s=()=>{if(i>=q.length)return;
@@ -318,13 +342,41 @@ setTimeout(()=>{'requestIdleCallback'in window?requestIdleCallback(y,{timeout:10
   return govde.replace('</body>', `${baslat}</body>`);
 }
 
-/** İçerik sayfaları ilk yanıtta kendi tamamlayıcı stil paketini alır. */
-function tamamlayiciStilEkle(html: string): string {
-  if (!tamamlayiciStilDosyasi || html.includes(tamamlayiciStilDosyasi)) return html;
-  return html.replace(
-    '</head>',
-    `<link rel="stylesheet" href="/${tamamlayiciStilDosyasi}"></head>`,
-  );
+/**
+ * İstenen adrese göre gereken tamamlayıcı stil paketlerinin anahtarları.
+ * Ortak paket ("tamamlayici") her zaman gelir; sayfa tipine özgü tek bir
+ * paket varsa üzerine eklenir. Böylece örneğin /tr/network gibi düz bir
+ * sayfa SSS, personel, e-imza gibi hiç kullanmadığı yüzlerce kuralı
+ * indirmez.
+ */
+function gerekliStilAnahtarlari(yol: string): string[] {
+  const p = yol.replace(/\/+$/, '') || yol;
+
+  if (p === '/yonetim' || p.startsWith('/yonetim/')) return ['tamamlayici', 'tamamlayici-admin'];
+
+  const hataKodu = acikHataKodu(p);
+  if (hataKodu !== null) return ['tamamlayici', 'tamamlayici-hata'];
+
+  if (/^\/(tr|en)\/(news|newsItem)(\/|$)/.test(p)) return ['tamamlayici', 'tamamlayici-haberler'];
+
+  const icerik = p.match(/^\/(tr|en)\/([^/]+)$/);
+  if (icerik) {
+    const ozel = SAYFA_TIPI_STIL[icerik[2]];
+    if (ozel) return ['tamamlayici', ozel];
+  }
+
+  return ['tamamlayici'];
+}
+
+/** İçerik sayfaları ilk yanıtta, o sayfa tipi için gereken tamamlayıcı stil paketlerini alır. */
+function tamamlayiciStilEkle(html: string, yol: string): string {
+  const baglantilar = gerekliStilAnahtarlari(yol)
+    .map((anahtar) => tamamlayiciDosyalari.get(anahtar))
+    .filter((dosya): dosya is string => !!dosya && !html.includes(dosya))
+    .map((dosya) => `<link rel="stylesheet" href="/${dosya}">`)
+    .join('');
+  if (!baglantilar) return html;
+  return html.replace('</head>', `${baglantilar}</head>`);
 }
 
 /* ---------- site haritası ve robots ---------- */
@@ -424,7 +476,10 @@ const varlikEsleme = new Map<string, string>();
 try {
   for (const name of readdirSync(browserDistFolder)) {
     if (/\.(js|css)$/i.test(name)) varlikEsleme.set(name.toLowerCase(), name);
-    if (/^tamamlayici(?:-[A-Z0-9]+)?\.css$/i.test(name)) tamamlayiciStilDosyasi = name;
+    // "tamamlayici.css" ya da hash'li biçimi "tamamlayici-XXXXXXXX.css";
+    // sayfa-tipine özgü paketlerde de aynı kalıp: "tamamlayici-sss-XXXXXXXX.css".
+    const eslesme = name.match(/^(tamamlayici(?:-[a-z0-9]+)*?)(?:-[A-Z0-9]{6,8})?\.css$/);
+    if (eslesme) tamamlayiciDosyalari.set(eslesme[1], name);
   }
 } catch {
   // Derleme çıktısı yoksa (geliştirme sunucusu) eşleme boş kalır
@@ -505,7 +560,7 @@ app.use(async (req, res, next) => {
       const anaSayfa = /^\/(tr|en)\/?$/.test(req.path);
       const govde = await yanit.text();
       const html = asamaliTarayiciBaslangici(
-        anaSayfa ? govde : tamamlayiciStilEkle(govde),
+        anaSayfa ? govde : tamamlayiciStilEkle(govde, req.path),
       );
       return writeResponseToNodeResponse(
         new Response(html, { status: hataKodu ?? yanit.status, headers: basliklar }),
@@ -515,7 +570,7 @@ app.use(async (req, res, next) => {
 
     if (req.path === '/yonetim' || req.path.startsWith('/yonetim/')) {
       return writeResponseToNodeResponse(
-        new Response(tamamlayiciStilEkle(await yanit.text()), {
+        new Response(tamamlayiciStilEkle(await yanit.text(), req.path), {
           status: yanit.status,
           headers: basliklar,
         }),
