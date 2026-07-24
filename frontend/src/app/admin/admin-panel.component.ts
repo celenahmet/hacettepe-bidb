@@ -1114,7 +1114,14 @@ interface MobileMenuItem {
               <span>Site</span>
             </button>
             <button type="button" [class.etkin]="mobilAnaEtkin('manage')" [attr.aria-expanded]="mobilGrup() === 'manage'" (click)="mobilGrupAc('manage')">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM19 13.5l2-1.5-2-1.5-.5-1.3.4-2.5-2.5-.4-1.1-.9L14.5 3h-3l-.8 2.4-1.1.9-2.5.4.4 2.5-.5 1.3L5 12l2 1.5.5 1.3-.4 2.5 2.5.4 1.1.9.8 2.4h3l.8-2.4 1.1-.9 2.5-.4-.4-2.5z"/></svg>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="9" y="9" width="6" height="6" rx="1"/>
+                <circle cx="5" cy="5" r="2"/>
+                <circle cx="19" cy="5" r="2"/>
+                <circle cx="5" cy="19" r="2"/>
+                <circle cx="19" cy="19" r="2"/>
+                <path d="m7 7 2.5 2.5M17 7l-2.5 2.5M7 17l2.5-2.5M17 17l-2.5-2.5"/>
+              </svg>
               <span>Yönetim</span>
             </button>
           </nav>
