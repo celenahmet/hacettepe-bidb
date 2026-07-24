@@ -16,10 +16,8 @@ import { Language, MenuItem } from '../core/models';
       </a>
       <a class="sol-menu-ana" [routerLink]="['/', language, 'news']" routerLinkActive="etkin">
         {{ language === 'en' ? 'News and Announcements' : 'Haberler ve Duyurular' }}
-      </a>
-
-      @for (m of menus$ | async; track m.title) {
-        <details class="sol-bolum" [open]="bolumEtkin(m.items)">
+      </a>      @for (m of menus$ | async; track m.title) {
+        <details class="sol-bolum" [open]="bolumEtkin(m.items) || ((m.title === 'Servislerimiz' || m.title === 'Services') && bolumEtkin(uygulamaSistemleri))">
           <summary>{{ m.title }}</summary>
           <ul>
             @for (o of m.items; track o.url) {
@@ -31,13 +29,10 @@ import { Language, MenuItem } from '../core/models';
                 }
               </li>
             }
-          </ul>
-        </details>
-        
-        @if (m.title === 'Servislerimiz' || m.title === 'Our Services') {
-          <details class="sol-bolum" [open]="bolumEtkin(uygulamaSistemleri)">
-            <summary>{{ language === 'en' ? 'Application Systems' : 'Uygulama Sistemleri' }}</summary>
-            <ul>
+            @if (m.title === 'Servislerimiz' || m.title === 'Services') {
+              <li style="padding: 8px 16px 4px 16px; font-weight: 700; font-size: 0.8em; text-transform: uppercase; color: var(--hu-kirmizi); border-top: 1px solid var(--cizgi); margin-top: 8px;">
+                {{ language === 'en' ? 'Application Systems' : 'Uygulama Sistemleri' }}
+              </li>
               @for (app of uygulamaSistemleri; track app.url) {
                 <li>
                   @if (app.newTab) {
@@ -47,10 +42,11 @@ import { Language, MenuItem } from '../core/models';
                   }
                 </li>
               }
-            </ul>
-          </details>
-        }
+            }
+          </ul>
+        </details>
       }
+
     </nav>
   `
 })

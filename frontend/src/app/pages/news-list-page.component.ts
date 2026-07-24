@@ -89,14 +89,16 @@ import { NewsCardComponent } from './news-card.component';
     .duyuru-kontrolleri {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
-      margin-bottom: 2rem;
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+      border-bottom: 1px solid var(--cizgi);
+      padding-bottom: 1rem;
     }
     @media (min-width: 768px) {
       .duyuru-kontrolleri {
         flex-direction: row;
         justify-content: space-between;
-        align-items: flex-start;
+        align-items: center;
       }
     }
     .kategori-filtreleri {
@@ -105,36 +107,53 @@ import { NewsCardComponent } from './news-card.component';
       gap: 0.5rem;
       flex: 1;
     }
-    .arama-kutusu input {
-      padding: 0.4rem 1rem;
-      border-radius: 999px;
-      border: 1px solid var(--tema-kenarlik, #ddd);
-      font-size: 0.9rem;
-      width: 100%;
+    .arama-kutusu {
+      position: relative;
       min-width: 250px;
+    }
+    .arama-kutusu::before {
+      content: '⚲';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%) rotate(-45deg);
+      font-size: 1.2rem;
+      color: var(--hu-kirmizi);
+      pointer-events: none;
+    }
+    .arama-kutusu input {
+      width: 100%;
+      padding: 0.5rem 0 0.5rem 2rem;
+      border: none;
+      border-bottom: 2px solid #ddd;
+      background: transparent;
+      font-size: 0.95rem;
+      color: var(--metin);
       outline: none;
-      transition: border-color 0.2s;
+      transition: border-color 0.3s ease;
     }
     .arama-kutusu input:focus {
-      border-color: var(--hu-kirmizi, #b31821);
+      border-bottom-color: var(--hu-kirmizi);
     }
     .kategori-buton {
-      padding: 0.4rem 1rem;
-      border-radius: 999px;
-      border: 1px solid var(--tema-kenarlik, #ddd);
-      background: var(--tema-zemin, #fff);
-      color: var(--tema-metin, #333);
+      padding: 0.25rem 0.75rem;
+      border-radius: 4px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--metin-2);
       cursor: pointer;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
+      font-weight: 500;
       transition: all 0.2s ease;
     }
     .kategori-buton:hover {
-      background: var(--tema-kenarlik, #eee);
+      color: var(--hu-kirmizi);
+      background: rgba(179, 24, 33, 0.05);
     }
     .kategori-buton.aktif {
-      background: var(--hu-kirmizi, #b31821);
-      color: #fff;
-      border-color: var(--hu-kirmizi, #b31821);
+      color: var(--hu-kirmizi);
+      border-color: var(--hu-kirmizi);
+      background: rgba(179, 24, 33, 0.05);
     }
   `]
 })
@@ -170,7 +189,13 @@ export class NewsListPageComponent {
   protected kategoriler = computed(() => {
     const tumu = this.duyurular();
     const set = new Set(tumu.map(d => d.category).filter(c => c));
-    return Array.from(set).sort();
+    // "general" (Genel Duyurular), "Tümü" filtresinin hemen yanında ilk
+    // sırada gösterilir; diğer kategoriler alfabetik sırada onu izler.
+    return Array.from(set).sort((a, b) => {
+      if (a === 'general') return -1;
+      if (b === 'general') return 1;
+      return a.localeCompare(b);
+    });
   });
 
   protected kategoriMetni(k: string): string {

@@ -1083,38 +1083,20 @@ interface MobileMenuItem {
             </div>
           </main>
 
-          @if (mobilGrup()) {
-            <button class="mobil-menu-perde" type="button" aria-label="Menüyü kapat"
-                    (click)="mobilGrup.set(null)"></button>
-            <section class="mobil-alt-menu" aria-label="Yönetim alt menüsü">
-              <header><strong>{{ mobilGrupBasligi() }}</strong><button type="button" class="ikincil" (click)="mobilGrup.set(null)">Kapat</button></header>
-              <div>
-                @for (item of mobilGrupOgeleri(); track item.tab) {
-                  <button type="button" [class.etkin]="sekme() === item.tab" (click)="mobilSekmeAc(item.tab)">
-                    <span>{{ item.label }}</span><small>{{ item.note }}</small>
-                  </button>
-                }
-              </div>
-              @if (mobilGrup() === 'manage') {
-                <button type="button" class="mobil-cikis" (click)="api.cikis(); mobilGrup.set(null)">Güvenli çıkış</button>
-              }
-            </section>
-          }
-
           <nav class="mobil-alt-nav" aria-label="Mobil yönetim menüsü">
             <button type="button" [class.etkin]="sekme() === 'analytics'" (click)="mobilSekmeAc('analytics')">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V9m6 10V5m6 14v-7m4 7H2"/></svg>
               <span>Analitik</span>
             </button>
-            <button type="button" [class.etkin]="mobilAnaEtkin('content')" [attr.aria-expanded]="mobilGrup() === 'content'" (click)="mobilGrupAc('content')">
+            <button type="button" [class.etkin]="sekme() === 'pages' || sekme() === 'news'" (click)="mobilSekmeAc('pages')">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v14H4zM8 9h8m-8 4h8"/></svg>
               <span>İçerik</span>
             </button>
-            <button type="button" [class.etkin]="mobilAnaEtkin('site')" [attr.aria-expanded]="mobilGrup() === 'site'" (click)="mobilGrupAc('site')">
+            <button type="button" [class.etkin]="sekme() === 'slider' || sekme() === 'shortcuts' || sekme() === 'menus'" (click)="mobilSekmeAc('slider')">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h18v13H3zM8 21h8m-4-4v4"/></svg>
               <span>Site</span>
             </button>
-            <button type="button" [class.etkin]="mobilAnaEtkin('manage')" [attr.aria-expanded]="mobilGrup() === 'manage'" (click)="mobilGrupAc('manage')">
+            <button type="button" [class.etkin]="sekme() === 'quality' || sekme() === 'personel' || sekme() === 'tickets' || sekme() === 'iletisim' || sekme() === 'sosyal'" (click)="mobilSekmeAc('quality')">
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <rect x="9" y="9" width="6" height="6" rx="1"/>
                 <circle cx="5" cy="5" r="2"/>
@@ -1297,12 +1279,7 @@ export class AdminPanelComponent {
     } as Record<string, string>)[value] ?? value;
   }
 
-  protected mobilGrupAc(group: MobileGroup): void {
-    this.mobilGrup.update((current) => current === group ? null : group);
-  }
-
   protected mobilSekmeAc(tab: AdminTab): void {
-    this.mobilGrup.set(null);
     switch (tab) {
       case 'analytics': this.sekmeAnalitik(); break;
       case 'quality': this.sekmeKalite(); break;
@@ -1322,11 +1299,7 @@ export class AdminPanelComponent {
     return this.mobilGrupOgeleri(group).some((item) => item.tab === this.sekme());
   }
 
-  protected mobilGrupBasligi(): string {
-    return ({ content: 'İçerik yönetimi', site: 'Site düzeni', manage: 'Yönetim araçları' } as const)[this.mobilGrup() ?? 'manage'];
-  }
-
-  protected mobilGrupOgeleri(group = this.mobilGrup() ?? 'manage'): MobileMenuItem[] {
+  protected mobilGrupOgeleri(group: MobileGroup): MobileMenuItem[] {
     const groups: Record<MobileGroup, MobileMenuItem[]> = {
       content: [
         { tab: 'pages', label: 'Sayfalar', note: 'Metin, URL ve SEO' },

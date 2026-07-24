@@ -16,7 +16,7 @@ public interface WebVitalSampleRepo extends JpaRepository<WebVitalSample, Long> 
         String getMetric();
         Double getP75();
         Long getSampleCount();
-        OffsetDateTime getLastMeasuredAt();
+        java.time.Instant getLastMeasuredAt();
     }
 
     /** Core Web Vitals değerlendirmesi ortalamayla değil 75. yüzdelikle yapılır. */

@@ -55,7 +55,7 @@ public class AdminQualityController {
                     String rating = WebVitalController.rating(item.getMetric(), value);
                     return new VitalScore(item.getPath(), item.getMetric(), value,
                             item.getSampleCount(), rating, performanceScore(item.getMetric(), value),
-                            item.getLastMeasuredAt());
+                            item.getLastMeasuredAt() == null ? null : item.getLastMeasuredAt().atOffset(java.time.ZoneOffset.UTC));
                 }).toList();
 
         int seoScore = pageScores.isEmpty() ? 0

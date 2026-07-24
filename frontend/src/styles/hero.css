@@ -9,7 +9,7 @@
 @layer kamu {
   .hero {
     position: relative;
-    min-height: clamp(34rem, 44vw, 41rem);
+    min-height: clamp(29rem, 38vw, 35rem);
     display: flex;
     overflow: hidden;
     background: #101722;
@@ -436,7 +436,7 @@
     .hero {
       width: 100%;
       max-width: 105rem;
-      min-height: 38rem;
+      min-height: 33rem;
       margin-inline: auto;
     }
 

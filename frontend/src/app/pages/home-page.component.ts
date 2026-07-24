@@ -35,21 +35,6 @@ import { NewsCardComponent } from './news-card.component';
             {{ metin('Bilgi İşlem Daire Başkanlığı', 'Department of Information Technology') }}
           </h1>
 
-          @if (v.shortcuts.length) {
-            <nav class="kisayollar" [attr.aria-label]="metin('Hızlı erişim', 'Quick access')">
-              @for (k of v.shortcuts; track k.url) {
-                <a class="kisayol" [href]="k.url"
-                   [attr.target]="k.newTab ? '_blank' : null"
-                   [attr.rel]="k.newTab ? 'noopener' : null">
-                  @if (k.iconUrl) {
-                    <img [src]="k.iconUrl" alt="" aria-hidden="true" width="52" height="52" loading="lazy">
-                  }
-                  <span>{{ k.name }}</span>
-                </a>
-              }
-            </nav>
-          }
-
           @if (v.news.length) {
               <section class="duyurular">
                 <div class="bolum-baslik">
