@@ -513,8 +513,17 @@
     border-radius: 4px;
     transition: transform 0.2s;
   }
+  .alt-sosyal-medya a svg {
+    filter: grayscale(100%);
+    opacity: 0.6;
+    transition: all 0.3s ease;
+  }
   .alt-sosyal-medya a:hover {
     transform: translateY(-2px);
+  }
+  .alt-sosyal-medya a:hover svg {
+    filter: grayscale(0%);
+    opacity: 1;
   }
 
   .alt-iletisim dl { margin: 0 0 var(--bosluk-4); }
