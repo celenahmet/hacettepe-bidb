@@ -25,10 +25,14 @@ import java.util.Locale;
 @RequestMapping("/api/admin/files")
 public class AdminFileController {
 
-    /** İzin verilen uzantılar. HTML ve betik dosyaları kasten dışarıda bırakıldı. */
+    /** İzin verilen uzantılar. HTML ve betik dosyaları kasten dışarıda bırakıldı.
+     *  SVG de aynı gerekçeyle dışarıda: içine gömülü <script> barındırabilir ve
+     *  dosyanın adresine doğrudan gidildiğinde (bir <img> içinde değil, üst
+     *  belge olarak açıldığında) bu betik çalışır — CSP'deki script-src 'self'
+     *  bunu engellemez, çünkü dosya zaten aynı kaynaktan sunulur. */
     private static final List<String> IZINLI = List.of(
             "pdf", "doc", "docx", "xls", "xlsx", "ppt", "pptx",
-            "odt", "ods", "zip", "rar", "jpg", "jpeg", "png", "gif", "webp", "svg"
+            "odt", "ods", "zip", "rar", "jpg", "jpeg", "png", "gif", "webp"
     );
 
     private static final long AZAMI_BOYUT = 25L * 1024 * 1024;   // 25 MB
