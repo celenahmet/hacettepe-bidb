@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 /**
  * Yayın içeriği herkese açıktır; düzenleme uçları kimlik doğrulaması ister.
@@ -22,10 +23,11 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     @Bean
-    SecurityFilterChain zincir(HttpSecurity http) throws Exception {
+    SecurityFilterChain zincir(HttpSecurity http, YoneticiGirisSinirlayici girisSinirlayici) throws Exception {
         http
             // API durum bilgisi tutmaz; oturum yerine temel kimlik doğrulama kullanılır
             .csrf(csrf -> csrf.disable())
+            .addFilterBefore(girisSinirlayici, BasicAuthenticationFilter.class)
             .authorizeHttpRequests(izin -> izin
                 .requestMatchers("/actuator/health", "/error").permitAll()
                 // Yayın uçları: yalnızca okuma, herkese açık
