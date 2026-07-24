@@ -215,9 +215,15 @@ const hataliSayfalar = new Set<string>();
 async function yayindakiYollar(): Promise<Set<string>> {
   if (yolOnbellek && Date.now() - yolOnbellek.savedAt < 60_000) return yolOnbellek.yollar;
   const yollar = new Set<string>();
-  for (const language of ['tr', 'en']) {
-    try {
-      const y = await fetch(`${API_TABAN}/api/${language}/pages`);
+  try {
+    // İki dilin sayfa listesi ARDIŞIK değil PARALEL istenir. Önbellek
+    // dakikada bir soğuduğunda, tam da o anda gelen ziyaretçi isteği
+    // (ör. /en/committees) iki ayrı ağ gidiş-dönüşünü sırayla bekliyor,
+    // bu da o tekil isteğin TTFB'sini gözle görülür biçimde şişiriyordu.
+    const yanitlar = await Promise.all(
+      ['tr', 'en'].map((language) => fetch(`${API_TABAN}/api/${language}/pages`).then((y) => ({ language, y })))
+    );
+    for (const { language, y } of yanitlar) {
       if (!y.ok) continue;
       for (const s of (await y.json()) as { slug: string; brokenContent?: boolean }[]) {
         // Kaynakta hata metni dönen sayfalar erişilebilir kalır, ancak
@@ -225,10 +231,10 @@ async function yayindakiYollar(): Promise<Set<string>> {
         if (s.brokenContent) hataliSayfalar.add(`/${language}/${s.slug}`);
         yollar.add(`/${language}/${s.slug}`);
       }
-    } catch {
-      // Sayfa listesi alınamazsa doğrulama yapılmaz; site yine de çalışır.
-      return yolOnbellek?.yollar ?? new Set<string>();
     }
+  } catch {
+    // Sayfa listesi alınamazsa doğrulama yapılmaz; site yine de çalışır.
+    return yolOnbellek?.yollar ?? new Set<string>();
   }
   yolOnbellek = { yollar, savedAt: Date.now() };
   return yollar;

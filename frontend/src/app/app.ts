@@ -24,7 +24,7 @@ import { QualityMetricsService } from './core/quality-metrics.service';
 
     @if (siteKabugu()) {
       <bidb-accessibility-menu [language]="language()"></bidb-accessibility-menu>
-      @defer (on viewport; on timer(100ms)) {
+      @defer (hydrate on viewport; hydrate on timer(100ms)) {
         <bidb-footer [language]="language()"></bidb-footer>
       } @placeholder {
         <div class="alt-tetikleyici" aria-hidden="true"></div>

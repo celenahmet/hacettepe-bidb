@@ -16,7 +16,7 @@ import { NewsCardComponent } from './news-card.component';
   imports: [SideMenuComponent, HeroSliderComponent, NewsCardComponent, AsyncPipe, RouterLink],
   template: `
     @if (veri$ | async; as v) {
-      @defer (hydrate on interaction; hydrate on timer(5s)) {
+      @defer (hydrate on idle) {
         <bidb-hero-slider
           [dilDegeri]="language()"
           [slaytlar]="v.slider"
@@ -24,7 +24,7 @@ import { NewsCardComponent } from './news-card.component';
         </bidb-hero-slider>
       }
 
-      @defer (on viewport; on timer(100ms)) {
+      @defer (hydrate on viewport; hydrate on timer(100ms)) {
       <div class="kap sayfa-duzen">
         <aside class="yan">
           <bidb-side-menu [dilDegeri]="language()"></bidb-side-menu>
