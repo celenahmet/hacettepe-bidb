@@ -4,18 +4,26 @@ import { filter } from 'rxjs/operators';
 import { HeaderComponent } from './layout/header.component';
 import { FooterComponent } from './layout/footer.component';
 import { CookieConsentComponent } from './layout/cookie-consent.component';
+import { AccessibilityMenuComponent } from './layout/accessibility-menu.component';
 import { Language } from './core/models';
 import { QualityMetricsService } from './core/quality-metrics.service';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent, FooterComponent, CookieConsentComponent],
+  imports: [
+    RouterOutlet,
+    HeaderComponent,
+    FooterComponent,
+    CookieConsentComponent,
+    AccessibilityMenuComponent
+  ],
   template: `
     @if (siteKabugu()) { <bidb-header [language]="language()"></bidb-header> }
 
     <router-outlet></router-outlet>
 
     @if (siteKabugu()) {
+      <bidb-accessibility-menu [language]="language()"></bidb-accessibility-menu>
       @defer (on viewport; on timer(100ms)) {
         <bidb-footer [language]="language()"></bidb-footer>
       } @placeholder {
