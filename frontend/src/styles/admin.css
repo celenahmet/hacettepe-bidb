@@ -1289,6 +1289,8 @@
 
     .sablon-izgara { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .kalite-ozet { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .duyuru-alan-izgara { grid-template-columns: minmax(0, 1fr); }
+    .aylik-grafik { overflow-x: auto; }
     .kalite-bolum > header { align-items: flex-start; flex-direction: column; }
     .analitik-ozet { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .analitik-ozet article:nth-child(2) { border-right: 0; }
