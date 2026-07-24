@@ -34,6 +34,7 @@ import { ContactFormComponent } from './contact-form.component';
     ContactFormComponent
   ],
   template: `
+    <div class="sayfa-seridi" aria-hidden="true"></div>
     <div class="kap sayfa-duzen">
       <aside class="yan">
         <!-- E-imza rehberi kendi menüsüyle gelir (kaynakta da öyleydi);

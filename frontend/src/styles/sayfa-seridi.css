@@ -1,0 +1,34 @@
+/* İçerik sayfalarının üstündeki geçiş şeridi.
+ *
+ * Üst menüyle sayfa içeriği arasında boş kalan alan için: ağır bir hero
+ * slider değil, tek bir dekoratif çizgi. Kurumsal logo, kendi kırmızısıyla
+ * çok düşük saydamlıkta büyütülüp sağ kenardan taşırılır — bilgi taşımaz,
+ * yalnızca sayfalar arası geçişi yumuşatan bir imza. Başlık ve bölüm adı
+ * zaten hemen altındaki sayfa başlığında var; burada tekrar edilmez.
+ */
+@layer kamu {
+  .sayfa-seridi {
+    position: relative;
+    overflow: hidden;
+    height: 64px;
+    background: linear-gradient(100deg, #fffdfc 0%, #fdf3f2 70%, #fbeeed 100%);
+    border-bottom: 1px solid var(--cizgi);
+  }
+
+  .sayfa-seridi::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: -36px;
+    width: 210px;
+    height: 300px;
+    background: url("/hu-logo.svg") no-repeat center / contain;
+    opacity: 0.07;
+    transform: translateY(-50%) rotate(-6deg);
+  }
+
+  @media (max-width: 620px) {
+    .sayfa-seridi { height: 44px; }
+    .sayfa-seridi::before { width: 140px; height: 200px; right: -24px; }
+  }
+}
