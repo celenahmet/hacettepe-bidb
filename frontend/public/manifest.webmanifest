@@ -1,0 +1,20 @@
+{
+  "name": "Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı",
+  "short_name": "HÜ BİDB",
+  "description": "Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı hizmetleri, güncel duyurular, e-posta, ağ, yazılım ve kullanıcı destek kaynakları.",
+  "start_url": "/tr",
+  "scope": "/",
+  "lang": "tr",
+  "dir": "ltr",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#b31821",
+  "icons": [
+    {
+      "src": "/hu-logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
