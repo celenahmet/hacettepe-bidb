@@ -33,22 +33,24 @@ import { Language, MenuItem } from '../core/models';
             }
           </ul>
         </details>
-      }
-
-      <details class="sol-bolum" [open]="bolumEtkin(uygulamaSistemleri)">
-        <summary>{{ language === 'en' ? 'Application Systems' : 'Uygulama Sistemleri' }}</summary>
-        <ul>
-          @for (app of uygulamaSistemleri; track app.url) {
-            <li>
-              @if (app.newTab) {
-                <a [href]="app.url" target="_blank" rel="noopener">{{ language === 'en' ? app.labelEn : app.label }}</a>
-              } @else {
-                <a [routerLink]="['/', language, app.url]" routerLinkActive="etkin">{{ language === 'en' ? app.labelEn : app.label }}</a>
+        
+        @if (m.title === 'Servislerimiz' || m.title === 'Our Services') {
+          <details class="sol-bolum" [open]="bolumEtkin(uygulamaSistemleri)">
+            <summary>{{ language === 'en' ? 'Application Systems' : 'Uygulama Sistemleri' }}</summary>
+            <ul>
+              @for (app of uygulamaSistemleri; track app.url) {
+                <li>
+                  @if (app.newTab) {
+                    <a [href]="app.url" target="_blank" rel="noopener">{{ language === 'en' ? app.labelEn : app.label }}</a>
+                  } @else {
+                    <a [routerLink]="['/', language, app.url]" routerLinkActive="etkin">{{ language === 'en' ? app.labelEn : app.label }}</a>
+                  }
+                </li>
               }
-            </li>
-          }
-        </ul>
-      </details>
+            </ul>
+          </details>
+        }
+      }
     </nav>
   `
 })
