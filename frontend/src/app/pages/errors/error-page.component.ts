@@ -192,7 +192,7 @@ const GENERIC_SERVER: ErrorContent = {
 
         <section class="hata-panel" [attr.data-family]="content().family">
           <div class="hata-kod" aria-hidden="true">
-            <span>HTTP durumu</span>
+            <span>Hata kodu</span>
             <strong>{{ code() }}</strong>
             <i></i>
           </div>
