@@ -39,7 +39,9 @@ import { ContactFormComponent } from './contact-form.component';
         <!-- E-imza rehberi kendi menüsüyle gelir (kaynakta da öyleydi);
              site geneline üst şeritten erişilir. -->
         @if (sayfa()?.slug?.startsWith('e-signature')) {
-          <bidb-eimza-nav [dilDegeri]="language()" [etkinYol]="etkinYol()"></bidb-eimza-nav>
+          @defer (hydrate on immediate) {
+            <bidb-eimza-nav [dilDegeri]="language()" [etkinYol]="etkinYol()"></bidb-eimza-nav>
+          }
         } @else {
           <bidb-side-menu [dilDegeri]="language()"></bidb-side-menu>
         }
@@ -73,30 +75,40 @@ import { ContactFormComponent } from './contact-form.component';
           @if (s.slug === 'office365') {
             <!-- Office 365: kaynak PDF bağlantıları, mevcut Microsoft
                  ikonları ve kısa kullanım açıklamalarıyla ayrıştırılır. -->
-            <bidb-office365-guides
-              [rawHtml]="s.contentHtml ?? ''"
-              [dilDegeri]="language()"></bidb-office365-guides>
+            @defer (hydrate on immediate) {
+              <bidb-office365-guides
+                [rawHtml]="s.contentHtml ?? ''"
+                [dilDegeri]="language()"></bidb-office365-guides>
+            }
           } @else if (s.slug === 'webmail') {
             <!-- E-posta giriş servisleri: kaynak görseller ve bağlantılar
                  korunur; yalnızca bu sayfaya özel kullanım yönlendirmesi
                  ve güvenli erişim açıklamasıyla sunulur. -->
-            <bidb-webmail-services
-              [rawHtml]="s.contentHtml ?? ''"
-              [dilDegeri]="language()"></bidb-webmail-services>
+            @defer (hydrate on immediate) {
+              <bidb-webmail-services
+                [rawHtml]="s.contentHtml ?? ''"
+                [dilDegeri]="language()"></bidb-webmail-services>
+            }
           } @else if (s.slug === 'email') {
             <!-- E-Posta İşlemleri: kaynak bağlantıları, amaçlarına göre
                  ayrışan erişilebilir işlem kartlarına dönüştürülür. -->
-            <bidb-email-operations
-              [rawHtml]="s.contentHtml ?? ''"
-              [dilDegeri]="language()"></bidb-email-operations>
+            @defer (hydrate on immediate) {
+              <bidb-email-operations
+                [rawHtml]="s.contentHtml ?? ''"
+                [dilDegeri]="language()"></bidb-email-operations>
+            }
           } @else if (s.slug === 'overview') {
             <!-- Genel Tanıtım: birim görev tanımları kart ızgarasına
                  ayrıştırılır; içerik birebir korunur. -->
-            <bidb-units [rawHtml]="s.contentHtml ?? ''" [dilDegeri]="language()"></bidb-units>
+            @defer (hydrate on immediate) {
+              <bidb-units [rawHtml]="s.contentHtml ?? ''" [dilDegeri]="language()"></bidb-units>
+            }
           } @else if (s.slug === 'faq') {
             <!-- SSS: kaynak akordeon HTML'i arama+filtreli modern bir
                  akordeona ayrıştırılır; içerik birebir korunur. -->
-            <bidb-faq [rawHtml]="s.contentHtml ?? ''" [dilDegeri]="language()"></bidb-faq>
+            @defer (hydrate on immediate) {
+              <bidb-faq [rawHtml]="s.contentHtml ?? ''" [dilDegeri]="language()"></bidb-faq>
+            }
           } @else {
             <div class="icerik" [innerHTML]="govde()"></div>
           }
@@ -105,20 +117,26 @@ import { ContactFormComponent } from './contact-form.component';
                kayıtlarından üretilir. Sayfa kaydı başlık, adres, menü bağı
                ve arama motoru bilgileri için durmayı sürdürür. -->
           @if (s.slug === 'staff') {
-            <bidb-staff-list [dilDegeri]="language()"></bidb-staff-list>
+            @defer (hydrate on immediate) {
+              <bidb-staff-list [dilDegeri]="language()"></bidb-staff-list>
+            }
           }
 
           <!-- İletişim bilgileri sayfa metnine yazılmaz; alt bilgiyle aynı
                kayıtlardan gelir. Metne gömülselerdi panelden bir numara
                değiştiğinde alt bilgi doğruyu, bu sayfa yanlışı gösterirdi. -->
           @if (s.slug === 'about' || s.slug === 'contact') {
-            <bidb-contact-block
-              [dilDegeri]="language()"
-              [haritaGoster]="s.slug === 'contact'">
-            </bidb-contact-block>
+            @defer (hydrate on immediate) {
+              <bidb-contact-block
+                [dilDegeri]="language()"
+                [haritaGoster]="s.slug === 'contact'">
+              </bidb-contact-block>
+            }
           }
           @if (s.slug === 'contact') {
-            <bidb-contact-form [dilDegeri]="language()"></bidb-contact-form>
+            @defer (hydrate on immediate) {
+              <bidb-contact-form [dilDegeri]="language()"></bidb-contact-form>
+            }
           }
 
           @if (belgeler().length) {
