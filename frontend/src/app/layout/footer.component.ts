@@ -55,28 +55,30 @@ interface SocialAccount {
 
         </div>
 
-        <!-- kurumsal -->
-        @if (kurumsal(); as k) {
-          <nav class="alt-sutun" [attr.aria-label]="k.title">
-            <span class="alt-etiket">{{ k.title }}</span>
-            <ul>
-              @for (o of k.items; track o.url) {
-                <li><a [routerLink]="o.url">{{ o.label }}</a></li>
-              }
-            </ul>
-          </nav>
-        }
+        <!-- kurumsal yerine yasal -->
+        <nav class="alt-sutun" [attr.aria-label]="language === 'en' ? 'Corporate' : 'Kurumsal'">
+          <span class="alt-etiket">{{ language === 'en' ? 'Corporate' : 'Kurumsal' }}</span>
+          <ul>
+            <li><a [routerLink]="['/', language, 'disclaimer']">{{ language === 'en' ? 'Disclaimer' : 'Sorumluluk Sınırı' }}</a></li>
+            <li><a [routerLink]="['/', language, 'accessibility']">{{ language === 'en' ? 'Accessibility Statement' : 'Erişilebilirlik Bildirimi' }}</a></li>
+            <li><a [routerLink]="['/', language, 'cookies']">{{ language === 'en' ? 'Cookie Policy' : 'Çerez Politikası' }}</a></li>
+            <li><button type="button" class="sutun-baglanti-dugme" (click)="cerezTercihleri.openPanel()">
+              {{ language === 'en' ? 'Cookie Preferences' : 'Çerez Tercihleri' }}
+            </button></li>
+          </ul>
+        </nav>
 
         <!-- servisler -->
         @if (language === 'tr') {
           <nav class="alt-sutun" aria-label="Servisler">
             <span class="alt-etiket">Servisler</span>
             <ul>
+              <li><a href="https://portal.hacettepe.edu.tr/" target="_blank" rel="noopener">Hacettepe Portalı</a></li>
               <li><a routerLink="/tr/email">E-Posta İşlemleri</a></li>
               <li><a routerLink="/tr/wireless">Kablosuz Erişim</a></li>
-              <li><a routerLink="/tr/software">Lisanslı Yazılım</a></li>
+              <li><a routerLink="/tr/office365">Office Uygulamaları</a></li>
               <li><a routerLink="/tr/faq">Sık Sorulan Sorular</a></li>
-              <li><a routerLink="/tr/forms">Formlar</a></li>
+              <li><a href="https://yazilimdeposu.hacettepe.edu.tr/" target="_blank" rel="noopener">Yazılım Deposu</a></li>
             </ul>
           </nav>
         }
@@ -146,14 +148,6 @@ interface SocialAccount {
                 }
               </nav>
             }
-            <nav class="alt-baglantilar" [attr.aria-label]="language === 'en' ? 'Legal and accessibility' : 'Yasal ve erişilebilirlik'">
-              <a [routerLink]="['/', language, 'disclaimer']">{{ language === 'en' ? 'Disclaimer' : 'Sorumluluk Sınırı' }}</a>
-              <a [routerLink]="['/', language, 'accessibility']">{{ language === 'en' ? 'Accessibility Statement' : 'Erişilebilirlik Bildirimi' }}</a>
-              <a [routerLink]="['/', language, 'cookies']">{{ language === 'en' ? 'Cookie Policy' : 'Çerez Politikası' }}</a>
-              <button type="button" (click)="cerezTercihleri.openPanel()">
-                {{ language === 'en' ? 'Cookie Preferences' : 'Çerez Tercihleri' }}
-              </button>
-            </nav>
           </div>
         </div>
       </div>
@@ -180,11 +174,6 @@ export class FooterComponent {
     this.kanallar().filter((kanal) => kanal.type === 'email').slice(0, 2)
   );
 
-  /* Kurumsal sütunu menü verisinden okunur. Önce elle yazılmış bir liste
-     vardı; İngilizce sürümde karşılığı olmayan sayfalara bağlanıyordu ve
-     bir sayfanın adresi değiştiğinde burası sessizce kırılıyordu. Üst
-     şerit de aynı kaynaktan besleniyor — iki yerde ayrı liste tutulmaz. */
-  protected kurumsal = signal<Menu | null>(null);
   protected sosyal = signal<SocialAccount[]>([]);
 
   ngOnInit(): void {
@@ -192,8 +181,6 @@ export class FooterComponent {
       .pipe(yenidenDene()).subscribe((l) => this.kanallar.set(l));
     this.http.get<SocialAccount[]>(`/api/${this.language}/social-accounts`)
       .pipe(yenidenDene()).subscribe((l) => this.sosyal.set(l));
-    this.http.get<Menu[]>(`/api/${this.language}/menus`)
-      .pipe(yenidenDene()).subscribe((l) => this.kurumsal.set(l.length ? l[0] : null));
   }
 
   protected tur(t: string): ContactChannel[] {

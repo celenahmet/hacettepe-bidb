@@ -4,7 +4,7 @@ import { AsyncPipe, DatePipe } from '@angular/common';
 import { switchMap, tap } from 'rxjs/operators';
 import { Api } from '../core/api.service';
 import { Seo } from '../core/seo.service';
-import { Language } from '../core/models';
+import { Language, NewsSummary } from '../core/models';
 import { RouterLink } from '@angular/router';
 import { SideMenuComponent } from '../layout/side-menu.component';
 import { HeroSliderComponent } from '../layout/hero-slider.component';
@@ -60,11 +60,37 @@ import { NewsCardComponent } from './news-card.component';
                          fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
                   </a>
                 </div>
+
+                @if (kategoriler(v.news).length > 1) {
+                  <div class="kategori-filtreleri" style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem;">
+                    <button 
+                      [class.aktif]="seciliKategori() === null"
+                      (click)="seciliKategori.set(null)"
+                      class="kategori-buton">
+                      {{ metin('Tümü', 'All') }}
+                    </button>
+                    @for (k of kategoriler(v.news); track k) {
+                      <button 
+                        [class.aktif]="seciliKategori() === k"
+                        (click)="seciliKategori.set(k)"
+                        class="kategori-buton">
+                        {{ kategoriMetni(k) }}
+                      </button>
+                    }
+                  </div>
+                }
+
                 <div class="haber-izgara">
-                  @for (d of v.news.slice(0, 7); track d.title; let i = $index) {
+                  @for (d of filtrelenmisHaberler(v.news).slice(0, 7); track d.title; let i = $index) {
                     <bidb-news-card [haber]="d" [dilDegeri]="language()" [oneCikan]="i === 0"></bidb-news-card>
                   }
                 </div>
+                
+                @if (filtrelenmisHaberler(v.news).length === 0) {
+                  <p style="margin-top: 1rem; color: var(--tema-metin-soluk);">
+                    {{ metin('Bu kategoride haber bulunmuyor.', 'No news found in this category.') }}
+                  </p>
+                }
               </section>
           }
 
@@ -95,7 +121,27 @@ import { NewsCardComponent } from './news-card.component';
         </main>
       }
     }
-  `
+  `,
+  styles: [`
+    .kategori-buton {
+      padding: 0.4rem 1rem;
+      border-radius: 999px;
+      border: 1px solid var(--tema-kenarlik, #ddd);
+      background: var(--tema-zemin, #fff);
+      color: var(--tema-metin, #333);
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.2s ease;
+    }
+    .kategori-buton:hover {
+      background: var(--tema-kenarlik, #eee);
+    }
+    .kategori-buton.aktif {
+      background: var(--tema-vurgu, #0055a4);
+      color: #fff;
+      border-color: var(--tema-vurgu, #0055a4);
+    }
+  `]
 })
 export class HomePageComponent {
   private rota = inject(ActivatedRoute);
@@ -103,11 +149,13 @@ export class HomePageComponent {
   private seo = inject(Seo);
 
   protected language = signal<Language>('tr');
+  protected seciliKategori = signal<string | null>(null);
 
   protected veri$ = this.rota.paramMap.pipe(
     tap((p) => {
       const language = (p.get('language') as Language) ?? 'tr';
       this.language.set(language);
+      this.seciliKategori.set(null); // Dil değiştiğinde filtreyi sıfırla
     }),
     switchMap((p) => this.api.anaSayfa((p.get('language') as Language) ?? 'tr')),
     tap((veri) => {
@@ -121,5 +169,52 @@ export class HomePageComponent {
 
   protected metin(tr: string, en: string): string {
     return this.language() === 'en' ? en : tr;
+  }
+
+  protected filtrelenmisHaberler(news: NewsSummary[]): NewsSummary[] {
+    const kategori = this.seciliKategori();
+    if (!kategori) return news;
+    return news.filter(n => n.category === kategori);
+  }
+
+  protected kategoriler(news: NewsSummary[]): string[] {
+    const set = new Set(news.map(n => n.category).filter(c => c));
+    return Array.from(set).sort();
+  }
+
+  protected kategoriMetni(k: string): string {
+    const dil = this.language();
+    const tr: Record<string, string> = {
+      'general': 'Genel',
+      'service-outage': 'Servis Kesintisi',
+      'maintenance': 'Bakım',
+      'cyber-security': 'Siber Güvenlik',
+      'network-internet': 'Ağ ve İnternet',
+      'email': 'E-Posta',
+      'software-license': 'Yazılım Lisansları',
+      'ebys-esignature': 'EBYS ve E-İmza',
+      'web-services': 'Web Servisleri',
+      'training-event': 'Eğitim ve Etkinlik',
+      'recruitment': 'Personel Alımı',
+      'iskur': 'İŞKUR',
+      'procurement': 'İhale ve Satın Alma'
+    };
+    const en: Record<string, string> = {
+      'general': 'General',
+      'service-outage': 'Service Outage',
+      'maintenance': 'Maintenance',
+      'cyber-security': 'Cyber Security',
+      'network-internet': 'Network & Internet',
+      'email': 'Email',
+      'software-license': 'Software Licenses',
+      'ebys-esignature': 'EBYS & E-Signature',
+      'web-services': 'Web Services',
+      'training-event': 'Training & Event',
+      'recruitment': 'Recruitment',
+      'iskur': 'ISKUR',
+      'procurement': 'Procurement'
+    };
+    const lookup = dil === 'en' ? en : tr;
+    return lookup[k] || k;
   }
 }

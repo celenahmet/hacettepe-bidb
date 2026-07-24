@@ -118,7 +118,22 @@ export class UnitsComponent {
    * isteğe bağlı tutuldu.
    */
   private ayristir(html: string): Birim[] {
-    const desen = /<p[^>]*>\s*<strong>\s*(?:<u>)?([\s\S]*?)(?:<\/u>)?\s*<\/strong>([\s\S]*?)<\/p>/gi;
+    /*
+     * Açıklama, kendi kapanış </p>'sine kadar DEĞİL, bir SONRAKİ birim
+     * başlığı başlayana kadar (ya da metin bitene kadar) alınır.
+     *
+     * NEDEN: kaynak HTML'de "Kullanıcı Destek Birimi" paragrafı hiç
+     * kapanmıyor — bir sonraki birim ("Web Birimi") onun İÇİNDE başlıyor.
+     * Eski kural "ilk </p>'ye kadar al" olduğu için, kapanmamış paragrafın
+     * açıklaması bir sonraki birimin TÜMÜNÜ yutuyor ve Web Birimi hiçbir
+     * zaman ayrı bir kart olarak görünmüyordu — sayfada sessizce kayboluyordu.
+     *
+     * Bu, kaynak metnin kelimelerine dokunmuyor; yalnızca kapanmamış bir
+     * HTML etiketi yüzünden bir birimin tamamen görünmez olmasını önlüyor.
+     * duz() zaten tüm etiketleri temizlediği için description'ın sonunda
+     * yanlışlıkla dahil olan fazladan bir kapanış etiketi zararsızdır.
+     */
+    const desen = /<p[^>]*>\s*<strong>\s*(?:<u>)?([\s\S]*?)(?:<\/u>)?\s*<\/strong>([\s\S]*?)(?=<p[^>]*>\s*<strong>\s*(?:<u>)?|$)/gi;
     const sonuc: Birim[] = [];
     let m: RegExpExecArray | null;
 

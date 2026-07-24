@@ -6,6 +6,7 @@ import { StaffEditorComponent } from './staff-editor.component';
 import { NewsCoverComponent } from '../pages/news-cover.component';
 import { AdminNews, NewsOptions, Shortcut, AdminMenuItem, AdminMenu, AdminPage, Slide, AdminSocialAccount, AdminApiService, ContactChannel, QualitySummary, AnalyticsReport } from './admin-api.service';
 import { ContactTicketAdminComponent } from './contact-ticket-admin.component';
+import { Api } from '../core/api.service';
 
 /** Alt bilgide görünen kurum bilgileri. */
 interface ContactInfo extends Record<string, string> {
@@ -31,39 +32,32 @@ interface MobileMenuItem {
   template: `
     <div class="yonetim">
       @if (!api.girisYapildi()) {
-        <div class="giris-duzen">
-          <aside class="giris-marka">
-            <div>
+        <div class="giris-duzen" [style.background-image]="arkaPlanGorseli() ? 'url(' + arkaPlanGorseli() + ')' : null">
+          <div class="giris-kutu">
+            <header class="giris-marka">
               <span class="kurum">Hacettepe Üniversitesi</span>
               <h1>Bilgi İşlem<br>Daire Başkanlığı</h1>
-              <span class="isaret"></span>
-              <p>
-                Site yönetim arayüzü. Sayfa metinleri, duyurular, menüler,
-                kısayollar ve iletişim bilgileri buradan yönetilir.
-              </p>
+            </header>
+
+            <div class="giris-alan">
+              <form (ngSubmit)="giris()">
+                <h2>Yönetim Sistemi</h2>
+
+                <label for="kullanici">Kullanıcı adı</label>
+                <input id="kullanici" name="kullanici" [(ngModel)]="kullanici" autocomplete="username" required>
+
+                <label for="parola">Parola</label>
+                <input id="parola" name="parola" type="password" [(ngModel)]="parola" autocomplete="current-password" required>
+
+                @if (hata()) { <p class="hata" role="alert">{{ hata() }}</p> }
+
+                <span class="dugmeler">
+                  <button type="submit" [disabled]="calisiyor()">
+                    {{ calisiyor() ? 'Denetleniyor…' : 'Giriş Yap' }}
+                  </button>
+                </span>
+              </form>
             </div>
-            <span class="kurum">Yönetim Arayüzü</span>
-          </aside>
-
-          <div class="giris-alan">
-            <form (ngSubmit)="giris()">
-              <span class="bolum-no">Oturum</span>
-              <h2>Giriş</h2>
-
-              <label for="kullanici">Kullanıcı adı</label>
-              <input id="kullanici" name="kullanici" [(ngModel)]="kullanici" autocomplete="username" required>
-
-              <label for="parola">Parola</label>
-              <input id="parola" name="parola" type="password" [(ngModel)]="parola" autocomplete="current-password" required>
-
-              @if (hata()) { <p class="hata" role="alert">{{ hata() }}</p> }
-
-              <span class="dugmeler">
-                <button type="submit" [disabled]="calisiyor()">
-                  {{ calisiyor() ? 'Denetleniyor…' : 'Giriş Yap' }}
-                </button>
-              </span>
-            </form>
           </div>
         </div>
       } @else {
@@ -1162,6 +1156,7 @@ export class AdminPanelComponent {
     return this.BOLUMLER[this.sekme()]?.ad ?? 'Yönetim';
   }
   protected api = inject(AdminApiService);
+  protected publicApi = inject(Api);
   private temizleyici = inject(DomSanitizer);
 
   protected kullanici = '';
@@ -1169,6 +1164,8 @@ export class AdminPanelComponent {
   protected hata = signal('');
   protected bilgi = signal('');
   protected calisiyor = signal(false);
+
+  protected arkaPlanGorseli = signal<string | null>(null);
 
   protected sekme = signal<AdminTab>('analytics');
   protected mobilGrup = signal<MobileGroup | null>(null);
@@ -1210,6 +1207,13 @@ export class AdminPanelComponent {
       this.sayilariYukle();
       this.analitikYukle();
       this.kaliteYukle();
+    } else {
+      this.publicApi.slider('tr').subscribe(slides => {
+        if (slides && slides.length > 0) {
+          const rastgele = slides[Math.floor(Math.random() * slides.length)];
+          this.arkaPlanGorseli.set(rastgele.imageUrl);
+        }
+      });
     }
   }
 
