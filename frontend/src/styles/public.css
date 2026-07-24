@@ -470,7 +470,7 @@
 
   .alt-logo-blok {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: var(--bosluk-4);
   }
 
