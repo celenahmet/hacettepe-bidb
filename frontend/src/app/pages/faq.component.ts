@@ -2,6 +2,7 @@ import { Component, Input, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Language } from '../core/models';
+import { disaBaglantilariGuvenceyeAl } from '../core/icerik-bicim';
 
 interface Soru {
   soru: string;
@@ -184,7 +185,7 @@ export class FaqComponent {
   }
 
   protected guvenli(html: string): SafeHtml {
-    return this.temizleyici.bypassSecurityTrustHtml(html);
+    return this.temizleyici.bypassSecurityTrustHtml(disaBaglantilariGuvenceyeAl(html));
   }
 
   private normalize(s: string): string {

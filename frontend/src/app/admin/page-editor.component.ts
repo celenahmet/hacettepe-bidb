@@ -2,6 +2,7 @@ import { Component, inject, input, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { AdminDocument, AdminPage, Revision, AdminApiService } from './admin-api.service';
+import { disaBaglantilariGuvenceyeAl } from '../core/icerik-bicim';
 
 /**
  * Bir sayfanın tüm düzenlenebilir yönleri: metin, adres, belgeler ve
@@ -194,7 +195,7 @@ export class PageEditorComponent {
   /* ---------- metin ---------- */
 
   protected onizle(): void {
-    this.onizleme.set(this.temizleyici.bypassSecurityTrustHtml(this.metin()));
+    this.onizleme.set(this.temizleyici.bypassSecurityTrustHtml(disaBaglantilariGuvenceyeAl(this.metin())));
     this.onizlendi.set(true);
   }
 

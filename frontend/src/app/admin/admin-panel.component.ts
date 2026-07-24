@@ -7,6 +7,7 @@ import { NewsCoverComponent } from '../pages/news-cover.component';
 import { AdminNews, NewsOptions, Shortcut, AdminMenuItem, AdminMenu, AdminPage, Slide, AdminSocialAccount, AdminApiService, ContactChannel, QualitySummary, AnalyticsReport } from './admin-api.service';
 import { ContactTicketAdminComponent } from './contact-ticket-admin.component';
 import { Api } from '../core/api.service';
+import { disaBaglantilariGuvenceyeAl } from '../core/icerik-bicim';
 
 /** Alt bilgide görünen kurum bilgileri. */
 interface ContactInfo extends Record<string, string> {
@@ -1760,7 +1761,7 @@ export class AdminPanelComponent {
   }
 
   protected duyuruOnizle(): void {
-    this.duyuruOnizleme.set(this.temizleyici.bypassSecurityTrustHtml(this.newsItem().contentHtml ?? ''));
+    this.duyuruOnizleme.set(this.temizleyici.bypassSecurityTrustHtml(disaBaglantilariGuvenceyeAl(this.newsItem().contentHtml ?? '')));
   }
 
   protected sekmeIletisim(): void {

@@ -108,6 +108,31 @@ export function baglantiDizinleriniIsaretle(html: string): string {
   });
 }
 
+/**
+ * target="_blank" bağlantılarına eksikse rel="noopener noreferrer" ekler.
+ *
+ * Yeni sekmede açılan bir sayfa, window.opener üzerinden orijinal sekmeye
+ * erişip onu fark ettirmeden başka bir adrese yönlendirebilir ("reverse
+ * tabnabbing"). Aktarılan içerikte onlarca sayfada bu öznitelik eksikti;
+ * kaynak metne dokunulmadan, yalnızca eksik güvenlik özniteliği eklenir.
+ */
+export function disaBaglantilariGuvenceyeAl(html: string): string {
+  return String(html).replace(/<a\b([^>]*)>/gi, (tam, nitelikler: string) => {
+    if (!/target\s*=\s*["']_blank["']/i.test(nitelikler)) return tam;
+
+    const relEslesme = nitelikler.match(/\brel\s*=\s*(["'])([^"']*)\1/i);
+    if (relEslesme) {
+      const degerler = relEslesme[2].split(/\s+/).filter(Boolean);
+      if (degerler.includes('noopener')) return tam;
+      degerler.push('noopener', 'noreferrer');
+      const yeniNitelikler = nitelikler.replace(relEslesme[0], `rel="${degerler.join(' ')}"`);
+      return `<a${yeniNitelikler}>`;
+    }
+
+    return `<a${nitelikler} rel="noopener noreferrer">`;
+  });
+}
+
 const EPOSTA = /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g;
 
 /* Türkiye telefon biçimleri: +90 312 297 62 62 · 0 312 297 6262 · (0312) 297 62 62
@@ -197,7 +222,7 @@ export function icerigiHazirla(html: string): string {
   return guncellemeMesajlariniBicimlendir(
     baglantiDizinleriniIsaretle(
       paragrafBaglantilariniDizinYap(
-        iletisimBaglantilari(bagliMaddeleriOnar(html))
+        iletisimBaglantilari(disaBaglantilariGuvenceyeAl(bagliMaddeleriOnar(html)))
       )
     )
   );
