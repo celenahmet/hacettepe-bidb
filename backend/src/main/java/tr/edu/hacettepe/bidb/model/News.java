@@ -34,6 +34,10 @@ public class News {
     @Column(name = "external_url", length = 500)
     private String externalUrl;
 
+    /** Duyuru detay sayfası yerine doğrudan yüklenen belgeye yönlenir. */
+    @Column(name = "document_only", nullable = false)
+    private boolean documentOnly = false;
+
     /** Haber kendi sayfasında yayımlanacaksa adresi: /tr/duyuru/<slug> */
     @Column(length = 200)
     private String slug;
@@ -85,6 +89,7 @@ public class News {
     public boolean isFeatured() { return featured; }
     public boolean isPublished() { return published; }
     public String getExternalUrl() { return externalUrl; }
+    public boolean isDocumentOnly() { return documentOnly; }
 
     public void setLanguage(String language) { this.language = language; }
     public void setTitle(String title) { this.title = title; }
@@ -93,6 +98,7 @@ public class News {
     public void setFeatured(boolean featured) { this.featured = featured; }
     public void setPublished(boolean published) { this.published = published; }
     public void setExternalUrl(String externalUrl) { this.externalUrl = externalUrl; }
+    public void setDocumentOnly(boolean documentOnly) { this.documentOnly = documentOnly; }
 
     public String getSlug() { return slug; }
     public void setSlug(String slug) { this.slug = slug; }

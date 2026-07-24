@@ -564,6 +564,88 @@
     background: var(--yuzey);
   }
 
+  .duyuru-belge-modu {
+    margin: var(--bosluk-5) 0;
+    overflow: hidden;
+    border: 1px solid var(--cizgi);
+    border-radius: 3px;
+    background: var(--yuzey);
+    transition: border-color var(--gecis-hizli), box-shadow var(--gecis-hizli);
+  }
+
+  .duyuru-belge-modu.etkin {
+    border-color: #245f91;
+    box-shadow: 0 0 0 2px rgb(36 95 145 / 10%);
+  }
+
+  .yonetim label.belge-modu-secim {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+    gap: var(--bosluk-3);
+    margin: 0;
+    padding: var(--bosluk-4);
+    color: var(--metin);
+    cursor: pointer;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .belge-modu-secim > input {
+    width: 1.1rem;
+    height: 1.1rem;
+    margin-top: .15rem;
+    accent-color: var(--hu-kirmizi);
+  }
+
+  .belge-modu-secim span {
+    display: grid;
+    gap: .3rem;
+  }
+
+  .belge-modu-secim strong { color: var(--hu-lacivert); }
+
+  .belge-modu-secim small {
+    color: var(--metin-3);
+    font-size: var(--olcu-xs);
+    line-height: 1.45;
+  }
+
+  .belge-yayin-alani {
+    padding: 0 var(--bosluk-4) var(--bosluk-4);
+    border-top: 1px solid var(--cizgi);
+    background: var(--yuzey-2);
+  }
+
+  .belge-yayin-alani .yukleme { margin-top: var(--bosluk-4); }
+
+  .belge-hazir,
+  .belge-uyari {
+    display: flex;
+    align-items: center;
+    gap: var(--bosluk-2);
+    margin: var(--bosluk-3) 0 0;
+    font-size: var(--olcu-xs);
+  }
+
+  .belge-hazir { color: #17633c; }
+  .belge-hazir a { margin-left: auto; font-weight: 650; }
+  .belge-uyari { color: #8b4f08; }
+
+  .belge-yayin-rozeti {
+    display: inline-flex;
+    margin-left: .4rem;
+    padding: .18rem .38rem;
+    border: 1px solid rgb(36 95 145 / 28%);
+    border-radius: 999px;
+    background: rgb(36 95 145 / 8%);
+    color: #245f91;
+    font-size: .58rem;
+    font-weight: 700;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+  }
+
   .duyuru-kapak-baslik h3 {
     margin: 0;
     font-size: var(--olcu-lg);
@@ -1145,6 +1227,7 @@
   /* ================= dar ekran ================= */
 
   @media (max-width: 1100px) {
+    .yonetim { overflow-x: clip; }
     .yonetim-duzen { grid-template-columns: minmax(0, 1fr); }
     .ray { display: none; }
     .calisma { padding-bottom: calc(76px + env(safe-area-inset-bottom)); }

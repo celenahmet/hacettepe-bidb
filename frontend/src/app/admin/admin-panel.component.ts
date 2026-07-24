@@ -537,6 +537,45 @@ interface MobileMenuItem {
               </label>
             </span>
 
+            <section class="duyuru-belge-modu" [class.etkin]="newsItem().documentOnly">
+              <label class="belge-modu-secim">
+                <input type="checkbox" name="documentOnly"
+                       [ngModel]="newsItem().documentOnly"
+                       (ngModelChange)="duyuruBelgeModu($event)">
+                <span>
+                  <strong>Yalnızca belge ile yayımla</strong>
+                  <small>Kart tıklandığında ayrı bir haber sayfası yerine doğrudan yüklenen belge açılır.</small>
+                </span>
+              </label>
+
+              @if (newsItem().documentOnly) {
+                <div class="belge-yayin-alani">
+                  <div class="yukleme">
+                    <label for="dbelge">Duyuru belgesini yükle</label>
+                    <input id="dbelge" type="file"
+                           accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.odt,.ods,.zip"
+                           (change)="duyuruBelgeSec($event)">
+                    @if (belgeYukleniyor()) { <small>Belge yükleniyor…</small> }
+                  </div>
+
+                  <label for="dbelgeadres">Belge adresi</label>
+                  <input id="dbelgeadres" name="externalUrl" required
+                         [ngModel]="newsItem().externalUrl"
+                         (ngModelChange)="duyuruAlan('externalUrl', $event)"
+                         placeholder="/uploads/duyuru-belgesi.pdf">
+                  @if (newsItem().externalUrl) {
+                    <p class="belge-hazir">
+                      <span aria-hidden="true">✓</span>
+                      <span>Belge bağlantısı hazır</span>
+                      <a [href]="newsItem().externalUrl" target="_blank" rel="noopener">Kontrol et</a>
+                    </p>
+                  } @else {
+                    <p class="belge-uyari">Yayın kaydedilmeden önce bir belge yüklenmesi veya belge adresi girilmesi zorunludur.</p>
+                  }
+                </div>
+              }
+            </section>
+
             <label for="dtarih">Yayın tarihi</label>
             <input id="dtarih" name="publishedOn" type="date" [ngModel]="newsItem().publishedOn"
                    (ngModelChange)="duyuruAlan('publishedOn', $event)" required>
@@ -573,7 +612,7 @@ interface MobileMenuItem {
                   <span class="bolum-no">Kapak Tasarımı</span>
                   <h3>Fotoğraf veya kurumsal şablon</h3>
                 </div>
-                <p>Fotoğraf yüklenmezse seçtiğiniz şablon otomatik kullanılır.</p>
+                <p>Fotoğraf yüklenmezse seçtiğiniz hazır renk paleti ve kurumsal şablon otomatik kullanılır.</p>
               </div>
 
               <div class="yukleme">
@@ -607,7 +646,7 @@ interface MobileMenuItem {
               </div>
 
               <fieldset class="sablon-alani" [disabled]="!!newsItem().imageUrl">
-                <legend>Şablon seçin</legend>
+                <legend>Hazır renk paleti ve şablon seçin</legend>
                 <div class="sablon-izgara">
                   @for (secenek of duyuruSecenekleri().templates; track secenek.key) {
                     <label class="sablon-secim" [class.etkin]="newsItem().coverTemplate === secenek.key">
@@ -631,25 +670,27 @@ interface MobileMenuItem {
               </fieldset>
             </section>
 
-            <label for="dslug">Haber adresi
-              <small>— doldurursanız haber kendi sayfasında açılır</small>
-            </label>
-            <input id="dslug" name="slug" [ngModel]="newsItem().slug"
-                   (ngModelChange)="duyuruAlan('slug', $event)"
-                   placeholder="örn. yeni-eposta-sistemi">
-            @if (newsItem().slug) {
-              <p class="aciklama">
-                Haber adresi: <code>{{ SITE }}/{{ newsItem().language }}/newsItem/{{ adresOnizleme(newsItem().slug) }}</code>
-              </p>
+            @if (!newsItem().documentOnly) {
+              <label for="dslug">Haber adresi
+                <small>— doldurursanız haber kendi sayfasında açılır</small>
+              </label>
+              <input id="dslug" name="slug" [ngModel]="newsItem().slug"
+                     (ngModelChange)="duyuruAlan('slug', $event)"
+                     placeholder="örn. yeni-eposta-sistemi">
+              @if (newsItem().slug) {
+                <p class="aciklama">
+                  Haber adresi: <code>{{ SITE }}/{{ newsItem().language }}/newsItem/{{ adresOnizleme(newsItem().slug) }}</code>
+                </p>
+              }
+
+              <label for="dicerik">Haber metni (HTML)</label>
+              <textarea id="dicerik" name="contentHtml" rows="10" class="kod" [ngModel]="newsItem().contentHtml"
+                        (ngModelChange)="duyuruAlan('contentHtml', $event)"></textarea>
+
+              <label for="dadres">Dış bağlantı <small>— haber sayfası yoksa buraya gidilir</small></label>
+              <input id="dadres" name="externalUrl" [ngModel]="newsItem().externalUrl"
+                     (ngModelChange)="duyuruAlan('externalUrl', $event)">
             }
-
-            <label for="dicerik">Haber metni (HTML)</label>
-            <textarea id="dicerik" name="contentHtml" rows="10" class="kod" [ngModel]="newsItem().contentHtml"
-                      (ngModelChange)="duyuruAlan('contentHtml', $event)"></textarea>
-
-            <label for="dadres">Bağlantı (belge veya dış url — haber sayfası yoksa buraya gidilir)</label>
-            <input id="dadres" name="externalUrl" [ngModel]="newsItem().externalUrl"
-                   (ngModelChange)="duyuruAlan('externalUrl', $event)">
 
             <label for="ddil">Dil</label>
             <select id="ddil" name="language" [ngModel]="newsItem().language" (ngModelChange)="duyuruAlan('language', $event)">
@@ -709,7 +750,10 @@ interface MobileMenuItem {
                       <strong class="tablo-kategori">{{ secenekEtiketi('categories', d.category) }}</strong>
                       <small>{{ secenekEtiketi('audiences', d.audience) }}</small>
                     </td>
-                    <td>{{ d.title }}</td>
+                    <td>
+                      {{ d.title }}
+                      @if (d.documentOnly) { <span class="belge-yayin-rozeti">Belge</span> }
+                    </td>
                     <td>
                       @if (d.slug) { <small><code>/{{ d.language }}/newsItem/{{ d.slug }}</code></small> }
                       @else { <span class="soluk">bağlantı</span> }
@@ -1133,6 +1177,7 @@ export class AdminPanelComponent {
   protected socialAccount = signal<AdminSocialAccount | null>(null);
   protected acikSayfa = signal<AdminPage | null>(null);
   protected gorselYukleniyor = signal(false);
+  protected belgeYukleniyor = signal(false);
   protected kanallar = signal<ContactChannel[]>([]);
   protected kanal = signal<ContactChannel | null>(null);
 
@@ -1347,6 +1392,10 @@ export class AdminPanelComponent {
 
   protected duyuruKaydet(): void {
     const d = this.newsItem();
+    if (d.documentOnly && !d.externalUrl?.trim()) {
+      this.mesaj('Belge yayını için önce bir belge yükleyin veya belge adresi girin.');
+      return;
+    }
     const istek = d.id ? this.api.updateNews(d.id, d) : this.api.addNews(d);
     istek.subscribe({
       next: () => {
@@ -1354,7 +1403,7 @@ export class AdminPanelComponent {
         this.sekmeDuyuru();
         this.mesaj('Duyuru kaydedildi.');
       },
-      error: () => this.mesaj('Duyuru kaydedilemedi.')
+      error: (e) => this.mesaj(typeof e?.error === 'string' ? e.error : 'Duyuru kaydedilemedi.')
     });
   }
 
@@ -1605,6 +1654,29 @@ export class AdminPanelComponent {
     this.newsItem.set({ ...this.newsItem(), imageUrl: null, imageAlt: null });
   }
 
+  protected duyuruBelgeModu(etkin: boolean): void {
+    this.newsItem.set({ ...this.newsItem(), documentOnly: etkin });
+  }
+
+  /** Belge yüklenir ve duyurunun doğrudan açılan bağlantısı olarak atanır. */
+  protected duyuruBelgeSec(olay: Event): void {
+    const girdi = olay.target as HTMLInputElement;
+    const dosya = girdi.files?.[0];
+    if (!dosya) return;
+    this.belgeYukleniyor.set(true);
+    this.api.uploadFile(dosya).subscribe({
+      next: (sonuc) => {
+        this.belgeYukleniyor.set(false);
+        girdi.value = '';
+        this.duyuruAlan('externalUrl', sonuc.url);
+      },
+      error: (e) => {
+        this.belgeYukleniyor.set(false);
+        this.mesaj(typeof e?.error === 'string' ? e.error : 'Belge yüklenemedi.');
+      }
+    });
+  }
+
   /**
    * Adresin sunucuda alacağı hâli gösterir: Türkçe karakterler dönüştürülür,
    * boşluklar tireye çevrilir. Sunucudaki sadeleştirmenin aynısıdır.
@@ -1684,6 +1756,7 @@ export class AdminPanelComponent {
       featured: false,
       published: true,
       externalUrl: null,
+      documentOnly: false,
       slug: null,
       imageUrl: null,
       imageAlt: null,

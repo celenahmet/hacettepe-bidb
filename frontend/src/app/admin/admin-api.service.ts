@@ -27,6 +27,8 @@ export interface AdminNews {
   featured: boolean;
   published: boolean;
   externalUrl: string | null;
+  /** Duyuru, detay sayfası yerine doğrudan yüklenen belgeye yönlenir. */
+  documentOnly: boolean;
   /** Doldurulursa haber kendi sayfasında açılır: /tr/newsItem/<slug> */
   slug: string | null;
   imageUrl: string | null;

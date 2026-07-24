@@ -80,13 +80,17 @@ public class AdminController {
 
     @PostMapping("/news")
     @Transactional
-    public NewsDto duyuruEkle(@RequestBody NewsDto istek) {
-        return NewsDto.of(news.save(istek.varligaAktar(new News())));
+    public ResponseEntity<?> duyuruEkle(@RequestBody NewsDto istek) {
+        String hata = istek.dogrulamaHatasi();
+        if (hata != null) return ResponseEntity.badRequest().body(hata);
+        return ResponseEntity.ok(NewsDto.of(news.save(istek.varligaAktar(new News()))));
     }
 
     @PutMapping("/news/{id}")
     @Transactional
-    public ResponseEntity<NewsDto> duyuruGuncelle(@PathVariable Long id, @RequestBody NewsDto istek) {
+    public ResponseEntity<?> duyuruGuncelle(@PathVariable Long id, @RequestBody NewsDto istek) {
+        String hata = istek.dogrulamaHatasi();
+        if (hata != null) return ResponseEntity.badRequest().body(hata);
         return news.findById(id)
                 .map(d -> ResponseEntity.ok(NewsDto.of(news.save(istek.varligaAktar(d)))))
                 .orElse(ResponseEntity.notFound().build());
