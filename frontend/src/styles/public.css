@@ -531,7 +531,11 @@
 
   .alt-sutun li:last-child { border-bottom: none; }
 
-  .alt-sutun a,
+  /* Yalnızca liste bağlantıları (Kurumsal/Servisler): .alt-iletisim de
+     .alt-sutun sınıfını taşıdığı için düz ".alt-sutun a" seçici sosyal
+     medya butonlarına ve iletişim kanalı bağlantılarına da sızıyor,
+     onları width:100% ile ovalleştiriyordu. "ul a" ile listeye kapsandı. */
+  .alt-sutun ul a,
   .sutun-baglanti-dugme {
     display: flex;
     justify-content: space-between;
@@ -543,7 +547,7 @@
     width: 100%;
   }
 
-  .alt-sutun a:hover,
+  .alt-sutun ul a:hover,
   .sutun-baglanti-dugme:hover { color: var(--hu-kirmizi); }
 
   .alt-ok {
