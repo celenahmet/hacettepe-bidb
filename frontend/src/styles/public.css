@@ -496,7 +496,7 @@
     border: none;
     border-top: 2px solid var(--hu-kirmizi);
     width: 48px;
-    margin: var(--bosluk-2) 0 var(--bosluk-3);
+    margin: 10px 0 var(--bosluk-3);
   }
 
   .alt-adres {
