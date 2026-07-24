@@ -667,15 +667,6 @@
     padding-bottom: var(--bosluk-4);
   }
 
-  .sutun-baglanti-dugme {
-    background: none;
-    border: none;
-    padding: 0;
-    font: inherit;
-    cursor: pointer;
-    text-align: left;
-  }
-
   /* İlk ekran dışındaki yoğun bölümler başlangıç yerleşimini bloke etmez. */
   .duyurular,
   .servisler,
