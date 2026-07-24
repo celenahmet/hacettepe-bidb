@@ -496,17 +496,40 @@
 
   .alt-iletisim {
     display: block;          /* eski iki sütunlu ızgara kuralını geçersiz kılar */
-    grid-template-columns: none;
+    border-top: none;
   }
+
+  .alt-sosyal-medya {
+    display: flex;
+    gap: var(--bosluk-3);
+    margin-bottom: var(--bosluk-5);
+  }
+  .alt-sosyal-medya a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    transition: transform 0.2s;
+  }
+  .alt-sosyal-medya a:hover {
+    transform: translateY(-2px);
+  }
+
   .alt-iletisim dl { margin: 0 0 var(--bosluk-4); }
   .alt-iletisim dt {
     margin-bottom: 2px;
     font-size: var(--olcu-xs);
-    letter-spacing: 0.06em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--metin-3);
   }
   .alt-iletisim dd { margin: 0 0 2px; overflow-wrap: anywhere; }
+
+  .alt-cerez-kapsayici {
+    margin-top: var(--bosluk-5);
+  }
 
   /* Alt şerit: telif ve yasal bağlantılar */
   /* Alt şerit: hafif zemin farkıyla ayrılır */
