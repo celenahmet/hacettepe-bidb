@@ -320,6 +320,20 @@
     -webkit-line-clamp: 3;
   }
 
+  /* ================= haber detay sayfası ================= */
+
+  /* Panelden yüklenen görsel serbest boyutlu; oran verilmezse tarayıcı
+     yükleninceye kadar yükseklik ayıramaz ve metin aşağı kayar (CLS).
+     Kart kapağıyla aynı 16/10 oranı kullanılır. */
+  .haber-gorsel {
+    display: block;
+    width: 100%;
+    margin: var(--bosluk-5) 0;
+    aspect-ratio: 16 / 10;
+    border-radius: var(--kose-md);
+    object-fit: cover;
+  }
+
   /* ================= manşet ================= */
 
   .haber-izgara > bidb-news-card.one-cikan-kapsayici {
