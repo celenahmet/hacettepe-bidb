@@ -51,7 +51,7 @@
     position: absolute;
     inset: -20px;
     background: inherit;
-    filter: blur(12px) brightness(0.65);
+    filter: blur(4px) brightness(0.8);
     z-index: -1;
   }
 
@@ -82,6 +82,11 @@
     background: var(--murekkep);
     color: var(--metin-ters);
     text-align: center;
+  }
+
+  .giris-marka img {
+    margin-bottom: var(--bosluk-3);
+    opacity: 0.92;
   }
 
   /* Panel, site başlık renklerini devralmasın */
@@ -1235,7 +1240,8 @@
   /* Mobil navigasyon yalnızca tablet ve telefonda açılır. */
   .mobil-alt-nav,
   .mobil-alt-menu,
-  .mobil-menu-perde { display: none; }
+  .mobil-menu-perde,
+  .mobil-menu-ac { display: none; }
 
   /* ================= dar ekran ================= */
 
@@ -1246,7 +1252,32 @@
     .calisma { padding-bottom: calc(76px + env(safe-area-inset-bottom)); }
 
     .calisma-ust, .calisma-govde { padding: var(--bosluk-5) var(--bosluk-4); }
+    .calisma-ust { position: relative; padding-right: 60px; }
     .calisma-ust h1 { font-size: var(--olcu-2xl); }
+
+    .mobil-menu-ac {
+      position: absolute;
+      top: var(--bosluk-5);
+      right: var(--bosluk-4);
+      display: grid;
+      place-items: center;
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      border: 1px solid var(--cizgi-koyu);
+      border-radius: 2px;
+      background: var(--yuzey);
+      color: var(--murekkep);
+    }
+    .mobil-menu-ac:hover { background: var(--hu-kirmizi); border-color: var(--hu-kirmizi); color: #fff; }
+    .mobil-menu-ac svg {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+    }
 
     .giris-duzen { grid-template-columns: minmax(0, 1fr); }
     .giris-marka { padding: var(--bosluk-5) var(--bosluk-4); }
@@ -1339,6 +1370,13 @@
       justify-content: space-between;
       gap: var(--bosluk-4);
       margin-bottom: var(--bosluk-3);
+    }
+    .yonetim .mobil-alt-menu header button {
+      display: grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      padding: 0;
     }
     .mobil-alt-menu > div { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--bosluk-2); }
     .yonetim .mobil-alt-menu > div > button {

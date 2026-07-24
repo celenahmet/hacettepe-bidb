@@ -18,7 +18,6 @@ interface ContactInfo extends Record<string, string> {
 
 type AdminTab = 'analytics' | 'quality' | 'pages' | 'news' | 'slider' |
   'shortcuts' | 'menus' | 'sosyal' | 'iletisim' | 'tickets' | 'personel';
-type MobileGroup = 'content' | 'site' | 'manage';
 interface MobileMenuItem {
   tab: AdminTab;
   label: string;
@@ -35,6 +34,7 @@ interface MobileMenuItem {
         <div class="giris-duzen" [style.background-image]="arkaPlanGorseli() ? 'url(' + arkaPlanGorseli() + ')' : null">
           <div class="giris-kutu">
             <header class="giris-marka">
+              <img src="/hu-logo.svg" alt="" aria-hidden="true" width="40" height="45">
               <span class="kurum">Hacettepe Üniversitesi</span>
               <h1>Bilgi İşlem<br>Daire Başkanlığı</h1>
             </header>
@@ -130,6 +130,9 @@ interface MobileMenuItem {
 
           <main class="calisma">
             <header class="calisma-ust">
+              <button type="button" class="mobil-menu-ac" (click)="mobilMenuAcik.set(true)" aria-label="Yönetim menüsünü aç">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+              </button>
               <span class="bolum-no">{{ bolumNo() }} · Yönetim Paneli</span>
               <h1>{{ bolumBasligi() }}</h1>
             </header>
@@ -1108,6 +1111,31 @@ interface MobileMenuItem {
               <span>Yönetim</span>
             </button>
           </nav>
+
+          @if (mobilMenuAcik()) {
+            <div class="mobil-menu-perde" (click)="mobilMenuAcik.set(false)"></div>
+            <div class="mobil-alt-menu" role="dialog" aria-modal="true" aria-label="Yönetim menüsü"
+                 (keydown.escape)="mobilMenuAcik.set(false)">
+              <header>
+                <strong>Yönetim Menüsü</strong>
+                <button type="button" class="ikincil" (click)="mobilMenuAcik.set(false)" aria-label="Menüyü kapat">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" width="18" height="18"
+                       fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                    <path d="M6 6l12 12M18 6 6 18"/>
+                  </svg>
+                </button>
+              </header>
+              <div>
+                @for (oge of MOBIL_MENU_OGELERI; track oge.tab) {
+                  <button type="button" [class.etkin]="sekme() === oge.tab" (click)="mobilMenuSec(oge.tab)">
+                    <span>{{ oge.label }}</span>
+                    <small>{{ oge.note }}</small>
+                  </button>
+                }
+              </div>
+              <button type="button" class="mobil-cikis" (click)="api.cikis()">Çıkış</button>
+            </div>
+          }
         </div>
       }
     </div>
@@ -1150,7 +1178,23 @@ export class AdminPanelComponent {
   protected arkaPlanGorseli = signal<string | null>(null);
 
   protected sekme = signal<AdminTab>('analytics');
-  protected mobilGrup = signal<MobileGroup | null>(null);
+  protected mobilMenuAcik = signal(false);
+
+  /** Mobilde başlığın yanındaki "menü" düğmesiyle açılan tam bölüm listesi
+   *  (masaüstü sol rayın 11 öğesiyle aynı hedefe gider). */
+  protected readonly MOBIL_MENU_OGELERI: MobileMenuItem[] = [
+    { tab: 'analytics', label: 'Analitik', note: 'Ziyaret ve trafik raporu' },
+    { tab: 'quality', label: 'SEO ve Performans', note: 'Kalite ölçümleri' },
+    { tab: 'pages', label: 'Sayfalar', note: 'Metin, URL ve SEO' },
+    { tab: 'news', label: 'Duyurular', note: 'Haber ve duyuru yayınları' },
+    { tab: 'slider', label: 'Slider', note: 'Ana sayfa vitrini' },
+    { tab: 'shortcuts', label: 'Kısayollar', note: 'Servis bağlantıları' },
+    { tab: 'menus', label: 'Menüler', note: 'Site navigasyonu' },
+    { tab: 'sosyal', label: 'Sosyal Medya', note: 'Kurumsal hesaplar' },
+    { tab: 'iletisim', label: 'İletişim Bilgileri', note: 'Kurumsal iletişim bilgileri' },
+    { tab: 'tickets', label: 'İletişim Talepleri', note: 'Form kayıtları ve takip' },
+    { tab: 'personel', label: 'Personel', note: 'Birim ve personel kayıtları' }
+  ];
   protected analytics = signal<AnalyticsReport | null>(null);
   protected analyticsLoading = signal(false);
   protected quality = signal<QualitySummary | null>(null);
@@ -1295,30 +1339,10 @@ export class AdminPanelComponent {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  protected mobilAnaEtkin(group: MobileGroup): boolean {
-    return this.mobilGrupOgeleri(group).some((item) => item.tab === this.sekme());
-  }
-
-  protected mobilGrupOgeleri(group: MobileGroup): MobileMenuItem[] {
-    const groups: Record<MobileGroup, MobileMenuItem[]> = {
-      content: [
-        { tab: 'pages', label: 'Sayfalar', note: 'Metin, URL ve SEO' },
-        { tab: 'news', label: 'Duyurular', note: 'Haber ve duyuru yayınları' }
-      ],
-      site: [
-        { tab: 'slider', label: 'Slider', note: 'Ana sayfa vitrini' },
-        { tab: 'shortcuts', label: 'Kısayollar', note: 'Servis bağlantıları' },
-        { tab: 'menus', label: 'Menüler', note: 'Site navigasyonu' }
-      ],
-      manage: [
-        { tab: 'quality', label: 'SEO ve Performans', note: 'Kalite ölçümleri' },
-        { tab: 'personel', label: 'Personel', note: 'Birim ve personel kayıtları' },
-        { tab: 'tickets', label: 'İletişim talepleri', note: 'Form kayıtları ve takip' },
-        { tab: 'iletisim', label: 'İletişim', note: 'Kurumsal iletişim bilgileri' },
-        { tab: 'sosyal', label: 'Sosyal medya', note: 'Kurumsal hesaplar' }
-      ]
-    };
-    return groups[group];
+  /** Tam menüden bir bölüm seçilince hem o sekmeye geçilir hem menü kapanır. */
+  protected mobilMenuSec(tab: AdminTab): void {
+    this.mobilSekmeAc(tab);
+    this.mobilMenuAcik.set(false);
   }
 
   protected kaliteYukle(): void {
