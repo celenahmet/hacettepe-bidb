@@ -512,12 +512,10 @@
     margin-bottom: var(--bosluk-4);
     padding-bottom: var(--bosluk-2);
     border-bottom: 2px solid var(--hu-kirmizi);
-    font-family: Georgia, Cambria, "Times New Roman", serif;
-    font-size: 0.92rem;
-    font-weight: 700;
-    font-style: italic;
-    letter-spacing: 0.02em;
-    text-transform: none;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
     color: #1a1a2e;
   }
 
@@ -581,8 +579,8 @@
     flex: none;
     align-items: center;
     justify-content: center;
-    width: 34px;
-    height: 34px;
+    width: 32px;
+    height: 32px;
     aspect-ratio: 1 / 1;
     background: transparent;
     border: 1px solid rgba(0,0,0,0.12);

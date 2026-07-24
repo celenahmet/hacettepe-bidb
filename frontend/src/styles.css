@@ -20,6 +20,7 @@
 @import "./styles/public.css";
 @import "./styles/hero.css";
 @import "./styles/accessibility.css";
+@import "./styles/admin.css";
 
 @layer site {
   /* Not: yönetim tablolarının dar ekran davranışı panel katmanında,
