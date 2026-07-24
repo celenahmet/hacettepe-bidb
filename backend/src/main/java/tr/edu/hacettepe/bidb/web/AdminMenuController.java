@@ -38,15 +38,14 @@ public class AdminMenuController {
     public record MenuGorunum(Long id, String language, String position, String title, int sortOrder,
                               List<OgeGorunum> items) {}
 
-    /** Menü öğelerindeki sayfa bilgisi tembel yüklendiği için işlem içinde çalışır. */
+    /** Menüler, öğeleri ve bağlı sayfaları tek sorguda gelir (bkz. MenuRepo.findAllWithItems). */
     @GetMapping
-    @Transactional
     public List<MenuGorunum> liste() {
-        return menuler.findAll().stream()
+        return menuler.findAllWithItems().stream()
                 .sorted(Comparator.comparing(Menu::getLanguage).thenComparingInt(Menu::getSortOrder))
                 .map(m -> new MenuGorunum(
                         m.getId(), m.getLanguage(), m.getPosition(), m.getTitle(), m.getSortOrder(),
-                        items.findByMenuIdOrderBySortOrderAsc(m.getId()).stream()
+                        m.getItems().stream()
                                 .map(o -> new OgeGorunum(
                                         o.getId(), o.getLabel(),
                                         o.getPage() == null ? null : o.getPage().getId(),

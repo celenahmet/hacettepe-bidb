@@ -18,4 +18,14 @@ public interface MenuRepo extends JpaRepository<Menu, Long> {
            ORDER BY m.sortOrder
            """)
     List<Menu> findByLanguageAndPosition(@Param("language") String language, @Param("position") String position);
+
+    /** Yönetim panelindeki menü listesi: öğeler ve bağlı sayfa tek sorguda gelir.
+     *  Aksi hâlde her menü için ayrı bir öğe sorgusu, her öğe için de ayrı bir
+     *  sayfa sorgusu açılırdı (N+1). */
+    @Query("""
+           SELECT DISTINCT m FROM Menu m
+           LEFT JOIN FETCH m.items o
+           LEFT JOIN FETCH o.page
+           """)
+    List<Menu> findAllWithItems();
 }
