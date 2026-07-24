@@ -46,16 +46,11 @@ interface SocialAccount {
               <div class="alt-logo-yazi">
                 <strong>HACETTEPE</strong>
                 <strong>{{ language === 'en' ? 'UNIVERSITY' : 'ÜNİVERSİTESİ' }}</strong>
-                <small>{{ language === 'en' ? 'Department of Information Technology' : 'Bilgi İşlem Daire Başkanlığı' }}</small>
               </div>
             </div>
 
             <hr class="alt-cizgi">
 
-            <p class="alt-kurum-isim">
-              {{ language === 'en' ? 'Hacettepe University' : 'Hacettepe Üniversitesi' }}<br>
-              {{ language === 'en' ? 'Department of Information Technology' : 'Bilgi İşlem Daire Başkanlığı' }}
-            </p>
             @for (a of tur('address'); track a.id) {
               <p class="alt-adres">{{ a.value }}</p>
             }

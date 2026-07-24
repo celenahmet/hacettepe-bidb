@@ -426,7 +426,7 @@
   .alt {
     margin-top: var(--bosluk-8);
     padding: 0;
-    background: #faf8f4;
+    background: #fdfcfa;
     color: #3a3a3a;
     font-size: var(--olcu-sm);
     position: relative;
@@ -446,6 +446,7 @@
     background-size: contain;
     background-position: center;
     opacity: 0.07;
+    transform: rotate(-14deg);
     pointer-events: none;
   }
 
@@ -483,21 +484,11 @@
 
   .alt-logo-yazi strong {
     display: block;
-    font-size: 1rem;
+    font-size: 1.3rem;
     font-weight: 900;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.03em;
     color: #1a1a2e;
     text-transform: uppercase;
-  }
-
-  .alt-logo-yazi small {
-    display: block;
-    margin-top: 6px;
-    font-size: 0.75rem;
-    color: #555;
-    font-weight: 400;
-    letter-spacing: 0;
-    text-transform: none;
   }
 
   /* Kırmızı yatay ayraç çizgisi */
@@ -506,14 +497,6 @@
     border-top: 2px solid var(--hu-kirmizi);
     width: 48px;
     margin: var(--bosluk-4) 0 var(--bosluk-3);
-  }
-
-  .alt-kurum-isim {
-    margin: 0 0 var(--bosluk-2);
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: #1a1a2e;
-    line-height: 1.5;
   }
 
   .alt-adres {
@@ -584,7 +567,7 @@
     border-top: none;
   }
 
-  /* Sosyal medya: koyu arka planlı kare butonlar */
+  /* Sosyal medya: iletişim kanalı ikonlarıyla aynı dilde — ince çerçeveli daire */
   .alt-sosyal {
     display: flex;
     gap: var(--bosluk-2);
@@ -595,16 +578,18 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    height: 36px;
-    background: #1e2a3b;
-    color: #fff;
-    border-radius: 6px;
-    transition: background var(--gecis-hizli), transform 0.15s;
+    width: 34px;
+    height: 34px;
+    background: transparent;
+    border: 1px solid rgba(0,0,0,0.12);
+    color: #555;
+    border-radius: 50%;
+    transition: border-color var(--gecis-hizli), color var(--gecis-hizli), transform 0.15s;
   }
 
   .sosyal-buton:hover {
-    background: var(--hu-kirmizi);
+    border-color: var(--hu-kirmizi);
+    color: var(--hu-kirmizi);
     transform: translateY(-2px);
   }
 
@@ -657,10 +642,11 @@
   .alt-serit .kap {
     padding-top: var(--bosluk-3);
     padding-bottom: var(--bosluk-3);
+    text-align: center;
   }
 
   .alt-serit small {
-    color: #777;
+    color: #333;
     font-size: 0.72rem;
   }
 
