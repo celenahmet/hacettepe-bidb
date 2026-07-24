@@ -33,38 +33,48 @@ import { NewsCardComponent } from './news-card.component';
         </header>
 
         @if (duyurular().length) {
-          @if (kategoriler().length > 1) {
-            <div class="kategori-filtreleri">
-              <button 
-                [class.aktif]="seciliKategori() === null"
-                (click)="seciliKategori.set(null)"
-                class="kategori-buton">
-                {{ language() === 'en' ? 'All' : 'Tümü' }}
-              </button>
-              @for (k of kategoriler(); track k) {
+          <div class="duyuru-kontrolleri">
+            @if (kategoriler().length > 1) {
+              <div class="kategori-filtreleri">
                 <button 
-                  [class.aktif]="seciliKategori() === k"
-                  (click)="seciliKategori.set(k)"
+                  [class.aktif]="seciliKategori() === null"
+                  (click)="seciliKategori.set(null)"
                   class="kategori-buton">
-                  {{ kategoriMetni(k) }}
+                  {{ language() === 'en' ? 'All' : 'Tümü' }}
                 </button>
-              }
+                @for (k of kategoriler(); track k) {
+                  <button 
+                    [class.aktif]="seciliKategori() === k"
+                    (click)="seciliKategori.set(k)"
+                    class="kategori-buton">
+                    {{ kategoriMetni(k) }}
+                  </button>
+                }
+              </div>
+            }
+
+            <div class="arama-kutusu">
+              <input 
+                type="text" 
+                [placeholder]="language() === 'en' ? 'Search announcements...' : 'Duyurularda ara...'"
+                (input)="aramaMetni.set($any($event.target).value)"
+                [value]="aramaMetni()">
             </div>
-          }
+          </div>
 
           <div class="haber-izgara">
             @for (d of filtrelenmisDuyurular(); track d.title; let i = $index) {
-              <bidb-news-card [haber]="d" [dilDegeri]="language()" [oneCikan]="i === 0"></bidb-news-card>
+              <bidb-news-card [haber]="d" [dilDegeri]="language()" [oneCikan]="i === 0 && !aramaMetni() && !seciliKategori()"></bidb-news-card>
             }
           </div>
 
           @if (filtrelenmisDuyurular().length === 0) {
             <p style="margin-top: 2rem; color: var(--tema-metin-soluk);">
-              {{ language() === 'en' ? 'No news found in this category.' : 'Bu kategoride haber bulunmuyor.' }}
+              {{ language() === 'en' ? 'No news found.' : 'Bu kriterlere uygun haber bulunmuyor.' }}
             </p>
           }
 
-          @if (language() === 'tr' && seciliKategori() === null) {
+          @if (language() === 'tr' && seciliKategori() === null && !aramaMetni()) {
             <p class="duyuru-arsiv">
               <a routerLink="/tr/archive">Daha eski duyurular için Arşiv sayfasına bakabilirsiniz.</a>
             </p>
@@ -76,11 +86,37 @@ import { NewsCardComponent } from './news-card.component';
     </div>
   `,
   styles: [`
+    .duyuru-kontrolleri {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    @media (min-width: 768px) {
+      .duyuru-kontrolleri {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+    }
     .kategori-filtreleri {
       display: flex;
       flex-wrap: wrap;
       gap: 0.5rem;
-      margin-bottom: 2rem;
+      flex: 1;
+    }
+    .arama-kutusu input {
+      padding: 0.4rem 1rem;
+      border-radius: 999px;
+      border: 1px solid var(--tema-kenarlik, #ddd);
+      font-size: 0.9rem;
+      width: 100%;
+      min-width: 250px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .arama-kutusu input:focus {
+      border-color: var(--hu-kirmizi, #b31821);
     }
     .kategori-buton {
       padding: 0.4rem 1rem;
@@ -96,9 +132,9 @@ import { NewsCardComponent } from './news-card.component';
       background: var(--tema-kenarlik, #eee);
     }
     .kategori-buton.aktif {
-      background: var(--tema-vurgu, #0055a4);
+      background: var(--hu-kirmizi, #b31821);
       color: #fff;
-      border-color: var(--tema-vurgu, #0055a4);
+      border-color: var(--hu-kirmizi, #b31821);
     }
   `]
 })
@@ -110,12 +146,25 @@ export class NewsListPageComponent {
   protected language = signal<Language>('tr');
   protected duyurular = signal<NewsSummary[]>([]);
   protected seciliKategori = signal<string | null>(null);
+  protected aramaMetni = signal<string>('');
 
   protected filtrelenmisDuyurular = computed(() => {
-    const tumu = this.duyurular();
+    let tumu = this.duyurular();
     const kategori = this.seciliKategori();
-    if (!kategori) return tumu;
-    return tumu.filter(d => d.category === kategori);
+    const arama = this.aramaMetni().toLowerCase().trim();
+
+    if (kategori) {
+      tumu = tumu.filter(d => d.category === kategori);
+    }
+
+    if (arama) {
+      tumu = tumu.filter(d => 
+        d.title.toLowerCase().includes(arama) || 
+        (d.summary && d.summary.toLowerCase().includes(arama))
+      );
+    }
+
+    return tumu;
   });
 
   protected kategoriler = computed(() => {
@@ -165,6 +214,7 @@ export class NewsListPageComponent {
       const dil = (p.get('language') as Language) ?? 'tr';
       this.language.set(dil);
       this.seciliKategori.set(null); // Dil değiştiğinde filtreyi sıfırla
+      this.aramaMetni.set(''); // Arama metnini sıfırla
 
       this.api.anaSayfa(dil).subscribe((v) => this.duyurular.set(v.news));
 
