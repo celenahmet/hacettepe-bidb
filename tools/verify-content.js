@@ -53,7 +53,8 @@ const BILINCLI_SAPMA = {
   "tr/e-signature-password": "E-imza alt sisteminden birebir alındı (eimza/*.php)",
   "tr/e-signature-unit-officers": "E-imza alt sisteminden birebir alındı (eimza/*.php)",
   "tr/e-signature-faq": "E-imza alt sisteminden birebir alındı (eimza/*.php)",
-  "tr/staff": "Yapısal veriye taşındı — node tools/personel-denetim.js ile denetlenir"
+  "tr/staff": "Yapısal veriye taşındı — node tools/personel-denetim.js ile denetlenir",
+  "tr/wireless": "V33 migration ile eduroam açıklaması eklendi (kurum kararı, dokümante edilmiş)"
 };
 
 const ORIGIN = "https://bidb.hacettepe.edu.tr";
