@@ -20,7 +20,11 @@ ENV BIDB_API=http://backend:8080
 # Angular SSR, bilinmeyen host başlıklarını güvenlik gereği reddeder
 ENV ALLOWED_HOSTS=localhost,127.0.0.1,bidb.hacettepe.edu.tr
 
-COPY --from=derleme /kaynak/dist ./dist
+COPY --from=derleme --chown=node:node /kaynak/dist ./dist
+
+# node:22-alpine imajı hazır, ayrıcalıksız bir 'node' kullanıcısıyla gelir;
+# /veri/dosyalar salt-okunur bağlandığı için ayrıca sahiplik ayarı gerekmez.
+USER node
 
 EXPOSE 4000
 CMD ["node", "dist/frontend/server/server.mjs"]

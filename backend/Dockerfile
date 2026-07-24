@@ -14,10 +14,13 @@ RUN mvn -B clean package -DskipTests
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /uygulama
 
-# Sağlık kontrolü için gerekli
-RUN apk add --no-cache wget
+# wget sağlık kontrolü için, su-exec kap içinde ayrıcalık düşürmek için gerekli
+RUN apk add --no-cache wget su-exec \
+    && addgroup -S bidb && adduser -S -G bidb bidb
 
 COPY --from=derleme /kaynak/target/*.jar uygulama.jar
+COPY baslangic.sh /baslangic.sh
+RUN chmod +x /baslangic.sh
 
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "uygulama.jar"]
+ENTRYPOINT ["/baslangic.sh"]
