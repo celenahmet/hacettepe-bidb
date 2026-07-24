@@ -1,63 +1,89 @@
 /* İçerik sayfalarının üstündeki konum şeridi (breadcrumb).
  *
- * Üst menüyle sayfa içeriği arasında boş kalan alan artık ziyaretçiye
- * sitede nerede olduğunu gösteriyor: Ana Sayfa / Bölüm / Sayfa. Ağır bir
- * hero slider değil — kurumsal logo, kendi kırmızısıyla düşük saydamlıkta
- * büyütülüp sağ kenardan taşırılır; imza niteliğinde, dikkat dağıtmaz.
+ * Üst menüyle sayfa içeriği arasındaki alan, tüm iç sayfalarda ortak
+ * kurumsal bir "neredesin" şeridi taşır: küçük bölüm etiketi + Ana Sayfa /
+ * Bölüm / Sayfa breadcrumb'ı, sağda amblemden esinlenen çok soluk, eğimli
+ * ve kırpılmış bir işaret. Ağır bir hero slider değil — bilgi taşıyan,
+ * ölçülü bir geçiş.
  */
 @layer kamu {
   .sayfa-seridi {
     position: relative;
     overflow: hidden;
-    background: linear-gradient(100deg, #fffdfc 0%, #fdf1f0 65%, #fbe9e8 100%);
+    background: linear-gradient(120deg, #fdfbfa 0%, #fdf4f3 60%, #fbeeed 100%);
     border-bottom: 1px solid var(--cizgi);
   }
 
+  /* Amblemden esinlenen işaret: kutunun kendisinden büyük tutulup eğik
+     yerleştirilir, böylece görünen yalnızca birkaç kavisli çizgidir —
+     tam logo gibi baskın durmaz, üst/alttan .sayfa-seridi'nin overflow:hidden'ı
+     tarafından kırpılır. */
   .sayfa-seridi::before {
     content: "";
     position: absolute;
-    top: 50%;
-    right: 2%;
-    width: 260px;
-    height: 260px;
+    top: -60%;
+    right: -6%;
+    width: 300px;
+    height: 320px;
     background: url("/hu-logo.svg") no-repeat center / contain;
-    opacity: 0.13;
-    transform: translateY(-50%) rotate(-6deg);
+    opacity: 0.08;
+    transform: rotate(12deg);
     pointer-events: none;
   }
 
   .sayfa-seridi-ic {
     position: relative;
-    padding-block: var(--bosluk-3);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    min-height: 100px;
+    padding-block: var(--bosluk-4);
+  }
+
+  .sayfa-seridi-etiket {
+    margin: 0;
+    color: var(--hu-kirmizi);
+    font-size: 11px;
+    font-weight: var(--kalinlik-kalin);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
   }
 
   .sayfa-iz {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     align-items: center;
-    gap: 0;
+    max-width: 100%;
     margin: 0;
     padding: 0;
+    overflow-x: auto;
     list-style: none;
-    font-size: var(--olcu-xs);
-    letter-spacing: 0.02em;
+    font-size: var(--olcu-sm);
+    letter-spacing: 0.01em;
+    scrollbar-width: none;
   }
+  .sayfa-iz::-webkit-scrollbar { display: none; }
 
   .sayfa-iz li {
     display: flex;
+    flex: none;
     align-items: center;
     color: var(--metin-3);
     white-space: nowrap;
   }
 
+  /* Kaba ">" yerine ince, çift kenarlı bir chevron — CSS ile çizilir,
+     ek bir simge dosyası gerekmez. */
   .sayfa-iz li + li::before {
     content: "";
-    width: 4px;
-    height: 4px;
+    flex: none;
+    width: 6px;
+    height: 6px;
     margin: 0 var(--bosluk-3);
-    border-radius: 50%;
-    background: var(--hu-kirmizi);
-    opacity: 0.55;
+    border-top: 1.5px solid var(--metin-acik);
+    border-right: 1.5px solid var(--metin-acik);
+    transform: rotate(45deg);
   }
 
   .sayfa-iz a {
@@ -69,14 +95,21 @@
 
   .sayfa-iz li:last-child span {
     overflow: hidden;
-    max-width: 42vw;
+    max-width: 46vw;
     color: var(--hu-lacivert);
-    font-weight: var(--kalinlik-orta);
+    font-weight: var(--kalinlik-kalin);
     text-overflow: ellipsis;
   }
 
+  @media (max-width: 780px) {
+    .sayfa-seridi::before { width: 220px; height: 240px; opacity: 0.06; }
+  }
+
   @media (max-width: 620px) {
-    .sayfa-seridi::before { width: 160px; height: 160px; right: -20px; opacity: 0.1; }
-    .sayfa-iz li:last-child span { max-width: 60vw; }
+    .sayfa-seridi-ic { min-height: 64px; padding-block: var(--bosluk-3); }
+    .sayfa-seridi-etiket { font-size: 10px; }
+    .sayfa-iz { font-size: var(--olcu-xs); }
+    .sayfa-iz li:last-child span { max-width: 58vw; }
+    .sayfa-seridi::before { width: 150px; height: 170px; right: -14%; opacity: 0.05; }
   }
 }

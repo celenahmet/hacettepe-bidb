@@ -37,6 +37,7 @@ import { ContactFormComponent } from './contact-form.component';
   template: `
     <nav class="sayfa-seridi" aria-label="Sayfa yolu">
       <div class="kap sayfa-seridi-ic">
+        @if (bolum(); as b) { <p class="sayfa-seridi-etiket">{{ b }}</p> }
         <ol class="sayfa-iz">
           <li><a [routerLink]="'/' + language()">{{ language() === 'en' ? 'Home' : 'Ana Sayfa' }}</a></li>
           @if (bolum(); as b) { <li><span>{{ b }}</span></li> }
