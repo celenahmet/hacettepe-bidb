@@ -1353,6 +1353,98 @@
     }
   }
 
+  /* ================= iletişim ticket yönetimi ================= */
+
+  .ticket-yonetim { min-width: 0; }
+  .ticket-ust {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--bosluk-6);
+    align-items: end;
+    margin-bottom: var(--bosluk-5);
+  }
+  .ticket-ust h2 { margin: 5px 0 8px; font-size: var(--olcu-xl); }
+  .ticket-ust p { max-width: 68ch; margin: 0; color: var(--metin-3); }
+  .ticket-sayaclar { display: flex; border: 1px solid var(--cizgi); background: var(--yuzey); }
+  .ticket-sayaclar span {
+    display: grid; min-width: 76px; padding: 11px 14px; border-left: 1px solid var(--cizgi);
+    color: var(--metin-3); font-size: var(--olcu-xs); text-align: center;
+  }
+  .ticket-sayaclar span:first-child { border-left: 0; }
+  .ticket-sayaclar strong { color: var(--murekkep); font-size: var(--olcu-lg); }
+  .ticket-filtreler {
+    display: grid; grid-template-columns: minmax(240px, 1fr) minmax(180px, .3fr) auto;
+    gap: var(--bosluk-2); margin-bottom: var(--bosluk-3);
+  }
+  .ticket-filtreler input, .ticket-filtreler select { width: 100%; min-height: 43px; }
+  .ticket-duzen { display: grid; grid-template-columns: minmax(0, 1fr); border-top: 2px solid var(--murekkep); }
+  .ticket-duzen.detay-acik { grid-template-columns: minmax(360px, .9fr) minmax(420px, 1.1fr); }
+  .ticket-liste { min-width: 0; border-left: 1px solid var(--cizgi); }
+  .yonetim .ticket-satir {
+    display: grid; grid-template-columns: 92px minmax(180px, 1fr) minmax(110px, .4fr) auto;
+    gap: var(--bosluk-3); align-items: center; width: 100%; min-height: 84px;
+    border: 0; border-right: 1px solid var(--cizgi); border-bottom: 1px solid var(--cizgi);
+    padding: 13px 15px; background: var(--yuzey); color: var(--metin);
+    text-align: left; text-transform: none;
+  }
+  .yonetim .ticket-satir:hover, .yonetim .ticket-satir.etkin {
+    background: var(--yuzey-2); box-shadow: inset 3px 0 var(--hu-kirmizi);
+  }
+  .ticket-durum {
+    padding-left: 9px; border-left: 2px solid #8391a4; color: var(--metin-3);
+    font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+  }
+  .ticket-durum[data-status="NEW"] { border-color: var(--hu-kirmizi); color: var(--hu-kirmizi); }
+  .ticket-durum[data-status="IN_PROGRESS"] { border-color: #1d66ad; color: #1d66ad; }
+  .ticket-durum[data-status="RESOLVED"] { border-color: #27815d; color: #20704f; }
+  .ticket-kimlik, .ticket-meta { display: grid; gap: 5px; min-width: 0; }
+  .ticket-kimlik strong { overflow: hidden; color: var(--murekkep); text-overflow: ellipsis; white-space: nowrap; }
+  .ticket-kimlik small, .ticket-meta small, .ticket-meta time { color: var(--metin-3); font-size: var(--olcu-xs); }
+  .ticket-meta { text-align: right; }
+  .ticket-oncelik { color: #a25b00; font-size: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+  .ticket-oncelik[data-priority="URGENT"] { color: var(--hu-kirmizi); }
+  .ticket-bos { padding: var(--bosluk-6); border-right: 1px solid var(--cizgi); border-bottom: 1px solid var(--cizgi); }
+  .ticket-bos p { color: var(--metin-3); }
+
+  .ticket-detay {
+    min-width: 0; border-right: 1px solid var(--cizgi); border-bottom: 1px solid var(--cizgi);
+    background: var(--yuzey);
+  }
+  .ticket-detay > header {
+    display: flex; justify-content: space-between; gap: var(--bosluk-4);
+    padding: var(--bosluk-4) var(--bosluk-5); border-bottom: 1px solid var(--cizgi);
+  }
+  .ticket-detay > header span { color: var(--hu-kirmizi); font: 700 11px/1 var(--yazi-mono); letter-spacing: .08em; }
+  .ticket-detay > header h3 { margin: 7px 0 0; color: var(--murekkep); font-size: var(--olcu-lg); }
+  .yonetim .ticket-kapat { width: 38px; min-width: 38px; height: 38px; padding: 0; font-size: 22px; }
+  .ticket-basvuran {
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin: 0; border-bottom: 1px solid var(--cizgi);
+  }
+  .ticket-basvuran div { padding: 13px var(--bosluk-5); border-right: 1px solid var(--cizgi); border-bottom: 1px solid var(--cizgi); }
+  .ticket-basvuran dt { color: var(--metin-3); font-size: 11px; text-transform: uppercase; }
+  .ticket-basvuran dd { margin: 4px 0 0; overflow-wrap: anywhere; font-weight: 650; }
+  .ticket-mesaj { padding: var(--bosluk-5); border-bottom: 1px solid var(--cizgi); }
+  .ticket-mesaj p { margin: var(--bosluk-3) 0 0; line-height: 1.7; white-space: pre-wrap; }
+  .ticket-islem { display: grid; gap: var(--bosluk-3); padding: var(--bosluk-5); border-bottom: 1px solid var(--cizgi); background: var(--yuzey-2); }
+  .ticket-islem label { display: grid; gap: 6px; color: var(--metin-2); font-size: var(--olcu-xs); font-weight: 700; }
+  .ticket-islem :is(input, select, textarea) { width: 100%; }
+  .ticket-islem textarea { resize: vertical; }
+  .ticket-islem-izgara { display: grid; grid-template-columns: 1fr 1fr; gap: var(--bosluk-3); }
+  .ticket-islem > button { justify-self: start; }
+  .ticket-gecmis { padding: var(--bosluk-5); }
+  .ticket-gecmis article { display: grid; grid-template-columns: 12px 1fr; gap: var(--bosluk-3); padding-top: var(--bosluk-4); }
+  .ticket-gecmis article i { position: relative; width: 9px; height: 9px; margin-top: 4px; border: 2px solid var(--hu-kirmizi); border-radius: 50%; }
+  .ticket-gecmis article i::after { content: ""; position: absolute; top: 9px; left: 2px; width: 1px; height: calc(100% + 36px); background: var(--cizgi); }
+  .ticket-gecmis article:last-child i::after { display: none; }
+  .ticket-gecmis article p { margin: 5px 0; color: var(--metin-2); }
+  .ticket-gecmis article small { color: var(--metin-3); }
+
+  @media (max-width: 1100px) {
+    .ticket-duzen.detay-acik { grid-template-columns: minmax(0, 1fr); }
+    .ticket-duzen.detay-acik .ticket-liste { display: none; }
+  }
+
   @media (max-width: 600px) {
     .calisma-ust, .calisma-govde { padding-inline: var(--bosluk-3); }
     .calisma-ust { padding-block: var(--bosluk-4); }
@@ -1388,5 +1480,19 @@
       align-items: flex-start;
       flex-direction: column;
     }
+    .ticket-ust { align-items: stretch; flex-direction: column; }
+    .ticket-sayaclar { width: 100%; }
+    .ticket-sayaclar span { flex: 1; min-width: 0; }
+    .ticket-filtreler { grid-template-columns: minmax(0, 1fr); }
+    .yonetim .ticket-satir {
+      grid-template-columns: 80px minmax(0, 1fr); gap: 9px;
+      padding: 12px 10px;
+    }
+    .ticket-meta { grid-column: 2; grid-row: 2; text-align: left; }
+    .ticket-oncelik { grid-column: 1; grid-row: 2; }
+    .ticket-detay > header, .ticket-mesaj, .ticket-islem, .ticket-gecmis { padding: var(--bosluk-4); }
+    .ticket-basvuran { grid-template-columns: minmax(0, 1fr); }
+    .ticket-basvuran div { padding-inline: var(--bosluk-4); border-right: 0; }
+    .ticket-islem-izgara { grid-template-columns: minmax(0, 1fr); }
   }
 }

@@ -5,6 +5,7 @@ import { PageEditorComponent } from './page-editor.component';
 import { StaffEditorComponent } from './staff-editor.component';
 import { NewsCoverComponent } from '../pages/news-cover.component';
 import { AdminNews, NewsOptions, Shortcut, AdminMenuItem, AdminMenu, AdminPage, Slide, AdminSocialAccount, AdminApiService, ContactChannel, QualitySummary, AnalyticsReport } from './admin-api.service';
+import { ContactTicketAdminComponent } from './contact-ticket-admin.component';
 
 /** Alt bilgide görünen kurum bilgileri. */
 interface ContactInfo extends Record<string, string> {
@@ -15,7 +16,7 @@ interface ContactInfo extends Record<string, string> {
 }
 
 type AdminTab = 'analytics' | 'quality' | 'pages' | 'news' | 'slider' |
-  'shortcuts' | 'menus' | 'sosyal' | 'iletisim' | 'personel';
+  'shortcuts' | 'menus' | 'sosyal' | 'iletisim' | 'tickets' | 'personel';
 type MobileGroup = 'content' | 'site' | 'manage';
 interface MobileMenuItem {
   tab: AdminTab;
@@ -26,7 +27,7 @@ interface MobileMenuItem {
 /** Yönetim paneli: giriş, sayfa SEO düzenleme ve duyuru yönetimi. */
 @Component({
   selector: 'bidb-admin-panel',
-  imports: [FormsModule, PageEditorComponent, StaffEditorComponent, NewsCoverComponent],
+  imports: [FormsModule, PageEditorComponent, StaffEditorComponent, NewsCoverComponent, ContactTicketAdminComponent],
   template: `
     <div class="yonetim">
       @if (!api.girisYapildi()) {
@@ -118,8 +119,12 @@ interface MobileMenuItem {
             <span class="no">09</span>
             <span>İletişim Bilgileri</span>
           </button>
-          <button type="button" [class.etkin]="sekme() === 'personel'" (click)="sekme.set('personel')">
+          <button type="button" [class.etkin]="sekme() === 'tickets'" (click)="sekme.set('tickets')">
             <span class="no">10</span>
+            <span>İletişim Talepleri</span>
+          </button>
+          <button type="button" [class.etkin]="sekme() === 'personel'" (click)="sekme.set('personel')">
+            <span class="no">11</span>
             <span>Personel</span>
           </button>
             </div>
@@ -1072,6 +1077,8 @@ interface MobileMenuItem {
             </table>
 
           </div>
+        } @else if (sekme() === 'tickets') {
+          <bidb-contact-ticket-admin></bidb-contact-ticket-admin>
         } @else if (sekme() === 'personel') {
 
           <!-- Personel sayfası HTML metni değil, birim ve kişi kayıtlarıdır;
@@ -1143,7 +1150,8 @@ export class AdminPanelComponent {
     menus: { no: '07', ad: 'Menüler' },
     sosyal: { no: '08', ad: 'Sosyal Medya' },
     iletisim: { no: '09', ad: 'İletişim Bilgileri' },
-    personel: { no: '10', ad: 'Personel' }
+    tickets: { no: '10', ad: 'İletişim Talepleri' },
+    personel: { no: '11', ad: 'Personel' }
   };
 
   protected bolumNo(): string {
@@ -1300,6 +1308,7 @@ export class AdminPanelComponent {
       case 'menus': this.sekmeMenu(); break;
       case 'sosyal': this.sekmeSosyal(); break;
       case 'iletisim': this.sekmeIletisim(); break;
+      case 'tickets': this.sekme.set('tickets'); break;
       default: this.sekme.set(tab);
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1327,6 +1336,7 @@ export class AdminPanelComponent {
       manage: [
         { tab: 'quality', label: 'SEO ve Performans', note: 'Kalite ölçümleri' },
         { tab: 'personel', label: 'Personel', note: 'Birim ve personel kayıtları' },
+        { tab: 'tickets', label: 'İletişim talepleri', note: 'Form kayıtları ve takip' },
         { tab: 'iletisim', label: 'İletişim', note: 'Kurumsal iletişim bilgileri' },
         { tab: 'sosyal', label: 'Sosyal medya', note: 'Kurumsal hesaplar' }
       ]

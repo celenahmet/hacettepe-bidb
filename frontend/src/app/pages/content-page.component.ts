@@ -16,6 +16,7 @@ import { UnitsComponent } from './units.component';
 import { EmailOperationsComponent } from './email-operations.component';
 import { WebmailServicesComponent } from './webmail-services.component';
 import { Office365GuidesComponent } from './office365-guides.component';
+import { ContactFormComponent } from './contact-form.component';
 
 /** /tr/<slug> ve /en/<slug> adreslerindeki içerik sayfası. */
 @Component({
@@ -29,7 +30,8 @@ import { Office365GuidesComponent } from './office365-guides.component';
     UnitsComponent,
     EmailOperationsComponent,
     WebmailServicesComponent,
-    Office365GuidesComponent
+    Office365GuidesComponent,
+    ContactFormComponent
   ],
   template: `
     <div class="kap sayfa-duzen">
@@ -114,6 +116,9 @@ import { Office365GuidesComponent } from './office365-guides.component';
               [dilDegeri]="language()"
               [haritaGoster]="s.slug === 'contact'">
             </bidb-contact-block>
+          }
+          @if (s.slug === 'contact') {
+            <bidb-contact-form [dilDegeri]="language()"></bidb-contact-form>
           }
 
           @if (belgeler().length) {

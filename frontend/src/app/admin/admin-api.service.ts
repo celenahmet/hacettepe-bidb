@@ -150,6 +150,35 @@ export interface ContactChannel {
   published: boolean;
 }
 
+export interface ContactTicket {
+  id: number;
+  referenceCode: string;
+  language: string;
+  category: string;
+  subject: string;
+  requesterName: string;
+  requesterEmail: string;
+  requesterPhone: string | null;
+  message: string;
+  status: 'NEW' | 'IN_PROGRESS' | 'WAITING' | 'RESOLVED' | 'CLOSED';
+  priority: 'NORMAL' | 'HIGH' | 'URGENT';
+  assignedTo: string | null;
+  adminNote: string | null;
+  createdAt: string;
+  updatedAt: string;
+  resolvedAt: string | null;
+}
+
+export interface ContactTicketEvent {
+  id: number;
+  eventType: string;
+  fromStatus: string | null;
+  toStatus: string | null;
+  note: string | null;
+  actor: string;
+  createdAt: string;
+}
+
 export interface StaffMember {
   id: number | null;
   unitId: number | null;
@@ -470,6 +499,25 @@ export class AdminApiService {
 
   deleteContactChannel(id: number): Observable<void> {
     return this.http.delete<void>(`/api/admin/contact-channels/${id}`, { headers: this.basliklar() });
+  }
+
+  contactTickets(): Observable<ContactTicket[]> {
+    return this.http.get<ContactTicket[]>('/api/admin/contact-tickets', { headers: this.basliklar() });
+  }
+
+  contactTicketEvents(id: number): Observable<ContactTicketEvent[]> {
+    return this.http.get<ContactTicketEvent[]>(`/api/admin/contact-tickets/${id}/events`,
+      { headers: this.basliklar() });
+  }
+
+  updateContactTicket(ticket: ContactTicket, eventNote: string): Observable<ContactTicket> {
+    return this.http.put<ContactTicket>(`/api/admin/contact-tickets/${ticket.id}`, {
+      status: ticket.status,
+      priority: ticket.priority,
+      assignedTo: ticket.assignedTo,
+      adminNote: ticket.adminNote,
+      eventNote
+    }, { headers: this.basliklar() });
   }
 
   /* ---------- personel ---------- */

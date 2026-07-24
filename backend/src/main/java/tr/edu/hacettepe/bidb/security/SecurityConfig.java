@@ -36,6 +36,8 @@ public class SecurityConfig {
                 // Kimliksiz, çerezsiz Core Web Vitals örnekleri
                 .requestMatchers(HttpMethod.POST,
                         "/api/metrics/vitals", "/api/metrics/page-view").permitAll()
+                // İletişim formu kimliksiz kabul edilir; hız ve alan sınırları controller'da uygulanır.
+                .requestMatchers(HttpMethod.POST, "/api/contact/tickets").permitAll()
                 // Yönetim uçları
                 .requestMatchers("/api/admin/**").authenticated()
                 .anyRequest().denyAll())
