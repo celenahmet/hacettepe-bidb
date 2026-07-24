@@ -257,7 +257,7 @@ interface MobileMenuItem {
               </div>
             </section>
           } @else {
-            <p class="hata" role="alert">Analitik raporu alınamadı. Backend bağlantısını kontrol edin.</p>
+            <p class="hata" role="alert">Analitik raporu alınamadı. {{ analyticsHata() || 'Backend bağlantısını kontrol edin.' }}</p>
           }
         } @else if (sekme() === 'quality') {
           @if (qualityLoading()) {
@@ -361,7 +361,7 @@ interface MobileMenuItem {
               </div>
             </section>
           } @else {
-            <p class="hata" role="alert">Kalite özeti alınamadı. Backend bağlantısını kontrol edin.</p>
+            <p class="hata" role="alert">Kalite özeti alınamadı. {{ qualityHata() || 'Backend bağlantısını kontrol edin.' }}</p>
           }
         } @else if (sekme() === 'pages') {
           <p class="aciklama">
@@ -1197,8 +1197,10 @@ export class AdminPanelComponent {
   ];
   protected analytics = signal<AnalyticsReport | null>(null);
   protected analyticsLoading = signal(false);
+  protected analyticsHata = signal('');
   protected quality = signal<QualitySummary | null>(null);
   protected qualityLoading = signal(false);
+  protected qualityHata = signal('');
   protected pages = signal<AdminPage[]>([]);
   protected news = signal<AdminNews[]>([]);
   protected duyuruSecenekleri = signal<NewsOptions>({ categories: [], audiences: [], templates: [] });
@@ -1283,12 +1285,21 @@ export class AdminPanelComponent {
       next: (report) => {
         this.analytics.set(report);
         this.analyticsLoading.set(false);
+        this.analyticsHata.set('');
       },
-      error: () => {
+      error: (e) => {
         this.analytics.set(null);
         this.analyticsLoading.set(false);
+        this.analyticsHata.set(this.baglantiHatasi(e));
       }
     });
+  }
+
+  /** Bir HTTP hatasından, operatöre gösterilecek kısa ve somut bir açıklama üretir. */
+  private baglantiHatasi(e: { status?: number }): string {
+    if (!e.status) return 'Sunucuya ulaşılamadı.';
+    if (e.status === 401 || e.status === 403) return `Yetki hatası (${e.status}) — oturum sona ermiş olabilir.`;
+    return `Sunucu ${e.status} hatası döndürdü.`;
   }
 
   protected sayiBicimle(value: number): string {
@@ -1351,10 +1362,12 @@ export class AdminPanelComponent {
       next: (summary) => {
         this.quality.set(summary);
         this.qualityLoading.set(false);
+        this.qualityHata.set('');
       },
-      error: () => {
+      error: (e) => {
         this.quality.set(null);
         this.qualityLoading.set(false);
+        this.qualityHata.set(this.baglantiHatasi(e));
       }
     });
   }
