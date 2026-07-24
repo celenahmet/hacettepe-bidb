@@ -302,12 +302,22 @@ interface MobileMenuItem {
                 <div class="kalite-vital-izgara">
                   @for (v of q.vitals; track v.path + v.metric) {
                     <article class="kalite-vital" [attr.data-rating]="v.rating">
-                      <div>
-                        <span>{{ v.metric }}</span>
-                        <strong>{{ metrikDegeri(v.metric, v.p75) }}</strong>
-                      </div>
-                      <p>{{ v.path }}</p>
-                      <small>{{ v.samples }} örnek · {{ dereceEtiketi(v.rating) }}</small>
+                      <button type="button" class="kalite-vital-tetik"
+                              [attr.aria-expanded]="acikVital() === v.path + v.metric"
+                              (click)="vitalDetayAcKapat(v.path + v.metric)">
+                        <div>
+                          <span>{{ v.metric }}</span>
+                          <strong>{{ metrikDegeri(v.metric, v.p75) }}</strong>
+                        </div>
+                        <p>{{ v.path }}</p>
+                        <small>{{ v.samples }} örnek · {{ dereceEtiketi(v.rating) }}</small>
+                      </button>
+                      @if (acikVital() === v.path + v.metric) {
+                        <div class="kalite-vital-aciklama">
+                          <p>{{ VITAL_ACIKLAMA[v.metric].teknik }}</p>
+                          <p class="sade">{{ VITAL_ACIKLAMA[v.metric].sade }}</p>
+                        </div>
+                      }
                     </article>
                   }
                 </div>
@@ -1201,6 +1211,35 @@ export class AdminPanelComponent {
   protected quality = signal<QualitySummary | null>(null);
   protected qualityLoading = signal(false);
   protected qualityHata = signal('');
+  protected acikVital = signal<string | null>(null);
+
+  /** Core Web Vitals kartına tıklanınca açılan, hem teknik hem sade dille açıklama. */
+  protected readonly VITAL_ACIKLAMA: Record<string, { teknik: string; sade: string }> = {
+    LCP: {
+      teknik: 'Sayfadaki en büyük görünür öğenin (genelde ana görsel ya da başlık) ekrana çizildiği an.',
+      sade: "Sayfanın \"yüklendi\" hissi verdiği an — ne kadar erken, o kadar iyi."
+    },
+    INP: {
+      teknik: 'Bir tıklama ya da dokunmadan, tarayıcının ekranı güncellemesine kadar geçen süre.',
+      sade: 'Bir düğmeye bastığınızda sitenin ne kadar hızlı tepki verdiği.'
+    },
+    CLS: {
+      teknik: 'Yükleme sırasında içeriğin kaydığı toplam görsel mesafenin ölçüsü.',
+      sade: "Sayfa yüklenirken metnin/düğmelerin yerinin oynayıp oynamadığı — 0'a yakın olması, tıklarken hedefin kaymaması demek."
+    },
+    FCP: {
+      teknik: 'Tarayıcının ekrana ilk içeriği (metin ya da görsel) boyadığı an.',
+      sade: 'Boş beyaz ekranın ne kadar sürdüğü.'
+    },
+    TTFB: {
+      teknik: 'Sunucunun isteğe ilk baytı döndürme süresi.',
+      sade: 'Sunucunun ne kadar hızlı yanıt verdiği — sayfa henüz çizilmeden önceki gecikme.'
+    }
+  };
+
+  protected vitalDetayAcKapat(anahtar: string): void {
+    this.acikVital.set(this.acikVital() === anahtar ? null : anahtar);
+  }
   protected pages = signal<AdminPage[]>([]);
   protected news = signal<AdminNews[]>([]);
   protected duyuruSecenekleri = signal<NewsOptions>({ categories: [], audiences: [], templates: [] });

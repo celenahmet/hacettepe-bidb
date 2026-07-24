@@ -1056,25 +1056,55 @@
   .kalite-vital[data-rating="needs-improvement"] { --kalite-renk: #aa6b00; }
   .kalite-vital[data-rating="poor"] { --kalite-renk: var(--hu-kirmizi); }
 
-  .kalite-vital > div {
+  /* Kart görünümü değişmesin diye düğme, çerçevesiz ve tam genişlikte
+     sıfırlanır — yalnızca tıklanabilirlik ekler, görseli etkilemez. */
+  .yonetim button.kalite-vital-tetik {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    letter-spacing: inherit;
+    text-align: left;
+    text-transform: none;
+    cursor: pointer;
+  }
+  .yonetim button.kalite-vital-tetik:hover { background: none; }
+
+  .kalite-vital-tetik > div {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
     gap: var(--bosluk-3);
   }
-  .kalite-vital > div span {
+  .kalite-vital-tetik > div span {
     color: var(--kalite-renk);
     font-size: var(--olcu-xs);
     font-weight: var(--kalinlik-kalin);
     letter-spacing: .1em;
   }
-  .kalite-vital > div strong { color: var(--murekkep); font-size: var(--olcu-xl); }
+  .kalite-vital-tetik > div strong { color: var(--murekkep); font-size: var(--olcu-xl); }
   .kalite-vital p {
     overflow-wrap: anywhere;
     margin: var(--bosluk-3) 0 var(--bosluk-2);
     font-size: var(--olcu-sm);
   }
   .kalite-vital small { color: var(--metin-acik); }
+
+  .kalite-vital-aciklama {
+    margin-top: var(--bosluk-3);
+    padding-top: var(--bosluk-3);
+    border-top: 1px dashed var(--cizgi);
+  }
+  .kalite-vital-aciklama p {
+    margin: 0 0 var(--bosluk-2);
+    font-size: var(--olcu-xs);
+    line-height: var(--satir-normal);
+    color: var(--metin-2);
+  }
+  .kalite-vital-aciklama p.sade { margin-bottom: 0; color: var(--metin-3); font-style: italic; }
 
   .kalite-bos {
     padding: var(--bosluk-5);
