@@ -323,14 +323,6 @@
     box-sizing: border-box;
   }
 
-  /* Diğer kısayollar: site genelindeki çizgi-ikon dili, currentColor ile
-     (beyaz), kart zemini olmadan — foto zemin üzerinde kendi başına okunur. */
-  .hero-servis-ikon svg {
-    width: 1.7rem;
-    height: 1.7rem;
-    color: #fff;
-  }
-
   .hero-servis-adi {
     align-self: end;
     display: -webkit-box;
@@ -513,11 +505,6 @@
       height: 2.15rem;
     }
 
-    .hero-servis-ikon svg {
-      width: 1.4rem;
-      height: 1.4rem;
-    }
-
     /*
      * Dar ekranda cover kırpması yatayda gerçekleşir. Biraz daha soldaki
      * bölgeyi göstermek, tabela yazısını içerik bloğunun sağında tutar.
@@ -619,11 +606,6 @@
     .hero-servis-ikon img {
       width: 1.8rem;
       height: 1.8rem;
-    }
-
-    .hero-servis-ikon svg {
-      width: 1.15rem;
-      height: 1.15rem;
     }
 
     .hero-servis-adi {

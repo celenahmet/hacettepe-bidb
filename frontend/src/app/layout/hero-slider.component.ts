@@ -82,62 +82,7 @@ import { Language, Shortcut, Slide } from '../core/models';
                      [attr.target]="k.newTab ? '_blank' : null"
                      [attr.rel]="k.newTab ? 'noopener' : null">
                     <span class="hero-servis-ikon">
-                      @if (simgeAnahtari(k.iconUrl); as anahtar) {
-                        <svg viewBox="0 0 24 24" aria-hidden="true"
-                             fill="none" stroke="currentColor" stroke-width="1.6"
-                             stroke-linecap="round" stroke-linejoin="round">
-                          @switch (anahtar) {
-                            @case ('eposta') {
-                              <rect x="3" y="5" width="18" height="14" rx="2"/>
-                              <path d="m3 7 9 6 9-6"/>
-                            }
-                            @case ('portal') {
-                              <rect x="3" y="3" width="7" height="7" rx="1"/>
-                              <rect x="14" y="3" width="7" height="7" rx="1"/>
-                              <rect x="3" y="14" width="7" height="7" rx="1"/>
-                              <rect x="14" y="14" width="7" height="7" rx="1"/>
-                            }
-                            @case ('ebys') {
-                              <path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/>
-                              <path d="M14 3v6h6"/>
-                              <path d="M8 13h8M8 17h5"/>
-                            }
-                            @case ('eimza') {
-                              <path d="M12 20h9"/>
-                              <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>
-                            }
-                            @case ('proxy') {
-                              <path d="M12 3l7 3v6c0 4.5-3 8-7 9-4-1-7-4.5-7-9V6z"/>
-                              <path d="M9.5 12l1.8 1.8 3.4-3.6"/>
-                            }
-                            @case ('yardim') {
-                              <path d="M4 13v-1a8 8 0 0 1 16 0v1"/>
-                              <rect x="2.5" y="13" width="4" height="6" rx="1.5"/>
-                              <rect x="17.5" y="13" width="4" height="6" rx="1.5"/>
-                              <path d="M19.5 19v.5a2.5 2.5 0 0 1-2.5 2.5H13"/>
-                            }
-                            @case ('sss') {
-                              <path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.5 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 8.5-8.5h.5a8 8 0 0 1 8 8z"/>
-                              <path d="M12 15v.01"/>
-                              <path d="M10.2 9.8a1.8 1.8 0 1 1 2.8 1.5c-.6.4-1 .8-1 1.7"/>
-                            }
-                            @case ('form') {
-                              <rect x="5" y="4" width="14" height="17" rx="2"/>
-                              <path d="M9 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1"/>
-                              <path d="m8 12 2 2 4-4"/>
-                              <path d="M8 17h4"/>
-                            }
-                            @case ('bilgidokuman') {
-                              <path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-                            }
-                            @case ('yazilimdeposu') {
-                              <rect x="3" y="7" width="18" height="13" rx="1.5"/>
-                              <path d="M3 7l2-4h14l2 4"/>
-                              <path d="M10 12h4"/>
-                            }
-                          }
-                        </svg>
-                      } @else if (k.iconUrl) {
+                      @if (k.iconUrl) {
                         <img [src]="k.iconUrl" alt="" aria-hidden="true"
                              width="46" height="46" loading="lazy" decoding="async" fetchpriority="low">
                       }
@@ -245,19 +190,6 @@ export class HeroSliderComponent implements OnInit, OnDestroy {
 
   protected gorunenKisayollar(): Shortcut[] {
     return this.kisayollar.slice(0, 12);
-  }
-
-  /**
-   * Webmail (Exchange) ve Office 365 zaten tanınır marka logosu kullanıyor;
-   * ikisi de raster <img> olarak kalır. Diğer kısayollar, site genelindeki
-   * çizgi-ikon diliyle (units.component.ts ile aynı üslup) çizilen bir SVG
-   * simgeye geçer — anlaşılır ve küçük boyutta net kalır.
-   */
-  protected simgeAnahtari(iconUrl: string | null): string | null {
-    if (!iconUrl) return null;
-    if (iconUrl.includes('exchange') || iconUrl.includes('office365')) return null;
-    const eslesme = iconUrl.match(/([a-z]+)\.(?:png|jpg)$/i);
-    return eslesme ? eslesme[1] : null;
   }
 
   protected slaytKonumu(slaytIndeksi: number): number {
