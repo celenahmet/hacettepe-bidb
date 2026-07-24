@@ -32,7 +32,7 @@
     position: absolute;
     inset: 0;
     z-index: 2;
-    background: rgb(4 10 18 / 55%);
+    background: rgb(4 10 18 / 35%);
     pointer-events: none;
   }
 
@@ -186,7 +186,7 @@
   }
 
   .hero-gorsel--servis {
-    filter: blur(3px) saturate(0.92);
+    filter: blur(1.5px) saturate(0.92);
     transform: scale(1.07);
   }
 
@@ -240,69 +240,87 @@
   .hero-servis-izgara {
     display: grid;
     grid-template-columns: repeat(6, minmax(0, 1fr));
-    border-top: 1px solid rgb(255 255 255 / 26%);
-    border-left: 1px solid rgb(255 255 255 / 26%);
-    background: rgb(6 18 34 / 32%);
-    box-shadow: 0 22px 56px rgb(0 0 0 / 18%);
+    gap: 1px;
+    background: rgba(255, 255, 255, 0.08); /* This acts as the border between cards */
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    overflow: hidden;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
   }
 
   .hero-servis-karti {
     position: relative;
     min-width: 0;
-    min-height: 8.1rem;
+    min-height: 8.5rem;
     display: grid;
     grid-template-rows: auto 1fr;
     align-content: start;
-    gap: 0.7rem;
-    padding: 1rem 2rem 1rem 1rem;
-    overflow: hidden;
-    border-right: 1px solid rgb(255 255 255 / 26%);
-    border-bottom: 1px solid rgb(255 255 255 / 26%);
-    background: rgb(9 25 46 / 68%);
-    color: #fff;
-    transition: background var(--gecis), transform var(--gecis);
+    gap: 0.8rem;
+    padding: 1.25rem;
+    background: rgba(10, 20, 35, 0.55);
+    color: #f0f2f5;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   }
 
   .hero-servis-karti::before {
     content: "";
     position: absolute;
-    top: 0;
-    right: 0;
-    width: 2rem;
-    height: 2px;
-    background: var(--hu-kirmizi);
-    transform: scaleX(0);
-    transform-origin: right;
-    transition: transform var(--gecis);
+    inset: 0;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    transition: border-color 0.3s ease;
+    pointer-events: none;
+    z-index: 2;
   }
 
   .hero-servis-karti:hover {
     z-index: 1;
-    background: rgb(255 255 255 / 96%);
-    color: var(--lacivert);
+    background: rgba(25, 40, 65, 0.85);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
   }
 
-  .hero-servis-karti:hover::before { transform: scaleX(1); }
+  .hero-servis-karti:hover::before {
+    border-color: rgba(255, 255, 255, 0.25);
+  }
 
   .hero-servis-karti:focus-visible {
     z-index: 2;
-    outline: 3px solid #fff;
-    outline-offset: -4px;
+    outline: 2px solid var(--hu-kirmizi);
+    outline-offset: -2px;
   }
 
   .hero-servis-ikon {
-    width: 2.85rem;
-    height: 2.85rem;
+    width: 3rem;
+    height: 3rem;
     display: grid;
     place-items: center;
-    border: 1px solid rgb(255 255 255 / 35%);
-    background: rgb(255 255 255 / 95%);
+    border-radius: 8px;
+    background: transparent;
+    transition: transform 0.3s ease;
+  }
+
+  .hero-servis-karti:hover .hero-servis-ikon {
+    transform: scale(1.05);
   }
 
   .hero-servis-ikon img {
-    width: 2rem;
-    height: 2rem;
+    width: 2.25rem;
+    height: 2.25rem;
     object-fit: contain;
+  }
+
+  /* İkon dosyaları (JPG/PNG) saydam değil — tek renge indirgeyen bir
+     filtre (brightness(0) + invert(1)) düz beyaz bir dikdörtgene
+     dönüştürüp ikonu görünmez kılıyordu. Bunun yerine tüm ikonlara aynı
+     beyaz kart zemini veriliyor; kendi renkleriyle okunur kalıyorlar. */
+  .hero-servis-ikon img {
+    border-radius: 4px;
+    background: #fff;
+    padding: 3px;
+    box-sizing: border-box;
   }
 
   .hero-servis-adi {
@@ -311,9 +329,9 @@
     min-width: 0;
     overflow: hidden;
     color: inherit;
-    font-size: clamp(0.72rem, 0.78vw, 0.83rem);
-    font-weight: var(--kalinlik-orta);
-    line-height: 1.35;
+    font-size: clamp(0.75rem, 0.8vw, 0.88rem);
+    font-weight: 500;
+    line-height: 1.4;
     text-wrap: balance;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
@@ -321,15 +339,15 @@
 
   .hero-servis-ok {
     position: absolute;
-    right: 0.75rem;
-    bottom: 0.85rem;
-    color: rgb(255 255 255 / 62%);
-    transition: color var(--gecis), transform var(--gecis);
+    right: 1rem;
+    bottom: 1rem;
+    color: rgba(255, 255, 255, 0.3);
+    transition: color 0.3s ease, transform 0.3s ease;
   }
 
   .hero-servis-karti:hover .hero-servis-ok {
-    color: var(--hu-kirmizi);
-    transform: translateX(2px);
+    color: #fff;
+    transform: translateX(4px);
   }
 
   /* ================= sade göstergeler ================= */

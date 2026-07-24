@@ -24,3 +24,7 @@ tools/*.log
 *-build.log
 frontend-kurulum.log
 yedek/
+
+# Geçici/ara dosyalar (üretim koduna girmez)
+scratch/
+insert.sql

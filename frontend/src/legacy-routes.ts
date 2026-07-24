@@ -67,9 +67,8 @@ export const LEGACY_ROUTES: Record<string, string> = {
   '/tr/eski_eposta_yedekalma_video': '/tr/email-backup-video',
   '/tr/kurumsalsema180117': '/tr/notice-180117',
   '/en/anasayfa': '/en/home',
-  '/en/overview': '/en/about',
   '/en/mv': '/en/mission-vision',
-  '/en/yonetim': '/en/management',
+  '/en/yonetim': '/en/org-chart',
   '/en/grup': '/en/service-groups',
   '/en/iletisim': '/en/contact'
 };

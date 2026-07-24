@@ -1,6 +1,6 @@
 import { Component, ElementRef, HostListener, Input, inject, signal } from '@angular/core';
 import { forkJoin } from 'rxjs';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import { Api } from '../core/api.service';
 import { Language, Menu } from '../core/models';
 
@@ -35,8 +35,8 @@ import { Language, Menu } from '../core/models';
              aşağıdaki ana menüde kalır. -->
         <span class="ust-eylemler">
           <span class="dil-secim dil-secim-mobil">
-            <a routerLink="/tr" [class.etkin]="language === 'tr'" (click)="kapat()">TR</a>
-            <a routerLink="/en" [class.etkin]="language === 'en'" (click)="kapat()">EN</a>
+            <a [routerLink]="getDilLinki('tr')" [class.etkin]="language === 'tr'" (click)="kapat()">TR</a>
+            <a [routerLink]="getDilLinki('en')" [class.etkin]="language === 'en'" (click)="kapat()">EN</a>
           </span>
 
           <button type="button" class="menu-dugmesi" (click)="menuAcKapa()"
@@ -82,8 +82,8 @@ import { Language, Menu } from '../core/models';
           </a>
 
           <span class="dil-secim dil-secim-masaustu">
-            <a routerLink="/tr" [class.etkin]="language === 'tr'" (click)="kapat()">TR</a>
-            <a routerLink="/en" [class.etkin]="language === 'en'" (click)="kapat()">EN</a>
+            <a [routerLink]="getDilLinki('tr')" [class.etkin]="language === 'tr'" (click)="kapat()">TR</a>
+            <a [routerLink]="getDilLinki('en')" [class.etkin]="language === 'en'" (click)="kapat()">EN</a>
           </span>
         </nav>
       </div>
@@ -91,10 +91,20 @@ import { Language, Menu } from '../core/models';
   `
 })
 export class HeaderComponent {
-  @Input({ required: true }) language!: Language;
+  private _language!: Language;
+  @Input({ required: true }) set language(val: Language) {
+    if (this._language !== val) {
+      this._language = val;
+      this.yukle();
+    }
+  }
+  get language(): Language {
+    return this._language;
+  }
 
   private api = inject(Api);
   private kok = inject(ElementRef<HTMLElement>);
+  private router = inject(Router);
 
   /** Dar ekranda menü panelinin açık olup olmadığı */
   protected menuAcik = signal(false);
@@ -119,19 +129,33 @@ export class HeaderComponent {
   protected acilirBolumler = signal<Menu[]>([]);
 
   ngOnInit(): void {
+    this.yukle();
+  }
+
+  private yukle(): void {
+    if (!this._language) return;
+    
     forkJoin({
-      menuler: this.api.menu(this.language),
-      anaSayfa: this.api.anaSayfa(this.language)
+      menuler: this.api.menu(this._language),
+      anaSayfa: this.api.anaSayfa(this._language)
     }).subscribe(({ menuler, anaSayfa }) => {
       const kurumsal = menuler.length ? menuler[0] : null;
       const servisler: Menu = {
-        title: this.language === 'en' ? 'Our Services' : 'Hizmetlerimiz',
+        title: this._language === 'en' ? 'Our Services' : 'Hizmetlerimiz',
         items: anaSayfa.services.map((s) => ({ label: s.name, url: s.url, newTab: s.newTab }))
       };
       // Sıra sabit: Kurumsal → Hizmetlerimiz.
       this.acilirBolumler.set([kurumsal, servisler]
         .filter((b): b is Menu => b !== null && b.items.length > 0));
     });
+  }
+
+  getDilLinki(hedefDil: Language): string {
+    const url = this.router.url.split(/[?#]/)[0];
+    if (url.startsWith('/' + this.language)) {
+      return url.replace('/' + this.language, '/' + hedefDil);
+    }
+    return '/' + hedefDil;
   }
 
   protected menuAcKapa(): void {
@@ -160,3 +184,4 @@ export class HeaderComponent {
     this.kapat();
   }
 }
+

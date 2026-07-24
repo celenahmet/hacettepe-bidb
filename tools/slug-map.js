@@ -88,9 +88,9 @@ const TR = {
 /** İngilizce taraftaki eski slug -> yeni slug */
 const EN = {
   anasayfa: "home",
-  overview: "about",
+  overview: "overview",   // artık kendi canonical slug'u; about'tan ayrıldı
   mv: "mission-vision",
-  yonetim: "management",
+  yonetim: "org-chart",
   grup: "service-groups",
   iletisim: "contact"
 };

@@ -418,131 +418,253 @@
 
   /* ================= alt bilgi ================= */
 
-  /* Açık yüzey: sayfayla aynı zemin, üstte tek bir çizgiyle ayrılır.
-     Ayrımı renk bloğu değil, çizgi ve boşluk kurar. Kutu yok. */
+  /*
+   * Footer — referans tasarıma birebir uygun.
+   * Krem/bej zemin (#f5f0e8), sağda şeffaf geometrik watermark,
+   * dört sütunlu asimetrik ızgara.
+   */
   .alt {
     margin-top: var(--bosluk-8);
     padding: 0;
-    border-top: 1px solid var(--cizgi);
-    background: var(--yuzey);
-    color: var(--metin-2);
+    background: #faf8f4;
+    color: #3a3a3a;
     font-size: var(--olcu-sm);
+    position: relative;
+    overflow: hidden;
   }
 
-  /* Asimetrik ızgara: kurum sütunu geniş, gezinme sütunları dar */
+  /* Dekoratif watermark: sağ altta şeffaf HÜ logosu */
+  .alt::after {
+    content: '';
+    position: absolute;
+    right: -40px;
+    bottom: -20px;
+    width: 340px;
+    height: 340px;
+    background-image: url('/hu-logo.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    opacity: 0.07;
+    pointer-events: none;
+  }
+
+  /* Ana içerik alanı (watermark'ın üzerinde) */
+  .alt-icerik {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* 4 sütun: kurum (geniş) + kurumsal + servisler + iletişim */
   .alt-izgara {
     display: grid;
-    grid-template-columns: minmax(0, 1.6fr) repeat(3, minmax(0, 1fr));
-    gap: var(--bosluk-7) var(--bosluk-6);
-    padding-top: var(--bosluk-7);
-    padding-bottom: var(--bosluk-6);
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.2fr);
+    gap: var(--bosluk-6) var(--bosluk-8);
+    padding-top: var(--bosluk-8);
+    padding-bottom: var(--bosluk-8);
   }
 
-  .alt-marka { display: flex; align-items: flex-start; gap: var(--bosluk-3); }
-  .alt-marka img { flex: none; }
-  .alt-marka strong {
-    display: block;
-    font-size: var(--olcu-sm);
-    font-weight: var(--kalinlik-kalin);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--metin);
-    line-height: var(--satir-sik);
+  /* --- Kurum kimliği sütunu --- */
+  .alt-kurum { display: flex; flex-direction: column; }
+
+  .alt-logo-blok {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--bosluk-4);
   }
-  .alt-marka small {
+
+  .alt-logo-blok img { flex: none; }
+
+  .alt-logo-yazi {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+  }
+
+  .alt-logo-yazi strong {
     display: block;
-    margin-top: 2px;
-    font-size: var(--olcu-sm);
-    color: var(--metin-2);
+    font-size: 1rem;
+    font-weight: 900;
+    letter-spacing: 0.04em;
+    color: #1a1a2e;
+    text-transform: uppercase;
+  }
+
+  .alt-logo-yazi small {
+    display: block;
+    margin-top: 6px;
+    font-size: 0.75rem;
+    color: #555;
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  /* Kırmızı yatay ayraç çizgisi */
+  .alt-cizgi {
+    border: none;
+    border-top: 2px solid var(--hu-kirmizi);
+    width: 48px;
+    margin: var(--bosluk-4) 0 var(--bosluk-3);
+  }
+
+  .alt-kurum-isim {
+    margin: 0 0 var(--bosluk-2);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #1a1a2e;
+    line-height: 1.5;
   }
 
   .alt-adres {
-    max-width: 42ch;
-    margin: var(--bosluk-4) 0 0;
-    line-height: var(--satir-genis);
-    color: var(--metin-2);
+    margin: 0;
+    font-size: 0.8rem;
+    color: #555;
+    line-height: 1.6;
   }
 
-  /* Bölüm etiketleri: küçük punto, geniş harf aralığı, kırmızı vurgu */
-  /* Sütun başlıkları. Boşluklu büyük harf, küçük punto ile birleşince
-     inceliyordu; punto ve kalınlık artırıldı, boşluk azaltıldı. Başlığın
-     altındaki bağlantılardan bakışta ayrılması gerekiyor. */
+  /* --- Ortak sütun stilleri --- */
   .alt-etiket {
     display: block;
-    margin-bottom: var(--bosluk-3);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
+    margin-bottom: var(--bosluk-4);
+    padding-bottom: var(--bosluk-2);
+    border-bottom: 2px solid var(--hu-kirmizi);
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--hu-kirmizi);
+    color: #1a1a2e;
   }
 
-  .alt-sutun ul { margin: 0; padding: 0; list-style: none; }
-  .alt-sutun li + li { margin-top: var(--bosluk-3); }
+  .alt-sutun ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .alt-sutun li {
+    border-bottom: 1px solid rgba(0,0,0,0.07);
+  }
+
+  .alt-sutun li:last-child { border-bottom: none; }
 
   .alt-sutun a,
-  .sutun-baglanti-dugme { color: var(--metin-2); }
+  .sutun-baglanti-dugme {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--bosluk-2) 0;
+    color: #444;
+    font-size: 0.82rem;
+    transition: color var(--gecis-hizli);
+    width: 100%;
+  }
+
   .alt-sutun a:hover,
   .sutun-baglanti-dugme:hover { color: var(--hu-kirmizi); }
+
+  .alt-ok {
+    font-size: 1rem;
+    color: #aaa;
+    line-height: 1;
+  }
 
   .sutun-baglanti-dugme {
     background: none;
     border: none;
-    padding: 0;
+    padding: var(--bosluk-2) 0;
     font: inherit;
     cursor: pointer;
     text-align: left;
   }
 
+  /* --- İletişim ve Medya sütunu --- */
   .alt-iletisim {
-    display: block;          /* eski iki sütunlu ızgara kuralını geçersiz kılar */
+    display: block;
     border-top: none;
   }
 
-  .alt-sosyal-medya {
+  /* Sosyal medya: koyu arka planlı kare butonlar */
+  .alt-sosyal {
     display: flex;
-    gap: var(--bosluk-3);
+    gap: var(--bosluk-2);
     margin-bottom: var(--bosluk-5);
   }
-  .alt-sosyal-medya a {
+
+  .sosyal-buton {
     display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: #1e2a3b;
+    color: #fff;
+    border-radius: 6px;
+    transition: background var(--gecis-hizli), transform 0.15s;
+  }
+
+  .sosyal-buton:hover {
+    background: var(--hu-kirmizi);
+    transform: translateY(-2px);
+  }
+
+  /* İletişim kanalı satırı: ikon + dt/dd */
+  .alt-kanal {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--bosluk-3);
+    margin-bottom: var(--bosluk-4);
+  }
+
+  .alt-kanal-ikon {
+    display: flex;
     align-items: center;
     justify-content: center;
     width: 32px;
     height: 32px;
-    border-radius: 4px;
-    transition: transform 0.2s;
-  }
-  .alt-sosyal-medya a svg {
-    filter: grayscale(100%);
-    opacity: 0.6;
-    transition: all 0.3s ease;
-  }
-  .alt-sosyal-medya a:hover {
-    transform: translateY(-2px);
-  }
-  .alt-sosyal-medya a:hover svg {
-    filter: grayscale(0%);
-    opacity: 1;
+    flex: none;
+    border: 1px solid rgba(0,0,0,0.12);
+    border-radius: 50%;
+    color: #555;
   }
 
-  .alt-iletisim dl { margin: 0 0 var(--bosluk-4); }
-  .alt-iletisim dt {
+  .alt-kanal dt {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: #888;
     margin-bottom: 2px;
-    font-size: var(--olcu-xs);
-    letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--metin-3);
-  }
-  .alt-iletisim dd { margin: 0 0 2px; overflow-wrap: anywhere; }
-
-  .alt-cerez-kapsayici {
-    margin-top: var(--bosluk-5);
   }
 
-  /* Alt şerit: telif ve yasal bağlantılar */
-  /* Alt şerit: hafif zemin farkıyla ayrılır */
-  .alt-serit { border-top: 1px solid var(--cizgi); background: var(--yuzey-2); }
+  .alt-kanal dd {
+    margin: 0 0 1px;
+    font-size: 0.8rem;
+    overflow-wrap: anywhere;
+  }
+
+  .alt-kanal dd a { color: #333; }
+  .alt-kanal dd a:hover { color: var(--hu-kirmizi); }
+
+  /* --- Telif satırı --- */
+  .alt-serit {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid rgba(0,0,0,0.10);
+    background: #ede8df;
+  }
+
+  .alt-serit .kap {
+    padding-top: var(--bosluk-3);
+    padding-bottom: var(--bosluk-3);
+  }
+
+  .alt-serit small {
+    color: #777;
+    font-size: 0.72rem;
+  }
+
+  /* Geriye dönük uyumluluk — eski sınıf adları */
   .alt-serit-ic {
     display: flex;
     flex-wrap: wrap;
@@ -552,7 +674,15 @@
     padding-top: var(--bosluk-4);
     padding-bottom: var(--bosluk-4);
   }
-  .alt-serit small { color: var(--metin-3); font-size: var(--olcu-xs); }
+
+  .sutun-baglanti-dugme {
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    text-align: left;
+  }
 
   /* İlk ekran dışındaki yoğun bölümler başlangıç yerleşimini bloke etmez. */
   .duyurular,
