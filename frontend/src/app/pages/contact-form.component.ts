@@ -101,8 +101,9 @@ interface TicketResponse {
               <input name="email" [(ngModel)]="form.email" type="email" required maxlength="254" autocomplete="email">
             </label>
             <label>
-              <span>{{ dilDegeri === 'en' ? 'Telephone (optional)' : 'Telefon (isteğe bağlı)' }}</span>
-              <input name="phone" [(ngModel)]="form.phone" type="tel" maxlength="30" autocomplete="tel">
+              <span>{{ dilDegeri === 'en' ? 'Telephone' : 'Telefon' }} *</span>
+              <input name="phone" [(ngModel)]="form.phone" type="tel" required minlength="7"
+                     maxlength="30" autocomplete="tel">
             </label>
           </div>
 
@@ -111,6 +112,27 @@ interface TicketResponse {
             <textarea name="message" [(ngModel)]="form.message" required minlength="20"
                       maxlength="5000" rows="7"></textarea>
             <small>{{ form.message.length }} / 5000</small>
+          </label>
+
+          <label class="iletisim-form-ek">
+            <span>{{ dilDegeri === 'en' ? 'Attachment (optional)' : 'Ek dosya (isteğe bağlı)' }}</span>
+            <span class="iletisim-form-ek-kutu">
+              <input #ekGirdi type="file" accept=".pdf,.jpg,.jpeg,.png,.docx" (change)="ekSec($event)">
+              @if (ek(); as dosya) {
+                <span class="iletisim-form-ek-secili">
+                  {{ dosya.name }} · {{ ekBoyut(dosya.size) }}
+                  <button type="button" (click)="ekKaldir(ekGirdi)">
+                    {{ dilDegeri === 'en' ? 'Remove' : 'Kaldır' }}
+                  </button>
+                </span>
+              }
+            </span>
+            <small>
+              {{ dilDegeri === 'en'
+                ? 'PDF, JPG, PNG or DOCX, up to 10 MB.'
+                : 'PDF, JPG, PNG ya da DOCX, en fazla 10 MB.' }}
+            </small>
+            @if (ekHata()) { <small class="iletisim-form-ek-hata">{{ ekHata() }}</small> }
           </label>
 
           <!-- İnsanların görmediği alan; otomatik form doldurucuları sessizce elenir. -->
@@ -160,14 +182,67 @@ export class ContactFormComponent {
   protected hata = signal('');
   protected sonuc = signal<TicketResponse | null>(null);
 
+  /** Ek dosyada izin verilen uzantılar; backend ile aynı liste. */
+  private readonly ekIzinliUzantilar = ['pdf', 'jpg', 'jpeg', 'png', 'docx'];
+  private readonly ekAzamiBoyut = 10 * 1024 * 1024;
+  protected ek = signal<File | null>(null);
+  protected ekHata = signal('');
+
+  protected ekSec(event: Event): void {
+    const girdi = event.target as HTMLInputElement;
+    const dosya = girdi.files?.[0] ?? null;
+    this.ekHata.set('');
+    if (!dosya) { this.ek.set(null); return; }
+
+    const uzanti = dosya.name.split('.').pop()?.toLowerCase() ?? '';
+    if (!this.ekIzinliUzantilar.includes(uzanti)) {
+      this.ekHata.set(this.dilDegeri === 'en'
+        ? 'Unsupported file type. Allowed: PDF, JPG, PNG, DOCX.'
+        : 'Desteklenmeyen dosya türü. İzin verilenler: PDF, JPG, PNG, DOCX.');
+      this.ek.set(null);
+      girdi.value = '';
+      return;
+    }
+    if (dosya.size > this.ekAzamiBoyut) {
+      this.ekHata.set(this.dilDegeri === 'en'
+        ? 'The file must be smaller than 10 MB.'
+        : "Dosya 10 MB'den küçük olmalıdır.");
+      this.ek.set(null);
+      girdi.value = '';
+      return;
+    }
+    this.ek.set(dosya);
+  }
+
+  protected ekKaldir(girdi: HTMLInputElement): void {
+    this.ek.set(null);
+    this.ekHata.set('');
+    girdi.value = '';
+  }
+
+  protected ekBoyut(bayt: number): string {
+    return bayt < 1024 * 1024
+      ? Math.max(1, Math.round(bayt / 1024)) + ' KB'
+      : (bayt / (1024 * 1024)).toFixed(1) + ' MB';
+  }
+
   protected gonder(): void {
     if (this.gonderiliyor()) return;
     this.hata.set('');
     this.gonderiliyor.set(true);
-    this.http.post<TicketResponse>('/api/contact/tickets', {
-      language: this.dilDegeri,
-      ...this.form
-    }).subscribe({
+    const govde = new FormData();
+    govde.set('language', this.dilDegeri);
+    govde.set('category', this.form.category);
+    govde.set('subject', this.form.subject);
+    govde.set('name', this.form.name);
+    govde.set('email', this.form.email);
+    govde.set('phone', this.form.phone);
+    govde.set('message', this.form.message);
+    govde.set('website', this.form.website);
+    const dosya = this.ek();
+    if (dosya) govde.set('attachment', dosya);
+
+    this.http.post<TicketResponse>('/api/contact/tickets', govde).subscribe({
       next: (response) => {
         this.sonuc.set(response);
         this.gonderiliyor.set(false);
@@ -183,6 +258,8 @@ export class ContactFormComponent {
 
   protected yenile(): void {
     this.form = this.bosForm();
+    this.ek.set(null);
+    this.ekHata.set('');
     this.sonuc.set(null);
     this.hata.set('');
   }

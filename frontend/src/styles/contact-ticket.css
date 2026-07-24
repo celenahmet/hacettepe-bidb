@@ -5,16 +5,16 @@
  */
 @layer kamu {
   .iletisim-form-bolumu {
-    margin-top: clamp(48px, 7vw, 88px);
+    margin-top: clamp(40px, 6vw, 72px);
     border-top: 1px solid var(--cizgi);
   }
 
   .iletisim-form-baslik {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(260px, 0.82fr);
-    gap: var(--bosluk-6);
+    gap: var(--bosluk-5);
     align-items: end;
-    padding: var(--bosluk-6) 0 var(--bosluk-5);
+    padding: var(--bosluk-5) 0 var(--bosluk-4);
   }
 
   .iletisim-form-baslik p {
@@ -34,7 +34,7 @@
   }
 
   .iletisim-form-baslik > span {
-    color: var(--metin-soluk);
+    color: var(--metin-3);
     font-size: var(--olcu-sm);
     line-height: 1.7;
   }
@@ -49,26 +49,26 @@
     display: flex;
     gap: var(--bosluk-3);
     align-items: center;
-    padding: var(--bosluk-4) var(--bosluk-5);
+    padding: var(--bosluk-3) var(--bosluk-5);
     border-bottom: 1px solid var(--cizgi);
     background: color-mix(in srgb, var(--hu-lacivert) 3%, var(--zemin));
   }
 
   .iletisim-form-no {
     color: var(--hu-kirmizi);
-    font: 700 var(--olcu-xs)/1 var(--yazi-mono);
+    font: 700 var(--olcu-xs)/1 var(--yazi-kod);
     letter-spacing: .12em;
   }
 
   .iletisim-form-giris div { display: grid; gap: 3px; }
   .iletisim-form-giris strong { color: var(--hu-lacivert); }
-  .iletisim-form-giris small { color: var(--metin-soluk); }
+  .iletisim-form-giris small { color: var(--metin-3); }
 
   .iletisim-form-izgara {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
     gap: var(--bosluk-4);
-    padding: var(--bosluk-5);
+    padding: var(--bosluk-4) var(--bosluk-5);
   }
 
   .iletisim-form-izgara.uc { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -88,14 +88,50 @@
     font: inherit;
   }
 
-  .iletisim-ticket-form textarea { min-height: 148px; resize: vertical; line-height: 1.6; }
+  .iletisim-ticket-form textarea { min-height: 130px; resize: vertical; line-height: 1.6; }
   .iletisim-ticket-form :is(input, select, textarea):focus {
     outline: 3px solid color-mix(in srgb, var(--hu-lacivert) 17%, transparent);
     border-color: var(--hu-lacivert);
   }
 
-  .iletisim-form-mesaj { margin: 0 var(--bosluk-5) var(--bosluk-5); }
-  .iletisim-form-mesaj small { justify-self: end; color: var(--metin-soluk); }
+  .iletisim-form-mesaj { margin: 0 var(--bosluk-5) var(--bosluk-4); }
+  .iletisim-form-mesaj small { justify-self: end; color: var(--metin-3); }
+
+  .iletisim-form-ek { margin: 0 var(--bosluk-5) var(--bosluk-4); }
+  .iletisim-form-ek-kutu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--bosluk-3);
+    align-items: center;
+  }
+  .iletisim-form-ek-kutu input[type="file"] {
+    width: auto;
+    min-height: 44px;
+    padding: 9px 10px;
+    font-size: var(--olcu-sm);
+  }
+  .iletisim-form-ek-secili {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--bosluk-2);
+    padding: 6px 6px 6px 12px;
+    border: 1px solid var(--cizgi-koyu);
+    border-radius: var(--kose-sm);
+    color: var(--metin);
+    font-size: var(--olcu-sm);
+  }
+  .iletisim-form-ek-secili button {
+    border: 0;
+    background: transparent;
+    color: var(--hu-kirmizi);
+    font-size: var(--olcu-xs);
+    font-weight: 650;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    cursor: pointer;
+  }
+  .iletisim-form-ek-hata { display: block; margin-top: 4px; color: var(--hu-kirmizi); font-weight: 650; }
+
   .iletisim-form-tuzak { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
   .iletisim-form-hata { margin: 0 var(--bosluk-5) var(--bosluk-4); color: var(--hu-kirmizi); font-weight: 650; }
 
@@ -104,12 +140,12 @@
     justify-content: space-between;
     gap: var(--bosluk-5);
     align-items: center;
-    padding: var(--bosluk-4) var(--bosluk-5);
+    padding: var(--bosluk-3) var(--bosluk-5);
     border-top: 1px solid var(--cizgi);
-    background: var(--zemin-2);
+    background: var(--yuzey-3);
   }
 
-  .iletisim-ticket-form footer p { max-width: 60ch; margin: 0; color: var(--metin-soluk); font-size: var(--olcu-xs); line-height: 1.6; }
+  .iletisim-ticket-form footer p { max-width: 60ch; margin: 0; color: var(--metin-3); font-size: var(--olcu-xs); line-height: 1.6; }
   .iletisim-ticket-form footer button,
   .iletisim-form-sonuc button {
     min-height: 48px;
@@ -140,13 +176,14 @@
   .iletisim-form-sonuc svg { width: 25px; fill: none; stroke: currentColor; stroke-width: 2; }
   .iletisim-form-sonuc p, .iletisim-form-sonuc h3, .iletisim-form-sonuc small { margin: 0; }
   .iletisim-form-sonuc h3 { margin: 4px 0; color: var(--hu-lacivert); letter-spacing: .06em; }
-  .iletisim-form-sonuc small { color: var(--metin-soluk); }
+  .iletisim-form-sonuc small { color: var(--metin-3); }
 
   @media (max-width: 760px) {
     .iletisim-form-baslik { grid-template-columns: 1fr; gap: var(--bosluk-3); }
     .iletisim-form-izgara, .iletisim-form-izgara.uc { grid-template-columns: 1fr; padding: var(--bosluk-4); }
     .iletisim-form-giris { padding-inline: var(--bosluk-4); }
-    .iletisim-form-mesaj { margin-inline: var(--bosluk-4); }
+    .iletisim-form-mesaj, .iletisim-form-ek { margin-inline: var(--bosluk-4); }
+    .iletisim-form-ek-kutu input[type="file"] { width: 100%; }
     .iletisim-ticket-form footer { align-items: stretch; flex-direction: column; padding: var(--bosluk-4); }
     .iletisim-ticket-form footer button { width: 100%; }
     .iletisim-form-sonuc { grid-template-columns: auto 1fr; }

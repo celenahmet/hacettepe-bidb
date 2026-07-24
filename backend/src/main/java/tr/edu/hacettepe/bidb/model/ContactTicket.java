@@ -21,10 +21,16 @@ public class ContactTicket {
     private String requesterName;
     @Column(name = "requester_email", nullable = false, length = 254)
     private String requesterEmail;
-    @Column(name = "requester_phone", length = 30)
+    @Column(name = "requester_phone", nullable = false, length = 30)
     private String requesterPhone;
     @Column(nullable = false, columnDefinition = "text")
     private String message;
+    @Column(name = "attachment_url", length = 300)
+    private String attachmentUrl;
+    @Column(name = "attachment_name", length = 200)
+    private String attachmentName;
+    @Column(name = "attachment_size_bytes")
+    private Long attachmentSizeBytes;
     @Column(nullable = false, length = 24)
     private String status = "NEW";
     @Column(nullable = false, length = 16)
@@ -57,6 +63,12 @@ public class ContactTicket {
     public void setRequesterPhone(String value) { requesterPhone = value; }
     public String getMessage() { return message; }
     public void setMessage(String value) { message = value; }
+    public String getAttachmentUrl() { return attachmentUrl; }
+    public void setAttachmentUrl(String value) { attachmentUrl = value; }
+    public String getAttachmentName() { return attachmentName; }
+    public void setAttachmentName(String value) { attachmentName = value; }
+    public Long getAttachmentSizeBytes() { return attachmentSizeBytes; }
+    public void setAttachmentSizeBytes(Long value) { attachmentSizeBytes = value; }
     public String getStatus() { return status; }
     public void setStatus(String value) { status = value; }
     public String getPriority() { return priority; }

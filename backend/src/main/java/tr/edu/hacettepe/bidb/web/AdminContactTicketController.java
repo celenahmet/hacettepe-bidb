@@ -32,12 +32,14 @@ public class AdminContactTicketController {
     public record TicketView(Long id, String referenceCode, String language, String category,
         String subject, String requesterName, String requesterEmail, String requesterPhone,
         String message, String status, String priority, String assignedTo, String adminNote,
+        String attachmentUrl, String attachmentName, Long attachmentSizeBytes,
         OffsetDateTime createdAt, OffsetDateTime updatedAt, OffsetDateTime resolvedAt) {
         static TicketView of(ContactTicket ticket) {
             return new TicketView(ticket.getId(), ticket.getReferenceCode(), ticket.getLanguage(),
                 ticket.getCategory(), ticket.getSubject(), ticket.getRequesterName(),
                 ticket.getRequesterEmail(), ticket.getRequesterPhone(), ticket.getMessage(),
                 ticket.getStatus(), ticket.getPriority(), ticket.getAssignedTo(), ticket.getAdminNote(),
+                ticket.getAttachmentUrl(), ticket.getAttachmentName(), ticket.getAttachmentSizeBytes(),
                 ticket.getCreatedAt(), ticket.getUpdatedAt(), ticket.getResolvedAt());
         }
     }

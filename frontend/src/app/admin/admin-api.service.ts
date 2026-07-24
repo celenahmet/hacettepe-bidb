@@ -164,6 +164,9 @@ export interface ContactTicket {
   priority: 'NORMAL' | 'HIGH' | 'URGENT';
   assignedTo: string | null;
   adminNote: string | null;
+  attachmentUrl: string | null;
+  attachmentName: string | null;
+  attachmentSizeBytes: number | null;
   createdAt: string;
   updatedAt: string;
   resolvedAt: string | null;

@@ -90,6 +90,17 @@ import {
               <section class="ticket-mesaj">
                 <span class="bolum-no">Başvuru Mesajı</span>
                 <p>{{ ticket.message }}</p>
+                @if (ticket.attachmentUrl) {
+                  <a class="ticket-ek" [href]="ticket.attachmentUrl" target="_blank" rel="noopener">
+                    <span aria-hidden="true">
+                      <svg viewBox="0 0 24 24"><path d="M8 12v6a3 3 0 0 0 6 0V9a5 5 0 0 0-10 0v9a2 2 0 0 0 4 0V9"></path></svg>
+                    </span>
+                    <span>
+                      <strong>{{ ticket.attachmentName }}</strong>
+                      <small>{{ ekBoyut(ticket.attachmentSizeBytes) }}</small>
+                    </span>
+                  </a>
+                }
               </section>
 
               <form class="ticket-islem" (ngSubmit)="kaydet()">
@@ -231,6 +242,12 @@ export class ContactTicketAdminComponent implements OnInit {
       E_SIGNATURE: 'E-imza', SECURITY: 'Bilgi güvenliği', WEB_SERVICES: 'Web hizmetleri',
       SUGGESTION: 'Görüş ve öneri'
     } as Record<string, string>)[category] ?? category;
+  }
+  protected ekBoyut(bayt: number | null): string {
+    if (!bayt) return '';
+    return bayt < 1024 * 1024
+      ? Math.max(1, Math.round(bayt / 1024)) + ' KB'
+      : (bayt / (1024 * 1024)).toFixed(1) + ' MB';
   }
   protected tarih(value: string): string {
     return new Intl.DateTimeFormat('tr-TR', { day: '2-digit', month: 'short', year: 'numeric' }).format(new Date(value));
