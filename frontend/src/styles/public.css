@@ -496,7 +496,7 @@
     border: none;
     border-top: 2px solid var(--hu-kirmizi);
     width: 48px;
-    margin: var(--bosluk-4) 0 var(--bosluk-3);
+    margin: var(--bosluk-2) 0 var(--bosluk-3);
   }
 
   .alt-adres {
@@ -512,10 +512,12 @@
     margin-bottom: var(--bosluk-4);
     padding-bottom: var(--bosluk-2);
     border-bottom: 2px solid var(--hu-kirmizi);
-    font-size: 0.7rem;
-    font-weight: 800;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
+    font-family: Georgia, Cambria, "Times New Roman", serif;
+    font-size: 0.92rem;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.02em;
+    text-transform: none;
     color: #1a1a2e;
   }
 
@@ -576,10 +578,12 @@
 
   .sosyal-buton {
     display: inline-flex;
+    flex: none;
     align-items: center;
     justify-content: center;
     width: 34px;
     height: 34px;
+    aspect-ratio: 1 / 1;
     background: transparent;
     border: 1px solid rgba(0,0,0,0.12);
     color: #555;
@@ -635,19 +639,19 @@
   .alt-serit {
     position: relative;
     z-index: 1;
-    border-top: 1px solid rgba(0,0,0,0.10);
-    background: #ede8df;
+    border-top: 1px solid rgba(0,0,0,0.06);
+    background: #fdfcfa;
   }
 
   .alt-serit .kap {
-    padding-top: var(--bosluk-3);
-    padding-bottom: var(--bosluk-3);
+    padding-top: var(--bosluk-4);
+    padding-bottom: var(--bosluk-4);
     text-align: center;
   }
 
   .alt-serit small {
     color: #333;
-    font-size: 0.72rem;
+    font-size: 0.95rem;
   }
 
   /* Geriye dönük uyumluluk — eski sınıf adları */
