@@ -99,6 +99,8 @@ export interface StaffMember {
   /** Yönetim panelinden düzenlenen görev veya kurumsal unvan. */
   roleTitle: string | null;
   note: string | null;
+  /** Profil detayında gösterilen isteğe bağlı kurumsal tanıtım metni. */
+  aboutText: string | null;
   /** Birim sorumlusu; kaynak sayfada adın sonundaki yıldızla gösteriliyordu */
   lead: boolean;
   photoUrl: string | null;

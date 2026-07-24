@@ -32,14 +32,14 @@ public class AdminStaffController {
 
     /* ---- okuma ---------------------------------------------------- */
 
-    public record MemberView(Long id, Long unitId, String fullName, String roleTitle, String note,
+    public record MemberView(Long id, Long unitId, String fullName, String roleTitle, String note, String aboutText,
                              boolean lead, String photoUrl, String email, String avatar, int sortOrder) {}
 
     public record UnitView(Long id, String language, String name, String campus, String phone,
                            int sortOrder, boolean published, List<MemberView> members) {}
 
     private static MemberView view(StaffMember k) {
-        return new MemberView(k.getId(), k.getUnit().getId(), k.getFullName(), k.getRoleTitle(), k.getNote(),
+        return new MemberView(k.getId(), k.getUnit().getId(), k.getFullName(), k.getRoleTitle(), k.getNote(), k.getAboutText(),
                 k.isLead(), k.getPhotoUrl(), k.getEmail(), k.getAvatar(), k.getSortOrder());
     }
 
@@ -104,13 +104,14 @@ public class AdminStaffController {
 
     /* ---- kişi -------------------------------------------------------- */
 
-    public record MemberRequest(Long unitId, String fullName, String roleTitle, String note,
+    public record MemberRequest(Long unitId, String fullName, String roleTitle, String note, String aboutText,
                                 boolean lead, String photoUrl, String email, String avatar, int sortOrder) {
 
         StaffMember apply(StaffMember k) {
             k.setFullName(fullName);
             k.setRoleTitle(bosIseNull(roleTitle));
             k.setNote(bosIseNull(note));
+            k.setAboutText(bosIseNull(aboutText));
             k.setLead(lead);
             k.setPhotoUrl(bosIseNull(photoUrl));
             k.setEmail(bosIseNull(email));
@@ -128,6 +129,9 @@ public class AdminStaffController {
         }
         if (!epostaGecerli(request.email())) {
             return ResponseEntity.badRequest().body("E-posta adresi geçerli değil.");
+        }
+        if (!hakkindaGecerli(request.aboutText())) {
+            return ResponseEntity.badRequest().body("Hakkında metni en fazla 2000 karakter olabilir.");
         }
         return units.findById(unitId).map(b -> {
             StaffMember k = request.apply(new StaffMember());
@@ -147,6 +151,9 @@ public class AdminStaffController {
         }
         if (!epostaGecerli(request.email())) {
             return ResponseEntity.badRequest().body("E-posta adresi geçerli değil.");
+        }
+        if (!hakkindaGecerli(request.aboutText())) {
+            return ResponseEntity.badRequest().body("Hakkında metni en fazla 2000 karakter olabilir.");
         }
         StaffMember kisi = members.findById(id).orElse(null);
         if (kisi == null) return ResponseEntity.notFound().build();
@@ -245,5 +252,9 @@ public class AdminStaffController {
         if (eposta == null || eposta.isBlank()) return true;
         return eposta.length() <= 254
                 && eposta.matches("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$");
+    }
+
+    private static boolean hakkindaGecerli(String metin) {
+        return metin == null || metin.length() <= 2000;
     }
 }

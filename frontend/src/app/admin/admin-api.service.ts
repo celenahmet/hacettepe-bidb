@@ -156,6 +156,8 @@ export interface StaffMember {
   roleTitle: string | null;
   /** Adın yanındaki açıklama: "(e-imza)" */
   note: string | null;
+  /** Profil detayında gösterilen isteğe bağlı kurumsal tanıtım metni */
+  aboutText: string | null;
   /** Birim sorumlusu */
   lead: boolean;
   photoUrl: string | null;

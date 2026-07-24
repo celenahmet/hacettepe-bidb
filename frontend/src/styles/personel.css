@@ -362,7 +362,7 @@
     width: min(58rem, 100%);
     max-height: min(46rem, calc(100vh - 2rem));
     display: grid;
-    grid-template-columns: minmax(17rem, 34%) minmax(0, 1fr);
+    grid-template-columns: minmax(19rem, 40%) minmax(0, 1fr);
     overflow: hidden auto;
     border: 1px solid rgb(255 255 255 / 22%);
     border-radius: 6px;
@@ -423,7 +423,9 @@
 
   .personel-profil-gorsel {
     position: relative;
-    min-height: 36rem;
+    min-height: 32rem;
+    height: 100%;
+    align-self: stretch;
     overflow: hidden;
     background: var(--yuzey-3);
   }
@@ -439,7 +441,7 @@
   .personel-profil-gorsel > img {
     display: block;
     object-fit: cover;
-    object-position: center top;
+    object-position: 50% 18%;
   }
 
   .personel-profil-gorsel > .personel-demo-portre {
@@ -525,6 +527,29 @@
     background: var(--yuzey-2);
     color: var(--metin-2);
     font-size: .74rem;
+  }
+
+  .personel-profil-hakkinda {
+    margin-top: var(--bosluk-5);
+    padding: var(--bosluk-4) 0 var(--bosluk-1) var(--bosluk-4);
+    border-left: 2px solid var(--hu-kirmizi);
+  }
+
+  .personel-profil-hakkinda h3 {
+    margin: 0 0 var(--bosluk-2);
+    color: var(--hu-lacivert);
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+
+  .personel-profil-hakkinda p {
+    margin: 0;
+    color: var(--metin-2);
+    font-size: .88rem;
+    line-height: 1.72;
+    white-space: pre-line;
   }
 
   .personel-profil-meta {
@@ -806,8 +831,10 @@
     }
 
     .personel-profil-gorsel {
-      min-height: 20rem;
-      max-height: 48vh;
+      width: 100%;
+      min-height: 18rem;
+      max-height: min(27rem, 48vh);
+      aspect-ratio: 5 / 4;
     }
 
     .personel-profil-icerik {

@@ -36,6 +36,10 @@ public class StaffMember {
     @Column(length = 200)
     private String note;
 
+    /** Profil detayında gösterilen, yönetim panelinden girilebilen isteğe bağlı tanıtım metni. */
+    @Column(name = "about_text", columnDefinition = "TEXT")
+    private String aboutText;
+
     @Column(name = "is_lead", nullable = false)
     private boolean lead = false;
 
@@ -66,6 +70,8 @@ public class StaffMember {
     public void setRoleTitle(String roleTitle) { this.roleTitle = roleTitle; }
     public String getNote() { return note; }
     public void setNote(String note) { this.note = note; }
+    public String getAboutText() { return aboutText; }
+    public void setAboutText(String aboutText) { this.aboutText = aboutText; }
     public boolean isLead() { return lead; }
     public void setLead(boolean lead) { this.lead = lead; }
     public String getPhotoUrl() { return photoUrl; }

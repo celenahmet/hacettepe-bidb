@@ -134,6 +134,14 @@ import { Language, StaffMember, StaffUnit } from '../core/models';
               <p class="personel-profil-not">{{ profil.kisi.note }}</p>
             }
 
+            @if (profil.kisi.aboutText) {
+              <section class="personel-profil-hakkinda"
+                       [attr.aria-labelledby]="'personel-hakkinda-baslik'">
+                <h3 id="personel-hakkinda-baslik">{{ dilDegeri === 'en' ? 'About' : 'Hakkında' }}</h3>
+                <p>{{ profil.kisi.aboutText }}</p>
+              </section>
+            }
+
             <div class="personel-profil-meta">
               @if (profil.birim.campus) {
                 <span>

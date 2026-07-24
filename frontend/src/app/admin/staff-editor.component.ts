@@ -84,6 +84,12 @@ import { AdminApiService, StaffMember, StaffUnit } from './admin-api.service';
         <label for="knot">Açıklama</label>
         <input id="knot" name="knot" [(ngModel)]="k.note" placeholder="e-imza">
 
+        <label for="khakkinda">Hakkında <span class="istege-bagli">(isteğe bağlı)</span></label>
+        <textarea id="khakkinda" name="khakkinda" [(ngModel)]="k.aboutText"
+                  rows="5" maxlength="2000"
+                  placeholder="Personelin görev alanı, sorumlulukları veya kurumsal deneyimi hakkında kısa bilgi"></textarea>
+        <small>Bu metin, personelin açılır profil kartındaki “Hakkında” bölümünde gösterilir.</small>
+
         <label for="keposta">Kurumsal e-posta</label>
         <input id="keposta" name="keposta" type="email" [(ngModel)]="k.email"
                placeholder="ad.soyad@hacettepe.edu.tr">
@@ -246,6 +252,7 @@ export class StaffEditorComponent {
           fullName: '',
           roleTitle: null,
           note: null,
+          aboutText: null,
           lead: false,
           photoUrl: null,
           email: null,
