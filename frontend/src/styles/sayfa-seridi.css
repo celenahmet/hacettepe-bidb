@@ -1,17 +1,15 @@
-/* İçerik sayfalarının üstündeki geçiş şeridi.
+/* İçerik sayfalarının üstündeki konum şeridi (breadcrumb).
  *
- * Üst menüyle sayfa içeriği arasında boş kalan alan için: ağır bir hero
- * slider değil, tek bir dekoratif çizgi. Kurumsal logo, kendi kırmızısıyla
- * çok düşük saydamlıkta büyütülüp sağ kenardan taşırılır — bilgi taşımaz,
- * yalnızca sayfalar arası geçişi yumuşatan bir imza. Başlık ve bölüm adı
- * zaten hemen altındaki sayfa başlığında var; burada tekrar edilmez.
+ * Üst menüyle sayfa içeriği arasında boş kalan alan artık ziyaretçiye
+ * sitede nerede olduğunu gösteriyor: Ana Sayfa / Bölüm / Sayfa. Ağır bir
+ * hero slider değil — kurumsal logo, kendi kırmızısıyla düşük saydamlıkta
+ * büyütülüp sağ kenardan taşırılır; imza niteliğinde, dikkat dağıtmaz.
  */
 @layer kamu {
   .sayfa-seridi {
     position: relative;
     overflow: hidden;
-    height: 64px;
-    background: linear-gradient(100deg, #fffdfc 0%, #fdf3f2 70%, #fbeeed 100%);
+    background: linear-gradient(100deg, #fffdfc 0%, #fdf1f0 65%, #fbe9e8 100%);
     border-bottom: 1px solid var(--cizgi);
   }
 
@@ -19,16 +17,66 @@
     content: "";
     position: absolute;
     top: 50%;
-    right: -36px;
-    width: 210px;
-    height: 300px;
+    right: 2%;
+    width: 260px;
+    height: 260px;
     background: url("/hu-logo.svg") no-repeat center / contain;
-    opacity: 0.07;
+    opacity: 0.13;
     transform: translateY(-50%) rotate(-6deg);
+    pointer-events: none;
+  }
+
+  .sayfa-seridi-ic {
+    position: relative;
+    padding-block: var(--bosluk-3);
+  }
+
+  .sayfa-iz {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--olcu-xs);
+    letter-spacing: 0.02em;
+  }
+
+  .sayfa-iz li {
+    display: flex;
+    align-items: center;
+    color: var(--metin-3);
+    white-space: nowrap;
+  }
+
+  .sayfa-iz li + li::before {
+    content: "";
+    width: 4px;
+    height: 4px;
+    margin: 0 var(--bosluk-3);
+    border-radius: 50%;
+    background: var(--hu-kirmizi);
+    opacity: 0.55;
+  }
+
+  .sayfa-iz a {
+    color: var(--metin-3);
+    text-decoration: none;
+    transition: color var(--gecis-hizli);
+  }
+  .sayfa-iz a:hover { color: var(--hu-kirmizi); text-decoration: underline; }
+
+  .sayfa-iz li:last-child span {
+    overflow: hidden;
+    max-width: 42vw;
+    color: var(--hu-lacivert);
+    font-weight: var(--kalinlik-orta);
+    text-overflow: ellipsis;
   }
 
   @media (max-width: 620px) {
-    .sayfa-seridi { height: 44px; }
-    .sayfa-seridi::before { width: 140px; height: 200px; right: -24px; }
+    .sayfa-seridi::before { width: 160px; height: 160px; right: -20px; opacity: 0.1; }
+    .sayfa-iz li:last-child span { max-width: 60vw; }
   }
 }

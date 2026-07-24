@@ -1,5 +1,5 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { switchMap, map, tap } from 'rxjs/operators';
@@ -22,6 +22,7 @@ import { ContactFormComponent } from './contact-form.component';
 @Component({
   selector: 'bidb-content-page',
   imports: [
+    RouterLink,
     SideMenuComponent,
     StaffListComponent,
     ContactBlockComponent,
@@ -34,7 +35,15 @@ import { ContactFormComponent } from './contact-form.component';
     ContactFormComponent
   ],
   template: `
-    <div class="sayfa-seridi" aria-hidden="true"></div>
+    <nav class="sayfa-seridi" aria-label="Sayfa yolu">
+      <div class="kap sayfa-seridi-ic">
+        <ol class="sayfa-iz">
+          <li><a [routerLink]="'/' + language()">{{ language() === 'en' ? 'Home' : 'Ana Sayfa' }}</a></li>
+          @if (bolum(); as b) { <li><span>{{ b }}</span></li> }
+          @if (sayfa(); as s) { <li aria-current="page"><span>{{ s.title }}</span></li> }
+        </ol>
+      </div>
+    </nav>
     <div class="kap sayfa-duzen">
       <aside class="yan">
         <!-- E-imza rehberi kendi menüsüyle gelir (kaynakta da öyleydi);
