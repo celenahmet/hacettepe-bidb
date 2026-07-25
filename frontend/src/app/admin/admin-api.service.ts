@@ -255,6 +255,20 @@ export interface LoginEvent {
   country: string | null;
 }
 
+export interface AuditEvent {
+  id: number;
+  occurredAt: string;
+  sessionId: string;
+  attemptedUsername: string | null;
+  ipAddress: string;
+  localIpAddress: string | null;
+  httpMethod: string;
+  resourcePath: string;
+  actionLabel: string;
+  httpStatus: number;
+  successful: boolean;
+}
+
 export interface AnalyticsPeriodPoint {
   key: string;
   views: number;
@@ -291,6 +305,7 @@ export interface AnalyticsReport {
 }
 
 const SESSION_KEY = 'bidb-yonetim';
+const OTURUM_KIMLIGI_ANAHTARI = 'bidb-oturum-kimligi';
 
 /** Yönetim uçlarına erişim. Kimlik bilgisi yalnızca tarayıcı oturumunda tutulur. */
 @Injectable({ providedIn: 'root' })
@@ -299,6 +314,22 @@ export class AdminApiService {
 
   readonly girisYapildi = signal(false);
   private kimlik = '';
+  /**
+   * Tarayıcı sekmesi başına üretilen, kalıcı olmayan bir ayırt edici.
+   * Paylaşılan tek yönetici hesabı olduğundan gerçek kullanıcı kimliği yerine
+   * işlem günlüğünde (bkz. admin_audit_event) "kim" sorusuna bu cevap verir.
+   */
+  private readonly oturumKimligi = this.oturumKimligiUret();
+
+  private oturumKimligiUret(): string {
+    if (typeof sessionStorage === 'undefined') return 'sunucu';
+    let kimlik = sessionStorage.getItem(OTURUM_KIMLIGI_ANAHTARI);
+    if (!kimlik) {
+      kimlik = (typeof crypto !== 'undefined' && crypto.randomUUID) ? crypto.randomUUID() : String(Date.now());
+      sessionStorage.setItem(OTURUM_KIMLIGI_ANAHTARI, kimlik);
+    }
+    return kimlik;
+  }
 
   constructor() {
     if (typeof sessionStorage !== 'undefined') {
@@ -325,6 +356,11 @@ export class AdminApiService {
   /** Son giriş denemeleri (güvenlik denetimi). */
   loginEvents(): Observable<LoginEvent[]> {
     return this.http.get<LoginEvent[]>('/api/admin/login-events', { headers: this.basliklar() });
+  }
+
+  /** Panelde yapılan değişiklik işlemlerinin denetim kaydı (oturum, IP, ne değişti). */
+  auditEvents(): Observable<AuditEvent[]> {
+    return this.http.get<AuditEvent[]>('/api/admin/audit-events', { headers: this.basliklar() });
   }
 
   girisOnayla(): void {
@@ -503,7 +539,8 @@ export class AdminApiService {
     const govde = new FormData();
     govde.append('dosya', dosya);
     return this.http.post<{ url: string; fileName: string; sizeBytes: number }>(
-      '/api/admin/files', govde, { headers: new HttpHeaders({ Authorization: this.kimlik }) });
+      '/api/admin/files', govde,
+      { headers: new HttpHeaders({ Authorization: this.kimlik, 'X-Bidb-Oturum': this.oturumKimligi }) });
   }
 
   uploadedFiles(): Observable<UploadedFile[]> {
@@ -606,6 +643,10 @@ export class AdminApiService {
   }
 
   private basliklar(): HttpHeaders {
-    return new HttpHeaders({ Authorization: this.kimlik, 'Content-Type': 'application/json' });
+    return new HttpHeaders({
+      Authorization: this.kimlik,
+      'Content-Type': 'application/json',
+      'X-Bidb-Oturum': this.oturumKimligi,
+    });
   }
 }

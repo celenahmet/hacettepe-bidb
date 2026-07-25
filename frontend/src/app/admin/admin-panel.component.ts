@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { PageEditorComponent } from './page-editor.component';
 import { LoginEventsAdminComponent } from './login-events-admin.component';
+import { AuditLogAdminComponent } from './audit-log-admin.component';
 import { StaffEditorComponent } from './staff-editor.component';
 import { NewsCoverComponent } from '../pages/news-cover.component';
 import { AdminNews, NewsOptions, Shortcut, AdminMenuItem, AdminMenu, AdminPage, Slide, AdminSocialAccount, AdminApiService, ContactChannel, QualitySummary, QualityVitalScore, AnalyticsReport } from './admin-api.service';
@@ -19,7 +20,8 @@ interface ContactInfo extends Record<string, string> {
 }
 
 type AdminTab = 'analytics' | 'quality' | 'pages' | 'news' | 'slider' |
-  'shortcuts' | 'menus' | 'sosyal' | 'iletisim' | 'tickets' | 'personel' | 'hakkinda' | 'girisKayitlari';
+  'shortcuts' | 'menus' | 'sosyal' | 'iletisim' | 'tickets' | 'personel' | 'hakkinda' |
+  'girisKayitlari' | 'islemGunlugu';
 interface MobileMenuItem {
   tab: AdminTab;
   label: string;
@@ -29,7 +31,7 @@ interface MobileMenuItem {
 /** Yönetim paneli: giriş, sayfa SEO düzenleme ve duyuru yönetimi. */
 @Component({
   selector: 'bidb-admin-panel',
-  imports: [FormsModule, PageEditorComponent, StaffEditorComponent, NewsCoverComponent, ContactTicketAdminComponent, LoginEventsAdminComponent],
+  imports: [FormsModule, PageEditorComponent, StaffEditorComponent, NewsCoverComponent, ContactTicketAdminComponent, LoginEventsAdminComponent, AuditLogAdminComponent],
   template: `
     <div class="yonetim">
       @if (!api.girisYapildi()) {
@@ -134,10 +136,12 @@ interface MobileMenuItem {
             <span class="no">13</span>
             <span>Yazılım Hakkında</span>
           </button>
-            </div>
+          <button type="button" [class.etkin]="sekme() === 'islemGunlugu'" (click)="sekme.set('islemGunlugu')">
+            <span class="no">14</span>
+            <span>İşlem Günlüğü</span>
+          </button>
 
-            <div class="ray-alt">
-              <button type="button" (click)="api.cikis()">Çıkış</button>
+          <button type="button" class="ray-liste-cikis" (click)="api.cikis()">Çıkış</button>
             </div>
           </nav>
 
@@ -1106,6 +1110,10 @@ interface MobileMenuItem {
 
           <bidb-login-events-admin></bidb-login-events-admin>
 
+        } @else if (sekme() === 'islemGunlugu') {
+
+          <bidb-audit-log-admin></bidb-audit-log-admin>
+
         } @else if (sekme() === 'hakkinda') {
 
           <section class="hakkinda-bolum">
@@ -1291,7 +1299,8 @@ export class AdminPanelComponent {
     tickets: { no: '10', ad: 'İletişim Talepleri' },
     personel: { no: '11', ad: 'Personel' },
     girisKayitlari: { no: '12', ad: 'Güvenlik Kayıtları' },
-    hakkinda: { no: '13', ad: 'Yazılım Hakkında' }
+    hakkinda: { no: '13', ad: 'Yazılım Hakkında' },
+    islemGunlugu: { no: '14', ad: 'İşlem Günlüğü' }
   };
 
   protected bolumNo(): string {
@@ -1331,7 +1340,8 @@ export class AdminPanelComponent {
     { tab: 'tickets', label: 'İletişim Talepleri', note: 'Form kayıtları ve takip' },
     { tab: 'personel', label: 'Personel', note: 'Birim ve personel kayıtları' },
     { tab: 'girisKayitlari', label: 'Güvenlik Kayıtları', note: 'Giriş denemeleri kaydı' },
-    { tab: 'hakkinda', label: 'Yazılım Hakkında', note: 'Bu panel hakkında bilgi' }
+    { tab: 'hakkinda', label: 'Yazılım Hakkında', note: 'Bu panel hakkında bilgi' },
+    { tab: 'islemGunlugu', label: 'İşlem Günlüğü', note: 'Panelde yapılan değişiklikler' }
   ];
   protected analytics = signal<AnalyticsReport | null>(null);
   protected analyticsLoading = signal(false);

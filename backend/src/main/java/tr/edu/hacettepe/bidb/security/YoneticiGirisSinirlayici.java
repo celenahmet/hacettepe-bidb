@@ -10,7 +10,6 @@ import tr.edu.hacettepe.bidb.service.GirisKayitServisi;
 
 import java.io.IOException;
 import java.time.Instant;
-import java.util.Base64;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Map;
@@ -32,6 +31,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * kaydına (admin_login_event) yazar. Sınırlama TÜM /api/admin/** için
  * geçerliyken, kayıt yalnızca bu tek uç için tutulur; aksi hâlde oturum
  * boyunca yapılan sıradan her API isteği bir "giriş" gibi kaydedilirdi.
+ * Diğer tüm değişiklik uçları için ayrıca bkz. YoneticiIslemGunlukFiltresi.
  */
 @Component
 public class YoneticiGirisSinirlayici extends OncePerRequestFilter {
@@ -54,7 +54,7 @@ public class YoneticiGirisSinirlayici extends OncePerRequestFilter {
             return;
         }
 
-        String adres = clientAddress(request);
+        String adres = IstekBilgisi.genelAdres(request);
         Instant simdi = Instant.now();
         Deque<Instant> denemeler = basarisizDenemeler.computeIfAbsent(adres, ignored -> new ArrayDeque<>());
         synchronized (denemeler) {
@@ -79,8 +79,8 @@ public class YoneticiGirisSinirlayici extends OncePerRequestFilter {
         }
 
         if (request.getRequestURI().equals(GIRIS_KAYIT_YOLU) && response.getStatus() != 429) {
-            girisKayitServisi.kaydet(adres, yerelAdres(request), request.getHeader("User-Agent"),
-                    denenenKullaniciAdi(request), response.getStatus() < 400);
+            girisKayitServisi.kaydet(adres, IstekBilgisi.yerelAdres(request), request.getHeader("User-Agent"),
+                    IstekBilgisi.denenenKullaniciAdi(request), response.getStatus() < 400);
         }
 
         if (basarisizDenemeler.size() > 10_000) {
@@ -90,39 +90,5 @@ public class YoneticiGirisSinirlayici extends OncePerRequestFilter {
                 return son == null || son.isBefore(esik);
             });
         }
-    }
-
-    /** Authorization başlığındaki Basic kimlikten yalnızca kullanıcı adını çözer. */
-    private static String denenenKullaniciAdi(HttpServletRequest request) {
-        String baslik = request.getHeader("Authorization");
-        if (baslik == null || !baslik.regionMatches(true, 0, "Basic ", 0, 6)) return null;
-        try {
-            String cozulmus = new String(Base64.getDecoder().decode(baslik.substring(6).trim()));
-            int ayrac = cozulmus.indexOf(':');
-            return ayrac < 0 ? cozulmus : cozulmus.substring(0, ayrac);
-        } catch (IllegalArgumentException e) {
-            return null;
-        }
-    }
-
-    private static String clientAddress(HttpServletRequest request) {
-        String forwarded = request.getHeader("X-Forwarded-For");
-        if (forwarded != null && !forwarded.isBlank()) return forwarded.split(",")[0].trim();
-        String adres = request.getRemoteAddr();
-        return adres == null ? "unknown" : adres;
-    }
-
-    /**
-     * SSR sunucusuna (server.ts) doğrudan bağlanan tarafın adresi — genelde kurum içi/
-     * özel bir ağ adresi. "server.forward-headers-strategy: framework" etkinken hem
-     * getRemoteAddr() hem de standart X-Forwarded-For başlığı Spring tarafından İLK
-     * (genel) adrese göre yeniden yazılıp sarmalanan istekten kaldırıldığından, bu bilgi
-     * standart olmayan ayrı bir başlıkla (bkz. server.ts) taşınır. Başlık yoksa (ör.
-     * doğrudan backend'e erişim, ara sunucu yok) getRemoteAddr() zaten doğru adrestir.
-     */
-    private static String yerelAdres(HttpServletRequest request) {
-        String yerel = request.getHeader("X-Bidb-Yerel-Adres");
-        if (yerel != null && !yerel.isBlank()) return yerel.trim();
-        return request.getRemoteAddr();
     }
 }

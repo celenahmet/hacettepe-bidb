@@ -198,6 +198,9 @@ app.use('/api', express.raw({ type: '*/*', limit: '5mb' }), async (req, res) => 
     // (kaba kuvvet sınırlaması ve yönetim giriş kayıtları bu adrese ve
     // User-Agent'a göre çalışır — bkz. YoneticiGirisSinirlayici, GirisKayitServisi).
     if (req.headers['user-agent']) basliklar['User-Agent'] = String(req.headers['user-agent']);
+    // Tarayıcının kendi ürettiği oturum ayırt edicisi; işlem günlüğünde
+    // "kim" sorusuna cevap verir (bkz. admin-api.service.ts, YoneticiIslemGunlukFiltresi).
+    if (req.headers['x-bidb-oturum']) basliklar['X-Bidb-Oturum'] = String(req.headers['x-bidb-oturum']);
     const oncekiZincir = req.headers['x-forwarded-for'];
     const oncekiZincirMetni = Array.isArray(oncekiZincir) ? oncekiZincir.join(', ') : oncekiZincir;
     const buAdim = req.socket.remoteAddress ?? '';

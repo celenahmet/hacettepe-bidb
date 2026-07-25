@@ -115,14 +115,12 @@ import { AdminApiService, LoginEvent } from './admin-api.service';
           <li class="giris-konum-satiri">
             <svg viewBox="0 0 24 24" aria-hidden="true" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
             <span>
-              <small>
-                Tahmini konum
+              <small>Tahmini konum</small>
+              <span class="konum-deger-satiri">
+                {{ konum(k) }}
                 <button type="button" class="konum-info-buton" aria-label="Konum bilgisi hakkında"
-                        [attr.aria-expanded]="konumBilgiAcik()" (click)="konumBilgiAcik.set(!konumBilgiAcik())">
-                  <svg viewBox="0 0 24 24" aria-hidden="true" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><circle cx="12" cy="8" r=".5" fill="currentColor" stroke-width="1"/></svg>
-                </button>
-              </small>
-              {{ konum(k) }}
+                        [attr.aria-expanded]="konumBilgiAcik()" (click)="konumBilgiAcik.set(!konumBilgiAcik())">i</button>
+              </span>
               @if (konumBilgiAcik()) {
                 <p class="konum-info-metni">
                   Bu konum, IP adresinin WHOIS/bölgesel kayıt bilgisine göre yapılan bir tahmindir.
