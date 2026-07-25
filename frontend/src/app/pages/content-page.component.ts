@@ -37,11 +37,6 @@ import { ContactFormComponent } from './contact-form.component';
   template: `
     <header class="sayfa-seridi">
       <div class="kap sayfa-seridi-ic">
-        @if (bolum(); as b) { <p class="sayfa-seridi-etiket">{{ b }}</p> }
-        @if (sayfa(); as s) {
-          <h1 class="sayfa-seridi-baslik">{{ s.title }}</h1>
-          @if (seritAciklamasi(); as a) { <p class="sayfa-seridi-aciklama">{{ a }}</p> }
-        }
         <nav [attr.aria-label]="language() === 'en' ? 'Breadcrumb' : 'Sayfa yolu'">
           <ol class="sayfa-iz">
             <li><a [routerLink]="'/' + language()">{{ language() === 'en' ? 'Home' : 'Ana Sayfa' }}</a></li>
@@ -49,6 +44,10 @@ import { ContactFormComponent } from './contact-form.component';
             @if (sayfa(); as s) { <li aria-current="page"><span>{{ s.title }}</span></li> }
           </ol>
         </nav>
+        @if (sayfa(); as s) {
+          <h1 class="sayfa-seridi-baslik">{{ s.title }}</h1>
+          @if (seritAciklamasi(); as a) { <p class="sayfa-seridi-aciklama">{{ a }}</p> }
+        }
       </div>
     </header>
     <div class="kap sayfa-duzen">

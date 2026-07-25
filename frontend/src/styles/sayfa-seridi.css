@@ -25,7 +25,8 @@
 
   /* Görselin sağ yarısı açık tonlu; metnin durduğu sol tarafta koyulaşan
      bir örtü olmadan beyaz yazı okunmuyor. Sağa doğru şeffaflaşır ki
-     görselin deseni görünmeye devam etsin. */
+     görselin deseni görünmeye devam etsin. Görselin kendi lacivertiyle
+     örtünün rengi aynı olduğu için geçiş dikişsiz okunur. */
   .sayfa-seridi::before {
     content: "";
     position: absolute;
@@ -33,10 +34,10 @@
     z-index: 0;
     background: linear-gradient(
       90deg,
-      rgba(8, 25, 55, 0.95) 0%,
-      rgba(8, 25, 55, 0.86) 34%,
-      rgba(8, 25, 55, 0.42) 68%,
-      rgba(8, 25, 55, 0.1) 100%
+      rgba(8, 25, 55, 0.97) 0%,
+      rgba(8, 25, 55, 0.9) 30%,
+      rgba(8, 25, 55, 0.5) 62%,
+      rgba(8, 25, 55, 0.14) 100%
     );
     pointer-events: none;
   }
@@ -47,45 +48,42 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: var(--bosluk-2);
-    min-height: 228px;
-    padding-block: var(--bosluk-6);
+    gap: var(--bosluk-3);
+    /* Arkadaki amblem/dalga deseni daha alçak bir şeritte tepesinden
+       kırpılıyordu; görselin dikey kompozisyonu bu yükseklikte oturuyor. */
+    min-height: 268px;
+    padding-block: var(--bosluk-7);
   }
 
-  /* Bölüm etiketi ("KURUMSAL"). Marka kırmızısı koyu lacivert üzerinde
-     yeterli kontrastı vermediği için bir tık açık tonu kullanılır. */
-  .sayfa-seridi-etiket {
-    margin: 0;
-    color: #ef5b64;
-    font-size: var(--olcu-xs);
-    font-weight: var(--kalinlik-kalin);
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-  }
-
+  /* Başlık. Önceki ölçek (2.7rem) içerik gövdesinin yanında orantısız
+     kalıyordu; sayfa başlığı, altındaki metnin ağırlığıyla aynı ailede
+     durmalı — vurgu boyutla değil, çevresindeki boşlukla kuruluyor. */
   .sayfa-seridi-baslik {
     margin: 0;
     color: #fff;
-    font-size: clamp(1.95rem, 3.4vw, 2.7rem);
+    font-size: clamp(1.5rem, 2.2vw, 1.95rem);
     font-weight: var(--kalinlik-kalin);
-    line-height: 1.14;
-    letter-spacing: -0.02em;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
   }
 
   .sayfa-seridi-aciklama {
     max-width: 54ch;
-    margin: var(--bosluk-1) 0 0;
-    color: rgba(255, 255, 255, 0.82);
-    font-size: var(--olcu-md);
+    margin: 0;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: var(--olcu-sm);
     line-height: var(--satir-normal);
   }
 
+  /* Breadcrumb başlığın ÜSTÜNDE durur: bölümü zaten söylediği için ayrıca
+     kırmızı bir bölüm etiketi taşınmaz — aynı bilgiyi iki kez vermek
+     şeridi gereksiz yere kalabalıklaştırıyordu. */
   .sayfa-iz {
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
     max-width: 100%;
-    margin: var(--bosluk-4) 0 0;
+    margin: 0;
     padding: 0;
     overflow-x: auto;
     list-style: none;
@@ -123,11 +121,12 @@
   }
   .sayfa-iz a:hover { color: #fff; text-decoration: underline; }
 
+  /* Son basamak hemen altındaki başlıkla aynı metni taşıdığı için vurgulu
+     değil, sakin bırakılır; ağırlığı başlık üstlenir. */
   .sayfa-iz li:last-child span {
     overflow: hidden;
     max-width: 46vw;
-    color: #fff;
-    font-weight: var(--kalinlik-kalin);
+    color: rgba(255, 255, 255, 0.9);
     text-overflow: ellipsis;
   }
 
@@ -138,15 +137,14 @@
       background: linear-gradient(
         90deg,
         rgba(8, 25, 55, 0.95) 0%,
-        rgba(8, 25, 55, 0.8) 100%
+        rgba(8, 25, 55, 0.82) 100%
       );
     }
   }
 
   @media (max-width: 620px) {
-    .sayfa-seridi-ic { min-height: 184px; padding-block: var(--bosluk-5); gap: 6px; }
-    .sayfa-seridi-aciklama { font-size: var(--olcu-sm); }
-    .sayfa-iz { margin-top: var(--bosluk-3); font-size: var(--olcu-xs); }
+    .sayfa-seridi-ic { min-height: 176px; padding-block: var(--bosluk-5); gap: var(--bosluk-2); }
+    .sayfa-iz { font-size: var(--olcu-xs); }
     .sayfa-iz li:last-child span { max-width: 58vw; }
   }
 }

@@ -20,19 +20,18 @@ import { SideMenuComponent } from '../../layout/side-menu.component';
   template: `
     <header class="sayfa-seridi">
       <div class="kap sayfa-seridi-ic">
-        <p class="sayfa-seridi-etiket">{{ language() === 'en' ? 'Privacy and Transparency' : 'Gizlilik ve Şeffaflık' }}</p>
-        <h1 class="sayfa-seridi-baslik">{{ language() === 'en' ? 'Cookie and Browser Storage Policy' : 'Çerez ve Tarayıcı Depolama Politikası' }}</h1>
-        <p class="sayfa-seridi-aciklama">
-          {{ language() === 'en'
-            ? 'This page explains, in plain language, which browser technologies are used on the Department of Information Technology website, for what purpose and for how long.'
-            : 'Bu sayfa, Bilgi İşlem Daire Başkanlığı web sitesinde hangi tarayıcı teknolojilerinin, hangi amaçla ve ne kadar süreyle kullanıldığını açık bir dille anlatır.' }}
-        </p>
         <nav [attr.aria-label]="language() === 'en' ? 'Breadcrumb' : 'Sayfa yolu'">
           <ol class="sayfa-iz">
             <li><a [routerLink]="['/', language()]">{{ language() === 'en' ? 'Home' : 'Ana Sayfa' }}</a></li>
             <li aria-current="page"><span>{{ language() === 'en' ? 'Cookie Policy' : 'Çerez Politikası' }}</span></li>
           </ol>
         </nav>
+        <h1 class="sayfa-seridi-baslik">{{ language() === 'en' ? 'Cookie and Browser Storage Policy' : 'Çerez ve Tarayıcı Depolama Politikası' }}</h1>
+        <p class="sayfa-seridi-aciklama">
+          {{ language() === 'en'
+            ? 'This page explains, in plain language, which browser technologies are used on the Department of Information Technology website, for what purpose and for how long.'
+            : 'Bu sayfa, Bilgi İşlem Daire Başkanlığı web sitesinde hangi tarayıcı teknolojilerinin, hangi amaçla ve ne kadar süreyle kullanıldığını açık bir dille anlatır.' }}
+        </p>
       </div>
     </header>
 
