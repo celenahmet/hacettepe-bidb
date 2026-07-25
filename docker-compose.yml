@@ -19,7 +19,11 @@ services:
       LANG: tr_TR.utf8
       POSTGRES_INITDB_ARGS: "--encoding=UTF8"
     ports:
-      - "5432:5432"
+      # Yalnızca ana makineden (localhost) erişilebilir — "0.0.0.0:5432" gibi
+      # tüm arayüzlere açık bağlamak, güvenlik duvarı yanlış/eksik olduğunda
+      # veritabanını doğrudan internete açar. Yerel geliştirme (psql -h
+      # localhost) bu bağlamayla hiç etkilenmez.
+      - "127.0.0.1:5432:5432"
     volumes:
       - db-data:/var/lib/postgresql/data
     healthcheck:
@@ -51,7 +55,11 @@ services:
     ports:
       # 8080 geliştirme makinesinde başka bir servis tarafından kullanılabildiği için
       # dışarıya 8081 açılır; kap içi haberleşme yine 8080 üzerindendir.
-      - "8081:8080"
+      # Yalnızca ana makineden erişilebilir — backend'e doğrudan (Node vekil
+      # sunucusunu atlayarak) dışarıdan ulaşılabilmesi hem CSP gibi güvenlik
+      # başlıklarını hem de gerçek istemci IP'sini çözen X-Forwarded-For
+      # zincirini devre dışı bırakırdı (bkz. server.ts, YoneticiGirisSinirlayici).
+      - "127.0.0.1:8081:8080"
     healthcheck:
       test: ["CMD", "wget", "-qO-", "http://localhost:8080/actuator/health"]
       interval: 10s
