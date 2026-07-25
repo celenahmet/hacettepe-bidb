@@ -171,15 +171,45 @@
 
   .ray-tepe {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    gap: var(--bosluk-3);
+    gap: var(--bosluk-3) var(--bosluk-2);
     padding: var(--bosluk-5) var(--bosluk-5) var(--bosluk-4);
     border-bottom: 1px solid rgb(255 255 255 / 10%);
   }
 
   .ray-tepe img { flex: none; opacity: 0.95; }
 
-  .ray-tepe-yazi { display: block; min-width: 0; }
+  .ray-tepe-yazi { display: block; min-width: 0; flex: 1 1 auto; }
+
+  .dil-degistir,
+  .erisilebilirlik-degistir {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    height: 24px;
+    padding: 0 7px;
+    border: 1px solid rgb(255 255 255 / 20%);
+    border-radius: 2px;
+    background: none;
+    color: rgb(255 255 255 / 65%);
+    font-family: var(--yazi-kod);
+    font-size: 10px;
+    font-weight: var(--kalinlik-kalin);
+    letter-spacing: 0.06em;
+    cursor: pointer;
+  }
+  .dil-degistir { margin-left: auto; }
+  .erisilebilirlik-degistir { width: 24px; padding: 0; }
+
+  .dil-degistir:hover,
+  .erisilebilirlik-degistir:hover { border-color: rgb(255 255 255 / 45%); color: #fff; }
+
+  .erisilebilirlik-degistir.etkin {
+    border-color: var(--hu-kirmizi-acik);
+    color: var(--hu-kirmizi-acik);
+  }
 
   .ray-tepe-yazi strong {
     display: block;

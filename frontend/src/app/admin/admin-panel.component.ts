@@ -8,6 +8,8 @@ import { StaffEditorComponent } from './staff-editor.component';
 import { NewsCoverComponent } from '../pages/news-cover.component';
 import { AdminNews, NewsOptions, Shortcut, AdminMenuItem, AdminMenu, AdminPage, Slide, AdminSocialAccount, AdminApiService, ContactChannel, QualitySummary, QualityVitalScore, AnalyticsReport } from './admin-api.service';
 import { ContactTicketAdminComponent } from './contact-ticket-admin.component';
+import { AdminDilServisi } from './admin-dil.service';
+import { AccessibilityMenuComponent } from '../layout/accessibility-menu.component';
 import { Api } from '../core/api.service';
 import { disaBaglantilariGuvenceyeAl } from '../core/icerik-bicim';
 
@@ -31,7 +33,7 @@ interface MobileMenuItem {
 /** Yönetim paneli: giriş, sayfa SEO düzenleme ve duyuru yönetimi. */
 @Component({
   selector: 'bidb-admin-panel',
-  imports: [FormsModule, PageEditorComponent, StaffEditorComponent, NewsCoverComponent, ContactTicketAdminComponent, LoginEventsAdminComponent, AuditLogAdminComponent],
+  imports: [FormsModule, PageEditorComponent, StaffEditorComponent, NewsCoverComponent, ContactTicketAdminComponent, LoginEventsAdminComponent, AuditLogAdminComponent, AccessibilityMenuComponent],
   template: `
     <div class="yonetim">
       @if (!api.girisYapildi()) {
@@ -39,25 +41,25 @@ interface MobileMenuItem {
           <div class="giris-kutu">
             <header class="giris-marka">
               <img src="/hu-logo.svg" alt="" aria-hidden="true" width="40" height="45">
-              <span class="kurum">Hacettepe Üniversitesi</span>
-              <h1>Bilgi İşlem<br>Daire Başkanlığı</h1>
+              <span class="kurum">{{ dilServisi.t('girisKurum') }}</span>
+              <h1 [innerHTML]="dilServisi.t('girisBaslik')"></h1>
             </header>
 
             <div class="giris-alan">
               <form (ngSubmit)="giris()">
-                <h2>Yönetim Sistemi</h2>
+                <h2>{{ dilServisi.t('yonetimPaneli') }}</h2>
 
-                <label for="kullanici">Kullanıcı adı</label>
+                <label for="kullanici">{{ dilServisi.t('kullaniciAdi') }}</label>
                 <input id="kullanici" name="kullanici" [(ngModel)]="kullanici" autocomplete="username" required>
 
-                <label for="parola">Parola</label>
+                <label for="parola">{{ dilServisi.t('parola') }}</label>
                 <input id="parola" name="parola" type="password" [(ngModel)]="parola" autocomplete="current-password" required>
 
                 @if (hata()) { <p class="hata" role="alert">{{ hata() }}</p> }
 
                 <span class="dugmeler">
                   <button type="submit" [disabled]="calisiyor()">
-                    {{ calisiyor() ? 'Denetleniyor…' : 'Giriş Yap' }}
+                    {{ calisiyor() ? dilServisi.t('girisYapiliyor') : dilServisi.t('girisYap') }}
                   </button>
                 </span>
               </form>
@@ -71,77 +73,91 @@ interface MobileMenuItem {
               <img src="/hu-logo.svg" alt="" aria-hidden="true" width="26" height="30">
               <span class="ray-tepe-yazi">
                 <strong>HÜ BİDB</strong>
-                <span>Yönetim</span>
+                <span>{{ dilServisi.t('yonetimPaneli') }}</span>
               </span>
+              <button type="button" class="dil-degistir" (click)="dilDegistir()"
+                      [attr.aria-label]="dilServisi.dil() === 'tr' ? 'Switch to English' : 'Türkçeye geç'">
+                {{ dilServisi.dil() === 'tr' ? 'EN' : 'TR' }}
+              </button>
+              <button type="button" class="erisilebilirlik-degistir" (click)="erisilebilirlikDegistir()"
+                      [class.etkin]="erisilebilirlikAcik()"
+                      [attr.aria-pressed]="erisilebilirlikAcik()"
+                      [attr.aria-label]="dilServisi.dil() === 'tr' ? 'Erişilebilirlik menüsünü aç/kapat' : 'Toggle accessibility menu'"
+                      [title]="dilServisi.dil() === 'tr' ? 'Erişilebilirlik menüsü' : 'Accessibility menu'">
+                <svg viewBox="0 0 24 24" aria-hidden="true" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="4.5" r="1.6"/>
+                  <path d="M4 8.5c3 1 13 1 16 0M12 8v13M8 21l2-6h4l2 6M9 13h6"/>
+                </svg>
+              </button>
             </div>
 
             <div class="ray-liste">
           <button type="button" [class.etkin]="sekme() === 'analytics'" (click)="sekmeAnalitik()">
             <span class="no">01</span>
-            <span>Analitik</span>
+            <span>{{ dilServisi.t('bolumAnalitik') }}</span>
             @if (analytics(); as a) { <span class="sayi">{{ a.currentMonthViews }}</span> }
           </button>
           <button type="button" [class.etkin]="sekme() === 'quality'" (click)="sekmeKalite()">
             <span class="no">02</span>
-            <span>SEO ve Performans</span>
+            <span>{{ dilServisi.t('bolumKalite') }}</span>
             @if (quality(); as q) { <span class="sayi">{{ q.seoScore }}</span> }
           </button>
           <button type="button" [class.etkin]="sekme() === 'pages'" (click)="sekme.set('pages')">
             <span class="no">03</span>
-            <span>Sayfalar</span>
+            <span>{{ dilServisi.t('bolumSayfalar') }}</span>
             <span class="sayi">{{ pages().length }}</span>
           </button>
           <button type="button" [class.etkin]="sekme() === 'news'" (click)="sekmeDuyuru()">
             <span class="no">04</span>
-            <span>Duyurular</span>
+            <span>{{ dilServisi.t('bolumDuyurular') }}</span>
             <span class="sayi">{{ news().length }}</span>
           </button>
           <button type="button" [class.etkin]="sekme() === 'slider'" (click)="sekmeSlider()">
             <span class="no">05</span>
-            <span>Slider</span>
+            <span>{{ dilServisi.t('bolumSlider') }}</span>
             <span class="sayi">{{ slides().length }}</span>
           </button>
           <button type="button" [class.etkin]="sekme() === 'shortcuts'" (click)="sekmeKisayol()">
             <span class="no">06</span>
-            <span>Kısayollar</span>
+            <span>{{ dilServisi.t('bolumKisayollar') }}</span>
             <span class="sayi">{{ shortcuts().length }}</span>
           </button>
           <button type="button" [class.etkin]="sekme() === 'menus'" (click)="sekmeMenu()">
             <span class="no">07</span>
-            <span>Menüler</span>
+            <span>{{ dilServisi.t('bolumMenuler') }}</span>
             <span class="sayi">{{ menus().length }}</span>
           </button>
           <button type="button" [class.etkin]="sekme() === 'sosyal'" (click)="sekmeSosyal()">
             <span class="no">08</span>
-            <span>Sosyal Medya</span>
+            <span>{{ dilServisi.t('bolumSosyal') }}</span>
             <span class="sayi">{{ socialAccounts().length }}</span>
           </button>
           <button type="button" [class.etkin]="sekme() === 'iletisim'" (click)="sekmeIletisim()">
             <span class="no">09</span>
-            <span>İletişim Bilgileri</span>
+            <span>{{ dilServisi.t('bolumIletisim') }}</span>
           </button>
           <button type="button" [class.etkin]="sekme() === 'tickets'" (click)="sekme.set('tickets')">
             <span class="no">10</span>
-            <span>İletişim Talepleri</span>
+            <span>{{ dilServisi.t('bolumTalepler') }}</span>
           </button>
           <button type="button" [class.etkin]="sekme() === 'personel'" (click)="sekme.set('personel')">
             <span class="no">11</span>
-            <span>Personel</span>
+            <span>{{ dilServisi.t('bolumPersonel') }}</span>
           </button>
           <button type="button" [class.etkin]="sekme() === 'islemGunlugu'" (click)="sekme.set('islemGunlugu')">
             <span class="no">12</span>
-            <span>İşlem Günlüğü</span>
+            <span>{{ dilServisi.t('bolumIslemGunlugu') }}</span>
           </button>
           <button type="button" [class.etkin]="sekme() === 'girisKayitlari'" (click)="sekme.set('girisKayitlari')">
             <span class="no">13</span>
-            <span>Güvenlik Kayıtları</span>
+            <span>{{ dilServisi.t('bolumGuvenlik') }}</span>
           </button>
           <button type="button" [class.etkin]="sekme() === 'hakkinda'" (click)="sekme.set('hakkinda')">
             <span class="no">14</span>
-            <span>Yazılım Hakkında</span>
+            <span>{{ dilServisi.t('bolumHakkinda') }}</span>
           </button>
 
-          <button type="button" class="ray-liste-cikis" (click)="api.cikis()">Çıkış</button>
+          <button type="button" class="ray-liste-cikis" (click)="api.cikis()">{{ dilServisi.t('cikisYap') }}</button>
             </div>
           </nav>
 
@@ -1280,6 +1296,10 @@ interface MobileMenuItem {
           }
         </div>
       }
+
+      @if (erisilebilirlikAcik()) {
+        <bidb-accessibility-menu [language]="dilServisi.dil()"></bidb-accessibility-menu>
+      }
     </div>
   `
 })
@@ -1311,6 +1331,31 @@ export class AdminPanelComponent {
     return this.BOLUMLER[this.sekme()]?.ad ?? 'Yönetim';
   }
   protected api = inject(AdminApiService);
+  protected dilServisi = inject(AdminDilServisi);
+
+  protected dilDegistir(): void {
+    this.dilServisi.degistir(this.dilServisi.dil() === 'tr' ? 'en' : 'tr');
+  }
+
+  /**
+   * Erişilebilirlik menüsü varsayılan olarak KAPALI — her sayfada durup
+   * dikkat dağıtmasın diye. İhtiyacı olan personel bir kez açtığında tercih
+   * kalıcı olur (localStorage) ve sonraki tüm girişlerde (giriş ekranı dahil)
+   * otomatik açık gelir.
+   */
+  protected erisilebilirlikAcik = signal(this.erisilebilirlikKayitli());
+
+  private erisilebilirlikKayitli(): boolean {
+    return typeof localStorage !== 'undefined' && localStorage.getItem('bidb-yonetim-erisilebilirlik') === '1';
+  }
+
+  protected erisilebilirlikDegistir(): void {
+    const yeni = !this.erisilebilirlikAcik();
+    this.erisilebilirlikAcik.set(yeni);
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('bidb-yonetim-erisilebilirlik', yeni ? '1' : '0');
+    }
+  }
   protected publicApi = inject(Api);
   private temizleyici = inject(DomSanitizer);
 
