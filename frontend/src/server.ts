@@ -581,9 +581,16 @@ app.use(async (req, res, next) => {
     const ziyaretciSayfasi = /^\/(tr|en)(\/|$)/.test(req.path) || hataKodu !== null;
     if (ziyaretciSayfasi) {
       const govde = await yanit.text();
+      // İletişim formu gibi asıl amacı ANINDA doldurulup gönderilmek olan
+      // sayfalar bu ertelemeden hariç tutulur: kullanıcı formu doldururken
+      // JS henüz yüklenmemişse, hydration tamamlandığında ngModel'in başlangıç
+      // (boş) değerleri DOM'daki yazılmış metnin üzerine yazıyor — "gönder"
+      // düğmesi doldurulmuş gibi görünse de aslında hep devre dışı kalıyordu.
+      const anindaEtkilesimGerekir = /^\/(tr|en)\/contact\/?$/.test(req.path);
       // Ana sayfa da (/tr, /en) haber kartları gibi tamamlayıcı stil gerektirir;
       // önceden buradaki özel durum bu paketin hiç eklenmemesine yol açıyordu.
-      const html = asamaliTarayiciBaslangici(tamamlayiciStilEkle(govde, req.path));
+      const govdeStilli = tamamlayiciStilEkle(govde, req.path);
+      const html = anindaEtkilesimGerekir ? govdeStilli : asamaliTarayiciBaslangici(govdeStilli);
       return writeResponseToNodeResponse(
         new Response(html, { status: hataKodu ?? yanit.status, headers: basliklar }),
         res,
