@@ -1114,11 +1114,43 @@ interface MobileMenuItem {
               (bozuk bağlantı, eksik alt metin, erişilebilirlik) düzeltilmiştir.
             </p>
 
+            <h2>Menülerin ve içeriğin dinamikliği</h2>
+            <p>
+              Sitede görünen hiçbir menü, kısayol ya da sayfa sırası kodun
+              içine gömülü değildir — hepsi veritabanında kayıtlıdır ve bu
+              panelin "Menüler", "Kısayollar" ve "Sayfalar" sekmelerinden
+              düzenlenir. Bir bölüm eklemek, bir sayfayı taşımak ya da bir
+              bağlantının hedefini değiştirmek için kod değişikliği ya da
+              yeniden dağıtım (deployment) gerekmez; değişiklik kaydedildiği
+              anda, panelden çıkış yapılmadan siteye yansır. Bu, sitenin
+              yapısının zaman içinde Bilgi İşlem personeli tarafından, bir
+              yazılımcıya ihtiyaç duymadan güncellenebilmesi için bilinçli
+              bir tasarım tercihidir.
+            </p>
+
+            <h2>Mimari tercihler</h2>
+            <p>
+              Kullanılan teknoloji yığını (Angular + Spring Boot + PostgreSQL,
+              sunucu tarafı render, aşamalı hidrasyon, sayfa tipine göre
+              bölünmüş stil paketleri gibi performans kararları dahil) ve
+              genel mimari yaklaşım, Bilgi İşlem Daire Başkanlığı tarafından
+              belirlenmiş; uygulama bu çerçeve içinde geliştirilmiştir.
+              Aktarılan sayfa içeriğinin birebir korunması, kurumsal kırmızı/
+              lacivert kimliğin tutarlı kullanımı ve şablon/yapay zekâ
+              hissi vermeyen, sade ve okunabilir bir tasarım dili gibi
+              ilkeler de baştan itibaren bu çerçevenin bir parçasıydı.
+            </p>
+
             <h2>Geliştirme notu</h2>
             <p>
               Bu yönetim paneli ve site, Bilgi İşlem Daire Başkanlığı'nda
-              staj yapan öğrenciler tarafından, Personel biriminden
-              <strong> Şahin Kaan</strong>'ın önderliğinde geliştirilmiştir.
+              <strong> 2026 yılı yaz stajyerliği</strong> kapsamında, Personel
+              biriminden <strong>Şahin Kaan</strong>'ın önderliğinde
+              geliştirilmiştir. Kısa bir staj süresine sığdırılmış olmasına
+              rağmen sistem uçtan uca (içerik aktarımından SEO'ya, mobil
+              uyuma, güvenlik sertleştirmesine kadar) gözden geçirilmeye
+              çalışılmıştır; eksik ya da geliştirilebilecek noktalar için
+              geri bildirim her zaman değerlidir.
             </p>
             <p>
               Geliştirenler:
@@ -1128,7 +1160,8 @@ interface MobileMenuItem {
               <li><strong>Yusuf Nurülgür</strong> — <a href="mailto:yusufnurulgur@hacettepe.edu.tr">yusufnurulgur&#64;hacettepe.edu.tr</a></li>
             </ul>
             <p class="hakkinda-not">
-              Bu not, sistemi ileride devralacak kişiler için bilinçli olarak
+              Bu not, sistemi ileride devralacak kişiler için — kim, ne
+              zaman, hangi niyetle geliştirdi bilinsin diye — bilinçli olarak
               kalıcı tutulmuştur.
             </p>
           </section>
