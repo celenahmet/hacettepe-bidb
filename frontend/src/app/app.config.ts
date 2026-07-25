@@ -1,5 +1,5 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter, withInMemoryScrolling } from '@angular/router';
+import { provideRouter, withInMemoryScrolling, withViewTransitions } from '@angular/router';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideClientHydration, withIncrementalHydration } from '@angular/platform-browser';
 import { registerLocaleData } from '@angular/common';
@@ -16,7 +16,10 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes, withInMemoryScrolling({ scrollPositionRestoration: 'top' })),
+    // Sayfa geçişlerinde tarayıcının yerel View Transitions API'sini kullanır
+    // (bkz. styles.css ::view-transition-*); desteklemeyen tarayıcılarda
+    // sessizce anlık geçişe düşer, ekstra bir JS animasyon kütüphanesi gerekmez.
+    provideRouter(routes, withInMemoryScrolling({ scrollPositionRestoration: 'top' }), withViewTransitions()),
     provideHttpClient(withFetch()),
     // SSR ile gelen içerik arama motorları ve ilk boyama için eksiksiz kalır.
     // Ekranın altındaki @defer blokları ise ancak görünür olduklarında hydrate

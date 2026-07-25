@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { HeaderComponent } from './layout/header.component';
+import { RouteProgressComponent } from './layout/route-progress.component';
 import { FooterComponent } from './layout/footer.component';
 import { CookieConsentComponent } from './layout/cookie-consent.component';
 import { AccessibilityMenuComponent } from './layout/accessibility-menu.component';
@@ -15,9 +16,12 @@ import { QualityMetricsService } from './core/quality-metrics.service';
     HeaderComponent,
     FooterComponent,
     CookieConsentComponent,
-    AccessibilityMenuComponent
+    AccessibilityMenuComponent,
+    RouteProgressComponent
   ],
   template: `
+    <bidb-route-progress></bidb-route-progress>
+
     @if (siteKabugu()) { <bidb-header [language]="language()"></bidb-header> }
 
     <router-outlet></router-outlet>

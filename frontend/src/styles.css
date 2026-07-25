@@ -63,6 +63,50 @@
   }
   .atla:focus { top: 0; }
 
+  /* ---------- sayfa geçişi (View Transitions API) ---------- */
+
+  /* Rota değişiminde tarayıcının yerel geçiş mekanizması devreye girer
+     (bkz. app.config.ts withViewTransitions()). Varsayılan çapraz-solma
+     yerine, hafif bir dikey kayma eklenir — "kurumsal ağırlık" hissi için
+     düz solmadan biraz daha belirgin, ama oyunsu olmayacak kadar ölçülü.
+     Desteklemeyen tarayıcılarda bu kurallar sessizce görmezden gelinir. */
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 320ms;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  ::view-transition-old(root) { animation-name: bidb-sayfa-cikis; }
+  ::view-transition-new(root) { animation-name: bidb-sayfa-giris; }
+
+  @keyframes bidb-sayfa-cikis {
+    to { opacity: 0; transform: translateY(-8px); }
+  }
+  @keyframes bidb-sayfa-giris {
+    from { opacity: 0; transform: translateY(8px); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+  }
+
+  /* ---------- rota yükleme şeridi ---------- */
+
+  .rota-ilerleme {
+    position: fixed;
+    top: 0; left: 0;
+    z-index: 300;
+    height: 3px;
+    width: 0%;
+    background: linear-gradient(90deg, var(--hu-kirmizi-koyu), var(--hu-kirmizi-acik));
+    opacity: 0;
+    transition: width 480ms cubic-bezier(0.2, 0.8, 0.2, 1), opacity 160ms ease;
+  }
+  .rota-ilerleme.etkin { opacity: 1; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rota-ilerleme { transition: opacity 160ms ease; }
+  }
+
   /* ---------- üst şerit ---------- */
 
   .ust { background: var(--beyaz); border-bottom: 1px solid var(--cizgi); }
