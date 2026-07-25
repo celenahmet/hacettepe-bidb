@@ -193,6 +193,15 @@ app.use('/api', express.raw({ type: '*/*', limit: '5mb' }), async (req, res) => 
     const basliklar: Record<string, string> = { Accept: 'application/json' };
     if (req.headers.authorization) basliklar['Authorization'] = req.headers.authorization;
     if (req.headers['content-type']) basliklar['Content-Type'] = String(req.headers['content-type']);
+    // Tarayıcı bilgisi ve gerçek istemci adresi de iletilir; aksi hâlde backend
+    // her isteği bu ön yüz sunucusunun kendi Docker adresinden geliyor sanır
+    // (kaba kuvvet sınırlaması ve yönetim giriş kayıtları bu adrese ve
+    // User-Agent'a göre çalışır — bkz. YoneticiGirisSinirlayici, GirisKayitServisi).
+    if (req.headers['user-agent']) basliklar['User-Agent'] = String(req.headers['user-agent']);
+    const oncekiZincir = req.headers['x-forwarded-for'];
+    const oncekiZincirMetni = Array.isArray(oncekiZincir) ? oncekiZincir.join(', ') : oncekiZincir;
+    const buAdim = req.socket.remoteAddress ?? '';
+    basliklar['X-Forwarded-For'] = oncekiZincirMetni ? `${oncekiZincirMetni}, ${buAdim}` : buAdim;
 
     const govdeliMi = req.method !== 'GET' && req.method !== 'HEAD';
     const yanit = await fetch(hedef, {
