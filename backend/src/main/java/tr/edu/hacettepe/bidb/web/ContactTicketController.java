@@ -66,7 +66,9 @@ public class ContactTicketController {
             @RequestParam @NotBlank @Size(min = 5, max = 160) String subject,
             @RequestParam @NotBlank @Size(min = 2, max = 120) String name,
             @RequestParam @NotBlank @Email @Size(max = 254) String email,
-            @RequestParam @NotBlank @Size(min = 7, max = 30) String phone,
+            @RequestParam @NotBlank @Size(min = 7, max = 30)
+            @Pattern(regexp = "^[0-9+()\\-.\\s]+$", message = "Telefon numarası yalnızca rakam ve yaygın ayraçlar içerebilir.")
+            String phone,
             @RequestParam @NotBlank @Size(min = 20, max = 5000) String message,
             @RequestParam(required = false, defaultValue = "") @Size(max = 0) String website,
             @RequestParam(name = "attachment", required = false) MultipartFile attachment,
@@ -89,7 +91,7 @@ public class ContactTicketController {
         ticket.setSubject(clean(subject));
         ticket.setRequesterName(clean(name));
         ticket.setRequesterEmail(email.trim().toLowerCase(Locale.ROOT));
-        ticket.setRequesterPhone(phone.trim());
+        ticket.setRequesterPhone(clean(phone));
         ticket.setMessage(message.trim());
 
         if (attachment != null && !attachment.isEmpty()) {
