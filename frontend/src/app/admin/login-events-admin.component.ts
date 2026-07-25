@@ -61,7 +61,7 @@ import { AdminApiService, LoginEvent } from './admin-api.service';
                   <td>{{ k.attemptedUsername || '—' }}</td>
                   <td><small>{{ k.ipAddress }}</small></td>
                   <td>{{ konum(k) }}</td>
-                  <td>{{ cihazEtiketi(k.deviceClass) }}</td>
+                  <td>{{ cihazEtiketi(k) }}</td>
                   <td><small>{{ k.browser || '—' }} · {{ k.operatingSystem || '—' }}</small></td>
                 </tr>
               }
@@ -135,7 +135,7 @@ import { AdminApiService, LoginEvent } from './admin-api.service';
           </li>
           <li>
             <svg viewBox="0 0 24 24" aria-hidden="true" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M10 18h4"/></svg>
-            <span><small>Cihaz</small>{{ cihazEtiketi(k.deviceClass) }}</span>
+            <span><small>Cihaz</small>{{ cihazEtiketi(k) }}</span>
           </li>
           <li>
             <svg viewBox="0 0 24 24" aria-hidden="true" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 2.5 15.5 0 18M12 3c-2.5 2.5-2.5 15.5 0 18"/></svg>
@@ -184,8 +184,9 @@ export class LoginEventsAdminComponent implements OnInit {
     return k.city || k.country || '—';
   }
 
-  protected cihazEtiketi(deger: string | null): string {
-    return ({ mobile: 'Telefon', tablet: 'Tablet', desktop: 'Masaüstü' } as Record<string, string>)[deger ?? ''] ?? '—';
+  protected cihazEtiketi(k: LoginEvent): string {
+    const sinif = ({ mobile: 'Telefon', tablet: 'Tablet', desktop: 'Masaüstü' } as Record<string, string>)[k.deviceClass ?? ''] ?? '—';
+    return k.deviceModel ? `${sinif} (${k.deviceModel})` : sinif;
   }
 
   protected tarihSaat(deger: string): string {

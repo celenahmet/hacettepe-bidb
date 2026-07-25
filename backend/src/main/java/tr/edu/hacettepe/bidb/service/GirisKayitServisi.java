@@ -14,6 +14,8 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Yönetim paneline yapılan her giriş denemesini kaydeder (kurumsal güvenlik
@@ -57,6 +59,7 @@ public class GirisKayitServisi {
             olay.setBrowser(tb.tarayici);
             olay.setOperatingSystem(tb.isletimSistemi);
             olay.setDeviceClass(tb.cihazSinifi);
+            olay.setDeviceModel(cihazModeliCoz(userAgent));
 
             if (herkeseAcikMi(ipAdresi)) {
                 konumCoz(ipAdresi, olay);
@@ -106,6 +109,29 @@ public class GirisKayitServisi {
         else cihazSinifi = "desktop";
 
         return new TarayiciBilgisi(tarayici, isletimSistemi, cihazSinifi);
+    }
+
+    private static final Pattern ANDROID_MODELI = Pattern.compile("Android\\s[\\d.]+;\\s*([^;)]+)\\)");
+
+    /**
+     * Android User-Agent'ları genelde gerçek cihaz model kodunu taşır
+     * (ör. "Linux; Android 13; SM-S911B Build/..." → "SM-S911B"). iOS
+     * bunun aksine model numarası vermez — Safari, gizlilik gerekçesiyle
+     * User-Agent Client Hints'i desteklemez; yalnızca "iPhone"/"iPad"
+     * çözülebilir, uydurma bir model adı üretilmez.
+     */
+    private static String cihazModeliCoz(String ua) {
+        if (ua == null) return null;
+        Matcher eslesme = ANDROID_MODELI.matcher(ua);
+        if (eslesme.find()) {
+            String model = eslesme.group(1).trim();
+            int buildIndex = model.indexOf(" Build/");
+            if (buildIndex > 0) model = model.substring(0, buildIndex).trim();
+            if (!model.isBlank()) return model;
+        }
+        if (ua.contains("iPhone")) return "iPhone";
+        if (ua.contains("iPad")) return "iPad";
+        return null;
     }
 
     /**

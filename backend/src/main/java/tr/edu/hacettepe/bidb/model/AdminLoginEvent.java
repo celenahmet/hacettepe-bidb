@@ -34,6 +34,9 @@ public class AdminLoginEvent {
     @Column(name = "device_class", length = 20)
     private String deviceClass;
 
+    @Column(name = "device_model", length = 120)
+    private String deviceModel;
+
     @Column(length = 40)
     private String browser;
 
@@ -63,6 +66,8 @@ public class AdminLoginEvent {
     public void setUserAgent(String userAgent) { this.userAgent = userAgent; }
     public String getDeviceClass() { return deviceClass; }
     public void setDeviceClass(String deviceClass) { this.deviceClass = deviceClass; }
+    public String getDeviceModel() { return deviceModel; }
+    public void setDeviceModel(String deviceModel) { this.deviceModel = deviceModel; }
     public String getBrowser() { return browser; }
     public void setBrowser(String browser) { this.browser = browser; }
     public String getOperatingSystem() { return operatingSystem; }

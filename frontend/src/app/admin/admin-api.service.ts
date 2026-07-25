@@ -249,6 +249,7 @@ export interface LoginEvent {
   ipAddress: string;
   localIpAddress: string | null;
   deviceClass: string | null;
+  deviceModel: string | null;
   browser: string | null;
   operatingSystem: string | null;
   city: string | null;
