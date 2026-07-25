@@ -178,7 +178,7 @@ export class LoginEventsAdminComponent implements OnInit {
 
   protected konum(k: LoginEvent): string {
     if (k.city && k.country) return `${k.city}, ${k.country}`;
-    return k.country || '—';
+    return k.city || k.country || '—';
   }
 
   protected cihazEtiketi(deger: string | null): string {

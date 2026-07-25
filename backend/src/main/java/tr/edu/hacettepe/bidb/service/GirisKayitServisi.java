@@ -60,6 +60,11 @@ public class GirisKayitServisi {
 
             if (herkeseAcikMi(ipAdresi)) {
                 konumCoz(ipAdresi, olay);
+            } else {
+                // Özel/yerel adresler için dış servise sorulmaz (bkz. herkeseAcikMi) —
+                // ama alan boş bırakılırsa arayüzde "veri gelmedi" gibi görünüyordu.
+                // Kurum içi/yerel bir bağlantı olduğu açıkça belirtilir.
+                olay.setCity("Yerel ağ");
             }
 
             depo.save(olay);

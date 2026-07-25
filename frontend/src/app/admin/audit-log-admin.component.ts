@@ -2,22 +2,15 @@ import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { SlicePipe } from '@angular/common';
 import { AdminApiService, AuditEvent } from './admin-api.service';
 
-/**
- * Yönetim panelinde yapılan değişiklik işlemlerinin denetim kaydı.
- *
- * Diğer panel bölümlerinden bilinçli olarak farklı, "güvenlik konsolu"
- * hissi veren koyu/monospace bir görünüm kullanır — kayıt defteri dilinin
- * bir istisnası; içerik türü (denetim/olay akışı) bunu haklı kılıyor.
- */
+/** Yönetim panelinde yapılan değişiklik işlemlerinin denetim kaydı. */
 @Component({
   selector: 'bidb-audit-log-admin',
   imports: [SlicePipe],
   template: `
-    <section class="gunluk-panel">
-      <header class="gunluk-tepe">
+    <section class="kalite-bolum">
+      <header>
         <div>
-          <span class="gunluk-canli" aria-hidden="true"></span>
-          <span class="gunluk-etiket">GÜVENLİK DENETİMİ // İŞLEM GÜNLÜĞÜ</span>
+          <span class="bolum-no">Güvenlik Denetimi</span>
           <h2>İşlem günlüğü</h2>
           <p>Panelde yapılan her oluşturma/güncelleme/silme işlemi — oturum, kullanıcı adı, genel ve yerel IPv4 ile.</p>
         </div>
@@ -31,12 +24,12 @@ import { AdminApiService, AuditEvent } from './admin-api.service';
       </div>
 
       @if (yukleniyor()) {
-        <p class="gunluk-durum">kayıtlar yükleniyor…</p>
+        <p class="aciklama" role="status">Kayıtlar yükleniyor…</p>
       } @else if (hata()) {
-        <p class="gunluk-durum gunluk-hata">{{ hata() }}</p>
+        <p class="hata" role="alert">{{ hata() }}</p>
       } @else if (filtrelenmis().length) {
         <div class="tablo-kaydir">
-          <table class="gunluk-tablo">
+          <table class="yonetim-tablo">
             <thead>
               <tr>
                 <th>Zaman</th>
@@ -52,15 +45,15 @@ import { AdminApiService, AuditEvent } from './admin-api.service';
             <tbody>
               @for (k of filtrelenmis(); track k.id) {
                 <tr>
-                  <td class="gunluk-zaman">{{ tarihSaat(k.occurredAt) }}</td>
-                  <td><span class="gunluk-oturum" [style.--renk]="oturumRengi(k.sessionId)">{{ k.sessionId | slice: 0:8 }}</span></td>
+                  <td><small>{{ tarihSaat(k.occurredAt) }}</small></td>
+                  <td><code class="gunluk-oturum">{{ k.sessionId | slice: 0:8 }}</code></td>
                   <td>{{ k.attemptedUsername || '—' }}</td>
-                  <td><span class="gunluk-eylem" [class]="'yontem-' + k.httpMethod.toLowerCase()">{{ k.actionLabel }}</span></td>
+                  <td>{{ k.actionLabel }}</td>
                   <td class="gunluk-yol"><small>{{ k.resourcePath }}</small></td>
                   <td><small>{{ k.ipAddress }}</small></td>
                   <td><small>{{ k.localIpAddress || '—' }}</small></td>
                   <td>
-                    <span class="gunluk-durum-rozet" [class.basarili]="k.successful" [class.basarisiz]="!k.successful">
+                    <span class="giris-kayit-rozet" [class.basarili]="k.successful" [class.basarisiz]="!k.successful">
                       {{ k.httpStatus }}
                     </span>
                   </td>
@@ -70,7 +63,7 @@ import { AdminApiService, AuditEvent } from './admin-api.service';
           </table>
         </div>
       } @else {
-        <div class="gunluk-bos">
+        <div class="kalite-bos">
           <strong>Kayıt yok</strong>
           <p>Panelde yapılan bir sonraki değişiklik işlemi burada görünecek.</p>
         </div>
@@ -114,13 +107,6 @@ export class AuditLogAdminComponent implements OnInit {
         this.yukleniyor.set(false);
       }
     });
-  }
-
-  /** Aynı oturum kimliği her zaman aynı rengi alır — okuyucu "kim" sorusunu renkten de takip edebilir. */
-  protected oturumRengi(sessionId: string): string {
-    let toplam = 0;
-    for (let i = 0; i < sessionId.length; i++) toplam = (toplam * 31 + sessionId.charCodeAt(i)) % 360;
-    return `hsl(${toplam} 70% 55%)`;
   }
 
   protected tarihSaat(deger: string): string {
