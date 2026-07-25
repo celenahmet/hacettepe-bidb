@@ -277,6 +277,15 @@
     border: 1px solid var(--cizgi); border-radius: 4px; background: var(--zemin);
   }
 
+  /* Bir servisin görseli tanımlı değilse (bkz. AdminComponentController), boş bir
+     kutu yerine kurumsal renkte sade bir simge kapağı gösterilir. */
+  .servis-simge {
+    display: grid; place-items: center; width: 100%; aspect-ratio: 16 / 9;
+    border: 1px solid var(--cizgi); border-radius: 4px;
+    background: var(--hu-lacivert); color: #fff;
+    border-bottom: 3px solid var(--hu-kirmizi);
+  }
+
   @media (max-width: 900px) {
     .kisayollar { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
     .servis-listesi { grid-template-columns: repeat(2, minmax(0, 1fr)); }

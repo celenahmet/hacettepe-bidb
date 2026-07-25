@@ -64,6 +64,13 @@ import { NewsCardComponent } from './news-card.component';
                        [attr.rel]="s.newTab ? 'noopener' : null">
                       @if (s.iconUrl) {
                         <img [src]="s.iconUrl" alt="" aria-hidden="true" loading="lazy">
+                      } @else {
+                        <span class="servis-simge" aria-hidden="true">
+                          <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="4" width="20" height="16" rx="2"/>
+                            <path d="m2 7 10 7 10-7"/>
+                          </svg>
+                        </span>
                       }
                       <span>{{ s.name }}</span>
                     </a>
