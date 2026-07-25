@@ -54,12 +54,6 @@
     background: color-mix(in srgb, var(--hu-lacivert) 3%, var(--zemin));
   }
 
-  .iletisim-form-no {
-    color: var(--hu-kirmizi);
-    font: 700 var(--olcu-xs)/1 var(--yazi-kod);
-    letter-spacing: .12em;
-  }
-
   .iletisim-form-giris div { display: grid; gap: 3px; }
   .iletisim-form-giris strong { color: var(--hu-lacivert); }
   .iletisim-form-giris small { color: var(--metin-3); }
@@ -71,7 +65,19 @@
     padding: var(--bosluk-4) var(--bosluk-5);
   }
 
-  .iletisim-form-izgara.uc { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  /* Form 820px'lik bir sütuna sığdığından dört alan tek satıra sıkışmasın diye 2x2 düzen kullanılır. */
+  .iletisim-form-izgara.dort { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  .iletisim-form-zorunlu-not {
+    margin: 0;
+    padding: var(--bosluk-3) var(--bosluk-5);
+    border-bottom: 1px solid var(--cizgi);
+    color: var(--metin-3);
+    font-size: var(--olcu-xs);
+  }
+  .iletisim-form-zorunlu-not span { color: var(--hu-kirmizi); font-weight: 700; }
+
+  .iletisim-form-alan-hata { margin-top: -2px; color: var(--hu-kirmizi); font-size: var(--olcu-xs); font-weight: 650; }
   .iletisim-ticket-form label { display: grid; gap: 8px; min-width: 0; }
   .iletisim-ticket-form label > span { color: var(--hu-lacivert); font-size: var(--olcu-sm); font-weight: 650; }
 
@@ -180,7 +186,7 @@
 
   @media (max-width: 760px) {
     .iletisim-form-baslik { grid-template-columns: 1fr; gap: var(--bosluk-3); }
-    .iletisim-form-izgara, .iletisim-form-izgara.uc { grid-template-columns: 1fr; padding: var(--bosluk-4); }
+    .iletisim-form-izgara, .iletisim-form-izgara.dort { grid-template-columns: 1fr; padding: var(--bosluk-4); }
     .iletisim-form-giris { padding-inline: var(--bosluk-4); }
     .iletisim-form-mesaj, .iletisim-form-ek { margin-inline: var(--bosluk-4); }
     .iletisim-form-ek-kutu input[type="file"] { width: 100%; }

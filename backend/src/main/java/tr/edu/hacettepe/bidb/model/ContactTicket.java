@@ -17,8 +17,10 @@ public class ContactTicket {
     private String category;
     @Column(nullable = false, length = 160)
     private String subject;
-    @Column(name = "requester_name", nullable = false, length = 120)
-    private String requesterName;
+    @Column(name = "requester_first_name", nullable = false, length = 80)
+    private String requesterFirstName;
+    @Column(name = "requester_last_name", nullable = false, length = 80)
+    private String requesterLastName;
     @Column(name = "requester_email", nullable = false, length = 254)
     private String requesterEmail;
     @Column(name = "requester_phone", nullable = false, length = 30)
@@ -55,8 +57,10 @@ public class ContactTicket {
     public void setCategory(String value) { category = value; }
     public String getSubject() { return subject; }
     public void setSubject(String value) { subject = value; }
-    public String getRequesterName() { return requesterName; }
-    public void setRequesterName(String value) { requesterName = value; }
+    public String getRequesterFirstName() { return requesterFirstName; }
+    public void setRequesterFirstName(String value) { requesterFirstName = value; }
+    public String getRequesterLastName() { return requesterLastName; }
+    public void setRequesterLastName(String value) { requesterLastName = value; }
     public String getRequesterEmail() { return requesterEmail; }
     public void setRequesterEmail(String value) { requesterEmail = value; }
     public String getRequesterPhone() { return requesterPhone; }

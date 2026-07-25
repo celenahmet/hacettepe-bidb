@@ -64,7 +64,8 @@ public class ContactTicketController {
             @RequestParam @NotBlank @Size(max = 2) String language,
             @RequestParam @NotBlank @Size(max = 40) String category,
             @RequestParam @NotBlank @Size(min = 5, max = 160) String subject,
-            @RequestParam @NotBlank @Size(min = 2, max = 120) String name,
+            @RequestParam @NotBlank @Size(min = 2, max = 80) String firstName,
+            @RequestParam @NotBlank @Size(min = 2, max = 80) String lastName,
             @RequestParam @NotBlank @Email @Size(max = 254) String email,
             @RequestParam @NotBlank @Size(min = 7, max = 30)
             @Pattern(regexp = "^[0-9+()\\-.\\s]+$", message = "Telefon numarası yalnızca rakam ve yaygın ayraçlar içerebilir.")
@@ -89,7 +90,8 @@ public class ContactTicketController {
         ticket.setLanguage(languageNormalized);
         ticket.setCategory(categoryNormalized);
         ticket.setSubject(clean(subject));
-        ticket.setRequesterName(clean(name));
+        ticket.setRequesterFirstName(clean(firstName));
+        ticket.setRequesterLastName(clean(lastName));
         ticket.setRequesterEmail(email.trim().toLowerCase(Locale.ROOT));
         ticket.setRequesterPhone(clean(phone));
         ticket.setMessage(message.trim());

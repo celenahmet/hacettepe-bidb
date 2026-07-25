@@ -6,7 +6,8 @@ import { Language } from '../core/models';
 interface TicketForm {
   category: string;
   subject: string;
-  name: string;
+  firstName: string;
+  lastName: string;
   email: string;
   phone: string;
   message: string;
@@ -59,8 +60,12 @@ interface TicketResponse {
         </div>
       } @else {
         <form class="iletisim-ticket-form" (ngSubmit)="gonder()" #ticketForm="ngForm">
+          <p class="iletisim-form-zorunlu-not">
+            <span aria-hidden="true">*</span>
+            {{ dilDegeri === 'en' ? 'Marks required fields.' : 'Zorunlu alanları belirtir.' }}
+          </p>
+
           <div class="iletisim-form-giris">
-            <span class="iletisim-form-no">01</span>
             <div>
               <strong>{{ dilDegeri === 'en' ? 'Request details' : 'Talep bilgileri' }}</strong>
               <small>{{ dilDegeri === 'en' ? 'Select the most relevant service.' : 'Talebinizle en ilgili hizmeti seçin.' }}</small>
@@ -84,26 +89,38 @@ interface TicketResponse {
           </div>
 
           <div class="iletisim-form-giris">
-            <span class="iletisim-form-no">02</span>
             <div>
               <strong>{{ dilDegeri === 'en' ? 'Contact information' : 'İletişim bilgileri' }}</strong>
-              <small>{{ dilDegeri === 'en' ? 'Fields marked with * are required.' : '* işaretli alanlar zorunludur.' }}</small>
             </div>
           </div>
 
-          <div class="iletisim-form-izgara uc">
+          <div class="iletisim-form-izgara dort">
             <label>
-              <span>{{ dilDegeri === 'en' ? 'Name and surname' : 'Ad soyad' }} *</span>
-              <input name="name" [(ngModel)]="form.name" required minlength="2" maxlength="120" autocomplete="name">
+              <span>{{ dilDegeri === 'en' ? 'First name' : 'Ad' }} *</span>
+              <input name="firstName" [(ngModel)]="form.firstName" required minlength="2" maxlength="80" autocomplete="given-name">
+            </label>
+            <label>
+              <span>{{ dilDegeri === 'en' ? 'Last name' : 'Soyad' }} *</span>
+              <input name="lastName" [(ngModel)]="form.lastName" required minlength="2" maxlength="80" autocomplete="family-name">
             </label>
             <label>
               <span>{{ dilDegeri === 'en' ? 'E-mail address' : 'E-posta adresi' }} *</span>
-              <input name="email" [(ngModel)]="form.email" type="email" required maxlength="254" autocomplete="email">
+              <input name="email" #emailAlani="ngModel" [(ngModel)]="form.email" type="email" required maxlength="254" autocomplete="email">
+              @if (emailAlani.invalid && (emailAlani.dirty || emailAlani.touched)) {
+                <small class="iletisim-form-alan-hata">
+                  {{ dilDegeri === 'en' ? 'Enter a valid e-mail address.' : 'Geçerli bir e-posta adresi girin.' }}
+                </small>
+              }
             </label>
             <label>
               <span>{{ dilDegeri === 'en' ? 'Telephone' : 'Telefon' }} *</span>
-              <input name="phone" [(ngModel)]="form.phone" type="tel" required minlength="7"
-                     maxlength="30" autocomplete="tel">
+              <input name="phone" #phoneAlani="ngModel" [(ngModel)]="form.phone" type="tel" required minlength="7"
+                     maxlength="30" autocomplete="tel" pattern="^[0-9+()\-.\s]+$">
+              @if (phoneAlani.invalid && (phoneAlani.dirty || phoneAlani.touched)) {
+                <small class="iletisim-form-alan-hata">
+                  {{ dilDegeri === 'en' ? 'Use only digits and common separators (+, (), -).' : 'Yalnızca rakam ve yaygın ayraçlar kullanın (+, (), -).' }}
+                </small>
+              }
             </label>
           </div>
 
@@ -234,7 +251,8 @@ export class ContactFormComponent {
     govde.set('language', this.dilDegeri);
     govde.set('category', this.form.category);
     govde.set('subject', this.form.subject);
-    govde.set('name', this.form.name);
+    govde.set('firstName', this.form.firstName);
+    govde.set('lastName', this.form.lastName);
     govde.set('email', this.form.email);
     govde.set('phone', this.form.phone);
     govde.set('message', this.form.message);
@@ -265,6 +283,6 @@ export class ContactFormComponent {
   }
 
   private bosForm(): TicketForm {
-    return { category: 'GENERAL', subject: '', name: '', email: '', phone: '', message: '', website: '' };
+    return { category: 'GENERAL', subject: '', firstName: '', lastName: '', email: '', phone: '', message: '', website: '' };
   }
 }

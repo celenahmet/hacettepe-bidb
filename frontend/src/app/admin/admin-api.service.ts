@@ -156,7 +156,8 @@ export interface ContactTicket {
   language: string;
   category: string;
   subject: string;
-  requesterName: string;
+  requesterFirstName: string;
+  requesterLastName: string;
   requesterEmail: string;
   requesterPhone: string | null;
   message: string;

@@ -51,7 +51,7 @@ import {
                 <span class="ticket-durum" [attr.data-status]="ticket.status">{{ durumAdi(ticket.status) }}</span>
                 <span class="ticket-kimlik">
                   <strong>{{ ticket.subject }}</strong>
-                  <small>{{ ticket.referenceCode }} · {{ ticket.requesterName }}</small>
+                  <small>{{ ticket.referenceCode }} · {{ ticket.requesterFirstName }} {{ ticket.requesterLastName }}</small>
                 </span>
                 <span class="ticket-meta">
                   <small>{{ kategoriAdi(ticket.category) }}</small>
@@ -80,7 +80,7 @@ import {
               </header>
 
               <dl class="ticket-basvuran">
-                <div><dt>Başvuru sahibi</dt><dd>{{ ticket.requesterName }}</dd></div>
+                <div><dt>Başvuru sahibi</dt><dd>{{ ticket.requesterFirstName }} {{ ticket.requesterLastName }}</dd></div>
                 <div><dt>E-posta</dt><dd><a [href]="'mailto:' + ticket.requesterEmail">{{ ticket.requesterEmail }}</a></dd></div>
                 @if (ticket.requesterPhone) {
                   <div><dt>Telefon</dt><dd><a [href]="'tel:' + ticket.requesterPhone">{{ ticket.requesterPhone }}</a></dd></div>
@@ -185,7 +185,7 @@ export class ContactTicketAdminComponent implements OnInit {
     const query = this.arama().trim().toLocaleLowerCase('tr-TR');
     return this.tickets().filter(ticket =>
       (!this.durumFiltresi() || ticket.status === this.durumFiltresi()) &&
-      (!query || [ticket.referenceCode, ticket.subject, ticket.requesterName, ticket.requesterEmail]
+      (!query || [ticket.referenceCode, ticket.subject, ticket.requesterFirstName, ticket.requesterLastName, ticket.requesterEmail]
         .some(value => value.toLocaleLowerCase('tr-TR').includes(query))));
   });
 
