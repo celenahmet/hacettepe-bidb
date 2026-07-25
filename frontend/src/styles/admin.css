@@ -38,12 +38,14 @@
     align-items: center;
     justify-content: center;
     min-height: 100vh;
+    min-height: 100dvh;
     background-color: var(--murekkep);
     background-size: cover;
     background-position: center;
     padding: var(--bosluk-4);
     z-index: 0;
     overflow: hidden;
+    overscroll-behavior-y: none;
   }
 
   .giris-duzen::before {
@@ -150,6 +152,12 @@
     display: grid;
     grid-template-columns: var(--ray-genislik) minmax(0, 1fr);
     min-height: 100vh;
+    min-height: 100dvh;
+    /* Sayfanın üst/alt sınırında esnek (rubber-band) kaydırma, altındaki
+       bembeyaz body zeminini bir an için açığa çıkarıyordu; hem kaydırma
+       tepmesini engelliyoruz hem de olası bir kalıntı için zemini eşitliyoruz. */
+    background: var(--murekkep);
+    overscroll-behavior-y: none;
   }
 
   /* ---- sol ray ---- */
