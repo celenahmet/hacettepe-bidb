@@ -1178,4 +1178,32 @@
     .konum-uygulamalar { grid-template-columns: minmax(0, 1fr); }
     .konum-uygulamalar > a + a { border-top: 1px solid var(--cizgi); border-left: 0; }
   }
+
+  /* ---------- e-posta kopyalandı bildirimi ---------- */
+
+  .eposta-kopyalandi-bildirim {
+    position: fixed;
+    left: 50%;
+    bottom: var(--bosluk-6);
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    gap: var(--bosluk-2);
+    max-width: calc(100% - 2rem);
+    padding: var(--bosluk-3) var(--bosluk-4);
+    border-left: 3px solid var(--hu-kirmizi);
+    border-radius: var(--kose-md);
+    background: var(--yuzey);
+    box-shadow: var(--golge-3);
+    color: var(--metin);
+    font-size: var(--olcu-sm);
+    transform: translateX(-50%);
+    animation: epostaBildirimGir 0.25s ease-out;
+  }
+  .eposta-kopyalandi-bildirim svg { flex: none; color: #177245; }
+
+  @keyframes epostaBildirimGir {
+    from { opacity: 0; transform: translate(-50%, 8px); }
+    to { opacity: 1; transform: translate(-50%, 0); }
+  }
 }

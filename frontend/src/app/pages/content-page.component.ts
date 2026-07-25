@@ -121,7 +121,17 @@ import { ContactFormComponent } from './contact-form.component';
               <bidb-faq [rawHtml]="s.contentHtml ?? ''" [dilDegeri]="language()"></bidb-faq>
             }
           } @else {
-            <div class="icerik" [innerHTML]="govde()"></div>
+            <!-- mailto bağlantıları kaynak HTML'in kendi içinde geldiği için
+                 (ör. organizasyon şeması), tek tek düzenlenemez; tıklamayı
+                 üstten yakalayıp panoya kopyalama davranışı ekleniyor. -->
+            <div class="icerik" [innerHTML]="govde()" (click)="epostaTiklama($event)"></div>
+          }
+
+          @if (kopyalandiEposta(); as eposta) {
+            <div class="eposta-kopyalandi-bildirim" role="status">
+              <svg viewBox="0 0 24 24" aria-hidden="true" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"></path></svg>
+              {{ language() === 'en' ? 'Copied to clipboard: ' : 'Panoya kopyalandı: ' }}{{ eposta }}
+            </div>
           }
 
           <!-- Personel listesi HTML olarak saklanmaz; birim ve kişi
@@ -181,6 +191,38 @@ export class ContentPageComponent {
 
   protected language = signal<Language>('tr');
   protected govde = signal<SafeHtml>('');
+  protected kopyalandiEposta = signal<string | null>(null);
+  private kopyalandiZamanlayici?: ReturnType<typeof setTimeout>;
+
+  /**
+   * mailto bağlantısına tıklamayı yakalar: varsayılan davranış (e-posta
+   * istemcisinin açılması) engellenmez, ayrıca adres panoya kopyalanıp
+   * kısa süreli bir bildirim gösterilir.
+   */
+  protected async epostaTiklama(event: MouseEvent): Promise<void> {
+    const hedef = (event.target as HTMLElement).closest?.('a[href^="mailto:"]') as HTMLAnchorElement | null;
+    if (!hedef) return;
+    const eposta = hedef.href.replace(/^mailto:/, '').split('?')[0];
+    if (!eposta) return;
+
+    try {
+      await navigator.clipboard.writeText(eposta);
+    } catch {
+      if (typeof document === 'undefined') return;
+      const alan = document.createElement('textarea');
+      alan.value = eposta;
+      alan.style.position = 'fixed';
+      alan.style.opacity = '0';
+      document.body.appendChild(alan);
+      alan.select();
+      document.execCommand('copy');
+      alan.remove();
+    }
+
+    clearTimeout(this.kopyalandiZamanlayici);
+    this.kopyalandiEposta.set(eposta);
+    this.kopyalandiZamanlayici = setTimeout(() => this.kopyalandiEposta.set(null), 2500);
+  }
 
   /**
    * Sayfaya bağlı belgelerden, metinde ZATEN bağlantısı verilmiş olanlar
