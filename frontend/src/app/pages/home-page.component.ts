@@ -64,6 +64,13 @@ import { NewsCardComponent } from './news-card.component';
                        [attr.rel]="s.newTab ? 'noopener' : null">
                       @if (s.iconUrl) {
                         <img [src]="s.iconUrl" alt="" aria-hidden="true" loading="lazy">
+                      } @else if (s.url === '/tr/email' || s.url === '/en/email') {
+                        <!-- E-Posta hizmeti Exchange üzerinden yürütülür; kaynak logo
+                             64x64 olduğu için kartın tamamına gerilip bulanıklaşmasın
+                             diye kurumsal zemin üstünde doğal boyutunda gösterilir. -->
+                        <span class="servis-simge" aria-hidden="true">
+                          <img src="/images/icon_exchange2.jpg" alt="" width="56" height="56" loading="lazy">
+                        </span>
                       } @else {
                         <span class="servis-simge" aria-hidden="true">
                           <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
