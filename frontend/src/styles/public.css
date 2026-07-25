@@ -593,6 +593,8 @@
     transition: border-color var(--gecis-hizli), color var(--gecis-hizli), transform 0.15s;
   }
 
+  .sosyal-harf { font-size: 12px; font-weight: 700; line-height: 1; }
+
   .sosyal-buton:hover {
     border-color: var(--hu-kirmizi);
     color: var(--hu-kirmizi);
