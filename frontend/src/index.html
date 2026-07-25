@@ -6,7 +6,11 @@
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#b31821">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <!-- Kurumsal logo favicon olarak: SVG olduğu için her çözünürlükte
+       (retina dahil) net kalır, dosya boyutu da favicon.ico'dan küçüktür.
+       .ico yalnızca SVG favicon desteklemeyen eski tarayıcılar için yedektir. -->
+  <link rel="icon" href="favicon.ico" sizes="32x32">
+  <link rel="icon" type="image/svg+xml" href="/hu-logo.svg">
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="apple-touch-icon" href="/hu-logo.svg">
 </head>
