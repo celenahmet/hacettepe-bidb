@@ -17,17 +17,20 @@ import { CookiePreferencesService } from '../../core/cookie-preferences.service'
   selector: 'bidb-cookie-policy',
   imports: [RouterLink],
   template: `
+    <nav class="sayfa-seridi" aria-label="Sayfa yolu">
+      <div class="kap sayfa-seridi-ic">
+        <ol class="sayfa-iz">
+          <li><a [routerLink]="['/', language()]">{{ language() === 'en' ? 'Home' : 'Ana Sayfa' }}</a></li>
+          <li aria-current="page"><span>{{ language() === 'en' ? 'Cookie Policy' : 'Çerez Politikası' }}</span></li>
+        </ol>
+        <p class="sayfa-seridi-etiket">{{ language() === 'en' ? 'Privacy and Transparency' : 'Gizlilik ve Şeffaflık' }}</p>
+      </div>
+    </nav>
+
     <main id="ana-icerik" class="cerez-politikasi">
       <div class="kap">
-        <nav class="cerez-iz" [attr.aria-label]="language() === 'en' ? 'Breadcrumb' : 'Sayfa yolu'">
-          <a [routerLink]="['/', language()]">{{ language() === 'en' ? 'Home' : 'Ana Sayfa' }}</a>
-          <span aria-hidden="true">/</span>
-          <span aria-current="page">{{ language() === 'en' ? 'Cookie Policy' : 'Çerez Politikası' }}</span>
-        </nav>
-
         <header class="cerez-politika-ust">
           <div>
-            <p class="cerez-kicker">{{ language() === 'en' ? 'PRIVACY AND TRANSPARENCY' : 'GİZLİLİK VE ŞEFFAFLIK' }}</p>
             <h1>{{ language() === 'en' ? 'Cookie and Browser Storage Policy' : 'Çerez ve Tarayıcı Depolama Politikası' }}</h1>
             <p class="cerez-ozet">
               {{ language() === 'en'
