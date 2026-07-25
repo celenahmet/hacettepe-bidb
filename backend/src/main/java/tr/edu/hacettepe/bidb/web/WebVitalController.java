@@ -1,11 +1,15 @@
 package tr.edu.hacettepe.bidb.web;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import tr.edu.hacettepe.bidb.model.WebVitalSample;
 import tr.edu.hacettepe.bidb.repo.WebVitalSampleRepo;
+import tr.edu.hacettepe.bidb.security.HizSinirlayici;
 
 import java.util.List;
 import java.util.Locale;
@@ -14,16 +18,19 @@ import java.util.Locale;
  * Tarayıcıdan anonim performans telemetrisi alır.
  *
  * Yalnızca rota, metrik adı ve sayısal değer saklanır. IP, user-agent,
- * referrer, çerez ve oturum bilgisi veri modeline alınmaz.
+ * referrer, çerez ve oturum bilgisi veri modeline alınmaz — hız sınırlaması
+ * için IP yalnızca bellekte, geçici olarak tutulur, hiçbir yere yazılmaz.
  */
 @RestController
 @RequestMapping("/api/metrics/vitals")
 public class WebVitalController {
     private static final List<String> METRICS = List.of("LCP", "INP", "CLS", "FCP", "TTFB");
     private final WebVitalSampleRepo samples;
+    private final HizSinirlayici hizSinirlayici;
 
-    public WebVitalController(WebVitalSampleRepo samples) {
+    public WebVitalController(WebVitalSampleRepo samples, HizSinirlayici hizSinirlayici) {
         this.samples = samples;
+        this.hizSinirlayici = hizSinirlayici;
     }
 
     public record Metric(
@@ -37,7 +44,11 @@ public class WebVitalController {
     ) {}
 
     @PostMapping
-    public ResponseEntity<Void> collect(@Valid @RequestBody VitalRequest request) {
+    public ResponseEntity<Void> collect(@Valid @RequestBody VitalRequest request, HttpServletRequest servletRequest) {
+        String adres = HizSinirlayici.istekAdresi(servletRequest);
+        if (hizSinirlayici.asildiMi("vital:" + adres, 60, 60)) {
+            throw new ResponseStatusException(HttpStatus.TOO_MANY_REQUESTS);
+        }
         String path = normalizePath(request.path());
         if (path == null) return ResponseEntity.badRequest().build();
 
