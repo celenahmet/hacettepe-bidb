@@ -18,7 +18,7 @@ interface ContactInfo extends Record<string, string> {
 }
 
 type AdminTab = 'analytics' | 'quality' | 'pages' | 'news' | 'slider' |
-  'shortcuts' | 'menus' | 'sosyal' | 'iletisim' | 'tickets' | 'personel';
+  'shortcuts' | 'menus' | 'sosyal' | 'iletisim' | 'tickets' | 'personel' | 'hakkinda';
 interface MobileMenuItem {
   tab: AdminTab;
   label: string;
@@ -65,8 +65,11 @@ interface MobileMenuItem {
         <div class="yonetim-duzen">
           <nav class="ray" aria-label="Yönetim bölümleri">
             <div class="ray-tepe">
-              <strong>HÜ BİDB</strong>
-              <span>Yönetim</span>
+              <img src="/hu-logo.svg" alt="" aria-hidden="true" width="26" height="30">
+              <span class="ray-tepe-yazi">
+                <strong>HÜ BİDB</strong>
+                <span>Yönetim</span>
+              </span>
             </div>
 
             <div class="ray-liste">
@@ -121,6 +124,10 @@ interface MobileMenuItem {
           <button type="button" [class.etkin]="sekme() === 'personel'" (click)="sekme.set('personel')">
             <span class="no">11</span>
             <span>Personel</span>
+          </button>
+          <button type="button" [class.etkin]="sekme() === 'hakkinda'" (click)="sekme.set('hakkinda')">
+            <span class="no">12</span>
+            <span>Yazılım Hakkında</span>
           </button>
             </div>
 
@@ -1093,6 +1100,46 @@ interface MobileMenuItem {
                düzenlemesi kendi bileşeninde durur. -->
           <bidb-staff-editor></bidb-staff-editor>
 
+        } @else if (sekme() === 'hakkinda') {
+
+          <section class="hakkinda-bolum">
+            <h2>Bu yönetim paneli nedir?</h2>
+            <p>
+              Bu panel, Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı'nın
+              kurumsal internet sitesini (bidb.hacettepe.edu.tr) yöneten
+              içerik yönetim sistemidir. Sayfa metinleri, duyurular, slider,
+              kısayollar, menüler, personel kayıtları, iletişim bilgileri ve
+              gelen iletişim talepleri buradan düzenlenir; sitenin SEO ve
+              gerçek kullanıcı performans ölçümleri "SEO ve Performans"
+              sekmesinden takip edilir.
+            </p>
+            <p>
+              Sistem Angular (sunucu tarafı render ile) ön yüz ve Spring Boot
+              REST servisi olmak üzere iki ayrı uygulamadan oluşur;
+              PostgreSQL veritabanı kullanır. Kaynak sayfa metinleri aktarım
+              sırasında birebir korunmuş, yalnızca teknik/yapısal hatalar
+              (bozuk bağlantı, eksik alt metin, erişilebilirlik) düzeltilmiştir.
+            </p>
+
+            <h2>Geliştirme notu</h2>
+            <p>
+              Bu yönetim paneli ve site, Bilgi İşlem Daire Başkanlığı'nda
+              staj yapan öğrenciler tarafından, Personel biriminden
+              <strong> Şahin Kaan</strong>'ın önderliğinde geliştirilmiştir.
+            </p>
+            <p>
+              Geliştirenler:
+            </p>
+            <ul class="hakkinda-liste">
+              <li><strong>Ahmet Çelen</strong> — <a href="mailto:ahmetcelen@hacettepe.edu.tr">ahmetcelen&#64;hacettepe.edu.tr</a></li>
+              <li><strong>Yusuf Nurülgür</strong> — <a href="mailto:yusufnurulgur@hacettepe.edu.tr">yusufnurulgur&#64;hacettepe.edu.tr</a></li>
+            </ul>
+            <p class="hakkinda-not">
+              Bu not, sistemi ileride devralacak kişiler için bilinçli olarak
+              kalıcı tutulmuştur.
+            </p>
+          </section>
+
         }
             </div>
           </main>
@@ -1166,7 +1213,8 @@ export class AdminPanelComponent {
     sosyal: { no: '08', ad: 'Sosyal Medya' },
     iletisim: { no: '09', ad: 'İletişim Bilgileri' },
     tickets: { no: '10', ad: 'İletişim Talepleri' },
-    personel: { no: '11', ad: 'Personel' }
+    personel: { no: '11', ad: 'Personel' },
+    hakkinda: { no: '12', ad: 'Yazılım Hakkında' }
   };
 
   protected bolumNo(): string {
@@ -1204,7 +1252,8 @@ export class AdminPanelComponent {
     { tab: 'sosyal', label: 'Sosyal Medya', note: 'Kurumsal hesaplar' },
     { tab: 'iletisim', label: 'İletişim Bilgileri', note: 'Kurumsal iletişim bilgileri' },
     { tab: 'tickets', label: 'İletişim Talepleri', note: 'Form kayıtları ve takip' },
-    { tab: 'personel', label: 'Personel', note: 'Birim ve personel kayıtları' }
+    { tab: 'personel', label: 'Personel', note: 'Birim ve personel kayıtları' },
+    { tab: 'hakkinda', label: 'Yazılım Hakkında', note: 'Bu panel hakkında bilgi' }
   ];
   protected analytics = signal<AnalyticsReport | null>(null);
   protected analyticsLoading = signal(false);

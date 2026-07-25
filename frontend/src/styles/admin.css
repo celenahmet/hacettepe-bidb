@@ -162,18 +162,25 @@
   }
 
   .ray-tepe {
+    display: flex;
+    align-items: center;
+    gap: var(--bosluk-3);
     padding: var(--bosluk-5) var(--bosluk-5) var(--bosluk-4);
     border-bottom: 1px solid rgb(255 255 255 / 10%);
   }
 
-  .ray-tepe strong {
+  .ray-tepe img { flex: none; opacity: 0.95; }
+
+  .ray-tepe-yazi { display: block; min-width: 0; }
+
+  .ray-tepe-yazi strong {
     display: block;
     font-size: var(--olcu-md);
     font-weight: var(--kalinlik-kalin);
     letter-spacing: -0.01em;
   }
 
-  .ray-tepe span {
+  .ray-tepe-yazi span {
     display: block;
     margin-top: 2px;
     font-size: 10px;
@@ -304,6 +311,47 @@
     font-size: var(--olcu-sm);
     line-height: var(--satir-genis);
     color: var(--metin-2);
+  }
+
+  /* ================= yazılım hakkında ================= */
+
+  .hakkinda-bolum { max-width: 68ch; }
+
+  .hakkinda-bolum h2 {
+    margin: var(--bosluk-6) 0 var(--bosluk-3);
+    font-size: var(--olcu-lg);
+    font-weight: var(--kalinlik-kalin);
+    letter-spacing: -0.01em;
+    color: var(--murekkep);
+  }
+  .hakkinda-bolum h2:first-child { margin-top: 0; }
+
+  .hakkinda-bolum p {
+    margin: 0 0 var(--bosluk-4);
+    font-size: var(--olcu-sm);
+    line-height: var(--satir-genis);
+    color: var(--metin-2);
+  }
+
+  .hakkinda-liste {
+    margin: 0 0 var(--bosluk-4);
+    padding: 0;
+    list-style: none;
+  }
+  .hakkinda-liste li {
+    padding: var(--bosluk-3) 0 var(--bosluk-3) var(--bosluk-4);
+    border-left: 2px solid var(--hu-kirmizi);
+    font-size: var(--olcu-sm);
+  }
+  .hakkinda-liste li + li { margin-top: var(--bosluk-2); }
+  .hakkinda-liste a { color: var(--metin-2); }
+
+  .hakkinda-not {
+    padding-top: var(--bosluk-4);
+    border-top: 1px solid var(--cizgi);
+    color: var(--metin-3);
+    font-size: var(--olcu-xs);
+    font-style: italic;
   }
 
   .yonetim .bilgi {
