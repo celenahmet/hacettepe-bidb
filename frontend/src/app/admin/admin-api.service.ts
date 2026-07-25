@@ -240,6 +240,20 @@ export interface QualitySummary {
   vitals: QualityVitalScore[];
 }
 
+/** Yönetim paneline yapılan bir giriş denemesinin kaydı. */
+export interface LoginEvent {
+  id: number;
+  occurredAt: string;
+  successful: boolean;
+  attemptedUsername: string | null;
+  ipAddress: string;
+  deviceClass: string | null;
+  browser: string | null;
+  operatingSystem: string | null;
+  city: string | null;
+  country: string | null;
+}
+
 export interface AnalyticsPeriodPoint {
   key: string;
   views: number;
@@ -295,10 +309,21 @@ export class AdminApiService {
     }
   }
 
-  /** Kullanıcı nameı ve parolayı doğrular; başarılıysa oturumda saklar. */
-  girisDene(kullanici: string, parola: string): Observable<AdminPage[]> {
+  /**
+   * Kullanıcı adı ve parolayı doğrular; başarılıysa oturumda saklar.
+   *
+   * Yalnızca bu tek uca (dogrula) çağrı yapılır — YoneticiGirisSinirlayici
+   * giriş kaydını (cihaz, IP, tahmini konum) bu yol için tutar. Sayfa
+   * listesi girişten sonra ayrıca yüklenir (bkz. AdminPanelComponent.giris()).
+   */
+  girisDene(kullanici: string, parola: string): Observable<{ kullanici: string }> {
     this.kimlik = 'Basic ' + btoa(`${kullanici}:${parola}`);
-    return this.http.get<AdminPage[]>('/api/admin/pages', { headers: this.basliklar() });
+    return this.http.get<{ kullanici: string }>('/api/admin/auth/dogrula', { headers: this.basliklar() });
+  }
+
+  /** Son giriş denemeleri (güvenlik denetimi). */
+  loginEvents(): Observable<LoginEvent[]> {
+    return this.http.get<LoginEvent[]>('/api/admin/login-events', { headers: this.basliklar() });
   }
 
   girisOnayla(): void {

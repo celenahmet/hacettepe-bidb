@@ -1287,6 +1287,93 @@
   .kalite-tablo ul { margin: 0; padding-left: 18px; color: var(--metin-acik); }
   .kalite-tamam { color: #177245; font-weight: var(--kalinlik-kalin); }
 
+  .giris-kayit-tablo td { white-space: nowrap; }
+  .giris-kayit-rozet {
+    display: inline-block;
+    padding: 2px var(--bosluk-2);
+    border: 1px solid currentColor;
+    border-radius: var(--kose-tam);
+    font-size: var(--olcu-xs);
+    font-weight: var(--kalinlik-kalin);
+  }
+  .giris-kayit-rozet.basarili { color: #177245; }
+  .giris-kayit-rozet.basarisiz { color: var(--hu-kirmizi); }
+
+  .giris-koruma-notu {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--bosluk-3);
+    margin: var(--bosluk-4) 0 var(--bosluk-5);
+    padding: var(--bosluk-4);
+    border-left: 3px solid var(--hu-lacivert);
+    background: var(--yuzey-2);
+  }
+  .giris-koruma-notu svg { flex: none; margin-top: 2px; color: var(--hu-lacivert); }
+  .giris-koruma-notu p { margin: 0; max-width: 68ch; color: var(--metin-2); font-size: var(--olcu-sm); line-height: var(--satir-genis); }
+
+  .yonetim tr.giris-kayit-satir { cursor: pointer; transition: background var(--gecis-hizli); }
+  .yonetim tr.giris-kayit-satir:hover,
+  .yonetim tr.giris-kayit-satir:focus-visible { background: var(--yuzey-2); outline: none; }
+
+  /* ================= giriş kaydı ayrıntı penceresi ================= */
+
+  .giris-detay-pencere {
+    --kalite-renk: var(--hu-lacivert);
+    position: fixed;
+    z-index: 131;
+    top: 50%;
+    left: 50%;
+    width: min(92vw, 420px);
+    max-height: 82vh;
+    overflow-y: auto;
+    padding: var(--bosluk-5);
+    border: 1px solid var(--cizgi-koyu);
+    border-top: 3px solid var(--kalite-renk);
+    background: var(--yuzey);
+    box-shadow: 0 24px 64px rgb(13 24 40 / 30%);
+    transform: translate(-50%, -50%);
+    animation: vitalPencereAnimasyonu 0.18s ease-out;
+  }
+  .giris-detay-pencere.basarili { --kalite-renk: #177245; }
+  .giris-detay-pencere.basarisiz { --kalite-renk: var(--hu-kirmizi); }
+
+  .giris-detay-pencere header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--bosluk-4);
+    margin-bottom: var(--bosluk-4);
+  }
+  .yonetim .giris-detay-pencere header button {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+  }
+
+  .giris-detay-liste { margin: 0; padding: 0; list-style: none; }
+  .giris-detay-liste li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--bosluk-3);
+    padding: var(--bosluk-3) 0;
+    border-top: 1px solid var(--cizgi);
+  }
+  .giris-detay-liste li:first-child { border-top: 0; }
+  .giris-detay-liste li svg { flex: none; margin-top: 2px; color: var(--metin-acik); }
+  .giris-detay-liste li span { display: block; color: var(--metin); font-size: var(--olcu-sm); overflow-wrap: anywhere; }
+  .giris-detay-liste li small {
+    display: block;
+    margin-bottom: 2px;
+    color: var(--metin-3);
+    font-size: 10px;
+    font-weight: var(--kalinlik-kalin);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
   /* ================= analitik ================= */
 
   .analitik-ozet {

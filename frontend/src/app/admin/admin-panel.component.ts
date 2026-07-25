@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { PageEditorComponent } from './page-editor.component';
+import { LoginEventsAdminComponent } from './login-events-admin.component';
 import { StaffEditorComponent } from './staff-editor.component';
 import { NewsCoverComponent } from '../pages/news-cover.component';
 import { AdminNews, NewsOptions, Shortcut, AdminMenuItem, AdminMenu, AdminPage, Slide, AdminSocialAccount, AdminApiService, ContactChannel, QualitySummary, QualityVitalScore, AnalyticsReport } from './admin-api.service';
@@ -18,7 +19,7 @@ interface ContactInfo extends Record<string, string> {
 }
 
 type AdminTab = 'analytics' | 'quality' | 'pages' | 'news' | 'slider' |
-  'shortcuts' | 'menus' | 'sosyal' | 'iletisim' | 'tickets' | 'personel' | 'hakkinda';
+  'shortcuts' | 'menus' | 'sosyal' | 'iletisim' | 'tickets' | 'personel' | 'hakkinda' | 'girisKayitlari';
 interface MobileMenuItem {
   tab: AdminTab;
   label: string;
@@ -28,7 +29,7 @@ interface MobileMenuItem {
 /** Yönetim paneli: giriş, sayfa SEO düzenleme ve duyuru yönetimi. */
 @Component({
   selector: 'bidb-admin-panel',
-  imports: [FormsModule, PageEditorComponent, StaffEditorComponent, NewsCoverComponent, ContactTicketAdminComponent],
+  imports: [FormsModule, PageEditorComponent, StaffEditorComponent, NewsCoverComponent, ContactTicketAdminComponent, LoginEventsAdminComponent],
   template: `
     <div class="yonetim">
       @if (!api.girisYapildi()) {
@@ -125,8 +126,12 @@ interface MobileMenuItem {
             <span class="no">11</span>
             <span>Personel</span>
           </button>
-          <button type="button" [class.etkin]="sekme() === 'hakkinda'" (click)="sekme.set('hakkinda')">
+          <button type="button" [class.etkin]="sekme() === 'girisKayitlari'" (click)="sekme.set('girisKayitlari')">
             <span class="no">12</span>
+            <span>Güvenlik Kayıtları</span>
+          </button>
+          <button type="button" [class.etkin]="sekme() === 'hakkinda'" (click)="sekme.set('hakkinda')">
+            <span class="no">13</span>
             <span>Yazılım Hakkında</span>
           </button>
             </div>
@@ -1093,6 +1098,10 @@ interface MobileMenuItem {
                düzenlemesi kendi bileşeninde durur. -->
           <bidb-staff-editor></bidb-staff-editor>
 
+        } @else if (sekme() === 'girisKayitlari') {
+
+          <bidb-login-events-admin></bidb-login-events-admin>
+
         } @else if (sekme() === 'hakkinda') {
 
           <section class="hakkinda-bolum">
@@ -1162,7 +1171,9 @@ interface MobileMenuItem {
             <p class="hakkinda-not">
               Sistem, sürdürülebilirlik ve kurumsallık ilkesiyle
               belgelenmiştir; ileride görev alacak ekiplerin devir sürecini
-              kolaylaştırması amaçlanmıştır.
+              kolaylaştırması amaçlanmıştır. Dinamik sistemler sayesinde web
+              sitesi, kod değişikliği gerekmeden bu panel üzerinden
+              yönetilebilir durumdadır.
             </p>
           </section>
 
@@ -1275,7 +1286,8 @@ export class AdminPanelComponent {
     iletisim: { no: '09', ad: 'İletişim Bilgileri' },
     tickets: { no: '10', ad: 'İletişim Talepleri' },
     personel: { no: '11', ad: 'Personel' },
-    hakkinda: { no: '12', ad: 'Yazılım Hakkında' }
+    girisKayitlari: { no: '12', ad: 'Güvenlik Kayıtları' },
+    hakkinda: { no: '13', ad: 'Yazılım Hakkında' }
   };
 
   protected bolumNo(): string {
@@ -1314,6 +1326,7 @@ export class AdminPanelComponent {
     { tab: 'iletisim', label: 'İletişim Bilgileri', note: 'Kurumsal iletişim bilgileri' },
     { tab: 'tickets', label: 'İletişim Talepleri', note: 'Form kayıtları ve takip' },
     { tab: 'personel', label: 'Personel', note: 'Birim ve personel kayıtları' },
+    { tab: 'girisKayitlari', label: 'Güvenlik Kayıtları', note: 'Giriş denemeleri kaydı' },
     { tab: 'hakkinda', label: 'Yazılım Hakkında', note: 'Bu panel hakkında bilgi' }
   ];
   protected analytics = signal<AnalyticsReport | null>(null);
@@ -1397,9 +1410,9 @@ export class AdminPanelComponent {
     this.hata.set('');
     this.calisiyor.set(true);
     this.api.girisDene(this.kullanici, this.parola).subscribe({
-      next: (liste) => {
+      next: () => {
         this.api.girisOnayla();
-        this.pages.set(liste);
+        this.sayfalariYukle();
         this.sayilariYukle();
         this.analitikYukle();
         this.kaliteYukle();

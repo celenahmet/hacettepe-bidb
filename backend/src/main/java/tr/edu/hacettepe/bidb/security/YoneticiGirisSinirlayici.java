@@ -6,9 +6,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import tr.edu.hacettepe.bidb.service.GirisKayitServisi;
 
 import java.io.IOException;
 import java.time.Instant;
+import java.util.Base64;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Map;
@@ -24,13 +26,25 @@ import java.util.concurrent.ConcurrentHashMap;
  *
  * Aynı kayan-pencere örüntüsü ContactTicketController'daki form hız
  * sınırlamasında da kullanılıyor; burada da tutarlılık için tekrarlandı.
+ *
+ * Ayrıca /api/admin/auth/dogrula ucuna (yalnızca giriş formunun çağırdığı
+ * uç — bkz. AdminAuthController) yapılan denemeleri kalıcı güvenlik
+ * kaydına (admin_login_event) yazar. Sınırlama TÜM /api/admin/** için
+ * geçerliyken, kayıt yalnızca bu tek uç için tutulur; aksi hâlde oturum
+ * boyunca yapılan sıradan her API isteği bir "giriş" gibi kaydedilirdi.
  */
 @Component
 public class YoneticiGirisSinirlayici extends OncePerRequestFilter {
     private static final long PENCERE_SANIYE = 300;
     private static final int AZAMI_BASARISIZ_DENEME = 8;
+    private static final String GIRIS_KAYIT_YOLU = "/api/admin/auth/dogrula";
 
     private final Map<String, Deque<Instant>> basarisizDenemeler = new ConcurrentHashMap<>();
+    private final GirisKayitServisi girisKayitServisi;
+
+    public YoneticiGirisSinirlayici(GirisKayitServisi girisKayitServisi) {
+        this.girisKayitServisi = girisKayitServisi;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
@@ -64,12 +78,30 @@ public class YoneticiGirisSinirlayici extends OncePerRequestFilter {
             basarisizDenemeler.remove(adres);
         }
 
+        if (request.getRequestURI().equals(GIRIS_KAYIT_YOLU) && response.getStatus() != 429) {
+            girisKayitServisi.kaydet(adres, request.getHeader("User-Agent"),
+                    denenenKullaniciAdi(request), response.getStatus() < 400);
+        }
+
         if (basarisizDenemeler.size() > 10_000) {
             Instant esik = simdi.minusSeconds(PENCERE_SANIYE);
             basarisizDenemeler.entrySet().removeIf(girdi -> {
                 Instant son = girdi.getValue().peekLast();
                 return son == null || son.isBefore(esik);
             });
+        }
+    }
+
+    /** Authorization başlığındaki Basic kimlikten yalnızca kullanıcı adını çözer. */
+    private static String denenenKullaniciAdi(HttpServletRequest request) {
+        String baslik = request.getHeader("Authorization");
+        if (baslik == null || !baslik.regionMatches(true, 0, "Basic ", 0, 6)) return null;
+        try {
+            String cozulmus = new String(Base64.getDecoder().decode(baslik.substring(6).trim()));
+            int ayrac = cozulmus.indexOf(':');
+            return ayrac < 0 ? cozulmus : cozulmus.substring(0, ayrac);
+        } catch (IllegalArgumentException e) {
+            return null;
         }
     }
 
