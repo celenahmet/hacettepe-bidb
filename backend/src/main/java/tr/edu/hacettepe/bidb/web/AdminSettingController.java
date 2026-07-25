@@ -1,6 +1,7 @@
 package tr.edu.hacettepe.bidb.web;
 
 import jakarta.transaction.Transactional;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tr.edu.hacettepe.bidb.model.Setting;
 import tr.edu.hacettepe.bidb.repo.SettingRepo;
@@ -30,8 +31,13 @@ public class AdminSettingController {
     /** Verilen anahtarları topluca kaydeder; olmayan name oluşturulur. */
     @PutMapping
     @Transactional
-    public List<Setting> kaydet(@RequestBody Map<String, String> degerler,
+    public ResponseEntity<?> kaydet(@RequestBody Map<String, String> degerler,
                              @RequestParam(defaultValue = "tr") String language) {
+        for (Map.Entry<String, String> girdi : degerler.entrySet()) {
+            if (girdi.getKey() == null || girdi.getKey().isBlank() || girdi.getKey().length() > 80) {
+                return ResponseEntity.badRequest().body("Geçersiz ayar adı: " + girdi.getKey());
+            }
+        }
         degerler.forEach((name, value) -> {
             Setting a = ayarlar.findByNameAndLanguage(name, language).orElseGet(() -> {
                 Setting yeni = new Setting();
@@ -39,9 +45,9 @@ public class AdminSettingController {
                 yeni.setLanguage(language);
                 return yeni;
             });
-            a.setValue(value);
+            a.setValue(value == null ? "" : value);
             ayarlar.save(a);
         });
-        return ayarlar.findAll();
+        return ResponseEntity.ok(ayarlar.findAll());
     }
 }

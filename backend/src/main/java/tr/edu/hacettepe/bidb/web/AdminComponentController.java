@@ -48,17 +48,30 @@ public class AdminComponentController {
         }
     }
 
+    private static String slaytHatasi(SlaytIstek istek) {
+        if (Girdi.bos(istek.language())) return "Dil boş olamaz.";
+        if (!Girdi.gecerliBaglanti(istek.imageUrl())) return "Görsel adresi geçersiz.";
+        if (istek.linkUrl() != null && !istek.linkUrl().isBlank() && !Girdi.gecerliBaglanti(istek.linkUrl())) {
+            return "Bağlantı adresi geçersiz.";
+        }
+        return null;
+    }
+
     @PostMapping("/slides")
     @Transactional
-    public Slider slaytEkle(@RequestBody SlaytIstek istek) {
-        return sliderlar.save(istek.aktar(new Slider()));
+    public ResponseEntity<?> slaytEkle(@RequestBody SlaytIstek istek) {
+        String hata = slaytHatasi(istek);
+        if (hata != null) return ResponseEntity.badRequest().body(hata);
+        return ResponseEntity.ok(sliderlar.save(istek.aktar(new Slider())));
     }
 
     @PutMapping("/slides/{id}")
     @Transactional
-    public ResponseEntity<Slider> slaytGuncelle(@PathVariable Long id, @RequestBody SlaytIstek istek) {
+    public ResponseEntity<?> slaytGuncelle(@PathVariable Long id, @RequestBody SlaytIstek istek) {
+        String hata = slaytHatasi(istek);
+        if (hata != null) return ResponseEntity.badRequest().body(hata);
         return sliderlar.findById(id)
-                .map(s -> ResponseEntity.ok(sliderlar.save(istek.aktar(s))))
+                .map(s -> ResponseEntity.ok((Object) sliderlar.save(istek.aktar(s))))
                 .orElse(ResponseEntity.notFound().build());
     }
 
@@ -87,17 +100,28 @@ public class AdminComponentController {
         }
     }
 
+    private static String kisayolHatasi(KisayolIstek istek) {
+        if (Girdi.bos(istek.language())) return "Dil boş olamaz.";
+        if (Girdi.bos(istek.name())) return "Ad boş olamaz.";
+        if (!Girdi.gecerliBaglanti(istek.url())) return "Bağlantı adresi geçersiz.";
+        return null;
+    }
+
     @PostMapping("/shortcuts")
     @Transactional
-    public Shortcut kisayolEkle(@RequestBody KisayolIstek istek) {
-        return shortcuts.save(istek.aktar(new Shortcut()));
+    public ResponseEntity<?> kisayolEkle(@RequestBody KisayolIstek istek) {
+        String hata = kisayolHatasi(istek);
+        if (hata != null) return ResponseEntity.badRequest().body(hata);
+        return ResponseEntity.ok(shortcuts.save(istek.aktar(new Shortcut())));
     }
 
     @PutMapping("/shortcuts/{id}")
     @Transactional
-    public ResponseEntity<Shortcut> kisayolGuncelle(@PathVariable Long id, @RequestBody KisayolIstek istek) {
+    public ResponseEntity<?> kisayolGuncelle(@PathVariable Long id, @RequestBody KisayolIstek istek) {
+        String hata = kisayolHatasi(istek);
+        if (hata != null) return ResponseEntity.badRequest().body(hata);
         return shortcuts.findById(id)
-                .map(h -> ResponseEntity.ok(shortcuts.save(istek.aktar(h))))
+                .map(h -> ResponseEntity.ok((Object) shortcuts.save(istek.aktar(h))))
                 .orElse(ResponseEntity.notFound().build());
     }
 
@@ -121,17 +145,27 @@ public class AdminComponentController {
         }
     }
 
+    private static String sosyalHatasi(SosyalIstek istek) {
+        if (Girdi.bos(istek.network())) return "Ağ adı boş olamaz.";
+        if (!Girdi.gecerliBaglanti(istek.url())) return "Bağlantı adresi geçersiz.";
+        return null;
+    }
+
     @PostMapping("/social-accounts")
     @Transactional
-    public SocialAccount sosyalEkle(@RequestBody SosyalIstek istek) {
-        return sosyal.save(istek.aktar(new SocialAccount()));
+    public ResponseEntity<?> sosyalEkle(@RequestBody SosyalIstek istek) {
+        String hata = sosyalHatasi(istek);
+        if (hata != null) return ResponseEntity.badRequest().body(hata);
+        return ResponseEntity.ok(sosyal.save(istek.aktar(new SocialAccount())));
     }
 
     @PutMapping("/social-accounts/{id}")
     @Transactional
-    public ResponseEntity<SocialAccount> sosyalGuncelle(@PathVariable Long id, @RequestBody SosyalIstek istek) {
+    public ResponseEntity<?> sosyalGuncelle(@PathVariable Long id, @RequestBody SosyalIstek istek) {
+        String hata = sosyalHatasi(istek);
+        if (hata != null) return ResponseEntity.badRequest().body(hata);
         return sosyal.findById(id)
-                .map(s -> ResponseEntity.ok(sosyal.save(istek.aktar(s))))
+                .map(s -> ResponseEntity.ok((Object) sosyal.save(istek.aktar(s))))
                 .orElse(ResponseEntity.notFound().build());
     }
 

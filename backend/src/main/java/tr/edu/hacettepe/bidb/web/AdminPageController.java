@@ -208,9 +208,17 @@ public class AdminPageController {
         return documents.findByPage_IdOrderBySortOrderAsc(id);
     }
 
+    private static String belgeHatasi(BelgeIstek istek) {
+        if (Girdi.bos(istek.name())) return "Belge adı boş olamaz.";
+        if (!Girdi.gecerliBaglanti(istek.url())) return "Belge adresi geçersiz.";
+        return null;
+    }
+
     @PostMapping("/{id}/documents")
     @Transactional
     public ResponseEntity<?> belgeEkle(@PathVariable Long id, @RequestBody BelgeIstek istek) {
+        String hata = belgeHatasi(istek);
+        if (hata != null) return ResponseEntity.badRequest().body(hata);
         return pages.findById(id).map(s -> {
             Document b = new Document();
             b.setPage(s);
@@ -222,6 +230,8 @@ public class AdminPageController {
     @PutMapping("/documents/{documentId}")
     @Transactional
     public ResponseEntity<?> belgeGuncelle(@PathVariable Long documentId, @RequestBody BelgeIstek istek) {
+        String hata = belgeHatasi(istek);
+        if (hata != null) return ResponseEntity.badRequest().body(hata);
         return documents.findById(documentId).map(b -> {
             aktar(istek, b);
             return ResponseEntity.ok(documents.save(b));

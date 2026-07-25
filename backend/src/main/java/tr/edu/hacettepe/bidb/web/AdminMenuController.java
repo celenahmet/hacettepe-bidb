@@ -68,17 +68,27 @@ public class AdminMenuController {
         }
     }
 
+    private static String bolumHatasi(MenuIstek istek) {
+        if (Girdi.bos(istek.language())) return "Dil boş olamaz.";
+        if (Girdi.bos(istek.title())) return "Başlık boş olamaz.";
+        return null;
+    }
+
     @PostMapping
     @Transactional
-    public Menu bolumEkle(@RequestBody MenuIstek istek) {
-        return menuler.save(istek.aktar(new Menu()));
+    public ResponseEntity<?> bolumEkle(@RequestBody MenuIstek istek) {
+        String hata = bolumHatasi(istek);
+        if (hata != null) return ResponseEntity.badRequest().body(hata);
+        return ResponseEntity.ok(menuler.save(istek.aktar(new Menu())));
     }
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<Menu> bolumGuncelle(@PathVariable Long id, @RequestBody MenuIstek istek) {
+    public ResponseEntity<?> bolumGuncelle(@PathVariable Long id, @RequestBody MenuIstek istek) {
+        String hata = bolumHatasi(istek);
+        if (hata != null) return ResponseEntity.badRequest().body(hata);
         return menuler.findById(id)
-                .map(m -> ResponseEntity.ok(menuler.save(istek.aktar(m))))
+                .map(m -> ResponseEntity.ok((Object) menuler.save(istek.aktar(m))))
                 .orElse(ResponseEntity.notFound().build());
     }
 
@@ -106,17 +116,30 @@ public class AdminMenuController {
         return o;
     }
 
+    /** DB'deki menu_oge_hedef CHECK kısıtıyla (sayfa ya da dış adresten biri) aynı kural. */
+    private static String ogeHatasi(OgeIstek istek) {
+        if (Girdi.bos(istek.label())) return "Etiket boş olamaz.";
+        if (istek.pageId() == null) {
+            if (!Girdi.gecerliBaglanti(istek.externalUrl())) return "Bir sayfa seçin ya da geçerli bir dış adres girin.";
+        }
+        return null;
+    }
+
     @PostMapping("/items")
     @Transactional
-    public MenuItem ogeEkle(@RequestBody OgeIstek istek) {
-        return items.save(aktar(istek, new MenuItem()));
+    public ResponseEntity<?> ogeEkle(@RequestBody OgeIstek istek) {
+        String hata = ogeHatasi(istek);
+        if (hata != null) return ResponseEntity.badRequest().body(hata);
+        return ResponseEntity.ok(items.save(aktar(istek, new MenuItem())));
     }
 
     @PutMapping("/items/{id}")
     @Transactional
-    public ResponseEntity<MenuItem> ogeGuncelle(@PathVariable Long id, @RequestBody OgeIstek istek) {
+    public ResponseEntity<?> ogeGuncelle(@PathVariable Long id, @RequestBody OgeIstek istek) {
+        String hata = ogeHatasi(istek);
+        if (hata != null) return ResponseEntity.badRequest().body(hata);
         return items.findById(id)
-                .map(o -> ResponseEntity.ok(items.save(aktar(istek, o))))
+                .map(o -> ResponseEntity.ok((Object) items.save(aktar(istek, o))))
                 .orElse(ResponseEntity.notFound().build());
     }
 
