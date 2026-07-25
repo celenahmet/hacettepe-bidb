@@ -94,7 +94,7 @@ public class NewsController {
     /** İki uç da aynı sayacı artırdığından, kimliksiz bir betiğin GET/POST arasında
      *  geçiş yaparak sınırı atlamasını önlemek için ortak bir anahtar kullanılır. */
     private boolean gorunumSiniriniAsti(HttpServletRequest request) {
-        String adres = HizSinirlayici.istekAdresi(request);
+        String adres = hizSinirlayici.istekAdresi(request);
         return hizSinirlayici.asildiMi("haber-goruntulenme:" + adres, 40, 60);
     }
 }

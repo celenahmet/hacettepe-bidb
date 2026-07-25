@@ -41,9 +41,11 @@ public class YoneticiGirisSinirlayici extends OncePerRequestFilter {
 
     private final Map<String, Deque<Instant>> basarisizDenemeler = new ConcurrentHashMap<>();
     private final GirisKayitServisi girisKayitServisi;
+    private final IstemciAdresi istemciAdresi;
 
-    public YoneticiGirisSinirlayici(GirisKayitServisi girisKayitServisi) {
+    public YoneticiGirisSinirlayici(GirisKayitServisi girisKayitServisi, IstemciAdresi istemciAdresi) {
         this.girisKayitServisi = girisKayitServisi;
+        this.istemciAdresi = istemciAdresi;
     }
 
     @Override
@@ -54,7 +56,7 @@ public class YoneticiGirisSinirlayici extends OncePerRequestFilter {
             return;
         }
 
-        String adres = IstekBilgisi.genelAdres(request);
+        String adres = IstekBilgisi.genelAdres(request, istemciAdresi);
         Instant simdi = Instant.now();
         Deque<Instant> denemeler = basarisizDenemeler.computeIfAbsent(adres, ignored -> new ArrayDeque<>());
         synchronized (denemeler) {

@@ -21,6 +21,11 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class HizSinirlayici {
     private final Map<String, Deque<Instant>> kayitlar = new ConcurrentHashMap<>();
+    private final IstemciAdresi istemciAdresi;
+
+    public HizSinirlayici(IstemciAdresi istemciAdresi) {
+        this.istemciAdresi = istemciAdresi;
+    }
 
     /** true dönerse sınır aşılmıştır, istek reddedilmelidir. */
     public boolean asildiMi(String anahtar, int azamiIstek, long pencereSaniye) {
@@ -47,10 +52,14 @@ public class HizSinirlayici {
         });
     }
 
-    public static String istekAdresi(HttpServletRequest request) {
-        String forwarded = request.getHeader("X-Forwarded-For");
-        if (forwarded != null && !forwarded.isBlank()) return forwarded.split(",")[0].trim();
-        String adres = request.getRemoteAddr();
-        return adres == null ? "unknown" : adres;
+    /**
+     * Sınırlama anahtarı olarak kullanılacak istemci adresi.
+     *
+     * Sahteciliğe kapalı çözüm için bkz. {@link IstemciAdresi}: daha önce
+     * X-Forwarded-For koşulsuz okunuyordu ve başlığı döndüren bir istemci
+     * buradaki bütün sınırları atlatabiliyordu.
+     */
+    public String istekAdresi(HttpServletRequest request) {
+        return istemciAdresi.coz(request);
     }
 }

@@ -24,8 +24,15 @@ spring:
 
 server:
   port: 8080
-  # Angular sunucu tarafı render'ı bu servisi çağırır
-  forward-headers-strategy: framework
+  # Angular sunucu tarafı render'ı bu servisi çağırır.
+  #
+  # "framework" stratejisi KASITLI OLARAK kapalıdır: o strateji getRemoteAddr()'ı
+  # X-Forwarded-For zincirinin İLK adımına göre yeniden yazar. O adım her zaman
+  # istemcinin kendi yazdığı, doğrulanmamış değerdir; açık kaldığında gerçek TCP
+  # karşı tarafı öğrenilemez hâle geliyor ve adrese dayanan bütün korumalar
+  # (yönetici kaba kuvvet sınırı dâhil) sahte başlıkla atlatılabiliyordu.
+  # İstemci adresi artık güvenilir vekil denetimiyle çözülür — bkz. IstemciAdresi.
+  forward-headers-strategy: none
 
 management:
   endpoints:
@@ -46,3 +53,12 @@ bidb:
     izinli-adresler: ${BIDB_CORS:http://localhost:4200,http://127.0.0.1:4200}
   # Panelden yüklenen belgelerin yazıldığı dizin; ön yüz aynı dizini sunar
   dosya-dizini: ${BIDB_DOSYA_DIZINI:/veri/dosyalar}
+  # Gerçek istemci adresinin çözümü (kaba kuvvet ve hız sınırları buna dayanır).
+  # bkz. IstemciAdresi
+  guvenilir-vekiller: ${BIDB_GUVENILIR_VEKILLER:}
+  # Ön yüzle backend arasındaki ara sunucu adımı sayısı; önde ayrıca bir ters
+  # vekil (nginx vb.) varsa artırılmalıdır.
+  vekil-adim-sayisi: ${BIDB_VEKIL_ADIM_SAYISI:1}
+  # Ara sunucunun kimliğini kanıtlayan paylaşılan sır; tanımlıysa iletilen
+  # istemci adresi yalnızca doğru anahtarla kabul edilir.
+  vekil-anahtari: ${BIDB_VEKIL_ANAHTARI:}

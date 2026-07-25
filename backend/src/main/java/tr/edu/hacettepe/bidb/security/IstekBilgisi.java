@@ -13,12 +13,16 @@ import java.util.Base64;
 final class IstekBilgisi {
     private IstekBilgisi() {}
 
-    /** Genel (public) adres adayı: X-Forwarded-For zincirindeki İLK adres. */
-    static String genelAdres(HttpServletRequest request) {
-        String forwarded = request.getHeader("X-Forwarded-For");
-        if (forwarded != null && !forwarded.isBlank()) return forwarded.split(",")[0].trim();
-        String adres = request.getRemoteAddr();
-        return adres == null ? "unknown" : adres;
+    /**
+     * Genel (public) istemci adresi.
+     *
+     * Daha önce burada X-Forwarded-For zincirinin İLK adımı okunuyordu. O adım
+     * her zaman istemcinin kendi yazdığı değerdir; başlığı her istekte
+     * değiştiren biri, bu adrese dayanan yönetici kaba kuvvet sınırını tümüyle
+     * atlatabiliyordu. Çözüm {@link IstemciAdresi} sınıfına taşındı.
+     */
+    static String genelAdres(HttpServletRequest request, IstemciAdresi istemciAdresi) {
+        return istemciAdresi.coz(request);
     }
 
     /**

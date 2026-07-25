@@ -50,6 +50,10 @@ services:
       BIDB_YONETICI_PAROLA: ${BIDB_YONETICI_PAROLA:-admin}
       # Panelden yüklenen belgeler burada durur; ön yüz aynı birimi okur
       BIDB_DOSYA_DIZINI: /veri/dosyalar
+      # Ön yüz vekilinin kimliğini kanıtlayan paylaşılan sır (frontend ile aynı
+      # değer). Tanımlıysa yalnızca doğru anahtarı taşıyan isteklerin bildirdiği
+      # istemci adresi kabul edilir — bkz. IstemciAdresi.
+      BIDB_VEKIL_ANAHTARI: ${BIDB_VEKIL_ANAHTARI:-}
     volumes:
       - belgeler:/veri/dosyalar
     ports:
@@ -76,6 +80,13 @@ services:
     environment:
       BIDB_API: http://backend:8080
       ALLOWED_HOSTS: localhost,127.0.0.1,bidb.hacettepe.edu.tr
+      # Backend'in, iletilen gerçek istemci adresine güvenmesi için bu vekilin
+      # kimliğini kanıtlayan paylaşılan sır. İki serviste de AYNI değer olmalı.
+      # Üretimde mutlaka rastgele bir değere ayarlanmalıdır; tanımsız
+      # bırakılırsa backend ara sunucuya ağ konumuna göre güvenir (bkz.
+      # IstemciAdresi) — bu, backend'e doğrudan erişebilen bir sürecin sahte
+      # istemci adresi bildirmesini engellemez.
+      BIDB_VEKIL_ANAHTARI: ${BIDB_VEKIL_ANAHTARI:-}
     volumes:
       # Panelden yüklenen belgeler (backend yazar, ön yüz sunar)
       - belgeler:/veri/dosyalar:ro

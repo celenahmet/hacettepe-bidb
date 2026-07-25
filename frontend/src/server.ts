@@ -222,6 +222,12 @@ app.use('/api', express.raw({ type: '*/*', limit: '5mb' }), async (req, res) => 
     // taşınır; yalnızca güvenlik denetim kaydında (bkz. YoneticiGirisSinirlayici)
     // "yerel/private" adres olarak kullanılır.
     basliklar['X-Bidb-Yerel-Adres'] = buAdim;
+    // Backend, iletilen istemci adresine yalnızca isteğin GERÇEKTEN bu vekilden
+    // geçtiğini doğrulayabilirse güvenir. Anahtar tanımlıysa (üretimde tanımlı
+    // olmalı), backend'e ağdan doğrudan ulaşabilen biri sahte bir zincir
+    // gönderip adrese dayanan korumaları atlatamaz — bkz. IstemciAdresi.
+    const vekilAnahtari = process.env['BIDB_VEKIL_ANAHTARI'];
+    if (vekilAnahtari) basliklar['X-Bidb-Vekil-Anahtari'] = vekilAnahtari;
 
     const govdeliMi = req.method !== 'GET' && req.method !== 'HEAD';
     const yanit = await fetch(hedef, {

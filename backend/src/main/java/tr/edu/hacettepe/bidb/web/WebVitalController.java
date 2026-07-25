@@ -45,7 +45,7 @@ public class WebVitalController {
 
     @PostMapping
     public ResponseEntity<Void> collect(@Valid @RequestBody VitalRequest request, HttpServletRequest servletRequest) {
-        String adres = HizSinirlayici.istekAdresi(servletRequest);
+        String adres = hizSinirlayici.istekAdresi(servletRequest);
         if (hizSinirlayici.asildiMi("vital:" + adres, 60, 60)) {
             throw new ResponseStatusException(HttpStatus.TOO_MANY_REQUESTS);
         }

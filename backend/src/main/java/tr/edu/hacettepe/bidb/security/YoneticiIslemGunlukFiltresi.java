@@ -28,9 +28,11 @@ public class YoneticiIslemGunlukFiltresi extends OncePerRequestFilter {
     private static final String OTURUM_BASLIGI = "X-Bidb-Oturum";
 
     private final IslemGunlukServisi gunlukServisi;
+    private final IstemciAdresi istemciAdresi;
 
-    public YoneticiIslemGunlukFiltresi(IslemGunlukServisi gunlukServisi) {
+    public YoneticiIslemGunlukFiltresi(IslemGunlukServisi gunlukServisi, IstemciAdresi istemciAdresi) {
         this.gunlukServisi = gunlukServisi;
+        this.istemciAdresi = istemciAdresi;
     }
 
     @Override
@@ -57,7 +59,7 @@ public class YoneticiIslemGunlukFiltresi extends OncePerRequestFilter {
                 String oturum = request.getHeader(OTURUM_BASLIGI);
                 gunlukServisi.kaydet(
                         (oturum == null || oturum.isBlank()) ? "bilinmiyor" : oturum,
-                        IstekBilgisi.genelAdres(request),
+                        IstekBilgisi.genelAdres(request, istemciAdresi),
                         IstekBilgisi.yerelAdres(request),
                         IstekBilgisi.denenenKullaniciAdi(request),
                         request.getMethod(),

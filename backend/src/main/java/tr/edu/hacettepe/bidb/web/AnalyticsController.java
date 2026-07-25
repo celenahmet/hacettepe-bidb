@@ -44,7 +44,7 @@ public class AnalyticsController {
     public ResponseEntity<Void> collect(@Valid @RequestBody PageViewRequest request, HttpServletRequest servletRequest) {
         // Kimliksiz, kayıt yapılmayan bir uç; script ile tekrarlı çağrılarda
         // veritabanını şişirmesin diye IP başına makul bir üst sınır konur.
-        String adres = HizSinirlayici.istekAdresi(servletRequest);
+        String adres = hizSinirlayici.istekAdresi(servletRequest);
         if (hizSinirlayici.asildiMi("goruntuleme:" + adres, 60, 60)) {
             throw new ResponseStatusException(HttpStatus.TOO_MANY_REQUESTS);
         }
