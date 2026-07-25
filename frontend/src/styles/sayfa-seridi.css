@@ -15,22 +15,22 @@
     border-bottom: 3px solid var(--hu-kirmizi);
   }
 
-  /* Amblemden esinlenen işaret. Önceden brightness(0)+invert(1) ile düz
-     beyaz bir silüete çevriliyordu — kalkanın yuvarlak hatlarıyla birlikte
-     tanınmaz, belirsiz bir leke gibi görünüyordu. Harita önizlemesindeki
-     aynı iz zaten kendi doğal renkleriyle (kırmızı+beyaz) iyi okunuyordu;
-     burada da aynı yaklaşım kullanılır. */
+  /* Amblemden esinlenen işaret. Önceden top/right yüzde ile konumlanıyordu;
+     şeridin kendisi 140px'lik dar bir kutu olduğu için 300px'lik logonun
+     çoğu üstten kırpılıyor, yalnızca tanınmaz bir parçası görünüyordu.
+     Footer ve harita önizlemesindeki iz gibi sağ-alt köşeye px ile
+     sabitlenince logo baştan sona görünür, yalnızca kenarda hafifçe taşar. */
   .sayfa-seridi::before {
     content: "";
     position: absolute;
     z-index: 0;
-    top: -30%;
-    right: -4%;
-    width: 300px;
-    height: 300px;
+    right: -18px;
+    bottom: -18px;
+    width: 210px;
+    height: 210px;
     background: url("/hu-logo.svg") no-repeat center / contain;
-    opacity: 0.5;
-    transform: rotate(10deg);
+    opacity: 0.35;
+    transform: rotate(-12deg);
     pointer-events: none;
   }
 
@@ -40,7 +40,7 @@
     flex-direction: column;
     justify-content: center;
     gap: var(--bosluk-2);
-    min-height: 140px;
+    min-height: 190px;
     padding-block: var(--bosluk-6);
   }
 
@@ -105,14 +105,14 @@
   }
 
   @media (max-width: 780px) {
-    .sayfa-seridi::before { width: 220px; height: 220px; opacity: 0.18; }
+    .sayfa-seridi::before { width: 170px; height: 170px; right: -14px; bottom: -14px; opacity: 0.3; }
   }
 
   @media (max-width: 620px) {
-    .sayfa-seridi-ic { min-height: 100px; padding-block: var(--bosluk-5); gap: 4px; }
+    .sayfa-seridi-ic { min-height: 150px; padding-block: var(--bosluk-5); gap: 4px; }
     .sayfa-seridi-etiket { font-size: var(--olcu-lg); }
     .sayfa-iz { font-size: var(--olcu-xs); }
     .sayfa-iz li:last-child span { max-width: 58vw; }
-    .sayfa-seridi::before { width: 160px; height: 160px; right: -10%; opacity: 0.15; }
+    .sayfa-seridi::before { width: 130px; height: 130px; right: -10px; bottom: -10px; opacity: 0.25; }
   }
 }
