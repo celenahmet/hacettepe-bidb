@@ -1,33 +1,35 @@
 /* İçerik sayfalarının üstündeki konum şeridi (breadcrumb).
  *
- * Üst menüyle sayfa içeriği arasındaki alan, tüm iç sayfalarda ortak
- * kurumsal bir "neredesin" şeridi taşır: küçük bölüm etiketi + Ana Sayfa /
- * Bölüm / Sayfa breadcrumb'ı, sağda amblemden esinlenen çok soluk, eğimli
- * ve kırpılmış bir işaret. Ağır bir hero slider değil — bilgi taşıyan,
- * ölçülü bir geçiş.
+ * Üst menüyle sayfa içeriği arasındaki alan, tüm iç sayfalarda ortak bir
+ * kurumsal başlık şeridi taşır: üstte küçük Ana Sayfa / Bölüm / Sayfa
+ * breadcrumb'ı, altında o bölümün adı — koyu lacivert zemin, alt kenarda
+ * kırmızı vurgu çizgisi, sağda amblemden esinlenen soluk beyaz bir işaret.
+ * Ağır bir hero slider değil, ama sayfanın nerede olduğunu net ve
+ * kurumsal bir ağırlıkla anlatan bir geçiş.
  */
 @layer kamu {
   .sayfa-seridi {
     position: relative;
     overflow: hidden;
-    background: linear-gradient(120deg, #fdfbfa 0%, #fdf4f3 60%, #fbeeed 100%);
-    border-bottom: 1px solid var(--cizgi);
+    background: var(--hu-lacivert);
+    border-bottom: 3px solid var(--hu-kirmizi);
   }
 
   /* Amblemden esinlenen işaret: kutunun kendisinden büyük tutulup eğik
      yerleştirilir, böylece görünen yalnızca birkaç kavisli çizgidir —
      tam logo gibi baskın durmaz, üst/alttan .sayfa-seridi'nin overflow:hidden'ı
-     tarafından kırpılır. */
+     tarafından kırpılır. Koyu zeminde okunması için beyaza çevrilir. */
   .sayfa-seridi::before {
     content: "";
     position: absolute;
-    top: -60%;
-    right: -6%;
-    width: 300px;
-    height: 320px;
+    top: -55%;
+    right: -5%;
+    width: 340px;
+    height: 360px;
     background: url("/hu-logo.svg") no-repeat center / contain;
-    opacity: 0.08;
-    transform: rotate(12deg);
+    opacity: 0.12;
+    filter: brightness(0) invert(1);
+    transform: rotate(10deg);
     pointer-events: none;
   }
 
@@ -36,18 +38,17 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 6px;
-    min-height: 100px;
-    padding-block: var(--bosluk-4);
+    gap: var(--bosluk-2);
+    min-height: 112px;
+    padding-block: var(--bosluk-5);
   }
 
   .sayfa-seridi-etiket {
     margin: 0;
-    color: var(--hu-kirmizi);
-    font-size: 11px;
+    color: #fff;
+    font-size: var(--olcu-xl);
     font-weight: var(--kalinlik-kalin);
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
+    letter-spacing: -0.01em;
   }
 
   .sayfa-iz {
@@ -62,6 +63,7 @@
     font-size: var(--olcu-sm);
     letter-spacing: 0.01em;
     scrollbar-width: none;
+    order: -1;
   }
   .sayfa-iz::-webkit-scrollbar { display: none; }
 
@@ -69,7 +71,7 @@
     display: flex;
     flex: none;
     align-items: center;
-    color: var(--metin-3);
+    color: rgba(255, 255, 255, 0.62);
     white-space: nowrap;
   }
 
@@ -81,35 +83,35 @@
     width: 6px;
     height: 6px;
     margin: 0 var(--bosluk-3);
-    border-top: 1.5px solid var(--metin-acik);
-    border-right: 1.5px solid var(--metin-acik);
+    border-top: 1.5px solid rgba(255, 255, 255, 0.4);
+    border-right: 1.5px solid rgba(255, 255, 255, 0.4);
     transform: rotate(45deg);
   }
 
   .sayfa-iz a {
-    color: var(--metin-3);
+    color: rgba(255, 255, 255, 0.85);
     text-decoration: none;
     transition: color var(--gecis-hizli);
   }
-  .sayfa-iz a:hover { color: var(--hu-kirmizi); text-decoration: underline; }
+  .sayfa-iz a:hover { color: #fff; text-decoration: underline; }
 
   .sayfa-iz li:last-child span {
     overflow: hidden;
     max-width: 46vw;
-    color: var(--hu-lacivert);
+    color: #fff;
     font-weight: var(--kalinlik-kalin);
     text-overflow: ellipsis;
   }
 
   @media (max-width: 780px) {
-    .sayfa-seridi::before { width: 220px; height: 240px; opacity: 0.06; }
+    .sayfa-seridi::before { width: 240px; height: 260px; opacity: 0.1; }
   }
 
   @media (max-width: 620px) {
-    .sayfa-seridi-ic { min-height: 64px; padding-block: var(--bosluk-3); }
-    .sayfa-seridi-etiket { font-size: 10px; }
+    .sayfa-seridi-ic { min-height: 84px; padding-block: var(--bosluk-4); gap: 4px; }
+    .sayfa-seridi-etiket { font-size: var(--olcu-lg); }
     .sayfa-iz { font-size: var(--olcu-xs); }
     .sayfa-iz li:last-child span { max-width: 58vw; }
-    .sayfa-seridi::before { width: 150px; height: 170px; right: -14%; opacity: 0.05; }
+    .sayfa-seridi::before { width: 170px; height: 190px; right: -12%; opacity: 0.08; }
   }
 }
