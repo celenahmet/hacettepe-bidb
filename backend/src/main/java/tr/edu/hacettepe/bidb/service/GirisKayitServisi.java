@@ -154,6 +154,9 @@ public class GirisKayitServisi {
             if (kok.has("error")) return;
             if (kok.hasNonNull("city")) olay.setCity(kisalt(kok.get("city").asText(), 120));
             if (kok.hasNonNull("country_name")) olay.setCountry(kisalt(kok.get("country_name").asText(), 120));
+            // "org": bağlantının geldiği internet servis sağlayıcısı/kurum (ör.
+            // "Türk Telekom", "Google LLC") — ipapi.co'nun WHOIS/ASN kaydından okuduğu ad.
+            if (kok.hasNonNull("org")) olay.setIsp(kisalt(kok.get("org").asText(), 200));
         } catch (Exception e) {
             log.debug("Konum çözümlenemedi ({}): {}", ip, e.getMessage());
         }

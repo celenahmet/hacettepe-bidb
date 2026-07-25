@@ -1391,6 +1391,7 @@
   }
 
   .konum-deger-satiri { display: inline-flex; align-items: center; gap: var(--bosluk-2); }
+  .konum-saglayici { display: block; margin-top: 2px; color: var(--metin-3); font-size: var(--olcu-xs); }
   .konum-info-buton {
     display: inline-flex;
     align-items: center;

@@ -128,17 +128,17 @@ interface MobileMenuItem {
             <span class="no">11</span>
             <span>Personel</span>
           </button>
-          <button type="button" [class.etkin]="sekme() === 'girisKayitlari'" (click)="sekme.set('girisKayitlari')">
+          <button type="button" [class.etkin]="sekme() === 'islemGunlugu'" (click)="sekme.set('islemGunlugu')">
             <span class="no">12</span>
+            <span>İşlem Günlüğü</span>
+          </button>
+          <button type="button" [class.etkin]="sekme() === 'girisKayitlari'" (click)="sekme.set('girisKayitlari')">
+            <span class="no">13</span>
             <span>Güvenlik Kayıtları</span>
           </button>
           <button type="button" [class.etkin]="sekme() === 'hakkinda'" (click)="sekme.set('hakkinda')">
-            <span class="no">13</span>
-            <span>Yazılım Hakkında</span>
-          </button>
-          <button type="button" [class.etkin]="sekme() === 'islemGunlugu'" (click)="sekme.set('islemGunlugu')">
             <span class="no">14</span>
-            <span>İşlem Günlüğü</span>
+            <span>Yazılım Hakkında</span>
           </button>
 
           <button type="button" class="ray-liste-cikis" (click)="api.cikis()">Çıkış</button>
@@ -1298,9 +1298,9 @@ export class AdminPanelComponent {
     iletisim: { no: '09', ad: 'İletişim Bilgileri' },
     tickets: { no: '10', ad: 'İletişim Talepleri' },
     personel: { no: '11', ad: 'Personel' },
-    girisKayitlari: { no: '12', ad: 'Güvenlik Kayıtları' },
-    hakkinda: { no: '13', ad: 'Yazılım Hakkında' },
-    islemGunlugu: { no: '14', ad: 'İşlem Günlüğü' }
+    islemGunlugu: { no: '12', ad: 'İşlem Günlüğü' },
+    girisKayitlari: { no: '13', ad: 'Güvenlik Kayıtları' },
+    hakkinda: { no: '14', ad: 'Yazılım Hakkında' }
   };
 
   protected bolumNo(): string {
@@ -1339,9 +1339,9 @@ export class AdminPanelComponent {
     { tab: 'iletisim', label: 'İletişim Bilgileri', note: 'Kurumsal iletişim bilgileri' },
     { tab: 'tickets', label: 'İletişim Talepleri', note: 'Form kayıtları ve takip' },
     { tab: 'personel', label: 'Personel', note: 'Birim ve personel kayıtları' },
+    { tab: 'islemGunlugu', label: 'İşlem Günlüğü', note: 'Panelde yapılan değişiklikler' },
     { tab: 'girisKayitlari', label: 'Güvenlik Kayıtları', note: 'Giriş denemeleri kaydı' },
-    { tab: 'hakkinda', label: 'Yazılım Hakkında', note: 'Bu panel hakkında bilgi' },
-    { tab: 'islemGunlugu', label: 'İşlem Günlüğü', note: 'Panelde yapılan değişiklikler' }
+    { tab: 'hakkinda', label: 'Yazılım Hakkında', note: 'Bu panel hakkında bilgi' }
   ];
   protected analytics = signal<AnalyticsReport | null>(null);
   protected analyticsLoading = signal(false);

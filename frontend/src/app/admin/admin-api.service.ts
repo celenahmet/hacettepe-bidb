@@ -253,6 +253,7 @@ export interface LoginEvent {
   operatingSystem: string | null;
   city: string | null;
   country: string | null;
+  isp: string | null;
 }
 
 export interface AuditEvent {

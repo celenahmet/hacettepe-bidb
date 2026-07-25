@@ -46,6 +46,9 @@ public class AdminLoginEvent {
     @Column(length = 120)
     private String country;
 
+    @Column(length = 200)
+    private String isp;
+
     public Long getId() { return id; }
     public OffsetDateTime getOccurredAt() { return occurredAt; }
     public boolean isSuccessful() { return successful; }
@@ -68,4 +71,6 @@ public class AdminLoginEvent {
     public void setCity(String city) { this.city = city; }
     public String getCountry() { return country; }
     public void setCountry(String country) { this.country = country; }
+    public String getIsp() { return isp; }
+    public void setIsp(String isp) { this.isp = isp; }
 }

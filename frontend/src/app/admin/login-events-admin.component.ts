@@ -121,6 +121,9 @@ import { AdminApiService, LoginEvent } from './admin-api.service';
                 <button type="button" class="konum-info-buton" aria-label="Konum bilgisi hakkında"
                         [attr.aria-expanded]="konumBilgiAcik()" (click)="konumBilgiAcik.set(!konumBilgiAcik())">i</button>
               </span>
+              @if (k.isp) {
+                <span class="konum-saglayici">İnternet sağlayıcısı: {{ k.isp }}</span>
+              }
               @if (konumBilgiAcik()) {
                 <p class="konum-info-metni">
                   Bu konum, IP adresinin WHOIS/bölgesel kayıt bilgisine göre yapılan bir tahmindir.
