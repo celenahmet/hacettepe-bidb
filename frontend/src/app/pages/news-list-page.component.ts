@@ -2,7 +2,7 @@ import { Component, inject, signal, computed } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Api } from '../core/api.service';
 import { Seo } from '../core/seo.service';
-import { Language, NewsSummary } from '../core/models';
+import { Language, NewsAudience, NewsSummary } from '../core/models';
 import { SideMenuComponent } from '../layout/side-menu.component';
 import { NewsCardComponent } from './news-card.component';
 
@@ -33,29 +33,35 @@ import { NewsCardComponent } from './news-card.component';
         </header>
 
         @if (duyurular().length) {
-          <div class="duyuru-kontrolleri">
-            @if (kategoriler().length > 1) {
-              <div class="kategori-filtreleri">
-                <button 
-                  [class.aktif]="seciliKategori() === null"
-                  (click)="seciliKategori.set(null)"
-                  class="kategori-buton">
-                  {{ language() === 'en' ? 'All' : 'Tümü' }}
-                </button>
-                @for (k of kategoriler(); track k) {
-                  <button 
-                    [class.aktif]="seciliKategori() === k"
-                    (click)="seciliKategori.set(k)"
-                    class="kategori-buton">
-                    {{ kategoriMetni(k) }}
-                  </button>
-                }
-              </div>
-            }
+          <div class="duyuru-filtre-alani">
+            <div class="duyuru-filtre-grubu">
+              @if (kategoriler().length > 1) {
+                <label class="duyuru-filtre">
+                  <span>{{ language() === 'en' ? 'Category' : 'Kategori' }}</span>
+                  <select [value]="seciliKategori() ?? ''" (change)="seciliKategori.set($any($event.target).value || null)">
+                    <option value="">{{ language() === 'en' ? 'All' : 'Tümü' }}</option>
+                    @for (k of kategoriler(); track k) {
+                      <option [value]="k">{{ kategoriMetni(k) }}</option>
+                    }
+                  </select>
+                </label>
+              }
+              @if (hedefKitleler().length > 1) {
+                <label class="duyuru-filtre">
+                  <span>{{ language() === 'en' ? 'Audience' : 'Hedef Kitle' }}</span>
+                  <select [value]="seciliHedefKitle() ?? ''" (change)="seciliHedefKitle.set($any($event.target).value || null)">
+                    <option value="">{{ language() === 'en' ? 'All' : 'Tümü' }}</option>
+                    @for (k of hedefKitleler(); track k) {
+                      <option [value]="k">{{ hedefKitleMetni(k) }}</option>
+                    }
+                  </select>
+                </label>
+              }
+            </div>
 
             <div class="arama-kutusu">
-              <input 
-                type="text" 
+              <input
+                type="text"
                 [placeholder]="language() === 'en' ? 'Search announcements...' : 'Duyurularda ara...'"
                 (input)="aramaMetni.set($any($event.target).value)"
                 [value]="aramaMetni()">
@@ -64,7 +70,7 @@ import { NewsCardComponent } from './news-card.component';
 
           <div class="haber-izgara">
             @for (d of filtrelenmisDuyurular(); track d.title; let i = $index) {
-              <bidb-news-card [haber]="d" [dilDegeri]="language()" [oneCikan]="i === 0 && !aramaMetni() && !seciliKategori()"></bidb-news-card>
+              <bidb-news-card [haber]="d" [dilDegeri]="language()" [oneCikan]="i === 0 && !aramaMetni() && !seciliKategori() && !seciliHedefKitle()"></bidb-news-card>
             }
           </div>
 
@@ -74,7 +80,7 @@ import { NewsCardComponent } from './news-card.component';
             </p>
           }
 
-          @if (language() === 'tr' && seciliKategori() === null && !aramaMetni()) {
+          @if (language() === 'tr' && seciliKategori() === null && seciliHedefKitle() === null && !aramaMetni()) {
             <p class="duyuru-arsiv">
               <a routerLink="/tr/archive">Daha eski duyurular için Arşiv sayfasına bakabilirsiniz.</a>
             </p>
@@ -86,26 +92,56 @@ import { NewsCardComponent } from './news-card.component';
     </div>
   `,
   styles: [`
-    .duyuru-kontrolleri {
+    .duyuru-filtre-alani {
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
+      gap: 1.25rem;
       margin-bottom: 3rem;
-      border-bottom: 1px solid var(--cizgi);
-      padding-bottom: 1rem;
+      padding: 1.25rem 1.5rem;
+      border: 1px solid var(--cizgi);
+      border-left: 3px solid var(--hu-kirmizi);
+      background: var(--zemin);
     }
     @media (min-width: 768px) {
-      .duyuru-kontrolleri {
+      .duyuru-filtre-alani {
         flex-direction: row;
         justify-content: space-between;
-        align-items: center;
+        align-items: flex-end;
+        gap: 2rem;
       }
     }
-    .kategori-filtreleri {
+    .duyuru-filtre-grubu {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.5rem;
+      gap: 1.5rem;
       flex: 1;
+    }
+    .duyuru-filtre {
+      display: grid;
+      gap: 0.35rem;
+      min-width: 200px;
+    }
+    .duyuru-filtre span {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--metin-3);
+    }
+    .duyuru-filtre select {
+      width: 100%;
+      padding: 0.55rem 0.65rem;
+      border: 1px solid var(--cizgi-koyu);
+      border-radius: 2px;
+      background: var(--yuzey);
+      color: var(--metin);
+      font: inherit;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .duyuru-filtre select:focus {
+      outline: 2px solid color-mix(in srgb, var(--hu-kirmizi) 25%, transparent);
+      border-color: var(--hu-kirmizi);
     }
     .arama-kutusu {
       position: relative;
@@ -135,26 +171,6 @@ import { NewsCardComponent } from './news-card.component';
     .arama-kutusu input:focus {
       border-bottom-color: var(--hu-kirmizi);
     }
-    .kategori-buton {
-      padding: 0.25rem 0.75rem;
-      border-radius: 4px;
-      border: 1px solid transparent;
-      background: transparent;
-      color: var(--metin-2);
-      cursor: pointer;
-      font-size: 0.85rem;
-      font-weight: 500;
-      transition: all 0.2s ease;
-    }
-    .kategori-buton:hover {
-      color: var(--hu-kirmizi);
-      background: rgba(179, 24, 33, 0.05);
-    }
-    .kategori-buton.aktif {
-      color: var(--hu-kirmizi);
-      border-color: var(--hu-kirmizi);
-      background: rgba(179, 24, 33, 0.05);
-    }
   `]
 })
 export class NewsListPageComponent {
@@ -165,15 +181,21 @@ export class NewsListPageComponent {
   protected language = signal<Language>('tr');
   protected duyurular = signal<NewsSummary[]>([]);
   protected seciliKategori = signal<string | null>(null);
+  protected seciliHedefKitle = signal<string | null>(null);
   protected aramaMetni = signal<string>('');
 
   protected filtrelenmisDuyurular = computed(() => {
     let tumu = this.duyurular();
     const kategori = this.seciliKategori();
+    const hedefKitle = this.seciliHedefKitle();
     const arama = this.aramaMetni().toLowerCase().trim();
 
     if (kategori) {
       tumu = tumu.filter(d => d.category === kategori);
+    }
+
+    if (hedefKitle) {
+      tumu = tumu.filter(d => d.audience === hedefKitle);
     }
 
     if (arama) {
@@ -197,6 +219,36 @@ export class NewsListPageComponent {
       return a.localeCompare(b);
     });
   });
+
+  protected hedefKitleler = computed(() => {
+    const tumu = this.duyurular();
+    const set = new Set(tumu.map(d => d.audience).filter(a => a));
+    return Array.from(set).sort((a, b) => a.localeCompare(b));
+  });
+
+  protected hedefKitleMetni(k: string): string {
+    const dil = this.language();
+    const tr: Record<NewsAudience, string> = {
+      'all-users': 'Tüm Kullanıcılar',
+      'students': 'Öğrenciler',
+      'academic-staff': 'Akademik Personel',
+      'administrative-staff': 'İdari Personel',
+      'all-staff': 'Tüm Personel',
+      'alumni': 'Mezunlar',
+      'unit-managers': 'Birim Yöneticileri'
+    };
+    const en: Record<NewsAudience, string> = {
+      'all-users': 'All Users',
+      'students': 'Students',
+      'academic-staff': 'Academic Staff',
+      'administrative-staff': 'Administrative Staff',
+      'all-staff': 'All Staff',
+      'alumni': 'Alumni',
+      'unit-managers': 'Unit Managers'
+    };
+    const lookup = (dil === 'en' ? en : tr) as Record<string, string>;
+    return lookup[k] || k;
+  }
 
   protected kategoriMetni(k: string): string {
     const dil = this.language();
@@ -239,6 +291,7 @@ export class NewsListPageComponent {
       const dil = (p.get('language') as Language) ?? 'tr';
       this.language.set(dil);
       this.seciliKategori.set(null); // Dil değiştiğinde filtreyi sıfırla
+      this.seciliHedefKitle.set(null);
       this.aramaMetni.set(''); // Arama metnini sıfırla
 
       this.api.anaSayfa(dil).subscribe((v) => this.duyurular.set(v.news));
