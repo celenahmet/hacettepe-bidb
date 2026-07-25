@@ -14,6 +14,7 @@ import tr.edu.hacettepe.bidb.model.ContactTicket;
 import tr.edu.hacettepe.bidb.model.ContactTicketEvent;
 import tr.edu.hacettepe.bidb.repo.ContactTicketEventRepo;
 import tr.edu.hacettepe.bidb.repo.ContactTicketRepo;
+import tr.edu.hacettepe.bidb.security.IstemciAdresi;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -45,12 +46,15 @@ public class ContactTicketController {
     private final ContactTicketRepo tickets;
     private final ContactTicketEventRepo events;
     private final Path ekDizini;
+    private final IstemciAdresi istemciAdresi;
     private final Map<String, Deque<Instant>> attempts = new ConcurrentHashMap<>();
 
     public ContactTicketController(ContactTicketRepo tickets, ContactTicketEventRepo events,
+                                    IstemciAdresi istemciAdresi,
                                     @Value("${bidb.dosya-dizini:/veri/dosyalar}") String dosyaDizini) {
         this.tickets = tickets;
         this.events = events;
+        this.istemciAdresi = istemciAdresi;
         // Panelden yönetilen belgelerle aynı paylaşılan birim kullanılır, ancak
         // ziyaretçi ekleri ayrı bir alt klasörde durur; admin dosya listesine karışmaz.
         this.ekDizini = Paths.get(dosyaDizini).resolve("talepler");
@@ -172,10 +176,17 @@ public class ContactTicketController {
         }
     }
 
+    /**
+     * Hız sınırının anahtarı olan istemci adresi.
+     *
+     * Burada da X-Forwarded-For'un İLK adımı okunuyordu; o adım istemcinin
+     * kendi yazdığı değer olduğundan başlığı döndüren biri 10 dakikalık 5
+     * talep sınırını tümüyle atlatabiliyordu (doğrulandı: 8/8 talep kabul
+     * edildi). Ek dosya sınırı 10 MB olduğu için bu, disk doldurmaya açık bir
+     * kapıydı. Çözüm tek yerde: bkz. IstemciAdresi.
+     */
     private String clientAddress(HttpServletRequest request) {
-        String forwarded = request.getHeader("X-Forwarded-For");
-        if (forwarded != null && !forwarded.isBlank()) return forwarded.split(",")[0].trim();
-        return Optional.ofNullable(request.getRemoteAddr()).orElse("unknown");
+        return istemciAdresi.coz(request);
     }
 
     private String newReferenceCode() {
