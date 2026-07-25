@@ -202,6 +202,13 @@ app.use('/api', express.raw({ type: '*/*', limit: '5mb' }), async (req, res) => 
     const oncekiZincirMetni = Array.isArray(oncekiZincir) ? oncekiZincir.join(', ') : oncekiZincir;
     const buAdim = req.socket.remoteAddress ?? '';
     basliklar['X-Forwarded-For'] = oncekiZincirMetni ? `${oncekiZincirMetni}, ${buAdim}` : buAdim;
+    // Backend'de "server.forward-headers-strategy: framework" etkin olduğundan
+    // Spring, standart X-Forwarded-For başlığını okuyup getRemoteAddr()'ı buna göre
+    // yeniden yazıyor (ve başlığı sarmalanmış istekten kaldırıyor) — bu yüzden bu SSR
+    // sunucusuna doğrudan bağlanan tarafın adresi, standart olmayan ayrı bir başlıkla
+    // taşınır; yalnızca güvenlik denetim kaydında (bkz. YoneticiGirisSinirlayici)
+    // "yerel/private" adres olarak kullanılır.
+    basliklar['X-Bidb-Yerel-Adres'] = buAdim;
 
     const govdeliMi = req.method !== 'GET' && req.method !== 'HEAD';
     const yanit = await fetch(hedef, {

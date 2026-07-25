@@ -22,11 +22,11 @@ public class AdminLoginEventController {
 
     public record LoginEventView(
             Long id, OffsetDateTime occurredAt, boolean successful, String attemptedUsername,
-            String ipAddress, String deviceClass, String browser, String operatingSystem,
+            String ipAddress, String localIpAddress, String deviceClass, String browser, String operatingSystem,
             String city, String country) {
         static LoginEventView of(AdminLoginEvent e) {
             return new LoginEventView(e.getId(), e.getOccurredAt(), e.isSuccessful(), e.getAttemptedUsername(),
-                    e.getIpAddress(), e.getDeviceClass(), e.getBrowser(), e.getOperatingSystem(),
+                    e.getIpAddress(), e.getLocalIpAddress(), e.getDeviceClass(), e.getBrowser(), e.getOperatingSystem(),
                     e.getCity(), e.getCountry());
         }
     }

@@ -23,6 +23,11 @@ public class AdminLoginEvent {
     @Column(name = "ip_address", nullable = false, length = 64)
     private String ipAddress;
 
+    /** Doğrudan bağlantının geldiği adres (genelde kurum içi/private ağ); ipAddress ile
+     *  aynıysa (ör. ters vekil sunucu yoksa) yine de ayrı saklanır — karşılaştırma kolaylaşır. */
+    @Column(name = "local_ip_address", length = 64)
+    private String localIpAddress;
+
     @Column(name = "user_agent", length = 500)
     private String userAgent;
 
@@ -49,6 +54,8 @@ public class AdminLoginEvent {
     public void setAttemptedUsername(String attemptedUsername) { this.attemptedUsername = attemptedUsername; }
     public String getIpAddress() { return ipAddress; }
     public void setIpAddress(String ipAddress) { this.ipAddress = ipAddress; }
+    public String getLocalIpAddress() { return localIpAddress; }
+    public void setLocalIpAddress(String localIpAddress) { this.localIpAddress = localIpAddress; }
     public String getUserAgent() { return userAgent; }
     public void setUserAgent(String userAgent) { this.userAgent = userAgent; }
     public String getDeviceClass() { return deviceClass; }

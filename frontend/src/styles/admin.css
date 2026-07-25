@@ -1384,6 +1384,28 @@
     text-transform: uppercase;
   }
 
+  .giris-konum-satiri small { display: inline-flex; align-items: center; gap: 4px; margin-bottom: 4px; }
+  .konum-info-buton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--metin-acik);
+    cursor: pointer;
+  }
+  .konum-info-buton:hover, .konum-info-buton[aria-expanded="true"] { color: var(--hu-kirmizi); }
+  .konum-info-metni {
+    margin: var(--bosluk-2) 0 0;
+    padding: var(--bosluk-2) var(--bosluk-3);
+    border-left: 2px solid var(--cizgi-koyu);
+    background: var(--yuzey-2);
+    color: var(--metin-3);
+    font-size: var(--olcu-xs);
+    line-height: 1.5;
+  }
+
   /* ================= analitik ================= */
 
   .analitik-ozet {

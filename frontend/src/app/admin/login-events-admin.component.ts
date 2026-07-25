@@ -41,7 +41,7 @@ import { AdminApiService, LoginEvent } from './admin-api.service';
                 <th>Zaman</th>
                 <th>Durum</th>
                 <th>Kullanıcı adı</th>
-                <th>IP adresi (IPv4)</th>
+                <th>Genel IPv4</th>
                 <th>Konum</th>
                 <th>Cihaz</th>
                 <th>Tarayıcı / İşletim sistemi</th>
@@ -51,7 +51,7 @@ import { AdminApiService, LoginEvent } from './admin-api.service';
               @for (k of kayitlar(); track k.id) {
                 <tr class="giris-kayit-satir" tabindex="0" role="button"
                     [attr.aria-label]="'Ayrıntıları gör: ' + tarihSaat(k.occurredAt)"
-                    (click)="acikKayit.set(k)" (keydown.enter)="acikKayit.set(k)">
+                    (click)="detayAc(k)" (keydown.enter)="detayAc(k)">
                   <td><small>{{ tarihSaat(k.occurredAt) }}</small></td>
                   <td>
                     <span class="giris-kayit-rozet" [class.basarili]="k.successful" [class.basarisiz]="!k.successful">
@@ -104,11 +104,33 @@ import { AdminApiService, LoginEvent } from './admin-api.service';
           </li>
           <li>
             <svg viewBox="0 0 24 24" aria-hidden="true" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h18"/></svg>
-            <span><small>IP adresi (IPv4)</small>{{ k.ipAddress }}</span>
+            <span><small>Genel IPv4 (public)</small>{{ k.ipAddress }}</span>
           </li>
-          <li>
+          @if (k.localIpAddress && k.localIpAddress !== k.ipAddress) {
+            <li>
+              <svg viewBox="0 0 24 24" aria-hidden="true" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="2"/></svg>
+              <span><small>Yerel IPv4 (private)</small>{{ k.localIpAddress }}</span>
+            </li>
+          }
+          <li class="giris-konum-satiri">
             <svg viewBox="0 0 24 24" aria-hidden="true" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
-            <span><small>Tahmini konum</small>{{ konum(k) }}</span>
+            <span>
+              <small>
+                Tahmini konum
+                <button type="button" class="konum-info-buton" aria-label="Konum bilgisi hakkında"
+                        [attr.aria-expanded]="konumBilgiAcik()" (click)="konumBilgiAcik.set(!konumBilgiAcik())">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><circle cx="12" cy="8" r=".5" fill="currentColor" stroke-width="1"/></svg>
+                </button>
+              </small>
+              {{ konum(k) }}
+              @if (konumBilgiAcik()) {
+                <p class="konum-info-metni">
+                  Bu konum, IP adresinin WHOIS/bölgesel kayıt bilgisine göre yapılan bir tahmindir.
+                  Kurum içi ağlar, VPN, mobil operatör veya proxy gibi birçok sebepten dolayı
+                  gerçek fiziksel konumdan farklı — hatta yanlış — görünebilir; kesin kabul edilmemelidir.
+                </p>
+              }
+            </span>
           </li>
           <li>
             <svg viewBox="0 0 24 24" aria-hidden="true" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M10 18h4"/></svg>
@@ -130,6 +152,7 @@ export class LoginEventsAdminComponent implements OnInit {
   protected yukleniyor = signal(false);
   protected hata = signal('');
   protected acikKayit = signal<LoginEvent | null>(null);
+  protected konumBilgiAcik = signal(false);
 
   ngOnInit(): void {
     this.yukle();
@@ -148,6 +171,11 @@ export class LoginEventsAdminComponent implements OnInit {
         this.yukleniyor.set(false);
       }
     });
+  }
+
+  protected detayAc(k: LoginEvent): void {
+    this.konumBilgiAcik.set(false);
+    this.acikKayit.set(k);
   }
 
   protected konum(k: LoginEvent): string {

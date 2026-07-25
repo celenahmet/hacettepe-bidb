@@ -79,7 +79,7 @@ public class YoneticiGirisSinirlayici extends OncePerRequestFilter {
         }
 
         if (request.getRequestURI().equals(GIRIS_KAYIT_YOLU) && response.getStatus() != 429) {
-            girisKayitServisi.kaydet(adres, request.getHeader("User-Agent"),
+            girisKayitServisi.kaydet(adres, yerelAdres(request), request.getHeader("User-Agent"),
                     denenenKullaniciAdi(request), response.getStatus() < 400);
         }
 
@@ -110,5 +110,19 @@ public class YoneticiGirisSinirlayici extends OncePerRequestFilter {
         if (forwarded != null && !forwarded.isBlank()) return forwarded.split(",")[0].trim();
         String adres = request.getRemoteAddr();
         return adres == null ? "unknown" : adres;
+    }
+
+    /**
+     * SSR sunucusuna (server.ts) doğrudan bağlanan tarafın adresi — genelde kurum içi/
+     * özel bir ağ adresi. "server.forward-headers-strategy: framework" etkinken hem
+     * getRemoteAddr() hem de standart X-Forwarded-For başlığı Spring tarafından İLK
+     * (genel) adrese göre yeniden yazılıp sarmalanan istekten kaldırıldığından, bu bilgi
+     * standart olmayan ayrı bir başlıkla (bkz. server.ts) taşınır. Başlık yoksa (ör.
+     * doğrudan backend'e erişim, ara sunucu yok) getRemoteAddr() zaten doğru adrestir.
+     */
+    private static String yerelAdres(HttpServletRequest request) {
+        String yerel = request.getHeader("X-Bidb-Yerel-Adres");
+        if (yerel != null && !yerel.isBlank()) return yerel.trim();
+        return request.getRemoteAddr();
     }
 }

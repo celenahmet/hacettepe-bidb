@@ -43,11 +43,12 @@ public class GirisKayitServisi {
     }
 
     @Async
-    public void kaydet(String ipAdresiHam, String userAgent, String kullaniciAdi, boolean basarili) {
+    public void kaydet(String ipAdresiHam, String yerelAdresHam, String userAgent, String kullaniciAdi, boolean basarili) {
         try {
             String ipAdresi = ipv4Normallestir(ipAdresiHam);
             AdminLoginEvent olay = new AdminLoginEvent();
             olay.setIpAddress(ipAdresi);
+            olay.setLocalIpAddress(ipv4Normallestir(yerelAdresHam));
             olay.setUserAgent(kisalt(userAgent, 500));
             olay.setAttemptedUsername(kisalt(kullaniciAdi, 120));
             olay.setSuccessful(basarili);

@@ -247,6 +247,7 @@ export interface LoginEvent {
   successful: boolean;
   attemptedUsername: string | null;
   ipAddress: string;
+  localIpAddress: string | null;
   deviceClass: string | null;
   browser: string | null;
   operatingSystem: string | null;
