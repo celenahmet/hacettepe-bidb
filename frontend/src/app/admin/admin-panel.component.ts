@@ -1136,9 +1136,9 @@ interface MobileMenuItem {
               genel mimari yaklaşım, Bilgi İşlem Daire Başkanlığı tarafından
               belirlenmiş; uygulama bu çerçeve içinde geliştirilmiştir.
               Aktarılan sayfa içeriğinin birebir korunması, kurumsal kırmızı/
-              lacivert kimliğin tutarlı kullanımı ve şablon/yapay zekâ
-              hissi vermeyen, sade ve okunabilir bir tasarım dili gibi
-              ilkeler de baştan itibaren bu çerçevenin bir parçasıydı.
+              lacivert kimliğin tutarlı kullanımı ve sade, okunabilir bir
+              tasarım dili gibi ilkeler de baştan itibaren bu çerçevenin
+              bir parçasıydı.
             </p>
 
             <h2>Geliştirme notu</h2>
