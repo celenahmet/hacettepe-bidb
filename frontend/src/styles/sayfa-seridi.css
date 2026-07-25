@@ -2,75 +2,75 @@
  *
  * Üst menüyle sayfa içeriği arasındaki alan, tüm iç sayfalarda ortak bir
  * kurumsal başlık şeridi taşır: üstte küçük Ana Sayfa / Bölüm / Sayfa
- * breadcrumb'ı, altında o bölümün adı — lacivertten koyulaşan bir zemin,
- * ince bir çizgi dokusuyla derinlik, sağda amblemin kendi kırmızı
- * madalyonunda dik durduğu kompakt bir mühür. Ağır bir hero slider değil,
- * ama sayfanın nerede olduğunu net ve kurumsal bir ağırlıkla anlatan bir
- * geçiş.
+ * breadcrumb'ı, altında o bölümün adı.
+ *
+ * Amblem burada TEKRARLANMAZ: üst menü zaten aynı ekranda kırmızı yuvarlak
+ * bir amblem gösteriyor (bkz. .logo). Şeridin içine ikinci bir amblem
+ * (eğik watermark, kırpılan köşe izi, dik duran madalyon — hepsi denendi)
+ * her seferinde ya kırpılıyor ya da üst menüdeki amblemi gereksiz yere
+ * tekrarlayan bir "çıkartma" gibi duruyordu. Bunun yerine zemin kendi
+ * başına soyut, geometrik bir derinlik taşır: iki yumuşak ışıma (biri
+ * lacivertin üstünde soluk beyaz, biri köşede kurumsal kırmızının yankısı)
+ * ve ince bir çizgi dokusu. Kırpılma/eğiklik sorunu yaşanmaz çünkü hiçbir
+ * şeklin kendine has bir "doğru" yönü ya da siluet sınırı yok.
  */
 @layer kamu {
   .sayfa-seridi {
     position: relative;
     overflow: hidden;
-    background: linear-gradient(128deg, var(--hu-lacivert) 0%, #122a4f 100%);
+    background: linear-gradient(128deg, var(--hu-lacivert) 0%, #0f2547 100%);
     border-bottom: 3px solid var(--hu-kirmizi);
   }
 
-  /* Zemine derinlik katan, dikkat çekmeyen ince çizgi dokusu. */
-  .sayfa-seridi::after {
+  .sayfa-seridi::before {
     content: "";
     position: absolute;
     inset: 0;
     z-index: 0;
-    background-image: repeating-linear-gradient(
-      118deg,
-      rgba(255, 255, 255, 0.045) 0px,
-      rgba(255, 255, 255, 0.045) 1px,
-      transparent 1px,
-      transparent 30px
-    );
-    pointer-events: none;
-  }
-
-  /* Amblem: köşeye taşan, eğik ve kırpılan bir leke yerine — kendi
-     kırmızı madalyonunda dik duran, resmi bir mühür gibi kompakt bir
-     işaret. Bir arma eğik durunca sahiplenilmemiş/özensiz görünüyordu;
-     burada hizası dikey, boyu sabit ve tamamı her zaman görünür. */
-  .sayfa-seridi::before {
-    content: "";
-    position: absolute;
-    z-index: 1;
-    top: 50%;
-    right: var(--bosluk-8);
-    transform: translateY(-50%);
-    width: 88px;
-    height: 88px;
-    border-radius: 50%;
     background:
-      url("/hu-logo.svg") no-repeat center / 46px 68px,
-      linear-gradient(155deg, var(--hu-kirmizi-acik), var(--hu-kirmizi-koyu));
-    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+      radial-gradient(260px 260px at calc(100% - 20px) 145%, rgba(255, 255, 255, 0.12), transparent 70%),
+      radial-gradient(140px 140px at calc(100% - 190px) -50%, rgba(217, 74, 82, 0.35), transparent 75%),
+      repeating-linear-gradient(
+        118deg,
+        rgba(255, 255, 255, 0.045) 0px,
+        rgba(255, 255, 255, 0.045) 1px,
+        transparent 1px,
+        transparent 30px
+      );
     pointer-events: none;
   }
 
   .sayfa-seridi-ic {
     position: relative;
-    z-index: 2;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: var(--bosluk-2);
     min-height: 190px;
     padding-block: var(--bosluk-6);
-    padding-right: 140px;
   }
 
   .sayfa-seridi-etiket {
+    position: relative;
     margin: 0;
+    padding-left: var(--bosluk-4);
     color: #fff;
     font-size: var(--olcu-xl);
     font-weight: var(--kalinlik-kalin);
     letter-spacing: -0.01em;
+  }
+
+  /* Başlığın soluna, kurumsal kırmızıda dikey bir vurgu çizgisi —
+     amblemin yerini tutan tek, sade işaret. */
+  .sayfa-seridi-etiket::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 3px;
+    bottom: 3px;
+    width: 4px;
+    background: var(--hu-kirmizi);
   }
 
   .sayfa-iz {
@@ -125,16 +125,10 @@
     text-overflow: ellipsis;
   }
 
-  @media (max-width: 780px) {
-    .sayfa-seridi::before { width: 72px; height: 72px; right: var(--bosluk-6); background-size: 38px 56px, cover; }
-    .sayfa-seridi-ic { padding-right: 108px; }
-  }
-
   @media (max-width: 620px) {
-    .sayfa-seridi-ic { min-height: 150px; padding-block: var(--bosluk-5); padding-right: 82px; gap: 4px; }
+    .sayfa-seridi-ic { min-height: 150px; padding-block: var(--bosluk-5); gap: 4px; }
     .sayfa-seridi-etiket { font-size: var(--olcu-lg); }
     .sayfa-iz { font-size: var(--olcu-xs); }
     .sayfa-iz li:last-child span { max-width: 58vw; }
-    .sayfa-seridi::before { width: 54px; height: 54px; right: var(--bosluk-4); background-size: 28px 42px, cover; }
   }
 }
