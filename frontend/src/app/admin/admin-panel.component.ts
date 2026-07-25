@@ -4,7 +4,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { PageEditorComponent } from './page-editor.component';
 import { StaffEditorComponent } from './staff-editor.component';
 import { NewsCoverComponent } from '../pages/news-cover.component';
-import { AdminNews, NewsOptions, Shortcut, AdminMenuItem, AdminMenu, AdminPage, Slide, AdminSocialAccount, AdminApiService, ContactChannel, QualitySummary, AnalyticsReport } from './admin-api.service';
+import { AdminNews, NewsOptions, Shortcut, AdminMenuItem, AdminMenu, AdminPage, Slide, AdminSocialAccount, AdminApiService, ContactChannel, QualitySummary, QualityVitalScore, AnalyticsReport } from './admin-api.service';
 import { ContactTicketAdminComponent } from './contact-ticket-admin.component';
 import { Api } from '../core/api.service';
 import { disaBaglantilariGuvenceyeAl } from '../core/icerik-bicim';
@@ -310,22 +310,15 @@ interface MobileMenuItem {
                 <div class="kalite-vital-izgara">
                   @for (v of q.vitals; track v.path + v.metric) {
                     <article class="kalite-vital" [attr.data-rating]="v.rating">
-                      <button type="button" class="kalite-vital-tetik"
-                              [attr.aria-expanded]="acikVital() === v.path + v.metric"
-                              (click)="vitalDetayAcKapat(v.path + v.metric)">
+                      <button type="button" class="kalite-vital-tetik" (click)="acikVitalKaydi.set(v)">
                         <div>
                           <span>{{ v.metric }}</span>
                           <strong>{{ metrikDegeri(v.metric, v.p75) }}</strong>
                         </div>
                         <p>{{ v.path }}</p>
                         <small>{{ v.samples }} örnek · {{ dereceEtiketi(v.rating) }}</small>
+                        <span class="kalite-vital-detay-ipucu">Ayrıntılar için tıklayın</span>
                       </button>
-                      @if (acikVital() === v.path + v.metric) {
-                        <div class="kalite-vital-aciklama">
-                          <p>{{ VITAL_ACIKLAMA[v.metric].teknik }}</p>
-                          <p class="sade">{{ VITAL_ACIKLAMA[v.metric].sade }}</p>
-                        </div>
-                      }
                     </article>
                   }
                 </div>
@@ -1194,6 +1187,41 @@ interface MobileMenuItem {
               <button type="button" class="mobil-cikis" (click)="api.cikis()">Çıkış</button>
             </div>
           }
+
+          @if (acikVitalKaydi(); as av) {
+            <div class="vital-perde" (click)="acikVitalKaydi.set(null)"></div>
+            <div class="vital-pencere" role="dialog" aria-modal="true" [attr.aria-label]="av.metric + ' ölçüm ayrıntısı'"
+                 [attr.data-rating]="av.rating" (keydown.escape)="acikVitalKaydi.set(null)">
+              <header>
+                <div>
+                  <span class="vital-pencere-metrik">{{ av.metric }}</span>
+                  <strong class="vital-pencere-deger">{{ metrikDegeri(av.metric, av.p75) }}</strong>
+                </div>
+                <button type="button" class="ikincil" (click)="acikVitalKaydi.set(null)" aria-label="Kapat">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" width="18" height="18"
+                       fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                    <path d="M6 6l12 12M18 6 6 18"/>
+                  </svg>
+                </button>
+              </header>
+
+              <div class="vital-pencere-durum">
+                <span class="vital-pencere-rozet" [attr.data-rating]="av.rating">{{ dereceEtiketi(av.rating) }}</span>
+                <span>{{ av.path }} · {{ av.samples }} örnek · 75. yüzdelik</span>
+              </div>
+
+              <div class="vital-pencere-govde">
+                <section>
+                  <span class="vital-pencere-baslik">Teknik tanım</span>
+                  <p>{{ VITAL_ACIKLAMA[av.metric].teknik }}</p>
+                </section>
+                <section>
+                  <span class="vital-pencere-baslik">Sade dille</span>
+                  <p>{{ VITAL_ACIKLAMA[av.metric].sade }}</p>
+                </section>
+              </div>
+            </div>
+          }
         </div>
       }
     </div>
@@ -1261,9 +1289,10 @@ export class AdminPanelComponent {
   protected quality = signal<QualitySummary | null>(null);
   protected qualityLoading = signal(false);
   protected qualityHata = signal('');
-  protected acikVital = signal<string | null>(null);
+  /** Ayrıntı penceresi açık olan Core Web Vitals kaydı; kapalıyken null. */
+  protected acikVitalKaydi = signal<QualityVitalScore | null>(null);
 
-  /** Core Web Vitals kartına tıklanınca açılan, hem teknik hem sade dille açıklama. */
+  /** Core Web Vitals kartına tıklanınca açılan pencerede, hem teknik hem sade dille açıklama. */
   protected readonly VITAL_ACIKLAMA: Record<string, { teknik: string; sade: string }> = {
     LCP: {
       teknik: 'Sayfadaki en büyük görünür öğenin (genelde ana görsel ya da başlık) ekrana çizildiği an.',
@@ -1287,9 +1316,6 @@ export class AdminPanelComponent {
     }
   };
 
-  protected vitalDetayAcKapat(anahtar: string): void {
-    this.acikVital.set(this.acikVital() === anahtar ? null : anahtar);
-  }
   protected pages = signal<AdminPage[]>([]);
   protected news = signal<AdminNews[]>([]);
   protected duyuruSecenekleri = signal<NewsOptions>({ categories: [], audiences: [], templates: [] });
