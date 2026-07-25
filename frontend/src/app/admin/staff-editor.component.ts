@@ -1,6 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AdminApiService, StaffMember, StaffUnit } from './admin-api.service';
+import { tiklamaSinirlayici } from './tiklama-siniri';
 
 /**
  * Personel yönetimi.
@@ -194,11 +195,14 @@ export class StaffEditorComponent {
   /** Kişi formunun hangi birime ait olduğu; yeni kişi buraya eklenir. */
   private hedefBirim: StaffUnit | null = null;
 
+  private yenileSiniri = tiklamaSinirlayici();
+
   ngOnInit(): void {
     this.yukle();
   }
 
   protected yukle(): void {
+    if (!this.yenileSiniri()) return;
     this.api.staffUnits().subscribe((liste) => this.birimler.set(liste));
   }
 

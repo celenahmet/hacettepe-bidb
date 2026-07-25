@@ -1,5 +1,6 @@
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { tiklamaSinirlayici } from './tiklama-siniri';
 import {
   AdminApiService, ContactTicket, ContactTicketEvent
 } from './admin-api.service';
@@ -188,9 +189,12 @@ export class ContactTicketAdminComponent implements OnInit {
         .some(value => value.toLocaleLowerCase('tr-TR').includes(query))));
   });
 
+  private yenileSiniri = tiklamaSinirlayici();
+
   ngOnInit(): void { this.yukle(); }
 
   protected yukle(): void {
+    if (!this.yenileSiniri()) return;
     this.yukleniyor.set(true);
     this.api.contactTickets().subscribe({
       next: tickets => { this.tickets.set(tickets); this.yukleniyor.set(false); },

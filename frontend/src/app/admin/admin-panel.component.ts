@@ -9,6 +9,7 @@ import { NewsCoverComponent } from '../pages/news-cover.component';
 import { AdminNews, NewsOptions, Shortcut, AdminMenuItem, AdminMenu, AdminPage, Slide, AdminSocialAccount, AdminApiService, ContactChannel, QualitySummary, QualityVitalScore, AnalyticsReport } from './admin-api.service';
 import { ContactTicketAdminComponent } from './contact-ticket-admin.component';
 import { AdminDilServisi } from './admin-dil.service';
+import { tiklamaSinirlayici } from './tiklama-siniri';
 import { AccessibilityMenuComponent } from '../layout/accessibility-menu.component';
 import { Api } from '../core/api.service';
 import { disaBaglantilariGuvenceyeAl } from '../core/icerik-bicim';
@@ -1523,7 +1524,10 @@ export class AdminPanelComponent {
     this.analitikYukle();
   }
 
+  private analitikYenileSiniri = tiklamaSinirlayici();
+
   protected analitikYukle(): void {
+    if (!this.analitikYenileSiniri()) return;
     this.analyticsLoading.set(true);
     this.api.analyticsReport(12).subscribe({
       next: (report) => {
@@ -1600,7 +1604,10 @@ export class AdminPanelComponent {
     this.mobilMenuAcik.set(false);
   }
 
+  private kaliteYenileSiniri = tiklamaSinirlayici();
+
   protected kaliteYukle(): void {
+    if (!this.kaliteYenileSiniri()) return;
     this.qualityLoading.set(true);
     this.api.qualitySummary().subscribe({
       next: (summary) => {

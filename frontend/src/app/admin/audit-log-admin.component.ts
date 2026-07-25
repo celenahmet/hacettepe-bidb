@@ -1,6 +1,7 @@
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { SlicePipe } from '@angular/common';
 import { AdminApiService, AuditEvent } from './admin-api.service';
+import { tiklamaSinirlayici } from './tiklama-siniri';
 
 /** Yönetim panelinde yapılan değişiklik işlemlerinin denetim kaydı. */
 @Component({
@@ -90,11 +91,14 @@ export class AuditLogAdminComponent implements OnInit {
       k.ipAddress.toLowerCase().includes(sorgu));
   });
 
+  private yenileSiniri = tiklamaSinirlayici();
+
   ngOnInit(): void {
     this.yukle();
   }
 
   protected yukle(): void {
+    if (!this.yenileSiniri()) return;
     this.yukleniyor.set(true);
     this.hata.set('');
     this.api.auditEvents().subscribe({

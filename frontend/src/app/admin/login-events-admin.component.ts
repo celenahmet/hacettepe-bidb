@@ -1,5 +1,6 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { AdminApiService, LoginEvent } from './admin-api.service';
+import { tiklamaSinirlayici } from './tiklama-siniri';
 
 /** Yönetim paneline yapılan giriş denemelerinin kaydı (güvenlik denetimi). */
 @Component({
@@ -154,12 +155,14 @@ export class LoginEventsAdminComponent implements OnInit {
   protected hata = signal('');
   protected acikKayit = signal<LoginEvent | null>(null);
   protected konumBilgiAcik = signal(false);
+  private yenileSiniri = tiklamaSinirlayici();
 
   ngOnInit(): void {
     this.yukle();
   }
 
   protected yukle(): void {
+    if (!this.yenileSiniri()) return;
     this.yukleniyor.set(true);
     this.hata.set('');
     this.api.loginEvents().subscribe({
