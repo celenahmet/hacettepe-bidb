@@ -8,6 +8,7 @@ import express from 'express';
 import compression from 'compression';
 import { join } from 'node:path';
 import { readdirSync } from 'node:fs';
+import { randomBytes } from 'node:crypto';
 import { LEGACY_ROUTES } from './legacy-routes';
 
 const browserDistFolder = join(import.meta.dirname, '../browser');
@@ -64,30 +65,39 @@ app.disable('x-powered-by');
 /**
  * İçerik güvenliği politikası.
  *
- * Sayfa metinlerinde satır içi stil (style="…") bulunuyor ve Angular
- * sunucu tarafı çizimde durum aktarımı için satır içi betik üretiyor;
- * bu ikisine izin verilir. Satır içi olay işleyicisi (onclick vb.) ve
- * <script> etiketi içerikte hiç yok — denetlendi.
+ * Angular, sunucu tarafı çizimde kendi ürettiği satır içi <style>/<script>
+ * etiketlerine index.html'deki <app-root ngCspNonce="…"> özniteliğinden
+ * okuduğu değeri nonce olarak damgalar (bkz. index.html, CSP_NONCE — Angular
+ * bunu DI olmadan doğrudan DOM'dan okur, bu yüzden istek başına farklı bir
+ * değer vermek için ek bir sağlayıcıya gerek yoktur). Her istekte rastgele
+ * bir nonce üretilip hem bu başlığa hem render edilen HTML'e (aşağıdaki
+ * BIDB_CSP_NONCE yer tutucusunun yerine) yazılır. 'unsafe-inline' nonce
+ * yanında da bırakılır: nonce'u anlayan tarayıcı onu yok sayar, anlamayan
+ * eski bir tarayıcı için tek yedek budur.
  *
  * Gömülü videolar yalnızca YouTube'dan, iletişim sayfasındaki isteğe bağlı
  * konum haritası ise yalnızca Google Maps'ten gelir.
  */
-const GUVENLIK_POLITIKASI = [
-  "default-src 'self'",
-  "script-src 'self' 'unsafe-inline'",
-  "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data:",
-  "font-src 'self' data:",
-  "frame-src https://www.youtube.com https://youtube.com https://www.google.com https://maps.google.com",
-  "connect-src 'self'",
-  "object-src 'none'",          // eklenti içeriği yok
-  "base-uri 'self'",            // <base> ile url kaçırma engellenir
-  "form-action 'self'",
-  "frame-ancestors 'self'"      // başka sitede çerçevelenemez (tıklama hırsızlığı)
-].join('; ');
+function guvenlikPolitikasi(nonce: string): string {
+  return [
+    "default-src 'self'",
+    `script-src 'self' 'nonce-${nonce}' 'unsafe-inline'`,
+    `style-src 'self' 'nonce-${nonce}' 'unsafe-inline'`,
+    "img-src 'self' data:",
+    "font-src 'self' data:",
+    "frame-src https://www.youtube.com https://youtube.com https://www.google.com https://maps.google.com",
+    "connect-src 'self'",
+    "object-src 'none'",          // eklenti içeriği yok
+    "base-uri 'self'",            // <base> ile url kaçırma engellenir
+    "form-action 'self'",
+    "frame-ancestors 'self'"      // başka sitede çerçevelenemez (tıklama hırsızlığı)
+  ].join('; ');
+}
 
 app.use((_req, res, next) => {
-  res.setHeader('Content-Security-Policy', GUVENLIK_POLITIKASI);
+  const nonce = randomBytes(16).toString('base64');
+  res.locals['cspNonce'] = nonce;
+  res.setHeader('Content-Security-Policy', guvenlikPolitikasi(nonce));
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
   res.setHeader('Permissions-Policy', 'geolocation=(), microphone=(), camera=()');
@@ -336,12 +346,16 @@ function acikHataKodu(yol: string): number | null {
  * tamamlandığında yeniden oynattığı için ilk dokunma kaybolmaz. Yönetim paneli
  * istemci taraflıdır ve bu dönüşümün özellikle dışında tutulur.
  */
-function asamaliTarayiciBaslangici(html: string): string {
+function asamaliTarayiciBaslangici(html: string, nonce: string): string {
   const moduller: string[] = [];
   const govde = html
     .replace(/\s*<link\s+rel="modulepreload"[^>]*>/gi, '')
-    .replace(/\s*<script\s+src="([^"]+)"\s+type="module"><\/script>/gi, (_etiket, src: string) => {
-      moduller.push(src);
+    // Angular, nonce eklendiğinden beri bu etiketlere de "nonce" özniteliği
+    // damgalıyor; öznitelik sırası/sayısı sabit varsayılmaz, "type=module"
+    // içeren herhangi bir kendi kendine kapanan <script> etiketi yakalanır.
+    .replace(/\s*<script\b([^>]*\btype="module"[^>]*)><\/script>/gi, (_etiket, oznitelikler: string) => {
+      const eslesme = /\bsrc="([^"]+)"/.exec(oznitelikler);
+      if (eslesme) moduller.push(eslesme[1]);
       return '';
     });
 
@@ -349,7 +363,7 @@ function asamaliTarayiciBaslangici(html: string): string {
   const kaynaklar = JSON.stringify(moduller).replace(/</g, '\\u003c');
   const ortakStil = tamamlayiciDosyalari.get('tamamlayici');
   const stil = JSON.stringify(ortakStil ? `/${ortakStil}` : '');
-  const baslat = `<script id="bidb-asamali-baslangic">
+  const baslat = `<script id="bidb-asamali-baslangic" nonce="${nonce}">
 (()=>{const q=${kaynaklar},c=${stil};let b=false;
 const m=()=>{let i=0;const s=()=>{if(i>=q.length)return;
 const e=document.createElement('script');e.type='module';e.src=q[i++];e.onload=s;document.body.appendChild(e)};s()};
@@ -589,9 +603,15 @@ app.use(async (req, res, next) => {
       basliklar.set('cache-control', 'public, max-age=0, s-maxage=60, stale-while-revalidate=300');
     }
 
+    // Angular, sunucu tarafı çizim sırasında kendi ürettiği satır içi
+    // <style>/<script> etiketlerine index.html'deki <app-root ngCspNonce>
+    // özniteliğinde bulduğu değeri (burada BIDB_CSP_NONCE yer tutucusu)
+    // damgalar; bu istek için üretilen gerçek nonce'la burada değiştirilir.
+    const nonce = res.locals['cspNonce'] as string;
+
     const ziyaretciSayfasi = /^\/(tr|en)(\/|$)/.test(req.path) || hataKodu !== null;
     if (ziyaretciSayfasi) {
-      const govde = await yanit.text();
+      const govde = (await yanit.text()).split('BIDB_CSP_NONCE').join(nonce);
       // İletişim formu gibi asıl amacı ANINDA doldurulup gönderilmek olan
       // sayfalar bu ertelemeden hariç tutulur: kullanıcı formu doldururken
       // JS henüz yüklenmemişse, hydration tamamlandığında ngModel'in başlangıç
@@ -601,7 +621,7 @@ app.use(async (req, res, next) => {
       // Ana sayfa da (/tr, /en) haber kartları gibi tamamlayıcı stil gerektirir;
       // önceden buradaki özel durum bu paketin hiç eklenmemesine yol açıyordu.
       const govdeStilli = tamamlayiciStilEkle(govde, req.path);
-      const html = anindaEtkilesimGerekir ? govdeStilli : asamaliTarayiciBaslangici(govdeStilli);
+      const html = anindaEtkilesimGerekir ? govdeStilli : asamaliTarayiciBaslangici(govdeStilli, nonce);
       return writeResponseToNodeResponse(
         new Response(html, { status: hataKodu ?? yanit.status, headers: basliklar }),
         res,
@@ -609,8 +629,9 @@ app.use(async (req, res, next) => {
     }
 
     if (req.path === '/yonetim' || req.path.startsWith('/yonetim/')) {
+      const govde = (await yanit.text()).split('BIDB_CSP_NONCE').join(nonce);
       return writeResponseToNodeResponse(
-        new Response(tamamlayiciStilEkle(await yanit.text(), req.path), {
+        new Response(tamamlayiciStilEkle(govde, req.path), {
           status: yanit.status,
           headers: basliklar,
         }),
