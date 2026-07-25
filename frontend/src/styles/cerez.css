@@ -178,29 +178,20 @@
   }
   .cerez-panel > footer a { color: var(--hu-lacivert); font-size: var(--olcu-sm); }
 
-  /* Politika sayfası — üst şerit artık site genelindeki paylaşılan
-     .sayfa-seridi bileşeniyle geliyor (bkz. sayfa-seridi.css). */
-  .cerez-politikasi { padding: var(--bosluk-6) 0 var(--bosluk-8); }
+  /* Politika sayfası — üst şerit site genelindeki paylaşılan .sayfa-seridi
+     bileşeniyle, gövde de diğer içerik sayfalarıyla aynı sol menü + içerik
+     iskeletiyle (.sayfa-duzen / .yan / .icerik-alani) gelir; bu sayfa artık
+     kendi başına bir şablon değil, sitenin geri kalanıyla aynı ağırlıkta. */
+  .cerez-politikasi { padding-bottom: var(--bosluk-8); }
   .cerez-politika-ust {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(250px, 330px);
-    gap: var(--bosluk-7);
-    align-items: end;
-    padding-bottom: var(--bosluk-6);
-    border-bottom: 1px solid var(--cizgi-koyu);
-  }
-  .cerez-politika-ust h1 {
-    max-width: 800px;
-    margin: 0;
-    color: #10294c;
-    font-size: clamp(2rem, 4vw, 3.25rem);
-    font-weight: var(--kalinlik-kalin);
-    line-height: 1.12;
-    letter-spacing: -.025em;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--bosluk-4);
   }
   .cerez-ozet {
-    max-width: 72ch;
-    margin: var(--bosluk-4) 0 0;
+    max-width: 68ch;
+    margin: 0;
     color: var(--metin-2);
     font-size: var(--olcu-lg);
     line-height: var(--satir-normal);
@@ -209,6 +200,7 @@
     display: flex;
     align-items: flex-start;
     gap: var(--bosluk-3);
+    max-width: 480px;
     padding: var(--bosluk-4);
     border: 1px solid var(--cizgi);
     border-left: 3px solid var(--basari);
@@ -226,30 +218,30 @@
   .cerez-mevcut-durum strong { color: var(--metin); font-size: var(--olcu-sm); }
   .cerez-mevcut-durum p { margin: 2px 0 0; color: var(--metin-2); font-size: var(--olcu-sm); line-height: 1.5; }
 
-  .cerez-politika-duzen {
-    display: grid;
-    grid-template-columns: 210px minmax(0, 1fr);
-    gap: var(--bosluk-7);
-    align-items: start;
-    padding-top: var(--bosluk-7);
-  }
+  /* Bu sayfada — yatay, kurumsal ağırlıkta bir gezinme kutusu (yandaki
+     .yan sol menüsü site içindeki DİĞER sayfaları listeler; bu, uzun tek
+     sayfanın kendi içindeki bölümlerini listeler — farklı bir amaç). */
   .cerez-icindekiler {
-    position: sticky;
-    top: var(--bosluk-5);
-    display: grid;
-    gap: var(--bosluk-2);
-    padding-left: var(--bosluk-4);
-    border-left: 2px solid var(--cizgi);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--bosluk-2) var(--bosluk-5);
+    margin: var(--bosluk-7) 0 var(--bosluk-6);
+    padding: var(--bosluk-4) var(--bosluk-5);
+    border: 1px solid var(--cizgi);
+    border-left: 3px solid var(--hu-lacivert);
+    background: var(--yuzey-2);
   }
   .cerez-icindekiler strong {
+    flex-basis: 100%;
     margin-bottom: var(--bosluk-1);
     color: var(--metin);
     font-size: var(--olcu-xs);
     letter-spacing: .06em;
     text-transform: uppercase;
   }
-  .cerez-icindekiler a { color: var(--metin-2); font-size: var(--olcu-sm); }
-  .cerez-icindekiler a:hover { color: var(--hu-kirmizi); }
+  .cerez-icindekiler a { color: var(--hu-lacivert); font-size: var(--olcu-sm); font-weight: var(--kalinlik-orta); }
+  .cerez-icindekiler a:hover { color: var(--hu-kirmizi); text-decoration: underline; }
   .cerez-politika-icerik { min-width: 0; }
   .cerez-politika-icerik > section {
     display: grid;
@@ -343,18 +335,6 @@
   @media (max-width: 900px) {
     .cerez-bildirimi { grid-template-columns: auto minmax(0, 1fr); }
     .cerez-bildirim-eylemler { grid-column: 1 / -1; justify-content: flex-end; }
-    .cerez-politika-ust { grid-template-columns: minmax(0, 1fr); gap: var(--bosluk-5); }
-    .cerez-politika-duzen { grid-template-columns: minmax(0, 1fr); gap: var(--bosluk-6); }
-    .cerez-icindekiler {
-      position: static;
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--bosluk-2) var(--bosluk-4);
-      padding: 0 0 var(--bosluk-4);
-      border-left: 0;
-      border-bottom: 1px solid var(--cizgi);
-    }
-    .cerez-icindekiler strong { flex-basis: 100%; }
   }
 
   @media (max-width: 700px) {
@@ -387,8 +367,6 @@
     .cerez-kategoriler .cerez-durum { top: var(--bosluk-4); left: 0; right: auto; }
     .cerez-panel > footer { align-items: stretch; flex-direction: column; }
     .cerez-panel > footer .birincil { width: 100%; }
-    .cerez-politikasi { padding-top: var(--bosluk-4); }
-    .cerez-politika-ust h1 { font-size: clamp(1.9rem, 10vw, 2.4rem); }
     .cerez-ozet { font-size: var(--olcu-md); }
     .cerez-politika-icerik > section { grid-template-columns: minmax(0, 1fr); gap: var(--bosluk-2); }
     .cerez-bolum-no { padding: 0; }

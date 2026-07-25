@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { Language, Page } from '../../core/models';
 import { Seo } from '../../core/seo.service';
 import { CookiePreferencesService } from '../../core/cookie-preferences.service';
+import { SideMenuComponent } from '../../layout/side-menu.component';
 
 /**
  * Çerez ve tarayıcı depolaması envanteri.
@@ -15,7 +16,7 @@ import { CookiePreferencesService } from '../../core/cookie-preferences.service'
  */
 @Component({
   selector: 'bidb-cookie-policy',
-  imports: [RouterLink],
+  imports: [RouterLink, SideMenuComponent],
   template: `
     <nav class="sayfa-seridi" aria-label="Sayfa yolu">
       <div class="kap sayfa-seridi-ic">
@@ -27,17 +28,20 @@ import { CookiePreferencesService } from '../../core/cookie-preferences.service'
       </div>
     </nav>
 
-    <main id="ana-icerik" class="cerez-politikasi">
-      <div class="kap">
-        <header class="cerez-politika-ust">
-          <div>
-            <h1>{{ language() === 'en' ? 'Cookie and Browser Storage Policy' : 'Çerez ve Tarayıcı Depolama Politikası' }}</h1>
-            <p class="cerez-ozet">
-              {{ language() === 'en'
-                ? 'This page explains, in plain language, which browser technologies are used on the Department of Information Technology website, for what purpose and for how long.'
-                : 'Bu sayfa, Bilgi İşlem Daire Başkanlığı web sitesinde hangi tarayıcı teknolojilerinin, hangi amaçla ve ne kadar süreyle kullanıldığını açık bir dille anlatır.' }}
-            </p>
-          </div>
+    <div class="kap sayfa-duzen">
+      <aside class="yan">
+        <bidb-side-menu [dilDegeri]="language()"></bidb-side-menu>
+      </aside>
+
+      <main id="ana-icerik" class="icerik-alani cerez-politikasi">
+        <header class="sayfa-tepe cerez-politika-ust">
+          <p class="sayfa-bolum">{{ language() === 'en' ? 'Privacy and Transparency' : 'Gizlilik ve Şeffaflık' }}</p>
+          <h1 class="sayfa-baslik">{{ language() === 'en' ? 'Cookie and Browser Storage Policy' : 'Çerez ve Tarayıcı Depolama Politikası' }}</h1>
+          <p class="cerez-ozet">
+            {{ language() === 'en'
+              ? 'This page explains, in plain language, which browser technologies are used on the Department of Information Technology website, for what purpose and for how long.'
+              : 'Bu sayfa, Bilgi İşlem Daire Başkanlığı web sitesinde hangi tarayıcı teknolojilerinin, hangi amaçla ve ne kadar süreyle kullanıldığını açık bir dille anlatır.' }}
+          </p>
           <aside class="cerez-mevcut-durum" aria-label="Mevcut kullanım durumu">
             <span class="cerez-durum-nokta" aria-hidden="true"></span>
             <div>
@@ -51,17 +55,16 @@ import { CookiePreferencesService } from '../../core/cookie-preferences.service'
           </aside>
         </header>
 
-        <div class="cerez-politika-duzen">
-          <nav class="cerez-icindekiler" [attr.aria-label]="language() === 'en' ? 'On this page' : 'Bu sayfada'">
-            <strong>{{ language() === 'en' ? 'On this page' : 'Bu sayfada' }}</strong>
-            <a href="#genel">{{ language() === 'en' ? 'General information' : 'Genel bilgi' }}</a>
-            <a href="#kategoriler">{{ language() === 'en' ? 'Technology categories' : 'Teknoloji kategorileri' }}</a>
-            <a href="#envanter">{{ language() === 'en' ? 'Storage inventory' : 'Depolama envanteri' }}</a>
-            <a href="#yonetim">{{ language() === 'en' ? 'Managing preferences' : 'Tercihleri yönetme' }}</a>
-            <a href="#iletisim">{{ language() === 'en' ? 'Updates and contact' : 'Güncellemeler ve iletişim' }}</a>
-          </nav>
+        <nav class="cerez-icindekiler" [attr.aria-label]="language() === 'en' ? 'On this page' : 'Bu sayfada'">
+          <strong>{{ language() === 'en' ? 'On this page' : 'Bu sayfada' }}</strong>
+          <a href="#genel">{{ language() === 'en' ? 'General information' : 'Genel bilgi' }}</a>
+          <a href="#kategoriler">{{ language() === 'en' ? 'Technology categories' : 'Teknoloji kategorileri' }}</a>
+          <a href="#envanter">{{ language() === 'en' ? 'Storage inventory' : 'Depolama envanteri' }}</a>
+          <a href="#yonetim">{{ language() === 'en' ? 'Managing preferences' : 'Tercihleri yönetme' }}</a>
+          <a href="#iletisim">{{ language() === 'en' ? 'Updates and contact' : 'Güncellemeler ve iletişim' }}</a>
+        </nav>
 
-          <div class="cerez-politika-icerik">
+        <div class="cerez-politika-icerik">
             <section id="genel">
               <span class="cerez-bolum-no">01</span>
               <div>
@@ -215,9 +218,8 @@ import { CookiePreferencesService } from '../../core/cookie-preferences.service'
               </div>
             </section>
           </div>
-        </div>
+        </main>
       </div>
-    </main>
   `
 })
 export class CookiePolicyComponent {
