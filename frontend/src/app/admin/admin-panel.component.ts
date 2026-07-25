@@ -1160,9 +1160,9 @@ interface MobileMenuItem {
               <li><strong>Yusuf Nurülgür</strong> — <a href="mailto:yusufnurulgur@hacettepe.edu.tr">yusufnurulgur&#64;hacettepe.edu.tr</a></li>
             </ul>
             <p class="hakkinda-not">
-              Bu not, sistemi ileride devralacak kişiler için — kim, ne
-              zaman, hangi niyetle geliştirdi bilinsin diye — bilinçli olarak
-              kalıcı tutulmuştur.
+              Sistem, sürdürülebilirlik ve kurumsallık ilkesiyle
+              belgelenmiştir; ileride görev alacak ekiplerin devir sürecini
+              kolaylaştırması amaçlanmıştır.
             </p>
           </section>
 
