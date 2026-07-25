@@ -2,46 +2,67 @@
  *
  * Üst menüyle sayfa içeriği arasındaki alan, tüm iç sayfalarda ortak bir
  * kurumsal başlık şeridi taşır: üstte küçük Ana Sayfa / Bölüm / Sayfa
- * breadcrumb'ı, altında o bölümün adı — koyu lacivert zemin, alt kenarda
- * kırmızı vurgu çizgisi, sağda amblemden esinlenen soluk beyaz bir işaret.
- * Ağır bir hero slider değil, ama sayfanın nerede olduğunu net ve
- * kurumsal bir ağırlıkla anlatan bir geçiş.
+ * breadcrumb'ı, altında o bölümün adı — lacivertten koyulaşan bir zemin,
+ * ince bir çizgi dokusuyla derinlik, sağda amblemin kendi kırmızı
+ * madalyonunda dik durduğu kompakt bir mühür. Ağır bir hero slider değil,
+ * ama sayfanın nerede olduğunu net ve kurumsal bir ağırlıkla anlatan bir
+ * geçiş.
  */
 @layer kamu {
   .sayfa-seridi {
     position: relative;
     overflow: hidden;
-    background: var(--hu-lacivert);
+    background: linear-gradient(128deg, var(--hu-lacivert) 0%, #122a4f 100%);
     border-bottom: 3px solid var(--hu-kirmizi);
   }
 
-  /* Amblemden esinlenen işaret. Önceden top/right yüzde ile konumlanıyordu;
-     şeridin kendisi 140px'lik dar bir kutu olduğu için 300px'lik logonun
-     çoğu üstten kırpılıyor, yalnızca tanınmaz bir parçası görünüyordu.
-     Footer ve harita önizlemesindeki iz gibi sağ-alt köşeye px ile
-     sabitlenince logo baştan sona görünür, yalnızca kenarda hafifçe taşar. */
+  /* Zemine derinlik katan, dikkat çekmeyen ince çizgi dokusu. */
+  .sayfa-seridi::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-image: repeating-linear-gradient(
+      118deg,
+      rgba(255, 255, 255, 0.045) 0px,
+      rgba(255, 255, 255, 0.045) 1px,
+      transparent 1px,
+      transparent 30px
+    );
+    pointer-events: none;
+  }
+
+  /* Amblem: köşeye taşan, eğik ve kırpılan bir leke yerine — kendi
+     kırmızı madalyonunda dik duran, resmi bir mühür gibi kompakt bir
+     işaret. Bir arma eğik durunca sahiplenilmemiş/özensiz görünüyordu;
+     burada hizası dikey, boyu sabit ve tamamı her zaman görünür. */
   .sayfa-seridi::before {
     content: "";
     position: absolute;
-    z-index: 0;
-    right: -18px;
-    bottom: -18px;
-    width: 210px;
-    height: 210px;
-    background: url("/hu-logo.svg") no-repeat center / contain;
-    opacity: 0.35;
-    transform: rotate(-12deg);
+    z-index: 1;
+    top: 50%;
+    right: var(--bosluk-8);
+    transform: translateY(-50%);
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    background:
+      url("/hu-logo.svg") no-repeat center / 46px 68px,
+      linear-gradient(155deg, var(--hu-kirmizi-acik), var(--hu-kirmizi-koyu));
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.15);
     pointer-events: none;
   }
 
   .sayfa-seridi-ic {
     position: relative;
+    z-index: 2;
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: var(--bosluk-2);
     min-height: 190px;
     padding-block: var(--bosluk-6);
+    padding-right: 140px;
   }
 
   .sayfa-seridi-etiket {
@@ -105,14 +126,15 @@
   }
 
   @media (max-width: 780px) {
-    .sayfa-seridi::before { width: 170px; height: 170px; right: -14px; bottom: -14px; opacity: 0.3; }
+    .sayfa-seridi::before { width: 72px; height: 72px; right: var(--bosluk-6); background-size: 38px 56px, cover; }
+    .sayfa-seridi-ic { padding-right: 108px; }
   }
 
   @media (max-width: 620px) {
-    .sayfa-seridi-ic { min-height: 150px; padding-block: var(--bosluk-5); gap: 4px; }
+    .sayfa-seridi-ic { min-height: 150px; padding-block: var(--bosluk-5); padding-right: 82px; gap: 4px; }
     .sayfa-seridi-etiket { font-size: var(--olcu-lg); }
     .sayfa-iz { font-size: var(--olcu-xs); }
     .sayfa-iz li:last-child span { max-width: 58vw; }
-    .sayfa-seridi::before { width: 130px; height: 130px; right: -10px; bottom: -10px; opacity: 0.25; }
+    .sayfa-seridi::before { width: 54px; height: 54px; right: var(--bosluk-4); background-size: 28px 42px, cover; }
   }
 }
