@@ -1145,7 +1145,7 @@ interface MobileMenuItem {
             <p>
               Bu yönetim paneli ve site, Bilgi İşlem Daire Başkanlığı'nda
               <strong> 2026 yılı yaz stajyerliği</strong> kapsamında, Personel
-              biriminden <strong>Şahin Kaan</strong>'ın önderliğinde
+              biriminden <strong>Şahin Kaan Aytaç</strong>'ın önderliğinde
               geliştirilmiştir. Kısa bir staj süresine sığdırılmış olmasına
               rağmen sistem uçtan uca (içerik aktarımından SEO'ya, mobil
               uyuma, güvenlik sertleştirmesine kadar) gözden geçirilmeye
