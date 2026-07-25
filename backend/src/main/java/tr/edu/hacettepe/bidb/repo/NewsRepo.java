@@ -12,9 +12,13 @@ import java.util.List;
 import java.util.Optional;
 
 public interface NewsRepo extends JpaRepository<News, Long> {
-    List<News> findByLanguageAndPublishedTrueOrderByPublishedOnDesc(String language, Limit limit);
+    // "Öne çıkan" (featured) işaretli duyurular, yayın tarihinden bağımsız
+    // olarak listenin başına sabitlenir — panelde bu alan zaten vardı ama
+    // hiçbir sorgu okumuyordu, ilk sıradaki (i===0) manşet kartı yalnızca
+    // en son yayınlanana gidiyordu.
+    List<News> findByLanguageAndPublishedTrueOrderByFeaturedDescPublishedOnDesc(String language, Limit limit);
 
-    List<News> findByLanguageAndPublishedTrueOrderByPublishedOnDesc(String language);
+    List<News> findByLanguageAndPublishedTrueOrderByFeaturedDescPublishedOnDesc(String language);
 
     Optional<News> findBySlugAndLanguageAndPublishedTrue(String slug, String language);
 

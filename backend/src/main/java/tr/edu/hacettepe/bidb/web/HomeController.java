@@ -47,7 +47,7 @@ public class HomeController {
                         .map(HomeDto.KisayolDto::of).toList(),
                 tumu.stream().filter(h -> "service".equals(h.getType()))
                         .map(HomeDto.KisayolDto::of).toList(),
-                news.findByLanguageAndPublishedTrueOrderByPublishedOnDesc(language, Limit.of(12)).stream()
+                news.findByLanguageAndPublishedTrueOrderByFeaturedDescPublishedOnDesc(language, Limit.of(12)).stream()
                         .map(HomeDto.NewsDto::of).toList()
         );
     }

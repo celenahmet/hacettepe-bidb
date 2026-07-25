@@ -53,7 +53,7 @@ public class NewsController {
     /** Tüm haberler, en yeni önce. */
     @GetMapping
     public List<HaberDto> liste(@PathVariable String language) {
-        return news.findByLanguageAndPublishedTrueOrderByPublishedOnDesc(language).stream()
+        return news.findByLanguageAndPublishedTrueOrderByFeaturedDescPublishedOnDesc(language).stream()
                 .map(HaberDto::of)
                 .toList();
     }

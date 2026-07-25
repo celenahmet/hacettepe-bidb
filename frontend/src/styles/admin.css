@@ -382,6 +382,16 @@
     color: var(--metin-3);
   }
 
+  .seo-ipucu {
+    margin: 6px 0 0;
+    padding-left: var(--bosluk-3);
+    border-left: 2px solid var(--cizgi-koyu);
+    font-size: var(--olcu-xs);
+    line-height: var(--satir-normal);
+  }
+  .seo-ipucu.uyumlu { border-color: #177245; color: #177245; }
+  .seo-ipucu.uyumsuz { border-color: #aa6b00; color: #aa6b00; }
+
   .yonetim input[type="text"],
   .yonetim input[type="password"],
   .yonetim input[type="number"],

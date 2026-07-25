@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { PageEditorComponent } from './page-editor.component';
@@ -516,6 +516,9 @@ interface MobileMenuItem {
             <label for="dbaslik">Başlık</label>
             <input id="dbaslik" name="title" [ngModel]="newsItem().title"
                    (ngModelChange)="duyuruAlan('title', $event)" required>
+            @if (duyuruBaslikSeoDurumu(); as sd) {
+              <p class="seo-ipucu" [class.uyumlu]="sd.uyumlu" [class.uyumsuz]="!sd.uyumlu">{{ sd.mesaj }}</p>
+            }
 
             <fieldset class="duyuru-siniflandirma">
               <legend>Yayın sınıflandırması</legend>
@@ -551,7 +554,7 @@ interface MobileMenuItem {
               </label>
               <label class="onay">
                 <input type="checkbox" name="doneCikan" [ngModel]="newsItem().featured"
-                       (ngModelChange)="duyuruAlan('featured', $event)"> Öne çıkan
+                       (ngModelChange)="duyuruAlan('featured', $event)"> Öne çıkan (listenin başına sabitlenir)
               </label>
             </span>
 
@@ -719,6 +722,7 @@ interface MobileMenuItem {
             <span class="dugmeler">
               <button type="submit">{{ newsItem().id ? 'Güncelle' : 'Ekle' }}</button>
               <button type="button" class="ikincil" (click)="duyuruOnizle()">Önizle</button>
+              <button type="button" class="ikincil" (click)="duyuruOnizlePencerede()">Yeni pencerede önizle</button>
               @if (newsItem().id) {
                 <button type="button" class="ikincil" (click)="duyuruSifirla()">Vazgeç</button>
               }
@@ -1367,6 +1371,30 @@ export class AdminPanelComponent {
   protected duyuruSecenekleri = signal<NewsOptions>({ categories: [], audiences: [], templates: [] });
   protected secili = signal<AdminPage | null>(null);
   protected newsItem = signal<AdminNews>(this.bosDuyuru());
+
+  /**
+   * Duyuru başlığı için canlı SEO uyum kontrolü. Engellemez — yalnızca
+   * bilgilendirir; "SEO ve Performans" sekmesindeki puanlamayla aynı
+   * 25-70 karakter aralığını kullanır (bkz. backend AdminQualityController).
+   */
+  protected duyuruBaslikSeoDurumu = computed(() => {
+    const baslik = (this.newsItem().title || '').trim();
+    if (!baslik) return null;
+    const uzunluk = baslik.length;
+    if (uzunluk < 25) {
+      return {
+        uyumlu: false,
+        mesaj: `SEO uyarısı: başlık ${uzunluk} karakter (önerilen: 25-70). Konuyu ve kime hitap ettiğini biraz daha açıklayıcı yazmayı deneyin.`
+      };
+    }
+    if (uzunluk > 70) {
+      return {
+        uyumlu: false,
+        mesaj: `SEO uyarısı: başlık ${uzunluk} karakter (önerilen: 25-70). 70'i aşan kısım arama sonuçlarında kesilebilir; kısaltmayı deneyin.`
+      };
+    }
+    return { uyumlu: true, mesaj: `Başlık uzunluğu (${uzunluk} karakter) SEO için uygun aralıkta.` };
+  });
   protected slides = signal<Slide[]>([]);
   protected shortcuts = signal<Shortcut[]>([]);
   protected slideItem = signal<Slide | null>(null);
@@ -1883,6 +1911,46 @@ export class AdminPanelComponent {
 
   protected duyuruOnizle(): void {
     this.duyuruOnizleme.set(this.temizleyici.bypassSecurityTrustHtml(disaBaglantilariGuvenceyeAl(this.newsItem().contentHtml ?? '')));
+  }
+
+  /**
+   * Kaydetmeden önce, ayrı bir tarayıcı PENCERESİNDE (yeni sekme değil —
+   * boyut/araç çubuğu özellikleri verilerek tarayıcının bunu ayrı pencere
+   * olarak açması sağlanır) yayınlanmış görünümün önizlemesi.
+   */
+  protected duyuruOnizlePencerede(): void {
+    const item = this.newsItem();
+    const govde = disaBaglantilariGuvenceyeAl(item.contentHtml ?? '');
+    const pencere = window.open('', 'bidbDuyuruOnizleme', 'width=860,height=920,noopener,noreferrer');
+    if (!pencere) return;
+
+    const kacir = (deger: string) => deger
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    const baslik = kacir(item.title || 'Duyuru');
+    const kapak = item.imageUrl
+      ? `<img src="${kacir(item.imageUrl)}" alt="${kacir(item.imageAlt || '')}" style="width:100%;max-height:360px;object-fit:cover;border-radius:4px;margin-bottom:24px;">`
+      : '';
+
+    pencere.document.open();
+    pencere.document.write(`<!doctype html><html lang="${item.language === 'en' ? 'en' : 'tr'}"><head>
+      <meta charset="utf-8"><title>Önizleme — ${baslik}</title>
+      <style>
+        body { margin:0; padding:0; background:#f5f2ee; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color:#1c2530; }
+        .kap { max-width: 720px; margin: 0 auto; padding: 40px 24px 80px; }
+        .etiket { color:#b31821; font-weight:700; font-size:11px; letter-spacing:.12em; text-transform:uppercase; margin:0 0 10px; }
+        h1 { font-size: 1.9rem; line-height:1.25; margin: 0 0 24px; color:#0f2c52; }
+        .govde { font-size: 1rem; line-height: 1.7; }
+        .govde img { max-width: 100%; }
+      </style>
+      </head><body>
+        <div class="kap">
+          <p class="etiket">Önizleme — henüz yayınlanmadı</p>
+          <h1>${baslik}</h1>
+          ${kapak}
+          <div class="govde">${govde}</div>
+        </div>
+      </body></html>`);
+    pencere.document.close();
   }
 
   protected sekmeIletisim(): void {
