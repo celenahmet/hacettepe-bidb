@@ -988,19 +988,21 @@
       var(--yuzey-3);
   }
 
-  /* Footer'daki amblem izinin aynısı: sağ altta soluk, eğik bir HÜ logosu. */
+  /* Footer'daki amblem izinin aynısı: sağ altta soluk, eğik bir HÜ logosu.
+     z-index, yol deseni SVG'sinin (aşağıda) üstünde net durması için. */
   .konum-onizleme::after {
     content: '';
     position: absolute;
-    right: -40px;
-    bottom: -20px;
-    width: 340px;
-    height: 340px;
+    z-index: 1;
+    right: -30px;
+    bottom: -15px;
+    width: 260px;
+    height: 260px;
     background-image: url('/hu-logo.svg');
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
-    opacity: 0.07;
+    opacity: 0.09;
     transform: rotate(-14deg);
     pointer-events: none;
   }
