@@ -84,6 +84,19 @@ public class IstemciAdresi {
     }
 
     /**
+     * İsteğin kendi ara sunucumuzdan geçtiği doğrulanabiliyor mu?
+     *
+     * Ara sunucunun eklediği standart dışı başlıklara (ör. denetim kaydındaki
+     * yerel adres) güvenilip güvenilemeyeceğini belirler; doğrulanamayan
+     * isteklerde o başlıklar yok sayılmalıdır, aksi hâlde herkes güvenlik
+     * kaydına istediği değeri yazdırabilir.
+     */
+    public boolean vekilDogrulandi(HttpServletRequest request) {
+        String tcpKarsiTaraf = request.getRemoteAddr();
+        return vekildenGeldiMi(request, tcpKarsiTaraf == null ? "unknown" : tcpKarsiTaraf);
+    }
+
+    /**
      * İstek gerçekten kendi ara sunucumuzdan mı geçti?
      *
      * <p>BIDB_VEKIL_ANAHTARI tanımlıysa yalnızca doğru anahtarı taşıyan istekler

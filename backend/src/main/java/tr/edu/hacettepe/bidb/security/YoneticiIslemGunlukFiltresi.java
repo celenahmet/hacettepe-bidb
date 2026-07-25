@@ -60,7 +60,7 @@ public class YoneticiIslemGunlukFiltresi extends OncePerRequestFilter {
                 gunlukServisi.kaydet(
                         (oturum == null || oturum.isBlank()) ? "bilinmiyor" : oturum,
                         IstekBilgisi.genelAdres(request, istemciAdresi),
-                        IstekBilgisi.yerelAdres(request),
+                        IstekBilgisi.yerelAdres(request, istemciAdresi),
                         IstekBilgisi.denenenKullaniciAdi(request),
                         request.getMethod(),
                         yol,

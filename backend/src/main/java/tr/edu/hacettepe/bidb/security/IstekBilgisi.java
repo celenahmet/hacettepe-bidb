@@ -33,9 +33,14 @@ final class IstekBilgisi {
      * standart olmayan ayrı bir başlıkla (bkz. server.ts) taşınır. Başlık yoksa (ör.
      * doğrudan backend'e erişim, ara sunucu yok) getRemoteAddr() zaten doğru adrestir.
      */
-    static String yerelAdres(HttpServletRequest request) {
-        String yerel = request.getHeader("X-Bidb-Yerel-Adres");
-        if (yerel != null && !yerel.isBlank()) return yerel.trim();
+    static String yerelAdres(HttpServletRequest request, IstemciAdresi istemciAdresi) {
+        // Başlık yalnızca isteğin kendi ara sunucumuzdan geçtiği doğrulanabildiğinde
+        // okunur. Doğrulama olmadan herkes bu başlığı gönderip güvenlik kaydına
+        // istediği adresi yazdırabilir; bir olay incelemesini yanlış yöne çeker.
+        if (istemciAdresi.vekilDogrulandi(request)) {
+            String yerel = request.getHeader("X-Bidb-Yerel-Adres");
+            if (yerel != null && !yerel.isBlank()) return yerel.trim();
+        }
         return request.getRemoteAddr();
     }
 

@@ -81,7 +81,7 @@ public class YoneticiGirisSinirlayici extends OncePerRequestFilter {
         }
 
         if (request.getRequestURI().equals(GIRIS_KAYIT_YOLU) && response.getStatus() != 429) {
-            girisKayitServisi.kaydet(adres, IstekBilgisi.yerelAdres(request), request.getHeader("User-Agent"),
+            girisKayitServisi.kaydet(adres, IstekBilgisi.yerelAdres(request, istemciAdresi), request.getHeader("User-Agent"),
                     IstekBilgisi.denenenKullaniciAdi(request), response.getStatus() < 400);
         }
 
