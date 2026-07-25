@@ -300,14 +300,28 @@ interface MobileMenuItem {
             <section class="kalite-ozet" aria-label="Kalite puanları">
               <article class="kalite-puan" [attr.data-level]="puanSeviyesi(q.seoScore)">
                 <span>SEO bütünlüğü</span>
-                <strong>{{ q.seoScore }}</strong>
+                <div class="kalite-halka" [style.--kp]="q.seoScore" role="img"
+                     [attr.aria-label]="'100 üzerinden ' + q.seoScore">
+                  <svg viewBox="0 0 120 120" aria-hidden="true">
+                    <circle class="halka-iz" cx="60" cy="60" r="52"></circle>
+                    <circle class="halka-deger" cx="60" cy="60" r="52"></circle>
+                  </svg>
+                  <strong>{{ q.seoScore }}</strong>
+                </div>
                 <small>100 üzerinden · {{ q.pages.length }} yayın</small>
               </article>
               <article class="kalite-puan"
                        [attr.data-level]="puanSeviyesi(q.performanceScore)"
                        [class.bekliyor]="q.performanceScore === null">
                 <span>Gerçek kullanıcı performansı</span>
-                <strong>{{ q.performanceScore ?? '—' }}</strong>
+                <div class="kalite-halka" [style.--kp]="q.performanceScore ?? 0" role="img"
+                     [attr.aria-label]="q.performanceScore === null ? 'Henüz ölçüm yok' : '100 üzerinden ' + q.performanceScore">
+                  <svg viewBox="0 0 120 120" aria-hidden="true">
+                    <circle class="halka-iz" cx="60" cy="60" r="52"></circle>
+                    <circle class="halka-deger" cx="60" cy="60" r="52"></circle>
+                  </svg>
+                  <strong>{{ q.performanceScore ?? '—' }}</strong>
+                </div>
                 <small>
                   @if (q.performanceScore === null) {
                     Henüz ziyaretçi ölçümü yok

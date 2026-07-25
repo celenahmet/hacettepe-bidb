@@ -1074,12 +1074,21 @@
     margin-bottom: var(--bosluk-7);
   }
 
+  /* Puan kartları bir Lighthouse/kalite raporunun tanıdık dilini konuşur:
+     düz bir kutu + dev rakam yerine, skoru bir halka üzerinde gösteren
+     dairesel bir gösterge. "Son hesaplama" kartı skor taşımadığı için
+     halkasız kalır, sakin bir bilgi kartı olarak ayrışır. */
   .kalite-puan {
-    min-height: 178px;
-    padding: var(--bosluk-5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--bosluk-1);
+    min-height: 210px;
+    padding: var(--bosluk-6) var(--bosluk-5) var(--bosluk-5);
     border: 1px solid var(--cizgi);
-    border-top: 3px solid var(--kalite-renk, var(--hu-lacivert));
+    border-radius: 8px;
     background: var(--yuzey-1);
+    text-align: center;
   }
 
   .kalite-puan[data-level="good"] { --kalite-renk: #177245; }
@@ -1096,18 +1105,49 @@
     text-transform: uppercase;
   }
 
-  .kalite-puan > strong {
-    display: block;
-    margin: var(--bosluk-3) 0 var(--bosluk-2);
+  .kalite-halka {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 116px;
+    height: 116px;
+    margin: var(--bosluk-3) 0;
+  }
+  .kalite-halka svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+  .kalite-halka circle { fill: none; stroke-width: 9px; }
+  .kalite-halka .halka-iz { stroke: var(--cizgi); }
+  .kalite-halka .halka-deger {
+    stroke: var(--kalite-renk, var(--hu-lacivert));
+    stroke-linecap: round;
+    stroke-dasharray: 326.7;
+    stroke-dashoffset: calc(326.7 - (326.7 * var(--kp, 0) / 100));
+    transition: stroke-dashoffset .7s cubic-bezier(.2,.8,.2,1);
+  }
+  .kalite-halka > strong {
+    position: absolute;
     color: var(--murekkep);
-    font-size: clamp(42px, 5vw, 68px);
-    font-weight: var(--kalinlik-normal);
+    font-size: clamp(26px, 2.6vw, 32px);
+    font-weight: var(--kalinlik-kalin);
     line-height: 1;
   }
+  .bekliyor .kalite-halka .halka-deger { stroke-dasharray: 4 8; stroke-dashoffset: 0; }
 
   .kalite-puan > small { color: var(--metin-acik); }
+
+  /* "Son hesaplama" skor taşımadığı için halkasız, sola hizalı, sakin bir
+     bilgi kartı olarak diğer ikisinden görsel olarak ayrışır. */
+  .kalite-puan--bilgi {
+    align-items: flex-start;
+    justify-content: center;
+    text-align: left;
+    background: var(--yuzey-2);
+  }
   .kalite-puan--bilgi > .kalite-zaman {
+    display: block;
+    margin: var(--bosluk-3) 0 0;
+    color: var(--murekkep);
     font-size: var(--olcu-xl);
+    font-weight: var(--kalinlik-kalin);
     line-height: 1.3;
   }
   .kalite-puan--bilgi button { margin-top: var(--bosluk-4); }
