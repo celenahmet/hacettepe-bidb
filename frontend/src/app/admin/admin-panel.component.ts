@@ -1983,7 +1983,14 @@ export class AdminPanelComponent {
   protected duyuruOnizlePencerede(): void {
     const item = this.newsItem();
     const govde = disaBaglantilariGuvenceyeAl(item.contentHtml ?? '');
-    const pencere = window.open('', 'bidbDuyuruOnizleme', 'width=860,height=920,noopener,noreferrer');
+    // "noopener" burada KASITLI OLARAK kullanılmaz: bu pencerenin içeriğini
+    // document.write() ile biz yazıyoruz (dışarıdan bir URL yüklenmiyor,
+    // yazılan HTML'de <script> de yok), yani reverse-tabnabbing riski hiç
+    // yok — ama noopener verilirse tarayıcı pencereye referans DÖNMEZ
+    // (kasıtlı güvenlik davranışı), bu da document.write() çağrısını hiç
+    // çalıştıramadan fonksiyonun erken çıkmasına yol açıyordu; pencere
+    // boş ("about:blank") açılıp öyle kalıyordu.
+    const pencere = window.open('', 'bidbDuyuruOnizleme', 'width=860,height=920');
     if (!pencere) return;
 
     const kacir = (deger: string) => deger
