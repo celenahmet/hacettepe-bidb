@@ -331,28 +331,9 @@
     container: organizasyon / inline-size;
   }
 
-  .organizasyon-sayfasi .sayfa-tepe {
-    margin-bottom: var(--bosluk-3);
-    padding-bottom: var(--bosluk-4);
-    border-bottom: 0;
-  }
-
-  .organizasyon-sayfasi .sayfa-baslik {
-    position: relative;
-    padding-bottom: var(--bosluk-4);
-    color: #0d2347;
-  }
-
-  .organizasyon-sayfasi .sayfa-baslik::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 2rem;
-    height: 2px;
-    background: var(--hu-kirmizi);
-  }
-
+  /* Sayfa başlığı üstteki .sayfa-seridi şeridinde; buradaki eski
+     .sayfa-tepe/.sayfa-baslik süslemeleri karşılıksız kaldığı için
+     kaldırıldı. */
   .organizasyon-giris {
     max-width: 72ch;
     margin: 0 0 var(--bosluk-5);

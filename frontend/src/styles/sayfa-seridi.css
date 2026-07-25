@@ -1,42 +1,43 @@
-/* İçerik sayfalarının üstündeki konum şeridi (breadcrumb).
+/* İçerik sayfalarının üstündeki sayfa başlığı şeridi.
  *
- * Üst menüyle sayfa içeriği arasındaki alan, tüm iç sayfalarda ortak bir
- * kurumsal başlık şeridi taşır: üstte küçük Ana Sayfa / Bölüm / Sayfa
- * breadcrumb'ı, altında o bölümün adı.
+ * Üst menüyle içerik arasındaki alan, tüm iç sayfalarda ortak bir kurumsal
+ * başlık şeridi taşır: kurumsal veri-ağı görseli üzerinde bölüm etiketi
+ * (kırmızı), sayfa başlığı (h1), varsa kısa tanıtım cümlesi ve en altta
+ * Ana Sayfa / Bölüm / Sayfa breadcrumb'ı.
  *
- * Amblem burada TEKRARLANMAZ: üst menü zaten aynı ekranda kırmızı yuvarlak
- * bir amblem gösteriyor (bkz. .logo). Şeridin içine ikinci bir amblem
- * (eğik watermark, kırpılan köşe izi, dik duran madalyon — hepsi denendi)
- * her seferinde ya kırpılıyor ya da üst menüdeki amblemi gereksiz yere
- * tekrarlayan bir "çıkartma" gibi duruyordu. Bunun yerine zemin kendi
- * başına soyut, geometrik bir derinlik taşır: iki yumuşak ışıma (biri
- * lacivertin üstünde soluk beyaz, biri köşede kurumsal kırmızının yankısı)
- * ve ince bir çizgi dokusu. Kırpılma/eğiklik sorunu yaşanmaz çünkü hiçbir
- * şeklin kendine has bir "doğru" yönü ya da siluet sınırı yok.
+ * Başlık BURADA h1'dir; içerik alanında ikinci kez tekrarlanmaz (aksi hâlde
+ * sayfada iki h1 olur ve ekran okuyucu aynı başlığı iki kez okur).
  */
 @layer kamu {
   .sayfa-seridi {
     position: relative;
     overflow: hidden;
-    background: linear-gradient(128deg, var(--hu-lacivert) 0%, #0f2547 100%);
+    background-color: #0b2044;
+    /* Kaynak PNG 2172x724 / 1,4 MB idi; bu şerit her içerik sayfasında
+       yüklendiği için 1920x640 WebP'ye indirildi (59 KB, ~%96 küçülme).
+       PNG kaynak dosya olarak durmayı sürdürüyor. */
+    background-image: url("/images/slider/slider_hacettepe_bakground.webp");
+    background-repeat: no-repeat;
+    background-position: center right;
+    background-size: cover;
     border-bottom: 3px solid var(--hu-kirmizi);
   }
 
+  /* Görselin sağ yarısı açık tonlu; metnin durduğu sol tarafta koyulaşan
+     bir örtü olmadan beyaz yazı okunmuyor. Sağa doğru şeffaflaşır ki
+     görselin deseni görünmeye devam etsin. */
   .sayfa-seridi::before {
     content: "";
     position: absolute;
     inset: 0;
     z-index: 0;
-    background:
-      radial-gradient(260px 260px at calc(100% - 20px) 145%, rgba(255, 255, 255, 0.12), transparent 70%),
-      radial-gradient(140px 140px at calc(100% - 190px) -50%, rgba(217, 74, 82, 0.35), transparent 75%),
-      repeating-linear-gradient(
-        118deg,
-        rgba(255, 255, 255, 0.045) 0px,
-        rgba(255, 255, 255, 0.045) 1px,
-        transparent 1px,
-        transparent 30px
-      );
+    background: linear-gradient(
+      90deg,
+      rgba(8, 25, 55, 0.95) 0%,
+      rgba(8, 25, 55, 0.86) 34%,
+      rgba(8, 25, 55, 0.42) 68%,
+      rgba(8, 25, 55, 0.1) 100%
+    );
     pointer-events: none;
   }
 
@@ -47,30 +48,36 @@
     flex-direction: column;
     justify-content: center;
     gap: var(--bosluk-2);
-    min-height: 190px;
+    min-height: 228px;
     padding-block: var(--bosluk-6);
   }
 
+  /* Bölüm etiketi ("KURUMSAL"). Marka kırmızısı koyu lacivert üzerinde
+     yeterli kontrastı vermediği için bir tık açık tonu kullanılır. */
   .sayfa-seridi-etiket {
-    position: relative;
     margin: 0;
-    padding-left: var(--bosluk-4);
-    color: #fff;
-    font-size: var(--olcu-xl);
+    color: #ef5b64;
+    font-size: var(--olcu-xs);
     font-weight: var(--kalinlik-kalin);
-    letter-spacing: -0.01em;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
   }
 
-  /* Başlığın soluna, kurumsal kırmızıda dikey bir vurgu çizgisi —
-     amblemin yerini tutan tek, sade işaret. */
-  .sayfa-seridi-etiket::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 3px;
-    bottom: 3px;
-    width: 4px;
-    background: var(--hu-kirmizi);
+  .sayfa-seridi-baslik {
+    margin: 0;
+    color: #fff;
+    font-size: clamp(1.95rem, 3.4vw, 2.7rem);
+    font-weight: var(--kalinlik-kalin);
+    line-height: 1.14;
+    letter-spacing: -0.02em;
+  }
+
+  .sayfa-seridi-aciklama {
+    max-width: 54ch;
+    margin: var(--bosluk-1) 0 0;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: var(--olcu-md);
+    line-height: var(--satir-normal);
   }
 
   .sayfa-iz {
@@ -78,14 +85,13 @@
     flex-wrap: nowrap;
     align-items: center;
     max-width: 100%;
-    margin: 0;
+    margin: var(--bosluk-4) 0 0;
     padding: 0;
     overflow-x: auto;
     list-style: none;
     font-size: var(--olcu-sm);
     letter-spacing: 0.01em;
     scrollbar-width: none;
-    order: -1;
   }
   .sayfa-iz::-webkit-scrollbar { display: none; }
 
@@ -125,10 +131,22 @@
     text-overflow: ellipsis;
   }
 
+  @media (max-width: 780px) {
+    /* Dar ekranda görselin "ilginç" sağ yarısı zaten kırpılıyor; örtü
+       tek renge yaklaştırılıp metin kontrastı garanti altına alınır. */
+    .sayfa-seridi::before {
+      background: linear-gradient(
+        90deg,
+        rgba(8, 25, 55, 0.95) 0%,
+        rgba(8, 25, 55, 0.8) 100%
+      );
+    }
+  }
+
   @media (max-width: 620px) {
-    .sayfa-seridi-ic { min-height: 150px; padding-block: var(--bosluk-5); gap: 4px; }
-    .sayfa-seridi-etiket { font-size: var(--olcu-lg); }
-    .sayfa-iz { font-size: var(--olcu-xs); }
+    .sayfa-seridi-ic { min-height: 184px; padding-block: var(--bosluk-5); gap: 6px; }
+    .sayfa-seridi-aciklama { font-size: var(--olcu-sm); }
+    .sayfa-iz { margin-top: var(--bosluk-3); font-size: var(--olcu-xs); }
     .sayfa-iz li:last-child span { max-width: 58vw; }
   }
 }

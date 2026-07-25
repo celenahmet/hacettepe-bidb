@@ -183,18 +183,12 @@
      iskeletiyle (.sayfa-duzen / .yan / .icerik-alani) gelir; bu sayfa artık
      kendi başına bir şablon değil, sitenin geri kalanıyla aynı ağırlıkta. */
   .cerez-politikasi { padding-bottom: var(--bosluk-8); }
+  /* Başlık ve tanıtım cümlesi üstteki şeritte; burada yalnızca "şu an
+     hangi çerezler etkin" durum kutusu duruyor. */
   .cerez-politika-ust {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: var(--bosluk-4);
-  }
-  .cerez-ozet {
-    max-width: 68ch;
-    margin: 0;
-    color: var(--metin-2);
-    font-size: var(--olcu-lg);
-    line-height: var(--satir-normal);
   }
   .cerez-mevcut-durum {
     display: flex;
@@ -367,7 +361,6 @@
     .cerez-kategoriler .cerez-durum { top: var(--bosluk-4); left: 0; right: auto; }
     .cerez-panel > footer { align-items: stretch; flex-direction: column; }
     .cerez-panel > footer .birincil { width: 100%; }
-    .cerez-ozet { font-size: var(--olcu-md); }
     .cerez-politika-icerik > section { grid-template-columns: minmax(0, 1fr); gap: var(--bosluk-2); }
     .cerez-bolum-no { padding: 0; }
   }

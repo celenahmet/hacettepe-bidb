@@ -35,16 +35,22 @@ import { ContactFormComponent } from './contact-form.component';
     ContactFormComponent
   ],
   template: `
-    <nav class="sayfa-seridi" aria-label="Sayfa yolu">
+    <header class="sayfa-seridi">
       <div class="kap sayfa-seridi-ic">
-        <ol class="sayfa-iz">
-          <li><a [routerLink]="'/' + language()">{{ language() === 'en' ? 'Home' : 'Ana Sayfa' }}</a></li>
-          @if (bolum(); as b) { <li><span>{{ b }}</span></li> }
-          @if (sayfa(); as s) { <li aria-current="page"><span>{{ s.title }}</span></li> }
-        </ol>
         @if (bolum(); as b) { <p class="sayfa-seridi-etiket">{{ b }}</p> }
+        @if (sayfa(); as s) {
+          <h1 class="sayfa-seridi-baslik">{{ s.title }}</h1>
+          @if (seritAciklamasi(); as a) { <p class="sayfa-seridi-aciklama">{{ a }}</p> }
+        }
+        <nav [attr.aria-label]="language() === 'en' ? 'Breadcrumb' : 'Sayfa yolu'">
+          <ol class="sayfa-iz">
+            <li><a [routerLink]="'/' + language()">{{ language() === 'en' ? 'Home' : 'Ana Sayfa' }}</a></li>
+            @if (bolum(); as b) { <li><span>{{ b }}</span></li> }
+            @if (sayfa(); as s) { <li aria-current="page"><span>{{ s.title }}</span></li> }
+          </ol>
+        </nav>
       </div>
-    </nav>
+    </header>
     <div class="kap sayfa-duzen">
       <aside class="yan">
         <!-- E-imza rehberi kendi menüsüyle gelir (kaynakta da öyleydi);
@@ -67,15 +73,14 @@ import { ContactFormComponent } from './contact-form.component';
             [class.personel-sayfasi]="sayfa()?.slug === 'staff'"
             [class.organizasyon-sayfasi]="sayfa()?.slug === 'org-chart'">
         @if (sayfa(); as s) {
-          <header class="sayfa-tepe">
-            @if (bolum(); as b) { <p class="sayfa-bolum">{{ b }}</p> }
-            <h1 class="sayfa-baslik">{{ s.title }}</h1>
-            @if (s.slug === 'staff') {
-              <div class="personel-baslik-ayrac" aria-hidden="true">
-                <span><img src="/hu-logo.svg" alt="" width="16" height="26"></span>
-              </div>
-            }
-          </header>
+          <!-- Sayfa başlığı (h1) üstteki şeritte; burada tekrarlanmaz.
+               Personel sayfasının amblemli ayracı listeyi başlattığı için
+               kendi başına durur. -->
+          @if (s.slug === 'staff') {
+            <div class="personel-baslik-ayrac" aria-hidden="true">
+              <span><img src="/hu-logo.svg" alt="" width="16" height="26"></span>
+            </div>
+          }
           @if (s.slug === 'org-chart') {
             <p class="organizasyon-giris">
               {{ language() === 'en'
@@ -242,6 +247,26 @@ export class ContentPageComponent {
     if (!sayfa?.documents?.length) return [];
     const govde = sayfa.contentHtml ?? '';
     return sayfa.documents.filter((b) => !govde.includes(b.url));
+  });
+
+  /**
+   * Başlık şeridinde başlığın altında gösterilecek kısa tanıtım cümlesi.
+   *
+   * Sayfa kayıtlarındaki seoDescription iki farklı yoldan doluyor: bir kısmı
+   * elle yazılmış gerçek bir tanıtım ("Hacettepe Üniversitesi Bilgi İşlem
+   * Daire Başkanlığı: kuruluş ve yasal dayanak…"), bir kısmı ise sayfa
+   * metninin ilk cümlelerinden otomatik kırpılmış ham bir parça ("Mustafa
+   * Gökhan GÜZEL Daire Başkanı gokhan{at}hacettepe.edu.tr…"). İkincisi bir
+   * tanıtım cümlesi değil ve şeritte okunmaz görünüyor.
+   *
+   * Otomatik kırpılanlar sonuna "…" konarak üretildiği için ayırt edilebilir;
+   * yalnızca düzgün noktalanmış, makul uzunluktaki metinler gösterilir.
+   */
+  protected seritAciklamasi = computed(() => {
+    const metin = this.sayfa()?.seoDescription?.trim();
+    if (!metin || metin.endsWith('…') || metin.endsWith('...')) return null;
+    if (metin.length > 220 || metin.includes('{at}')) return null;
+    return metin;
   });
 
   /** Sayfanın ait olduğu menü bölümü ("Kurumsal", "Servislerimiz"…).
