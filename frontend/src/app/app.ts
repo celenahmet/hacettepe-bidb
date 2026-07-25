@@ -8,6 +8,7 @@ import { CookieConsentComponent } from './layout/cookie-consent.component';
 import { AccessibilityMenuComponent } from './layout/accessibility-menu.component';
 import { Language } from './core/models';
 import { QualityMetricsService } from './core/quality-metrics.service';
+import { TamamlayiciStilServisi } from './core/tamamlayici-stil.service';
 
 @Component({
   selector: 'app-root',
@@ -42,6 +43,10 @@ export class App {
   // Servisin oluşturulması, tarayıcı hydration sonrasında anonim Web Vitals
   // gözlemcilerini başlatır; SSR sırasında hiçbir ölçüm yapılmaz.
   private qualityMetrics = inject(QualityMetricsService);
+  // Rota değişiminde sayfa tipine özgü tamamlayıcı CSS paketini eksikse ekler
+  // (bkz. TamamlayiciStilServisi) — tıklayarak gezinmede sayfaların stilsiz
+  // kalmasının (iletişim formu, haber ızgarası, şemalar vb.) düzeltmesi.
+  private tamamlayiciStil = inject(TamamlayiciStilServisi);
 
   protected language = signal<Language>('tr');
 

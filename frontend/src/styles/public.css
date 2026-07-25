@@ -1010,11 +1010,15 @@
   .konum-onizleme > svg {
     position: absolute;
     inset: 0;
+    z-index: 0;
     width: 100%;
     height: 100%;
     fill: none;
     stroke: #d5dde5;
     stroke-width: 7;
+    /* Logo izinin üstünden geçtiklerinde daha az baskın olsunlar diye
+       yol deseni bütünüyle soluklaştırıldı. */
+    opacity: 0.55;
   }
 
   .konum-onizleme > svg .ana-yol { stroke: #fff; stroke-width: 30; }
