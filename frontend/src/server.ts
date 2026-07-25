@@ -540,6 +540,17 @@ app.use(
     maxAge: '1y',
     index: false,
     redirect: false,
+    setHeaders: (res, dosyaYolu) => {
+      // "tamamlayici*.css" paketleri (bkz. gerekliStilAnahtarlari) içerik
+      // hash'i OLMAYAN sabit adlarla sunulur — her derlemede aynı URL farklı
+      // içerik taşıyabilir. 1 yıllık agresif önbellek burada bir düzeltmenin
+      // kullanıcılara HİÇ ulaşmamasına yol açar (tarayıcı hiç yeniden
+      // istemez). ETag ile her zaman doğrulama yapılsın diye kısa tutulur;
+      // içerik değişmediyse sunucu yine de hızlı bir 304 döner.
+      if (/[/\\]tamamlayici[^/\\]*\.css$/.test(dosyaYolu)) {
+        res.setHeader('Cache-Control', 'no-cache');
+      }
+    },
   }),
 );
 
