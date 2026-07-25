@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
@@ -27,6 +28,7 @@ public class SecurityConfig {
         http
             // API durum bilgisi tutmaz; oturum yerine temel kimlik doğrulama kullanılır
             .csrf(csrf -> csrf.disable())
+            .sessionManagement(oturum -> oturum.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .addFilterBefore(girisSinirlayici, BasicAuthenticationFilter.class)
             .authorizeHttpRequests(izin -> izin
                 .requestMatchers("/actuator/health", "/error").permitAll()
