@@ -368,6 +368,10 @@ function gerekliStilAnahtarlari(yol: string): string[] {
 
   if (/^\/(tr|en)\/(news|newsItem)(\/|$)/.test(p)) return ['tamamlayici', 'tamamlayici-haberler'];
 
+  // Ana sayfa da (/tr, /en) haber kartlarını (.haber-kart, .haber-kapak) gösterir;
+  // tek parçalı yol olduğu için aşağıdaki içerik-sayfası deseniyle eşleşmez.
+  if (/^\/(tr|en)$/.test(p)) return ['tamamlayici', 'tamamlayici-haberler'];
+
   const icerik = p.match(/^\/(tr|en)\/([^/]+)$/);
   if (icerik) {
     const ozel = SAYFA_TIPI_STIL[icerik[2]];
@@ -566,11 +570,10 @@ app.use(async (req, res, next) => {
 
     const ziyaretciSayfasi = /^\/(tr|en)(\/|$)/.test(req.path) || hataKodu !== null;
     if (ziyaretciSayfasi) {
-      const anaSayfa = /^\/(tr|en)\/?$/.test(req.path);
       const govde = await yanit.text();
-      const html = asamaliTarayiciBaslangici(
-        anaSayfa ? govde : tamamlayiciStilEkle(govde, req.path),
-      );
+      // Ana sayfa da (/tr, /en) haber kartları gibi tamamlayıcı stil gerektirir;
+      // önceden buradaki özel durum bu paketin hiç eklenmemesine yol açıyordu.
+      const html = asamaliTarayiciBaslangici(tamamlayiciStilEkle(govde, req.path));
       return writeResponseToNodeResponse(
         new Response(html, { status: hataKodu ?? yanit.status, headers: basliklar }),
         res,
