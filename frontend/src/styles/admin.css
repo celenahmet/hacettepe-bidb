@@ -1505,9 +1505,15 @@
     margin: var(--bosluk-4) 0;
   }
 
-  .gunluk-arama {
+  /* Görünmez etiket alanı sardığı için esneme davranışı etikete taşındı;
+     giriş kutusu etiketi doldurur (bkz. audit-log-admin.component.ts). */
+  .gunluk-arama-etiket {
     flex: 1;
     max-width: 360px;
+  }
+
+  .gunluk-arama {
+    width: 100%;
     padding: 8px 10px;
     border: 1px solid var(--cizgi-koyu);
     border-radius: 2px;

@@ -19,8 +19,14 @@ import { tiklamaSinirlayici } from './tiklama-siniri';
       </header>
 
       <div class="gunluk-arac-cubugu">
-        <input type="search" class="gunluk-arama" placeholder="Filtrele: işlem, kullanıcı, oturum, yol…"
-               [value]="filtre()" (input)="filtre.set($any($event.target).value)">
+        <!-- Yer tutucu metin erişilebilir ad yerine geçmez; ad, panelin geri
+             kalanıyla aynı örüntüyle (görünmez etiket) veriliyor —
+             bkz. contact-ticket-admin.component.ts. -->
+        <label class="gunluk-arama-etiket">
+          <span class="sr-only">Kayıtlarda filtrele</span>
+          <input type="search" class="gunluk-arama" placeholder="Filtrele: işlem, kullanıcı, oturum, yol…"
+                 [value]="filtre()" (input)="filtre.set($any($event.target).value)">
+        </label>
         <span class="gunluk-sayac">{{ filtrelenmis().length }} / {{ kayitlar().length }} kayıt</span>
       </div>
 

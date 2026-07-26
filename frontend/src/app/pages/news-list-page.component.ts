@@ -60,8 +60,13 @@ import { NewsCardComponent } from './news-card.component';
             </div>
 
             <div class="arama-kutusu">
+              <!-- Görünür bir etiket tasarımda yer almıyor; yer tutucu metin
+                   erişilebilir ad yerine geçmez (kullanıcı yazmaya başlayınca
+                   kaybolur ve ekran okuyucularda güvenilir okunmaz), bu yüzden
+                   ad aria-label ile veriliyor. -->
               <input
-                type="text"
+                type="search"
+                [attr.aria-label]="language() === 'en' ? 'Search announcements' : 'Duyurularda ara'"
                 [placeholder]="language() === 'en' ? 'Search announcements...' : 'Duyurularda ara...'"
                 (input)="aramaMetni.set($any($event.target).value)"
                 [value]="aramaMetni()">
