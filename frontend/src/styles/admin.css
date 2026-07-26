@@ -1398,8 +1398,22 @@
   .giris-koruma-notu p { margin: 0; max-width: 68ch; color: var(--metin-2); font-size: var(--olcu-sm); line-height: var(--satir-genis); }
 
   .yonetim tr.giris-kayit-satir { cursor: pointer; transition: background var(--gecis-hizli); }
-  .yonetim tr.giris-kayit-satir:hover,
-  .yonetim tr.giris-kayit-satir:focus-visible { background: var(--yuzey-2); outline: none; }
+  .yonetim tr.giris-kayit-satir:hover { background: var(--yuzey-2); }
+
+  /* Klavye odağı kendi göstergesini alır. Önceden bu kural :hover ile ortaktı:
+     odaktaki satır yalnızca --yuzey-2 zeminine dönüyor, halka da kapatılıyordu.
+     Beyaz ile #f7f9fb arasındaki kontrast 1,06:1 — WCAG odak göstergesi için
+     3:1 ister. Fare kullanıcısı için o soluk ton yeterli, çünkü konumu imleç
+     söylüyor; klavyeyle gezen kişinin ise tıklanabilir satırlar arasında nerede
+     olduğunu anlamasının başka yolu yoktu.
+
+     outline-offset negatif: satır kenarlıkları ve komşu hücreler dışa çizilen
+     halkayı kırpabiliyor, halka satırın içine çizilince her durumda görünür. */
+  .yonetim tr.giris-kayit-satir:focus-visible {
+    background: var(--yuzey-2);
+    outline: 2px solid var(--hu-kirmizi);
+    outline-offset: -2px;
+  }
 
   /* ================= giriş kaydı ayrıntı penceresi ================= */
 
