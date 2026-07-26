@@ -4,7 +4,25 @@ import { Meta, Title } from '@angular/platform-browser';
 import { Language, Page } from './models';
 
 const SITE_ORIGIN = 'https://bidb.hacettepe.edu.tr';
+/** Sayfanın kendi ana görseli — ön yükleme (LCP) için de kullanılır, bu yüzden
+ *  site içi biçim tercihi olan WebP'de kalır. */
 const DEFAULT_IMAGE = '/images/slider/slide1-1920.webp';
+
+/**
+ * Paylaşım kartlarının görseli. Ayrı bir dosya olmasının iki sebebi var:
+ *
+ * Biçim — LinkedIn desteklediği biçimler arasında WebP'yi saymıyor, Facebook'un
+ * davranışı ise sürümden sürüme değişiyor. Kart görselsiz çıktığında bağlantı
+ * yalnızca başlıktan ibaret kalır. Site içinde WebP kullanılmaya devam eder;
+ * yalnızca sosyal kart için JPEG karşılığa düşülür.
+ *
+ * Oran — slider görselleri 2.31:1. Kartların beklediği oran 1.91:1 olduğundan
+ * paylaşımda üstten ve alttan kırpılıyor, tabela çerçeve dışında kalabiliyordu.
+ * Bu dosya doğrudan 1200x630 üretildi (bkz. tasarim-kaynaklari/BENIOKU.md).
+ */
+const SOSYAL_GORSEL = '/og-gorsel.jpg';
+const SOSYAL_GORSEL_EN = '1200';
+const SOSYAL_GORSEL_BOY = '630';
 const SITE_NAME = {
   tr: 'Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı',
   en: 'Hacettepe University Department of Information Technology'
@@ -75,13 +93,15 @@ export class Seo {
     this.ozellik('og:url', canonical);
     this.ozellik('og:locale', language === 'tr' ? 'tr_TR' : 'en_GB');
     this.ozellik('og:locale:alternate', language === 'tr' ? 'en_GB' : 'tr_TR');
-    this.ozellik('og:image', image);
+    const sosyal = this.sosyalGorsel(extras.image || sayfa?.seoImage);
+    this.ozellik('og:image', sosyal.url);
     this.ozellik('og:image:alt', extras.imageAlt || sayfa?.title || siteAdi);
+    this.sosyalOlcu(sosyal.olcusuBiliniyor);
 
     this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
     this.meta.updateTag({ name: 'twitter:title', content: title });
     this.ayarla('twitter:description', description);
-    this.meta.updateTag({ name: 'twitter:image', content: image });
+    this.meta.updateTag({ name: 'twitter:image', content: sosyal.url });
 
     if (type === 'article') {
       this.ozellik('article:published_time', extras.publishedAt ?? '');
@@ -147,12 +167,13 @@ export class Seo {
     this.ozellik('og:type', 'website');
     this.ozellik('og:site_name', siteAdi);
     this.ozellik('og:url', this.tamUrl(yol));
-    this.ozellik('og:image', this.tamUrl(DEFAULT_IMAGE));
+    this.ozellik('og:image', this.tamUrl(SOSYAL_GORSEL));
     this.ozellik('og:image:alt', siteAdi);
+    this.sosyalOlcu(true);
     this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
     this.meta.updateTag({ name: 'twitter:title', content: title });
     this.meta.updateTag({ name: 'twitter:description', content: aciklama });
-    this.meta.updateTag({ name: 'twitter:image', content: this.tamUrl(DEFAULT_IMAGE) });
+    this.meta.updateTag({ name: 'twitter:image', content: this.tamUrl(SOSYAL_GORSEL) });
     this.meta.removeTag("property='article:published_time'");
     this.meta.removeTag("property='article:modified_time'");
     this.belge.documentElement.lang = 'tr';
@@ -161,6 +182,31 @@ export class Seo {
     this.baglantiKaldir('alternate', 'en');
     this.baglantiKaldir('alternate', 'x-default');
     this.yapisalVeri(null);
+  }
+
+  /**
+   * Sayfanın görselini paylaşım kartı için değerlendirir. Panelden yüklenen
+   * duyuru görselleri JPEG/PNG ise olduğu gibi kullanılır — habere ait görsel,
+   * genel bina fotoğrafından her zaman daha iyi bir karttır. WebP ise ya da
+   * görsel hiç yoksa kurumsal JPEG'e düşülür.
+   */
+  private sosyalGorsel(aday: string | null | undefined): { url: string; olcusuBiliniyor: boolean } {
+    if (aday && !/\.webp(\?|#|$)/i.test(aday)) {
+      return { url: this.tamUrl(aday), olcusuBiliniyor: false };
+    }
+    return { url: this.tamUrl(SOSYAL_GORSEL), olcusuBiliniyor: true };
+  }
+
+  /**
+   * Ölçü etiketleri kartın görsel inmeden yerleştirilmesini sağlar; olmadığında
+   * ilk paylaşımda kart çoğu kez görselsiz çizilir. Ölçüsünü bilmediğimiz bir
+   * görsel için yazılmaz — yanlış ölçü, hiç ölçü vermemekten kötüdür. İstemci
+   * içi gezinmede önceki sayfadan kalmasın diye açıkça silinir.
+   */
+  private sosyalOlcu(biliniyor: boolean): void {
+    this.ozellik('og:image:width', biliniyor ? SOSYAL_GORSEL_EN : '');
+    this.ozellik('og:image:height', biliniyor ? SOSYAL_GORSEL_BOY : '');
+    this.ozellik('og:image:type', biliniyor ? 'image/jpeg' : '');
   }
 
   private tamUrl(value: string): string {
@@ -214,7 +260,12 @@ export class Seo {
     if (!el) {
       el = this.belge.createElement('link');
       el.rel = 'preload';
-      el.as = 'image';
+      // setAttribute ile yazılmalı: sunucu tarafı DOM'u "as" özelliğini
+      // özniteliğe yansıtmıyor, atama sessizce kayboluyordu. "as" taşımayan bir
+      // preload geçersizdir ve tarayıcı tümden atar — etiket HTML'de görünmesine
+      // rağmen ön yükleme hiç çalışmıyordu. Aynı yöntemin diğer öznitelikleri
+      // zaten setAttribute kullandığı için çıktıda görünüyor.
+      el.setAttribute('as', 'image');
       el.setAttribute('data-bidb-lcp', '');
       this.belge.head.appendChild(el);
     }

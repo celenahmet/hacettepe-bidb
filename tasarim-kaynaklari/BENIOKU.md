@@ -33,3 +33,32 @@ kendi içinde koyulaşan bir geçiş taşıyor. Kenar sütununu germek, pikselle
 aynen devam ettirdiği için birleşme yerini görünmez kılar.
 
 Yeniden üretmek gerekirse `sharp` ile aynı adımlar uygulanmalıdır.
+
+### `public/og-gorsel.jpg` (1200x630, ~128 KB)
+
+Bağlantı paylaşıldığında görünen kart görseli (`og:image`). Kaynağı
+`public/images/slider/slide1-1920.webp`; `fit: cover`, `position: center`,
+JPEG kalite 86, mozjpeg, `4:4:4`.
+
+**Neden ayrı bir dosya:**
+
+*Biçim* — LinkedIn desteklediği biçimler arasında WebP'yi saymıyor, Facebook'un
+davranışı sürümden sürüme değişiyor. Sitenin kendi görselleri WebP olduğu için
+paylaşılan bağlantı kartsız, yalnız başlıktan ibaret çıkıyordu. JPEG her
+platformda çalışır.
+
+*Oran* — slider görselleri 2.31:1, kartların beklediği oran 1.91:1. Kaynak
+daha geniş olduğundan kırpma yanlardan olur ve bina tabelası çerçevede kalır;
+bu yüzden dikey kırpma sorunu yaşanmaz.
+
+Boyutu `og:image:width`/`height` ile bildirilir; bu yüzden dosya yeniden
+üretilirse ölçü değişmemeli, değişecekse `seo.service.ts` içindeki sabitler de
+güncellenmelidir.
+
+### `public/icon-{192,512}.png`, `public/icon-maskable-512.png`
+
+Uygulama olarak kurulum ikonları (`manifest.webmanifest`). Kaynağı
+`public/hu-logo.svg`; beyaz zemin, amblem kendi oranı (34.5:50) korunarak
+ortalanmış. Standart ikonlarda %14, maskelenebilir olanda %24 boşluk —
+Android maskelenebilir ikonu kendi şekline göre kenarlardan kırptığı için
+amblemin güvenli bölgede kalması gerekir.
