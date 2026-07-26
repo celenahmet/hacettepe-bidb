@@ -46,7 +46,12 @@
   body {
     margin: 0;
     font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    font-size: 16px;
+    /* rem, px değil: erişilebilirlik aracının yazı büyütmesi kök puntoyu
+       değiştirerek çalışıyor (html.a11y-font-1/-2). Sabit px burada o
+       ölçeklemenin dışında kalan bir ada bırakırdı. Ölçümde bugünkü içerikte
+       etkisi yok — bütün metin kendi rem tabanlı boyutunu taşıyan öğelerde —
+       ama doğrudan body'ye yazılacak bir metin sessizce büyümezdi. */
+    font-size: 1rem;
     line-height: 1.6;
     color: var(--metin);
     background: var(--beyaz);
