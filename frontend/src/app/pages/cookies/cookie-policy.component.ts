@@ -26,7 +26,8 @@ import { SideMenuComponent } from '../../layout/side-menu.component';
             <li aria-current="page"><span>{{ language() === 'en' ? 'Cookie Policy' : 'Çerez Politikası' }}</span></li>
           </ol>
         </nav>
-        <h1 class="sayfa-seridi-baslik">{{ language() === 'en' ? 'Cookie and Browser Storage Policy' : 'Çerez ve Tarayıcı Depolama Politikası' }}</h1>
+        <!-- Görsel bağlam; asıl başlık (h1) içerik sütununun tepesinde. -->
+        <p class="sayfa-seridi-baslik" aria-hidden="true">{{ language() === 'en' ? 'Cookie and Browser Storage Policy' : 'Çerez ve Tarayıcı Depolama Politikası' }}</p>
         <p class="sayfa-seridi-aciklama">
           {{ language() === 'en'
             ? 'This page explains, in plain language, which browser technologies are used on the Department of Information Technology website, for what purpose and for how long.'
@@ -41,6 +42,10 @@ import { SideMenuComponent } from '../../layout/side-menu.component';
       </aside>
 
       <main id="ana-icerik" class="icerik-alani cerez-politikasi">
+        <header class="sayfa-tepe">
+          <h1 class="sayfa-baslik">{{ language() === 'en' ? 'Cookie and Browser Storage Policy' : 'Çerez ve Tarayıcı Depolama Politikası' }}</h1>
+        </header>
+
         <header class="cerez-politika-ust">
           <aside class="cerez-mevcut-durum" aria-label="Mevcut kullanım durumu">
             <span class="cerez-durum-nokta" aria-hidden="true"></span>

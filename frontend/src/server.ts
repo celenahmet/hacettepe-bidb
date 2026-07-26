@@ -195,9 +195,23 @@ app.use(async (req, res, next) => {
  */
 const apiTaban = process.env['BIDB_API'] ?? 'http://localhost:8081';
 
+/** Vekilin dışına çıkılmadığını doğrulamak için sabit taban. */
+const apiKokU = new URL(apiTaban);
+
 app.use('/api', express.raw({ type: '*/*', limit: '5mb' }), async (req, res) => {
   try {
-    const hedef = apiTaban + '/api' + req.url;
+    // Yol, adres çözümlenerek DOĞRULANIR. Düz birleştirme yapıldığında
+    // ".." ve yüzde kodlu biçimleri ("%2e%2e", ".%2e") backend'e giderken
+    // normalleştiriliyor ve istek /api önekinin dışına çıkabiliyordu:
+    // /api/%2e%2e/actuator/health gerçekte /actuator/health'e ulaşıyordu.
+    // Bu, "backend'e yalnızca bu vekil üzerinden erişilir" sınırını deliyordu.
+    const hedefU = new URL(apiTaban + '/api' + req.url);
+    if (hedefU.origin !== apiKokU.origin
+        || !(hedefU.pathname === '/api' || hedefU.pathname.startsWith('/api/'))) {
+      res.status(400).json({ message: 'Geçersiz istek yolu.' });
+      return;
+    }
+    const hedef = hedefU.toString();
 
     // Kimlik doğrulama ve içerik başlıkları olduğu gibi iletilir
     const basliklar: Record<string, string> = { Accept: 'application/json' };

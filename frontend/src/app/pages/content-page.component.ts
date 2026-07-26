@@ -45,7 +45,10 @@ import { ContactFormComponent } from './contact-form.component';
           </ol>
         </nav>
         @if (sayfa(); as s) {
-          <h1 class="sayfa-seridi-baslik">{{ s.title }}</h1>
+          <!-- Görsel bağlam; sayfanın asıl başlığı (h1) içerik sütununun
+               tepesinde duruyor. Aynı metin iki kez okunmasın diye ekran
+               okuyuculardan gizlenir. -->
+          <p class="sayfa-seridi-baslik" aria-hidden="true">{{ s.title }}</p>
           @if (seritAciklamasi(); as a) { <p class="sayfa-seridi-aciklama">{{ a }}</p> }
         }
       </div>
@@ -72,14 +75,14 @@ import { ContactFormComponent } from './contact-form.component';
             [class.personel-sayfasi]="sayfa()?.slug === 'staff'"
             [class.organizasyon-sayfasi]="sayfa()?.slug === 'org-chart'">
         @if (sayfa(); as s) {
-          <!-- Sayfa başlığı (h1) üstteki şeritte; burada tekrarlanmaz.
-               Personel sayfasının amblemli ayracı listeyi başlattığı için
-               kendi başına durur. -->
-          @if (s.slug === 'staff') {
-            <div class="personel-baslik-ayrac" aria-hidden="true">
-              <span><img src="/hu-logo.svg" alt="" width="16" height="26"></span>
-            </div>
-          }
+          <header class="sayfa-tepe">
+            <h1 class="sayfa-baslik">{{ s.title }}</h1>
+            @if (s.slug === 'staff') {
+              <div class="personel-baslik-ayrac" aria-hidden="true">
+                <span><img src="/hu-logo.svg" alt="" width="16" height="26"></span>
+              </div>
+            }
+          </header>
           @if (s.slug === 'org-chart') {
             <p class="organizasyon-giris">
               {{ language() === 'en'
