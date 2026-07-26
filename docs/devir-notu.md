@@ -62,40 +62,6 @@ eder. **Bu projedeki en tehlikeli hata türü budur.**
 - Masaüstü, tablet ve mobil birlikte düşünülür. Her tasarım kararının
   gerekçesi kısaca açıklanır (kod yorumlarında da).
 
-### 2.4 Commit imzası ve push
-
-Commit'lerde yalnızca Ahmet Çelen görünür. Başka bir imza, ortak yazar
-satırı (`Co-Authored-By`) ya da araç tanıtımı (`Generated with …`)
-eklenmez — commit mesajının gövdesinde de, alt bilgisinde de.
-
-**Kimlik:**
-
-```
-user.name  = Ahmet Çelen
-user.email = ahmetcelenyt@icloud.com
-```
-
-**Uzak depo:** `origin` → `https://github.com/celenahmet/hacettepe-bidb.git`,
-dal `main`. Push aynı kimlikle yapılır; ayrı bir hesap ya da makine kimliği
-kullanılmaz.
-
-**Geçmişteki iki ad hakkında:** `git log` iki farklı görünen ad gösterir —
-`Ahmet Çelen` ve `celenahmet`. İkisinin de e-postası aynıdır
-(`ahmetcelenyt@icloud.com`), yani aynı kişidir; fark yalnızca commit'in
-hangi ortamdan atıldığından gelir. Yeni commit'lerde `Ahmet Çelen`
-kullanılır; geçmiş **yeniden yazılmaz**.
-
-**Kuralın tutulup tutulmadığı şöyle ölçülür:**
-
-```bash
-git log --grep='Co-Authored-By' --oneline | wc -l   # 0 olmalı
-git log --grep='Generated with'  --oneline | wc -l   # 0 olmalı
-git log --format='%an <%ae>' | sort | uniq -c        # yalnızca yukarıdaki e-posta
-```
-
-Son denetimde üçü de temiz: 290 commit, sıfır ortak yazar satırı, sıfır araç
-tanıtımı, tek e-posta.
-
 ---
 
 ## 3. Mimari
