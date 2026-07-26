@@ -1,5 +1,6 @@
 import { Component, Input, inject, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
+import { DOCUMENT } from '@angular/common';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Language } from '../core/models';
 
@@ -59,7 +60,7 @@ interface TicketResponse {
           </button>
         </div>
       } @else {
-        <form class="iletisim-ticket-form" (ngSubmit)="gonder()" #ticketForm="ngForm">
+        <form class="iletisim-ticket-form" (ngSubmit)="gonder(ticketForm)" #ticketForm="ngForm" novalidate>
           <p class="iletisim-form-zorunlu-not">
             <span aria-hidden="true">*</span>
             {{ dilDegeri === 'en' ? 'Marks required fields.' : 'Zorunlu alanları belirtir.' }}
@@ -75,16 +76,30 @@ interface TicketResponse {
           <div class="iletisim-form-izgara">
             <label>
               <span>{{ dilDegeri === 'en' ? 'Category' : 'Kategori' }} *</span>
-              <select name="category" [(ngModel)]="form.category" required>
+              <select name="category" #categoryAlani="ngModel" [(ngModel)]="form.category" required>
                 @for (item of kategoriler; track item.key) {
                   <option [value]="item.key">{{ dilDegeri === 'en' ? item.en : item.tr }}</option>
                 }
               </select>
+            
+              @if (categoryAlani.invalid && (categoryAlani.dirty || categoryAlani.touched)) {
+                <small class="iletisim-form-alan-hata">
+                  {{ dilDegeri === 'en' ? 'Select a category.' : 'Kategori seçin.' }}
+                </small>
+              }
             </label>
             <label>
               <span>{{ dilDegeri === 'en' ? 'Subject' : 'Konu' }} *</span>
-              <input name="subject" [(ngModel)]="form.subject" required minlength="5" maxlength="160"
+              <input name="subject" #subjectAlani="ngModel" [(ngModel)]="form.subject" required minlength="5" maxlength="160"
                      [placeholder]="dilDegeri === 'en' ? 'Briefly describe your request' : 'Talebinizi kısaca belirtin'">
+            
+              @if (subjectAlani.invalid && (subjectAlani.dirty || subjectAlani.touched)) {
+                <small class="iletisim-form-alan-hata">
+                  {{ subjectAlani.errors?.['required']
+                    ? (dilDegeri === 'en' ? 'Enter a subject.' : 'Konu girin.')
+                    : (dilDegeri === 'en' ? 'Subject must be at least 5 characters.' : 'Konu en az 5 karakter olmalı.') }}
+                </small>
+              }
             </label>
           </div>
 
@@ -97,18 +112,36 @@ interface TicketResponse {
           <div class="iletisim-form-izgara dort">
             <label>
               <span>{{ dilDegeri === 'en' ? 'First name' : 'Ad' }} *</span>
-              <input name="firstName" [(ngModel)]="form.firstName" required minlength="2" maxlength="80" autocomplete="given-name">
+              <input name="firstName" #firstNameAlani="ngModel" [(ngModel)]="form.firstName" required minlength="2" maxlength="80" autocomplete="given-name">
+            
+              @if (firstNameAlani.invalid && (firstNameAlani.dirty || firstNameAlani.touched)) {
+                <small class="iletisim-form-alan-hata">
+                  {{ firstNameAlani.errors?.['required']
+                    ? (dilDegeri === 'en' ? 'Enter your first name.' : 'Adınızı girin.')
+                    : (dilDegeri === 'en' ? 'First name must be at least 2 characters.' : 'Ad en az 2 karakter olmalı.') }}
+                </small>
+              }
             </label>
             <label>
               <span>{{ dilDegeri === 'en' ? 'Last name' : 'Soyad' }} *</span>
-              <input name="lastName" [(ngModel)]="form.lastName" required minlength="2" maxlength="80" autocomplete="family-name">
+              <input name="lastName" #lastNameAlani="ngModel" [(ngModel)]="form.lastName" required minlength="2" maxlength="80" autocomplete="family-name">
+            
+              @if (lastNameAlani.invalid && (lastNameAlani.dirty || lastNameAlani.touched)) {
+                <small class="iletisim-form-alan-hata">
+                  {{ lastNameAlani.errors?.['required']
+                    ? (dilDegeri === 'en' ? 'Enter your last name.' : 'Soyadınızı girin.')
+                    : (dilDegeri === 'en' ? 'Last name must be at least 2 characters.' : 'Soyad en az 2 karakter olmalı.') }}
+                </small>
+              }
             </label>
             <label>
               <span>{{ dilDegeri === 'en' ? 'E-mail address' : 'E-posta adresi' }} *</span>
               <input name="email" #emailAlani="ngModel" [(ngModel)]="form.email" type="email" required maxlength="254" autocomplete="email">
               @if (emailAlani.invalid && (emailAlani.dirty || emailAlani.touched)) {
                 <small class="iletisim-form-alan-hata">
-                  {{ dilDegeri === 'en' ? 'Enter a valid e-mail address.' : 'Geçerli bir e-posta adresi girin.' }}
+                  {{ emailAlani.errors?.['required']
+                    ? (dilDegeri === 'en' ? 'Enter your e-mail address.' : 'E-posta adresinizi girin.')
+                    : (dilDegeri === 'en' ? 'Enter a valid e-mail address.' : 'Geçerli bir e-posta adresi girin.') }}
                 </small>
               }
             </label>
@@ -116,9 +149,13 @@ interface TicketResponse {
               <span>{{ dilDegeri === 'en' ? 'Telephone' : 'Telefon' }} *</span>
               <input name="phone" #phoneAlani="ngModel" [(ngModel)]="form.phone" type="tel" required minlength="7"
                      maxlength="30" autocomplete="tel" pattern="^[0-9+()\-.\s]+$">
+              <!-- Boş alanda biçim uyarısı vermek yanıltıcıydı: hiç yazmamış
+                   ziyaretçiye "yalnızca rakam kullanın" deniyordu. -->
               @if (phoneAlani.invalid && (phoneAlani.dirty || phoneAlani.touched)) {
                 <small class="iletisim-form-alan-hata">
-                  {{ dilDegeri === 'en' ? 'Use only digits and common separators (+, (), -).' : 'Yalnızca rakam ve yaygın ayraçlar kullanın (+, (), -).' }}
+                  {{ phoneAlani.errors?.['required']
+                    ? (dilDegeri === 'en' ? 'Enter your telephone number.' : 'Telefon numaranızı girin.')
+                    : (dilDegeri === 'en' ? 'Use only digits and common separators (+, (), -).' : 'Yalnızca rakam ve yaygın ayraçlar kullanın (+, (), -).') }}
                 </small>
               }
             </label>
@@ -126,8 +163,15 @@ interface TicketResponse {
 
           <label class="iletisim-form-mesaj">
             <span>{{ dilDegeri === 'en' ? 'Your message' : 'Mesajınız' }} *</span>
-            <textarea name="message" [(ngModel)]="form.message" required minlength="20"
+            <textarea name="message" #messageAlani="ngModel" [(ngModel)]="form.message" required minlength="20"
                       maxlength="5000" rows="7"></textarea>
+            @if (messageAlani.invalid && (messageAlani.dirty || messageAlani.touched)) {
+              <small class="iletisim-form-alan-hata">
+                {{ messageAlani.errors?.['required']
+                  ? (dilDegeri === 'en' ? 'Write your message.' : 'Mesajınızı yazın.')
+                  : (dilDegeri === 'en' ? 'Your message must be at least 20 characters.' : 'Mesajınız en az 20 karakter olmalı.') }}
+              </small>
+            }
             <small>{{ form.message.length }} / 5000</small>
           </label>
 
@@ -165,7 +209,10 @@ interface TicketResponse {
                 ? 'The information you submit is used solely to process and follow up your request.'
                 : 'İlettiğiniz bilgiler yalnızca talebinizin değerlendirilmesi ve takibi amacıyla kullanılır.' }}
             </p>
-            <button type="submit" [disabled]="gonderiliyor() || ticketForm.invalid">
+            <!-- Yalnızca gönderim sürerken kapatılır. Geçersiz formda da kapatmak,
+                 ziyaretçiye ölü bir düğme gösterip nedenini söylememek demekti;
+                 artık tıklanınca eksik alanlar yazılıyor ve ilkine odaklanılıyor. -->
+            <button type="submit" [disabled]="gonderiliyor()">
               {{ gonderiliyor()
                 ? (dilDegeri === 'en' ? 'Submitting…' : 'Gönderiliyor…')
                 : (dilDegeri === 'en' ? 'Submit request' : 'Talebi gönder') }}
@@ -179,6 +226,7 @@ interface TicketResponse {
 })
 export class ContactFormComponent {
   private http = inject(HttpClient);
+  private belge = inject(DOCUMENT);
   @Input() dilDegeri: Language = 'tr';
 
   protected readonly kategoriler = [
@@ -243,8 +291,51 @@ export class ContactFormComponent {
       : (bayt / (1024 * 1024)).toFixed(1) + ' MB';
   }
 
-  protected gonder(): void {
+  /** Zorunlu alanların ekranda görünen adları; eksik alan uyarısı bunlarla yazılır. */
+  private readonly alanAdlari: Record<string, { tr: string; en: string }> = {
+    category:  { tr: 'Kategori',        en: 'Category' },
+    subject:   { tr: 'Konu',            en: 'Subject' },
+    firstName: { tr: 'Ad',              en: 'First name' },
+    lastName:  { tr: 'Soyad',           en: 'Last name' },
+    email:     { tr: 'E-posta adresi',  en: 'E-mail address' },
+    phone:     { tr: 'Telefon',         en: 'Telephone' },
+    message:   { tr: 'Mesajınız',       en: 'Your message' }
+  };
+
+  protected gonder(kunye: NgForm): void {
     if (this.gonderiliyor()) return;
+
+    // Form eksikse gönderme düğmesi ARTIK KAPATILMIYOR; tıklanınca neyin eksik
+    // olduğu söyleniyor. Önceden düğme geçersiz formda devre dışıydı: ziyaretçi
+    // sayfaya girdiğinde ölü bir düğme görüyor, hangi alanın eksik olduğunu
+    // anlatan hiçbir şey olmadığı için de çıkmaza giriyordu. Yedi zorunlu alanın
+    // yalnızca ikisinde (e-posta, telefon) hata mesajı vardı.
+    if (kunye.invalid) {
+      // Dokunulmamış alanlar da işaretlenir; Angular hata mesajlarını ancak
+      // alana dokunulduğunda gösteriyor, oysa hiç dokunulmamış boş alan da eksik.
+      kunye.control.markAllAsTouched();
+
+      const eksik = Object.keys(this.alanAdlari)
+        .filter((ad) => kunye.control.get(ad)?.invalid)
+        .map((ad) => this.alanAdlari[ad][this.dilDegeri === 'en' ? 'en' : 'tr']);
+
+      this.hata.set(
+        this.dilDegeri === 'en'
+          ? `Please complete the required fields: ${eksik.join(', ')}.`
+          : `Lütfen zorunlu alanları doldurun: ${eksik.join(', ')}.`
+      );
+
+      // İlk eksik alana odaklanılır: uzun formda ziyaretçi nereye bakacağını
+      // aramak zorunda kalmasın.
+      const ilk = Object.keys(this.alanAdlari).find((ad) => kunye.control.get(ad)?.invalid);
+      if (ilk) {
+        const el = this.belge.querySelector<HTMLElement>(`.iletisim-ticket-form [name="${ilk}"]`);
+        el?.focus();
+        el?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      }
+      return;
+    }
+
     this.hata.set('');
     this.gonderiliyor.set(true);
     const govde = new FormData();

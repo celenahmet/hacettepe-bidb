@@ -78,6 +78,17 @@
   .iletisim-form-zorunlu-not span { color: var(--hu-kirmizi); font-weight: 700; }
 
   .iletisim-form-alan-hata { margin-top: -2px; color: var(--hu-kirmizi); font-size: var(--olcu-xs); font-weight: 650; }
+
+  /* Eksik alan yazıyla söylenmekle kalmaz, alanın kendisi de belli olur.
+     Yalnızca dokunulmuş alanlarda: form daha ilk açılışta kırmızıya boyanmaz.
+     Renk tek işaret değil — hata metni de yazıldığı için renk körlüğünde de
+     anlaşılır (WCAG 1.4.1). */
+  .iletisim-ticket-form input.ng-invalid.ng-touched,
+  .iletisim-ticket-form select.ng-invalid.ng-touched,
+  .iletisim-ticket-form textarea.ng-invalid.ng-touched {
+    border-color: var(--hu-kirmizi);
+    box-shadow: 0 0 0 3px rgb(179 24 33 / 12%);
+  }
   .iletisim-ticket-form label { display: grid; gap: 8px; min-width: 0; }
   .iletisim-ticket-form label > span { color: var(--hu-lacivert); font-size: var(--olcu-sm); font-weight: 650; }
 
