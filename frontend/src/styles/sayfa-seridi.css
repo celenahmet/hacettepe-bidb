@@ -1,12 +1,12 @@
-/* İçerik sayfalarının üstündeki sayfa başlığı şeridi.
+/* İçerik sayfalarının üstündeki konum şeridi.
  *
- * Üst menüyle içerik arasındaki alan, tüm iç sayfalarda ortak bir kurumsal
- * başlık şeridi taşır: kurumsal veri-ağı görseli üzerinde bölüm etiketi
- * (kırmızı), sayfa başlığı (h1), varsa kısa tanıtım cümlesi ve en altta
- * Ana Sayfa / Bölüm / Sayfa breadcrumb'ı.
+ * Üst menüyle içerik arasındaki alan, tüm iç sayfalarda kurumsal veri-ağı
+ * görseli üzerinde Ana Sayfa / Bölüm / Sayfa yolunu ve — varsa — sayfanın
+ * kısa tanıtım cümlesini taşır.
  *
- * Başlık BURADA h1'dir; içerik alanında ikinci kez tekrarlanmaz (aksi hâlde
- * sayfada iki h1 olur ve ekran okuyucu aynı başlığı iki kez okur).
+ * Sayfa adı burada TEKRARLANMAZ: yolun son basamağı zaten onu söylüyor,
+ * sayfanın asıl başlığı (h1) da içerik sütununun tepesinde duruyor. Üçüncü
+ * kez yazmak şeridi kalabalıklaştırıyordu.
  */
 @layer kamu {
   .sayfa-seridi {
@@ -77,9 +77,10 @@
     line-height: var(--satir-normal);
   }
 
-  /* Breadcrumb başlığın ÜSTÜNDE durur: bölümü zaten söylediği için ayrıca
-     kırmızı bir bölüm etiketi taşınmaz — aynı bilgiyi iki kez vermek
-     şeridi gereksiz yere kalabalıklaştırıyordu. */
+  /* Şeridin tek içeriği bu yol. Başlık kaldırıldıktan sonra küçük punto
+     268px'lik bandın içinde cılız kalıyordu; bir kademe büyütüldü
+     (0,875rem -> 1rem) — şerit hâlâ yalnızca konum bilgisi taşıyor, bu
+     yüzden başlık ölçeğine çıkarılmadı. */
   .sayfa-iz {
     display: flex;
     flex-wrap: nowrap;
@@ -89,7 +90,7 @@
     padding: 0;
     overflow-x: auto;
     list-style: none;
-    font-size: var(--olcu-sm);
+    font-size: var(--olcu-md);
     letter-spacing: 0.01em;
     scrollbar-width: none;
   }
@@ -123,8 +124,8 @@
   }
   .sayfa-iz a:hover { color: #fff; text-decoration: underline; }
 
-  /* Son basamak hemen altındaki başlıkla aynı metni taşıdığı için vurgulu
-     değil, sakin bırakılır; ağırlığı başlık üstlenir. */
+  /* Bulunulan sayfa yolun sonudur; şeritte başka bir başlık olmadığı için
+     bir tık öne çıkarılır ama yolun sakin dilini bozacak kadar değil. */
   .sayfa-iz li:last-child span {
     overflow: hidden;
     max-width: 46vw;
@@ -146,7 +147,7 @@
 
   @media (max-width: 620px) {
     .sayfa-seridi-ic { min-height: 176px; padding-block: var(--bosluk-5); gap: var(--bosluk-2); }
-    .sayfa-iz { font-size: var(--olcu-xs); }
+    .sayfa-iz { font-size: var(--olcu-sm); }
     .sayfa-iz li:last-child span { max-width: 58vw; }
   }
 }
