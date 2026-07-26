@@ -91,7 +91,7 @@ dokunulmadı), 14 test talebi, 1 test dosyası yüklemesi. Gerçek veriler korun
 |---|---|
 | Kimlik doğrulamanın belirteç tabanlıya çevrilmesi (R-1) | Mimari değişiklik; direktif gereği mimari bozulmadı. Plan: `SECURITY_FIX_PLAN.md` P2-1 |
 | Çok kullanıcılı yönetici modeli (R-2) | Aynı gerekçe. P2-2 |
-| CSP'den `unsafe-inline` kaldırılması | Nonce zaten çalışıyor; kaldırma gerçek tarayıcıda ihlal raporu gerektirir. P2-3 |
+| CSP `script-src`'den `unsafe-inline` kaldırılması | Nonce'u anlayan tarayıcı onu zaten yok sayıyor; yalnızca çok eski tarayıcılar için yedek. Kaldırmak bugünkü korumayı değiştirmez. P2-3. (`style-src`'deki nonce ise ölçüm sonrası KALDIRILDI — aşağıya bakınız.) |
 | Konum servisinin varsayılan kapatılması | Çalışan bir özelliği güvenlik gerekçesiyle sessizce kapatmamak için; karar kurumun. Anahtar eklendi, gerekçe belgelendi |
 | Erişilemeyen 5 dış bağlantının kaldırılması | Beşinin de alan adı çözülüyor (ayakta sunucular); büyük olasılıkla kampüs içi erişime açık. Tek noktadan yapılan ağ denemesine dayanarak kurumsal bağlantı silinmez |
 | RLS (Row-Level Security) | Uygulamada kullanıcıya ait kaynak kavramı yok; tek paylaşılan yönetici hesabı var. Gerekli değil |

@@ -305,7 +305,12 @@ kullanıldı. Kurulmadıkları hâlde çalıştırılmış gibi gösterilmemişt
 ## Sonraki taramada nereden devam edilmeli
 
 1. Üretim altyapısı erişimi sağlandığında yukarıdaki PostgreSQL/TLS komutları.
-2. Gerçek tarayıcıda CSP ihlal raporu toplanarak `unsafe-inline`'ın kaldırılabilirliği (nonce zaten üretiliyor).
+2. ~~Gerçek tarayıcıda CSP ihlal raporu toplanarak `unsafe-inline`'ın kaldırılabilirliği.~~
+   **Yapıldı.** Sayfa başına 11 ihlal ölçüldü ve varsayım çürüdü: fazlalık olan
+   `unsafe-inline` değil, `style-src`'deki nonce'tu — nonce varken tarayıcı
+   `unsafe-inline`'ı yok sayıyor ve nonce `style="…"` özniteliğine verilemediği
+   için Angular'ın stil bağları engelleniyordu. Nonce `style-src`'den kaldırıldı,
+   `script-src`'de duruyor. Ayrıntı: SECURITY_FIX_PLAN.md P2-3.
 3. R-1 ve R-2 için kimlik doğrulama mimarisi kararı alındıktan sonra yeniden inceleme.
 4. Yük/eşzamanlılık testleri (bu incelemede kapsam dışı bırakıldı).
 5. CI/CD kurulduğunda: SBOM (CycloneDX), secret taraması, imza doğrulama.

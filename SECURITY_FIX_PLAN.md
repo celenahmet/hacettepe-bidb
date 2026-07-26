@@ -57,12 +57,31 @@ Tek paylaşılan hesap; işlemler kişilere atfedilemez. Denetim kaydı sekme ki
 "kim" sorusuna yaklaşık cevap veriyor. Çok kullanıcılı model + rol ayrımı gerekir.
 **Owner:** Backend · **Bağımlılık:** P2-1 ile birlikte yapılması verimli.
 
-### P2-3 · CSP'den `unsafe-inline` kaldırılması
-Nonce üretimi **zaten var** ve çalışıyor (`script-src 'self' 'nonce-…' 'unsafe-inline'`).
-`unsafe-inline` yalnızca nonce anlamayan eski tarayıcılar için duruyor ve nonce'u
-anlayan tarayıcı onu zaten yok sayıyor — yani bugünkü koruma nonce düzeyinde.
-Kaldırmadan önce gerçek tarayıcıda CSP ihlal raporu toplanmalı.
-**Owner:** Frontend · **Risk:** Orta (hydration/event-replay etkilenebilir)
+### P2-3 · CSP'den `unsafe-inline` kaldırılması — ÖLÇÜLDÜ, SONUÇ TERSİNE ÇIKTI
+
+Gerçek tarayıcıda ihlal raporu toplandı (bu maddenin istediği adım). Sonuç,
+maddenin dayandığı varsayımı çürüttü: `unsafe-inline` fazlalık değildi,
+`style-src`'deki NONCE fazlalıktı ve zarar veriyordu.
+
+Ölçüm: her sayfada 11 ihlal — *"Applying inline style violates … The action has
+been blocked."* Sebep, CSP'nin şu kuralı: **kural listesinde nonce varsa tarayıcı
+`unsafe-inline`'ı yok sayar.** Nonce ise yalnızca `<style>` etiketine
+verilebilir, `style="…"` özniteliğine verilemez. Angular'ın stil bağları
+(`[style.width.%]`, `[style.animation-duration.ms]`) tam olarak o özniteliği
+yazdığından, rota yükleme çubuğunun genişliği ve slider nokta göstergelerinin
+animasyon süresi **hiç uygulanmıyordu** — hata görünmüyor, yalnızca efekt yoktu.
+
+Alınan karar: nonce `style-src`'den kaldırıldı, `script-src`'de bırakıldı.
+Bu değerler sürekli (yüzde, milisaniye) olduğundan bileşen tarafında satır içi
+stilden kaçınmak mümkün değil. Ödünç dar: stil enjeksiyonu betik çalıştırmaz ve
+CSS ile veri sızdırmanın ana kanalı olan dış kaynak isteği zaten
+`img-src 'self'` ve `connect-src 'self'` ile kapalı.
+
+**Kalan iş:** `script-src`'deki `unsafe-inline`. Nonce'u anlayan tarayıcı onu
+zaten yok sayıyor; yalnızca nonce desteklemeyen çok eski tarayıcılar için yedek
+olarak duruyor. Kaldırılması bugünkü korumayı değiştirmez, yalnızca politikayı
+dürüstleştirir.
+**Owner:** Frontend · **Risk:** Düşük (yalnızca eski tarayıcı yedeği etkilenir)
 
 ---
 
