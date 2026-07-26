@@ -618,7 +618,12 @@ app.use(async (req, res, next) => {
     const basliklar = new Headers(yanit.headers);
     basliklar.delete('content-length');
     if (hataKodu) basliklar.set('cache-control', 'no-store');
-    else if (/^\/(tr|en)(\/|$)/.test(req.path)) {
+    else if (req.path === '/yonetim' || req.path.startsWith('/yonetim/')) {
+      // Yönetim yüzeyi hiçbir katmanda saklanmamalı. Başlık verilmediğinde
+      // tarayıcılar sezgisel önbellekleme uygular ve araya giren bir vekil
+      // ya da CDN bu sayfayı başka bir kullanıcıya sunabilir.
+      basliklar.set('cache-control', 'no-store');
+    } else if (/^\/(tr|en)(\/|$)/.test(req.path)) {
       // İçerik dinamiktir; CDN kısa süre saklar ve arka planda tazeler.
       basliklar.set('cache-control', 'public, max-age=0, s-maxage=60, stale-while-revalidate=300');
     }
