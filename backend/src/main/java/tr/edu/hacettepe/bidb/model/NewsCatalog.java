@@ -57,16 +57,26 @@ public final class NewsCatalog {
 
     private NewsCatalog() {}
 
+    /*
+     * Üç metot da "tanımlı değilse varsayılana düş" işini yapar. Değerin null
+     * olup olmadığı AYRICA sorulmalı: bu kümeler Collectors.toUnmodifiableSet()
+     * ile üretiliyor ve değişmez kümeler contains(null) çağrısında false
+     * dönmez, NullPointerException FIRLATIR (HashSet'ten farkı budur).
+     *
+     * Sonuç, varsayılana düşme mekanizmasının tam da ihtiyaç duyulduğu anda
+     * çalışmamasıydı: kategorisi belirtilmemiş bir duyuru gönderildiğinde
+     * panel, alan uyarısı yerine 500 hatası alıyordu (yeniden üretildi).
+     */
     public static String category(String value) {
-        return CATEGORY_KEYS.contains(value) ? value : "general";
+        return value != null && CATEGORY_KEYS.contains(value) ? value : "general";
     }
 
     public static String audience(String value) {
-        return AUDIENCE_KEYS.contains(value) ? value : "all-users";
+        return value != null && AUDIENCE_KEYS.contains(value) ? value : "all-users";
     }
 
     public static String template(String value) {
-        return TEMPLATE_KEYS.contains(value) ? value : "institutional";
+        return value != null && TEMPLATE_KEYS.contains(value) ? value : "institutional";
     }
 
     private static Option option(String key, String tr, String en, String description) {
