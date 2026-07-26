@@ -12,9 +12,12 @@ services:
     image: postgres:16-alpine
     container_name: ${BIDB_ONEK:-bidb}-db
     environment:
-      POSTGRES_DB: bidb
-      POSTGRES_USER: bidb
-      POSTGRES_PASSWORD: bidb
+      POSTGRES_DB: ${BIDB_DB_AD:-bidb}
+      POSTGRES_USER: ${BIDB_DB_KULLANICI:-bidb}
+      # Yönetici parolasıyla aynı yaklaşım: varsayılan yalnızca geliştirme
+      # içindir, üretimde .env üzerinden verilmelidir. Daha önce sabit
+      # yazıldığı için dosyayı düzenlemeden değiştirilemiyordu.
+      POSTGRES_PASSWORD: ${BIDB_DB_PAROLA:-bidb}
       # Türkçe sıralama ve karşılaştırma
       LANG: tr_TR.utf8
       POSTGRES_INITDB_ARGS: "--encoding=UTF8"
@@ -27,7 +30,7 @@ services:
     volumes:
       - db-data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U bidb -d bidb"]
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
       interval: 5s
       timeout: 3s
       retries: 20
@@ -41,9 +44,9 @@ services:
       db:
         condition: service_healthy
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/bidb
-      SPRING_DATASOURCE_USERNAME: bidb
-      SPRING_DATASOURCE_PASSWORD: bidb
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${BIDB_DB_AD:-bidb}
+      SPRING_DATASOURCE_USERNAME: ${BIDB_DB_KULLANICI:-bidb}
+      SPRING_DATASOURCE_PASSWORD: ${BIDB_DB_PAROLA:-bidb}
       SPRING_PROFILES_ACTIVE: docker
       # Yönetim uçları için kimlik bilgileri (üretimde mutlaka değiştirilmeli)
       BIDB_YONETICI_KULLANICI: ${BIDB_YONETICI_KULLANICI:-admin}
