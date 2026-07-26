@@ -384,8 +384,19 @@ async function yayindakiYollar(): Promise<Set<string>> {
     const yanitlar = await Promise.all(
       ['tr', 'en'].map((language) => apiGetir(`${API_TABAN}/api/${language}/pages`).then((y) => ({ language, y })))
     );
+    // Bir dilin listesi alınamadıysa ELDEKİ parçayla karar verilemez. Eksik
+    // küme boş olmadığı için sayfaYok() içindeki "liste boşsa doğrulama yapma"
+    // koruması devreye girmez ve o dilin BÜTÜN sayfaları "yok" sayılır.
+    // Üstelik sonuç aşağıda bir dakika önbelleğe alındığından hata tek isteğe
+    // değil, o dakikaya yayılırdı: yayın sonrası backend daha ısınırken gelen
+    // ziyaretçi ve tarayıcı robotları bir dilin tamamını 404 olarak görürdü.
+    // Bu davranış bu oturumda iki kez gözlendi (Türkçe sayfalar 302, İngilizce
+    // 200). Eksik listeyle karar vermektense hiç karar vermemek doğrusudur:
+    // var olmayan bir sayfayı göstermek, var olanları gizlemekten iyidir.
+    if (yanitlar.some(({ y }) => !y.ok)) {
+      return yolOnbellek?.yollar ?? new Set<string>();
+    }
     for (const { language, y } of yanitlar) {
-      if (!y.ok) continue;
       for (const s of (await y.json()) as { slug: string; brokenContent?: boolean }[]) {
         // Kaynakta hata metni dönen sayfalar erişilebilir kalır, ancak
         // site haritasına girmez (bkz. hataliSayfalar)
