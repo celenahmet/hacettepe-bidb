@@ -44,13 +44,10 @@ import { ContactFormComponent } from './contact-form.component';
             @if (sayfa(); as s) { <li aria-current="page"><span>{{ s.title }}</span></li> }
           </ol>
         </nav>
-        @if (sayfa(); as s) {
-          <!-- Görsel bağlam; sayfanın asıl başlığı (h1) içerik sütununun
-               tepesinde duruyor. Aynı metin iki kez okunmasın diye ekran
-               okuyuculardan gizlenir. -->
-          <p class="sayfa-seridi-baslik" aria-hidden="true">{{ s.title }}</p>
-          @if (seritAciklamasi(); as a) { <p class="sayfa-seridi-aciklama">{{ a }}</p> }
-        }
+        <!-- Sayfa adı şeritte TEKRARLANMAZ: yolun son basamağı zaten onu
+             söylüyor, asıl başlık da (h1) içerik sütununun tepesinde duruyor.
+             Üçüncü kez yazmak şeridi kalabalıklaştırıyordu. -->
+        @if (seritAciklamasi(); as a) { <p class="sayfa-seridi-aciklama">{{ a }}</p> }
       </div>
     </header>
     <div class="kap sayfa-duzen">

@@ -12,11 +12,24 @@
   .sayfa-seridi {
     position: relative;
     overflow: hidden;
-    background-color: #0b2044;
-    /* Kaynak PNG 2172x724 / 1,4 MB idi; bu şerit her içerik sayfasında
-       yüklendiği için 1920x640 WebP'ye indirildi (59 KB, ~%96 küçülme).
-       PNG kaynak dosya olarak durmayı sürdürüyor. */
-    background-image: url("/images/slider/slider_hacettepe_bakground.webp");
+    background-color: #021c4c;
+    /*
+      Zemin, kaynak görselden ŞERİT İÇİN ayrıca üretildi (6432x536, 12:1, 62 KB
+      — kaynak 1,4 MB PNG idi).
+
+      Neden özel bir oran: "cover", görsel kaptan darsa yüksekliği doldurup
+      GENİŞLİKTEN, genişse genişliği doldurup YÜKSEKLİKTEN kırpar. Kaynak
+      görselin oranı (3:1) şeritten (yaklaşık 7:1) dar olduğu için ikinci durum
+      oluşuyor ve amblem sürekli tepesinden kesiliyordu. 12:1, gerçekçi her
+      ekran genişliğinden geniş olduğundan kırpma artık HEP yatayda olur;
+      amblem hiçbir çözünürlükte dikeyde kesilmez.
+
+      Görselin solundaki alan, en sol piksel sütunu yatayda gerilerek
+      dolduruldu. Kenar pikselleri aynen devam ettiği için birleşme yeri
+      görünmez — daha önce düz bir renkle eşitlemeye çalışmak, kenar tek renk
+      olmadığı (kendi içinde koyulaşan bir geçiş taşıdığı) için çizgi bırakıyordu.
+    */
+    background-image: url("/images/slider/sayfa-seridi-zemin.webp");
     background-repeat: no-repeat;
     background-position: center right;
     background-size: cover;
@@ -49,22 +62,11 @@
     flex-direction: column;
     justify-content: center;
     gap: var(--bosluk-3);
-    /* Arkadaki amblem/dalga deseni daha alçak bir şeritte tepesinden
-       kırpılıyordu; görselin dikey kompozisyonu bu yükseklikte oturuyor. */
+    /* Şerit artık yalnızca yolu (ve varsa kısa tanıtımı) taşıyor. Yükseklik
+       metne göre değil, arkadaki görselin kompozisyonuna göre belirlenir:
+       amblem ve dalga deseni bu ölçüde dengeli oturuyor. */
     min-height: 268px;
     padding-block: var(--bosluk-7);
-  }
-
-  /* Başlık. Önceki ölçek (2.7rem) içerik gövdesinin yanında orantısız
-     kalıyordu; sayfa başlığı, altındaki metnin ağırlığıyla aynı ailede
-     durmalı — vurgu boyutla değil, çevresindeki boşlukla kuruluyor. */
-  .sayfa-seridi-baslik {
-    margin: 0;
-    color: #fff;
-    font-size: clamp(1.5rem, 2.2vw, 1.95rem);
-    font-weight: var(--kalinlik-kalin);
-    line-height: 1.2;
-    letter-spacing: -0.015em;
   }
 
   .sayfa-seridi-aciklama {

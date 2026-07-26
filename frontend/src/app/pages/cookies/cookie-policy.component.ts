@@ -26,8 +26,8 @@ import { SideMenuComponent } from '../../layout/side-menu.component';
             <li aria-current="page"><span>{{ language() === 'en' ? 'Cookie Policy' : 'Çerez Politikası' }}</span></li>
           </ol>
         </nav>
-        <!-- Görsel bağlam; asıl başlık (h1) içerik sütununun tepesinde. -->
-        <p class="sayfa-seridi-baslik" aria-hidden="true">{{ language() === 'en' ? 'Cookie and Browser Storage Policy' : 'Çerez ve Tarayıcı Depolama Politikası' }}</p>
+        <!-- Sayfa adı şeritte tekrarlanmaz; yolun son basamağı ve içerikteki
+             h1 zaten söylüyor. -->
         <p class="sayfa-seridi-aciklama">
           {{ language() === 'en'
             ? 'This page explains, in plain language, which browser technologies are used on the Department of Information Technology website, for what purpose and for how long.'
