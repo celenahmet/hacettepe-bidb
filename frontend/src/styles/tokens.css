@@ -42,8 +42,14 @@
 
     --metin: #1c2530;
     --metin-2: #4a5765;
-    /* WCAG AA: beyaz ve açık gri yüzeylerde küçük metin için en az 4.5:1. */
-    --metin-3: #667382;
+    /* WCAG AA: beyaz ve açık gri yüzeylerde küçük metin için en az 4.5:1.
+       Önceki değer (#667382) yalnızca beyaz ve --yuzey-2 üzerinde bu koşulu
+       sağlıyordu; açık yüzeylerin en koyusu olan --yuzey-3 (#eef2f6) üzerinde
+       oran 4.30'a düşüyordu. Ölçümde iletişim formunun altındaki kişisel veri
+       bilgilendirme notu (12 punto) bu eşleşmeye denk geliyordu — okunması
+       gereken bir metin. Değer, üç yüzeyin en koyusuna göre seçildi:
+       #eef2f6 üzerinde 4.77, --yuzey-2 üzerinde 5.09, beyaz üzerinde 5.36. */
+    --metin-3: #5f6c7b;
     --metin-ters: #f2f5f8;
 
     --cizgi: #e1e6ec;
