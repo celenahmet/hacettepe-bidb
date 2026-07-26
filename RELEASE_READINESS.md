@@ -264,3 +264,26 @@ Buna ek olarak üretim yapılandırması (TLS, ters vekil, PostgreSQL sunucu aya
 ve tarayıcı davranışı bu ortamdan görülemedi.
 
 **Bu iki madde tamamlandığında karar READY FOR PRODUCTION'a çevrilebilir.**
+
+---
+
+## Ek: kampüs ağından doğrulanması gereken dış bağlantılar
+
+Veritabanındaki **bütün** adres alanları tarandı (11 sütun: `document.url`,
+`menu_item.external_url`, `news.external_url`, `news.image_url`,
+`shortcut.url`, `shortcut.icon_url`, `slide.image_url`, `slide.link_url`,
+`social_account.url`, `staff_member.photo_url`, `contact_ticket.attachment_url`)
+— 154 benzersiz adres. Üçü dışında hepsi 200 dönüyor.
+
+Kalan üçü **silinmedi**: üçü de kurumsal adres ve tek noktadan yapılan bir ağ
+denemesine dayanarak kurumsal bağlantı kaldırılmaz (bkz. `SECURITY_CHANGES.md`).
+Kampüs ağından açılıp karar verilmesi gerekir:
+
+| Nerede | Bağlantı | Buradan sonuç | Not |
+|---|---|---|---|
+| Kısayol · "Sorun Bildirim ve Destek Hizmetleri" (TR ve EN) | `https://bidbdestek.hacettepe.edu.tr` | **422** | Sunucu ayakta ve yanıt veriyor; tarayıcı kimliğiyle de 422. Kurumun kendi alt alanı — büyük olasılıkla çalışıyor, ama sitedeki birincil destek kısayolu olduğu için **öncelikli doğrulanmalı** |
+| Belge · `/tr/hunet-policy` → "UKP için lütfen tıklayınız." | `https://ulakbim.tubitak.gov.tr/sites/images/Ulakbim/ukp-v2011.pdf` | **404** | Uzak sunucu dosyayı kaldırmış (2011 tarihli belge). Güncel karşılığı bulunup adres değiştirilmeli ya da bağlantı kaldırılmalı — karar içerik sahibinin |
+| Belge · `/tr/notice-121120` | `https://cbddo.gov.tr/SharedFolderServer/Genel/File/bg_rehber.pdf` | **bağlantı kurulamadı** | Ağ düzeyinde erişilemedi; kampüsten denenmeli |
+
+Kontrol tekrarlanmak istenirse: adresler yukarıdaki 11 sütundan toplanıp tek tek
+istenir; site içi olanlar `/dosyalar/...` altında sunulur.
