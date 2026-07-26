@@ -38,14 +38,30 @@ import { NewsCoverComponent } from './news-cover.component';
           </span>
         </div>
 
-        <h3 class="haber-baslik">
-          @if (haber.hasOwnPage) {
-            <a [routerLink]="haber.url">{{ haber.title }}</a>
-          } @else {
-            <a [href]="haber.url" target="_blank" rel="noopener"
-               (click)="disBaglantiGoruntulenmesi()">{{ haber.title }}</a>
-          }
-        </h3>
+        <!-- Başlık seviyesi sayfaya göre değişir: ana sayfada kartlar
+             "Haber ve Duyurular" (h2) bölümünün altında olduğu için h3,
+             duyuru listesinde ise doğrudan sayfa başlığının (h1) altında
+             olduğu için h2 gelmelidir. Sabit h3 kullanıldığında duyuru
+             listesinde h1'den h3'e atlanıyor, başlık hiyerarşisi kırılıyordu. -->
+        @if (baslikSeviyesi === 2) {
+          <h2 class="haber-baslik">
+            @if (haber.hasOwnPage) {
+              <a [routerLink]="haber.url">{{ haber.title }}</a>
+            } @else {
+              <a [href]="haber.url" target="_blank" rel="noopener"
+                 (click)="disBaglantiGoruntulenmesi()">{{ haber.title }}</a>
+            }
+          </h2>
+        } @else {
+          <h3 class="haber-baslik">
+            @if (haber.hasOwnPage) {
+              <a [routerLink]="haber.url">{{ haber.title }}</a>
+            } @else {
+              <a [href]="haber.url" target="_blank" rel="noopener"
+                 (click)="disBaglantiGoruntulenmesi()">{{ haber.title }}</a>
+            }
+          </h3>
+        }
 
         @if (haber.summary) {
           <p class="haber-ozet">{{ haber.summary }}</p>
@@ -58,6 +74,8 @@ export class NewsCardComponent {
   @Input({ required: true }) haber!: NewsSummary;
   @Input() dilDegeri: Language = 'tr';
   @Input() oneCikan = false;
+  /** Kartın başlık seviyesi; kullanıldığı sayfadaki hiyerarşiye göre verilir. */
+  @Input() baslikSeviyesi: 2 | 3 = 3;
 
   protected get dil(): string {
     return this.dilDegeri === 'en' ? 'en-US' : 'tr-TR';

@@ -75,7 +75,8 @@ import { NewsCardComponent } from './news-card.component';
 
           <div class="haber-izgara">
             @for (d of filtrelenmisDuyurular(); track d.title; let i = $index) {
-              <bidb-news-card [haber]="d" [dilDegeri]="language()" [oneCikan]="i === 0 && !aramaMetni() && !seciliKategori() && !seciliHedefKitle()"></bidb-news-card>
+              <bidb-news-card [haber]="d" [dilDegeri]="language()" [baslikSeviyesi]="2"
+                              [oneCikan]="i === 0 && !aramaMetni() && !seciliKategori() && !seciliHedefKitle()"></bidb-news-card>
             }
           </div>
 

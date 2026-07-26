@@ -16,6 +16,15 @@ import { NewsCardComponent } from './news-card.component';
   imports: [SideMenuComponent, HeroSliderComponent, NewsCardComponent, AsyncPipe, RouterLink],
   template: `
     @if (veri$ | async; as v) {
+      <!-- Sayfanın h1'i, belge sırasında HER BAŞLIKTAN ÖNCE gelmelidir.
+           Önceden içerik bloğunun içindeydi ve slider'ın "Dijital Servisler"
+           başlığından (h2) sonra çiziliyordu; ekran okuyucu ana sayfaya h2
+           ile giriyor, h1'i sonra buluyordu. Görsel tasarım değişmez —
+           başlık yalnızca ekran okuyucular içindir. -->
+      <h1 class="sr-only">
+        {{ metin('Bilgi İşlem Daire Başkanlığı', 'Department of Information Technology') }}
+      </h1>
+
       @defer (hydrate on idle) {
         <bidb-hero-slider
           [dilDegeri]="language()"
@@ -31,10 +40,6 @@ import { NewsCardComponent } from './news-card.component';
         </aside>
 
         <main id="ana-icerik" class="icerik-alani">
-          <h1 class="sr-only">
-            {{ metin('Bilgi İşlem Daire Başkanlığı', 'Department of Information Technology') }}
-          </h1>
-
           @if (v.news.length) {
               <section class="duyurular">
                 <div class="bolum-baslik">
