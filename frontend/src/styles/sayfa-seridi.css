@@ -12,14 +12,21 @@
   .sayfa-seridi {
     position: relative;
     overflow: hidden;
-    background-color: #0b2044;
+    /* Görselin kendi sol kenar rengiyle birebir aynı (örneklenerek alındı):
+       görsel tüm genişliği kaplamadığı için sol tarafta düz zemine geçilir,
+       renkler eşit olduğundan geçiş yeri görünmez. */
+    background-color: #021c4c;
     /* Kaynak PNG 2172x724 / 1,4 MB idi; bu şerit her içerik sayfasında
        yüklendiği için 1920x640 WebP'ye indirildi (59 KB, ~%96 küçülme).
        PNG kaynak dosya olarak durmayı sürdürüyor. */
     background-image: url("/images/slider/slider_hacettepe_bakground.webp");
     background-repeat: no-repeat;
     background-position: center right;
-    background-size: cover;
+    /* "cover" görselin yüksekliğini şeride sığdırmak için üstten ve alttan
+       kırpıyordu; amblem hep yarım kalıyordu. "auto 100%" görselin TAM
+       yüksekliğini gösterir — amblem eksiksiz görünür, desen sağda durur,
+       sol taraf zaten metnin durduğu düz zemindir. */
+    background-size: auto 100%;
     border-bottom: 3px solid var(--hu-kirmizi);
   }
 
@@ -34,10 +41,10 @@
     z-index: 0;
     background: linear-gradient(
       90deg,
-      rgba(8, 25, 55, 0.97) 0%,
-      rgba(8, 25, 55, 0.9) 30%,
-      rgba(8, 25, 55, 0.5) 62%,
-      rgba(8, 25, 55, 0.14) 100%
+      rgba(2, 28, 76, 0.96) 0%,
+      rgba(2, 28, 76, 0.88) 28%,
+      rgba(2, 28, 76, 0.45) 60%,
+      rgba(2, 28, 76, 0.1) 100%
     );
     pointer-events: none;
   }
@@ -49,22 +56,10 @@
     flex-direction: column;
     justify-content: center;
     gap: var(--bosluk-3);
-    /* Arkadaki amblem/dalga deseni daha alçak bir şeritte tepesinden
-       kırpılıyordu; görselin dikey kompozisyonu bu yükseklikte oturuyor. */
-    min-height: 268px;
+    /* Görselin dikey kompozisyonu (amblem + dalga deseni) bu yükseklikte
+       tam olarak oturuyor. */
+    min-height: 320px;
     padding-block: var(--bosluk-7);
-  }
-
-  /* Başlık. Önceki ölçek (2.7rem) içerik gövdesinin yanında orantısız
-     kalıyordu; sayfa başlığı, altındaki metnin ağırlığıyla aynı ailede
-     durmalı — vurgu boyutla değil, çevresindeki boşlukla kuruluyor. */
-  .sayfa-seridi-baslik {
-    margin: 0;
-    color: #fff;
-    font-size: clamp(1.5rem, 2.2vw, 1.95rem);
-    font-weight: var(--kalinlik-kalin);
-    line-height: 1.2;
-    letter-spacing: -0.015em;
   }
 
   .sayfa-seridi-aciklama {
@@ -75,9 +70,10 @@
     line-height: var(--satir-normal);
   }
 
-  /* Breadcrumb başlığın ÜSTÜNDE durur: bölümü zaten söylediği için ayrıca
-     kırmızı bir bölüm etiketi taşınmaz — aynı bilgiyi iki kez vermek
-     şeridi gereksiz yere kalabalıklaştırıyordu. */
+  /* Şeridin asıl içeriği budur. Sayfa başlığı burada tekrarlanmaz (içerik
+     sütununun tepesinde, kurumsal kırmızıyla duruyor); şerit ziyaretçiye
+     yalnızca "neredeyim" sorusunu yanıtlar, bu yüzden yol okunaklı bir
+     punto taşır. */
   .sayfa-iz {
     display: flex;
     flex-wrap: nowrap;
@@ -87,8 +83,8 @@
     padding: 0;
     overflow-x: auto;
     list-style: none;
-    font-size: var(--olcu-sm);
-    letter-spacing: 0.01em;
+    font-size: clamp(1rem, 1.15vw, 1.2rem);
+    letter-spacing: 0.005em;
     scrollbar-width: none;
   }
   .sayfa-iz::-webkit-scrollbar { display: none; }
@@ -102,49 +98,52 @@
   }
 
   /* Kaba ">" yerine ince, çift kenarlı bir chevron — CSS ile çizilir,
-     ek bir simge dosyası gerekmez. */
+     ek bir simge dosyası gerekmez. Punto büyüdüğü için ayraç da
+     orantılı olarak büyütüldü. */
   .sayfa-iz li + li::before {
     content: "";
     flex: none;
-    width: 6px;
-    height: 6px;
-    margin: 0 var(--bosluk-3);
-    border-top: 1.5px solid rgba(255, 255, 255, 0.4);
-    border-right: 1.5px solid rgba(255, 255, 255, 0.4);
+    width: 8px;
+    height: 8px;
+    margin: 0 var(--bosluk-4);
+    border-top: 1.5px solid rgba(255, 255, 255, 0.45);
+    border-right: 1.5px solid rgba(255, 255, 255, 0.45);
     transform: rotate(45deg);
   }
 
   .sayfa-iz a {
-    color: rgba(255, 255, 255, 0.85);
+    color: rgba(255, 255, 255, 0.82);
     text-decoration: none;
     transition: color var(--gecis-hizli);
   }
   .sayfa-iz a:hover { color: #fff; text-decoration: underline; }
 
-  /* Son basamak hemen altındaki başlıkla aynı metni taşıdığı için vurgulu
-     değil, sakin bırakılır; ağırlığı başlık üstlenir. */
+  /* Bulunulan sayfa yolun sonudur; şeritte başlık taşınmadığı için
+     ziyaretçinin "hangi sayfadayım" cevabını buradan alması gerekir. */
   .sayfa-iz li:last-child span {
     overflow: hidden;
     max-width: 46vw;
-    color: rgba(255, 255, 255, 0.9);
+    color: #fff;
+    font-weight: var(--kalinlik-kalin);
     text-overflow: ellipsis;
   }
 
   @media (max-width: 780px) {
-    /* Dar ekranda görselin "ilginç" sağ yarısı zaten kırpılıyor; örtü
-       tek renge yaklaştırılıp metin kontrastı garanti altına alınır. */
+    /* Dar ekranda görselin deseni zaten ekran dışında kalıyor; örtü tek
+       renge yaklaştırılıp metin kontrastı garanti altına alınır. */
     .sayfa-seridi::before {
       background: linear-gradient(
         90deg,
-        rgba(8, 25, 55, 0.95) 0%,
-        rgba(8, 25, 55, 0.82) 100%
+        rgba(2, 28, 76, 0.94) 0%,
+        rgba(2, 28, 76, 0.8) 100%
       );
     }
   }
 
   @media (max-width: 620px) {
-    .sayfa-seridi-ic { min-height: 176px; padding-block: var(--bosluk-5); gap: var(--bosluk-2); }
-    .sayfa-iz { font-size: var(--olcu-xs); }
+    .sayfa-seridi-ic { min-height: 190px; padding-block: var(--bosluk-5); gap: var(--bosluk-2); }
+    .sayfa-iz { font-size: var(--olcu-sm); }
+    .sayfa-iz li + li::before { width: 6px; height: 6px; margin: 0 var(--bosluk-3); }
     .sayfa-iz li:last-child span { max-width: 58vw; }
   }
 }
