@@ -116,7 +116,14 @@ export class Seo {
     // Ana görsel tarayıcı tarafından HTML çözümlemesinin en başında keşfedilir.
     // Özellikle mobil ağ profillerinde LCP görselinin CSS/JS sonrasına kalmasını
     // önler. İstemci içi geçişte eski preload etiketi tekil olarak güncellenir.
-    this.gorselOnYukle(extras.image || sayfa?.seoImage || DEFAULT_IMAGE);
+    //
+    // Yalnızca sayfanın GERÇEKTEN gösterdiği bir görsel varsa yazılır. Önceden
+    // görseli olmayan sayfalarda da varsayılana düşülüyordu; içerik sayfalarında
+    // slider görseli hiç çizilmediği için tarayıcı onu boşuna indiriyordu.
+    // ("preloaded using link preload but not used" uyarısı ölçümde görüldü.)
+    // Bu, preload etiketine "as" özniteliği eklenene kadar fark edilmiyordu:
+    // öncesinde etiket geçersiz olduğu için tarayıcı zaten yok sayıyordu.
+    this.gorselOnYukle(extras.image || sayfa?.seoImage || null);
     const digerDil = language === 'en' ? 'tr' : 'en';
     this.baglantiAyarla('alternate', canonical, language);
     if (sayfa?.hasTranslation) {
@@ -255,8 +262,14 @@ export class Seo {
     el.href = yol;
   }
 
-  private gorselOnYukle(yol: string): void {
+  private gorselOnYukle(yol: string | null): void {
     let el = this.belge.head.querySelector('link[data-bidb-lcp]') as HTMLLinkElement | null;
+    // Görseli olmayan bir sayfaya geçildiğinde önceki sayfadan kalan etiket
+    // kaldırılır; yoksa istemci içi gezinmede eski görsel indirilmeye devam eder.
+    if (!yol) {
+      el?.remove();
+      return;
+    }
     if (!el) {
       el = this.belge.createElement('link');
       el.rel = 'preload';
