@@ -56,6 +56,12 @@ interface MobileMenuItem {
                 <label for="parola">{{ dilServisi.t('parola') }}</label>
                 <input id="parola" name="parola" type="password" [(ngModel)]="parola" autocomplete="current-password" required>
 
+                @if (api.hareketsizliktenKapandi()) {
+                  <p class="aciklama" role="status">
+                    Uzun süre işlem yapılmadığı için oturum güvenlik gereği kapatıldı.
+                    Lütfen yeniden giriş yapın.
+                  </p>
+                }
                 @if (hata()) { <p class="hata" role="alert">{{ hata() }}</p> }
 
                 <span class="dugmeler">

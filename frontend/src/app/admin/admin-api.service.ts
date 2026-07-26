@@ -309,6 +309,16 @@ export interface AnalyticsReport {
 
 const SESSION_KEY = 'bidb-yonetim';
 const OTURUM_KIMLIGI_ANAHTARI = 'bidb-oturum-kimligi';
+const SON_HAREKET_ANAHTARI = 'bidb-yonetim-son-hareket';
+
+/**
+ * Hareketsizlik sınırı. Panelde bu süre boyunca hiçbir kullanıcı etkileşimi
+ * olmazsa oturum kapatılır: kimlik bilgisi sekme kapanana kadar geçerli
+ * kaldığından, açık bırakılmış bir bilgisayarda panel süresiz kullanılabilir
+ * durumda kalıyordu.
+ */
+const HAREKETSIZLIK_SINIRI_MS = 30 * 60 * 1000;
+const HAREKET_KONTROL_ARALIGI_MS = 60 * 1000;
 
 /** Yönetim uçlarına erişim. Kimlik bilgisi yalnızca tarayıcı oturumunda tutulur. */
 @Injectable({ providedIn: 'root' })
@@ -334,14 +344,52 @@ export class AdminApiService {
     return kimlik;
   }
 
+  /** Oturum hareketsizlikten kapandıysa giriş ekranı bunu açıklar. */
+  readonly hareketsizliktenKapandi = signal(false);
+
   constructor() {
     if (typeof sessionStorage !== 'undefined') {
       const kayit = sessionStorage.getItem(SESSION_KEY);
-      if (kayit) {
+      // Sekme askıya alınmış (uyku, arka plan) olabilir: geri dönüldüğünde
+      // sayaç değil, GEÇEN SÜRE ölçülür; aksi hâlde saatlerce açık kalmış bir
+      // sekme oturumu canlı sanırdı.
+      if (kayit && !this.hareketsizlikAsildi()) {
         this.kimlik = kayit;
         this.girisYapildi.set(true);
+        this.hareketiIsaretle();
+      } else if (kayit) {
+        sessionStorage.removeItem(SESSION_KEY);
+        this.hareketsizliktenKapandi.set(true);
       }
     }
+    this.hareketsizlikGozetimiKur();
+  }
+
+  private hareketsizlikAsildi(): boolean {
+    if (typeof sessionStorage === 'undefined') return false;
+    const son = Number(sessionStorage.getItem(SON_HAREKET_ANAHTARI) ?? 0);
+    return son > 0 && Date.now() - son > HAREKETSIZLIK_SINIRI_MS;
+  }
+
+  private hareketiIsaretle(): void {
+    if (typeof sessionStorage !== 'undefined') {
+      sessionStorage.setItem(SON_HAREKET_ANAHTARI, String(Date.now()));
+    }
+  }
+
+  private hareketsizlikGozetimiKur(): void {
+    if (typeof document === 'undefined') return;
+    for (const olay of ['pointerdown', 'keydown', 'scroll', 'touchstart']) {
+      document.addEventListener(olay, () => {
+        if (this.girisYapildi()) this.hareketiIsaretle();
+      }, { passive: true, capture: true });
+    }
+    setInterval(() => {
+      if (this.girisYapildi() && this.hareketsizlikAsildi()) {
+        this.cikis();
+        this.hareketsizliktenKapandi.set(true);
+      }
+    }, HAREKET_KONTROL_ARALIGI_MS);
   }
 
   /**
@@ -368,13 +416,18 @@ export class AdminApiService {
 
   girisOnayla(): void {
     this.girisYapildi.set(true);
+    this.hareketsizliktenKapandi.set(false);
+    this.hareketiIsaretle();
     if (typeof sessionStorage !== 'undefined') sessionStorage.setItem(SESSION_KEY, this.kimlik);
   }
 
   cikis(): void {
     this.kimlik = '';
     this.girisYapildi.set(false);
-    if (typeof sessionStorage !== 'undefined') sessionStorage.removeItem(SESSION_KEY);
+    if (typeof sessionStorage !== 'undefined') {
+      sessionStorage.removeItem(SESSION_KEY);
+      sessionStorage.removeItem(SON_HAREKET_ANAHTARI);
+    }
   }
 
   pages(): Observable<AdminPage[]> {
