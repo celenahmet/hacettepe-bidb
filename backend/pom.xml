@@ -7,7 +7,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.5.14</version>
+    <version>3.5.16</version>
     <relativePath/>
   </parent>
 
@@ -19,6 +19,23 @@
 
   <properties>
     <java.version>21</java.version>
+    <!--
+      Spring Boot'un yönettiği sürümden ileri alınır. 42.7.10'da iki bilinen
+      kusur var: SCAM kimlik doğrulamasında sınırsız PBKDF2 yinelemesi
+      (kaynak tüketimi) ve kanal bağlama düşürmesi. İkisi de kötü niyetli ya
+      da araya giren bir PostgreSQL sunucusu gerektirdiği için bu dağıtımda
+      (özel Docker ağında kendi veritabanımız) sömürülebilir değil; yine de
+      yamalı sürüm kullanmamak için bir neden yok.
+    -->
+    <postgresql.version>42.7.13</postgresql.version>
+    <!--
+      Spring Boot 3.5.16 Jackson 2.21.4 getiriyor; 2.21.5'te kapatılan üç
+      kusur @JsonView / @JsonIgnoreProperties / @JsonTypeInfo kullanımını
+      gerektiriyor ve bu kod tabanında bunların hiçbiri yok — yani sömürü
+      yolu yok. Yine de yamalı yamada kalmak için sürüm ileri alınır;
+      yama düzeyi bir değişiklik olduğundan uyumluluk riski düşüktür.
+    -->
+    <jackson-bom.version>2.21.5</jackson-bom.version>
   </properties>
 
   <dependencies>
