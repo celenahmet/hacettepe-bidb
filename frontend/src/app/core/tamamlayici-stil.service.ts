@@ -35,9 +35,7 @@ const SAYFA_TIPI_STIL: Record<string, string> = {
 function gerekliStilAnahtarlari(yol: string): string[] {
   const p = yol.replace(/\/+$/, '') || yol;
 
-  // Yönetim paneli CSS'i her sayfada zaten yüklü olan kritik pakette
-  // (styles.css → admin.css) durur; bu mekanizmaya hiç ihtiyaç duymaz.
-  if (p === '/yonetim' || p.startsWith('/yonetim/')) return [];
+  if (p === '/yonetim' || p.startsWith('/yonetim/')) return ['tamamlayici', 'tamamlayici-admin'];
   if (/^\/error\/\d{3}$/.test(p)) return ['tamamlayici', 'tamamlayici-hata'];
   if (/^\/(tr|en)\/(news|newsItem)(\/|$)/.test(p)) return ['tamamlayici', 'tamamlayici-haberler'];
   if (/^\/(tr|en)$/.test(p)) return ['tamamlayici', 'tamamlayici-haberler'];

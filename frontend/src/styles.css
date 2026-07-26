@@ -20,7 +20,11 @@
 @import "./styles/public.css";
 @import "./styles/hero.css";
 @import "./styles/accessibility.css";
-@import "./styles/admin.css";
+/* admin.css BURAYA ALINMAZ: yönetim paneli stilleri "tamamlayici-admin"
+   paketi olarak zaten ayrı derleniyor (bkz. angular.json) ve yalnızca
+   /yonetim istendiğinde ekleniyor. Buradan da çağrıldığında ~42 KB'lık
+   panel CSS'i, onu hiç kullanmayacak her ziyaretçinin render'ını bloklayan
+   kritik pakete giriyordu. */
 
 @layer site {
   /* Not: yönetim tablolarının dar ekran davranışı panel katmanında,
