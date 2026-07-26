@@ -25,6 +25,9 @@ import java.security.SecureRandom;
 import java.time.Instant;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+// NOT: java.util.regex.Pattern import EDİLMEZ — bu sınıf Jakarta'nın @Pattern
+// anotasyonunu da kullanıyor ve import onu gölgeleyip derlemeyi kırıyor.
+// Aşağıdaki desen alanı tam nitelikli adla yazılır.
 
 /** Ziyaretçi iletişim formu. Ham IP saklanmaz; yalnızca kısa süreli hız sınırı için bellekte tutulur. */
 @RestController
@@ -91,6 +94,10 @@ public class ContactTicketController {
         String categoryNormalized = category.toUpperCase(Locale.ROOT);
         if (!CATEGORIES.contains(categoryNormalized)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Geçersiz talep kategorisi");
+        }
+        if (!ePostaMakulMu(email)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Geçerli bir e-posta adresi girin.");
         }
 
         String referenceCode = newReferenceCode();
@@ -193,6 +200,33 @@ public class ContactTicketController {
     private String clientAddress(HttpServletRequest request) {
         return istemciAdresi.coz(request);
     }
+
+    /**
+     * E-posta adresinin makul olup olmadığına yüzeysel bakar.
+     *
+     * @Email tek başına yetmiyordu: Jakarta doğrulayıcısı "a@b" ve "a@b.c"
+     * adreslerini geçerli sayıyor (ölçüldü, kayıt oluşuyordu). Böyle bir adres
+     * gerçek olamaz; talebe dönüş yapılamayacağı için kayıt da işe yaramaz.
+     *
+     * Aranan: tek @ işareti, boş olmayan yerel bölüm, noktalı bir alan adı ve
+     * en az iki HARFTEN oluşan bir uzantı. Alan adı etiketleri tire ile
+     * başlayıp bitemez, arka arkaya nokta gelemez.
+     *
+     * Sınır bilinçli: bu bir BİÇİM ve makullük denetimi, adresin gerçekten
+     * teslim alınabildiğinin kanıtı değil. DNS/MX sorgusu yapılmıyor — form
+     * gönderimini bir ağ aramasına bağlamak, geçerli adresleri de reddedebilen
+     * yeni bir arıza yüzeyi açardı.
+     */
+    static boolean ePostaMakulMu(String deger) {
+        if (deger == null) return false;
+        String adres = deger.trim();
+        if (adres.isEmpty() || adres.length() > 254) return false;
+        return EPOSTA_BICIMI.matcher(adres).matches();
+    }
+
+    private static final java.util.regex.Pattern EPOSTA_BICIMI = java.util.regex.Pattern.compile(
+            "^[A-Za-z0-9._%+-]+@[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?"
+          + "(?:\\.[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?)*\\.[A-Za-z]{2,}$");
 
     private String newReferenceCode() {
         String code;

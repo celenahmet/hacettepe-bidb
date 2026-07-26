@@ -136,7 +136,17 @@ interface TicketResponse {
             </label>
             <label>
               <span>{{ dilDegeri === 'en' ? 'E-mail address' : 'E-posta adresi' }} *</span>
-              <input name="email" #emailAlani="ngModel" [(ngModel)]="form.email" type="email" required maxlength="254" autocomplete="email">
+              <!-- type="email" TEK BAŞINA Angular doğrulaması yapmaz; onu ancak
+                   "email" yönergesi devreye sokar. Yoksa "duzmetin" gibi @
+                   içermeyen bir değer bile geçerli sayılıp gönderiliyor, backend
+                   genel bir 400 döndürüyor ve ziyaretçi hangi alanın hatalı
+                   olduğunu öğrenemiyordu (ölçüldü).
+                   Desen ayrıca noktalı bir alan adı ve en az iki harfli bir uzantı
+                   ister: "a@b" ile "a@b.c" tek başına e-posta doğrulayıcısını
+                   geçiyor ama gerçek bir adres değiller. -->
+              <input name="email" #emailAlani="ngModel" [(ngModel)]="form.email" type="email"
+                     required email maxlength="254" autocomplete="email"
+                     pattern="^[A-Za-z0-9._%+\-]+@[A-Za-z0-9]([A-Za-z0-9\-]*[A-Za-z0-9])?(\.[A-Za-z0-9]([A-Za-z0-9\-]*[A-Za-z0-9])?)*\.[A-Za-z]{2,}$">
               @if (emailAlani.invalid && (emailAlani.dirty || emailAlani.touched)) {
                 <small class="iletisim-form-alan-hata">
                   {{ emailAlani.errors?.['required']
