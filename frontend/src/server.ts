@@ -598,6 +598,16 @@ app.use(
  */
 app.use(async (req, res, next) => {
   try {
+    // Sayfalar salt okunurdur. Daha önce her yöntem çizime giriyordu: PUT,
+    // DELETE ve PATCH sayfayı 200 ile döndürüyor, TRACE ise çizim katmanında
+    // işlenmemiş bir istisnaya düşüp 500 veriyordu. Yazma yöntemleri yalnızca
+    // /api vekilinde anlamlıdır (o middleware bu noktadan önce yanıtlar).
+    if (req.method !== 'GET' && req.method !== 'HEAD') {
+      res.setHeader('Allow', 'GET, HEAD');
+      res.status(405).json({ message: 'Bu adres yalnızca GET ve HEAD destekler.' });
+      return;
+    }
+
     const bulunamadi = await sayfaYok(req.path);
     // Veritabanında bulunmayan içerik adresleri ortak 404 rotasına taşınır;
     // böylece hem görünen URL hem de paylaşılan hata kodu tutarlı olur.
