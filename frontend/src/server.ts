@@ -681,13 +681,33 @@ app.use((req, res, next) => {
  * uygulama imajındaki public/dosyalar altındadır ve aşağıdaki genel
  * statik sunum tarafından karşılanır.
  */
+/**
+ * İletişim formuna eklenen belgeler bu alt klasörde durur. Kurumun yayımladığı
+ * belgelerle aynı dizini paylaşırlar ama aynı muameleyi GÖREMEZLER: bunlar
+ * ziyaretçinin kendi belgesidir ve kimlik fotokopisi, doldurulmuş form ya da
+ * hesap ekran görüntüsü taşıyabilir.
+ */
+const TALEP_EKI = /[/\\]talepler[/\\]/;
+
 app.use(
   '/dosyalar',
   express.static(process.env['BIDB_DOSYA_DIZINI'] ?? '/veri/dosyalar', {
     maxAge: '1d',
     index: false,
     redirect: false,
-    fallthrough: true
+    fallthrough: true,
+    setHeaders: (res, dosyaYolu) => {
+      if (!TALEP_EKI.test(dosyaYolu)) return;
+      // "public" paylaşımlı önbelleklere (CDN, kampüs ya da kurum vekilleri)
+      // yanıtı saklama izni verir. Kurumun yayımladığı bir yönerge için doğru,
+      // bir kişinin destek talebine eklediği belge için değil: kopyası
+      // üniversitenin denetlemediği altyapılarda bir gün boyunca kalırdı.
+      res.setHeader('Cache-Control', 'private, no-store');
+      // Adres yalnızca takip kodunu bilene verilir, ama kod e-postayla
+      // paylaşılabilen bir metin. Bir yere yapıştırıldığında arama motorunun
+      // belgeyi dizine almasını engelle.
+      res.setHeader('X-Robots-Tag', 'noindex, nofollow');
+    }
   }),
 );
 
