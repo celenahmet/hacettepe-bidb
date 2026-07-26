@@ -62,3 +62,12 @@ bidb:
   # Ara sunucunun kimliğini kanıtlayan paylaşılan sır; tanımlıysa iletilen
   # istemci adresi yalnızca doğru anahtarla kabul edilir.
   vekil-anahtari: ${BIDB_VEKIL_ANAHTARI:}
+  # Yönetici giriş kaydındaki şehir/ülke/sağlayıcı bilgisi dış bir servisten
+  # (ipapi.co) sorulur. Bu, giriş yapan kişinin IP ADRESİNİN kurum dışına,
+  # yurt dışında barındırılan üçüncü bir tarafa gönderilmesi demektir.
+  # IP adresi KVKK kapsamında kişisel veridir: aktarımın aydınlatma metninde
+  # yer alması ve bir işleyen sözleşmesine dayanması gerekir.
+  # Kurum istemiyorsa false yapılır — giriş kaydı yine tutulur, yalnızca
+  # şehir/ülke/sağlayıcı alanları boş kalır. Bkz. GirisKayitServisi.
+  konum-servisi:
+    etkin: ${BIDB_KONUM_SERVISI:true}

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import tr.edu.hacettepe.bidb.model.AdminLoginEvent;
@@ -39,6 +40,23 @@ public class GirisKayitServisi {
     private final AdminLoginEventRepo depo;
     private final HttpClient http = HttpClient.newBuilder().connectTimeout(ZAMAN_ASIMI).build();
     private final ObjectMapper json = new ObjectMapper();
+
+    /**
+     * Giriş kaydındaki şehir/ülke/sağlayıcı bilgisinin dış bir servisten
+     * (ipapi.co) sorulup sorulmayacağı.
+     *
+     * <p><b>Kişisel veri uyarısı.</b> Bu sorgu, yönetici girişi yapan kişinin
+     * IP adresini kurum dışına — yurt dışında barındırılan üçüncü bir tarafa —
+     * gönderir. IP adresi KVKK kapsamında kişisel veridir; bu aktarımın
+     * aydınlatma metninde yer alması ve bir işleyen sözleşmesine dayanması
+     * gerekir. Kurum bunu istemiyorsa BIDB_KONUM_SERVISI=false ile kapatılır;
+     * kayıt yine tutulur, yalnızca şehir/ülke/sağlayıcı alanları boş kalır.
+     *
+     * <p>Varsayılan, mevcut davranışı sürdürecek biçimde açıktır: güvenlik
+     * gerekçesiyle çalışan bir özellik sessizce kapatılmaz, karar kurumundur.
+     */
+    @Value("${bidb.konum-servisi.etkin:true}")
+    private boolean konumServisiEtkin;
 
     public GirisKayitServisi(AdminLoginEventRepo depo) {
         this.depo = depo;
@@ -165,7 +183,29 @@ public class GirisKayitServisi {
                 || ip.startsWith("172.31."));
     }
 
+    /**
+     * Değerin sayısal bir IPv4/IPv6 adresi olduğunu doğrular.
+     *
+     * Adres, dış servise giden URL'nin İÇİNE konuyor. Doğrulanmadığında,
+     * adresi belirleyebilen bir konumdaki taraf oraya yol parçası ("/../")
+     * ya da sorgu karakterleri yazdırıp giden isteği yönlendirebilirdi.
+     * Yalnızca rakam, nokta ve iki nokta kabul edilir.
+     */
+    private static boolean ipDegismeziMi(String deger) {
+        if (deger == null || deger.isBlank() || deger.length() > 45) return false;
+        boolean ikiNokta = deger.indexOf(':') >= 0;
+        for (int i = 0; i < deger.length(); i++) {
+            char c = deger.charAt(i);
+            boolean gecerli = ikiNokta
+                    ? (Character.digit(c, 16) >= 0 || c == ':' || c == '.')
+                    : (c >= '0' && c <= '9') || c == '.';
+            if (!gecerli) return false;
+        }
+        return true;
+    }
+
     private void konumCoz(String ip, AdminLoginEvent olay) {
+        if (!konumServisiEtkin || !ipDegismeziMi(ip)) return;
         try {
             HttpRequest istek = HttpRequest.newBuilder()
                     .uri(URI.create("https://ipapi.co/" + ip + "/json/"))
