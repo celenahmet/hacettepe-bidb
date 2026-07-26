@@ -77,10 +77,13 @@
     line-height: var(--satir-normal);
   }
 
-  /* Şeridin tek içeriği bu yol. Başlık kaldırıldıktan sonra küçük punto
-     268px'lik bandın içinde cılız kalıyordu; bir kademe büyütüldü
-     (0,875rem -> 1rem) — şerit hâlâ yalnızca konum bilgisi taşıyor, bu
-     yüzden başlık ölçeğine çıkarılmadı. */
+  /* Şeridin tek içeriği bu yol; 268px'lik bandın içinde tek başına durduğu
+     için okunaklı bir puntoya çıkarıldı (0,875 -> 1,125rem).
+
+     Basamakların TAMAMI aynı tonda: önceden bağlantılar %85, aradaki
+     basamak %62, bulunulan sayfa %90 opaklıktaydı — üç farklı gri, yolu
+     kesintili gösteriyordu. Ayrım artık renkle değil, ayraç ve üzerine
+     gelme geri bildirimiyle kuruluyor. */
   .sayfa-iz {
     display: flex;
     flex-wrap: nowrap;
@@ -90,7 +93,7 @@
     padding: 0;
     overflow-x: auto;
     list-style: none;
-    font-size: var(--olcu-md);
+    font-size: var(--olcu-lg);
     letter-spacing: 0.01em;
     scrollbar-width: none;
   }
@@ -100,7 +103,7 @@
     display: flex;
     flex: none;
     align-items: center;
-    color: rgba(255, 255, 255, 0.62);
+    color: rgba(255, 255, 255, 0.88);
     white-space: nowrap;
   }
 
@@ -109,27 +112,27 @@
   .sayfa-iz li + li::before {
     content: "";
     flex: none;
-    width: 6px;
-    height: 6px;
+    width: 7px;
+    height: 7px;
     margin: 0 var(--bosluk-3);
-    border-top: 1.5px solid rgba(255, 255, 255, 0.4);
-    border-right: 1.5px solid rgba(255, 255, 255, 0.4);
+    border-top: 1.5px solid rgba(255, 255, 255, 0.5);
+    border-right: 1.5px solid rgba(255, 255, 255, 0.5);
     transform: rotate(45deg);
   }
 
   .sayfa-iz a {
-    color: rgba(255, 255, 255, 0.85);
+    color: rgba(255, 255, 255, 0.88);
     text-decoration: none;
     transition: color var(--gecis-hizli);
   }
   .sayfa-iz a:hover { color: #fff; text-decoration: underline; }
 
-  /* Bulunulan sayfa yolun sonudur; şeritte başka bir başlık olmadığı için
-     bir tık öne çıkarılır ama yolun sakin dilini bozacak kadar değil. */
+  /* Bulunulan sayfa, diğer basamaklarla aynı tonda durur; uzun sayfa
+     adlarında dar ekranda taşmaması için kısaltılır. */
   .sayfa-iz li:last-child span {
     overflow: hidden;
     max-width: 46vw;
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(255, 255, 255, 0.88);
     text-overflow: ellipsis;
   }
 
@@ -147,7 +150,7 @@
 
   @media (max-width: 620px) {
     .sayfa-seridi-ic { min-height: 176px; padding-block: var(--bosluk-5); gap: var(--bosluk-2); }
-    .sayfa-iz { font-size: var(--olcu-sm); }
+    .sayfa-iz { font-size: var(--olcu-md); }
     .sayfa-iz li:last-child span { max-width: 58vw; }
   }
 }
