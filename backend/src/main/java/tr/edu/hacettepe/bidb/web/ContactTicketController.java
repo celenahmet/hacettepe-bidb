@@ -1,6 +1,7 @@
 package tr.edu.hacettepe.bidb.web;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.transaction.Transactional;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.constraints.*;
 import org.springframework.beans.factory.annotation.Value;
@@ -62,8 +63,12 @@ public class ContactTicketController {
 
     public record CreateResponse(String referenceCode, String status, Instant receivedAt) {}
 
+    // Talep ve onun "CREATED" olayı iki ayrı kayıttır ve birlikte anlam taşır.
+    // İşlem sınırı olmadan ikisi ayrı ayrı yazılıyordu: olay kaydı başarısız
+    // olursa talep, panelde geçmişi hiç başlamamış gibi görünürdü.
     @PostMapping(consumes = "multipart/form-data")
     @ResponseStatus(HttpStatus.CREATED)
+    @Transactional
     public CreateResponse create(
             @RequestParam @NotBlank @Size(max = 2) String language,
             @RequestParam @NotBlank @Size(max = 40) String category,

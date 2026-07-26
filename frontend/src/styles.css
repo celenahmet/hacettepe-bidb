@@ -59,6 +59,17 @@
     overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
   }
 
+  /* İletişim formundaki bal küpü alanı (bkz. contact-form.component.ts).
+     Bu kural BİLEREK kritik pakette durur, sayfaya özel ertelenmiş paket
+     içinde değil: alan yalnızca CSS ile gizlendiği için, o paket herhangi
+     bir nedenle yüklenmezse ziyaretçiye anlamsız bir "Website" kutusu
+     görünüyordu. Daha da kötüsü, dolduran gerçek bir kullanıcının talebi
+     sunucuda bot sayılıp reddediliyordu. Kritik paket her sayfada ve
+     çizimden önce yüklendiği için burada bu risk yok. */
+  .iletisim-form-tuzak {
+    position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden;
+  }
+
   /* Klavye kullanıcıları için içeriğe atlama */
   .atla {
     position: absolute; left: 12px; top: -48px; z-index: 100;

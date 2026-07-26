@@ -138,7 +138,8 @@
   }
   .iletisim-form-ek-hata { display: block; margin-top: 4px; color: var(--hu-kirmizi); font-weight: 650; }
 
-  .iletisim-form-tuzak { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+  /* .iletisim-form-tuzak KASITLI OLARAK burada değil, her sayfada yüklenen
+     kritik pakette (styles.css) tanımlıdır — gerekçesi orada yazılı. */
   .iletisim-form-hata { margin: 0 var(--bosluk-5) var(--bosluk-4); color: var(--hu-kirmizi); font-weight: 650; }
 
   .iletisim-ticket-form footer {
