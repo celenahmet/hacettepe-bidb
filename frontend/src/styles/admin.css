@@ -1462,14 +1462,27 @@
 
   .konum-deger-satiri { display: inline-flex; align-items: center; gap: var(--bosluk-2); }
   .konum-saglayici { display: block; margin-top: 2px; color: var(--metin-3); font-size: var(--olcu-xs); }
-  .konum-info-buton {
+  /*
+    Seçici ".yonetim button" ile NİTELENMEK ZORUNDA. Tek başına
+    ".konum-info-buton" yazıldığında panelin genel düğme kuralı
+    (".yonetim button", özgüllük 0-1-1) bunu (0-1-0) geçiyor ve düğme
+    lacivert dolgulu, beyaz yazılı, geniş dolgulu büyük bir düğme olarak
+    çiziliyordu — bilgi işaretine hiç benzemiyordu. İkisi de "panel"
+    katmanında olduğu için katman sırası devreye girmiyor, kararı
+    özgüllük veriyor. Panelin diğer düğme türevleri de aynı yolu izler
+    (bkz. .yonetim button.ikincil, .yonetim button.kalite-vital-tetik).
+  */
+  .yonetim button.konum-info-buton {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 15px;
-    height: 15px;
+    width: 16px;
+    height: 16px;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
     border: 1px solid var(--cizgi-koyu);
-    border-radius: 2px;
+    border-radius: 50%;
     background: none;
     color: var(--metin-acik);
     font-family: var(--yazi-kod);
@@ -1479,8 +1492,10 @@
     line-height: 1;
     cursor: pointer;
   }
-  .konum-info-buton:hover, .konum-info-buton[aria-expanded="true"] {
+  .yonetim button.konum-info-buton:hover,
+  .yonetim button.konum-info-buton[aria-expanded="true"] {
     border-color: var(--hu-kirmizi);
+    background: none;
     color: var(--hu-kirmizi);
   }
   .konum-info-metni {
