@@ -45,12 +45,24 @@
     object-position: center;
     opacity: 0;
     transform: scale(1.025);
-    transition: opacity 560ms ease;
+    /*
+      "ease" hızlı başlayıp yavaş biter; iki fotoğrafın üst üste bindiği anda
+      bu, geçişin başında ani bir sıçrama gibi okunuyordu. Simetrik eğri
+      (Material'ın standart giriş/çıkış eğrisi) hem başta hem sonda yumuşak
+      olduğu için çapraz geçiş sakin ve kurumsal bir ağırlıkta ilerler.
+    */
+    transition: opacity 560ms cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .hero-gorsel.etkin {
     opacity: 1;
-    animation: hero-nefes 10s linear forwards;
+    /*
+      Yavaş yakınlaşma "linear" ilerliyordu; sabit hız 10 saniye boyunca
+      fark edilir ve mekanik durur. "ease-out" başta hafifçe hareket edip
+      sonra neredeyse durduğu için hareket, izleyicinin dikkatini çekmeden
+      derinlik hissi verir — slayt süresi (10 sn) değişmedi.
+    */
+    animation: hero-nefes 10s ease-out forwards;
   }
 
   /*

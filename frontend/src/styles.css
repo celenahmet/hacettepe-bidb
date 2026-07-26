@@ -103,7 +103,34 @@
   @media (prefers-reduced-motion: reduce) {
     ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
   }
+}
 
+/*
+ * Hareket azaltma tercihi için genel emniyet ağı.
+ *
+ * Tercih işletim sisteminde açıldığında hareket tamamen durmalıdır; bu bir
+ * konfor ayarı değil, vestibüler rahatsızlığı olan ya da migren tetiklenen
+ * kullanıcılar için erişilebilirlik gereğidir. Bazı stil dosyaları kendi
+ * kurallarını yazıyor (hero, hata, personel, haberler…) ama admin.css,
+ * public.css ve sss.css yazmıyordu; oradaki hareketler tercihe rağmen
+ * çalışmayı sürdürüyordu.
+ *
+ * Kural katman DIŞINDA duruyor ki hangi katmanda tanımlanmış olursa olsun
+ * her hareketi yakalasın. "none" yerine 0,01 ms kullanılır: animasyonun
+ * bitiş olayı yine tetiklenir, bu olaya bağlı davranışlar kırılmaz.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@layer site {
   /* ---------- rota yükleme şeridi ---------- */
 
   .rota-ilerleme {
