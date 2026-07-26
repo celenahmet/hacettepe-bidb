@@ -50,25 +50,30 @@ public class IslemGunlukServisi {
             olay.setAttemptedUsername(kisalt(kullaniciAdi, 120));
             olay.setHttpMethod(httpMethod);
             olay.setResourcePath(kisalt(yol, 200));
-            olay.setActionLabel(eylemEtiketi(httpMethod, yol));
+            boolean basarili = httpStatus < 400;
+            olay.setActionLabel(eylemEtiketi(httpMethod, yol, basarili));
             olay.setHttpStatus(httpStatus);
-            olay.setSuccessful(httpStatus < 400);
+            olay.setSuccessful(basarili);
             depo.save(olay);
         } catch (Exception e) {
             log.warn("İşlem günlüğü kaydı oluşturulamadı: {}", e.getMessage());
         }
     }
 
-    /** "/api/admin/news/16" + PUT → "Duyuru güncellendi (#16)" gibi okunabilir bir etiket üretir. */
-    private static String eylemEtiketi(String httpMethod, String yol) {
+    /**
+     * "/api/admin/news/16" + PUT → "Duyuru güncellendi (#16)" gibi okunabilir bir etiket üretir.
+     * Başarısız istekler olumsuz çekimle yazılır ("güncellenemedi"): etiket denetim tablosunda
+     * tek başına okunan sütun, olmamış bir işlemi olmuş gibi anlatmamalı.
+     */
+    private static String eylemEtiketi(String httpMethod, String yol, boolean basarili) {
         String[] parcalar = yol.replaceFirst("^/api/admin/", "").split("/");
         String kaynak = parcalar.length > 0 ? KAYNAK_ADLARI.getOrDefault(parcalar[0], parcalar[0]) : "Kayıt";
 
         String eylem = switch (httpMethod) {
-            case "POST" -> "oluşturuldu";
-            case "PUT", "PATCH" -> "güncellendi";
-            case "DELETE" -> "silindi";
-            default -> "değiştirildi";
+            case "POST" -> basarili ? "oluşturuldu" : "oluşturulamadı";
+            case "PUT", "PATCH" -> basarili ? "güncellendi" : "güncellenemedi";
+            case "DELETE" -> basarili ? "silindi" : "silinemedi";
+            default -> basarili ? "değiştirildi" : "değiştirilemedi";
         };
 
         Matcher eslesme = SAYISAL_ID.matcher(yol);
