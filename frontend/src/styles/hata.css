@@ -26,10 +26,18 @@
     z-index: -2;
     inset: -6%;
     display: block;
-    transform: translate3d(-1.2%, -0.8%, 0) scale(1.52);
+    transform: translate3d(-0.8%, -0.5%, 0) scale(1.18);
     transform-origin: center;
     backface-visibility: hidden;
-    animation: hata-teknokent-akis 26s linear infinite alternate;
+    /*
+      Yalnızca "transform" canlandırılır (düzen/boyama tetiklemez, GPU'da
+      birleştirilir). Ölçek aralığı 1,52–1,62'den 1,18–1,24'e indirildi:
+      tam ekran bir görselde bu, birleştirici katmanın piksel alanını belirgin
+      biçimde küçültür — düşük güçlü cihazlarda takılmanın başlıca sebebi buydu.
+      Zamanlama "linear" yerine "ease-in-out": alternate yönü döndüğünde ani
+      sıçrama olmaz, hareket akıcı okunur.
+    */
+    animation: hata-teknokent-akis 32s ease-in-out infinite alternate;
     will-change: transform;
   }
 
@@ -41,19 +49,32 @@
     object-position: 50% 43%;
   }
 
+  /*
+    Koyu sinematik örtü. Önceki sürüm açık tonluydu (beyaza çalan mavi bir
+    yıkama); fotoğraf öne çıkıyor, panel ile arka plan aynı parlaklıkta
+    yarışıyordu. Şimdi merkezden köşelere doğru koyulaşan bir vinyet var:
+    bakış ortadaki panele toplanıyor, fotoğraf bağlam olarak kalıyor.
+    Renkler kurumsal lacivert ailesinden alındı.
+  */
   .hata-arka-plan-ton {
     position: absolute;
     z-index: -1;
     inset: 0;
     background:
-      linear-gradient(118deg, rgb(231 243 251 / 32%) 0%, rgb(24 112 171 / 15%) 54%, rgb(4 53 96 / 21%) 100%),
-      linear-gradient(180deg, rgb(4 29 53 / 3%), rgb(4 29 53 / 14%));
+      radial-gradient(125% 95% at 50% 38%,
+        rgb(2 18 40 / 26%) 0%,
+        rgb(2 18 40 / 70%) 58%,
+        rgb(1 11 26 / 92%) 100%),
+      linear-gradient(180deg,
+        rgb(2 18 40 / 52%) 0%,
+        rgb(2 18 40 / 30%) 42%,
+        rgb(1 11 26 / 74%) 100%);
     pointer-events: none;
   }
 
   @keyframes hata-teknokent-akis {
-    from { transform: translate3d(-1.2%, -0.8%, 0) scale(1.52); }
-    to { transform: translate3d(1.4%, 0.8%, 0) scale(1.62); }
+    from { transform: translate3d(-0.8%, -0.5%, 0) scale(1.18); }
+    to { transform: translate3d(0.9%, 0.5%, 0) scale(1.24); }
   }
 
   .hata-kap {
@@ -388,7 +409,7 @@
   @media (prefers-reduced-motion: reduce) {
     .hata-arka-plan {
       animation: none;
-      transform: translate3d(0, 0, 0) scale(1.57);
+      transform: translate3d(0, 0, 0) scale(1.21);
       will-change: auto;
     }
 
