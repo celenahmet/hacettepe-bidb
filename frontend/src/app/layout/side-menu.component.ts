@@ -71,7 +71,12 @@ export class SideMenuComponent {
 
   protected uygulamaSistemleri = [
     { label: 'Hacettepe Portal', labelEn: 'Hacettepe Portal', url: 'https://portal.hacettepe.edu.tr/', newTab: true },
-    { label: 'Web Servisleri', labelEn: 'Web Services', url: 'webmail', newTab: false },
+    // Bu girdi "Web Servisleri" yazıp /tr/webmail adresine gidiyordu; o sayfanın
+    // başlığı "E-posta" ve menüde zaten "E-Posta Giriş" adıyla yer alıyor.
+    // Ziyaretçi ada göre WEB Servisleri beklerken e-posta sayfasına düşüyordu.
+    // Etiket, adının karşılığı olan sayfaya bağlandı. Kurumda bu ad ayrı bir
+    // uygulamaya (dış adres) karşılık geliyorsa buradaki url onunla değiştirilmelidir.
+    { label: 'Web Servisleri', labelEn: 'Web Services', url: 'web-services', newTab: false },
     { label: 'HÜ İçerik Yönetim Sistemi', labelEn: 'HU Content Management System', url: 'http://hu-iys.hacettepe.edu.tr/', newTab: true },
     { label: 'Akademik Ön Değerlendirme Başvuru Sistemi', labelEn: 'Academic Pre-Evaluation Application System', url: 'https://kriter.hacettepe.edu.tr', newTab: true },
     { label: 'GSF Başvuru Sistemi', labelEn: 'GSF Application System', url: 'https://ozelyeteneksinavi.hacettepe.edu.tr/giris/', newTab: true },
