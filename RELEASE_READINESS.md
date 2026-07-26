@@ -16,8 +16,10 @@
 ## Yönetici özeti
 
 Güvenlik turunda yapılan **üç sürüm değişikliğinin** hiçbir regresyona yol açmadığı
-kanıtlandı. En kritik doğrulama — **boş bir veritabanında 64 göçün tamamının
+kanıtlandı. En kritik doğrulama — **boş bir veritabanında göç zincirinin tamamının
 çalışması ve üretimdeki şemayla birebir aynı sonucu üretmesi** — başarıyla geçti.
+Zincir V65 ve V66 eklendikten sonra yeniden çalıştırıldı: 66 göç, 0 başarısız,
+şema farkı yok.
 
 **Karar: CONDITIONAL APPROVAL.** Yayın engelleyici bulunmadı; ancak yedek/geri
 yükleme doğrulanamadı ve depoda çalışan bir otomatik test paketi yok. Bu ikisi
@@ -81,9 +83,9 @@ verisinden PostgreSQL diyalektini kendisi seçiyor. Sürücü yükseltmesinden s
 
 | Senaryo | Beklenen | Sonuç |
 |---|---|---|
-| **Boş veritabanından V1→V64** | Tümü başarılı | ✅ **64 göç, 0 başarısız, 22 tablo** |
-| Sıfırdan kurulan şema = yükseltme yoluyla oluşan şema | Fark olmamalı | ✅ **192 sütunun tamamı birebir aynı (`diff` boş)** |
-| Mevcut veritabanında göç durumu | V64'te, hepsi başarılı | ✅ 64 göç uygulanmış |
+| **Boş veritabanından V1→V66** | Tümü başarılı | ✅ **66 göç, 0 başarısız** (V65 ve V66 eklendikten sonra yeniden çalıştırıldı) |
+| Sıfırdan kurulan şema = yükseltme yoluyla oluşan şema | Fark olmamalı | ✅ **192 sütunun tamamı birebir aynı (`diff` boş)**, 47 indeks ve 185 kısıt da eşit |
+| Mevcut veritabanında göç durumu | V66'da, hepsi başarılı | ✅ 66 göç uygulanmış |
 | Checksum uyuşmazlığı | Olmamalı | ✅ Yok (uygulama açılıyor) |
 | Göç sonrası veri bütünlüğü | Korunmalı | ✅ 161 sayfa, 34 duyuru, 14 slayt, 11 giriş kaydı yerinde |
 | Türkçe karakter / UTF-8 | Bozulma olmamalı | ✅ 357 Türkçe karakter, **0 bozulma işareti** |
