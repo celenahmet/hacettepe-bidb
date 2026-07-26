@@ -39,6 +39,25 @@ reddetti ve site backend'siz kaldı.
      SQL gövdesi de değiştiyse bu YETMEZ: veritabanı ile dosya artık farklı
      şeyler anlatıyordur, düzeltmeyi yeni bir göçle yapın.
 
+## `restart` göç dosyasını tazelemez — `--build` gerekir
+
+Göç dosyaları uygulama imajının içine kopyalanır. `docker compose restart
+backend` var olan imajı yeniden başlatır, yani konteynerin gördüğü göç dosyası
+**diskteki değil, imajdaki eski sürümdür**.
+
+Bu, sağlama sorununu sinsi hâle getirir. Bir kez yaşandı: V66'nın yorumu
+düzeltildi, geçmiş kaydı silinip `restart` ile yeniden uygulatıldı ve her şey
+yolunda göründü — ama Flyway eski dosyayı uygulayıp **eski** sağlamayı yazdı.
+Hata ancak bir sonraki gerçek derlemede ortaya çıktı: imaj artık düzeltilmiş
+dosyayı taşıyordu, sağlamalar tutmadı, backend hiç açılmadı ve site her
+adreste hata sayfası döndürdü. Arada geçen zamanda sorun görünmüyordu, çünkü
+çalışan konteyner zaten ayaktaydı.
+
+Kural: **bir göç dosyasına dokunulduysa `docker compose up -d --build backend`
+çalıştırın**, `restart` değil. Ardından `flyway_schema_history` içindeki
+sağlamanın dosyayla eşleştiği doğrulanmalıdır; backend'in ayağa kalkması
+bunun kanıtıdır.
+
 ## Adlandırma
 
 `V<numara>__kisa_aciklama.sql` — açıklama Türkçe, boşluk yerine alt çizgi.
