@@ -133,7 +133,7 @@ async function yonlendirmeleriHazirla(): Promise<void> {
 
 async function yonlendirmeleriTazele(): Promise<void> {
   try {
-    const y = await fetch(`${API_TABAN}/api/tr/redirects`);
+    const y = await apiGetir(`${API_TABAN}/api/tr/redirects`);
     if (!y.ok) return;
     const veri = (await y.json()) as Record<string, string>;
     panelYonlendirmeleri.clear();
@@ -198,6 +198,16 @@ const apiTaban = process.env['BIDB_API'] ?? 'http://localhost:8081';
 /** Vekilin dışına çıkılmadığını doğrulamak için sabit taban. */
 const apiKokU = new URL(apiTaban);
 
+/**
+ * Vekil üzerinden yapılan backend çağrılarının azami süresi.
+ *
+ * Sayfa çizimini bekleten iç çağrılardan (API_ZAMAN_ASIMI_MS) daha uzun
+ * tutulur, çünkü bu yol panelden yapılan belge yüklemelerini de taşır
+ * (azami 5 MB). Yine de sonsuz değildir: erişilemeyen bir backend'de
+ * çizim bu süre sonunda hatayı görüp sayfayı yine de döndürebilmelidir.
+ */
+const VEKIL_ZAMAN_ASIMI_MS = Number(process.env['BIDB_VEKIL_ZAMAN_ASIMI'] ?? 8000);
+
 app.use('/api', express.raw({ type: '*/*', limit: '5mb' }), async (req, res) => {
   try {
     // Yol, adres çözümlenerek DOĞRULANIR. Düz birleştirme yapıldığında
@@ -244,11 +254,16 @@ app.use('/api', express.raw({ type: '*/*', limit: '5mb' }), async (req, res) => 
     if (vekilAnahtari) basliklar['X-Bidb-Vekil-Anahtari'] = vekilAnahtari;
 
     const govdeliMi = req.method !== 'GET' && req.method !== 'HEAD';
-    const yanit = await fetch(hedef, {
+    // Zaman aşımı ŞART. Sunucu tarafı çizim, bileşenlerin veri isteklerini
+    // bu vekil üzerinden yapar; buradaki çağrı askıda kalırsa çizim de
+    // askıda kalır ve ziyaretçiye hiçbir yanıt dönmez. Durdurulmuş bir
+    // backend kabına giden paketler sessizce düştüğü için bağlantı
+    // reddedilmiyor, TCP yeniden denemeleriyle dakikalarca bekliyordu.
+    const yanit = await backendCagir(hedef, {
       method: req.method,
       headers: basliklar,
       body: govdeliMi && Buffer.isBuffer(req.body) && req.body.length ? new Uint8Array(req.body) : undefined
-    });
+    }, VEKIL_ZAMAN_ASIMI_MS);
 
     const govde = Buffer.from(await yanit.arrayBuffer());
     res.status(yanit.status);
@@ -274,6 +289,70 @@ app.use('/api', express.raw({ type: '*/*', limit: '5mb' }), async (req, res) => 
 const API_TABAN = process.env['API_TABAN'] ?? 'http://backend:8080';
 const SITE_ADRESI = process.env['SITE_ADRESI'] ?? 'https://bidb.hacettepe.edu.tr';
 
+/**
+ * Backend çağrılarının azami süresi.
+ *
+ * Bu çağrıların hiçbirinde zaman aşımı yoktu. Backend erişilemez ya da çok
+ * yavaş olduğunda istek işleyicisi yanıt beklerken askıda kalıyor, ziyaretçi
+ * sayfaları hiç dönmüyordu (tarayıcı zaman aşımına düşene kadar). Her askıda
+ * kalan istek bir bağlantıyı tuttuğu için tek bir yavaş backend, ön yüzün
+ * tamamını yanıt veremez hâle getirebiliyordu.
+ *
+ * Çağrı yerlerinin tamamı zaten hatayı yakalayıp zarifçe geriliyor (önbellekten
+ * devam etmek, doğrulamayı atlamak gibi); eksik olan tek şey, hatanın MAKUL
+ * bir sürede oluşmasıydı.
+ */
+const API_ZAMAN_ASIMI_MS = Number(process.env['BIDB_API_ZAMAN_ASIMI'] ?? 4000);
+
+/**
+ * Devre kesici.
+ *
+ * Tek başına zaman aşımı yetmiyor: tek bir sayfanın çizimi backend'e birkaç
+ * ayrı çağrı yapıyor ve kesinti sırasında bunların HER BİRİ ayrı ayrı zaman
+ * aşımına uğruyor. Süreler üst üste binince ziyaretçi, hata sayfasını bile
+ * yarım dakikadan uzun bekliyordu (ölçüldü: 38 sn).
+ *
+ * Arka arkaya birkaç çağrı başarısız olduğunda devre açılır: kısa bir süre
+ * boyunca ağa hiç çıkılmadan anında hata verilir, böylece kesinti sırasında
+ * sayfa gecikmesi tek bir zaman aşımıyla sınırlı kalır. Süre dolunca bir
+ * çağrı denenir; başarılıysa devre kapanır ve site kendiliğinden toparlanır.
+ */
+const DEVRE_HATA_ESIGI = 3;
+const DEVRE_ACIK_KALMA_MS = 10_000;
+let ardisikHata = 0;
+let devreAcikSonu = 0;
+
+function devreAcikMi(): boolean {
+  return Date.now() < devreAcikSonu;
+}
+
+function backendBasarili(): void {
+  ardisikHata = 0;
+  devreAcikSonu = 0;
+}
+
+function backendHatali(): void {
+  if (++ardisikHata >= DEVRE_HATA_ESIGI) devreAcikSonu = Date.now() + DEVRE_ACIK_KALMA_MS;
+}
+
+/** Backend'e zaman aşımlı ve devre kesicili çağrı. */
+async function backendCagir(adres: string, secenekler: RequestInit, zamanAsimiMs: number): Promise<Response> {
+  if (devreAcikMi()) throw new Error('Backend devresi açık; çağrı yapılmadı.');
+  try {
+    const yanit = await fetch(adres, { ...secenekler, signal: AbortSignal.timeout(zamanAsimiMs) });
+    backendBasarili();
+    return yanit;
+  } catch (e) {
+    backendHatali();
+    throw e;
+  }
+}
+
+/** Sayfa çizimini bekleten backend çağrıları; hızlı başarısız olmalı. */
+function apiGetir(adres: string, secenekler: RequestInit = {}): Promise<Response> {
+  return backendCagir(adres, secenekler, API_ZAMAN_ASIMI_MS);
+}
+
 let yolOnbellek: { yollar: Set<string>; savedAt: number } | null = null;
 
 /** Kaynakta hata metni dönen pages; site haritasında ilan edilmezler. */
@@ -293,7 +372,7 @@ async function yayindakiYollar(): Promise<Set<string>> {
     // (ör. /en/committees) iki ayrı ağ gidiş-dönüşünü sırayla bekliyor,
     // bu da o tekil isteğin TTFB'sini gözle görülür biçimde şişiriyordu.
     const yanitlar = await Promise.all(
-      ['tr', 'en'].map((language) => fetch(`${API_TABAN}/api/${language}/pages`).then((y) => ({ language, y })))
+      ['tr', 'en'].map((language) => apiGetir(`${API_TABAN}/api/${language}/pages`).then((y) => ({ language, y })))
     );
     for (const { language, y } of yanitlar) {
       if (!y.ok) continue;
@@ -321,7 +400,7 @@ async function sayfaYok(yol: string): Promise<boolean> {
   const haber = p.match(/^\/(tr|en)\/newsItem\/([^/]+)$/);
   if (haber) {
     try {
-      const y = await fetch(`${API_TABAN}/api/${haber[1]}/newsItem/${encodeURIComponent(haber[2])}`);
+      const y = await apiGetir(`${API_TABAN}/api/${haber[1]}/newsItem/${encodeURIComponent(haber[2])}`);
       return y.status === 404;
     } catch {
       return false;
@@ -450,11 +529,11 @@ app.get('/sitemap.xml', async (_req, res) => {
   const haberler: { language: string; slug: string; date?: string }[] = [];
 
   await Promise.all(['tr', 'en'].flatMap((language) => [
-    fetch(`${API_TABAN}/api/${language}/pages`)
+    apiGetir(`${API_TABAN}/api/${language}/pages`)
       .then((response) => response.ok ? response.json() : [])
       .then((items: SitemapPage[]) => sayfalar.push(...items.map((item) => ({ ...item, language }))))
       .catch(() => undefined),
-    fetch(`${API_TABAN}/api/${language}/news`)
+    apiGetir(`${API_TABAN}/api/${language}/news`)
       .then((response) => response.ok ? response.json() : [])
       .then((items: { slug?: string; date?: string }[]) => haberler.push(
         ...items.filter((item) => item.slug).map((item) => ({
