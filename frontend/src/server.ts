@@ -72,9 +72,22 @@ app.disable('x-powered-by');
  * bunu DI olmadan doğrudan DOM'dan okur, bu yüzden istek başına farklı bir
  * değer vermek için ek bir sağlayıcıya gerek yoktur). Her istekte rastgele
  * bir nonce üretilip hem bu başlığa hem render edilen HTML'e (aşağıdaki
- * BIDB_CSP_NONCE yer tutucusunun yerine) yazılır. 'unsafe-inline' nonce
- * yanında da bırakılır: nonce'u anlayan tarayıcı onu yok sayar, anlamayan
- * eski bir tarayıcı için tek yedek budur.
+ * BIDB_CSP_NONCE yer tutucusunun yerine) yazılır.
+ *
+ * NONCE YALNIZCA script-src'DEDİR. style-src'de de vardı ve iki görsel
+ * özelliği sessizce bozuyordu: kural listesinde nonce varsa tarayıcı
+ * 'unsafe-inline'ı YOK SAYAR, nonce ise yalnızca <style> etiketine
+ * verilebilir — style="..." özniteliğine verilemez. Angular'ın stil bağları
+ * ([style.width.%], [style.animation-duration.ms]) tam olarak o özniteliği
+ * yazdığı için rota yükleme çubuğunun genişliği ve slider nokta
+ * göstergelerinin animasyon süresi uygulanmıyordu. Her sayfada 11 ihlal
+ * ölçüldü. Bu değerler sürekli (yüzde, milisaniye); satır içi stil olmadan
+ * ifade edilemezler.
+ *
+ * Ödünç dar: stil enjeksiyonu betik çalıştırmaz ve CSS ile veri sızdırmanın
+ * ana kanalı olan dış kaynak isteği zaten img-src 'self' ve connect-src
+ * 'self' ile kapalı. Güvenliğin asıl taşıyıcısı olan script-src nonce'u
+ * olduğu gibi duruyor.
  *
  * Gömülü videolar yalnızca YouTube'dan, iletişim sayfasındaki isteğe bağlı
  * konum haritası ise yalnızca Google Maps'ten gelir.
@@ -83,7 +96,7 @@ function guvenlikPolitikasi(nonce: string): string {
   return [
     "default-src 'self'",
     `script-src 'self' 'nonce-${nonce}' 'unsafe-inline'`,
-    `style-src 'self' 'nonce-${nonce}' 'unsafe-inline'`,
+    "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data:",
     "font-src 'self' data:",
     "frame-src https://www.youtube.com https://youtube.com https://www.google.com https://maps.google.com",
