@@ -1,0 +1,158 @@
+/*
+ * Yazdırma düzeni.
+ *
+ * Bu sitede yönergeler, başvuru adımları, iletişim bilgileri ve hizmet
+ * açıklamaları kâğıda basılıyor. Yazdırma kuralı hiç tanımlı olmadığı için
+ * ekranın tamamı olduğu gibi basılıyordu: üst menü, sol bölüm menüsü, koyu
+ * lacivert konum şeridi, çerez bandı, sosyal medya simgeleri. Bunların
+ * hiçbirinin kâğıtta karşılığı yok; şerit ise tam genişlikte koyu bir alan
+ * olduğu için her sayfada belirgin bir mürekkep gideri.
+ *
+ * Kurallar KATMAN DIŞINDA tutuldu: normal bildirimlerde katmansız olan bütün
+ * katmanları yener, üstelik özgüllüğe bakılmadan — böylece ekran düzeninin
+ * hiçbir kuralı buradakileri geçemez. Aynı gerekçeyle yazılmış
+ * "prefers-reduced-motion" bloğuyla tutarlı.
+ *
+ * Dikkat: bu kural !important için TERSİNE işler. Katmanlı bir !important,
+ * katmansız bir !important'ı yener (tarayıcıda ölçüldü). Yani buradaki
+ * !important'lar sayfanın en güçlü bildirimleri DEĞİL; katmanlı bir
+ * !important ile çakışırsa kaybederler. Yine de duruyorlar, çünkü ileride
+ * katmansız bir kural eklenirse ona karşı koruma sağlıyorlar. Bir gizleme
+ * kuralı beklenmedik biçimde çalışmazsa önce katmanlı !important aranmalı.
+ */
+@media print {
+  /* ---------- kâğıda gitmeyecek olanlar ---------- */
+
+  /* Gezinme ve site kabuğu: basılı sayfada tıklanacak bir şey yok. */
+  .ust,
+  .menu-dugmesi,
+  .atla,
+  .yan,
+  .sol-menu,
+  bidb-header,
+  bidb-side-menu,
+  bidb-hero-slider,
+  bidb-route-progress,
+  bidb-cookie-consent,
+  bidb-accessibility-menu,
+  .rota-ilerleme,
+  .sayfa-seridi,
+  .alt-sosyal,
+  .sosyal-buton {
+    display: none !important;
+  }
+
+  /* ---------- sayfa kurulumu ---------- */
+
+  @page {
+    margin: 1.6cm 1.4cm;
+  }
+
+  html,
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 11.5pt;
+    line-height: 1.45;
+  }
+
+  /* Sol menü gizlendiğinde iki sütunlu ızgaradan geriye boş bir sütun
+     kalıyordu; içerik kâğıdın sağ yarısına sıkışıyordu. */
+  .sayfa-duzen {
+    display: block !important;
+    padding: 0 !important;
+  }
+
+  .kap,
+  .icerik-alani,
+  .icerik {
+    max-width: none !important;
+    width: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* ---------- okunabilirlik ---------- */
+
+  /* Ekran için seçilmiş zemin renkleri kâğıtta yalnızca mürekkep harcar;
+     kutuların sınırını renk yerine ince çizgi taşır. */
+  .kart,
+  .kutu,
+  .uyari,
+  .bilgi-kutu,
+  .sayfa-tepe {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: 1px solid #999 !important;
+  }
+
+  a {
+    color: #000 !important;
+    text-decoration: underline;
+  }
+
+  /* Basılı sayfada bağlantının nereye gittiği kaybolur. Yalnızca dış
+     adresler yazılır: site içi bağlantılar zaten aynı belgenin parçası ve
+     hepsini yazmak metni okunmaz hâle getirirdi.
+
+     Bilinen ödünç: dış bağlantıların 44'ünün metni zaten adresin kendisi
+     (133 dış bağlantı içinde sayıldı). O bağlantılarda adres kâğıtta iki kez
+     görünür. CSS bir bağlantının metnini href'iyle karşılaştıramaz, kaynak
+     içeriğe de dokunulmuyor; kalan 89 bağlantının hedefini kurtarmak, 44'ünde
+     tekrar oluşmasına değer görüldü. */
+  main a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 9pt;
+    color: #444;
+    word-break: break-all;
+  }
+
+  /* Aynı sekmede açılmayan ya da işlevsel olan bağlantılarda adres yazılmaz. */
+  main a[href^="mailto:"]::after,
+  main a[href^="tel:"]::after,
+  main a[href^="#"]::after {
+    content: "";
+  }
+
+  img,
+  table,
+  figure {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    max-width: 100% !important;
+  }
+
+  h1, h2, h3, h4 {
+    break-after: avoid;
+    page-break-after: avoid;
+    color: #000 !important;
+  }
+
+  /* Tek satırı bir sonraki sayfaya sarkan paragraflar. */
+  p, li {
+    orphans: 3;
+    widows: 3;
+  }
+
+  /* ---------- alt bilgi ---------- */
+
+  /* Kurum ve iletişim bilgisi kâğıtta kalır: basılı bir yönergenin hangi
+     birimden geldiği ve kime sorulacağı belgenin üzerinde olmalı. Süslemeler
+     ve sütun düzeni ise düz bir bloğa indirilir. */
+  .alt {
+    background: transparent !important;
+    color: #000 !important;
+    border-top: 1px solid #999;
+    padding: 0.6cm 0 0 !important;
+    margin-top: 0.8cm;
+    break-before: avoid;
+  }
+
+  .alt-izgara {
+    display: block !important;
+  }
+
+  .alt-serit {
+    display: none !important;
+  }
+}

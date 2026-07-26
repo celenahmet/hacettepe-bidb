@@ -20,6 +20,11 @@
 @import "./styles/public.css";
 @import "./styles/hero.css";
 @import "./styles/accessibility.css";
+/* Yazdırma kuralları kasten katmansız ve en sonda: katmansız stiller bütün
+   katmanları yendiği için ekran düzeninin hiçbir kuralı bunları geçemez.
+   Kritik pakete girer, çünkü ziyaretçi sayfa açılır açılmaz Ctrl+P yapabilir
+   ve geç yüklenen bir pakette olsa o an devrede olmazdı. */
+@import "./styles/yazdirma.css";
 /* admin.css BURAYA ALINMAZ: yönetim paneli stilleri "tamamlayici-admin"
    paketi olarak zaten ayrı derleniyor (bkz. angular.json) ve yalnızca
    /yonetim istendiğinde ekleniyor. Buradan da çağrıldığında ~42 KB'lık
