@@ -287,3 +287,33 @@ Kampüs ağından açılıp karar verilmesi gerekir:
 
 Kontrol tekrarlanmak istenirse: adresler yukarıdaki 11 sütundan toplanıp tek tek
 istenir; site içi olanlar `/dosyalar/...` altında sunulur.
+
+---
+
+## Ek: içerik sahibinin karar vermesi gereken başlık çakışması
+
+Yayındaki 158 sayfanın SEO işaretlemesi tarandı — title, canonical,
+description, tek h1, hreflang ve og etiketleri **158 sayfanın tamamında
+eksiksiz**. Tek bulgu, iki sayfanın aynı başlığı taşıması:
+
+| Sayfa | `title` alanı | Sayfanın KENDİ içeriğindeki başlık |
+|---|---|---|
+| `/tr/notice-280425` | SÖZLEŞMELİ BİLİŞİM PERSONELİ **SINAV** DUYURUSU | SÖZLEŞMELİ BİLİŞİM PERSONELİ DUYURUSU |
+| `/tr/notices` | SÖZLEŞMELİ BİLİŞİM PERSONELİ **SINAV** DUYURUSU | SÖZLEŞMELİ BİLİŞİM PERSONELİ **SINAV** DUYURUSU |
+| `/en/notice-280425` | CONTRACTED IT PERSONNEL **EXAMINATION** ANNOUNCEMENT | CONTRACTED IT PERSONNEL **RECRUITMENT**… |
+| `/en/notices` | Contracted IT Personnel **Examination** Announcement | CONTRACTED IT PERSONNEL **EXAMINATION**… |
+
+İki sayfanın içeriği farklı (ayrı uzunluk, ayrı özet); biri **işe alım**,
+diğeri **sınav** duyurusu. Ancak `notice-280425` sayfasının başlık alanı,
+kendi içeriğiyle çelişip diğer sayfanın konusunu söylüyor — aktarımda yanlış
+sayfadan kopyalanmış görünüyor. İngilizce tarafta da aynı çelişki var
+(başlıklar yalnızca büyük/küçük harfte ayrışıyor, yani fiilen aynı).
+
+**Etkisi:** iki sayfa da yayında, `index, follow` ve site haritasında. Arama
+motoru aynı başlıklı iki adres görüyor; hangisinin hangi duyuru olduğu
+sonuçlardan anlaşılmıyor.
+
+**Neden burada, kodda değil:** düzeltme bir editoryal karar — resmî bir
+duyurunun başlığı içerik sahibinin yazacağı metindir, kaynak içeriğe
+dokunulmama ilkesi gereği tahminle değiştirilmedi. Panelden başlık alanının
+düzeltilmesi yeterli; başka bir teknik değişiklik gerekmiyor.
