@@ -1,8 +1,9 @@
 import { Component, Input, inject } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
+import { Observable } from 'rxjs';
 import { Api } from '../core/api.service';
-import { Language, MenuItem } from '../core/models';
+import { Language, Menu, MenuItem } from '../core/models';
 
 /** Sol menü. Bölümler API'den gelir; açılır-kapanır çalışır. */
 @Component({
@@ -67,7 +68,10 @@ export class SideMenuComponent {
   protected language: Language = 'tr';
   private api = inject(Api);
   private router = inject(Router);
-  protected menus$ = this.api.menu('tr');
+  // Girdi ayarlayıcısı ilk değeri hemen verdiği için burada ayrı bir
+  // istek başlatılmaz; sabit 'tr' ile yapılan eski çağrı, dil İngilizce
+  // olsa bile boşa bir menü isteği açıyordu.
+  protected menus$!: Observable<Menu[]>;
 
   protected uygulamaSistemleri = [
     { label: 'Hacettepe Portal', labelEn: 'Hacettepe Portal', url: 'https://portal.hacettepe.edu.tr/', newTab: true },

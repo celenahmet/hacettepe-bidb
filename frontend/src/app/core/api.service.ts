@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, shareReplay } from 'rxjs/operators';
 import { yenidenDene } from './yeniden-dene';
 import { HomeData, Language, Menu, Page, Slide, SocialAccount, StaffUnit } from './models';
 
@@ -54,10 +54,33 @@ export class Api {
       })));
   }
 
+  /**
+   * Menü, tek bir sayfa çiziminde DÖRT ayrı yerden isteniyor (üst şerit, sol
+   * menü, içerik sayfasının bölüm çözümü ve sol menünün ilk kurulumu). Her
+   * çağrı ayrı bir HTTP isteği açıyordu; sunucu tarafında bu, menü sorgusunun
+   * dört kez çalışması ve her menü öğesi için page tablosuna ayrı ayrı
+   * gidilmesi demekti — ölçüldü: tek /tr/staff çiziminde page tablosuna 145
+   * erişim.
+   *
+   * Yanıt kısa süreli olarak paylaşılıyor. Süre, vekilin bu uçlar için zaten
+   * ilan ettiği tazelik penceresiyle (30 sn, bkz. server.ts) aynı tutuldu;
+   * böylece kabul edilmiş olandan daha uzun bir bayatlık oluşmuyor. Sunucu
+   * tarafında her istek kendi enjektörünü aldığı için önbellek istek
+   * başınadır, ziyaretçiler arasında paylaşılmaz.
+   */
+  private menuOnbellek = new Map<string, { veri$: Observable<Menu[]>; zaman: number }>();
+  private static readonly MENU_TAZELIK_MS = 30_000;
+
   menu(language: Language, position = 'sol'): Observable<Menu[]> {
-    return this.http
+    const anahtar = `${language}|${position}`;
+    const kayit = this.menuOnbellek.get(anahtar);
+    if (kayit && Date.now() - kayit.zaman < Api.MENU_TAZELIK_MS) return kayit.veri$;
+
+    const veri$ = this.http
       .get<Menu[]>(`${this.taban}/api/${language}/menus`, { params: { position } })
-      .pipe(yenidenDene(), catchError(() => of([])));
+      .pipe(yenidenDene(), catchError(() => of([])), shareReplay({ bufferSize: 1, refCount: false }));
+    this.menuOnbellek.set(anahtar, { veri$, zaman: Date.now() });
+    return veri$;
   }
 
   slider(language: Language): Observable<Slide[]> {
