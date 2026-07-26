@@ -63,7 +63,7 @@ import { ContactFormComponent } from './contact-form.component';
         }
       </aside>
 
-      <main id="ana-icerik" class="icerik-alani"
+      <main id="ana-icerik" tabindex="-1" class="icerik-alani"
             [class.web-servis-sayfasi]="sayfa()?.slug === 'web-services'"
             [class.dokumanlar-sayfasi]="sayfa()?.slug === 'documents'"
             [class.kurul-sayfasi]="sayfa()?.slug === 'committees'"

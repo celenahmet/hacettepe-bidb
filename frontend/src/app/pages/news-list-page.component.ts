@@ -26,7 +26,7 @@ import { aramaIcinSadelestir } from '../core/arama-metni';
         <bidb-side-menu [dilDegeri]="language()"></bidb-side-menu>
       </aside>
 
-      <main id="ana-icerik" class="icerik-alani">
+      <main id="ana-icerik" tabindex="-1" class="icerik-alani">
         <header class="sayfa-tepe">
           <h1 class="sayfa-baslik">
             {{ language() === 'en' ? 'News and Announcements' : 'Haber ve Duyurular' }}

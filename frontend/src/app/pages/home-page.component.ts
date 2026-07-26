@@ -39,7 +39,7 @@ import { NewsCardComponent } from './news-card.component';
           <bidb-side-menu [dilDegeri]="language()"></bidb-side-menu>
         </aside>
 
-        <main id="ana-icerik" class="icerik-alani">
+        <main id="ana-icerik" tabindex="-1" class="icerik-alani">
           @if (v.news.length) {
               <section class="duyurular">
                 <div class="bolum-baslik">

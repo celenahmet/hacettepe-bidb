@@ -171,7 +171,7 @@ const GENERIC_SERVER: ErrorContent = {
   selector: 'bidb-error-page',
   imports: [RouterLink],
   template: `
-    <main id="ana-icerik" class="hata-sayfasi">
+    <main id="ana-icerik" tabindex="-1" class="hata-sayfasi">
       @if (arkaPlanGorunur()) {
         <picture class="hata-arka-plan" aria-hidden="true">
           <source media="(min-width: 64rem)" srcset="/images/slider/slide2-1920.webp">

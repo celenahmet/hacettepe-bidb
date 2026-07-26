@@ -18,7 +18,10 @@ import { Language, Menu } from '../core/models';
   selector: 'bidb-header',
   imports: [RouterLink],
   template: `
-    <a class="atla" href="#ana-icerik">{{ language === 'en' ? 'Skip to content' : 'İçeriğe atla' }}</a>
+    <!-- href korunur: JavaScript çalışmadığında tarayıcının kendi çapa
+         davranışı yine içeriğe kaydırır. JavaScript varsa odağı BİZ taşırız
+         (bkz. iceriyeAtla) — tarayıcıya bırakıldığında çalışmıyordu. -->
+    <a class="atla" href="#ana-icerik" (click)="iceriyeAtla($event)">{{ language === 'en' ? 'Skip to content' : 'İçeriğe atla' }}</a>
 
     <header class="ust">
       <div class="kap ust-ic">
@@ -91,6 +94,26 @@ import { Language, Menu } from '../core/models';
   `
 })
 export class HeaderComponent {
+  /**
+   * "İçeriğe atla" bağlantısını gerçekten çalıştırır.
+   *
+   * Tarayıcının kendi çapa davranışına güvenmek yetmiyordu: adres
+   * #ana-icerik oluyor, sayfa kayıyor, ama ODAK gövdede kalıyordu. Sebebi
+   * yönlendiricinin adres değişimini bir gezinme sayıp konumu (ve odağı)
+   * sıfırlaması. Sonuçta bağlantı yalnızca kaydırıyor, klavye kullanıcısı için
+   * hiçbir şeyi ATLAMIYORDU — bir sonraki Tab yine üst menüden devam ediyordu.
+   * Bu, bağlantının tek varlık sebebiydi (WCAG 2.4.1, blokları atlama).
+   *
+   * Hedefte tabindex="-1" var; odaklanabilir ama Tab sırasına girmez.
+   */
+  protected iceriyeAtla(olay: Event): void {
+    const hedef = document.getElementById('ana-icerik');
+    if (!hedef) return;                    // sayfa henüz çizilmediyse tarayıcıya bırak
+    olay.preventDefault();
+    hedef.focus({ preventScroll: true });
+    hedef.scrollIntoView({ block: 'start' });
+  }
+
   private _language!: Language;
   @Input({ required: true }) set language(val: Language) {
     if (this._language !== val) {

@@ -41,7 +41,7 @@ import { SideMenuComponent } from '../../layout/side-menu.component';
         <bidb-side-menu [dilDegeri]="language()"></bidb-side-menu>
       </aside>
 
-      <main id="ana-icerik" class="icerik-alani cerez-politikasi">
+      <main id="ana-icerik" tabindex="-1" class="icerik-alani cerez-politikasi">
         <header class="sayfa-tepe">
           <h1 class="sayfa-baslik">{{ language() === 'en' ? 'Cookie and Browser Storage Policy' : 'Çerez ve Tarayıcı Depolama Politikası' }}</h1>
         </header>
