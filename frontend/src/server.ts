@@ -10,6 +10,7 @@ import { join } from 'node:path';
 import { readdirSync } from 'node:fs';
 import { randomBytes } from 'node:crypto';
 import { LEGACY_ROUTES } from './legacy-routes';
+import { ESKI_KOK_YOLLAR } from './eski-kok-yollar';
 
 const browserDistFolder = join(import.meta.dirname, '../browser');
 
@@ -153,6 +154,15 @@ async function yonlendirmeleriTazele(): Promise<void> {
  */
 app.use(async (req, res, next) => {
   const yol = req.path.replace(/\/+$/, '') || req.path;
+
+  // Dil öneki taşımayan eski adresler (eski sitenin klasör + .shtml düzeni).
+  // Aşağıdaki "yalnızca /tr, /en" kuralından ÖNCE ve yalnızca BİREBİR
+  // eşleşmeyle bakılır; desen kullanılsaydı bu ara katman varlık
+  // dosyalarından önce çalıştığı için CSS/JS isteklerini de yakalayabilirdi.
+  const kokHedef = ESKI_KOK_YOLLAR[yol.toLowerCase()];
+  if (kokHedef) {
+    return res.redirect(301, kokHedef + req.originalUrl.slice(req.path.length));
+  }
 
   // Yalnızca içerik sayfaları yönlendirilir. Varlık dosyalarının adında
   // büyük harf bulunur (styles-CYIGEJUB.css gibi); onlara dokunulmazsa
