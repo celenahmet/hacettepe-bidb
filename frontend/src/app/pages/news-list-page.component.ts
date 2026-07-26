@@ -5,6 +5,7 @@ import { Seo } from '../core/seo.service';
 import { Language, NewsAudience, NewsSummary } from '../core/models';
 import { SideMenuComponent } from '../layout/side-menu.component';
 import { NewsCardComponent } from './news-card.component';
+import { aramaIcinSadelestir } from '../core/arama-metni';
 
 /**
  * Haber ve duyuruların tamamı: /tr/news, /en/news
@@ -194,7 +195,7 @@ export class NewsListPageComponent {
     let tumu = this.duyurular();
     const kategori = this.seciliKategori();
     const hedefKitle = this.seciliHedefKitle();
-    const arama = this.aramaMetni().toLowerCase().trim();
+    const arama = aramaIcinSadelestir(this.aramaMetni().trim());
 
     if (kategori) {
       tumu = tumu.filter(d => d.category === kategori);
@@ -205,9 +206,9 @@ export class NewsListPageComponent {
     }
 
     if (arama) {
-      tumu = tumu.filter(d => 
-        d.title.toLowerCase().includes(arama) || 
-        (d.summary && d.summary.toLowerCase().includes(arama))
+      tumu = tumu.filter(d =>
+        aramaIcinSadelestir(d.title).includes(arama) ||
+        aramaIcinSadelestir(d.summary).includes(arama)
       );
     }
 
