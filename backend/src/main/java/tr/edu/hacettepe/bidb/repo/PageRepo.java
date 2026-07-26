@@ -23,5 +23,12 @@ public interface PageRepo extends JpaRepository<Page, Long> {
 
     boolean existsBySlugAndLanguageAndPublishedTrue(String slug, String language);
 
-    List<Page> findByLanguageAndPublishedTrueOrderBySortOrderAsc(String language);
+    /**
+     * Sıralama id ile de bağlanır: yayındaki sayfalarda aynı dilde aynı sıra
+     * numarasını paylaşan 16 grup var (ölçüldü). Bu liste ziyaretçiye sıralı
+     * gösterilmiyor, ama site haritasını üretiyor; eşitlik çözülmeden kalırsa
+     * harita satırlarının sırası kayıt güncellendikçe değişir ve tarayıcı
+     * robotlarına gereksiz değişiklik gibi görünür.
+     */
+    List<Page> findByLanguageAndPublishedTrueOrderBySortOrderAscIdAsc(String language);
 }

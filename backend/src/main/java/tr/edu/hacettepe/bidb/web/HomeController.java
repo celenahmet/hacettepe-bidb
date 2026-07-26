@@ -32,7 +32,7 @@ public class HomeController {
 
     @GetMapping("/home")
     public HomeDto anaSayfa(@PathVariable String language) {
-        List<Shortcut> tumu = shortcuts.findByLanguageAndPublishedTrueOrderBySortOrderAsc(language);
+        List<Shortcut> tumu = shortcuts.findByLanguageAndPublishedTrueOrderBySortOrderAscIdAsc(language);
 
         boolean hasTranslation = pages.existsBySlugAndLanguageAndPublishedTrue(
                 "home", language.equals("en") ? "tr" : "en");

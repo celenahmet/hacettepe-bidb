@@ -33,9 +33,9 @@ public class PageController {
     @GetMapping("/pages")
     public List<PageDto> liste(@PathVariable String language) {
         String otherLanguage = language.equals("en") ? "tr" : "en";
-        var translatedSlugs = pages.findByLanguageAndPublishedTrueOrderBySortOrderAsc(otherLanguage)
+        var translatedSlugs = pages.findByLanguageAndPublishedTrueOrderBySortOrderAscIdAsc(otherLanguage)
                 .stream().map(s -> s.getSlug()).collect(java.util.stream.Collectors.toSet());
-        return pages.findByLanguageAndPublishedTrueOrderBySortOrderAsc(language).stream()
+        return pages.findByLanguageAndPublishedTrueOrderBySortOrderAscIdAsc(language).stream()
                 .map(s -> PageDto.summary(s, translatedSlugs.contains(s.getSlug())))
                 .toList();
     }
