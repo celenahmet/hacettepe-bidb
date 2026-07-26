@@ -435,6 +435,16 @@ async function sayfaYok(yol: string): Promise<boolean> {
   return tazelenmis.size > 0 && !tazelenmis.has(p.toLowerCase());
 }
 
+/**
+ * Sayfa değil, dosya isteyen adresler. Sayfa adresleri (/tr/<slug>) nokta
+ * içermez — veritabanındaki kayıtların hiçbirinde yok — bu yüzden uzantı,
+ * ikisini ayırmak için güvenilir bir işaret. Liste kasten sayılıdır: eski
+ * sitenin .shtml adresleri gibi insan gözüyle açılan sayfalar dışarıda kalsın,
+ * onlar markalı hata sayfasını görmeye devam etsin.
+ */
+const VARLIK_UZANTISI =
+  /\.(js|mjs|css|map|png|jpe?g|gif|webp|avif|svg|ico|woff2?|ttf|otf|eot|json|webmanifest|xml|txt|pdf|docx?|xlsx?|pptx?|odt|ods|zip|rar)$/i;
+
 /** /error/<kod> adresindeki geçerli HTTP hata kodunu döndürür. Bileşen
  *  bütün kodları aynı rotada çizse de ağ yanıtı da gerçeği söylemelidir. */
 function acikHataKodu(yol: string): number | null {
@@ -733,6 +743,19 @@ app.use(async (req, res, next) => {
     if (req.method !== 'GET' && req.method !== 'HEAD') {
       res.setHeader('Allow', 'GET, HEAD');
       res.status(405).json({ message: 'Bu adres yalnızca GET ve HEAD destekler.' });
+      return;
+    }
+
+    // Buraya bir varlık uzantısıyla gelinmişse dosya gerçekten yoktur: yukarıdaki
+    // statik katmanların hepsi onu aramış ve bulamamıştır. Bu istekler hata
+    // SAYFASINA taşınmamalı — bir <img> ya da <script> etiketine HTML gövdesi
+    // dönmenin karşılığı yok. Üstelik taşıma bedava değildi: Angular
+    // yönlendiricisi eksik dosya için önyüklenip bir 302 üretiyor, ardından
+    // hata sayfası da çiziliyordu, yani eksik tek bir görsel iki çizim
+    // maliyeti çıkarıyordu. Robotlara da doğru cevap düz bir 404'tür;
+    // "geçici olarak taşındı" demek, ölü adresi dizinde tutar.
+    if (VARLIK_UZANTISI.test(req.path)) {
+      res.status(404).type('txt').send('Bulunamadı.');
       return;
     }
 
