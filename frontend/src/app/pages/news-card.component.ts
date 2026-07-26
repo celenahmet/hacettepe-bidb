@@ -43,9 +43,17 @@ import { NewsCoverComponent } from './news-cover.component';
              duyuru listesinde ise doğrudan sayfa başlığının (h1) altında
              olduğu için h2 gelmelidir. Sabit h3 kullanıldığında duyuru
              listesinde h1'den h3'e atlanıyor, başlık hiyerarşisi kırılıyordu. -->
+        <!-- Duyurunun gideceği bir yer olmayabilir: panelde adres alanı boş
+             bırakılıp dış bağlantı da verilmediğinde (kendi başına bilgi veren
+             kısa duyurular böyle girilebiliyor) url null gelir. Önceden bu
+             durumda da bağlantı çiziliyor, href değersiz kalıyor ve başlığa
+             tıklamak aynı sayfayı yeniden yüklüyordu. Gidilecek yer yoksa
+             başlık düz metin olarak yazılır. -->
         @if (baslikSeviyesi === 2) {
           <h2 class="haber-baslik">
-            @if (haber.hasOwnPage) {
+            @if (!haber.url) {
+              {{ haber.title }}
+            } @else if (haber.hasOwnPage) {
               <a [routerLink]="haber.url">{{ haber.title }}</a>
             } @else {
               <a [href]="haber.url" target="_blank" rel="noopener"
@@ -54,7 +62,9 @@ import { NewsCoverComponent } from './news-cover.component';
           </h2>
         } @else {
           <h3 class="haber-baslik">
-            @if (haber.hasOwnPage) {
+            @if (!haber.url) {
+              {{ haber.title }}
+            } @else if (haber.hasOwnPage) {
               <a [routerLink]="haber.url">{{ haber.title }}</a>
             } @else {
               <a [href]="haber.url" target="_blank" rel="noopener"
