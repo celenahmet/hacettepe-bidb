@@ -534,6 +534,7 @@ app.get('/sitemap.xml', async (_req, res) => {
     updatedAt?: string | null;
     hasTranslation?: boolean;
     brokenContent?: boolean;
+    seoRobots?: string | null;
   };
   const sayfalar: SitemapPage[] = [];
   const haberler: { language: string; slug: string; date?: string }[] = [];
@@ -563,8 +564,22 @@ app.get('/sitemap.xml', async (_req, res) => {
     return `  <url>\n    <loc>${xmlEscape(SITE_ADRESI + path)}</loc>${lastmod ? `\n    <lastmod>${xmlEscape(lastmod.slice(0, 10))}</lastmod>` : ''}${links}\n  </url>`;
   };
 
+  /**
+   * Site haritası, arama motoruna "bu adresleri dizine al" der. Sayfanın
+   * kendisi "noindex" diyorsa bu iki sinyal çelişir ve arama konsolunda
+   * hata olarak raporlanır.
+   *
+   * Daha önce filtre yalnızca brokenContent bayrağına bakıyordu. O bayrak
+   * aynı emekli sayfanın Türkçesinde işaretliyken İngilizcesinde işaretli
+   * değildi; sonuçta üç İngilizce adres hem site haritasında yer alıyor hem
+   * "noindex" taşıyordu. Ölçüt artık sayfanın kendi robots yönergesi —
+   * hangi nedenle konmuş olursa olsun tutarlılık garanti altına alınır.
+   */
+  const dizineKapali = (page: SitemapPage) =>
+    (page.seoRobots ?? '').toLowerCase().includes('noindex');
+
   const sayfaEtiketleri = sayfalar
-    .filter((page) => page.slug !== 'home' && !page.brokenContent)
+    .filter((page) => page.slug !== 'home' && !page.brokenContent && !dizineKapali(page))
     .map((page) => {
       const path = `/${page.language}/${page.slug}`;
       const alternate = page.hasTranslation ? (page.language === 'tr' ? 'en' : 'tr') : undefined;
