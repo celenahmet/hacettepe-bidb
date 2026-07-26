@@ -658,21 +658,45 @@ app.use(
 /**
  * Serve static files from /browser
  */
+/**
+ * Angular'ın ürettiği paketler adlarında içerik hash'i taşır
+ * (main-K3GW6QRP.js, styles-QGBFNQSO.css). İçerik değişince ad da değişir;
+ * bu yüzden süresiz önbelleğe alınabilirler.
+ */
+const ICERIK_HASHLI = /-[A-Z0-9]{6,10}\.(js|css)$/;
+
+/** "tamamlayici*.css" paketleri sabit adla sunulur (bkz. gerekliStilAnahtarlari). */
+const TAMAMLAYICI_STIL = /[/\\]tamamlayici[^/\\]*\.css$/;
+
 app.use(
   express.static(browserDistFolder, {
-    maxAge: '1y',
     index: false,
     redirect: false,
     setHeaders: (res, dosyaYolu) => {
-      // "tamamlayici*.css" paketleri (bkz. gerekliStilAnahtarlari) içerik
-      // hash'i OLMAYAN sabit adlarla sunulur — her derlemede aynı URL farklı
-      // içerik taşıyabilir. 1 yıllık agresif önbellek burada bir düzeltmenin
-      // kullanıcılara HİÇ ulaşmamasına yol açar (tarayıcı hiç yeniden
-      // istemez). ETag ile her zaman doğrulama yapılsın diye kısa tutulur;
-      // içerik değişmediyse sunucu yine de hızlı bir 304 döner.
-      if (/[/\\]tamamlayici[^/\\]*\.css$/.test(dosyaYolu)) {
+      if (TAMAMLAYICI_STIL.test(dosyaYolu)) {
+        // Sabit adlı olduğundan aynı adres her derlemede farklı içerik
+        // taşıyabilir. Uzun önbellek burada bir düzeltmenin kullanıcıya HİÇ
+        // ulaşmamasına yol açardı; ETag ile her zaman doğrulanır, içerik
+        // değişmediyse hızlı bir 304 döner.
         res.setHeader('Cache-Control', 'no-cache');
+        return;
       }
+      if (ICERIK_HASHLI.test(dosyaYolu)) {
+        // Adı içeriğe bağlı; içerik değişirse adres de değişir. "immutable",
+        // tarayıcının sayfa yenilemede bile yeniden doğrulama yapmasını önler.
+        res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+        return;
+      }
+      // Geri kalan her şey — logo, favicon, görseller, aktarılan belgeler,
+      // manifest — SABİT adla sunulur. Daha önce hepsi 1 yıl önbelleğe
+      // alınıyordu: kurumsal logo güncellense ya da bir form/yönerge aynı
+      // adla yenilense, o dosyayı bir kez indirmiş ziyaretçi bir yıl boyunca
+      // eskisini görmeyi sürdürürdü. Bir günlük tazelik + bir haftalık
+      // arka planda tazeleme, güncellemenin makul sürede ulaşmasını sağlar
+      // ve pratikte ölçülebilir bir hız kaybı getirmez (değişmemiş dosya
+      // için yanıt 304'tür). Panelden yüklenen belgelerin sunulduğu
+      // /dosyalar ara katmanı da zaten bir günlük tazelik kullanıyor.
+      res.setHeader('Cache-Control', 'public, max-age=86400, stale-while-revalidate=604800');
     },
   }),
 );
