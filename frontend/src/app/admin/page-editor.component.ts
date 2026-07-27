@@ -256,6 +256,7 @@ export class PageEditorComponent {
 
   protected deleteDocument(b: AdminDocument): void {
     if (!b.id) { this.documents.update((l) => l.filter((x) => x !== b)); return; }
+    if (!confirm(`"${b.name}" belgesi silinecek. Onaylıyor musunuz?`)) return;
     this.api.deleteDocument(b.id).subscribe({
       next: () => { this.documents.update((l) => l.filter((x) => x !== b)); this.bildir('Belge silindi.'); },
       error: () => this.bildir('Silinemedi.')

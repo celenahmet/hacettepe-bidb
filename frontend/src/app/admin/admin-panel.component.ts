@@ -1711,6 +1711,7 @@ export class AdminPanelComponent {
 
   protected deleteNews(d: AdminNews): void {
     if (!d.id) return;
+    if (!confirm(`"${d.title}" duyurusu silinecek. Onaylıyor musunuz?`)) return;
     this.api.deleteNews(d.id).subscribe({
       next: () => {
         this.news.update((liste) => liste.filter((x) => x.id !== d.id));
@@ -1766,6 +1767,7 @@ export class AdminPanelComponent {
 
   protected deleteSlide(s: Slide): void {
     if (!s.id) return;
+    if (!confirm(`"${s.title || 'Başlıksız slayt'}" slaytı silinecek. Onaylıyor musunuz?`)) return;
     this.api.deleteSlide(s.id).subscribe({
       next: () => { this.slides.update((l) => l.filter((x) => x.id !== s.id)); this.mesaj('Slayt silindi.'); },
       error: () => this.mesaj('Silinemedi.')
@@ -1792,6 +1794,7 @@ export class AdminPanelComponent {
 
   protected deleteShortcut(k: Shortcut): void {
     if (!k.id) return;
+    if (!confirm(`"${k.name}" kısayolu silinecek. Onaylıyor musunuz?`)) return;
     this.api.deleteShortcut(k.id).subscribe({
       next: () => { this.shortcuts.update((l) => l.filter((x) => x.id !== k.id)); this.mesaj('Kısayol silindi.'); },
       error: () => this.mesaj('Silinemedi.')
@@ -1826,6 +1829,7 @@ export class AdminPanelComponent {
 
   protected ogeSil(o: AdminMenuItem): void {
     if (!o.id) return;
+    if (!confirm(`"${o.label}" bağlantısı menüden silinecek. Onaylıyor musunuz?`)) return;
     this.api.deleteMenuItem(o.id).subscribe({
       next: () => { this.sekmeMenu(); this.mesaj('Bağlantı silindi.'); },
       error: () => this.mesaj('Silinemedi.')
@@ -1857,6 +1861,7 @@ export class AdminPanelComponent {
 
   protected deleteSocialAccount(s: AdminSocialAccount): void {
     if (!s.id) return;
+    if (!confirm('Sosyal medya hesabı silinecek. Onaylıyor musunuz?')) return;
     this.api.deleteSocialAccount(s.id).subscribe({
       next: () => { this.socialAccounts.update((l) => l.filter((x) => x.id !== s.id)); this.mesaj('Hesap silindi.'); },
       error: () => this.mesaj('Silinemedi.')
@@ -1884,6 +1889,15 @@ export class AdminPanelComponent {
   }
 
   protected bolumSil(m: AdminMenu): void {
+    // Bölüm silinince İÇİNDEKİ BAĞLANTILAR DA gider (menu_item.menu_id yabancı
+    // anahtarı CASCADE). Sayı uyarıda açıkça yazılır; tek tıkla bütün bir
+    // gezinme bölümünün kaybolması, kullanıcının bilmeden onaylayacağı bir şey
+    // olmamalı.
+    const sayi = m.items?.length ?? 0;
+    const uyari = sayi
+      ? `"${m.title}" menü bölümü ve içindeki ${sayi} bağlantı silinecek. Onaylıyor musunuz?`
+      : `"${m.title}" menü bölümü silinecek. Onaylıyor musunuz?`;
+    if (!confirm(uyari)) return;
     this.api.deleteMenuSection(m.id).subscribe({
       next: () => { this.sekmeMenu(); this.mesaj('Menü bölümü silindi.'); },
       error: () => this.mesaj('Silinemedi.')
@@ -2073,6 +2087,7 @@ export class AdminPanelComponent {
 
   protected kanalSil(k: ContactChannel): void {
     if (!k.id) return;
+    if (!confirm(`"${k.label || 'Bu iletişim kaydı'}" silinecek. Onaylıyor musunuz?`)) return;
     this.api.deleteContactChannel(k.id).subscribe({
       next: () => { this.kanallar.update((l) => l.filter((x) => x.id !== k.id)); this.mesaj('Kayıt silindi.'); },
       error: () => this.mesaj('Silinemedi.')
