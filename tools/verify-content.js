@@ -54,7 +54,14 @@ const BILINCLI_SAPMA = {
   "tr/e-signature-unit-officers": "E-imza alt sisteminden birebir alındı (eimza/*.php)",
   "tr/e-signature-faq": "E-imza alt sisteminden birebir alındı (eimza/*.php)",
   "tr/staff": "Yapısal veriye taşındı — node tools/personel-denetim.js ile denetlenir",
-  "tr/wireless": "V33 migration ile eduroam açıklaması eklendi (kurum kararı, dokümante edilmiş)"
+  "tr/wireless": "V33 migration ile eduroam açıklaması eklendi (kurum kararı, dokümante edilmiş)",
+  // Tek fark bir marka adının yazımı: kaynakta "Macos", bizde "MacOS".
+  // Uzunluk birebir aynı (1327 karakter), anlam değişmiyor. 781107d
+  // ("proxy kartlarının marka ikonlarını düzelt") ile bilerek düzeltildi.
+  // Kayda geçiriliyor: aksi hâlde denetim her çalıştığında açıklamasız bir
+  // FARKLI satırı üretiyor ve bu listenin var olma sebebi olan "acaba
+  // bozuldu mu?" sorusunu her seferinde yeniden doğuruyordu.
+  "tr/proxy": "Marka adı yazımı düzeltildi: Macos -> MacOS (781107d)"
 };
 
 const ORIGIN = "https://bidb.hacettepe.edu.tr";
