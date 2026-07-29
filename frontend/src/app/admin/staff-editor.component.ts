@@ -203,7 +203,12 @@ export class StaffEditorComponent {
 
   protected yukle(): void {
     if (!this.yenileSiniri()) return;
-    this.api.staffUnits().subscribe((liste) => this.birimler.set(liste));
+    this.api.staffUnits().subscribe({
+      next: (liste) => this.birimler.set(liste),
+      // Liste alınamadığında ekran boş kalıyor ve boş birim listesiyle
+      // ayırt edilemiyordu; sebebi söylenmeli.
+      error: () => this.bildir('Personel listesi alınamadı.')
+    });
   }
 
   protected kisiBirimAdi(): string {
@@ -240,7 +245,13 @@ export class StaffEditorComponent {
       ? `"${b.name}" birimi ve içindeki ${sayi} kişi silinecek. Onaylıyor musunuz?`
       : `"${b.name}" birimi silinecek. Onaylıyor musunuz?`;
     if (!confirm(uyari)) return;
-    this.api.deleteStaffUnit(b.id!).subscribe(() => { this.bildir('Birim silindi.'); this.yukle(); });
+    // Hata dalı olmadan istek başarısız olduğunda HİÇBİR ŞEY olmuyordu: next
+    // çalışmadığı için ne mesaj çıkıyor ne liste tazeleniyordu. Kullanıcı
+    // onaylıyor, kayıt listede duruyor ve nedeni söylenmiyordu.
+    this.api.deleteStaffUnit(b.id!).subscribe({
+      next: () => { this.bildir('Birim silindi.'); this.yukle(); },
+      error: () => this.bildir('Birim silinemedi.')
+    });
   }
 
   /* ---- kişi ---- */
@@ -277,7 +288,10 @@ export class StaffEditorComponent {
 
   protected kisiSil(k: StaffMember): void {
     if (!confirm(`"${k.fullName}" listeden silinecek. Onaylıyor musunuz?`)) return;
-    this.api.deleteStaffMember(k.id!).subscribe(() => { this.bildir('Kişi silindi.'); this.yukle(); });
+    this.api.deleteStaffMember(k.id!).subscribe({
+      next: () => { this.bildir('Kişi silindi.'); this.yukle(); },
+      error: () => this.bildir('Kişi silinemedi.')
+    });
   }
 
   /** Seçilen fotoğraf yüklenir ve adresi forma yazılır. */
@@ -295,7 +309,10 @@ export class StaffEditorComponent {
   /* ---- sıralama ---- */
 
   protected tasi(tur: 'units' | 'members', id: number, yon: 'up' | 'down'): void {
-    this.api.moveStaff(tur, id, yon).subscribe(() => this.yukle());
+    this.api.moveStaff(tur, id, yon).subscribe({
+      next: () => this.yukle(),
+      error: () => this.bildir('Sıra değiştirilemedi.')
+    });
   }
 
   private bildir(metin: string): void {
