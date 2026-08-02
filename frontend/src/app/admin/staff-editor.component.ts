@@ -133,6 +133,14 @@ import { tiklamaSinirlayici } from './tiklama-siniri';
       <section class="menu-bolum">
         <h2>
           {{ b.name }}
+          <!-- Dil göstergesi: uç nokta iki dilin birimlerini TEK listede
+               döndürüyor (16 tr + 16 en) ve İngilizce olanlar başta sıralanıyor.
+               Panelin diğer bütün bölümleri dili gösteriyor - Sayfalar,
+               Duyurular, Slider, Sosyal Medya ve Kısayollar birer sütunla,
+               Menüler başlıkta. Personel tek istisnaydı: iki dil yan yana
+               duruyor ama hangisinin hangi dil olduğunu söyleyen hiçbir şey
+               yoktu, bu yüzden bölüm "İngilizceye dönmüş" gibi görünüyordu. -->
+          <small class="birim-dil">{{ b.language }}</small>
           @if (b.campus) { <small>({{ b.campus }})</small> }
           @if (b.phone) { <small>· {{ b.phone }}</small> }
           @if (!b.published) { <small>· yayımda değil</small> }

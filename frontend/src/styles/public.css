@@ -742,10 +742,18 @@
     /* Üst menü panele dönüşür; düğmeyle açılır.
        Eski kural dar ekranda başlığı dikey diziyordu; logo ve menü düğmesi
        aynı satırda kalmalı. */
+    /* nowrap: wrap iken marka bloğu satıra sığmadığında dil + menü grubu
+       ALT SATIRA düşüyordu. Ölçüldü: 320, 360 ve 430px'te başlık iki satır
+       oluyor (kapsayıcı 113/133px, tek satırda 65px). 390px'te tesadüfen
+       sığıyordu, bu yüzden kusur her ölçüde görünmüyordu.
+
+       Sarma kapatılınca marka bloğu daralır ve yazısı kendi içinde alt
+       satıra iner; dil seçimi ile menü düğmesi her genişlikte sağ üstte,
+       markayla aynı satırda kalır. */
     .ust-ic {
       display: flex;
       flex-direction: row;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       align-items: center;
       justify-content: space-between;
       min-height: 0;

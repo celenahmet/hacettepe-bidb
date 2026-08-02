@@ -1039,6 +1039,22 @@
     border-bottom: 1px solid var(--cizgi);
   }
 
+  /* Personel biriminin dil etiketi. Başlıktaki diğer küçük notlardan
+     (yerleşke, telefon) ayrılsın diye rozet biçiminde. */
+  .birim-dil {
+    display: inline-block;
+    margin-inline-start: var(--bosluk-2);
+    padding: 1px 6px;
+    border: 1px solid var(--cizgi);
+    border-radius: 2px;
+    background: var(--zemin);
+    color: var(--metin-3);
+    font-family: var(--yazi-kod);
+    font-size: var(--olcu-xs);
+    text-transform: uppercase;
+    vertical-align: middle;
+  }
+
 
   /* ---- personel: fotoğraf alanları ----
      Fotoğraf burada bir önizlemedir; listede satır yüksekliğini bozmaması
