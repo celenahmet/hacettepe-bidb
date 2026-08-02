@@ -126,12 +126,29 @@ node tools/menu-denetim.js      # menü kaynakla birebir
 node tools/son-kontrol.js       # 30 maddelik yayına hazırlık
 ```
 
+Tasarım değişikliğinden sonra ayrıca:
+
+```bash
+node tools/hizalama-denetim.js         # ızgaraların sütun ekseni kayık mı
+node tools/hizalama-denetim.js --kanit # aracın gerçekten ölçtüğünü doğrular
+```
+
+Bu araç çalışan siteye ve `--remote-debugging-port=9222` ile açılmış bir
+Chrome'a ihtiyaç duyar; ölçümü gerçek tarayıcıda yapar, çünkü sütun
+genişliği CSS'in yanı sıra yazı tipine ve içeriğe de bağlıdır.
+
 `eksik-denetim.js` yalnızca durum koduna değil **içerik türüne** de bakar:
 200 dönen bir yanıtın doğru dosya olduğunu varsayma.
 
 **Denetimler her şeyi yakalamaz.** "200 OK ama görsel bozuk" hatası bu
 projede iki kez çıktı. Yapısal değişiklikten sonra **ekran görüntüsüyle de
 bak.**
+
+**Bir denetimin "temiz" demesi, denetimin çalıştığı anlamına gelmez.** Bu
+oturumda bir kontrast ölçeri her oranı `NaN` üretiyordu, yani hiçbir zaman
+bulgu veremezdi ve "temiz" raporluyordu. Bu yüzden `hizalama-denetim.js`
+bilinen bir kusuru enjekte edip yakalayıp yakalamadığını gösteren bir
+`--kanit` moduyla geliyor. Yeni bir denetim yazarken aynısını yap.
 
 ---
 
