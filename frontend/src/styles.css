@@ -371,7 +371,19 @@
 
   /* ---------- yönetim paneli ---------- */
 
-  .yonetim { padding-top: 34px; padding-bottom: 54px; }
+  /* .yonetim'in dış boşluğu KALDIRILDI (eskiden padding 34px/54px).
+
+     Bu kural, panelin admin.css'ten önceki tek sütunlu düzeninden kalmaydı.
+     Bugünkü düzende panelin kendi boşlukları .ray ve .calisma-ust içinde;
+     dıştaki dolgu bir şeyi hizalamıyor, yalnızca yukarı itiyordu.
+
+     Görünen sonucu: giriş ekranı tam ekran arka planıyla 0'dan değil 34'ten
+     başlıyordu, üstte içeriksiz beyaz bir şerit kalıyordu. Ayrıca ekran 950px
+     iken belge 1038px olduğu için giriş ekranı gereksiz yere 88px kayıyordu.
+
+     Ölçüldü: kaldırılınca giriş ekranı ust=0 ve dikey kaydırma 0; girişli
+     panelde .calisma-ust ve .ray zaten 0'da olduğu için düzen değişmiyor,
+     yalnızca aynı 88px ölü kaydırma gidiyor. */
   .yonetim h1 { font-size: 1.5rem; color: var(--lacivert); margin: 0 0 20px; }
 
   .giris { max-width: 380px; display: grid; gap: 6px; }

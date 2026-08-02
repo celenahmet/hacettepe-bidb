@@ -82,6 +82,11 @@ interface MobileMenuItem {
                 <strong>HÜ BİDB</strong>
                 <span>{{ dilServisi.t('yonetimPaneli') }}</span>
               </span>
+              <!-- İki düğme kendi satırında toplanır. Ray 236px ve başlık iki
+                   satır olduğu için hepsi tek satıra sığmıyordu; flex sarması
+                   düğmeleri rastgele dağıtıyordu (EN üstte sağda, erişilebilirlik
+                   altta solda). Sarmalayıcı, ikisini birlikte ve sağa hizalı tutar. -->
+              <span class="ray-tepe-araclar">
               <button type="button" class="dil-degistir" (click)="dilDegistir()"
                       [attr.aria-label]="dilServisi.dil() === 'tr' ? 'Switch to English' : 'Türkçeye geç'">
                 {{ dilServisi.dil() === 'tr' ? 'EN' : 'TR' }}
@@ -96,6 +101,7 @@ interface MobileMenuItem {
                   <path d="M4 8.5c3 1 13 1 16 0M12 8v13M8 21l2-6h4l2 6M9 13h6"/>
                 </svg>
               </button>
+              </span>
             </div>
 
             <div class="ray-liste">
