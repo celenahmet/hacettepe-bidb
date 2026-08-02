@@ -202,6 +202,44 @@ export interface StaffMember {
   sortOrder: number;
 }
 
+/** Kurumsal e-posta yapılandırması. Parola alanı BİLEREK yoktur. */
+export interface MailSetting {
+  host: string | null;
+  port: number | null;
+  username: string | null;
+  fromAddress: string | null;
+  fromName: string | null;
+  securityMode: 'NONE' | 'STARTTLS' | 'SSL';
+  enabled: boolean;
+  updatedAt: string | null;
+  updatedBy: string | null;
+  /** Ortam değişkenindeki SMTP parolası tanımlı mı; değerin kendisi gelmez. */
+  passwordDefined: boolean;
+  /** Gönderim neden yapılamıyor; null ise engel yok. */
+  blockingIssue: string | null;
+}
+
+export interface MailSettingForm {
+  host: string | null;
+  port: number | null;
+  username: string | null;
+  fromAddress: string | null;
+  fromName: string | null;
+  securityMode: string;
+  enabled: boolean;
+}
+
+/** Gönderim günlüğü kaydı. İleti gövdesi saklanmaz, burada da yoktur. */
+export interface MailLogEntry {
+  id: number;
+  createdAt: string;
+  toAddress: string;
+  subject: string;
+  purpose: 'PAROLA_SIFIRLAMA' | 'TALEP_BILDIRIM' | 'SINAMA';
+  status: 'SENT' | 'FAILED' | 'SKIPPED';
+  errorMessage: string | null;
+}
+
 export interface StaffUnit {
   id: number | null;
   language: string;
@@ -640,6 +678,28 @@ export class AdminApiService {
       adminNote: ticket.adminNote,
       eventNote
     }, { headers: this.basliklar() });
+  }
+
+  /* ---------- e-posta ----------
+     PAROLA BU UÇLARDA YOKTUR: ne gönderilir ne de alınır. Sunucu parolayı
+     yalnızca ortam değişkeninden okur; buraya gelen tek bilgi
+     passwordDefined ikilisidir. */
+
+  mailSettings(): Observable<MailSetting> {
+    return this.http.get<MailSetting>('/api/admin/mail/settings', { headers: this.basliklar() });
+  }
+
+  saveMailSettings(a: MailSettingForm): Observable<MailSetting> {
+    return this.http.put<MailSetting>('/api/admin/mail/settings', a, { headers: this.basliklar() });
+  }
+
+  mailLog(): Observable<MailLogEntry[]> {
+    return this.http.get<MailLogEntry[]>('/api/admin/mail/log', { headers: this.basliklar() });
+  }
+
+  sendTestMail(): Observable<string> {
+    return this.http.post('/api/admin/mail/test', {},
+      { headers: this.basliklar(), responseType: 'text' });
   }
 
   /* ---------- personel ---------- */

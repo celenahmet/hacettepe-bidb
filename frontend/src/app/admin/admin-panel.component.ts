@@ -1,6 +1,7 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { MailAdminComponent } from './mail-admin.component';
 import { PageEditorComponent } from './page-editor.component';
 import { LoginEventsAdminComponent } from './login-events-admin.component';
 import { AuditLogAdminComponent } from './audit-log-admin.component';
@@ -24,7 +25,7 @@ interface ContactInfo extends Record<string, string> {
 
 type AdminTab = 'analytics' | 'quality' | 'pages' | 'news' | 'slider' |
   'shortcuts' | 'menus' | 'sosyal' | 'iletisim' | 'tickets' | 'personel' | 'hakkinda' |
-  'girisKayitlari' | 'islemGunlugu';
+  'girisKayitlari' | 'islemGunlugu' | 'eposta';
 interface MobileMenuItem {
   tab: AdminTab;
   label: string;
@@ -34,7 +35,7 @@ interface MobileMenuItem {
 /** Yönetim paneli: giriş, sayfa SEO düzenleme ve duyuru yönetimi. */
 @Component({
   selector: 'bidb-admin-panel',
-  imports: [FormsModule, PageEditorComponent, StaffEditorComponent, NewsCoverComponent, ContactTicketAdminComponent, LoginEventsAdminComponent, AuditLogAdminComponent, AccessibilityMenuComponent],
+  imports: [FormsModule, PageEditorComponent, StaffEditorComponent, NewsCoverComponent, ContactTicketAdminComponent, LoginEventsAdminComponent, AuditLogAdminComponent, MailAdminComponent, AccessibilityMenuComponent],
   template: `
     <div class="yonetim">
       @if (!api.girisYapildi()) {
@@ -153,20 +154,24 @@ interface MobileMenuItem {
             <span class="no">10</span>
             <span>{{ dilServisi.t('bolumTalepler') }}</span>
           </button>
-          <button type="button" [class.etkin]="sekme() === 'personel'" (click)="sekme.set('personel')">
+          <button type="button" [class.etkin]="sekme() === 'eposta'" (click)="sekme.set('eposta')">
             <span class="no">11</span>
+            <span>{{ dilServisi.t('bolumEposta') }}</span>
+          </button>
+          <button type="button" [class.etkin]="sekme() === 'personel'" (click)="sekme.set('personel')">
+            <span class="no">12</span>
             <span>{{ dilServisi.t('bolumPersonel') }}</span>
           </button>
           <button type="button" [class.etkin]="sekme() === 'islemGunlugu'" (click)="sekme.set('islemGunlugu')">
-            <span class="no">12</span>
+            <span class="no">13</span>
             <span>{{ dilServisi.t('bolumIslemGunlugu') }}</span>
           </button>
           <button type="button" [class.etkin]="sekme() === 'girisKayitlari'" (click)="sekme.set('girisKayitlari')">
-            <span class="no">13</span>
+            <span class="no">14</span>
             <span>{{ dilServisi.t('bolumGuvenlik') }}</span>
           </button>
           <button type="button" [class.etkin]="sekme() === 'hakkinda'" (click)="sekme.set('hakkinda')">
-            <span class="no">14</span>
+            <span class="no">15</span>
             <span>{{ dilServisi.t('bolumHakkinda') }}</span>
           </button>
 
@@ -1141,6 +1146,8 @@ interface MobileMenuItem {
             </table>
 
           </div>
+        } @else if (sekme() === 'eposta') {
+          <bidb-mail-admin></bidb-mail-admin>
         } @else if (sekme() === 'tickets') {
           <bidb-contact-ticket-admin></bidb-contact-ticket-admin>
         } @else if (sekme() === 'personel') {
@@ -1344,10 +1351,13 @@ export class AdminPanelComponent {
     sosyal: { no: '08', ad: 'Sosyal Medya' },
     iletisim: { no: '09', ad: 'İletişim Bilgileri' },
     tickets: { no: '10', ad: 'İletişim Talepleri' },
-    personel: { no: '11', ad: 'Personel' },
-    islemGunlugu: { no: '12', ad: 'İşlem Günlüğü' },
-    girisKayitlari: { no: '13', ad: 'Güvenlik Kayıtları' },
-    hakkinda: { no: '14', ad: 'Yazılım Hakkında' }
+    /* E-Posta bilerek SONA konmadı: iletişim grubunun devamı ve
+       kullanımı sık. Sonrakilerin numarası bir kaydı. */
+    eposta: { no: '11', ad: 'E-Posta' },
+    personel: { no: '12', ad: 'Personel' },
+    islemGunlugu: { no: '13', ad: 'İşlem Günlüğü' },
+    girisKayitlari: { no: '14', ad: 'Güvenlik Kayıtları' },
+    hakkinda: { no: '15', ad: 'Yazılım Hakkında' }
   };
 
   protected bolumNo(): string {
