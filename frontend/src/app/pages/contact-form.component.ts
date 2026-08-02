@@ -77,6 +77,11 @@ interface TicketResponse {
             <label>
               <span>{{ dilDegeri === 'en' ? 'Category' : 'Kategori' }} <b class="zorunlu-isaret" aria-hidden="true">*</b></span>
               <select name="category" #categoryAlani="ngModel" [(ngModel)]="form.category" required>
+                <!-- Boş seçenek olmadan bu alan hiç geçersiz olamıyordu: öntanımlı
+                     GENERAL geldiği için required hiç ihlal edilmiyor, altındaki
+                     "Kategori seçin." uyarısı hiç görünemiyor ve etiketteki yıldız
+                     kullanıcının doldurması gereken bir şeyi işaret etmiyordu. -->
+                <option value="">{{ dilDegeri === 'en' ? 'Select a category' : 'Kategori seçin' }}</option>
                 @for (item of kategoriler; track item.key) {
                   <option [value]="item.key">{{ dilDegeri === 'en' ? item.en : item.tr }}</option>
                 }
@@ -384,6 +389,9 @@ export class ContactFormComponent {
   }
 
   private bosForm(): TicketForm {
-    return { category: 'GENERAL', subject: '', firstName: '', lastName: '', email: '', phone: '', message: '', website: '' };
+    // category boş başlar: talebin hangi birime düşeceğini öntanımlı bir değer
+    // değil, kullanıcı belirlesin. Öntanımlı GENERAL'de düşünmeden geçilen her
+    // talep "genel" olarak kaydoluyordu.
+    return { category: '', subject: '', firstName: '', lastName: '', email: '', phone: '', message: '', website: '' };
   }
 }
