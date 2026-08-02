@@ -217,6 +217,29 @@ Her biri gerçekten yaşandı. Yeni bir ajan aynı tuzağa düşmesin:
 
 ---
 
+## 6b. KAYNAKTAN BİLİNÇLİ SAPMALAR
+
+Aktarımın kuralı "kaynak metin birebir korunur". Aşağıdakiler kurum
+kararıyla bu kuralın DIŞINDA bırakılmıştır. Buraya yazılmalarının sebebi:
+aksi hâlde bir sonraki denetim bunları "bozulmuş" diye işaretler ve aynı
+soru her seferinde yeniden doğar.
+
+Sayfa METİNLERİNDEKİ sapmalar `tools/verify-content.js` içindeki
+`BILINCLI_SAPMA` listesinde tutulur. Aşağıdakiler sayfa metni değil,
+yapısal veridir; o listeye girmezler.
+
+| Sapma | Nerede | Gerekçe |
+|---|---|---|
+| Portal, servis listesinde 2. sırada | Ana sayfa kartları + üst menüdeki "Hizmetlerimiz" | Kaynakta EN SONDA (V68 ile oraya döndürülmüştü). En çok kullanılan giriş noktası olduğu için kurum tercihiyle öne alındı — V69. |
+
+Servis sırası **iki yüzeyi birden** etkiler ve bu bilinçlidir: ana sayfa
+kartları ile üst menüdeki açılır liste aynı kayıtlardan üretilir
+(`header.component.ts`, `anaSayfa.services`). Ayrı sıralamak menüye özel
+bir sıra alanı gerektirirdi; iki yüzeyin aynı sırayı göstermesi kullanıcı
+açısından da tutarlı olduğu için tercih edilmedi.
+
+---
+
 ## 7. İNGİLİZCE ÇEVİRİ — ERTELENDİ (kapsam kararlaştırıldı)
 
 **DURUM: Tasarım işleri bitene kadar başlanmayacak.**
