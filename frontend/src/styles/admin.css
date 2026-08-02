@@ -401,6 +401,14 @@
     font-size: var(--olcu-sm);
   }
 
+  /* .bilgi yeşil zeminlidir, yani "işlem başarılı" der. Veri kaybı uyarısı
+     bu görünümü alamaz: aynı kutunun uyarı hâli ayrı renkle işaretlenir. */
+  .yonetim .bilgi.uyari {
+    border-left-color: var(--uyari);
+    background: #fdf6e6;
+    color: #6b4a00;
+  }
+
   .yonetim label {
     display: block;
     margin: var(--bosluk-4) 0 var(--bosluk-2);

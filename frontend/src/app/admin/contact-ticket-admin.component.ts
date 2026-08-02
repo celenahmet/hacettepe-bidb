@@ -206,7 +206,15 @@ export class ContactTicketAdminComponent implements OnInit {
     this.secili.set({ ...ticket });
     this.mesaj.set('');
     this.islemNotu = '';
-    this.api.contactTicketEvents(ticket.id).subscribe(events => this.olaylar.set(events));
+    /* Talep listesi detay açıkken de tıklanabilir olduğu için bir talepten
+       diğerine geçilebiliyor. Geçmiş önce boşaltılmazsa ve yeni okuma
+       başarısız olursa, ÖNCEKİ talebin işlem geçmişi yeni talebin altında
+       görünür — yönetici yanlış talebin kaydını okuyup ona göre işlem yapar. */
+    this.olaylar.set([]);
+    this.api.contactTicketEvents(ticket.id).subscribe({
+      next: events => this.olaylar.set(events),
+      error: () => this.mesaj.set('İşlem geçmişi alınamadı.')
+    });
   }
 
   protected kapat(): void { this.secili.set(null); this.olaylar.set([]); }

@@ -38,6 +38,13 @@ import { disaBaglantilariGuvenceyeAl } from '../core/icerik-bicim';
           Her kayıtta önceki hâl sürüm geçmişine eklenir.
         </p>
 
+        @if (metinOkunamadi()) {
+          <p class="bilgi uyari" role="alert">
+            Sayfa metni sunucudan okunamadı. Aşağıdaki kutu bu sayfanın içeriği DEĞİL.
+            Yayınlama, içeriğin boşla ezilmemesi için kapatıldı.
+          </p>
+        }
+
         <label for="metin">Sayfa metni</label>
         <textarea id="metin" name="metin" rows="18" class="kod"
                   [ngModel]="metin()" (ngModelChange)="metin.set($event)"></textarea>
@@ -47,9 +54,11 @@ import { disaBaglantilariGuvenceyeAl } from '../core/icerik-bicim';
                placeholder="örn. telefon numarası güncellendi">
 
         <span class="dugmeler">
-          <button type="button" class="ikincil" (click)="onizle()">Önizle</button>
-          <button type="button" (click)="yayinla()" [disabled]="!onizlendi()">Yayınla</button>
-          @if (!onizlendi()) { <small>Yayınlamak için önce önizleyin.</small> }
+          <button type="button" class="ikincil" (click)="onizle()"
+                  [disabled]="metinOkunamadi()">Önizle</button>
+          <button type="button" (click)="yayinla()"
+                  [disabled]="!onizlendi() || metinOkunamadi()">Yayınla</button>
+          @if (!onizlendi() && !metinOkunamadi()) { <small>Yayınlamak için önce önizleyin.</small> }
         </span>
 
         @if (onizleme(); as o) {
@@ -159,6 +168,8 @@ export class PageEditorComponent {
   protected mesaj = signal('');
 
   protected metin = signal('');
+  /* Sayfa metni okunamadıysa yayınlama KAPATILIR — bkz. ngOnInit */
+  protected metinOkunamadi = signal(false);
   protected not = signal('');
   protected onizleme = signal<SafeHtml | null>(null);
   protected onizlendi = signal(false);
@@ -174,8 +185,20 @@ export class PageEditorComponent {
     const s = this.sayfa();
     this.yeniBaslik.set(s.title);
     this.yeniSlug.set(s.slug);
-    // Liste görünümünde içerik gelmediği için sayfa ayrıca okunur
-    this.api.fullPage(s.language, s.slug).subscribe((tam) => this.metin.set(tam?.contentHtml ?? ''));
+    /* Liste görünümünde içerik gelmediği için sayfa ayrıca okunur.
+
+       Bu çağrı başarısız olursa metin kutusu BOŞ kalır — sayfanın gerçekten
+       içeriği yokmuş gibi görünür. Yayınla denirse boş metin kaydedilir ve
+       sayfanın tüm içeriği silinir. Bu yüzden hata yalnızca bildirilmiyor,
+       yayınlama da kapatılıyor: kullanıcının okumadığı bir uyarı, içeriği
+       kurtarmaya yetmez. */
+    this.api.fullPage(s.language, s.slug).subscribe({
+      next: (tam) => this.metin.set(tam?.contentHtml ?? ''),
+      error: () => {
+        this.metinOkunamadi.set(true);
+        this.bildir('Sayfa metni okunamadı. Yayınlama kapatıldı; düzenlemeyi kapatıp yeniden açın.');
+      }
+    });
   }
 
   /** 2026-07-21T20:54:59Z -> 21.07.2026 20:54 */
@@ -200,6 +223,9 @@ export class PageEditorComponent {
   }
 
   protected yayinla(): void {
+    // Düğme zaten kapalı; buradaki kontrol, metin okunamamışken hiçbir yoldan
+    // boş içerik kaydedilememesi içindir.
+    if (this.metinOkunamadi()) return;
     this.api.saveContent(this.sayfa().id, {
       title: this.yeniBaslik(),
       contentHtml: this.metin(),
@@ -236,7 +262,13 @@ export class PageEditorComponent {
 
   protected belgeBolumu(): void {
     this.bolum.set('belge');
-    this.api.documents(this.sayfa().id).subscribe((l) => this.documents.set(l));
+    /* Liste önce boşaltılır: aksi hâlde yeniden yükleme başarısız olduğunda
+       bir önceki okumanın belgeleri ekranda kalır ve güncel sanılır. */
+    this.documents.set([]);
+    this.api.documents(this.sayfa().id).subscribe({
+      next: (l) => this.documents.set(l),
+      error: () => this.bildir('Belge listesi alınamadı. Liste eksik görünüyor olabilir.')
+    });
   }
 
   protected belgeAlan(b: AdminDocument, alan: keyof AdminDocument, value: unknown): void {
