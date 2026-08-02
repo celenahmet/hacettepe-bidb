@@ -108,7 +108,14 @@ const OLCUM = `(function () {
     ekle('başlık', e.textContent);
   });
   govde.querySelectorAll('label > span, label > strong').forEach(function (e) { ekle('etiket', e.textContent); });
-  govde.querySelectorAll('button').forEach(function (e) { ekle('düğme', e.textContent); });
+  // .ticket-satir düğmeleri VERİ ile örülüdür: talep başlığı, başvuru
+  // sahibinin adı ve tarih tek düğme metninde birleşir. Arayüz parçaları
+  // (durum, kategori) ayrıca çevrilidir; bütünü taramak, Türkçe adı olan
+  // her talebi kusur gösterirdi.
+  govde.querySelectorAll('button').forEach(function (e) {
+    if (e.closest('.ticket-satir') || e.classList.contains('ticket-satir')) return;
+    ekle('düğme', e.textContent);
+  });
   govde.querySelectorAll('th').forEach(function (e) { ekle('sütun', e.textContent); });
   govde.querySelectorAll('[placeholder]').forEach(function (e) { ekle('yer tutucu', e.getAttribute('placeholder')); });
   govde.querySelectorAll('.aciklama, .bolum-no, .kalite-bos strong, .kalite-bos p')

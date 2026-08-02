@@ -217,8 +217,8 @@ const SOZLUK: Record<string, { tr: string; en: string }> = {
   // ---- kalite / sayfalar ----
   kaliteGelistirmeAlanlari: { tr: 'Geliştirme alanları', en: 'Areas for improvement' },
   kaliteYuzdelikNot: {
-    tr: '75. yüzdelik değerler; ortalama değer kullanıcı deneyimini gizler.',
-    en: '75th percentile values; an average would conceal the actual user experience.' },
+    tr: '75. yüzdelik değerler; ortalama değer kullanıcı deneyimini gizlemez.',
+    en: '75th percentile values; an average value does not conceal the user experience.' },
   kaliteEnDusukOnce: { tr: 'En düşük puanlı kayıtlar önce gösterilir.', en: 'Lowest scoring records are shown first.' },
   sayfaIcerik: { tr: 'İçerik', en: 'Content' },
   sayfaYayinda: { tr: 'Yayında', en: 'Published' },
@@ -257,6 +257,41 @@ const SOZLUK: Record<string, { tr: string; en: string }> = {
   hakkindaNedir: { tr: 'Bu yönetim paneli nedir?', en: 'What is this admin panel?' },
   hakkindaDinamiklik: { tr: 'Menülerin ve içeriğin dinamikliği', en: 'How menus and content stay dynamic' },
   hakkindaGelistirmeNotu: { tr: 'Geliştirme notu', en: 'Development note' },
+
+  anaTanitim: {
+    tr: 'Toplam görüntüleme, aylık karşılaştırma ve son ziyaret tek raporda.',
+    en: 'Total views, monthly comparison and the latest visit in a single report.' },
+  duyuruBelgeNot: {
+    tr: 'Kart tıklandığında ayrı bir haber sayfası yerine doğrudan yüklenen belge açılır.',
+    en: 'Clicking the card opens the uploaded document directly instead of a separate news page.' },
+  duyuruOnizle: { tr: 'Önizle', en: 'Preview' },
+  duyuruYeniPencere: { tr: 'Yeni pencerede önizle', en: 'Preview in a new window' },
+  duyuruBaslikOrnek: { tr: 'Örn. Planlı sistem çalışması', en: 'e.g. Scheduled system maintenance' },
+  duyuruAdresOrnek: { tr: 'örn. yeni-eposta-sistemi', en: 'e.g. new-email-system' },
+  duyuruKapakTasarimi: { tr: 'Kapak Tasarımı', en: 'Cover Design' },
+
+  sayfaDuzenleTanitim: {
+    tr: '"Düzenle" ile sayfanın metnini, adresini ve belgelerini yönetebilir, sürüm geçmişinden eski bir hâle dönebilirsiniz.',
+    en: 'Use "Edit" to manage the page text, address and documents, and to restore an earlier version from the revision history.' },
+  girisKayitCihaz: { tr: '— cihaz, tarayıcı, IP ve tahmini konum ile.', en: '— with device, browser, IP and approximate location.' },
+  talepDurumYeni: { tr: 'Yeni', en: 'New' },
+  talepDurumIslemde: { tr: 'İşlemde', en: 'In progress' },
+  talepDurumBekliyor: { tr: 'Yanıt bekliyor', en: 'Awaiting reply' },
+  talepDurumCozuldu: { tr: 'Çözüldü', en: 'Resolved' },
+  talepDurumKapatildi: { tr: 'Kapatıldı', en: 'Closed' },
+  talepOncelikNormal: { tr: 'Normal', en: 'Normal' },
+  talepOncelikYuksek: { tr: 'Yüksek', en: 'High' },
+  talepOncelikAcil: { tr: 'Acil', en: 'Urgent' },
+
+  talepKatGenel: { tr: 'Genel bilgi', en: 'General information' },
+  talepKatTeknik: { tr: 'Teknik destek', en: 'Technical support' },
+  talepKatEposta: { tr: 'E-posta', en: 'E-mail' },
+  talepKatAg: { tr: 'Ağ ve internet', en: 'Network and internet' },
+  talepKatYazilim: { tr: 'Yazılım ve lisans', en: 'Software and licensing' },
+  talepKatEimza: { tr: 'E-imza', en: 'E-signature' },
+  talepKatGuvenlik: { tr: 'Bilgi güvenliği', en: 'Information security' },
+  talepKatWeb: { tr: 'Web hizmetleri', en: 'Web services' },
+  talepKatOneri: { tr: 'Görüş ve öneri', en: 'Feedback and suggestions' },
 
   cikisYap: { tr: 'Çıkış', en: 'Sign out' },
   menuyuAc: { tr: 'Yönetim menüsünü aç', en: 'Open admin menu' },

@@ -7,7 +7,7 @@ import { LoginEventsAdminComponent } from './login-events-admin.component';
 import { AuditLogAdminComponent } from './audit-log-admin.component';
 import { StaffEditorComponent } from './staff-editor.component';
 import { NewsCoverComponent } from '../pages/news-cover.component';
-import { AdminNews, NewsOptions, Shortcut, AdminMenuItem, AdminMenu, AdminPage, Slide, AdminSocialAccount, AdminApiService, ContactChannel, QualitySummary, QualityVitalScore, AnalyticsReport } from './admin-api.service';
+import { AdminNews, NewsOption, NewsOptions, Shortcut, AdminMenuItem, AdminMenu, AdminPage, Slide, AdminSocialAccount, AdminApiService, ContactChannel, QualitySummary, QualityVitalScore, AnalyticsReport } from './admin-api.service';
 import { ContactTicketAdminComponent } from './contact-ticket-admin.component';
 import { AdminDilServisi } from './admin-dil.service';
 import { tiklamaSinirlayici } from './tiklama-siniri';
@@ -292,7 +292,7 @@ interface MobileMenuItem {
             <section class="kalite-bolum">
               <header>
                 <div><span class="bolum-no">{{ dilServisi.t('anaIcerikPerformansi') }}</span><h2>{{ dilServisi.t('anaSayfaRapor') }}</h2></div>
-                <p>Toplam görüntüleme, aylık karşılaştırma ve son ziyaret tek raporda.</p>
+                <p>{{ dilServisi.t('anaTanitim') }}</p>
               </header>
               <div class="tablo-kaydir">
                 <table class="yonetim-tablo analitik-tablo">
@@ -368,7 +368,7 @@ interface MobileMenuItem {
                   <span class="bolum-no">Core Web Vitals</span>
                   <h2>{{ dilServisi.t('kaliteGercekOlcum') }}</h2>
                 </div>
-                <p>75. yüzdelik değerler; ortalama değer kullanıcı deneyimini gizlemez.</p>
+                <p>{{ dilServisi.t('kaliteYuzdelikNot') }}</p>
               </header>
 
               @if (q.vitals.length) {
@@ -404,7 +404,7 @@ interface MobileMenuItem {
                   <span class="bolum-no">Sayfa Denetimi</span>
                   <h2>{{ dilServisi.t('kaliteSeoKuyruk') }}</h2>
                 </div>
-                <p>En düşük puanlı kayıtlar önce gösterilir.</p>
+                <p>{{ dilServisi.t('kaliteEnDusukOnce') }}</p>
               </header>
               <div class="tablo-kaydir">
                 <table class="yonetim-tablo kalite-tablo">
@@ -441,8 +441,7 @@ interface MobileMenuItem {
           }
         } @else if (sekme() === 'pages') {
           <p class="aciklama">
-            "Düzenle" ile sayfanın metnini, adresini ve belgelerini yönetebilir,
-            sürüm geçmişinden eski bir hâle dönebilirsiniz.
+              {{ dilServisi.t('sayfaDuzenleTanitim') }}
           </p>
 
           <button type="button" (click)="yeniSayfaAc()">Yeni sayfa</button>
@@ -588,7 +587,7 @@ interface MobileMenuItem {
                   <select name="category" [ngModel]="newsItem().category"
                           (ngModelChange)="duyuruAlan('category', $event)">
                     @for (secenek of duyuruSecenekleri().categories; track secenek.key) {
-                      <option [value]="secenek.key">{{ secenek.trLabel }}</option>
+                      <option [value]="secenek.key">{{ katalogEtiketi(secenek) }}</option>
                     }
                   </select>
                   <small>{{ secenekAciklamasi('categories', newsItem().category) }}</small>
@@ -599,7 +598,7 @@ interface MobileMenuItem {
                   <select name="audience" [ngModel]="newsItem().audience"
                           (ngModelChange)="duyuruAlan('audience', $event)">
                     @for (secenek of duyuruSecenekleri().audiences; track secenek.key) {
-                      <option [value]="secenek.key">{{ secenek.trLabel }}</option>
+                      <option [value]="secenek.key">{{ katalogEtiketi(secenek) }}</option>
                     }
                   </select>
                   <small>{{ secenekAciklamasi('audiences', newsItem().audience) }}</small>
@@ -625,7 +624,7 @@ interface MobileMenuItem {
                        (ngModelChange)="duyuruBelgeModu($event)">
                 <span>
                   <strong>{{ dilServisi.t('duyuruYalnizcaBelge') }}</strong>
-                  <small>Kart tıklandığında ayrı bir haber sayfası yerine doğrudan yüklenen belge açılır.</small>
+                  <small>{{ dilServisi.t('duyuruBelgeNot') }}</small>
                 </span>
               </label>
 
@@ -690,7 +689,7 @@ interface MobileMenuItem {
             <section class="duyuru-kapak-secimi">
               <div class="duyuru-kapak-baslik">
                 <div>
-                  <span class="bolum-no">Kapak Tasarımı</span>
+                  <span class="bolum-no">{{ dilServisi.t('duyuruKapakTasarimi') }}</span>
                   <h3>{{ dilServisi.t('duyuruFotoSablon') }}</h3>
                 </div>
                 <p>Fotoğraf yüklenmezse seçtiğiniz hazır renk paleti ve kurumsal şablon otomatik kullanılır.</p>
@@ -722,7 +721,7 @@ interface MobileMenuItem {
                 <input id="dkapakmetni" name="coverText" maxlength="120"
                        [ngModel]="newsItem().coverText"
                        (ngModelChange)="duyuruAlan('coverText', $event)"
-                       placeholder="Örn. Planlı sistem çalışması">
+                       [placeholder]="dilServisi.t('duyuruBaslikOrnek')">
                 <small>{{ (newsItem().coverText?.length || 0) }}/120</small>
               </div>
 
@@ -742,8 +741,8 @@ interface MobileMenuItem {
                         [coverText]="newsItem().coverText"
                         [language]="newsItem().language === 'en' ? 'en' : 'tr'" />
                       <span class="sablon-bilgi">
-                        <strong>{{ secenek.trLabel }}</strong>
-                        <small>{{ secenek.description }}</small>
+                        <strong>{{ katalogEtiketi(secenek) }}</strong>
+                        <small>{{ katalogNotu(secenek) }}</small>
                       </span>
                     </label>
                   }
@@ -757,7 +756,7 @@ interface MobileMenuItem {
               </label>
               <input id="dslug" name="slug" [ngModel]="newsItem().slug"
                      (ngModelChange)="duyuruAlan('slug', $event)"
-                     placeholder="örn. yeni-eposta-sistemi">
+                     [placeholder]="dilServisi.t('duyuruAdresOrnek')">
               @if (newsItem().slug) {
                 <p class="aciklama">
                   Haber adresi: <code>{{ SITE }}/{{ newsItem().language }}/newsItem/{{ adresOnizleme(newsItem().slug) }}</code>
@@ -781,8 +780,8 @@ interface MobileMenuItem {
 
             <span class="dugmeler">
               <button type="submit">{{ newsItem().id ? 'Güncelle' : 'Ekle' }}</button>
-              <button type="button" class="ikincil" (click)="duyuruOnizle()">Önizle</button>
-              <button type="button" class="ikincil" (click)="duyuruOnizlePencerede()">Yeni pencerede önizle</button>
+              <button type="button" class="ikincil" (click)="duyuruOnizle()">{{ dilServisi.t('duyuruOnizle') }}</button>
+              <button type="button" class="ikincil" (click)="duyuruOnizlePencerede()">{{ dilServisi.t('duyuruYeniPencere') }}</button>
               @if (newsItem().id) {
                 <button type="button" class="ikincil" (click)="duyuruSifirla()">Vazgeç</button>
               }
@@ -1031,8 +1030,7 @@ interface MobileMenuItem {
           </div>
         } @else if (sekme() === 'iletisim') {
           <p class="aciklama">
-            Alt bilgide görünen kurum bilgileri. Her telefon ve e-posta ayrı
-            bir kayıttır; sıra numarası görüntüleme sırasını belirler.
+              {{ dilServisi.t('iletisimTanitim') }}
           </p>
 
           <button type="button" (click)="kanalDuzenle(null)">{{ dilServisi.t('ortakYeniKayit') }}</button>
@@ -1684,6 +1682,17 @@ export class AdminPanelComponent {
       : this.dilServisi.t('kaliteZayif');
   }
 
+  /* Duyuru kataloğu iki dilde geliyor (arka uçtaki NewsCatalog). Şablon
+     her zaman Türkçesini yazıyordu; panel İngilizceye alındığında kategori
+     ve şablon adları Türkçe kalıyordu. */
+  protected katalogEtiketi(s: NewsOption): string {
+    return this.dilServisi.dil() === 'en' ? s.enLabel : s.trLabel;
+  }
+
+  protected katalogNotu(s: NewsOption): string {
+    return this.dilServisi.dil() === 'en' ? s.enDescription : s.description;
+  }
+
   protected metrikDegeri(metric: string, value: number): string {
     return metric === 'CLS' ? value.toFixed(3) : `${Math.round(value)} ms`;
   }
@@ -1756,11 +1765,13 @@ export class AdminPanelComponent {
   }
 
   protected secenekEtiketi(tur: keyof NewsOptions, anahtar: string): string {
-    return this.duyuruSecenekleri()[tur].find((s) => s.key === anahtar)?.trLabel ?? anahtar;
+    const s = this.duyuruSecenekleri()[tur].find((x) => x.key === anahtar);
+    return s ? this.katalogEtiketi(s) : anahtar;
   }
 
   protected secenekAciklamasi(tur: keyof NewsOptions, anahtar: string): string {
-    return this.duyuruSecenekleri()[tur].find((s) => s.key === anahtar)?.description ?? '';
+    const s = this.duyuruSecenekleri()[tur].find((x) => x.key === anahtar);
+    return s ? this.katalogNotu(s) : '';
   }
 
   protected duyuruSifirla(): void {

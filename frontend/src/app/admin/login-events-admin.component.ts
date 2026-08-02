@@ -12,7 +12,7 @@ import { tiklamaSinirlayici } from './tiklama-siniri';
         <div>
           <span class="bolum-no">{{ d.t('gunlukGuvenlikDenetimi') }}</span>
           <h2>{{ d.t('girisKayitBaslik') }}</h2>
-          <p>Yönetim paneline yapılan son 200 giriş denemesi — cihaz, tarayıcı, IP ve tahmini konum ile.</p>
+          <p>{{ d.t('girisKayitTanitim') }} {{ d.t('girisKayitCihaz') }}</p>
         </div>
         <button type="button" class="ikincil" (click)="yukle()">Yenile</button>
       </header>

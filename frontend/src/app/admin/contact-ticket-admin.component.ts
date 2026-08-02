@@ -16,7 +16,7 @@ import { AdminDilServisi } from './admin-dil.service';
         <div>
           <span class="bolum-no">{{ d.t('talepMerkezi') }}</span>
           <h2>{{ d.t('talepBaslik') }}</h2>
-          <p>Web formundan iletilen talepleri sınıflandırın, sorumlu atayın ve sonuçlanana kadar izleyin.</p>
+          <p>{{ d.t('talepTanitim') }}</p>
         </div>
         <div class="ticket-sayaclar" aria-label="Talep özeti">
           <span><strong>{{ acikSayisi() }}</strong>Açık</span>
@@ -29,7 +29,7 @@ import { AdminDilServisi } from './admin-dil.service';
         <label>
           <span class="sr-only">Taleplerde ara</span>
           <input type="search" [ngModel]="arama()" (ngModelChange)="arama.set($event)"
-                 placeholder="Takip no, konu veya başvuru sahibi ara…">
+                 [placeholder]="d.t('talepAramaYerTutucu')">
         </label>
         <label>
           <span class="sr-only">{{ d.t('talepDurumFiltre') }}</span>
@@ -171,15 +171,24 @@ export class ContactTicketAdminComponent implements OnInit {
   protected durumFiltresi = signal('');
   protected islemNotu = '';
 
-  protected readonly durumlar = [
-    { key: 'NEW', label: 'Yeni' }, { key: 'IN_PROGRESS', label: 'İşlemde' },
-    { key: 'WAITING', label: 'Yanıt bekliyor' }, { key: 'RESOLVED', label: 'Çözüldü' },
-    { key: 'CLOSED', label: 'Kapatıldı' }
-  ];
-  protected readonly oncelikler = [
-    { key: 'NORMAL', label: 'Normal' }, { key: 'HIGH', label: 'Yüksek' },
-    { key: 'URGENT', label: 'Acil' }
-  ];
+  /* Getter: sabit dizi olsaydı dil değiştiğinde etiketler eski dilde
+     kalırdı - dizi bir kez kurulup bir daha okunmazdı. */
+  protected get durumlar() {
+    return [
+      { key: 'NEW', label: this.d.t('talepDurumYeni') },
+      { key: 'IN_PROGRESS', label: this.d.t('talepDurumIslemde') },
+      { key: 'WAITING', label: this.d.t('talepDurumBekliyor') },
+      { key: 'RESOLVED', label: this.d.t('talepDurumCozuldu') },
+      { key: 'CLOSED', label: this.d.t('talepDurumKapatildi') }
+    ];
+  }
+  protected get oncelikler() {
+    return [
+      { key: 'NORMAL', label: this.d.t('talepOncelikNormal') },
+      { key: 'HIGH', label: this.d.t('talepOncelikYuksek') },
+      { key: 'URGENT', label: this.d.t('talepOncelikAcil') }
+    ];
+  }
 
   protected yeniSayisi = computed(() => this.tickets().filter(t => t.status === 'NEW').length);
   protected acikSayisi = computed(() => this.tickets().filter(t => !['RESOLVED', 'CLOSED'].includes(t.status)).length);
@@ -251,10 +260,11 @@ export class ContactTicketAdminComponent implements OnInit {
   }
   protected kategoriAdi(category: string): string {
     return ({
-      GENERAL: 'Genel bilgi', TECHNICAL_SUPPORT: 'Teknik destek', EMAIL: 'E-posta',
-      NETWORK: 'Ağ ve internet', SOFTWARE: 'Yazılım ve lisans', EBYS: 'EBYS',
-      E_SIGNATURE: 'E-imza', SECURITY: 'Bilgi güvenliği', WEB_SERVICES: 'Web hizmetleri',
-      SUGGESTION: 'Görüş ve öneri'
+      GENERAL: this.d.t('talepKatGenel'), TECHNICAL_SUPPORT: this.d.t('talepKatTeknik'),
+      EMAIL: this.d.t('talepKatEposta'), NETWORK: this.d.t('talepKatAg'),
+      SOFTWARE: this.d.t('talepKatYazilim'), EBYS: 'EBYS',
+      E_SIGNATURE: this.d.t('talepKatEimza'), SECURITY: this.d.t('talepKatGuvenlik'),
+      WEB_SERVICES: this.d.t('talepKatWeb'), SUGGESTION: this.d.t('talepKatOneri')
     } as Record<string, string>)[category] ?? category;
   }
   protected ekBoyut(bayt: number | null): string {
@@ -263,11 +273,16 @@ export class ContactTicketAdminComponent implements OnInit {
       ? Math.max(1, Math.round(bayt / 1024)) + ' KB'
       : (bayt / (1024 * 1024)).toFixed(1) + ' MB';
   }
+  /** Tarih yerel biçimi panel dilini izler; ay kısaltmaları da çevrilsin. */
+  private yerel(): string {
+    return this.d.dil() === 'en' ? 'en-GB' : 'tr-TR';
+  }
+
   protected tarih(value: string): string {
-    return new Intl.DateTimeFormat('tr-TR', { day: '2-digit', month: 'short', year: 'numeric' }).format(new Date(value));
+    return new Intl.DateTimeFormat(this.yerel(), { day: '2-digit', month: 'short', year: 'numeric' }).format(new Date(value));
   }
   protected tarihSaat(value: string): string {
-    return new Intl.DateTimeFormat('tr-TR', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(value));
+    return new Intl.DateTimeFormat(this.yerel(), { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(value));
   }
   protected olayAdi(event: ContactTicketEvent): string {
     if (event.eventType === 'CREATED') return 'Talep oluşturuldu';

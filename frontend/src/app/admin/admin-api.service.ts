@@ -50,6 +50,8 @@ export interface NewsOption {
   trLabel: string;
   enLabel: string;
   description: string;
+  /** İngilizce panelde gösterilen açıklama; katalogda tanımlı. */
+  enDescription: string;
 }
 
 export interface NewsOptions {
