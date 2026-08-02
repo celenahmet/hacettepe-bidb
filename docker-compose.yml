@@ -51,6 +51,12 @@ services:
       # Yönetim uçları için kimlik bilgileri (üretimde mutlaka değiştirilmeli)
       BIDB_YONETICI_KULLANICI: ${BIDB_YONETICI_KULLANICI:-admin}
       BIDB_YONETICI_PAROLA: ${BIDB_YONETICI_PAROLA:-admin}
+      # Kurumsal e-posta sunucusunun parolası. Sunucu adresi, kapı, gönderen
+      # ve güvenlik kipi panelden yönetilir; PAROLA bilinçli olarak yalnızca
+      # burada durur. Veritabanında tutulsaydı yedeklere, göç dökümlerine ve
+      # panel yanıtlarına düşerdi. Tanımlı değilse kimlik doğrulamalı gönderim
+      # açılamaz; panel bunu "tanımlı değil" diye gösterir.
+      BIDB_MAIL_PAROLA: ${BIDB_MAIL_PAROLA:-}
       # Panelden yüklenen belgeler burada durur; ön yüz aynı birimi okur
       BIDB_DOSYA_DIZINI: /veri/dosyalar
       # Ön yüz vekilinin kimliğini kanıtlayan paylaşılan sır (frontend ile aynı
