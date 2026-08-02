@@ -41,6 +41,18 @@ public class SecurityConfig {
                         "/api/metrics/vitals", "/api/metrics/page-view").permitAll()
                 // İletişim formu kimliksiz kabul edilir; hız ve alan sınırları controller'da uygulanır.
                 .requestMatchers(HttpMethod.POST, "/api/contact/tickets").permitAll()
+                /* Parola yenileme: kimlik doğrulaması İSTEMEZ - parolasını
+                   bilmeyen kullanıcı içindir. Üç uç TEK TEK yazılmıştır;
+                   /api/admin/** toptan gevşetilmemiştir.
+
+                   Yolun /api/admin/ altında olması bilinçli: mevcut denetim
+                   günlüğü filtresi ve giriş sınırlayıcısı bu ön eki izliyor,
+                   böylece akış kendiliğinden güvenlik kaydına giriyor ve kaba
+                   kuvvete karşı korunuyor. Uçların kendi hız sınırı ayrıca var. */
+                .requestMatchers(HttpMethod.POST,
+                        "/api/admin/password-reset/request",
+                        "/api/admin/password-reset/confirm").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/admin/password-reset/validate").permitAll()
                 // Yönetim uçları
                 .requestMatchers("/api/admin/**").authenticated()
                 .anyRequest().denyAll())

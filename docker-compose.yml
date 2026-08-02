@@ -57,6 +57,10 @@ services:
       # panel yanıtlarına düşerdi. Tanımlı değilse kimlik doğrulamalı gönderim
       # açılamaz; panel bunu "tanımlı değil" diye gösterir.
       BIDB_MAIL_PAROLA: ${BIDB_MAIL_PAROLA:-}
+      # Parola yenileme bağlantısının başına konan adres. Yanlış tanımlanırsa
+      # kullanıcıya çalışmayan bir bağlantı gider; üretimde mutlaka gerçek
+      # site adresi verilmelidir.
+      BIDB_SITE_ADRESI: ${SITE_ADRESI:-http://localhost:4000}
       # Panelden yüklenen belgeler burada durur; ön yüz aynı birimi okur
       BIDB_DOSYA_DIZINI: /veri/dosyalar
       # Ön yüz vekilinin kimliğini kanıtlayan paylaşılan sır (frontend ile aynı
