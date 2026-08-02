@@ -1,6 +1,7 @@
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AdminAccountView, AdminApiService, MailLogEntry, MailSetting } from './admin-api.service';
+import { AdminDilServisi } from './admin-dil.service';
 import { tiklamaSinirlayici } from './tiklama-siniri';
 
 /**
@@ -18,14 +19,13 @@ import { tiklamaSinirlayici } from './tiklama-siniri';
     <section class="kalite-bolum">
       <header>
         <div>
-          <span class="bolum-no">Kurumsal İletişim</span>
-          <h2>E-posta gönderim ayarları</h2>
+          <span class="bolum-no">{{ d.t('epostaKurumsal') }}</span>
+          <h2>{{ d.t('epostaAyarBaslik') }}</h2>
           <p>
-            Parola yenileme gibi otomatik iletiler bu sunucu üzerinden gönderilir.
-            Yapılandırma tamamlanmadan gönderim açılamaz.
+            {{ d.t('epostaAyarTanitim') }}
           </p>
         </div>
-        <button type="button" class="ikincil" (click)="yukle()">Yenile</button>
+        <button type="button" class="ikincil" (click)="yukle()">{{ d.t('epostaYenile') }}</button>
       </header>
 
       @if (mesaj()) { <p class="bilgi" role="status">{{ mesaj() }}</p> }
@@ -35,88 +35,85 @@ import { tiklamaSinirlayici } from './tiklama-siniri';
         <!-- Durum satırı: yöneticinin neyin eksik olduğunu tahmin etmesi gerekmesin -->
         <p class="bilgi" [class.uyari]="!!a.blockingIssue" role="status">
           @if (a.blockingIssue) {
-            Gönderim şu anda yapılamıyor — {{ a.blockingIssue }}
+            {{ d.t('epostaKapali') }} {{ a.blockingIssue }}
           } @else {
-            Gönderim açık. İletiler {{ a.fromAddress }} adresinden gönderilecektir.
+            {{ d.t('epostaAcik') }} {{ a.fromAddress }}
           }
         </p>
 
         <form class="duyuru-form" (ngSubmit)="kaydet()" #f="ngForm" novalidate>
           <div class="iletisim-form-izgara dort">
             <label>
-              <span>Sunucu adresi</span>
+              <span>{{ d.t('epostaSunucu') }}</span>
               <input name="host" [ngModel]="taslak().host" (ngModelChange)="alan('host', $event)"
-                     placeholder="örn. smtp.hacettepe.edu.tr" maxlength="200">
+                     [placeholder]="d.t('epostaSunucuOrnek')" maxlength="200">
             </label>
             <label>
-              <span>Kapı</span>
+              <span>{{ d.t('epostaKapi') }}</span>
               <input name="port" type="number" min="1" max="65535"
                      [ngModel]="taslak().port" (ngModelChange)="alan('port', $event)">
             </label>
             <label>
-              <span>Kullanıcı adı</span>
+              <span>{{ d.t('epostaKullanici') }}</span>
               <input name="username" [ngModel]="taslak().username"
                      (ngModelChange)="alan('username', $event)" maxlength="200"
                      autocomplete="off">
             </label>
             <label>
-              <span>Güvenlik</span>
+              <span>{{ d.t('epostaGuvenlik') }}</span>
               <select name="securityMode" [ngModel]="taslak().securityMode"
                       (ngModelChange)="alan('securityMode', $event)">
-                <option value="STARTTLS">STARTTLS (önerilen)</option>
+                <option value="STARTTLS">{{ d.t('epostaGuvenlikOnerilen') }}</option>
                 <option value="SSL">SSL/TLS</option>
-                <option value="NONE">Şifresiz</option>
+                <option value="NONE">{{ d.t('epostaGuvenlikSifresiz') }}</option>
               </select>
             </label>
             <label>
-              <span>Gönderen adresi</span>
+              <span>{{ d.t('epostaGonderenAdres') }}</span>
               <input name="fromAddress" type="email" [ngModel]="taslak().fromAddress"
                      (ngModelChange)="alan('fromAddress', $event)" maxlength="254"
-                     placeholder="örn. bidb@hacettepe.edu.tr">
+                     [placeholder]="d.t('epostaAdresOrnek')">
             </label>
             <label>
-              <span>Gönderen adı</span>
+              <span>{{ d.t('epostaGonderenAd') }}</span>
               <input name="fromName" [ngModel]="taslak().fromName"
                      (ngModelChange)="alan('fromName', $event)" maxlength="120"
-                     placeholder="örn. Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı">
+                     [placeholder]="d.t('epostaAdOrnek')">
             </label>
           </div>
 
           @if (taslak().securityMode === 'NONE') {
             <p class="bilgi uyari" role="alert">
-              Şifresiz bağlantıda kullanıcı adı ve parola ağ üzerinde açık gider.
-              Yalnızca kurum içi güvenilir bir aktarıcı için seçiniz.
+              {{ d.t('epostaSifresizUyari') }}
             </p>
           }
 
           <!-- Parola kutusu YOK; gerekçe kullanıcıya da açıklanır -->
           <p class="aciklama">
-            Sunucu parolası güvenlik gereği panelde tutulmaz; sunucudaki
-            <code>BIDB_MAIL_PAROLA</code> ortam değişkeninden okunur.
-            Durum: <strong>{{ a.passwordDefined ? 'tanımlı' : 'tanımlı değil' }}</strong>.
+            {{ d.t('epostaParolaNot1') }} <code>BIDB_MAIL_PAROLA</code> {{ d.t('epostaParolaNot2') }} <strong>{{ a.passwordDefined ? d.t('epostaTanimli') : d.t('epostaTanimliDegil') }}</strong>.
           </p>
 
           <label class="onay">
             <input type="checkbox" name="enabled" [ngModel]="taslak().enabled"
                    (ngModelChange)="alan('enabled', $event)">
-            <span>Gönderim açık</span>
+            <span>{{ d.t('epostaGonderimAcik') }}</span>
           </label>
 
           <span class="dugmeler">
-            <button type="submit" [disabled]="kaydediliyor()">Kaydet</button>
+            <button type="submit" [disabled]="kaydediliyor()">{{ d.t('epostaKaydet') }}</button>
             <button type="button" class="ikincil" (click)="sinama()"
                     [disabled]="!!a.blockingIssue || sinaniyor()">
-              Sınama iletisi gönder
+              {{ d.t('epostaSinamaGonder') }}
             </button>
           </span>
           @if (a.blockingIssue) {
-            <small>Sınama iletisi ancak gönderim açıkken gönderilebilir.</small>
+            <small>{{ d.t('epostaSinamaKapali') }}</small>
           } @else {
-            <small>Sınama iletisi yalnızca gönderen adresine yollanır.</small>
+            <small>{{ d.t('epostaSinamaNot') }}</small>
           }
 
           @if (a.updatedAt) {
-            <small>Son güncelleme: {{ zaman(a.updatedAt) }}{{ a.updatedBy ? ' · ' + a.updatedBy : '' }}</small>
+            <small>{{ d.t('epostaSonGuncelleme') }} {{ zaman(a.updatedAt) }}{{ a.updatedBy ? ' · ' + a.updatedBy : '' }}</small>
           }
         </form>
       }
@@ -125,11 +122,10 @@ import { tiklamaSinirlayici } from './tiklama-siniri';
     <section class="kalite-bolum">
       <header>
         <div>
-          <span class="bolum-no">Kurumsal İletişim</span>
-          <h2>Parola yenileme adresi</h2>
+          <span class="bolum-no">{{ d.t('epostaKurumsal') }}</span>
+          <h2>{{ d.t('epostaHesapBaslik') }}</h2>
           <p>
-            Yönetim paneli parolası unutulduğunda yenileme yönergesi bu adrese
-            gönderilir. Adres tanımlı değilse yenileme akışı çalışmaz.
+            {{ d.t('epostaHesapTanitim') }}
           </p>
         </div>
       </header>
@@ -137,33 +133,29 @@ import { tiklamaSinirlayici } from './tiklama-siniri';
       @if (hesap(); as h) {
         @if (!h.email) {
           <p class="bilgi uyari" role="alert">
-            Adres tanımlı değil. Parola unutulursa yenileme yapılamaz; kurtarma
-            yalnızca sunucuya erişimi olan bir işletmen tarafından yapılabilir.
+            {{ d.t('epostaHesapUyari') }}
           </p>
         }
         <form class="duyuru-form" (ngSubmit)="hesapKaydet()" novalidate>
           <label>
-            <span>Kullanıcı adı</span>
+            <span>{{ d.t('epostaKullanici') }}</span>
             <input name="username" [value]="h.username" disabled>
           </label>
           <label>
-            <span>Bildirim adresi</span>
+            <span>{{ d.t('epostaBildirimAdresi') }}</span>
             <input name="accountEmail" type="email" maxlength="254"
                    [ngModel]="hesapEposta()" (ngModelChange)="hesapEposta.set($event)"
-                   placeholder="örn. bidb@hacettepe.edu.tr">
+                   [placeholder]="d.t('epostaAdresOrnek')">
           </label>
           <!-- Parola alanı YOK; gerekçe kullanıcıya da söyleniyor -->
           <p class="aciklama">
-            Parola bu ekrandan değiştirilemez. Bu bilinçlidir: açık bir oturumu
-            ele geçiren birinin tek istekle parolayı değiştirip hesabı kalıcı
-            olarak devralması engellenir. Parola yalnızca e-posta ile doğrulanan
-            yenileme akışından değişir.
+            {{ d.t('epostaParolaDegismez') }}
             @if (h.passwordUpdatedAt) {
-              Son değişiklik: {{ zaman(h.passwordUpdatedAt) }}.
+              {{ d.t('epostaSonParolaDegisikligi') }} {{ zaman(h.passwordUpdatedAt) }}.
             }
           </p>
           <span class="dugmeler">
-            <button type="submit" [disabled]="hesapKaydediliyor()">Adresi kaydet</button>
+            <button type="submit" [disabled]="hesapKaydediliyor()">{{ d.t('epostaAdresKaydet') }}</button>
           </span>
         </form>
       }
@@ -172,14 +164,13 @@ import { tiklamaSinirlayici } from './tiklama-siniri';
     <section class="kalite-bolum">
       <header>
         <div>
-          <span class="bolum-no">Kurumsal İletişim</span>
-          <h2>Gönderim günlüğü</h2>
+          <span class="bolum-no">{{ d.t('epostaKurumsal') }}</span>
+          <h2>{{ d.t('epostaGunlukBaslik') }}</h2>
           <p>
-            Gönderilen ve gönderilemeyen iletilerin kaydı. İleti gövdesi güvenlik
-            gereği saklanmaz: parola yenileme iletileri tek kullanımlık bağlantı taşır.
+            {{ d.t('epostaGunlukTanitim') }}
           </p>
         </div>
-        <span class="gunluk-sayac">{{ gunluk().length }} kayıt</span>
+        <span class="gunluk-sayac">{{ gunluk().length }} {{ d.t('epostaKayit') }}</span>
       </header>
 
       @if (gunluk().length) {
@@ -187,11 +178,11 @@ import { tiklamaSinirlayici } from './tiklama-siniri';
           <table class="yonetim-tablo">
             <thead>
               <tr>
-                <th>Zaman</th>
-                <th>Alıcı</th>
-                <th>Konu</th>
-                <th>Amaç</th>
-                <th>Durum</th>
+                <th>{{ d.t('epostaZaman') }}</th>
+                <th>{{ d.t('epostaAlici') }}</th>
+                <th>{{ d.t('epostaKonu') }}</th>
+                <th>{{ d.t('epostaAmac') }}</th>
+                <th>{{ d.t('epostaDurum') }}</th>
               </tr>
             </thead>
             <tbody>
@@ -218,8 +209,8 @@ import { tiklamaSinirlayici } from './tiklama-siniri';
         </div>
       } @else {
         <div class="kalite-bos">
-          <strong>Kayıt yok</strong>
-          <p>Gönderilen ilk ileti burada görünecek.</p>
+          <strong>{{ d.t('epostaKayitYok') }}</strong>
+          <p>{{ d.t('epostaKayitYokAciklama') }}</p>
         </div>
       }
     </section>
@@ -227,6 +218,8 @@ import { tiklamaSinirlayici } from './tiklama-siniri';
 })
 export class MailAdminComponent implements OnInit {
   private api = inject(AdminApiService);
+  /** Şablonda kısa olsun diye tek harf: d.t('anahtar') */
+  protected d = inject(AdminDilServisi);
 
   protected ayar = signal<MailSetting | null>(null);
   protected gunluk = signal<MailLogEntry[]>([]);
@@ -253,15 +246,15 @@ export class MailAdminComponent implements OnInit {
     if (!this.yenileSiniri()) return;
     this.api.mailSettings().subscribe({
       next: (a) => { this.ayar.set(a); this.duzenlenen.set({ ...a }); },
-      error: () => this.hata.set('E-posta ayarları alınamadı.')
+      error: () => this.hata.set(this.d.t('epostaAyarAlinamadi'))
     });
     this.api.mailLog().subscribe({
       next: (l) => this.gunluk.set(l),
-      error: () => this.hata.set('Gönderim günlüğü alınamadı.')
+      error: () => this.hata.set(this.d.t('epostaGunlukAlinamadi'))
     });
     this.api.mailAccount().subscribe({
       next: (h) => { this.hesap.set(h); this.hesapEposta.set(h.email ?? ''); },
-      error: () => this.hata.set('Yönetici hesabı bilgisi alınamadı.')
+      error: () => this.hata.set(this.d.t('epostaHesapAlinamadi'))
     });
   }
 
@@ -285,7 +278,7 @@ export class MailAdminComponent implements OnInit {
         this.ayar.set(a);
         this.duzenlenen.set({ ...a });
         this.kaydediliyor.set(false);
-        this.bildir('Ayarlar kaydedildi.');
+        this.bildir(this.d.t('epostaAyarKaydedildi'));
       },
       error: (e) => {
         this.kaydediliyor.set(false);
@@ -294,7 +287,7 @@ export class MailAdminComponent implements OnInit {
            yöneticiye aratırdı. */
         this.hata.set(typeof e?.error === 'string' && e.error
           ? e.error
-          : 'Ayarlar kaydedilemedi.');
+          : this.d.t('epostaAyarKaydedilemedi'));
       }
     });
   }
@@ -309,13 +302,13 @@ export class MailAdminComponent implements OnInit {
         this.hesap.set(h);
         this.hesapEposta.set(h.email ?? '');
         this.hesapKaydediliyor.set(false);
-        this.bildir(h.email ? 'Bildirim adresi kaydedildi.' : 'Bildirim adresi kaldırıldı.');
+        this.bildir(h.email ? this.d.t('epostaAdresKaydedildi') : this.d.t('epostaAdresKaldirildi'));
       },
       error: (e) => {
         this.hesapKaydediliyor.set(false);
         this.hata.set(typeof e?.error === 'string' && e.error
           ? e.error
-          : 'Bildirim adresi kaydedilemedi. Adresin biçimini denetleyiniz.');
+          : this.d.t('epostaAdresKaydedilemedi'));
       }
     });
   }
@@ -328,7 +321,7 @@ export class MailAdminComponent implements OnInit {
       next: (m) => { this.sinaniyor.set(false); this.bildir(m); this.yukle(); },
       error: (e) => {
         this.sinaniyor.set(false);
-        this.hata.set(typeof e?.error === 'string' && e.error ? e.error : 'Sınama iletisi gönderilemedi.');
+        this.hata.set(typeof e?.error === 'string' && e.error ? e.error : this.d.t('epostaSinamaGonderilemedi'));
         // Başarısız deneme de günlüğe düşer; liste tazelenir ki sebep görünsün.
         this.yukle();
       }
@@ -344,18 +337,18 @@ export class MailAdminComponent implements OnInit {
 
   protected amacEtiketi(a: MailLogEntry['purpose']): string {
     switch (a) {
-      case 'PAROLA_SIFIRLAMA': return 'Parola yenileme';
-      case 'TALEP_BILDIRIM': return 'Talep bildirimi';
-      case 'SINAMA': return 'Sınama';
+      case 'PAROLA_SIFIRLAMA': return this.d.t('epostaAmacParola');
+      case 'TALEP_BILDIRIM': return this.d.t('epostaAmacTalep');
+      case 'SINAMA': return this.d.t('epostaAmacSinama');
       default: return a;
     }
   }
 
   protected durumEtiketi(d: MailLogEntry['status']): string {
     switch (d) {
-      case 'SENT': return 'Gönderildi';
-      case 'FAILED': return 'Başarısız';
-      case 'SKIPPED': return 'Gönderilmedi';
+      case 'SENT': return this.d.t('epostaDurumGonderildi');
+      case 'FAILED': return this.d.t('epostaDurumBasarisiz');
+      case 'SKIPPED': return this.d.t('epostaDurumGonderilmedi');
       default: return d;
     }
   }

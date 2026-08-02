@@ -100,7 +100,13 @@ const OLCUM = `(function () {
   }
 
   // Başlıklar, etiketler, düğmeler, sütun başlıkları: hepsi arayüz metni
-  govde.querySelectorAll('h1, h2, h3, h4').forEach(function (e) { ekle('başlık', e.textContent); });
+  // .menu-bolum başlıkları VERİDİR (personel birimi, menü adı) - dışlanır.
+  // Aksi hâlde araç, İngilizce panelde de doğru olan Türkçe birim adlarını
+  // kusur sayar ve hiçbir zaman temiz diyemezdi.
+  govde.querySelectorAll('h1, h2, h3, h4').forEach(function (e) {
+    if (e.closest('.menu-bolum')) return;
+    ekle('başlık', e.textContent);
+  });
   govde.querySelectorAll('label > span, label > strong').forEach(function (e) { ekle('etiket', e.textContent); });
   govde.querySelectorAll('button').forEach(function (e) { ekle('düğme', e.textContent); });
   govde.querySelectorAll('th').forEach(function (e) { ekle('sütun', e.textContent); });
