@@ -1501,6 +1501,10 @@ export class AdminPanelComponent {
       this.analitikYukle();
       this.kaliteYukle();
     } else {
+      // Hata dalı KASTEN yok: bu çağrı giriş ekranının dekoratif arka planını
+      // getiriyor. Alınamazsa ekran arka plansız açılır, işlev kaybı olmaz.
+      // Kimlik doğrulamadan önce "liste alınamadı" uyarısı göstermek ise
+      // kullanıcıya yapabileceği bir şey söylemeden endişe verirdi.
       this.publicApi.slider('tr').subscribe(slides => {
         if (slides && slides.length > 0) {
           const rastgele = slides[Math.floor(Math.random() * slides.length)];
@@ -1688,8 +1692,8 @@ export class AdminPanelComponent {
 
   protected sekmeDuyuru(): void {
     this.sekme.set('news');
-    this.api.news().subscribe((d) => this.news.set(d));
-    this.api.newsOptions().subscribe((s) => this.duyuruSecenekleri.set(s));
+    this.api.news().subscribe(this.yukleme((d) => this.news.set(d), 'Duyuru listesi'));
+    this.api.newsOptions().subscribe(this.yukleme((s) => this.duyuruSecenekleri.set(s), 'Duyuru seçenekleri'));
   }
 
   protected duyuruKaydet(): void {
@@ -1739,12 +1743,12 @@ export class AdminPanelComponent {
 
   protected sekmeSlider(): void {
     this.sekme.set('slider');
-    this.api.slides().subscribe((l) => this.slides.set(l));
+    this.api.slides().subscribe(this.yukleme((l) => this.slides.set(l), 'Slayt listesi'));
   }
 
   protected sekmeKisayol(): void {
     this.sekme.set('shortcuts');
-    this.api.shortcuts().subscribe((l) => this.shortcuts.set(l));
+    this.api.shortcuts().subscribe(this.yukleme((l) => this.shortcuts.set(l), 'Kısayol listesi'));
   }
 
   protected slaytDuzenle(s: Slide | null): void {
@@ -1803,7 +1807,7 @@ export class AdminPanelComponent {
 
   protected sekmeMenu(): void {
     this.sekme.set('menus');
-    this.api.menus().subscribe((l) => this.menus.set(l));
+    this.api.menus().subscribe(this.yukleme((l) => this.menus.set(l), 'Menü listesi'));
   }
 
   protected ogeDuzenle(menuId: number, o: AdminMenuItem | null): void {
@@ -1838,7 +1842,7 @@ export class AdminPanelComponent {
 
   protected sekmeSosyal(): void {
     this.sekme.set('sosyal');
-    this.api.socialAccounts().subscribe((l) => this.socialAccounts.set(l));
+    this.api.socialAccounts().subscribe(this.yukleme((l) => this.socialAccounts.set(l), 'Sosyal medya listesi'));
   }
 
   protected sosyalDuzenle(s: AdminSocialAccount | null): void {
@@ -1911,7 +1915,7 @@ export class AdminPanelComponent {
   }
 
   protected refreshPages(): void {
-    this.api.pages().subscribe((l) => this.pages.set(l));
+    this.api.pages().subscribe(this.yukleme((l) => this.pages.set(l), 'Sayfa listesi'));
   }
 
   protected yeniSayfaAc(): void {
@@ -1932,13 +1936,19 @@ export class AdminPanelComponent {
         // Yeni sayfa oluşturulur oluşturulmaz metin ve SEO alanları açılır;
         // kullanıcı 70 satırlık listede sayfayı aramak zorunda kalmaz.
         const id = (olusan as { id?: number })?.id;
-        this.api.pages().subscribe((l) => {
-          this.pages.set(l);
-          const yeni = l.find((x) => x.id === id);
-          if (yeni) {
-            this.acikSayfa.set(yeni);
-            this.secili.set({ ...yeni });
-          }
+        this.api.pages().subscribe({
+          next: (l) => {
+            this.pages.set(l);
+            const yeni = l.find((x) => x.id === id);
+            if (yeni) {
+              this.acikSayfa.set(yeni);
+              this.secili.set({ ...yeni });
+            }
+          },
+          // Sayfa OLUŞTU; başarısız olan yalnızca listenin tazelenmesi. Mesaj
+          // bunu ayırt etmeli — yoksa kullanıcı sayfanın hiç oluşmadığını
+          // sanıp yeniden dener ve aynı adres çakışır.
+          error: () => this.mesaj('Sayfa oluşturuldu ancak liste tazelenemedi. Listeyi yenileyin.')
         });
         this.mesaj('Sayfa oluşturuldu. Metnini ve arama motoru bilgilerini şimdi girebilirsiniz.');
       },
@@ -2058,7 +2068,7 @@ export class AdminPanelComponent {
 
   protected sekmeIletisim(): void {
     this.sekme.set('iletisim');
-    this.api.contactChannels().subscribe((l) => this.kanallar.set(l));
+    this.api.contactChannels().subscribe(this.yukleme((l) => this.kanallar.set(l), 'İletişim kayıtları'));
   }
 
   protected turAdi(t: string): string {
@@ -2095,12 +2105,12 @@ export class AdminPanelComponent {
   }
 
   private sayilariYukle(): void {
-    this.api.news().subscribe((l) => this.news.set(l));
-    this.api.newsOptions().subscribe((s) => this.duyuruSecenekleri.set(s));
-    this.api.slides().subscribe((l) => this.slides.set(l));
-    this.api.shortcuts().subscribe((l) => this.shortcuts.set(l));
-    this.api.menus().subscribe((l) => this.menus.set(l));
-    this.api.socialAccounts().subscribe((l) => this.socialAccounts.set(l));
+    this.api.news().subscribe(this.yukleme((l) => this.news.set(l), 'Duyuru listesi'));
+    this.api.newsOptions().subscribe(this.yukleme((s) => this.duyuruSecenekleri.set(s), 'Duyuru seçenekleri'));
+    this.api.slides().subscribe(this.yukleme((l) => this.slides.set(l), 'Slayt listesi'));
+    this.api.shortcuts().subscribe(this.yukleme((l) => this.shortcuts.set(l), 'Kısayol listesi'));
+    this.api.menus().subscribe(this.yukleme((l) => this.menus.set(l), 'Menü listesi'));
+    this.api.socialAccounts().subscribe(this.yukleme((l) => this.socialAccounts.set(l), 'Sosyal medya listesi'));
   }
 
   private sayfalariYukle(): void {
@@ -2139,5 +2149,23 @@ export class AdminPanelComponent {
   private mesaj(m: string): void {
     this.bilgi.set(m);
     setTimeout(() => this.bilgi.set(''), 4000);
+  }
+
+  /**
+   * Liste yükleyen çağrılar için ortak abonelik.
+   *
+   * Tek argümanlı subscribe yalnızca "next" dalını bağlar; istek başarısız
+   * olduğunda hiçbir şey çalışmaz. Bölüm boş görünür ve bu, "hiç kayıt yok"
+   * durumundan AYIRT EDİLEMEZ — yönetici var olan kayıtların silindiğini
+   * sanabilir. Sebebi söylenmeli.
+   *
+   * On iki yükleme çağrısında aynı dört satırı tekrarlamak yerine tek yerde
+   * toplandı; adı mesajda geçtiği için hangi listenin alınamadığı belli olur.
+   */
+  private yukleme<T>(uygula: (veri: T) => void, ad: string) {
+    return {
+      next: uygula,
+      error: () => this.mesaj(`${ad} alınamadı.`)
+    };
   }
 }
