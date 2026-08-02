@@ -219,6 +219,13 @@ export interface MailSetting {
   blockingIssue: string | null;
 }
 
+/** Yönetici hesabının görünen bilgileri. Parola karması buraya GELMEZ. */
+export interface AdminAccountView {
+  username: string;
+  email: string | null;
+  passwordUpdatedAt: string | null;
+}
+
 export interface MailSettingForm {
   host: string | null;
   port: number | null;
@@ -691,6 +698,16 @@ export class AdminApiService {
 
   saveMailSettings(a: MailSettingForm): Observable<MailSetting> {
     return this.http.put<MailSetting>('/api/admin/mail/settings', a, { headers: this.basliklar() });
+  }
+
+  /** Yönetici hesabının bildirim adresi. Parola BURADAN DEĞİŞTİRİLEMEZ. */
+  mailAccount(): Observable<AdminAccountView> {
+    return this.http.get<AdminAccountView>('/api/admin/mail/account', { headers: this.basliklar() });
+  }
+
+  saveMailAccount(email: string | null): Observable<AdminAccountView> {
+    return this.http.put<AdminAccountView>('/api/admin/mail/account', { email },
+      { headers: this.basliklar() });
   }
 
   mailLog(): Observable<MailLogEntry[]> {

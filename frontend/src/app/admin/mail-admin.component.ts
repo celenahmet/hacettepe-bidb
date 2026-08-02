@@ -1,6 +1,6 @@
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { AdminApiService, MailLogEntry, MailSetting } from './admin-api.service';
+import { AdminAccountView, AdminApiService, MailLogEntry, MailSetting } from './admin-api.service';
 import { tiklamaSinirlayici } from './tiklama-siniri';
 
 /**
@@ -126,6 +126,53 @@ import { tiklamaSinirlayici } from './tiklama-siniri';
       <header>
         <div>
           <span class="bolum-no">Kurumsal İletişim</span>
+          <h2>Parola yenileme adresi</h2>
+          <p>
+            Yönetim paneli parolası unutulduğunda yenileme yönergesi bu adrese
+            gönderilir. Adres tanımlı değilse yenileme akışı çalışmaz.
+          </p>
+        </div>
+      </header>
+
+      @if (hesap(); as h) {
+        @if (!h.email) {
+          <p class="bilgi uyari" role="alert">
+            Adres tanımlı değil. Parola unutulursa yenileme yapılamaz; kurtarma
+            yalnızca sunucuya erişimi olan bir işletmen tarafından yapılabilir.
+          </p>
+        }
+        <form class="duyuru-form" (ngSubmit)="hesapKaydet()" novalidate>
+          <label>
+            <span>Kullanıcı adı</span>
+            <input name="username" [value]="h.username" disabled>
+          </label>
+          <label>
+            <span>Bildirim adresi</span>
+            <input name="accountEmail" type="email" maxlength="254"
+                   [ngModel]="hesapEposta()" (ngModelChange)="hesapEposta.set($event)"
+                   placeholder="örn. bidb@hacettepe.edu.tr">
+          </label>
+          <!-- Parola alanı YOK; gerekçe kullanıcıya da söyleniyor -->
+          <p class="aciklama">
+            Parola bu ekrandan değiştirilemez. Bu bilinçlidir: açık bir oturumu
+            ele geçiren birinin tek istekle parolayı değiştirip hesabı kalıcı
+            olarak devralması engellenir. Parola yalnızca e-posta ile doğrulanan
+            yenileme akışından değişir.
+            @if (h.passwordUpdatedAt) {
+              Son değişiklik: {{ zaman(h.passwordUpdatedAt) }}.
+            }
+          </p>
+          <span class="dugmeler">
+            <button type="submit" [disabled]="hesapKaydediliyor()">Adresi kaydet</button>
+          </span>
+        </form>
+      }
+    </section>
+
+    <section class="kalite-bolum">
+      <header>
+        <div>
+          <span class="bolum-no">Kurumsal İletişim</span>
           <h2>Gönderim günlüğü</h2>
           <p>
             Gönderilen ve gönderilemeyen iletilerin kaydı. İleti gövdesi güvenlik
@@ -188,6 +235,10 @@ export class MailAdminComponent implements OnInit {
   protected kaydediliyor = signal(false);
   protected sinaniyor = signal(false);
 
+  protected hesap = signal<AdminAccountView | null>(null);
+  protected hesapEposta = signal<string>('');
+  protected hesapKaydediliyor = signal(false);
+
   /** Düzenlenen kopya; kaydedilene kadar sunucudaki değere dokunulmaz. */
   private duzenlenen = signal<MailSetting | null>(null);
   protected taslak = computed(() => this.duzenlenen() ?? this.bosTaslak());
@@ -207,6 +258,10 @@ export class MailAdminComponent implements OnInit {
     this.api.mailLog().subscribe({
       next: (l) => this.gunluk.set(l),
       error: () => this.hata.set('Gönderim günlüğü alınamadı.')
+    });
+    this.api.mailAccount().subscribe({
+      next: (h) => { this.hesap.set(h); this.hesapEposta.set(h.email ?? ''); },
+      error: () => this.hata.set('Yönetici hesabı bilgisi alınamadı.')
     });
   }
 
@@ -240,6 +295,27 @@ export class MailAdminComponent implements OnInit {
         this.hata.set(typeof e?.error === 'string' && e.error
           ? e.error
           : 'Ayarlar kaydedilemedi.');
+      }
+    });
+  }
+
+  protected hesapKaydet(): void {
+    if (this.hesapKaydediliyor()) return;
+    this.hesapKaydediliyor.set(true);
+    this.hata.set('');
+    const deger = this.hesapEposta().trim();
+    this.api.saveMailAccount(deger === '' ? null : deger).subscribe({
+      next: (h) => {
+        this.hesap.set(h);
+        this.hesapEposta.set(h.email ?? '');
+        this.hesapKaydediliyor.set(false);
+        this.bildir(h.email ? 'Bildirim adresi kaydedildi.' : 'Bildirim adresi kaldırıldı.');
+      },
+      error: (e) => {
+        this.hesapKaydediliyor.set(false);
+        this.hata.set(typeof e?.error === 'string' && e.error
+          ? e.error
+          : 'Bildirim adresi kaydedilemedi. Adresin biçimini denetleyiniz.');
       }
     });
   }

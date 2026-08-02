@@ -12,6 +12,7 @@ import tr.edu.hacettepe.bidb.model.MailLog;
 import tr.edu.hacettepe.bidb.model.MailSetting;
 import tr.edu.hacettepe.bidb.repo.MailLogRepo;
 import tr.edu.hacettepe.bidb.repo.MailSettingRepo;
+import tr.edu.hacettepe.bidb.security.YoneticiHesabiServisi;
 import tr.edu.hacettepe.bidb.service.EpostaServisi;
 
 import java.security.Principal;
@@ -33,11 +34,14 @@ public class AdminMailController {
     private final MailSettingRepo ayarDepo;
     private final MailLogRepo gunlukDepo;
     private final EpostaServisi eposta;
+    private final YoneticiHesabiServisi hesaplar;
 
-    public AdminMailController(MailSettingRepo ayarDepo, MailLogRepo gunlukDepo, EpostaServisi eposta) {
+    public AdminMailController(MailSettingRepo ayarDepo, MailLogRepo gunlukDepo,
+                               EpostaServisi eposta, YoneticiHesabiServisi hesaplar) {
         this.ayarDepo = ayarDepo;
         this.gunlukDepo = gunlukDepo;
         this.eposta = eposta;
+        this.hesaplar = hesaplar;
     }
 
     /** Panelin okuduğu görünüm. Parola alanı BİLEREK yoktur. */
@@ -104,6 +108,34 @@ public class AdminMailController {
         a.setUpdatedBy(kim == null ? null : kim.getName());
         ayarDepo.save(a);
         return ResponseEntity.ok(gorunum(a));
+    }
+
+    /* ---------- yönetici hesabının bildirim adresi ----------
+
+       Parola yenileme iletisi bu adrese gider. Adres tanımlı değilse akış
+       hiç çalışmaz; panelde bu durum açıkça gösterilir.
+
+       Parola BURADAN DEĞİŞTİRİLEMEZ. Bilinçli: oturumu ele geçiren biri
+       tek istekle parolayı değiştirip hesabı kalıcı olarak devralabilirdi.
+       Parola yalnızca e-posta ile doğrulanan yenileme akışından değişir. */
+
+    public record AccountView(String username, String email, OffsetDateTime passwordUpdatedAt) {}
+
+    public record AccountForm(@Email @Size(max = 254) String email) {}
+
+    @GetMapping("/account")
+    public ResponseEntity<?> hesap() {
+        var h = hesaplar.hesap();
+        if (h == null) return ResponseEntity.status(500).body("Yönetici hesabı bulunamadı.");
+        return ResponseEntity.ok(new AccountView(h.getUsername(), h.getEmail(), h.getPasswordUpdatedAt()));
+    }
+
+    @PutMapping("/account")
+    public ResponseEntity<?> hesapKaydet(@Valid @RequestBody AccountForm form) {
+        var h = hesaplar.hesap();
+        if (h == null) return ResponseEntity.status(500).body("Yönetici hesabı bulunamadı.");
+        hesaplar.epostaBelirle(h, bosaCevir(form.email()));
+        return ResponseEntity.ok(new AccountView(h.getUsername(), h.getEmail(), h.getPasswordUpdatedAt()));
     }
 
     @GetMapping("/log")

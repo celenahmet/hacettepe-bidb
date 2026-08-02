@@ -13,6 +13,13 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./admin/admin-panel.component').then((module) => module.AdminPanelComponent)
   },
+  // Parola yenileme panelden AYRI bir bileşen: parolasını bilmeyen kullanıcı
+  // için, yani giriş yapılmadan açılır. Panel paketiyle birlikte yüklenmez.
+  {
+    path: 'yonetim/parola-yenileme',
+    loadComponent: () =>
+      import('./admin/parola-yenileme.component').then((module) => module.ParolaYenilemeComponent)
+  },
   // Bütün HTTP hata durumları aynı bileşende, yalnızca kod parametresi
   // değiştirilerek sunulur. Her kod için ayrı sayfa ya da klasör tutulmaz.
   {

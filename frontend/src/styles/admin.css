@@ -2104,4 +2104,14 @@
     .ticket-basvuran div { padding-inline: var(--bosluk-4); border-right: 0; }
     .ticket-islem-izgara { grid-template-columns: minmax(0, 1fr); }
   }
+
+  /* Giriş kutusundaki "Parolamı unuttum" satırı. Düğmelerden ayrı ve sönük
+     durur: birincil eylem giriş yapmaktır, bu ikincil bir çıkış yoludur. */
+  .giris-yardim {
+    margin: var(--bosluk-4) 0 0;
+    font-size: var(--olcu-sm);
+    text-align: center;
+  }
+  .giris-yardim a { color: var(--metin-3); text-decoration: underline; }
+  .giris-yardim a:hover { color: var(--hu-kirmizi); }
 }

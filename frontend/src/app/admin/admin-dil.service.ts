@@ -58,6 +58,7 @@ const SOZLUK: Record<string, { tr: string; en: string }> = {
   bolumIletisim: { tr: 'İletişim Bilgileri', en: 'Contact Information' },
   bolumTalepler: { tr: 'İletişim Talepleri', en: 'Contact Requests' },
   bolumEposta: { tr: 'E-Posta', en: 'E-mail' },
+  parolamiUnuttum: { tr: 'Parolamı unuttum', en: 'Forgot my password' },
   bolumPersonel: { tr: 'Personel', en: 'Staff' },
   bolumGuvenlik: { tr: 'Güvenlik Kayıtları', en: 'Security Log' },
   bolumHakkinda: { tr: 'Yazılım Hakkında', en: 'About This System' },

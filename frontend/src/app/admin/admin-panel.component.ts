@@ -70,6 +70,14 @@ interface MobileMenuItem {
                     {{ calisiyor() ? dilServisi.t('girisYapiliyor') : dilServisi.t('girisYap') }}
                   </button>
                 </span>
+
+                <!-- routerLink değil düz href: yenileme sayfası panelden ayrı
+                     bir paket ve buradan yalnızca çıkılır, geri dönülmez.
+                     Tam gezinme, panel paketinin gereksiz yere hazır
+                     tutulmasını da önler. -->
+                <p class="giris-yardim">
+                  <a href="/yonetim/parola-yenileme">{{ dilServisi.t('parolamiUnuttum') }}</a>
+                </p>
               </form>
             </div>
           </div>
