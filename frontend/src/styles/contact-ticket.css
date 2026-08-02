@@ -58,9 +58,13 @@
   .iletisim-form-giris strong { color: var(--hu-lacivert); }
   .iletisim-form-giris small { color: var(--metin-3); }
 
+  /* Sütunlar eşit: alttaki 2x2 bloğun (Ad/Soyad, E-posta/Telefon) sütun
+     ayrımı da eşit olduğundan, buradaki oran farklı olursa iki blok
+     arasındaki dikey eksen kayar. Ölçüldü: 1fr/1.35fr ile birinci sütunun
+     sağ kenarı 788px ve 844px'te bitiyordu, yani 56px kayma görünüyordu. */
   .iletisim-form-izgara {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--bosluk-4);
     padding: var(--bosluk-4) var(--bosluk-5);
   }
@@ -73,9 +77,14 @@
     padding: var(--bosluk-3) var(--bosluk-5);
     border-bottom: 1px solid var(--cizgi);
     color: var(--metin-3);
-    font-size: var(--olcu-xs);
+    font-size: var(--olcu-sm);
   }
   .iletisim-form-zorunlu-not span { color: var(--hu-kirmizi); font-weight: 700; }
+
+  /* Açıklamadaki yıldız kırmızıydı, etiketlerdeki yıldızlar ise etiket
+     rengindeydi (lacivert). Açıklama, formda karşılığı olmayan bir işareti
+     tarif ediyordu. İki yıldız artık aynı görünüyor. */
+  .zorunlu-isaret { color: var(--hu-kirmizi); font-weight: 700; }
 
   .iletisim-form-alan-hata { margin-top: -2px; color: var(--hu-kirmizi); font-size: var(--olcu-xs); font-weight: 650; }
 

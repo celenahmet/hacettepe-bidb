@@ -75,7 +75,7 @@ interface TicketResponse {
 
           <div class="iletisim-form-izgara">
             <label>
-              <span>{{ dilDegeri === 'en' ? 'Category' : 'Kategori' }} *</span>
+              <span>{{ dilDegeri === 'en' ? 'Category' : 'Kategori' }} <b class="zorunlu-isaret" aria-hidden="true">*</b></span>
               <select name="category" #categoryAlani="ngModel" [(ngModel)]="form.category" required>
                 @for (item of kategoriler; track item.key) {
                   <option [value]="item.key">{{ dilDegeri === 'en' ? item.en : item.tr }}</option>
@@ -89,7 +89,7 @@ interface TicketResponse {
               }
             </label>
             <label>
-              <span>{{ dilDegeri === 'en' ? 'Subject' : 'Konu' }} *</span>
+              <span>{{ dilDegeri === 'en' ? 'Subject' : 'Konu' }} <b class="zorunlu-isaret" aria-hidden="true">*</b></span>
               <input name="subject" #subjectAlani="ngModel" [(ngModel)]="form.subject" required minlength="5" maxlength="160"
                      [placeholder]="dilDegeri === 'en' ? 'Briefly describe your request' : 'Talebinizi kısaca belirtin'">
             
@@ -111,7 +111,7 @@ interface TicketResponse {
 
           <div class="iletisim-form-izgara dort">
             <label>
-              <span>{{ dilDegeri === 'en' ? 'First name' : 'Ad' }} *</span>
+              <span>{{ dilDegeri === 'en' ? 'First name' : 'Ad' }} <b class="zorunlu-isaret" aria-hidden="true">*</b></span>
               <input name="firstName" #firstNameAlani="ngModel" [(ngModel)]="form.firstName" required minlength="2" maxlength="80" autocomplete="given-name">
             
               @if (firstNameAlani.invalid && (firstNameAlani.dirty || firstNameAlani.touched)) {
@@ -123,7 +123,7 @@ interface TicketResponse {
               }
             </label>
             <label>
-              <span>{{ dilDegeri === 'en' ? 'Last name' : 'Soyad' }} *</span>
+              <span>{{ dilDegeri === 'en' ? 'Last name' : 'Soyad' }} <b class="zorunlu-isaret" aria-hidden="true">*</b></span>
               <input name="lastName" #lastNameAlani="ngModel" [(ngModel)]="form.lastName" required minlength="2" maxlength="80" autocomplete="family-name">
             
               @if (lastNameAlani.invalid && (lastNameAlani.dirty || lastNameAlani.touched)) {
@@ -135,7 +135,7 @@ interface TicketResponse {
               }
             </label>
             <label>
-              <span>{{ dilDegeri === 'en' ? 'E-mail address' : 'E-posta adresi' }} *</span>
+              <span>{{ dilDegeri === 'en' ? 'E-mail address' : 'E-posta adresi' }} <b class="zorunlu-isaret" aria-hidden="true">*</b></span>
               <!-- type="email" TEK BAŞINA Angular doğrulaması yapmaz; onu ancak
                    "email" yönergesi devreye sokar. Yoksa "duzmetin" gibi @
                    içermeyen bir değer bile geçerli sayılıp gönderiliyor, backend
@@ -156,7 +156,7 @@ interface TicketResponse {
               }
             </label>
             <label>
-              <span>{{ dilDegeri === 'en' ? 'Telephone' : 'Telefon' }} *</span>
+              <span>{{ dilDegeri === 'en' ? 'Telephone' : 'Telefon' }} <b class="zorunlu-isaret" aria-hidden="true">*</b></span>
               <input name="phone" #phoneAlani="ngModel" [(ngModel)]="form.phone" type="tel" required minlength="7"
                      maxlength="30" autocomplete="tel" pattern="^[0-9+()\-.\s]+$">
               <!-- Boş alanda biçim uyarısı vermek yanıltıcıydı: hiç yazmamış
@@ -172,7 +172,7 @@ interface TicketResponse {
           </div>
 
           <label class="iletisim-form-mesaj">
-            <span>{{ dilDegeri === 'en' ? 'Your message' : 'Mesajınız' }} *</span>
+            <span>{{ dilDegeri === 'en' ? 'Your message' : 'Mesajınız' }} <b class="zorunlu-isaret" aria-hidden="true">*</b></span>
             <textarea name="message" #messageAlani="ngModel" [(ngModel)]="form.message" required minlength="20"
                       maxlength="5000" rows="7"></textarea>
             @if (messageAlani.invalid && (messageAlani.dirty || messageAlani.touched)) {
