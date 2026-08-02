@@ -234,7 +234,7 @@ interface MobileMenuItem {
             <div class="analitik-ana-izgara">
               <section class="analitik-panel analitik-grafik">
                 <header>
-                  <div><span class="bolum-no">12 Aylık Eğilim</span><h2>Aylık trafik</h2></div>
+                  <div><span class="bolum-no">{{ dilServisi.t('anaEgilim') }}</span><h2>{{ dilServisi.t('anaAylikTrafik') }}</h2></div>
                   <button type="button" class="ikincil" (click)="analitikYukle()">Yenile</button>
                 </header>
                 @if (a.monthly.length) {
@@ -268,7 +268,7 @@ interface MobileMenuItem {
               <aside class="analitik-kirilimlar">
                 <section class="analitik-panel">
                   <span class="bolum-no">Cihazlar</span>
-                  <h2>Erişim biçimi</h2>
+                  <h2>{{ dilServisi.t('anaErisimBicimi') }}</h2>
                   @for (item of a.devices; track item.name) {
                     <div class="kirilim-satir">
                       <span>{{ cihazEtiketi(item.name) }}</span><strong>%{{ item.percentage }}</strong>
@@ -278,7 +278,7 @@ interface MobileMenuItem {
                 </section>
                 <section class="analitik-panel">
                   <span class="bolum-no">Kaynaklar</span>
-                  <h2>Trafik kaynağı</h2>
+                  <h2>{{ dilServisi.t('anaTrafikKaynagi') }}</h2>
                   @for (item of a.referrers; track item.name) {
                     <div class="kirilim-satir">
                       <span>{{ kaynakEtiketi(item.name) }}</span><strong>%{{ item.percentage }}</strong>
@@ -291,12 +291,12 @@ interface MobileMenuItem {
 
             <section class="kalite-bolum">
               <header>
-                <div><span class="bolum-no">İçerik Performansı</span><h2>Sayfa bazlı rapor</h2></div>
+                <div><span class="bolum-no">{{ dilServisi.t('anaIcerikPerformansi') }}</span><h2>{{ dilServisi.t('anaSayfaRapor') }}</h2></div>
                 <p>Toplam görüntüleme, aylık karşılaştırma ve son ziyaret tek raporda.</p>
               </header>
               <div class="tablo-kaydir">
                 <table class="yonetim-tablo analitik-tablo">
-                  <thead><tr><th>Sayfa</th><th>Toplam</th><th>Bu ay</th><th>Geçen ay</th><th>Değişim</th><th>Son ziyaret</th></tr></thead>
+                  <thead><tr><th>Sayfa</th><th>Toplam</th><th>Bu ay</th>{{ dilServisi.t('anaGecenAy') }}{{ dilServisi.t('anaDegisim') }}<th>Son ziyaret</th></tr></thead>
                   <tbody>
                     @for (page of a.pages; track page.path) {
                       <tr>
@@ -351,7 +351,7 @@ interface MobileMenuItem {
                   @if (q.performanceScore === null) {
                     Henüz ziyaretçi ölçümü yok
                   } @else {
-                    28 gün · {{ q.performanceSamples }} örnek
+                    28 {{ dilServisi.t('kaliteGun') }} · {{ q.performanceSamples }} {{ dilServisi.t('kaliteOrnek') }}
                   }
                 </small>
               </article>
@@ -366,7 +366,7 @@ interface MobileMenuItem {
               <header>
                 <div>
                   <span class="bolum-no">Core Web Vitals</span>
-                  <h2>Gerçek kullanıcı ölçümleri</h2>
+                  <h2>{{ dilServisi.t('kaliteGercekOlcum') }}</h2>
                 </div>
                 <p>75. yüzdelik değerler; ortalama değer kullanıcı deneyimini gizlemez.</p>
               </header>
@@ -381,8 +381,8 @@ interface MobileMenuItem {
                           <strong>{{ metrikDegeri(v.metric, v.p75) }}</strong>
                         </div>
                         <p>{{ v.path }}</p>
-                        <small>{{ v.samples }} örnek · {{ dereceEtiketi(v.rating) }}</small>
-                        <span class="kalite-vital-detay-ipucu">Ayrıntılar için tıklayın</span>
+                        <small>{{ v.samples }} {{ dilServisi.t('kaliteOrnek') }} · {{ dereceEtiketi(v.rating) }}</small>
+                        <span class="kalite-vital-detay-ipucu">{{ dilServisi.t('kaliteAyrintiIpucu') }}</span>
                       </button>
                     </article>
                   }
@@ -402,14 +402,14 @@ interface MobileMenuItem {
               <header>
                 <div>
                   <span class="bolum-no">Sayfa Denetimi</span>
-                  <h2>SEO geliştirme kuyruğu</h2>
+                  <h2>{{ dilServisi.t('kaliteSeoKuyruk') }}</h2>
                 </div>
                 <p>En düşük puanlı kayıtlar önce gösterilir.</p>
               </header>
               <div class="tablo-kaydir">
                 <table class="yonetim-tablo kalite-tablo">
                   <thead>
-                    <tr><th>Sayfa</th><th>Tür</th><th>Puan</th><th>Geliştirme alanları</th></tr>
+                    <tr><th>Sayfa</th><th>{{ dilServisi.t('ortakTur') }}</th><th>Puan</th>{{ dilServisi.t('kaliteGelistirmeAlanlari') }}</tr>
                   </thead>
                   <tbody>
                     @for (p of q.pages; track p.path) {
@@ -480,7 +480,7 @@ interface MobileMenuItem {
 
             <table class="yonetim-tablo">
               <thead>
-                <tr><th>Sayfa</th><th>Dil</th><th>İçerik</th><th>Yayında</th><th></th></tr>
+                <tr><th>Sayfa</th><th>Dil</th>{{ dilServisi.t('sayfaIcerik') }}{{ dilServisi.t('sayfaYayinda') }}<th></th></tr>
               </thead>
               <tbody>
                 @for (s of pages(); track s.id) {
@@ -491,7 +491,7 @@ interface MobileMenuItem {
                     <td>{{ s.published ? 'Evet' : 'Hayır' }}</td>
                     <td>
                       <button type="button" class="ikincil" (click)="duzenle(s)">SEO</button>
-                      <button type="button" (click)="openPage(s)">Düzenle</button>
+                      <button type="button" (click)="openPage(s)">{{ dilServisi.t('ortakDuzenle') }}</button>
                     </td>
                   </tr>
 
@@ -568,7 +568,7 @@ interface MobileMenuItem {
             <div class="duyuru-form-baslik">
               <div>
                 <span class="bolum-no">Haber ve Duyuru</span>
-                <h2>{{ newsItem().id ? 'Duyuruyu düzenle' : 'Yeni duyuru oluştur' }}</h2>
+                <h2>{{ newsItem().id ? 'Duyuruyu düzenle' : dilServisi.t('duyuruYeniOlustur') }}</h2>
               </div>
               <p>Kategori, hedef kitle ve kapak dili birlikte yönetilir.</p>
             </div>
@@ -624,7 +624,7 @@ interface MobileMenuItem {
                        [ngModel]="newsItem().documentOnly"
                        (ngModelChange)="duyuruBelgeModu($event)">
                 <span>
-                  <strong>Yalnızca belge ile yayımla</strong>
+                  <strong>{{ dilServisi.t('duyuruYalnizcaBelge') }}</strong>
                   <small>Kart tıklandığında ayrı bir haber sayfası yerine doğrudan yüklenen belge açılır.</small>
                 </span>
               </label>
@@ -691,7 +691,7 @@ interface MobileMenuItem {
               <div class="duyuru-kapak-baslik">
                 <div>
                   <span class="bolum-no">Kapak Tasarımı</span>
-                  <h3>Fotoğraf veya kurumsal şablon</h3>
+                  <h3>{{ dilServisi.t('duyuruFotoSablon') }}</h3>
                 </div>
                 <p>Fotoğraf yüklenmezse seçtiğiniz hazır renk paleti ve kurumsal şablon otomatik kullanılır.</p>
               </div>
@@ -814,7 +814,7 @@ interface MobileMenuItem {
           <div class="tablo-kaydir">
 
             <table class="yonetim-tablo">
-              <thead><tr><th>Tarih</th><th>Kapak</th><th>Kategori / hedef</th><th>Başlık</th><th>Adres</th><th>Dil</th><th></th></tr></thead>
+              <thead><tr><th>Tarih</th><th>Kapak</th><th>Kategori / hedef</th><th>{{ dilServisi.t('ortakBaslik') }}</th><th>Adres</th><th>Dil</th><th></th></tr></thead>
               <tbody>
                 @for (d of news(); track d.id) {
                   <tr>
@@ -842,7 +842,7 @@ interface MobileMenuItem {
                     </td>
                     <td>{{ d.language }}</td>
                     <td>
-                      <button type="button" class="ikincil" (click)="duyuruDuzenle(d)">Düzenle</button>
+                      <button type="button" class="ikincil" (click)="duyuruDuzenle(d)">{{ dilServisi.t('ortakDuzenle') }}</button>
                       <button type="button" class="tehlike" (click)="deleteNews(d)">Sil</button>
                     </td>
                   </tr>
@@ -891,7 +891,7 @@ interface MobileMenuItem {
           <div class="tablo-kaydir">
 
             <table class="yonetim-tablo">
-              <thead><tr><th>Sıra</th><th>Başlık</th><th>Görsel</th><th>Dil</th><th></th></tr></thead>
+              <thead><tr><th>{{ dilServisi.t('ortakSira') }}</th><th>{{ dilServisi.t('ortakBaslik') }}</th><th>{{ dilServisi.t('ortakGorsel') }}</th><th>Dil</th><th></th></tr></thead>
               <tbody>
                 @for (sl of slides(); track sl.id) {
                   <tr>
@@ -900,7 +900,7 @@ interface MobileMenuItem {
                     <td><small>{{ sl.imageUrl }}</small></td>
                     <td>{{ sl.language }}</td>
                     <td>
-                      <button type="button" class="ikincil" (click)="slaytDuzenle(sl)">Düzenle</button>
+                      <button type="button" class="ikincil" (click)="slaytDuzenle(sl)">{{ dilServisi.t('ortakDuzenle') }}</button>
                       <button type="button" class="tehlike" (click)="deleteSlide(sl)">Sil</button>
                     </td>
                   </tr>
@@ -941,7 +941,7 @@ interface MobileMenuItem {
             </form>
           }
 
-          <button type="button" (click)="bolumDuzenle(null)">Yeni menü bölümü</button>
+          <button type="button" (click)="bolumDuzenle(null)">{{ dilServisi.t('ortakYeniMenuBolumu') }}</button>
 
           @if (menuBolum(); as mb) {
             <form class="duyuru-form" (ngSubmit)="bolumKaydet()">
@@ -966,13 +966,13 @@ interface MobileMenuItem {
             <section class="menu-bolum">
               <h2>{{ m.title }} <small>({{ m.language }})</small></h2>
               <span class="dugmeler">
-                <button type="button" class="ikincil" (click)="ogeDuzenle(m.id, null)">Bağlantı ekle</button>
-                <button type="button" class="ikincil" (click)="bolumDuzenle(m)">Bölümü düzenle</button>
-                <button type="button" class="tehlike" (click)="bolumSil(m)">Bölümü sil</button>
+                <button type="button" class="ikincil" (click)="ogeDuzenle(m.id, null)">{{ dilServisi.t('ortakBaglantiEkle') }}</button>
+                <button type="button" class="ikincil" (click)="bolumDuzenle(m)">{{ dilServisi.t('ortakBolumuDuzenle') }}</button>
+                <button type="button" class="tehlike" (click)="bolumSil(m)">{{ dilServisi.t('ortakBolumuSil') }}</button>
               </span>
               <div class="tablo-kaydir">
                 <table class="yonetim-tablo">
-                  <thead><tr><th>Sıra</th><th>Etiket</th><th>Hedef</th><th></th></tr></thead>
+                  <thead><tr><th>{{ dilServisi.t('ortakSira') }}</th><th>Etiket</th><th>Hedef</th><th></th></tr></thead>
                   <tbody>
                     @for (o of m.items; track o.id) {
                       <tr>
@@ -980,7 +980,7 @@ interface MobileMenuItem {
                         <td>{{ o.label }}</td>
                         <td><small>{{ o.pagePath || o.externalUrl }}</small></td>
                         <td>
-                          <button type="button" class="ikincil" (click)="ogeDuzenle(m.id, o)">Düzenle</button>
+                          <button type="button" class="ikincil" (click)="ogeDuzenle(m.id, o)">{{ dilServisi.t('ortakDuzenle') }}</button>
                           <button type="button" class="tehlike" (click)="ogeSil(o)">Sil</button>
                         </td>
                       </tr>
@@ -1012,7 +1012,7 @@ interface MobileMenuItem {
           <div class="tablo-kaydir">
 
             <table class="yonetim-tablo">
-              <thead><tr><th>Sıra</th><th>Ağ</th><th>Adres</th><th></th></tr></thead>
+              <thead><tr><th>{{ dilServisi.t('ortakSira') }}</th><th>{{ dilServisi.t('ortakAg') }}</th><th>Adres</th><th></th></tr></thead>
               <tbody>
                 @for (sh of socialAccounts(); track sh.id) {
                   <tr>
@@ -1020,7 +1020,7 @@ interface MobileMenuItem {
                     <td>{{ sh.network }}</td>
                     <td><small>{{ sh.url }}</small></td>
                     <td>
-                      <button type="button" class="ikincil" (click)="sosyalDuzenle(sh)">Düzenle</button>
+                      <button type="button" class="ikincil" (click)="sosyalDuzenle(sh)">{{ dilServisi.t('ortakDuzenle') }}</button>
                       <button type="button" class="tehlike" (click)="deleteSocialAccount(sh)">Sil</button>
                     </td>
                   </tr>
@@ -1035,7 +1035,7 @@ interface MobileMenuItem {
             bir kayıttır; sıra numarası görüntüleme sırasını belirler.
           </p>
 
-          <button type="button" (click)="kanalDuzenle(null)">Yeni kayıt</button>
+          <button type="button" (click)="kanalDuzenle(null)">{{ dilServisi.t('ortakYeniKayit') }}</button>
 
           @if (kanal(); as k) {
             <form class="duyuru-form" (ngSubmit)="kanalKaydet()">
@@ -1078,7 +1078,7 @@ interface MobileMenuItem {
           <div class="tablo-kaydir">
 
             <table class="yonetim-tablo">
-              <thead><tr><th>Tür</th><th>Sıra</th><th>Değer</th><th>Etiket</th><th>Dil</th><th></th></tr></thead>
+              <thead><tr><th>{{ dilServisi.t('ortakTur') }}</th><th>{{ dilServisi.t('ortakSira') }}</th><th>{{ dilServisi.t('ortakDeger') }}</th><th>Etiket</th><th>Dil</th><th></th></tr></thead>
               <tbody>
                 @for (k of kanallar(); track k.id) {
                   <tr>
@@ -1088,7 +1088,7 @@ interface MobileMenuItem {
                     <td><small>{{ k.label || '—' }}</small></td>
                     <td>{{ k.language }}</td>
                     <td>
-                      <button type="button" class="ikincil" (click)="kanalDuzenle(k)">Düzenle</button>
+                      <button type="button" class="ikincil" (click)="kanalDuzenle(k)">{{ dilServisi.t('ortakDuzenle') }}</button>
                       <button type="button" class="tehlike" (click)="kanalSil(k)">Sil</button>
                     </td>
                   </tr>
@@ -1099,7 +1099,7 @@ interface MobileMenuItem {
           </div>
 
         } @else if (sekme() === 'shortcuts') {
-          <button type="button" (click)="kisayolDuzenle(null)">Yeni kısayol</button>
+          <button type="button" (click)="kisayolDuzenle(null)">{{ dilServisi.t('ortakYeniKisayol') }}</button>
 
           @if (shortcutItem(); as ks) {
             <form class="duyuru-form" (ngSubmit)="saveShortcut()">
@@ -1136,7 +1136,7 @@ interface MobileMenuItem {
           <div class="tablo-kaydir">
 
             <table class="yonetim-tablo">
-              <thead><tr><th>Sıra</th><th>Ad</th><th>Adres</th><th>Dil</th><th></th></tr></thead>
+              <thead><tr><th>{{ dilServisi.t('ortakSira') }}</th><th>Ad</th><th>Adres</th><th>Dil</th><th></th></tr></thead>
               <tbody>
                 @for (ks of shortcuts(); track ks.id) {
                   <tr>
@@ -1145,7 +1145,7 @@ interface MobileMenuItem {
                     <td><small>{{ ks.url }}</small></td>
                     <td>{{ ks.language }}</td>
                     <td>
-                      <button type="button" class="ikincil" (click)="kisayolDuzenle(ks)">Düzenle</button>
+                      <button type="button" class="ikincil" (click)="kisayolDuzenle(ks)">{{ dilServisi.t('ortakDuzenle') }}</button>
                       <button type="button" class="tehlike" (click)="deleteShortcut(ks)">Sil</button>
                     </td>
                   </tr>
@@ -1175,7 +1175,7 @@ interface MobileMenuItem {
         } @else if (sekme() === 'hakkinda') {
 
           <section class="hakkinda-bolum">
-            <h2>Bu yönetim paneli nedir?</h2>
+            <h2>{{ dilServisi.t('hakkindaNedir') }}</h2>
             <p>
               Bu panel, Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı'nın
               kurumsal internet sitesini (bidb.hacettepe.edu.tr) yöneten
@@ -1193,7 +1193,7 @@ interface MobileMenuItem {
               (bozuk bağlantı, eksik alt metin, erişilebilirlik) düzeltilmiştir.
             </p>
 
-            <h2>Menülerin ve içeriğin dinamikliği</h2>
+            <h2>{{ dilServisi.t('hakkindaDinamiklik') }}</h2>
             <p>
               Sitede görünen hiçbir menü, kısayol ya da sayfa sırası kodun
               içine gömülü değildir — hepsi veritabanında kayıtlıdır ve bu
@@ -1220,7 +1220,7 @@ interface MobileMenuItem {
               bir parçasıydı.
             </p>
 
-            <h2>Geliştirme notu</h2>
+            <h2>{{ dilServisi.t('hakkindaGelistirmeNotu') }}</h2>
             <p>
               Bu yönetim paneli ve site, Bilgi İşlem Daire Başkanlığı'nda
               <strong> 2026 yılı yaz stajyerliği</strong> kapsamında, Personel
@@ -1321,7 +1321,7 @@ interface MobileMenuItem {
 
               <div class="aciklama-pencere-durum">
                 <span class="aciklama-pencere-rozet" [attr.data-rating]="av.rating">{{ dereceEtiketi(av.rating) }}</span>
-                <span>{{ av.path }} · {{ av.samples }} örnek · 75. yüzdelik</span>
+                <span>{{ av.path }} · {{ av.samples }} {{ dilServisi.t('kaliteOrnek') }} · {{ dilServisi.t('kaliteYuzdelik') }}</span>
               </div>
 
               <div class="aciklama-pencere-govde">
@@ -1679,7 +1679,9 @@ export class AdminPanelComponent {
   }
 
   protected dereceEtiketi(rating: string): string {
-    return rating === 'good' ? 'İyi' : rating === 'needs-improvement' ? 'İyileştirilmeli' : 'Zayıf';
+    return rating === 'good' ? this.dilServisi.t('kaliteIyi')
+      : rating === 'needs-improvement' ? this.dilServisi.t('kaliteGelistirilmeli')
+      : this.dilServisi.t('kaliteZayif');
   }
 
   protected metrikDegeri(metric: string, value: number): string {

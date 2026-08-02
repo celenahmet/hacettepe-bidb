@@ -1,6 +1,7 @@
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { SlicePipe } from '@angular/common';
 import { AdminApiService, AuditEvent } from './admin-api.service';
+import { AdminDilServisi } from './admin-dil.service';
 import { tiklamaSinirlayici } from './tiklama-siniri';
 import { aramaIcinSadelestir } from '../core/arama-metni';
 
@@ -12,11 +13,11 @@ import { aramaIcinSadelestir } from '../core/arama-metni';
     <section class="kalite-bolum">
       <header>
         <div>
-          <span class="bolum-no">Güvenlik Denetimi</span>
-          <h2>İşlem günlüğü</h2>
-          <p>Panelde yapılan her oluşturma/güncelleme/silme işlemi — oturum, kullanıcı adı, genel ve yerel IPv4 ile.</p>
+          <span class="bolum-no">{{ d.t('gunlukGuvenlikDenetimi') }}</span>
+          <h2>{{ d.t('gunlukIslemBaslik') }}</h2>
+          <p>{{ d.t('gunlukIslemTanitim') }}</p>
         </div>
-        <button type="button" class="ikincil" (click)="yukle()">Yenile</button>
+        <button type="button" class="ikincil" (click)="yukle()">{{ d.t('gunlukYenile') }}</button>
       </header>
 
       <div class="gunluk-arac-cubugu">
@@ -24,15 +25,15 @@ import { aramaIcinSadelestir } from '../core/arama-metni';
              kalanıyla aynı örüntüyle (görünmez etiket) veriliyor —
              bkz. contact-ticket-admin.component.ts. -->
         <label class="gunluk-arama-etiket">
-          <span class="sr-only">Kayıtlarda filtrele</span>
-          <input type="search" class="gunluk-arama" placeholder="Filtrele: işlem, kullanıcı, oturum, yol…"
+          <span class="sr-only">{{ d.t('gunlukFiltreEtiket') }}</span>
+          <input type="search" class="gunluk-arama" [placeholder]="d.t('gunlukFiltreYerTutucu')"
                  [value]="filtre()" (input)="filtre.set($any($event.target).value)">
         </label>
-        <span class="gunluk-sayac">{{ filtrelenmis().length }} / {{ kayitlar().length }} kayıt</span>
+        <span class="gunluk-sayac">{{ filtrelenmis().length }} / {{ kayitlar().length }} {{ d.t('epostaKayit') }}</span>
       </div>
 
       @if (yukleniyor()) {
-        <p class="aciklama" role="status">Kayıtlar yükleniyor…</p>
+        <p class="aciklama" role="status">{{ d.t('gunlukYukleniyor') }}</p>
       } @else if (hata()) {
         <p class="hata" role="alert">{{ hata() }}</p>
       } @else if (filtrelenmis().length) {
@@ -40,14 +41,14 @@ import { aramaIcinSadelestir } from '../core/arama-metni';
           <table class="yonetim-tablo">
             <thead>
               <tr>
-                <th>Zaman</th>
-                <th>Oturum</th>
-                <th>Kullanıcı</th>
-                <th>İşlem</th>
-                <th>Kaynak</th>
+                <th>{{ d.t('ortakZaman') }}</th>
+                <th>{{ d.t('gunlukOturum') }}</th>
+                <th>{{ d.t('ortakKullanici') }}</th>
+                <th>{{ d.t('ortakIslem') }}</th>
+                <th>{{ d.t('gunlukKaynak') }}</th>
                 <th>Genel IPv4</th>
                 <th>Yerel IPv4</th>
-                <th>Durum</th>
+                <th>{{ d.t('ortakDurum') }}</th>
               </tr>
             </thead>
             <tbody>
@@ -79,8 +80,8 @@ import { aramaIcinSadelestir } from '../core/arama-metni';
         </div>
       } @else {
         <div class="kalite-bos">
-          <strong>Kayıt yok</strong>
-          <p>Panelde yapılan bir sonraki değişiklik işlemi burada görünecek.</p>
+          <strong>{{ d.t('gunlukKayitYok') }}</strong>
+          <p>{{ d.t('gunlukKayitYokAciklama') }}</p>
         </div>
       }
 
@@ -127,6 +128,7 @@ import { aramaIcinSadelestir } from '../core/arama-metni';
 })
 export class AuditLogAdminComponent implements OnInit {
   private api = inject(AdminApiService);
+  protected d = inject(AdminDilServisi);
 
   protected kayitlar = signal<AuditEvent[]>([]);
   protected yukleniyor = signal(false);

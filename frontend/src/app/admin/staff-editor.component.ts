@@ -1,6 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AdminApiService, StaffMember, StaffUnit } from './admin-api.service';
+import { AdminDilServisi } from './admin-dil.service';
 import { tiklamaSinirlayici } from './tiklama-siniri';
 
 /**
@@ -19,8 +20,7 @@ import { tiklamaSinirlayici } from './tiklama-siniri';
   imports: [FormsModule],
   template: `
     <p class="aciklama">
-      Personel sayfası bu kayıtlardan üretilir. Buradaki her değişiklik
-      kaydedildiği anda sitede görünür.
+      {{ d.t('personelTanitim') }}
     </p>
 
     <span class="dugmeler">
@@ -148,9 +148,9 @@ import { tiklamaSinirlayici } from './tiklama-siniri';
         <span class="dugmeler">
           <button type="button" class="ikincil" (click)="tasi('units', b.id!, 'up')" title="Yukarı taşı">↑</button>
           <button type="button" class="ikincil" (click)="tasi('units', b.id!, 'down')" title="Aşağı taşı">↓</button>
-          <button type="button" class="ikincil" (click)="kisiDuzenle(b, null)">Kişi ekle</button>
-          <button type="button" class="ikincil" (click)="birimDuzenle(b)">Birimi düzenle</button>
-          <button type="button" class="tehlike" (click)="birimSil(b)">Birimi sil</button>
+          <button type="button" class="ikincil" (click)="kisiDuzenle(b, null)">{{ d.t('ortakKisiEkle') }}</button>
+          <button type="button" class="ikincil" (click)="birimDuzenle(b)">{{ d.t('ortakBirimiDuzenle') }}</button>
+          <button type="button" class="tehlike" (click)="birimSil(b)">{{ d.t('ortakBirimiSil') }}</button>
         </span>
 
         <div class="tablo-kaydir">
@@ -177,7 +177,7 @@ import { tiklamaSinirlayici } from './tiklama-siniri';
                   <td>
                     <button type="button" class="ikincil" (click)="tasi('members', k.id!, 'up')" title="Yukarı taşı">↑</button>
                     <button type="button" class="ikincil" (click)="tasi('members', k.id!, 'down')" title="Aşağı taşı">↓</button>
-                    <button type="button" class="ikincil" (click)="kisiDuzenle(b, k)">Düzenle</button>
+                    <button type="button" class="ikincil" (click)="kisiDuzenle(b, k)">{{ d.t('ortakDuzenle') }}</button>
                     <button type="button" class="tehlike" (click)="kisiSil(k)">Sil</button>
                   </td>
                 </tr>
@@ -193,6 +193,7 @@ import { tiklamaSinirlayici } from './tiklama-siniri';
 })
 export class StaffEditorComponent {
   private api = inject(AdminApiService);
+  protected d = inject(AdminDilServisi);
 
   protected birimler = signal<StaffUnit[]>([]);
   protected birimFormu = signal<StaffUnit | null>(null);

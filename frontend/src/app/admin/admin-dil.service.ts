@@ -141,6 +141,123 @@ const SOZLUK: Record<string, { tr: string; en: string }> = {
   epostaAdresKaydedilemedi: { tr: 'Bildirim adresi kaydedilemedi. Adresin biçimini denetleyiniz.', en: 'The notification address could not be saved. Please check the address format.' },
   epostaSinamaGonderilemedi: { tr: 'Sınama iletisi gönderilemedi.', en: 'The test message could not be sent.' },
 
+  // ---- SEO ve Performans ----
+  kaliteGercekOlcum: { tr: 'Gerçek kullanıcı ölçümleri', en: 'Real user measurements' },
+  kaliteSeoKuyruk: { tr: 'SEO geliştirme kuyruğu', en: 'SEO improvement queue' },
+  kaliteOrnek: { tr: 'örnek', en: 'samples' },
+  kaliteGun: { tr: 'gün', en: 'days' },
+  kaliteAyrintiIpucu: { tr: 'Ayrıntılar için tıklayın', en: 'Click for details' },
+  kaliteYuzdelik: { tr: '75. yüzdelik', en: '75th percentile' },
+  kaliteIyi: { tr: 'İyi', en: 'Good' },
+  kaliteGelistirilmeli: { tr: 'İyileştirilmeli', en: 'Needs improvement' },
+  kaliteZayif: { tr: 'Zayıf', en: 'Poor' },
+
+  // ---- panel genelinde tekrar eden metinler ----
+  ortakDuzenle: { tr: 'Düzenle', en: 'Edit' },
+  ortakSil: { tr: 'Sil', en: 'Delete' },
+  ortakSira: { tr: 'Sıra', en: 'Order' },
+  ortakBaslik: { tr: 'Başlık', en: 'Title' },
+  ortakGorsel: { tr: 'Görsel', en: 'Image' },
+  ortakTur: { tr: 'Tür', en: 'Type' },
+  ortakDeger: { tr: 'Değer', en: 'Value' },
+  ortakAg: { tr: 'Ağ', en: 'Network' },
+  ortakKullanici: { tr: 'Kullanıcı', en: 'User' },
+  ortakIslem: { tr: 'İşlem', en: 'Action' },
+  ortakZaman: { tr: 'Zaman', en: 'Time' },
+  ortakDurum: { tr: 'Durum', en: 'Status' },
+  ortakYeniKisayol: { tr: 'Yeni kısayol', en: 'New shortcut' },
+  ortakYeniKayit: { tr: 'Yeni kayıt', en: 'New record' },
+  ortakYeniMenuBolumu: { tr: 'Yeni menü bölümü', en: 'New menu section' },
+  ortakBaglantiEkle: { tr: 'Bağlantı ekle', en: 'Add link' },
+  ortakBolumuDuzenle: { tr: 'Bölümü düzenle', en: 'Edit section' },
+  ortakBolumuSil: { tr: 'Bölümü sil', en: 'Delete section' },
+  ortakKisiEkle: { tr: 'Kişi ekle', en: 'Add person' },
+  ortakBirimiDuzenle: { tr: 'Birimi düzenle', en: 'Edit unit' },
+  ortakBirimiSil: { tr: 'Birimi sil', en: 'Delete unit' },
+  iletisimTanitim: {
+    tr: 'Alt bilgide görünen kurum bilgileri. Her telefon ve e-posta ayrı bir kayıttır; sıra numarası görüntüleme sırasını belirler.',
+    en: 'Institutional details shown in the footer. Each telephone number and e-mail address is a separate record; the order number determines the display sequence.' },
+  personelTanitim: {
+    tr: 'Personel sayfası bu kayıtlardan üretilir. Buradaki her değişiklik kaydedildiği anda sitede görünür.',
+    en: 'The staff page is generated from these records. Every change here appears on the site as soon as it is saved.' },
+
+  // ---- güvenlik denetimi bölümleri ----
+  gunlukGuvenlikDenetimi: { tr: 'Güvenlik Denetimi', en: 'Security Audit' },
+  gunlukIslemBaslik: { tr: 'İşlem günlüğü', en: 'Audit log' },
+  gunlukIslemTanitim: {
+    tr: 'Panelde yapılan her oluşturma/güncelleme/silme işlemi — oturum, kullanıcı adı, genel ve yerel IPv4 ile.',
+    en: 'Every create, update and delete performed in the panel — with session, username, public and local IPv4.' },
+  gunlukFiltreEtiket: { tr: 'Kayıtlarda filtrele', en: 'Filter records' },
+  gunlukFiltreYerTutucu: { tr: 'Filtrele: işlem, kullanıcı, oturum, yol…', en: 'Filter: action, user, session, path…' },
+  gunlukOturum: { tr: 'Oturum', en: 'Session' },
+  gunlukKaynak: { tr: 'Kaynak', en: 'Resource' },
+  gunlukKayitYok: { tr: 'Kayıt yok', en: 'No records' },
+  gunlukKayitYokAciklama: {
+    tr: 'Panelde yapılan bir sonraki değişiklik işlemi burada görünecek.',
+    en: 'The next change made in the panel will appear here.' },
+  gunlukYukleniyor: { tr: 'Kayıtlar yükleniyor…', en: 'Loading records…' },
+  gunlukYenile: { tr: 'Yenile', en: 'Refresh' },
+  girisKayitBaslik: { tr: 'Giriş kayıtları', en: 'Sign-in records' },
+  girisKayitTanitim: {
+    tr: 'Yönetim paneline yapılan son 200 giriş denemesi — cihaz, tarayıcı ve konum bilgisiyle.',
+    en: 'The last 200 sign-in attempts to the admin panel — with device, browser and location details.' },
+  girisKayitKullaniciAdi: { tr: 'Kullanıcı adı', en: 'Username' },
+  girisKayitTarayici: { tr: 'Tarayıcı / İşletim sistemi', en: 'Browser / Operating system' },
+
+  // ---- analitik ----
+  anaAylikTrafik: { tr: 'Aylık trafik', en: 'Monthly traffic' },
+  anaErisimBicimi: { tr: 'Erişim biçimi', en: 'Access type' },
+  anaTrafikKaynagi: { tr: 'Trafik kaynağı', en: 'Traffic source' },
+  anaSayfaRapor: { tr: 'Sayfa bazlı rapor', en: 'Report by page' },
+  anaGecenAy: { tr: 'Geçen ay', en: 'Last month' },
+  anaDegisim: { tr: 'Değişim', en: 'Change' },
+  anaEgilim: { tr: '12 Aylık Eğilim', en: '12-Month Trend' },
+  anaIcerikPerformansi: { tr: 'İçerik Performansı', en: 'Content Performance' },
+
+  // ---- kalite / sayfalar ----
+  kaliteGelistirmeAlanlari: { tr: 'Geliştirme alanları', en: 'Areas for improvement' },
+  kaliteYuzdelikNot: {
+    tr: '75. yüzdelik değerler; ortalama değer kullanıcı deneyimini gizler.',
+    en: '75th percentile values; an average would conceal the actual user experience.' },
+  kaliteEnDusukOnce: { tr: 'En düşük puanlı kayıtlar önce gösterilir.', en: 'Lowest scoring records are shown first.' },
+  sayfaIcerik: { tr: 'İçerik', en: 'Content' },
+  sayfaYayinda: { tr: 'Yayında', en: 'Published' },
+  sayfaDuzenleNot: {
+    tr: '"Düzenle" ile sayfanın metnini, adresini ve belgelerini yönetebilirsiniz.',
+    en: 'Use "Edit" to manage the page text, address and documents.' },
+
+  // ---- duyurular ----
+  duyuruYeniOlustur: { tr: 'Yeni duyuru oluştur', en: 'Create announcement' },
+  duyuruFotoSablon: { tr: 'Fotoğraf veya kurumsal şablon', en: 'Photograph or institutional template' },
+  duyuruYalnizcaBelge: { tr: 'Yalnızca belge ile yayımla', en: 'Publish as document only' },
+  duyuruYalnizcaBelgeNot: {
+    tr: 'Kart tıklandığında ayrı bir haber sayfası yerine doğrudan belge açılır.',
+    en: 'Clicking the card opens the document directly instead of a separate news page.' },
+  duyuruKurumsal: { tr: 'Kurumsal', en: 'Institutional' },
+  duyuruKurumsalNot: { tr: 'Lacivert ve kırmızı, resmî genel duyurular', en: 'Navy and red; official general announcements' },
+  duyuruHizmetSinyali: { tr: 'Hizmet Sinyali', en: 'Service Signal' },
+  duyuruHizmetSinyaliNot: { tr: 'Kesinti ve anlık hizmet durumları', en: 'Outages and live service status' },
+  duyuruTeknoloji: { tr: 'Teknoloji', en: 'Technology' },
+  duyuruTeknolojiNot: { tr: 'Yazılım, lisans ve dijital hizmetler', en: 'Software, licences and digital services' },
+  duyuruGuvenlik: { tr: 'Güvenlik', en: 'Security' },
+  duyuruGuvenlikNot: { tr: 'Siber güvenlik ve kritik uyarılar', en: 'Cyber security and critical alerts' },
+  duyuruTeknikBakim: { tr: 'Teknik Bakım', en: 'Technical Maintenance' },
+  duyuruTeknikBakimNot: { tr: 'Planlı bakım ve altyapı çalışmaları', en: 'Planned maintenance and infrastructure work' },
+
+  // ---- iletişim talepleri ----
+  talepBaslik: { tr: 'İletişim talepleri', en: 'Contact requests' },
+  talepMerkezi: { tr: 'Merkezi Talep Kaydı', en: 'Central Request Register' },
+  talepTanitim: {
+    tr: 'Web formundan iletilen talepleri sınıflandırın, sorumlu atayın ve durumlarını izleyin.',
+    en: 'Classify requests submitted through the web form, assign an owner and track their status.' },
+  talepDurumFiltre: { tr: 'Duruma göre filtrele', en: 'Filter by status' },
+  talepAramaYerTutucu: { tr: 'Takip no, konu veya başvuru sahibi ara…', en: 'Search reference, subject or requester…' },
+
+  // ---- yazılım hakkında ----
+  hakkindaNedir: { tr: 'Bu yönetim paneli nedir?', en: 'What is this admin panel?' },
+  hakkindaDinamiklik: { tr: 'Menülerin ve içeriğin dinamikliği', en: 'How menus and content stay dynamic' },
+  hakkindaGelistirmeNotu: { tr: 'Geliştirme notu', en: 'Development note' },
+
   cikisYap: { tr: 'Çıkış', en: 'Sign out' },
   menuyuAc: { tr: 'Yönetim menüsünü aç', en: 'Open admin menu' },
   yonetimPaneli: { tr: 'Yönetim Paneli', en: 'Admin Panel' },

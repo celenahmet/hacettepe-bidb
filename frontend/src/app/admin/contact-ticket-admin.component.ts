@@ -4,6 +4,7 @@ import { tiklamaSinirlayici } from './tiklama-siniri';
 import {
   AdminApiService, ContactTicket, ContactTicketEvent
 } from './admin-api.service';
+import { AdminDilServisi } from './admin-dil.service';
 
 /** Yönetim panelinde iletişim taleplerinin kayıt, atama ve işlem geçmişi görünümü. */
 @Component({
@@ -13,8 +14,8 @@ import {
     <section class="ticket-yonetim">
       <header class="ticket-ust">
         <div>
-          <span class="bolum-no">Merkezi Talep Kaydı</span>
-          <h2>İletişim talepleri</h2>
+          <span class="bolum-no">{{ d.t('talepMerkezi') }}</span>
+          <h2>{{ d.t('talepBaslik') }}</h2>
           <p>Web formundan iletilen talepleri sınıflandırın, sorumlu atayın ve sonuçlanana kadar izleyin.</p>
         </div>
         <div class="ticket-sayaclar" aria-label="Talep özeti">
@@ -31,7 +32,7 @@ import {
                  placeholder="Takip no, konu veya başvuru sahibi ara…">
         </label>
         <label>
-          <span class="sr-only">Duruma göre filtrele</span>
+          <span class="sr-only">{{ d.t('talepDurumFiltre') }}</span>
           <select [ngModel]="durumFiltresi()" (ngModelChange)="durumFiltresi.set($event)">
             <option value="">Tüm durumlar</option>
             @for (item of durumlar; track item.key) { <option [value]="item.key">{{ item.label }}</option> }
@@ -41,10 +42,10 @@ import {
       </div>
 
       @if (yukleniyor()) {
-        <p class="aciklama" role="status">İletişim talepleri yükleniyor…</p>
+        <p class="aciklama" role="status">{{ d.t('talepBaslik') }} yükleniyor…</p>
       } @else {
         <div class="ticket-duzen" [class.detay-acik]="secili()">
-          <div class="ticket-liste" aria-label="İletişim talepleri">
+          <div class="ticket-liste" aria-label="{{ d.t('talepBaslik') }}">
             @for (ticket of filtreli(); track ticket.id) {
               <button type="button" class="ticket-satir" [class.etkin]="secili()?.id === ticket.id"
                       (click)="ac(ticket)">
@@ -159,6 +160,7 @@ import {
 })
 export class ContactTicketAdminComponent implements OnInit {
   private api = inject(AdminApiService);
+  protected d = inject(AdminDilServisi);
   protected tickets = signal<ContactTicket[]>([]);
   protected secili = signal<ContactTicket | null>(null);
   protected olaylar = signal<ContactTicketEvent[]>([]);

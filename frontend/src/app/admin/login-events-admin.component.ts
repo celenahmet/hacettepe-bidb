@@ -1,5 +1,6 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { AdminApiService, LoginEvent } from './admin-api.service';
+import { AdminDilServisi } from './admin-dil.service';
 import { tiklamaSinirlayici } from './tiklama-siniri';
 
 /** Yönetim paneline yapılan giriş denemelerinin kaydı (güvenlik denetimi). */
@@ -9,8 +10,8 @@ import { tiklamaSinirlayici } from './tiklama-siniri';
     <section class="kalite-bolum">
       <header>
         <div>
-          <span class="bolum-no">Güvenlik Denetimi</span>
-          <h2>Giriş kayıtları</h2>
+          <span class="bolum-no">{{ d.t('gunlukGuvenlikDenetimi') }}</span>
+          <h2>{{ d.t('girisKayitBaslik') }}</h2>
           <p>Yönetim paneline yapılan son 200 giriş denemesi — cihaz, tarayıcı, IP ve tahmini konum ile.</p>
         </div>
         <button type="button" class="ikincil" (click)="yukle()">Yenile</button>
@@ -40,12 +41,12 @@ import { tiklamaSinirlayici } from './tiklama-siniri';
             <thead>
               <tr>
                 <th>Zaman</th>
-                <th>Durum</th>
-                <th>Kullanıcı adı</th>
+                <th>{{ d.t('ortakDurum') }}</th>
+                <th>{{ d.t('girisKayitKullaniciAdi') }}</th>
                 <th>Genel IPv4</th>
                 <th>Konum</th>
                 <th>Cihaz</th>
-                <th>Tarayıcı / İşletim sistemi</th>
+                <th>{{ d.t('girisKayitTarayici') }}</th>
               </tr>
             </thead>
             <tbody>
@@ -149,6 +150,7 @@ import { tiklamaSinirlayici } from './tiklama-siniri';
 })
 export class LoginEventsAdminComponent implements OnInit {
   private api = inject(AdminApiService);
+  protected d = inject(AdminDilServisi);
 
   protected kayitlar = signal<LoginEvent[]>([]);
   protected yukleniyor = signal(false);
