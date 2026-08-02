@@ -78,7 +78,7 @@ import { tiklamaSinirlayici } from './tiklama-siniri';
     </section>
 
     @if (acikKayit(); as k) {
-      <div class="vital-perde" (click)="acikKayit.set(null)"></div>
+      <div class="aciklama-perde" (click)="acikKayit.set(null)"></div>
       <div class="giris-detay-pencere" role="dialog" aria-modal="true" aria-label="Giriş denemesi ayrıntısı"
            [class.basarili]="k.successful" [class.basarisiz]="!k.successful"
            (keydown.escape)="acikKayit.set(null)">

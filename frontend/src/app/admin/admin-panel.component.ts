@@ -1282,13 +1282,13 @@ interface MobileMenuItem {
           }
 
           @if (acikVitalKaydi(); as av) {
-            <div class="vital-perde" (click)="acikVitalKaydi.set(null)"></div>
-            <div class="vital-pencere" role="dialog" aria-modal="true" [attr.aria-label]="av.metric + ' ölçüm ayrıntısı'"
+            <div class="aciklama-perde" (click)="acikVitalKaydi.set(null)"></div>
+            <div class="aciklama-pencere" role="dialog" aria-modal="true" [attr.aria-label]="av.metric + ' ölçüm ayrıntısı'"
                  [attr.data-rating]="av.rating" (keydown.escape)="acikVitalKaydi.set(null)">
               <header>
                 <div>
-                  <span class="vital-pencere-metrik">{{ av.metric }}</span>
-                  <strong class="vital-pencere-deger">{{ metrikDegeri(av.metric, av.p75) }}</strong>
+                  <span class="aciklama-pencere-metrik">{{ av.metric }}</span>
+                  <strong class="aciklama-pencere-deger">{{ metrikDegeri(av.metric, av.p75) }}</strong>
                 </div>
                 <button type="button" class="ikincil" (click)="acikVitalKaydi.set(null)" aria-label="Kapat">
                   <svg viewBox="0 0 24 24" aria-hidden="true" width="18" height="18"
@@ -1298,18 +1298,18 @@ interface MobileMenuItem {
                 </button>
               </header>
 
-              <div class="vital-pencere-durum">
-                <span class="vital-pencere-rozet" [attr.data-rating]="av.rating">{{ dereceEtiketi(av.rating) }}</span>
+              <div class="aciklama-pencere-durum">
+                <span class="aciklama-pencere-rozet" [attr.data-rating]="av.rating">{{ dereceEtiketi(av.rating) }}</span>
                 <span>{{ av.path }} · {{ av.samples }} örnek · 75. yüzdelik</span>
               </div>
 
-              <div class="vital-pencere-govde">
+              <div class="aciklama-pencere-govde">
                 <section>
-                  <span class="vital-pencere-baslik">Teknik tanım</span>
+                  <span class="aciklama-pencere-baslik">Teknik tanım</span>
                   <p>{{ VITAL_ACIKLAMA[av.metric].teknik }}</p>
                 </section>
                 <section>
-                  <span class="vital-pencere-baslik">Sade dille</span>
+                  <span class="aciklama-pencere-baslik">Sade dille</span>
                   <p>{{ VITAL_ACIKLAMA[av.metric].sade }}</p>
                 </section>
               </div>

@@ -1251,7 +1251,7 @@
 
   /* ================= Core Web Vitals ayrıntı penceresi ================= */
 
-  .vital-perde {
+  .aciklama-perde {
     position: fixed;
     z-index: 130;
     inset: 0;
@@ -1259,7 +1259,7 @@
     backdrop-filter: blur(2px);
   }
 
-  .vital-pencere {
+  .aciklama-pencere {
     --kalite-renk: var(--hu-lacivert);
     position: fixed;
     z-index: 131;
@@ -1277,22 +1277,22 @@
     transform: translate(-50%, -50%);
     animation: vitalPencereAnimasyonu 0.18s ease-out;
   }
-  .vital-pencere[data-rating="good"] { --kalite-renk: #177245; }
-  .vital-pencere[data-rating="needs-improvement"] { --kalite-renk: #aa6b00; }
-  .vital-pencere[data-rating="poor"] { --kalite-renk: var(--hu-kirmizi); }
+  .aciklama-pencere[data-rating="good"] { --kalite-renk: #177245; }
+  .aciklama-pencere[data-rating="needs-improvement"] { --kalite-renk: #aa6b00; }
+  .aciklama-pencere[data-rating="poor"] { --kalite-renk: var(--hu-kirmizi); }
 
   @keyframes vitalPencereAnimasyonu {
     from { opacity: 0; transform: translate(-50%, -46%); }
     to { opacity: 1; transform: translate(-50%, -50%); }
   }
 
-  .vital-pencere header {
+  .aciklama-pencere header {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
     gap: var(--bosluk-4);
   }
-  .yonetim .vital-pencere header button {
+  .yonetim .aciklama-pencere header button {
     display: grid;
     place-items: center;
     flex: none;
@@ -1301,7 +1301,7 @@
     padding: 0;
   }
 
-  .vital-pencere-metrik {
+  .aciklama-pencere-metrik {
     display: block;
     color: var(--kalite-renk);
     font-size: var(--olcu-xs);
@@ -1309,7 +1309,7 @@
     letter-spacing: 0.14em;
     text-transform: uppercase;
   }
-  .vital-pencere-deger {
+  .aciklama-pencere-deger {
     display: block;
     margin-top: 2px;
     color: var(--murekkep);
@@ -1318,7 +1318,7 @@
     letter-spacing: -0.02em;
   }
 
-  .vital-pencere-durum {
+  .aciklama-pencere-durum {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -1330,7 +1330,7 @@
     color: var(--metin-3);
     font-size: var(--olcu-xs);
   }
-  .vital-pencere-rozet {
+  .aciklama-pencere-rozet {
     padding: 3px var(--bosluk-2);
     border: 1px solid var(--kalite-renk);
     border-radius: var(--kose-tam);
@@ -1341,8 +1341,8 @@
     text-transform: uppercase;
   }
 
-  .vital-pencere-govde section + section { margin-top: var(--bosluk-4); }
-  .vital-pencere-baslik {
+  .aciklama-pencere-govde section + section { margin-top: var(--bosluk-4); }
+  .aciklama-pencere-baslik {
     display: block;
     margin-bottom: var(--bosluk-1);
     color: var(--metin-3);
@@ -1351,13 +1351,13 @@
     letter-spacing: 0.12em;
     text-transform: uppercase;
   }
-  .vital-pencere-govde p {
+  .aciklama-pencere-govde p {
     margin: 0;
     color: var(--metin);
     font-size: var(--olcu-sm);
     line-height: var(--satir-genis);
   }
-  .vital-pencere-govde section:last-child p { color: var(--metin-2); font-style: italic; }
+  .aciklama-pencere-govde section:last-child p { color: var(--metin-2); font-style: italic; }
 
   .kalite-bos {
     padding: var(--bosluk-5);
@@ -1392,6 +1392,26 @@
   }
   .giris-kayit-rozet.basarili { color: #177245; }
   .giris-kayit-rozet.basarisiz { color: var(--hu-kirmizi); }
+
+  /* Rozet artık <button>: panelin düğme görünümünü miras almasın diye zemin,
+     gölge ve dolgu sıfırlanır — rozet gibi durmaya devam etmeli. Tıklanabilir
+     olduğu, imleç ve üzerine gelince koyulaşan çerçeveyle belli oluyor. */
+  .yonetim button.durum-tetik {
+    min-height: 0;
+    margin: 0;
+    padding: 2px var(--bosluk-2);
+    border: 1px solid currentColor;
+    border-radius: var(--kose-tam);
+    background: transparent;
+    box-shadow: none;
+    font-size: var(--olcu-xs);
+    font-weight: var(--kalinlik-kalin);
+    line-height: 1.4;
+    cursor: pointer;
+  }
+  .yonetim button.durum-tetik:hover { background: color-mix(in srgb, currentColor 12%, transparent); }
+  .yonetim button.durum-tetik.basarili { color: #177245; }
+  .yonetim button.durum-tetik.basarisiz { color: var(--hu-kirmizi); }
 
   .giris-koruma-notu {
     display: flex;
