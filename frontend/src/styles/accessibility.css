@@ -6,6 +6,11 @@
  */
 
 @layer site {
+
+  /* Seçiciler .a11y-widget ile nitelenir: yönetim panelindeki
+     ".yonetim button" kuralı aynı katmanda ve daha özgül olduğu için
+     bileşenin kendi görünümünü eziyordu. Ölçüldü: düğme zemini lacivert
+     oluyor, etiket rengi koyu kaldığı için kontrast 1,48:1'e düşüyordu. */
   bidb-accessibility-menu { display: contents; }
 
   .a11y-widget {
@@ -15,7 +20,7 @@
     top: var(--a11y-widget-y, 70vh);
   }
 
-  .a11y-trigger {
+  .a11y-widget .a11y-trigger{
     position: relative;
     width: 38px;
     height: 54px;
@@ -64,9 +69,9 @@
     opacity: 0.62;
   }
 
-  .a11y-trigger:hover,
-  .a11y-trigger:focus-visible,
-  .a11y-trigger.dragging {
+  .a11y-widget .a11y-trigger:hover,
+  .a11y-widget .a11y-trigger:focus-visible,
+  .a11y-widget .a11y-trigger.dragging{
     width: 43px;
     background: linear-gradient(180deg, var(--hu-kirmizi), var(--hu-kirmizi-koyu));
     box-shadow: 0 9px 24px rgb(142 17 25 / 25%);
@@ -97,10 +102,10 @@
   .a11y-widget.compact .a11y-trigger > svg:first-child { width: 15px; height: 15px; }
   .a11y-widget.compact .a11y-move-icon { width: 7px; height: 7px; }
 
-  .a11y-trigger:focus-visible,
-  .a11y-action:focus-visible,
-  .a11y-compact-toggle:focus-visible,
-  .a11y-close:focus-visible {
+  .a11y-widget .a11y-trigger:focus-visible,
+  .a11y-widget .a11y-action:focus-visible,
+  .a11y-widget .a11y-compact-toggle:focus-visible,
+  .a11y-widget .a11y-close:focus-visible{
     outline: 3px solid #f2c94c;
     outline-offset: 3px;
   }
@@ -156,8 +161,8 @@
     gap: 3px;
   }
 
-  .a11y-compact-toggle,
-  .a11y-close {
+  .a11y-widget .a11y-compact-toggle,
+  .a11y-widget .a11y-close{
     width: 34px;
     height: 34px;
     display: grid;
@@ -169,13 +174,13 @@
     color: var(--metin-3);
   }
 
-  .a11y-compact-toggle:hover,
-  .a11y-close:hover {
+  .a11y-widget .a11y-compact-toggle:hover,
+  .a11y-widget .a11y-close:hover{
     background: var(--yuzey-3);
     color: var(--hu-kirmizi);
   }
 
-  .a11y-compact-toggle.active {
+  .a11y-widget .a11y-compact-toggle.active{
     background: var(--hu-lacivert);
     color: #fff;
   }
@@ -198,7 +203,7 @@
     padding: var(--bosluk-3);
   }
 
-  .a11y-action {
+  .a11y-widget .a11y-action{
     min-width: 0;
     min-height: 94px;
     display: flex;
@@ -247,14 +252,14 @@
     line-height: 1;
   }
 
-  .a11y-action:hover {
+  .a11y-widget .a11y-action:hover{
     z-index: 1;
     border-color: color-mix(in srgb, var(--hu-mavi) 45%, var(--cizgi));
     color: var(--hu-lacivert);
     transform: translateY(-1px);
   }
 
-  .a11y-action.active {
+  .a11y-widget .a11y-action.active{
     border-color: var(--hu-lacivert);
     background: var(--hu-lacivert);
     color: #fff;
@@ -351,7 +356,7 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .a11y-trigger,
+    .a11y-widget .a11y-trigger,
     .a11y-action { transition: none; }
   }
 }

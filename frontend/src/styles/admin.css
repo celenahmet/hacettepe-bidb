@@ -516,6 +516,24 @@
     border-color: var(--hu-kirmizi);
   }
 
+  /* Erişilebilirlik menüsü sitenin bileşeni; panelde de gösteriliyor. Yukarıdaki
+     ".yonetim button" kuralı onun bütün düğmelerini ele geçiriyordu.
+
+     Özgüllükle çözülemez: accessibility.css @layer site, bu dosya @layer panel
+     ve katman sırası "site, kamu, panel" olduğu için panel her hâlükârda
+     kazanıyor. Bu yüzden muafiyet de panel katmanından veriliyor;
+     revert-layer, bu katmanın bildirimlerini geri alıp bileşenin kendi
+     görünümünü yürürlüğe sokar.
+
+     Ölçüldü, kusurun büyüklüğü: sekiz düğmenin zemini var(--murekkep) oluyor,
+     yazı rengi ise .a11y-action span ile korunduğu için koyu kalıyordu -
+     kontrast 1,12:1 (asgari 4,5:1). Etiketler okunmuyordu. Ayrıca panel
+     kuralı text-transform: uppercase dayatıyordu: belge dili tr olduğu için
+     büyütme Türkçe kurallarıyla yapılıyor ve İngilizce arayüzde "Hide images"
+     "HİDE İMAGES" olarak çıkıyordu. Üzerine gelince zemin kuruma ait kırmızıya
+     dönüyor, düğme "etkin" gibi görünüyordu. */
+  .yonetim .a11y-widget button { all: revert-layer; }
+
   .yonetim button:disabled { opacity: 0.4; cursor: not-allowed; }
 
   .yonetim button.ikincil {
