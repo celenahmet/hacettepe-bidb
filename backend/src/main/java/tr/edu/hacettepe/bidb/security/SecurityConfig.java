@@ -1,15 +1,12 @@
 package tr.edu.hacettepe.bidb.security;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
@@ -17,8 +14,10 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 /**
  * Yayın içeriği herkese açıktır; düzenleme uçları kimlik doğrulaması ister.
  *
- * Yönetici bilgileri ortam değişkeninden okunur. Üretimde mutlaka
- * BIDB_YONETICI_PAROLA tanımlanmalıdır; tanımlanmazsa uygulama başlamaz.
+ * Yönetici hesabı VERİTABANINDA tutulur (bkz. YoneticiHesabiServisi).
+ * BIDB_YONETICI_KULLANICI / BIDB_YONETICI_PAROLA yalnızca ilk kurulumda
+ * kullanılan tohumdur: hesap tablosu boşsa açılışta ondan bir hesap
+ * oluşturulur. İlk açılışta parola tanımlı değilse uygulama başlamaz.
  */
 @Configuration
 public class SecurityConfig {
@@ -49,19 +48,16 @@ public class SecurityConfig {
         return http.build();
     }
 
-    @Bean
-    UserDetailsService yoneticiler(
-            @Value("${bidb.yonetici.kullanici:yonetici}") String kullanici,
-            @Value("${bidb.yonetici.parola:}") String parola,
-            PasswordEncoder sifreleyici) {
+    /* Kimlik artık VERİTABANINDAN okunur: YoneticiHesabiServisi, @Service
+       olduğu için zaten tek başına UserDetailsService bean'idir.
 
-        if (parola == null || parola.isBlank()) {
-            throw new IllegalStateException(
-                "Yönetici parolası tanımlı değil. BIDB_YONETICI_PAROLA ortam değişkenini ayarlayın.");
-        }
-        return new InMemoryUserDetailsManager(
-            User.withUsername(kullanici).password(sifreleyici.encode(parola)).roles("YONETICI").build());
-    }
+       Burada ayrıca bir @Bean TANIMLANMAZ. Tanımlanmıştı ve giriş tamamen
+       kırıldı: aynı örnek iki ayrı bean adıyla (yoneticiHesabiServisi,
+       yoneticiler) kayıtlı olunca Spring Security "Found 2 UserDetailsService
+       beans ... will not use a UserDetailsService for username/password login"
+       deyip parola doğrulamasını devre dışı bıraktı; doğru parolayla bile
+       401 dönüyordu. Uyarı yalnızca günlüğe düşüyor, açılış başarılı
+       görünüyor - bu yüzden ancak gerçek bir giriş denemesiyle fark edilir. */
 
     @Bean
     PasswordEncoder sifreleyici() {

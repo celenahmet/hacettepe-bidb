@@ -57,10 +57,39 @@ BIDB_YONETICI_PAROLA=<güçlü bir parola>
 ALLOWED_HOSTS=bidb.hacettepe.edu.tr
 SITE_ADRESI=https://bidb.hacettepe.edu.tr
 SPRING_DATASOURCE_PASSWORD=<veritabanı parolası>
+# Kurumsal e-posta sunucusunun parolası. Diğer e-posta ayarları (sunucu,
+# kapı, gönderen, güvenlik kipi) panelden yönetilir; parola bilinçli olarak
+# yalnızca burada durur, veritabanına yazılmaz.
+BIDB_MAIL_PAROLA=<smtp parolası>
 ```
 
 > **Parola tanımlanmazsa uygulama başlamaz.** Bu kasıtlıdır: varsayılan
 > parolayla yanlışlıkla yayına çıkmak mümkün olmasın diye.
+
+#### Yönetici parolası nerede tutulur
+
+`BIDB_YONETICI_PAROLA` yalnızca **ilk kurulumda kullanılan tohumdur**.
+`admin_account` tablosu boşsa uygulama açılışta bu değerlerle bir hesap
+oluşturur. Hesap oluştuktan sonra parola veritabanındaki BCrypt karmasıdır;
+ortam değişkenini değiştirmek giriş parolasını **değiştirmez**.
+
+Bu bilinçlidir: parola sıfırlama akışının çalışabilmesi için parolanın
+çalışma sırasında değiştirilebilir bir yerde durması gerekiyor. Ortam
+değişkeni geçerli kalsaydı, sıfırlanan parolanın yanında eskisi de
+çalışmaya devam ederdi.
+
+**Parola unutulursa** (ve e-posta ile sıfırlama da yapılandırılmamışsa),
+veritabanına erişimi olan bir işletmen hesabı silip servisi yeniden
+başlatarak ortam değişkenindeki değerlerle yeniden oluşturabilir:
+
+```bash
+docker exec -i bidb-db psql -U bidb -d bidb -c "DELETE FROM admin_account;"
+docker compose up -d --force-recreate backend
+```
+
+Bu, bilerek bırakılmış acil durum kapısıdır; veritabanı erişimi zaten en
+yüksek yetki seviyesi olduğu için yeni bir zayıflık açmaz. Yordam
+denendi ve çalıştığı doğrulandı.
 
 ### 2. HTTPS
 
