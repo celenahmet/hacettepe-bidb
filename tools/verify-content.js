@@ -64,6 +64,10 @@ const BILINCLI_SAPMA = {
   "tr/proxy": "Marka adı yazımı düzeltildi: Macos -> MacOS (781107d)"
 };
 
+/* Kaynağın "bu sayfa yok" gövdesi. İngilizce adreslerin tamamı bunu
+   döndürüyor; taslak sayfa gerçek içerik değildir. */
+const KAYNAK_SUNMUYOR = /^Böyle bir sayfa bulunmamaktadır/;
+
 const ORIGIN = "https://bidb.hacettepe.edu.tr";
 const KAP = "bidb-db";
 
@@ -103,7 +107,7 @@ function farkNoktasi(a, b) {
   console.log("SAYFA".padEnd(34) + "KAYNAK".padStart(8) + "VERİTABANI".padStart(12) + "   SONUÇ");
   console.log("-".repeat(74));
 
-  let ayni = 0, farkli = 0, bilincli = 0;
+  let ayni = 0, farkli = 0, bilincli = 0, sunulmayan = 0;
   const farklar = [];
 
   for (const kayit of kayitlar) {
@@ -127,6 +131,24 @@ function farkNoktasi(a, b) {
     const kaynakMetin = normalize(X.duz(X.icerikGovdesi(canli)));
     const dbMetin = normalize(X.duz(html));
 
+    /* Kaynak sitenin İngilizce adresleri artık içerik SUNMUYOR: /en/<slug>
+       isteklerinin tamamı aynı taslak sayfayı döndürüyor ve içerik gövdesinde
+       "Böyle bir sayfa bulunmamaktadır!" yazıyor.
+
+       Bunlar "FARKLI" sayıldığında denetim 79 sahte bulgu üretiyordu. O
+       kalabalıkta gerçek bir bozulma görünmez hâle gelir - denetimin var olma
+       sebebi de tam olarak onu görmek. Bu yüzden ayrı sayılıyor.
+
+       İngilizce içerik silinmiş değil; kaynakta karşılaştırılacak bir şey yok.
+       Karşılığın doğruluğu, çeviri işi yapıldığında ayrıca ele alınacak
+       (bkz. devir notu, İngilizce çeviri bölümü). */
+    if (KAYNAK_SUNMUYOR.test(kaynakMetin)) {
+      sunulmayan++;
+      console.log((dil + "/" + slug).padEnd(34) + "        ○ kaynak artık bu sayfayı sunmuyor");
+      await new Promise((r) => setTimeout(r, 250));
+      continue;
+    }
+
     if (kaynakMetin === dbMetin) {
       ayni++;
       console.log((dil + "/" + slug).padEnd(34) + String(kaynakMetin.length).padStart(8) + String(dbMetin.length).padStart(12) + "   ✓ birebir aynı");
@@ -139,7 +161,8 @@ function farkNoktasi(a, b) {
     await new Promise((r) => setTimeout(r, 250));
   }
 
-  console.log("\n" + ayni + " sayfa birebir aynı, " + farkli + " sayfa farklı.");
+  console.log("\n" + ayni + " sayfa birebir aynı, " + farkli + " sayfa farklı, "
+    + bilincli + " bilinçli sapma, " + sunulmayan + " sayfayı kaynak artık sunmuyor.");
   if (farklar.length) {
     console.log("\nFarkların ayrıntısı:");
     farklar.slice(0, 5).forEach((f) => {
