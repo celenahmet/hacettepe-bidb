@@ -28,6 +28,28 @@ const SITE_NAME = {
   en: 'Hacettepe University Department of Information Technology'
 };
 
+/**
+ * Sekme başlığında kullanılan KISA kurum adı.
+ *
+ * Tam ad 52-57 karakter; başlığın sonuna eklendiğinde toplam 72-93 karaktere
+ * çıkıyordu ve arama sonuçlarında kurum adı sayfanın kendi adını kırpacak
+ * kadar yer kaplıyordu (örn. "Çerez ve Tarayıcı Depolama Politikası —
+ * Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı" = 91 karakter).
+ *
+ * Kısa biçim uydurulmadı: kaynak sitenin kendi başlıkları da bu ekle
+ * bitiyor (veritabanındaki seo_title değerlerinin tamamında
+ * "— Hacettepe Üniversitesi BİDB" / "— Hacettepe University IT" geçiyor).
+ * Yani burada yapılan, üretilen başlıkları kaynağın kendi kuralına
+ * uydurmaktır.
+ *
+ * Tam ad yerinde kalır: author, og:site_name ve JSON-LD publisher alanlarında
+ * uzunluk sorun değil, orada kurumun resmî adı yazmalı.
+ */
+const SITE_NAME_KISA = {
+  tr: 'Hacettepe Üniversitesi BİDB',
+  en: 'Hacettepe University IT'
+};
+
 const GENERIC_SOURCE_TITLES = [
   'Hacettepe Üniversitesi Bilgi İşlem Daire Başkanlığı',
   'Hacettepe University Comnputer Center',
@@ -64,7 +86,7 @@ export class Seo {
       kaynakBaslik === siteAdi ||
       GENERIC_SOURCE_TITLES.some((b) => b.toLowerCase() === kaynakBaslik.toLowerCase());
     const title = sayfa
-      ? (genelMi ? `${sayfa.title} — ${siteAdi}` : kaynakBaslik)
+      ? (genelMi ? `${sayfa.title} — ${SITE_NAME_KISA[language]}` : kaynakBaslik)
       : siteAdi;
     const description = sayfa?.seoDescription?.trim() ||
       (sayfa
@@ -164,7 +186,7 @@ export class Seo {
 
   hata(code: number, baslik: string, aciklama: string, yol: string): void {
     const siteAdi = SITE_NAME.tr;
-    const title = `${code} · ${baslik} — ${siteAdi}`;
+    const title = `${code} · ${baslik} — ${SITE_NAME_KISA.tr}`;
     this.title.setTitle(title);
     this.ayarla('description', aciklama);
     this.ayarla('keywords', '');
