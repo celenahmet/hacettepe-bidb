@@ -144,6 +144,22 @@ Günlük çalışacak biçimde zamanlanmalıdır:
 Yedekler **sunucu dışına** kopyalanmalıdır; aynı diskteki yedek, disk
 arızasında işe yaramaz.
 
+#### Yedek TEK BAŞINA yeterli değildir
+
+Sistemi sıfırdan ayağa kaldırmak için hem **yedek** hem **depo** gerekir.
+Belgeler iki ayrı yerde durur ve yalnızca biri yedeğe girer:
+
+| Nerede | Ne | Yedekte mi |
+|---|---|---|
+| `frontend/public/dosyalar/` (git) | Kaynaktan aktarılan 77 belge | Hayır — **depoda**, imaja gömülür |
+| `belgeler` Docker birimi | Panelden yüklenenler + talep ekleri | Evet |
+| Dış bağlantı | 4 belge başka sunucuda | İkisinde de değil |
+
+Bu bir kusur değil, tasarım: depodaki belgeler sürüm denetimi altında ve
+her kurulumda kendiliğinden gelir, yedeği şişirmelerinin anlamı yok. Ama
+**"yedeğim var, güvendeyim" yanlış bir sonuçtur** — depo da (GitHub ya da
+kurumun kendi git sunucusu) yaşamaya devam etmelidir.
+
 #### Yedeğin gerçekten çalıştığını sınama
 
 Yedek almak yetmez; alınan yedeğin geri yüklenebildiği de sınanmalıdır.
