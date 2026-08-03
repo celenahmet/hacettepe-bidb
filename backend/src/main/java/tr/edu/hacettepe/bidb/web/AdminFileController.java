@@ -40,8 +40,14 @@ public class AdminFileController {
     private final UploadedFileRepo kayitlar;
     private final Path dizin;
 
+    /* Varsayılan "/veri/fileslar" yazıyordu: Türkçe tanımlayıcıların
+       İngilizceye çevrildiği geçişte "dosya"→"file" değişimi bu dizin
+       ADINA da uygulanmış. Yayında etkisi yoktu — application.yml
+       özelliği her zaman tanımlıyor — ama özellik verilmediğinde bu
+       denetleyici ContactTicketController'dan BAŞKA bir dizine yazardı
+       ve panelden yüklenen belgeler ön yüzün sunduğu yerde çıkmazdı. */
     public AdminFileController(UploadedFileRepo kayitlar,
-                                  @Value("${bidb.dosya-dizini:/veri/fileslar}") String dizin) {
+                                  @Value("${bidb.dosya-dizini:/veri/dosyalar}") String dizin) {
         this.kayitlar = kayitlar;
         this.dizin = Paths.get(dizin);
     }

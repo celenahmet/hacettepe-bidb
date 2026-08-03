@@ -18,7 +18,7 @@
 # test de geçer; hiçbir şeyi sınamayan bir test de geçer. Bu depodaki
 # ölçüm araçlarının hepsinde aynı sebeple bir kanıt kipi vardır.
 #
-# --kanit, üretim koduna BİLEREK altı hata sokar, testlerin kırmızıya
+# --kanit, üretim koduna BİLEREK yedi hata sokar, testlerin kırmızıya
 # döndüğünü görür ve hataları geri alır. Testler bu hataları yakalamazsa
 # "0 hata" sonucu güvenilmez demektir.
 #
@@ -28,8 +28,10 @@
 #   3. Sıfırlama jetonunun düz metin saklanması (yedek sızarsa hesap ele geçer)
 #   4. Adres benzersizlik denetiminin yayın süzgecine bağlanması
 #                                             (uyarı hangi adresin dolu olduğunu söylemez)
-#   5. Türkçe sayı biçiminin bozulması        ("0.328" yazar, kimse fark etmez)
-#   6. Bir çevirinin Türkçe bırakılması       (İngilizce panelde Türkçe metin)
+#   5. Yüklenen dosyalarda HTML/SVG'ye izin verilmesi
+#                                             (aynı kaynakta betik çalışır, oturum gider)
+#   6. Türkçe sayı biçiminin bozulması        ("0.328" yazar, kimse fark etmez)
+#   7. Bir çevirinin Türkçe bırakılması       (İngilizce panelde Türkçe metin)
 #
 # Windows'ta Git Bash, macOS ve Linux'ta doğrudan çalışır.
 
@@ -135,10 +137,11 @@ testleri_calistir() {   # testleri_calistir [arka|on]
 VITAL="$KOK/backend/src/main/java/tr/edu/hacettepe/bidb/web/WebVitalController.java"
 PAROLA="$KOK/backend/src/main/java/tr/edu/hacettepe/bidb/service/ParolaSifirlamaServisi.java"
 SAYFA_UC="$KOK/backend/src/main/java/tr/edu/hacettepe/bidb/web/AdminPageController.java"
+DOSYA_UC="$KOK/backend/src/main/java/tr/edu/hacettepe/bidb/web/AdminFileController.java"
 ESIK="$KOK/frontend/src/app/admin/vitals-esik.ts"
 SOZLUK="$KOK/frontend/src/app/admin/admin-dil.service.ts"
 
-BOZULACAK=("$VITAL" "$PAROLA" "$SAYFA_UC" "$ESIK" "$SOZLUK")
+BOZULACAK=("$VITAL" "$PAROLA" "$SAYFA_UC" "$DOSYA_UC" "$ESIK" "$SOZLUK")
 
 geri_al() {
   # Yedekten geri yüklenir; git durumuna bakılmaz. Kanıt kipi, henüz
@@ -177,19 +180,21 @@ kanit_calistir() {
   for d in "${BOZULACAK[@]}"; do cp "$d" "$d.kanit-yedek"; done
   trap geri_al EXIT
 
-  renk_uyari "Üretim koduna bilerek altı hata sokuluyor…"
+  renk_uyari "Üretim koduna bilerek yedi hata sokuluyor…"
   echo "  1. LCP 'iyi' eşiği 2500 → 3000"
   echo "  2. Asgari parola uzunluğu 12 → 8"
   echo "  3. Sıfırlama jetonu karmalanmadan saklanıyor"
   echo "  4. Adres benzersizlik denetimi yayın süzgecine bağlanıyor"
-  echo "  5. Türkçe sayı biçimi İngilizceye çevriliyor"
-  echo "  6. Bir çeviri İngilizce alanında Türkçe bırakılıyor"
+  echo "  5. Yüklenen dosyalarda HTML ve SVG'ye izin veriliyor"
+  echo "  6. Türkçe sayı biçimi İngilizceye çevriliyor"
+  echo "  7. Bir çeviri İngilizce alanında Türkçe bırakılıyor"
   echo
 
   sed -i 's/case "LCP" -> 2500;/case "LCP" -> 3000;/' "$VITAL"
   sed -i 's/public static final int ASGARI_PAROLA = 12;/public static final int ASGARI_PAROLA = 8;/' "$PAROLA"
   sed -i 's|return HexFormat.of().formatHex(md.digest(jeton.getBytes(StandardCharsets.UTF_8)));|return jeton;|' "$PAROLA"
   sed -i 's|pages.existsBySlugAndLanguage(slug, language)|pages.findPublishedBySlugAndLanguage(slug, language).isPresent()|' "$SAYFA_UC"
+  sed -i 's|"odt", "ods", "zip", "rar", "jpg", "jpeg", "png", "gif", "webp"|"odt", "ods", "zip", "rar", "jpg", "jpeg", "png", "gif", "webp", "html", "svg"|' "$DOSYA_UC"
   sed -i "s/const yerel = dil === 'en' ? 'en-US' : 'tr-TR';/const yerel = 'en-US';/" "$ESIK"
   sed -i "s/kaliteOptimum: { tr: 'Optimum beklenti', en: 'Expected range' },/kaliteOptimum: { tr: 'Optimum beklenti', en: 'Optimum beklenti' },/" "$SOZLUK"
 
@@ -200,10 +205,11 @@ kanit_calistir() {
   grep -q 'ASGARI_PAROLA = 8;' "$PAROLA"        && sokulan=$((sokulan + 1))
   grep -q 'return jeton;' "$PAROLA"             && sokulan=$((sokulan + 1))
   grep -q 'findPublishedBySlugAndLanguage(slug, language).isPresent()' "$SAYFA_UC" && sokulan=$((sokulan + 1))
+  grep -q '"webp", "html", "svg"' "$DOSYA_UC"   && sokulan=$((sokulan + 1))
   grep -q "const yerel = 'en-US';" "$ESIK"      && sokulan=$((sokulan + 1))
   grep -q "en: 'Optimum beklenti' }" "$SOZLUK"  && sokulan=$((sokulan + 1))
-  if [ "$sokulan" -ne 6 ]; then
-    renk_hata "Hatalar sokulamadı ($sokulan/6). Üretim kodu değişmiş; kanıt kipi güncellenmeli."
+  if [ "$sokulan" -ne 7 ]; then
+    renk_hata "Hatalar sokulamadı ($sokulan/7). Üretim kodu değişmiş; kanıt kipi güncellenmeli."
     exit 1
   fi
 
@@ -222,13 +228,23 @@ kanit_calistir() {
 
   # Her beş hatanın da AYRI AYRI yakalandığı doğrulanır. Yalnızca birinin
   # yakalanması "testler çalışıyor" demek için yeterli değildir.
+  # Arama BORU KULLANMADAN yapılır. Önce "printf ... | grep -q" yazılmıştı
+  # ve yanlış sonuç verdi: grep -q ilk eşleşmede hemen çıkıyor, hâlâ yazmakta
+  # olan printf SIGPIPE alıyor, "set -o pipefail" de bunu başarısızlık
+  # sayıyor. Eşleşme VARKEN "yakalanmadı" deniyordu. Kusur çıktı büyüyünce
+  # ortaya çıktı: küçük çıktı boru tamponuna sığdığı için printf erken
+  # bitiyor ve SIGPIPE hiç oluşmuyordu — yani araç bir süre sessizce
+  # doğru sonuç verip sonra bozuldu.
   local eksik=""
-  printf '%s\n' "$arka" | grep -q "WebVitalEsikTest"  || eksik="$eksik eşik"
-  printf '%s\n' "$arka" | grep -q "ParolaKuraliTest"  || eksik="$eksik parola"
-  printf '%s\n' "$arka" | grep -q "JetonKarmaTest"    || eksik="$eksik jeton"
-  printf '%s\n' "$arka" | grep -q "AdresBenzersizligiTest" || eksik="$eksik adres-benzersizliği"
-  printf '%s\n' "$on"   | grep -q "vitals-esik"       || eksik="$eksik sayı-biçimi"
-  printf '%s\n' "$on"   | grep -q "AdminDilServisi"   || eksik="$eksik çeviri"
+  icerir() { case "$1" in *"$2"*) return 0 ;; *) return 1 ;; esac; }
+
+  icerir "$arka" "WebVitalEsikTest"       || eksik="$eksik eşik"
+  icerir "$arka" "ParolaKuraliTest"       || eksik="$eksik parola"
+  icerir "$arka" "JetonKarmaTest"         || eksik="$eksik jeton"
+  icerir "$arka" "AdresBenzersizligiTest" || eksik="$eksik adres-benzersizliği"
+  icerir "$arka" "DosyaYuklemeTest"       || eksik="$eksik dosya-türü"
+  icerir "$on"   "vitals-esik"            || eksik="$eksik sayı-biçimi"
+  icerir "$on"   "AdminDilServisi"        || eksik="$eksik çeviri"
 
   echo
   if [ "$arka_durum" -eq 0 ] || [ "$on_durum" -eq 0 ] || [ -n "$eksik" ]; then
@@ -238,7 +254,7 @@ kanit_calistir() {
     exit 1
   fi
 
-  renk_iyi "Testler çalışıyor: altı bozulmanın altısını da yakaladılar."
+  renk_iyi "Testler çalışıyor: yedi bozulmanın yedisini de yakaladılar."
   echo "  Üretim kodu geri alındı."
 
   # Geri alma gerçekten oldu mu? Sessizce bozuk kalmış bir depo,
@@ -248,8 +264,9 @@ kanit_calistir() {
      && grep -q 'formatHex' "$PAROLA" \
      && grep -q "dil === 'en' ? 'en-US' : 'tr-TR'" "$ESIK" \
      && grep -q 'pages.existsBySlugAndLanguage(slug, language)' "$SAYFA_UC" \
+     && ! grep -q '"html", "svg"' "$DOSYA_UC" \
      && grep -q "en: 'Expected range' }" "$SOZLUK"; then
-    renk_iyi "Geri alma doğrulandı: beş dosya da özgün hâlinde."
+    renk_iyi "Geri alma doğrulandı: altı dosya da özgün hâlinde."
   else
     renk_hata "GERİ ALMA BAŞARISIZ. Dosyaları elle kontrol edin: git diff"
     exit 1
