@@ -140,7 +140,23 @@ Tasarım ya da panel dili değişikliğinden sonra:
 node tools/hizalama-denetim.js         # ızgaraların sütun ekseni kayık mı
 node tools/panel-dil-denetim.js        # İngilizce panelde çevrilmemiş metin
 node tools/buyuk-harf-denetim.js       # yanlış dille büyük/küçük harf dönüşümü
+node tools/erisilebilirlik-denetim.js  # WCAG 2.2 AA: alt metin, form adı,
+                                       # başlık atlama, dokunma hedefi (24x24)
 ```
+
+**Erişilebilirlik bildirimi bir TAAHHÜTTÜR.** `/tr/accessibility` sayfası
+"WCAG 2.2 Seviye AA standartlarına büyük ölçüde uyumludur" diyor. Bu, ölçüt
+listesinin tamamını bağlar — SC 2.5.8 (dokunma hedefi en az 24x24) dâhil.
+Bildirimin metni kaynak içeriğidir ve değiştirilmez; onun yerine site
+iddiaya uydurulur.
+
+Dokunma hedefinde iki farklı yöntem kullanılır ve **hangisinin uygun
+olduğu duruma bağlıdır**: çevresinde boşluk olan tek başına denetimlerde
+(dil seçimi, "Tümü") görünmez sözde öğeyle hedef büyütülür ve düzen hiç
+değişmez. ÜST ÜSTE DİZİLİ bağlantılarda (alt bilgi iletişim listesi) bu
+çalışmaz: 17px'lik satırlarda 24px'lik alanlar komşularıyla çakışır ve
+ölçüt "hedef başka bir hedefle kesişmemeli" der. Orada gerçek boşluk
+verilir.
 
 **Büyük harf dönüşümü dile bağlıdır ve bu gözden kaçar.** Türkçede "i"nin
 büyüğü "İ", İngilizcede "I"dır; CSS'in `text-transform` özelliği dönüşümü

@@ -1209,3 +1209,69 @@
     to { opacity: 1; transform: translate(-50%, 0); }
   }
 }
+
+@layer kamu {
+  /* ================= dokunma hedefi (WCAG 2.2 SC 2.5.8, AA) =================
+
+     Ölçüt: etkileşimli hedef en az 24x24 CSS pikseli olmalı. Sitenin
+     erişilebilirlik bildirimi "WCAG 2.2 Seviye AA standartlarına büyük
+     ölçüde uyumludur" diyor; bu, o taahhüdün gereği.
+
+     Ölçüldü: dil seçimi 16x19, "Tümü" bağlantısı 58x22, alt bilgideki
+     telefon/e-posta bağlantıları 106x17, personel telefonu 63x15.
+
+     Yöntem: GÖRÜNEN düzen değiştirilmez. Dolgu eklemek liste satır
+     aralıklarını ve başlık hizalarını bozardı. Bunun yerine hedef alanı
+     görünmez bir sözde öğeyle büyütülür — kullanıcı aynı şeyi görür ama
+     tıklama/dokunma alanı ölçütü karşılar.
+
+     İSTİSNA UYGULANMADI: cümle içinde geçen satır içi bağlantılar ölçütten
+     muaftır (yükseklikleri çevresindeki metnin satır yüksekliğiyle
+     sınırlıdır). Bu yüzden burada yalnızca TEK BAŞINA duran denetimler
+     hedeflenir; paragraf içi bağlantılara dokunulmaz. */
+  /* Çevresinde boşluk OLAN tek başına denetimler: görünmez sözde öğeyle
+     büyütülür, düzen hiç değişmez. */
+  .dil-secim a,
+  .bolum-tumu,
+  .cerez-bildirim-metin a {
+    position: relative;
+  }
+
+  .dil-secim a::after,
+  .bolum-tumu::after,
+  .cerez-bildirim-metin a::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    min-width: 24px;
+    min-height: 24px;
+  }
+
+  /* ÜST ÜSTE DİZİLİ bağlantılarda sözde öğe çözüm DEĞİL: 17px'lik satırlarda
+     24px'lik alanlar komşularıyla çakışır ve ölçüt "24px'lik hedef başka bir
+     hedefle kesişmemeli" der. Ölçüldü: çakışan alanlarda gerçek hedef 24
+     yerine 20-21px kalıyordu. Burada gerçek boşluk verilir; satırlar birkaç
+     piksel açılır, karşılığında telefon ve e-posta bağlantıları özellikle
+     dokunmatik ekranda güvenle seçilebilir olur. */
+  /* Paragrafın TAMAMINI kaplayan bağlantı tek başına bir denetimdir;
+     çevresinde onu satır yüksekliğiyle sınırlayan metin yoktur, bu yüzden
+     satır içi istisnasına girmez. */
+  .icerik p > a:only-child,
+  .icerik p > strong:only-child > a:only-child,
+  .alt-kanal dd a,
+  .iletisim-blok dd a,
+  a.personel-telefon,
+  .duyuru-arsiv a {
+    display: inline-block;
+    padding-block: 4px;
+  }
+
+  /* Erişilebilirlik aracının KENDİ tetiği dar ekranda 22px genişliğindeydi.
+     Burada sözde öğe yerine gerçek ölçü büyütülüyor: düğme zaten tek başına
+     duruyor ve 2px'lik artış hiçbir şeyin yerini oynatmıyor. */
+  .a11y-widget .a11y-trigger { min-width: 24px; }
+}
