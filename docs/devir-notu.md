@@ -126,16 +126,39 @@ node tools/menu-denetim.js      # menü kaynakla birebir
 node tools/son-kontrol.js       # 30 maddelik yayına hazırlık
 ```
 
-Tasarım değişikliğinden sonra ayrıca:
+SEO ya da meta etiket değişikliğinden sonra:
+
+```bash
+node tools/seo-denetim.js         # 158 sayfada title/description/canonical/
+                                  # hreflang/og/JSON-LD/tek h1
+node tools/seo-denetim.js --kanit # aracın gerçekten ölçtüğünü doğrular
+```
+
+Tasarım ya da panel dili değişikliğinden sonra:
 
 ```bash
 node tools/hizalama-denetim.js         # ızgaraların sütun ekseni kayık mı
-node tools/hizalama-denetim.js --kanit # aracın gerçekten ölçtüğünü doğrular
+node tools/panel-dil-denetim.js        # İngilizce panelde çevrilmemiş metin
 ```
 
-Bu araç çalışan siteye ve `--remote-debugging-port=9222` ile açılmış bir
+Bu iki araç çalışan siteye ve `--remote-debugging-port=9222` ile açılmış bir
 Chrome'a ihtiyaç duyar; ölçümü gerçek tarayıcıda yapar, çünkü sütun
-genişliği CSS'in yanı sıra yazı tipine ve içeriğe de bağlıdır.
+genişliği CSS'in yanı sıra yazı tipine ve içeriğe de bağlıdır. İkisinin de
+`--kanit` modu var.
+
+**Kaynak sitenin İngilizce sayfaları artık içerik SUNMUYOR.** `/en/<slug>`
+isteklerinin tamamı aynı taslak sayfayı döndürüyor ("Böyle bir sayfa
+bulunmamaktadır"). `verify-content.js` bunları ayrı sayar; aksi hâlde 79
+sahte "FARKLI" üretiyor ve gerçek bir bozulma o kalabalıkta görünmez
+oluyordu. Nitekim bir kez öyle oldu: kaynağın VPN sayfasına sonradan
+eklenen bir kılavuz bağlantısı (V75) bu yığının içinde gözden kaçmıştı.
+
+Denetimin bugünkü sonucu: **56 birebir aynı, 4 farklı, 21 bilinçli sapma,
+78 sayfayı kaynak sunmuyor.** Kalan dört farkın hepsi İngilizce
+(`en/contact`, `en/mission-vision`, `en/org-chart`, `en/overview`) ve
+İngilizce çeviri işi bilinçli olarak ertelenmiş durumda (bkz. 7. bölüm).
+Bilerek gizlenmediler; çeviri yapıldığında ele alınacaklar. **Türkçe tarafta
+açıklanmamış tek fark yok.**
 
 `eksik-denetim.js` yalnızca durum koduna değil **içerik türüne** de bakar:
 200 dönen bir yanıtın doğru dosya olduğunu varsayma.
