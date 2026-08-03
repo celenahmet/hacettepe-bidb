@@ -1311,14 +1311,16 @@ interface MobileMenuItem {
 
           @if (acikVitalKaydi(); as av) {
             <div class="aciklama-perde" (click)="acikVitalKaydi.set(null)"></div>
-            <div class="aciklama-pencere" role="dialog" aria-modal="true" [attr.aria-label]="av.metric + ' ölçüm ayrıntısı'"
+            <div class="aciklama-pencere" role="dialog" aria-modal="true"
+                 [attr.aria-label]="av.metric + ' ' + dilServisi.t('kaliteOlcumAyrinti')"
                  [attr.data-rating]="av.rating" (keydown.escape)="acikVitalKaydi.set(null)">
               <header>
                 <div>
                   <span class="aciklama-pencere-metrik">{{ av.metric }}</span>
                   <strong class="aciklama-pencere-deger">{{ metrikDegeri(av.metric, av.p75) }}</strong>
                 </div>
-                <button type="button" class="ikincil" (click)="acikVitalKaydi.set(null)" aria-label="Kapat">
+                <button type="button" class="ikincil" (click)="acikVitalKaydi.set(null)"
+                        [attr.aria-label]="dilServisi.t('kaliteKapat')">
                   <svg viewBox="0 0 24 24" aria-hidden="true" width="18" height="18"
                        fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
                     <path d="M6 6l12 12M18 6 6 18"/>
@@ -1333,12 +1335,34 @@ interface MobileMenuItem {
 
               <div class="aciklama-pencere-govde">
                 <section>
-                  <span class="aciklama-pencere-baslik">Teknik tanım</span>
-                  <p>{{ VITAL_ACIKLAMA[av.metric].teknik }}</p>
+                  <span class="aciklama-pencere-baslik">{{ dilServisi.t('kaliteTeknikTanim') }}</span>
+                  <p>{{ vitalAciklama(av.metric).teknik }}</p>
                 </section>
-                <section>
-                  <span class="aciklama-pencere-baslik">Sade dille</span>
-                  <p>{{ VITAL_ACIKLAMA[av.metric].sade }}</p>
+                <section class="aciklama-pencere-sade">
+                  <span class="aciklama-pencere-baslik">{{ dilServisi.t('kaliteSadeDille') }}</span>
+                  <p>{{ vitalAciklama(av.metric).sade }}</p>
+                </section>
+
+                <!-- Sınırlar sunucudan gelir (VitalScore.good / .poor); burada
+                     yazılı bir sayı yoktur. Rozetle aynı kaynaktan okundukları
+                     için "Geliştirilmeli" yazan bir kartın altında "iyi" aralığı
+                     görünmesi gibi bir çelişki oluşamaz. -->
+                <section class="aciklama-pencere-esik">
+                  <span class="aciklama-pencere-baslik">{{ dilServisi.t('kaliteOptimum') }}</span>
+                  <ul>
+                    @for (a of vitalAraliklar(av); track a.derece) {
+                      <li [attr.data-rating]="a.derece" [class.etkin]="a.etkin">
+                        <span class="esik-ad">{{ a.etiket }}</span>
+                        <span class="esik-aralik">{{ a.aralik }}</span>
+                      </li>
+                    }
+                  </ul>
+                  <p class="esik-hedef">
+                    {{ dilServisi.t('kaliteHedef') }}:
+                    {{ metrikDegeri(av.metric, av.good) }}
+                    {{ dilServisi.t('kaliteVeAlti') }}.
+                    {{ dilServisi.t('kaliteHedefAciklama') }}
+                  </p>
                 </section>
               </div>
             </div>
@@ -1449,29 +1473,70 @@ export class AdminPanelComponent {
   /** Ayrıntı penceresi açık olan Core Web Vitals kaydı; kapalıyken null. */
   protected acikVitalKaydi = signal<QualityVitalScore | null>(null);
 
-  /** Core Web Vitals kartına tıklanınca açılan pencerede, hem teknik hem sade dille açıklama. */
-  protected readonly VITAL_ACIKLAMA: Record<string, { teknik: string; sade: string }> = {
+  /**
+   * Core Web Vitals kartına tıklanınca açılan pencerede, hem teknik hem
+   * sade dille açıklama. İki dilde tutulur: panel İngilizceye alındığında
+   * bu metinler de İngilizce olmalı — pencere yalnızca tıklanınca açıldığı
+   * için dil denetimi aracının gözünden kaçmıştı.
+   */
+  private readonly VITAL_METIN: Record<string, Record<'tr' | 'en', { teknik: string; sade: string }>> = {
     LCP: {
-      teknik: 'Sayfadaki en büyük görünür öğenin (genelde ana görsel ya da başlık) ekrana çizildiği an.',
-      sade: "Sayfanın \"yüklendi\" hissi verdiği an — ne kadar erken, o kadar iyi."
+      tr: {
+        teknik: 'Sayfadaki en büyük görünür öğenin (genelde ana görsel ya da başlık) ekrana çizildiği an.',
+        sade: 'Sayfanın "yüklendi" hissi verdiği an — ne kadar erken, o kadar iyi.'
+      },
+      en: {
+        teknik: 'The moment the largest visible element (usually the main image or heading) is painted.',
+        sade: 'When the page starts to feel "loaded" — the earlier, the better.'
+      }
     },
     INP: {
-      teknik: 'Bir tıklama ya da dokunmadan, tarayıcının ekranı güncellemesine kadar geçen süre.',
-      sade: 'Bir düğmeye bastığınızda sitenin ne kadar hızlı tepki verdiği.'
+      tr: {
+        teknik: 'Bir tıklama ya da dokunmadan, tarayıcının ekranı güncellemesine kadar geçen süre.',
+        sade: 'Bir düğmeye bastığınızda sitenin ne kadar hızlı tepki verdiği.'
+      },
+      en: {
+        teknik: 'The time from a click or tap until the browser updates the screen.',
+        sade: 'How quickly the site responds when you press a button.'
+      }
     },
     CLS: {
-      teknik: 'Yükleme sırasında içeriğin kaydığı toplam görsel mesafenin ölçüsü.',
-      sade: "Sayfa yüklenirken metnin/düğmelerin yerinin oynayıp oynamadığı — 0'a yakın olması, tıklarken hedefin kaymaması demek."
+      tr: {
+        teknik: 'Yükleme sırasında içeriğin kaydığı toplam görsel mesafenin ölçüsü.',
+        sade: "Sayfa yüklenirken metnin/düğmelerin yerinin oynayıp oynamadığı — 0'a yakın olması, tıklarken hedefin kaymaması demek."
+      },
+      en: {
+        teknik: 'A measure of the total visual distance content shifts while loading.',
+        sade: 'Whether text and buttons jump around while the page loads — close to 0 means what you aim at stays put.'
+      }
     },
     FCP: {
-      teknik: 'Tarayıcının ekrana ilk içeriği (metin ya da görsel) boyadığı an.',
-      sade: 'Boş beyaz ekranın ne kadar sürdüğü.'
+      tr: {
+        teknik: 'Tarayıcının ekrana ilk içeriği (metin ya da görsel) boyadığı an.',
+        sade: 'Boş beyaz ekranın ne kadar sürdüğü.'
+      },
+      en: {
+        teknik: 'The moment the browser paints the first content (text or image).',
+        sade: 'How long the blank white screen lasts.'
+      }
     },
     TTFB: {
-      teknik: 'Sunucunun isteğe ilk baytı döndürme süresi.',
-      sade: 'Sunucunun ne kadar hızlı yanıt verdiği — sayfa henüz çizilmeden önceki gecikme.'
+      tr: {
+        teknik: 'Sunucunun isteğe ilk baytı döndürme süresi.',
+        sade: 'Sunucunun ne kadar hızlı yanıt verdiği — sayfa henüz çizilmeden önceki gecikme.'
+      },
+      en: {
+        teknik: 'How long the server takes to return the first byte of the response.',
+        sade: 'How fast the server answers — the delay before the page is drawn at all.'
+      }
     }
   };
+
+  protected vitalAciklama(metric: string): { teknik: string; sade: string } {
+    const kayit = this.VITAL_METIN[metric];
+    if (!kayit) return { teknik: '', sade: '' };
+    return kayit[this.dilServisi.dil() === 'en' ? 'en' : 'tr'];
+  }
 
   protected pages = signal<AdminPage[]>([]);
   protected news = signal<AdminNews[]>([]);
@@ -1702,8 +1767,44 @@ export class AdminPanelComponent {
     return this.dilServisi.dil() === 'en' ? s.enDescription : s.description;
   }
 
+  /*
+   * Ölçüm değeri. Sayı biçimi PANEL DİLİNE göre yerelleştirilir.
+   *
+   * Önce toFixed(3) kullanılıyordu ve Türkçe panelde "0.328" yazıyordu;
+   * Türkçede ondalık ayracı virgüldür. Aynı ekranda hem 75. yüzdelik hem
+   * eşik değerleri okunuyor, ayracın yanlış olması kurumsal bir panelde
+   * göze batan bir kusur.
+   */
   protected metrikDegeri(metric: string, value: number): string {
-    return metric === 'CLS' ? value.toFixed(3) : `${Math.round(value)} ms`;
+    const yerel = this.dilServisi.dil() === 'en' ? 'en-US' : 'tr-TR';
+    if (metric === 'CLS') {
+      return new Intl.NumberFormat(yerel, {
+        minimumFractionDigits: 3, maximumFractionDigits: 3
+      }).format(value);
+    }
+    return `${new Intl.NumberFormat(yerel).format(Math.round(value))} ms`;
+  }
+
+  /**
+   * "Optimum beklenti" bloğundaki üç aralık.
+   *
+   * Sınırlar kaydın kendisinden (sunucudan) okunur, panele yazılmaz;
+   * aralıklar rozetle aynı sayıdan üretildiği için ikisi çelişemez.
+   * Biçimlendirme metrikDegeri ile yapılır: kartta yazan ölçüm ile
+   * buradaki sınır aynı birimde görünsün, okuyan kafadan çevirmesin.
+   */
+  protected vitalAraliklar(v: QualityVitalScore) {
+    const y = (sayi: number) => this.metrikDegeri(v.metric, sayi);
+    const alti = this.dilServisi.t('kaliteVeAlti');
+    const ustu = this.dilServisi.t('kaliteUstu');
+    return [
+      { derece: 'good', etiket: this.dilServisi.t('kaliteIyi'),
+        aralik: `${y(v.good)} ${alti}`, etkin: v.rating === 'good' },
+      { derece: 'needs-improvement', etiket: this.dilServisi.t('kaliteGelistirilmeli'),
+        aralik: `${y(v.good)} – ${y(v.poor)}`, etkin: v.rating === 'needs-improvement' },
+      { derece: 'poor', etiket: this.dilServisi.t('kaliteZayif'),
+        aralik: `${y(v.poor)} ${ustu}`, etkin: v.rating === 'poor' }
+    ];
   }
 
   protected tarihSaat(value: string): string {

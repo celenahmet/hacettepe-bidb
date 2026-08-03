@@ -152,6 +152,27 @@ const SOZLUK: Record<string, { tr: string; en: string }> = {
   kaliteGelistirilmeli: { tr: 'İyileştirilmeli', en: 'Needs improvement' },
   kaliteZayif: { tr: 'Zayıf', en: 'Poor' },
 
+  /* Ölçüm ayrıntı penceresi. Bu metinler şablona sabit Türkçe yazılmıştı;
+     pencere yalnızca karta tıklanınca açıldığı için panel dil denetimi
+     onu hiç görmemiş ve panel "temiz" raporlanmıştı. */
+  kaliteTeknikTanim: { tr: 'Teknik tanım', en: 'Technical definition' },
+  kaliteSadeDille: { tr: 'Sade dille', en: 'In plain language' },
+  kaliteOptimum: { tr: 'Optimum beklenti', en: 'Expected range' },
+  kaliteVeAlti: { tr: 've altı', en: 'or below' },
+  kaliteUstu: { tr: 'üstü', en: 'and above' },
+  kaliteHedef: { tr: 'Hedef', en: 'Target' },
+  kaliteHedefAciklama: {
+    tr: 'Ölçüt, ziyaretlerin en yavaş dörtte biri hariç tutulduğunda '
+      + "(%75'lik dilim) bu sınırın altında kalınmasıdır — tek tek yavaş "
+      + 'açılışlar değil, kullanıcıların çoğunluğunun gördüğü süre '
+      + 'değerlendirilir.',
+    en: 'The criterion is staying below this limit once the slowest quarter '
+      + 'of visits is excluded (75th percentile) — what most users experience '
+      + 'is assessed, not individual slow loads.'
+  },
+  kaliteOlcumAyrinti: { tr: 'ölçüm ayrıntısı', en: 'measurement detail' },
+  kaliteKapat: { tr: 'Kapat', en: 'Close' },
+
   // ---- panel genelinde tekrar eden metinler ----
   ortakDuzenle: { tr: 'Düzenle', en: 'Edit' },
   ortakSil: { tr: 'Sil', en: 'Delete' },

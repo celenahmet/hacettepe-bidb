@@ -277,6 +277,10 @@ export interface QualityVitalScore {
   rating: 'good' | 'needs-improvement' | 'poor';
   score: number;
   lastMeasuredAt: string;
+  /** Bu metriğin "iyi" sınırı; sunucudan gelir, panelde yazılı değildir. */
+  good: number;
+  /** "Zayıf" sınırı; bu değerin üstü zayıf sayılır. */
+  poor: number;
 }
 
 export interface QualitySummary {

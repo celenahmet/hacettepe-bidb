@@ -1403,7 +1403,71 @@
     font-size: var(--olcu-sm);
     line-height: var(--satir-genis);
   }
-  .aciklama-pencere-govde section:last-child p { color: var(--metin-2); font-style: italic; }
+  /* Sıraya değil, sınıfa bakar. Önce "section:last-child" yazılmıştı;
+     pencereye üçüncü bir bölüm eklenince italik oraya kayıyordu. */
+  .aciklama-pencere-sade p { color: var(--metin-2); font-style: italic; }
+
+  /* Optimum beklenti: üç aralık, ölçümün düştüğü aralık vurgulu.
+     Renkler rozetle aynı ailedendir; --kalite-renk pencerenin kendi
+     derecesine bağlı olduğu için burada her satır kendi rengini alır. */
+  .aciklama-pencere-esik ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 4px;
+  }
+
+  .aciklama-pencere-esik li {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--bosluk-3);
+    padding: 7px var(--bosluk-3);
+    border: 1px solid var(--cizgi);
+    border-left-width: 3px;
+    border-radius: var(--kose-sm);
+    background: var(--yuzey-2);
+  }
+
+  .aciklama-pencere-esik li[data-rating="good"]              { border-left-color: #177245; }
+  .aciklama-pencere-esik li[data-rating="needs-improvement"] { border-left-color: #aa6b00; }
+  .aciklama-pencere-esik li[data-rating="poor"]              { border-left-color: var(--hu-kirmizi); }
+
+  /* Ölçümün düştüğü aralık. Yalnızca renkle ayrılmaz — kalın yazı ve
+     belirgin çerçeveyle de işaretlenir; renk körlüğünde de seçilir. */
+  .aciklama-pencere-esik li.etkin {
+    border-color: var(--kalite-renk);
+    background: color-mix(in srgb, var(--kalite-renk) 8%, var(--yuzey));
+  }
+
+  .aciklama-pencere-esik li.etkin .esik-ad,
+  .aciklama-pencere-esik li.etkin .esik-aralik {
+    color: var(--kalite-renk);
+    font-weight: var(--kalinlik-kalin);
+  }
+
+  .esik-ad {
+    color: var(--metin-2);
+    font-size: 11px;
+    font-weight: var(--kalinlik-kalin);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .esik-aralik {
+    color: var(--metin);
+    font-family: var(--yazi-kod);
+    font-size: var(--olcu-sm);
+    white-space: nowrap;
+  }
+
+  .aciklama-pencere-govde .esik-hedef {
+    margin-top: var(--bosluk-2);
+    color: var(--metin-3);
+    font-size: 12px;
+    line-height: var(--satir-genis);
+  }
 
   .kalite-bos {
     padding: var(--bosluk-5);
