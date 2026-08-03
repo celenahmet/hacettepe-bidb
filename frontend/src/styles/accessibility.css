@@ -102,12 +102,23 @@
   .a11y-widget.compact .a11y-trigger > svg:first-child { width: 15px; height: 15px; }
   .a11y-widget.compact .a11y-move-icon { width: 7px; height: 7px; }
 
+  /* Odak göstergesi İKİ TONLU.
+     Bu araç sayfanın üzerinde yüzer ve arkasında ne olacağı önceden
+     bilinmez: bazen beyaz içerik, bazen koyu hero. Tek renkli bir gösterge
+     ikisinde birden çalışamaz — ölçüldü, tek başına sarı (#f2c94c) beyaz
+     zeminde 1,8:1 kalıyor ve WCAG 1.4.11'in istediği 3:1'in altında.
+
+     Sarı halkanın dışına koyu bir halka eklenir: açık zeminde koyu halka,
+     koyu zeminde sarı halka görünür. Tarayıcıların kendi odak halkasında
+     kullandığı yöntemin aynısı. Aracın kendi düğmesinin odağının
+     seçilememesi ayrıca ağır bir kusurdu. */
   .a11y-widget .a11y-trigger:focus-visible,
   .a11y-widget .a11y-action:focus-visible,
   .a11y-widget .a11y-compact-toggle:focus-visible,
   .a11y-widget .a11y-close:focus-visible{
     outline: 3px solid #f2c94c;
     outline-offset: 3px;
+    box-shadow: 0 0 0 6px rgb(13 42 82 / 92%);
   }
 
   .a11y-panel {

@@ -193,4 +193,16 @@
   .icerik .mb-4 { margin-bottom: var(--bosluk-5); }
   .icerik .text-center { text-align: center; }
   .icerik .text-danger { color: var(--hu-kirmizi); }
+
+  /* Aktarılan içerikte <font color="red"> geçiyor. Tarayıcının "red" değeri
+     (#ff0000) beyaz üzerinde 4:1 veriyor; WCAG 1.4.3 (AA) 4,5 istiyor ve bu
+     metin 16px/600 olduğu için "büyük metin" sayılmıyor.
+
+     SAKLANAN İÇERİK DEĞİŞMİYOR: <font color="red"> veritabanında olduğu gibi
+     duruyor, yalnızca çizim rengi kurumsal kırmızıya eşleniyor (6,8:1).
+     Hemen üstteki .text-danger eşlemesiyle aynı yaklaşım: aktarılan sunum
+     işaretlemesi sitenin görsel diline çevriliyor.
+
+     Yeşil karşılığına dokunulmadı; ölçüldü, eşiği zaten karşılıyor. */
+  .icerik font[color="red" i] { color: var(--hu-kirmizi); }
 }

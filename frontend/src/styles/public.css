@@ -615,7 +615,15 @@
     font-size: 0.65rem;
     font-weight: 700;
     letter-spacing: 0.12em;
-    color: #888;
+    /* Kontrast ölçütü (WCAG 1.4.3, AA). Önceki #888 bu zeminde 3,46:1
+       veriyordu; 10,4 pikselle "büyük metin" sayılmadığı için eşik 4,5.
+       Tasarım belirteciyle 5,24:1'e çıkıyor. Sihirli bir onaltılık değer
+       yerine belirteç kullanıldı ki ton değişirse burası da izlesin.
+
+       Aynı gri, alt bilgideki süs okunda (.alt-ok) da kullanılıyor; oraya
+       DOKUNULMADI. O öğe aria-hidden ve metin değil süs; metin dışı ölçüt
+       (1.4.11) 3:1 istiyor ve 3,46 ile karşılıyor. */
+    color: var(--metin-3);
     margin-bottom: 2px;
     text-transform: uppercase;
   }

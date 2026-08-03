@@ -298,9 +298,15 @@
     border-color: rgba(255, 255, 255, 0.25);
   }
 
+  /* Odak göstergesi BEYAZ, kurumsal kırmızı değil.
+     Kırmızı sitenin geri kalanında doğru seçim ama burada zemin koyu:
+     ölçüldü, rgb(179,24,33) üzerine rgb(16,23,34) yalnızca 2,63:1 veriyor;
+     WCAG 1.4.11 gösterge için 3:1 istiyor. Klavyeyle gezen kullanıcı odağın
+     nerede olduğunu güçlükle seçiyordu. Beyaz aynı zeminde 17,9:1 veriyor.
+     Aynı dosyadaki .hero-dugme de bu sebeple beyaz kullanıyor. */
   .hero-servis-karti:focus-visible {
     z-index: 2;
-    outline: 2px solid var(--hu-kirmizi);
+    outline: 2px solid #fff;
     outline-offset: -2px;
   }
 
