@@ -144,6 +144,40 @@ Günlük çalışacak biçimde zamanlanmalıdır:
 Yedekler **sunucu dışına** kopyalanmalıdır; aynı diskteki yedek, disk
 arızasında işe yaramaz.
 
+#### Yedeğin gerçekten çalıştığını sınama
+
+Yedek almak yetmez; alınan yedeğin geri yüklenebildiği de sınanmalıdır.
+`al` komutunun kendi denetimi dökümün yalnızca **listelenebildiğini**
+gösterir — listelenen bir döküm geri yüklenemeyebilir. (Ölçüldü: yarısı
+kesilmiş bir döküm bu denetimden 26 tablo bulunduğu bilgisiyle geçti,
+ama geri yüklenemedi.)
+
+```bash
+tools/yedek.sh dogrula 20260803-180706
+```
+
+Yedek **geçici ve ayrı** bir veritabanına gerçekten geri yüklenir, canlı
+veritabanıyla karşılaştırılır (şema, her tablonun kesin satır sayısı,
+diziler, sayfa metinlerinin sağlaması, belge arşivi), sonra o geçici
+veritabanı silinir. Canlı veriye dokunulmaz; üretimde de çalıştırılabilir.
+
+| Çıkış kodu | Anlamı |
+|---|---|
+| 0 | Geri yüklendi, canlı veriyle birebir aynı |
+| 1 | **Geri yüklenemedi** — yedek kullanılamaz |
+| 2 | Geri yüklendi ama içerik farklı |
+
+Kod 2, eski bir yedekte beklenen sonuçtur (yedek alındıktan sonra veri
+değişmiştir). **Az önce alınmış** bir yedekte kod 2 görülüyorsa yedekleme
+veri kaçırıyor demektir.
+
+Yeni alınan yedek ayda bir doğrulanmalıdır:
+
+```
+# Linux/macOS — her ayın 1'i, saat 04:00, en son yedeği sınar
+0 4 1 * * cd /opt/hacettepe-bidb && tools/yedek.sh dogrula "$(ls -t yedek/veritabani-*.dump | head -1 | sed 's/.*veritabani-//;s/\.dump//')"
+```
+
 ---
 
 ## Güncelleme
