@@ -168,11 +168,12 @@ Bu yüzden `.yonetim` kök öğesinin `lang` özniteliği panel diline BAĞLIDIR
 Belge dili (`html lang`) sitenin diline göre ayarlanır (Seo servisi) ama
 panelin kendi dil seçimi ondan bağımsızdır; ikisi ayrışınca dönüşüm bozulur.
 
-Bu üç araç çalışan siteye ve `--remote-debugging-port=9222` ile açılmış bir
-Chrome'a ihtiyaç duyar; ölçüm gerçek tarayıcıda yapılır. Sebebi: sütun
-genişliği CSS'in yanı sıra yazı tipine ve içeriğe bağlıdır, harf dönüşümü
-ise yalnızca çizim sırasında oluşur — kodda izi yoktur. Üçünün de `--kanit`
-modu var.
+Bu dört araç çalışan siteye ve `--remote-debugging-port=9222` ile açılmış
+bir Chrome'a ihtiyaç duyar; ölçüm gerçek tarayıcıda yapılır ve bu zorunlu:
+sütun genişliği CSS'in yanı sıra yazı tipine ve içeriğe bağlıdır, harf
+dönüşümü yalnızca çizim sırasında oluşur, dokunma hedefi ise ancak
+`elementFromPoint` ile ölçülebilir. Hiçbirinin kodda izi yoktur. Dördünün
+de `--kanit` modu var.
 
 **Kaynak sitenin İngilizce sayfaları artık içerik SUNMUYOR.** `/en/<slug>`
 isteklerinin tamamı aynı taslak sayfayı döndürüyor ("Böyle bir sayfa
