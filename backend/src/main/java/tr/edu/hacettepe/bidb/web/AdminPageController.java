@@ -126,7 +126,7 @@ public class AdminPageController {
         String language = istek.language() == null ? "tr" : istek.language().trim().toLowerCase(Locale.ROOT);
         String slug = temizSlug(istek.slug());
         if (slug.isBlank()) return ResponseEntity.badRequest().body("Adres boş olamaz.");
-        if (pages.findBySlugAndLanguage(slug, language).isPresent()) {
+        if (pages.existsBySlugAndLanguage(slug, language)) {
             return ResponseEntity.badRequest().body("Bu adres zaten kullanılıyor: /" + language + "/" + slug);
         }
 
@@ -155,7 +155,7 @@ public class AdminPageController {
             if (yeni.isBlank()) return ResponseEntity.badRequest().body("Adres boş olamaz.");
 
             if (!yeni.equals(s.getSlug())) {
-                if (pages.findBySlugAndLanguage(yeni, s.getLanguage()).isPresent()) {
+                if (pages.existsBySlugAndLanguage(yeni, s.getLanguage())) {
                     return ResponseEntity.badRequest().body("Bu adres zaten kullanılıyor: /" + s.getLanguage() + "/" + yeni);
                 }
                 String oldPath = "/" + s.getLanguage() + "/" + s.getSlug();

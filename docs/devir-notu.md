@@ -118,7 +118,9 @@ girmelidir.
 Kod değişikliğinden sonra, önce testler:
 
 ```bash
-tools/test.sh            # arka uç (JUnit) + ön yüz (Karma) testleri
+tools/test.sh            # arka uç (JUnit) + ön yüz (Karma) — 104 test
+tools/test.sh arka       # yalnızca arka uç
+tools/test.sh on         # yalnızca ön yüz
 tools/test.sh --kanit    # testlerin GERÇEKTEN ölçtüğünü kanıtlar
 ```
 
@@ -130,11 +132,22 @@ pencere yalnızca tıklanınca açıldığı için `panel-dil-denetim.js` onu hi
 görmedi ve panel "temiz" raporlandı. Sözlüğü doğrudan dolaşan bir test,
 ekranda görünme koşuluna bağlı değildir.
 
-`--kanit` üretim koduna bilerek beş hata sokar, testlerin kırmızıya
+Bütünleşme testleri **gerçek PostgreSQL** üzerinde çalışır (Testcontainers,
+`VeritabaniTemeli`): üretimdeki sürümün aynısı ayağa kalkar ve 75 geçişin
+tamamı uygulanır — geçişlerin uygulanabilirliği de böylece sınanmış olur.
+Geliştirme veritabanına dokunulmaz; ayrı bir kap, testler bitince silinir.
+İlk koşu ~100 sn (kap açılışı), sonraki sınıflar bağlamı paylaşır.
+
+`--kanit` üretim koduna bilerek altı hata sokar, testlerin kırmızıya
 döndüğünü görür, geri alır ve **deponun yeniden yeşile döndüğünü** sınar.
 Son adım gereklidir: geri alma sırasında zaman damgası tazelenmezse Maven
 kaynağı yeniden derlemez ve bir sonraki koşu bozuk bytecode'u çalıştırır
 (yaşandı).
+
+**Test yazarken dikkat:** aynı Spring bağlamını paylaşan testler veriyi
+de paylaşır. `ParolaSifirlamaAkisiTest` yönetici parolasını gerçekten
+değiştiriyor; toplamayınca sonraki sınıfın altı testi 401 aldı. Testler
+tek tek geçip birlikte düşüyorsa önce paylaşılan durumu arayın.
 
 Yapısal her değişiklikten sonra:
 
@@ -283,15 +296,13 @@ Her biri gerçekten yaşandı. Yeni bir ajan aynı tuzağa düşmesin:
 
 1. **İngilizce çeviri** (aşağıda ayrı bölüm)
 2. `e-signature-workflow` sayfası kaynakta da boş — yayından kaldırılabilir
-3. **Test kapsamı dar.** 56 test var (31 arka uç, 25 ön yüz) ve hepsi saf
-   mantığı sınıyor: Core Web Vitals eşikleri, parola kuralı, sıfırlama
-   jetonunun karmalanması, sayı biçimi, çeviri sözlüğü. Veritabanına ya
-   da HTTP katmanına dokunan hiçbir test yok — depo (Testcontainers) için
-   bağımlılık `pom.xml`'de hazır, kullanılmadı. Sırada denmeye değer
-   olanlar: yetkilendirme (kimliksiz istek `/api/admin/**`'e girebiliyor
-   mu), parola sıfırlama akışının uçtan uca davranışı (jeton tek kullanım,
-   süre dolumu, hız sınırı) ve içerik uçlarının yayımlanmamış kaydı
-   sızdırmaması.
+3. **Test kapsamı hâlâ dar.** 104 test var (79 arka uç, 25 ön yüz).
+   Kapsanan: Core Web Vitals eşikleri, parola kuralı, sıfırlama jetonu ve
+   akışın tamamı, yetkilendirme matrisi, yayımlanmamış içerik, adres
+   benzersizliği, sayı biçimi, çeviri sözlüğü. **Kapsanmayan**: menü,
+   personel, slider, kısayol, iletişim talebi ve dosya yükleme uçlarının
+   hiçbiri; denetim günlüğü (`YoneticiIslemGunlukFiltresi`) gerçekten
+   kaydediyor mu; e-posta gönderimi (SMTP yok, taklit sunucu gerekir).
 
 > Slider ve kısayol düzenleme uçları bu listeden **çıkarıldı**: ikisi de
 > yazılmış durumda ve uçtan uca denendi — ekle/güncelle/sil sırasıyla

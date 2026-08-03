@@ -1,0 +1,29 @@
+# Testlerde geçerli EK ayarlar.
+#
+# Dosya adı bilerek "application-test.yml": "application.yml" olsaydı
+# src/main/resources'taki ana yapılandırmayı GÖLGELERDİ (test sınıf yolu
+# önce gelir) ve tüm ayarlar kaybolurdu. Yaşandı — uygulama, tanımsız
+# ${bidb.cors.izinli-adresler} yüzünden açılmadı. Bu dosya ana
+# yapılandırmanın ÜSTÜNE biner, yerine geçmez.
+#
+# Veritabanı adresi BURADA YOKTUR: Testcontainers ayağa kaldırdığı kabın
+# adresini @ServiceConnection ile kendiliğinden bağlar (VeritabaniTemeli).
+# Sabit bir adres yazılsaydı testler geliştirme veritabanına bağlanır ve
+# gerçek veriyi değiştirebilirdi.
+
+bidb:
+  yonetici:
+    # Tohum hesabı. Uygulama, hesap tablosu boşken parola tanımlı değilse
+    # açılmaz; testlerin açılabilmesi için gerekli.
+    kullanici: admin
+    parola: test-parolasi-1234
+  # Yüklenen dosyalar için yazılabilir geçici dizin. Üretimdeki
+  # /veri/dosyalar test kabında yoktur.
+  dosya-dizini: /tmp/bidb-test-dosyalar
+
+logging:
+  level:
+    # Testcontainers ve Flyway çıktısı koşuyu okunmaz hâle getiriyordu
+    org.testcontainers: WARN
+    com.github.dockerjava: WARN
+    org.flywaydb: WARN

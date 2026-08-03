@@ -10,13 +10,42 @@ import java.util.Optional;
 
 public interface PageRepo extends JpaRepository<Page, Long> {
 
-    /** Belgeler tek sorguda getirilir; yanıt üretilirken oturum kapalı olur. */
+    /**
+     * YALNIZCA YAYINDAKİ sayfa. Belgeler tek sorguda getirilir; yanıt
+     * üretilirken oturum kapalı olur.
+     *
+     * Adı önce "findBySlugAndLanguage" idi ve sorgunun yayın süzgecini
+     * gizliyordu. İki sonucu oldu:
+     *
+     * (1) PageController'ı okuyan, yayımlanmamış sayfanın sızdığını
+     *     sanıyordu — sızmıyordu, süzgeç sorgunun gövdesindeydi.
+     * (2) Yönetim panelindeki slug BENZERSİZLİK denetimleri de bu yöntemi
+     *     çağırıyordu ve orada süzgeç YANLIŞTI: yayımlanmamış bir sayfanın
+     *     adresi "boşta" görünüyordu.
+     *
+     * (2)'nin sonucu veri bozulması DEĞİLDİ — veritabanındaki UNIQUE kısıt
+     * ikinci kaydı zaten engelliyor, VeriHatasiIsleyici de bunu 400'e
+     * çeviriyordu. Kaybedilen şey mesajın kendisiydi: işletmen "Bu adres
+     * zaten kullanılıyor: /tr/duyurular" yerine "Bu kayıt zaten var" gibi
+     * genel bir uyarı alıyor, hangi adresin çakıştığını göremiyordu.
+     *
+     * Benzersizlik için existsBySlugAndLanguage() kullanılır.
+     */
     @Query("""
            SELECT s FROM Page s
            LEFT JOIN FETCH s.documents
            WHERE s.slug = :slug AND s.language = :language AND s.published = true
            """)
-    Optional<Page> findBySlugAndLanguage(@Param("slug") String slug, @Param("language") String language);
+    Optional<Page> findPublishedBySlugAndLanguage(@Param("slug") String slug, @Param("language") String language);
+
+    /**
+     * Adres KULLANIMDA mı — yayın durumuna BAKMAKSIZIN.
+     *
+     * Benzersizlik veritabanında (slug, dil) UNIQUE kısıtıyla sağlanıyor;
+     * o kısıt da yayın durumuna bakmaz. Denetimin kısıtla aynı soruyu
+     * sorması gerekir, yoksa denetim geçer ve kayıt kısıta çarpar.
+     */
+    boolean existsBySlugAndLanguage(String slug, String language);
 
     /** SEO ve liste yanıtlarında içerik/belge ilişkisini yüklemeden sayfayı bulur. */
     Optional<Page> findFirstBySlugAndLanguageAndPublishedTrue(String slug, String language);

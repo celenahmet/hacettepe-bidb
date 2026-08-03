@@ -23,7 +23,7 @@ public class PageController {
         // Diğer dildeki karşılığı varsa hreflang bağlantısı verilebilir
         boolean hasTranslation = pages.existsBySlugAndLanguageAndPublishedTrue(
                 slug, language.equals("en") ? "tr" : "en");
-        return pages.findBySlugAndLanguage(slug, language)
+        return pages.findPublishedBySlugAndLanguage(slug, language)
                 .map(s -> PageDto.of(s, hasTranslation))
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
