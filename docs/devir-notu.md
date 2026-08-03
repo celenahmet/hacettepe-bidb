@@ -139,7 +139,18 @@ Tasarım ya da panel dili değişikliğinden sonra:
 ```bash
 node tools/hizalama-denetim.js         # ızgaraların sütun ekseni kayık mı
 node tools/panel-dil-denetim.js        # İngilizce panelde çevrilmemiş metin
+node tools/buyuk-harf-denetim.js       # yanlış dille büyük/küçük harf dönüşümü
 ```
+
+**Büyük harf dönüşümü dile bağlıdır ve bu gözden kaçar.** Türkçede "i"nin
+büyüğü "İ", İngilizcede "I"dır; CSS'in `text-transform` özelliği dönüşümü
+ÖĞENİN DİLİNE göre yapar. Dil yanlış olduğunda İngilizce "Sign in" metni
+"SİGN İN" olarak çıkar. Bu, kurumsal bir sitede göze batan bir hatadır ve
+kodda hiçbir izi yoktur — yalnızca ekranda görünür.
+
+Bu yüzden `.yonetim` kök öğesinin `lang` özniteliği panel diline BAĞLIDIR.
+Belge dili (`html lang`) sitenin diline göre ayarlanır (Seo servisi) ama
+panelin kendi dil seçimi ondan bağımsızdır; ikisi ayrışınca dönüşüm bozulur.
 
 Bu iki araç çalışan siteye ve `--remote-debugging-port=9222` ile açılmış bir
 Chrome'a ihtiyaç duyar; ölçümü gerçek tarayıcıda yapar, çünkü sütun

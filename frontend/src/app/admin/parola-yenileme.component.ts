@@ -19,7 +19,10 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
   selector: 'bidb-parola-yenileme',
   imports: [FormsModule, RouterLink],
   template: `
-    <div class="yonetim">
+    <!-- lang açıkça yazılır: bu ekranın metinleri Türkçe ve CSS'in
+         text-transform'u dönüşümü öğenin diline göre yapıyor. Belge dili
+         başka bir dile ayarlıysa "GİRİŞ" yerine "GIRIŞ" çıkardı. -->
+    <div class="yonetim" lang="tr">
       <div class="giris-duzen">
         <div class="giris-kutu">
           <header class="giris-marka">

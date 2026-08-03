@@ -37,7 +37,16 @@ interface MobileMenuItem {
   selector: 'bidb-admin-panel',
   imports: [FormsModule, PageEditorComponent, StaffEditorComponent, NewsCoverComponent, ContactTicketAdminComponent, LoginEventsAdminComponent, AuditLogAdminComponent, MailAdminComponent, AccessibilityMenuComponent],
   template: `
-    <div class="yonetim">
+    <!-- lang panel diline bağlanır. Sebebi görünüşte biçimsel ama sonucu
+         değil: CSS'in text-transform'u büyük/küçük harf dönüşümünü ÖĞENİN
+         DİLİNE göre yapar ve Türkçe ile İngilizce'nin kuralları ayrışır
+         (i -> Türkçe İ, İngilizce I). Belge dili sitenin diline göre
+         ayarlanıyor (Seo servisi) ama panelin KENDİ dil seçimi ayrı.
+         Panel İngilizceyken belge Türkçe kaldığı için İngilizce metinler
+         Türkçe kurallarıyla büyütülüyordu: "Hacettepe University" ->
+         "HACETTEPE UNİVERSİTY", "Sign in" -> "SİGN İN".
+         Ölçüldü: panel İngilizceyken 19 metin bozuluyordu. -->
+    <div class="yonetim" [attr.lang]="dilServisi.dil()">
       @if (!api.girisYapildi()) {
         <div class="giris-duzen" [style.background-image]="arkaPlanGorseli() ? 'url(' + arkaPlanGorseli() + ')' : null">
           <div class="giris-kutu">
