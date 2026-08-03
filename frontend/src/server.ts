@@ -114,7 +114,33 @@ app.use((_req, res, next) => {
   res.setHeader('Content-Security-Policy', guvenlikPolitikasi(nonce));
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
-  res.setHeader('Permissions-Policy', 'geolocation=(), microphone=(), camera=()');
+
+  /* Kullanılmayan cihaz ve tarayıcı yetenekleri kapatılır. Site hiçbirini
+     istemiyor; açık bırakmak, ileride eklenen üçüncü taraf bir gömülü
+     içeriğin sessizce kullanabilmesi demek.
+
+     fullscreen ve picture-in-picture AÇIK bırakıldı: iki sayfada gömülü
+     YouTube videosu var (email-backup-video, email-migration) ve bunları
+     kapatmak videoyu tam ekran izlemeyi engellerdi. */
+  res.setHeader('Permissions-Policy', [
+    'geolocation=()', 'microphone=()', 'camera=()',
+    'payment=()', 'usb=()', 'serial=()', 'bluetooth=()',
+    'accelerometer=()', 'gyroscope=()', 'magnetometer=()',
+    'display-capture=()', 'midi=()', 'idle-detection=()',
+    'browsing-topics=()'          // reklam amaçlı ilgi alanı çıkarımı
+  ].join(', '));
+
+  /* Bu pencereyi başka kaynaktan açılan pencerelerden yalıtır. Sitedeki
+     314 dış bağlantının hepsinde zaten rel="noopener" var (ölçüldü);
+     COOP bunun tarayıcı düzeyindeki karşılığı ve ileride eklenecek bir
+     bağlantı unutulursa da korur. */
+  res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+
+  /* CSP'deki frame-ancestors bunu zaten kapsıyor ve modern tarayıcılarda
+     o geçerli. X-Frame-Options, CSP'yi desteklemeyen eski tarayıcılar için
+     yedek olarak kalır; ikisi çelişmez. */
+  res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+
   // Yalnızca HTTPS üzerinden anlamlıdır; tarayıcı düz HTTP'de yok sayar.
   res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
   next();
