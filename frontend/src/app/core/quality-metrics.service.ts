@@ -30,8 +30,37 @@ export class QualityMetricsService {
     });
   }
 
+  /**
+   * Otomasyon trafiği ölçüme yazılmaz.
+   *
+   * Bu ölçümlerin adı "gerçek kullanıcı performansı"; panelde kurumun kalite
+   * karnesi olarak gösteriliyor. Tarayıcı otomasyonu (geliştirme sırasındaki
+   * denetim betikleri, Lighthouse, tarayıcı robotları) bu tabloya yazdığında
+   * karne artık gerçek ziyaretçiyi anlatmaz.
+   *
+   * Ölçüldü: iki sayfa gezen bir otomasyon oturumu tabloya DÖRT örnek
+   * yazıyordu. Etkisi teorik değil - CLS örneklerinin 2,277'ye kadar çıkan
+   * uçları, yükleme ortasında görünüm boyutunu değiştiren denetim
+   * betiklerinden geliyor; gerçek bir ziyaretçide o değer görülmez. Panel
+   * bu yüzden düzeltilmiş bir sorunu "Zayıf" göstermeye devam ediyordu.
+   *
+   * İki ölçüt kullanılıyor çünkü tek başına hiçbiri yetmiyor:
+   *   - navigator.webdriver: WebDriver oturumlarını yakalar, ancak hata
+   *     ayıklama portuna bağlanmış sıradan bir Chrome'da false kalır.
+   *   - UA deseni: başlıksız (headless) tarayıcıları ve bilinen ölçüm
+   *     araçlarını yakalar.
+   *
+   * Yanlış pozitifin bedeli düşük: birkaç gerçek örneğin atlanması. Yanlış
+   * negatifin bedeli yüksek: karnenin bozulması.
+   */
+  private otomasyonMu(): boolean {
+    if ((navigator as { webdriver?: boolean }).webdriver === true) return true;
+    return /headless|bot|crawler|spider|lighthouse|pagespeed|gtmetrix|ptst/i
+      .test(navigator.userAgent);
+  }
+
   private startPageViews(): void {
-    if (navigator.doNotTrack === '1') return;
+    if (navigator.doNotTrack === '1' || this.otomasyonMu()) return;
     let lastPath = '';
     const record = (path: string, navigation: boolean) => {
       const cleanPath = path.split(/[?#]/)[0];
@@ -78,7 +107,7 @@ export class QualityMetricsService {
   }
 
   private start(): void {
-    if (navigator.doNotTrack === '1') return;
+    if (navigator.doNotTrack === '1' || this.otomasyonMu()) return;
     this.path = window.location.pathname;
     if (!/^\/(tr|en)(\/|$)/.test(this.path) || this.path.startsWith('/error/')) return;
 
