@@ -10,6 +10,7 @@ import { NewsCoverComponent } from '../pages/news-cover.component';
 import { AdminNews, NewsOption, NewsOptions, Shortcut, AdminMenuItem, AdminMenu, AdminPage, Slide, AdminSocialAccount, AdminApiService, ContactChannel, QualitySummary, QualityVitalScore, AnalyticsReport } from './admin-api.service';
 import { ContactTicketAdminComponent } from './contact-ticket-admin.component';
 import { AdminDilServisi } from './admin-dil.service';
+import { EsikAraligi, metrikDegeri, vitalAraliklar } from './vitals-esik';
 import { tiklamaSinirlayici } from './tiklama-siniri';
 import { AccessibilityMenuComponent } from '../layout/accessibility-menu.component';
 import { Api } from '../core/api.service';
@@ -1767,44 +1768,16 @@ export class AdminPanelComponent {
     return this.dilServisi.dil() === 'en' ? s.enDescription : s.description;
   }
 
-  /*
-   * Ölçüm değeri. Sayı biçimi PANEL DİLİNE göre yerelleştirilir.
-   *
-   * Önce toFixed(3) kullanılıyordu ve Türkçe panelde "0.328" yazıyordu;
-   * Türkçede ondalık ayracı virgüldür. Aynı ekranda hem 75. yüzdelik hem
-   * eşik değerleri okunuyor, ayracın yanlış olması kurumsal bir panelde
-   * göze batan bir kusur.
-   */
+  /* Ölçüm biçimlendirmesi ve eşik aralıkları vitals-esik.ts içinde;
+     saf işlevler oldukları için paneli ayağa kaldırmadan sınanabiliyorlar
+     (vitals-esik.spec.ts). Buradakiler yalnızca panel diliyle bağlayan
+     ince sarmalayıcılardır. */
   protected metrikDegeri(metric: string, value: number): string {
-    const yerel = this.dilServisi.dil() === 'en' ? 'en-US' : 'tr-TR';
-    if (metric === 'CLS') {
-      return new Intl.NumberFormat(yerel, {
-        minimumFractionDigits: 3, maximumFractionDigits: 3
-      }).format(value);
-    }
-    return `${new Intl.NumberFormat(yerel).format(Math.round(value))} ms`;
+    return metrikDegeri(metric, value, this.dilServisi.dil());
   }
 
-  /**
-   * "Optimum beklenti" bloğundaki üç aralık.
-   *
-   * Sınırlar kaydın kendisinden (sunucudan) okunur, panele yazılmaz;
-   * aralıklar rozetle aynı sayıdan üretildiği için ikisi çelişemez.
-   * Biçimlendirme metrikDegeri ile yapılır: kartta yazan ölçüm ile
-   * buradaki sınır aynı birimde görünsün, okuyan kafadan çevirmesin.
-   */
-  protected vitalAraliklar(v: QualityVitalScore) {
-    const y = (sayi: number) => this.metrikDegeri(v.metric, sayi);
-    const alti = this.dilServisi.t('kaliteVeAlti');
-    const ustu = this.dilServisi.t('kaliteUstu');
-    return [
-      { derece: 'good', etiket: this.dilServisi.t('kaliteIyi'),
-        aralik: `${y(v.good)} ${alti}`, etkin: v.rating === 'good' },
-      { derece: 'needs-improvement', etiket: this.dilServisi.t('kaliteGelistirilmeli'),
-        aralik: `${y(v.good)} – ${y(v.poor)}`, etkin: v.rating === 'needs-improvement' },
-      { derece: 'poor', etiket: this.dilServisi.t('kaliteZayif'),
-        aralik: `${y(v.poor)} ${ustu}`, etkin: v.rating === 'poor' }
-    ];
+  protected vitalAraliklar(v: QualityVitalScore): EsikAraligi[] {
+    return vitalAraliklar(v, this.dilServisi.dil(), this.dilServisi.t);
   }
 
   protected tarihSaat(value: string): string {

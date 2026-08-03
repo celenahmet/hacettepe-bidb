@@ -115,7 +115,28 @@ girmelidir.
 
 ## 4. DOĞRULAMA ARAÇLARI
 
-Yapısal her değişiklikten sonra çalıştırılır:
+Kod değişikliğinden sonra, önce testler:
+
+```bash
+tools/test.sh            # arka uç (JUnit) + ön yüz (Karma) testleri
+tools/test.sh --kanit    # testlerin GERÇEKTEN ölçtüğünü kanıtlar
+```
+
+Makineye Java ya da Maven kurmaya gerek yok; arka uç testleri kapta
+çalışır. Aşağıdaki tarayıcı araçlarından farkı önemlidir: **testler
+mantığı sınar, araçlar ekranı ölçer.** İkisi birbirinin yerine geçmez.
+Bunun somut örneği yaşandı — ölçüm ayrıntı penceresi çevrilmemişti ama
+pencere yalnızca tıklanınca açıldığı için `panel-dil-denetim.js` onu hiç
+görmedi ve panel "temiz" raporlandı. Sözlüğü doğrudan dolaşan bir test,
+ekranda görünme koşuluna bağlı değildir.
+
+`--kanit` üretim koduna bilerek beş hata sokar, testlerin kırmızıya
+döndüğünü görür, geri alır ve **deponun yeniden yeşile döndüğünü** sınar.
+Son adım gereklidir: geri alma sırasında zaman damgası tazelenmezse Maven
+kaynağı yeniden derlemez ve bir sonraki koşu bozuk bytecode'u çalıştırır
+(yaşandı).
+
+Yapısal her değişiklikten sonra:
 
 ```bash
 node tools/verify-content.js    # ana site metinleri kaynakla birebir mi
@@ -262,6 +283,15 @@ Her biri gerçekten yaşandı. Yeni bir ajan aynı tuzağa düşmesin:
 
 1. **İngilizce çeviri** (aşağıda ayrı bölüm)
 2. `e-signature-workflow` sayfası kaynakta da boş — yayından kaldırılabilir
+3. **Test kapsamı dar.** 56 test var (31 arka uç, 25 ön yüz) ve hepsi saf
+   mantığı sınıyor: Core Web Vitals eşikleri, parola kuralı, sıfırlama
+   jetonunun karmalanması, sayı biçimi, çeviri sözlüğü. Veritabanına ya
+   da HTTP katmanına dokunan hiçbir test yok — depo (Testcontainers) için
+   bağımlılık `pom.xml`'de hazır, kullanılmadı. Sırada denmeye değer
+   olanlar: yetkilendirme (kimliksiz istek `/api/admin/**`'e girebiliyor
+   mu), parola sıfırlama akışının uçtan uca davranışı (jeton tek kullanım,
+   süre dolumu, hız sınırı) ve içerik uçlarının yayımlanmamış kaydı
+   sızdırmaması.
 
 > Slider ve kısayol düzenleme uçları bu listeden **çıkarıldı**: ikisi de
 > yazılmış durumda ve uçtan uca denendi — ekle/güncelle/sil sırasıyla

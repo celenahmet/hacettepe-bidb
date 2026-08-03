@@ -37,7 +37,11 @@ export class AdminDilServisi {
   };
 }
 
-const SOZLUK: Record<string, { tr: string; en: string }> = {
+/* Dışa açık: admin-dil.service.spec.ts sözlüğün TAMAMINI dolaşarak her
+   anahtarın iki dilde de dolu olduğunu sınar. Tek tek anahtar sınamak
+   yeni eklenen çevirileri kapsamazdı — asıl kusur zaten "eklemeyi
+   unutmak" biçiminde çıkıyor. */
+export const SOZLUK: Record<string, { tr: string; en: string }> = {
   // ---- giriş ekranı ----
   girisKurum: { tr: 'Hacettepe Üniversitesi', en: 'Hacettepe University' },
   girisBaslik: { tr: 'Bilgi İşlem<br>Daire Başkanlığı', en: 'Information Technologies<br>Department' },

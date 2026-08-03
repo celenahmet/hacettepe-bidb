@@ -123,8 +123,11 @@ public class AdminQualityController {
     }
 
     /* Eşikler WebVitalController'dan okunur; burada ayrıca yazılmaz.
-       Yazılmıştı ve iki kopya ayrışmıştı (bkz. oradaki açıklama). */
-    private static int performanceScore(String metric, double value) {
+       Yazılmıştı ve iki kopya ayrışmıştı (bkz. oradaki açıklama).
+
+       Paket düzeyinde görünür: WebVitalEsikTest bu puanlamanın
+       derecelendirmeyle aynı sınırları kullandığını doğrudan sınar. */
+    static int performanceScore(String metric, double value) {
         double good = WebVitalController.good(metric);
         double poor = WebVitalController.poor(metric);
         if (value <= good) return 100;
