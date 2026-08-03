@@ -81,8 +81,19 @@ public class WebVitalController {
         return Math.round(value * factor) / factor;
     }
 
-    static String rating(String metric, double value) {
-        double good = switch (metric) {
+    /*
+     * Core Web Vitals eşiklerinin TEK kaynağı burasıdır.
+     *
+     * Bu değerler daha önce AdminQualityController içinde de ayrıca
+     * yazılmıştı ve iki kopya şimdiden ayrışmıştı: bilinmeyen bir metrik
+     * için "poor" sınırı burada 0, orada 1 idi. Yönetim paneli artık bu
+     * eşikleri ekranda da gösterdiğinden üçüncü bir kopya çıkacaktı;
+     * ikisi de buradan okur, panel de API'den alır.
+     *
+     * Değerler Google'ın yayımladığı eşiklerdir (web.dev/vitals).
+     */
+    static double good(String metric) {
+        return switch (metric) {
             case "LCP" -> 2500;
             case "INP" -> 200;
             case "CLS" -> 0.10;
@@ -90,7 +101,10 @@ public class WebVitalController {
             case "TTFB" -> 800;
             default -> 0;
         };
-        double poor = switch (metric) {
+    }
+
+    static double poor(String metric) {
+        return switch (metric) {
             case "LCP" -> 4000;
             case "INP" -> 500;
             case "CLS" -> 0.25;
@@ -98,8 +112,11 @@ public class WebVitalController {
             case "TTFB" -> 1800;
             default -> 0;
         };
-        if (value <= good) return "good";
-        if (value <= poor) return "needs-improvement";
+    }
+
+    static String rating(String metric, double value) {
+        if (value <= good(metric)) return "good";
+        if (value <= poor(metric)) return "needs-improvement";
         return "poor";
     }
 }

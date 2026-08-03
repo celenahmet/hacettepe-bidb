@@ -28,8 +28,12 @@ public class AdminQualityController {
 
     public record PageScore(String path, String title, String contentType,
                             int score, List<String> issues) {}
+    /* good/poor: bu metriğin "iyi" ve "zayıf" sınırı. Panel, beklenen
+       aralığı ekranda bu değerlerden yazar; metni kendi içine gömerse
+       eşik değiştiğinde panel yanlış bilgi vermeye devam ederdi. */
     public record VitalScore(String path, String metric, double p75, long samples,
-                             String rating, int score, OffsetDateTime lastMeasuredAt) {}
+                             String rating, int score, OffsetDateTime lastMeasuredAt,
+                             double good, double poor) {}
     public record QualitySummary(int seoScore, Integer performanceScore, long performanceSamples,
                                  OffsetDateTime generatedAt, List<PageScore> pages,
                                  List<VitalScore> vitals) {}
@@ -55,7 +59,8 @@ public class AdminQualityController {
                     String rating = WebVitalController.rating(item.getMetric(), value);
                     return new VitalScore(item.getPath(), item.getMetric(), value,
                             item.getSampleCount(), rating, performanceScore(item.getMetric(), value),
-                            item.getLastMeasuredAt() == null ? null : item.getLastMeasuredAt().atOffset(java.time.ZoneOffset.UTC));
+                            item.getLastMeasuredAt() == null ? null : item.getLastMeasuredAt().atOffset(java.time.ZoneOffset.UTC),
+                            WebVitalController.good(item.getMetric()), WebVitalController.poor(item.getMetric()));
                 }).toList();
 
         int seoScore = pageScores.isEmpty() ? 0
@@ -117,15 +122,11 @@ public class AdminQualityController {
         return Math.min(score, 100);
     }
 
+    /* Eşikler WebVitalController'dan okunur; burada ayrıca yazılmaz.
+       Yazılmıştı ve iki kopya ayrışmıştı (bkz. oradaki açıklama). */
     private static int performanceScore(String metric, double value) {
-        double good = switch (metric) {
-            case "LCP" -> 2500; case "INP" -> 200; case "CLS" -> 0.10;
-            case "FCP" -> 1800; case "TTFB" -> 800; default -> 0;
-        };
-        double poor = switch (metric) {
-            case "LCP" -> 4000; case "INP" -> 500; case "CLS" -> 0.25;
-            case "FCP" -> 3000; case "TTFB" -> 1800; default -> 1;
-        };
+        double good = WebVitalController.good(metric);
+        double poor = WebVitalController.poor(metric);
         if (value <= good) return 100;
         if (value >= poor) return 0;
         return (int) Math.round(100 * (poor - value) / (poor - good));
