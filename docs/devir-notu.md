@@ -118,7 +118,7 @@ girmelidir.
 Kod değişikliğinden sonra, önce testler:
 
 ```bash
-tools/test.sh            # arka uç (JUnit) + ön yüz (Karma) — 156 test
+tools/test.sh            # arka uç (JUnit) + ön yüz (Karma) — 169 test
 tools/test.sh arka       # yalnızca arka uç
 tools/test.sh on         # yalnızca ön yüz
 tools/test.sh --kanit    # testlerin GERÇEKTEN ölçtüğünü kanıtlar
@@ -304,7 +304,7 @@ Her biri gerçekten yaşandı. Yeni bir ajan aynı tuzağa düşmesin:
 
 1. **İngilizce çeviri** (aşağıda ayrı bölüm)
 2. `e-signature-workflow` sayfası kaynakta da boş — yayından kaldırılabilir
-3. **Test kapsamı hâlâ dar.** 156 test var (131 arka uç, 25 ön yüz).
+3. **Test kapsamı hâlâ dar.** 169 test var (138 arka uç, 31 ön yüz).
    Kapsanan: Core Web Vitals eşikleri, parola kuralı, sıfırlama jetonu ve
    akışın tamamı, yetkilendirme matrisi, yayımlanmamış içerik, adres
    benzersizliği, **her iki yükleme yüzeyi** (panel belgesi ve kimliksiz

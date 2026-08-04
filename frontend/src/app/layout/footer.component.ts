@@ -23,6 +23,34 @@ interface SocialAccount {
 }
 
 /**
+ * Sosyal ağın EKRANDA görünen adı — bağlantının aria-label'ı ve üstüne
+ * gelindiğinde çıkan başlık.
+ *
+ * Marka adları sözlükten okunur. Önce "baş harfini büyüt" kuralı tek
+ * başına kullanılıyordu ve iki markada yanlış sonuç veriyordu:
+ * "linkedin" → "Linkedin", "youtube" → "Youtube". İkisi de markanın
+ * kendi yazımı değil. Bu ad ekran okuyucu tarafından sesli okunuyor ve
+ * fare üstüne gelince görünüyor; yani yazım hatası doğrudan kullanıcıya
+ * ulaşıyor.
+ *
+ * Sözlükte olmayan bir ağ için baş harfi büyütme kuralı sürer: panelden
+ * yeni bir ağ eklendiğinde bağlantı adsız kalmasın.
+ *
+ * Bileşenin dışında: sınanabilmesi için (footer-ag-adi.spec.ts).
+ */
+export const AG_ADLARI: Record<string, string> = {
+  instagram: 'Instagram',
+  linkedin: 'LinkedIn',
+  twitter: 'X',
+  youtube: 'YouTube',
+  facebook: 'Facebook'
+};
+
+export function agAdi(ag: string): string {
+  return AG_ADLARI[ag] ?? ag.charAt(0).toUpperCase() + ag.slice(1);
+}
+
+/**
  * Sayfa altı — referans tasarıma birebir uygun.
  *
  * Krem zemin üzerinde dört sütunlu düzen:
@@ -269,11 +297,7 @@ export class FooterComponent {
     return this.kanallar().filter((k) => k.type === t);
   }
 
-  /** "twitter" -> "X", diğerleri baş harfi büyük */
-  protected agAdi(ag: string): string {
-    if (ag === 'twitter') return 'X';
-    return ag.charAt(0).toUpperCase() + ag.slice(1);
-  }
+  protected agAdi = agAdi;
 
   /** "+90 312 297 62 62" -> "+903122976262" */
   protected telBaglanti(t: string): string {
